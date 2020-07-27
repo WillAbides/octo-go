@@ -584,7 +584,7 @@ func ActionsCreateRegistrationTokenForOrg(ctx context.Context, req *ActionsCreat
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ActionsCreateRegistrationTokenForOrgResponseBody{}
+	resp.Data = components.AuthenticationToken{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -673,13 +673,6 @@ func (r *ActionsCreateRegistrationTokenForOrgReq) Rel(link RelName, resp *Action
 }
 
 /*
-ActionsCreateRegistrationTokenForOrgResponseBody is a response body for ActionsCreateRegistrationTokenForOrg
-
-https://developer.github.com/v3/actions/self-hosted-runners/#create-a-registration-token-for-an-organization
-*/
-type ActionsCreateRegistrationTokenForOrgResponseBody components.AuthenticationToken
-
-/*
 ActionsCreateRegistrationTokenForOrgResponse is a response for ActionsCreateRegistrationTokenForOrg
 
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-registration-token-for-an-organization
@@ -687,7 +680,7 @@ https://developer.github.com/v3/actions/self-hosted-runners/#create-a-registrati
 type ActionsCreateRegistrationTokenForOrgResponse struct {
 	response
 	request *ActionsCreateRegistrationTokenForOrgReq
-	Data    ActionsCreateRegistrationTokenForOrgResponseBody
+	Data    components.AuthenticationToken
 }
 
 /*
@@ -711,7 +704,7 @@ func ActionsCreateRegistrationTokenForRepo(ctx context.Context, req *ActionsCrea
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ActionsCreateRegistrationTokenForRepoResponseBody{}
+	resp.Data = components.AuthenticationToken{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -801,13 +794,6 @@ func (r *ActionsCreateRegistrationTokenForRepoReq) Rel(link RelName, resp *Actio
 }
 
 /*
-ActionsCreateRegistrationTokenForRepoResponseBody is a response body for ActionsCreateRegistrationTokenForRepo
-
-https://developer.github.com/v3/actions/self-hosted-runners/#create-a-registration-token-for-a-repository
-*/
-type ActionsCreateRegistrationTokenForRepoResponseBody components.AuthenticationToken
-
-/*
 ActionsCreateRegistrationTokenForRepoResponse is a response for ActionsCreateRegistrationTokenForRepo
 
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-registration-token-for-a-repository
@@ -815,7 +801,7 @@ https://developer.github.com/v3/actions/self-hosted-runners/#create-a-registrati
 type ActionsCreateRegistrationTokenForRepoResponse struct {
 	response
 	request *ActionsCreateRegistrationTokenForRepoReq
-	Data    ActionsCreateRegistrationTokenForRepoResponseBody
+	Data    components.AuthenticationToken
 }
 
 /*
@@ -839,7 +825,7 @@ func ActionsCreateRemoveTokenForOrg(ctx context.Context, req *ActionsCreateRemov
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ActionsCreateRemoveTokenForOrgResponseBody{}
+	resp.Data = components.AuthenticationToken{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -928,13 +914,6 @@ func (r *ActionsCreateRemoveTokenForOrgReq) Rel(link RelName, resp *ActionsCreat
 }
 
 /*
-ActionsCreateRemoveTokenForOrgResponseBody is a response body for ActionsCreateRemoveTokenForOrg
-
-https://developer.github.com/v3/actions/self-hosted-runners/#create-a-remove-token-for-an-organization
-*/
-type ActionsCreateRemoveTokenForOrgResponseBody components.AuthenticationToken
-
-/*
 ActionsCreateRemoveTokenForOrgResponse is a response for ActionsCreateRemoveTokenForOrg
 
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-remove-token-for-an-organization
@@ -942,7 +921,7 @@ https://developer.github.com/v3/actions/self-hosted-runners/#create-a-remove-tok
 type ActionsCreateRemoveTokenForOrgResponse struct {
 	response
 	request *ActionsCreateRemoveTokenForOrgReq
-	Data    ActionsCreateRemoveTokenForOrgResponseBody
+	Data    components.AuthenticationToken
 }
 
 /*
@@ -966,7 +945,7 @@ func ActionsCreateRemoveTokenForRepo(ctx context.Context, req *ActionsCreateRemo
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ActionsCreateRemoveTokenForRepoResponseBody{}
+	resp.Data = components.AuthenticationToken{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1056,13 +1035,6 @@ func (r *ActionsCreateRemoveTokenForRepoReq) Rel(link RelName, resp *ActionsCrea
 }
 
 /*
-ActionsCreateRemoveTokenForRepoResponseBody is a response body for ActionsCreateRemoveTokenForRepo
-
-https://developer.github.com/v3/actions/self-hosted-runners/#create-a-remove-token-for-a-repository
-*/
-type ActionsCreateRemoveTokenForRepoResponseBody components.AuthenticationToken
-
-/*
 ActionsCreateRemoveTokenForRepoResponse is a response for ActionsCreateRemoveTokenForRepo
 
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-remove-token-for-a-repository
@@ -1070,7 +1042,7 @@ https://developer.github.com/v3/actions/self-hosted-runners/#create-a-remove-tok
 type ActionsCreateRemoveTokenForRepoResponse struct {
 	response
 	request *ActionsCreateRemoveTokenForRepoReq
-	Data    ActionsCreateRemoveTokenForRepoResponseBody
+	Data    components.AuthenticationToken
 }
 
 /*
@@ -2448,7 +2420,7 @@ func ActionsGetArtifact(ctx context.Context, req *ActionsGetArtifactReq, opt ...
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ActionsGetArtifactResponseBody{}
+	resp.Data = components.Artifact{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2541,13 +2513,6 @@ func (r *ActionsGetArtifactReq) Rel(link RelName, resp *ActionsGetArtifactRespon
 }
 
 /*
-ActionsGetArtifactResponseBody is a response body for ActionsGetArtifact
-
-https://developer.github.com/v3/actions/artifacts/#get-an-artifact
-*/
-type ActionsGetArtifactResponseBody components.Artifact
-
-/*
 ActionsGetArtifactResponse is a response for ActionsGetArtifact
 
 https://developer.github.com/v3/actions/artifacts/#get-an-artifact
@@ -2555,7 +2520,7 @@ https://developer.github.com/v3/actions/artifacts/#get-an-artifact
 type ActionsGetArtifactResponse struct {
 	response
 	request *ActionsGetArtifactReq
-	Data    ActionsGetArtifactResponseBody
+	Data    components.Artifact
 }
 
 /*
@@ -2579,7 +2544,7 @@ func ActionsGetJobForWorkflowRun(ctx context.Context, req *ActionsGetJobForWorkf
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ActionsGetJobForWorkflowRunResponseBody{}
+	resp.Data = components.Job{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2672,13 +2637,6 @@ func (r *ActionsGetJobForWorkflowRunReq) Rel(link RelName, resp *ActionsGetJobFo
 }
 
 /*
-ActionsGetJobForWorkflowRunResponseBody is a response body for ActionsGetJobForWorkflowRun
-
-https://developer.github.com/v3/actions/workflow-jobs/#get-a-job-for-a-workflow-run
-*/
-type ActionsGetJobForWorkflowRunResponseBody components.Job
-
-/*
 ActionsGetJobForWorkflowRunResponse is a response for ActionsGetJobForWorkflowRun
 
 https://developer.github.com/v3/actions/workflow-jobs/#get-a-job-for-a-workflow-run
@@ -2686,7 +2644,7 @@ https://developer.github.com/v3/actions/workflow-jobs/#get-a-job-for-a-workflow-
 type ActionsGetJobForWorkflowRunResponse struct {
 	response
 	request *ActionsGetJobForWorkflowRunReq
-	Data    ActionsGetJobForWorkflowRunResponseBody
+	Data    components.Job
 }
 
 /*
@@ -2710,7 +2668,7 @@ func ActionsGetOrgPublicKey(ctx context.Context, req *ActionsGetOrgPublicKeyReq,
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ActionsGetOrgPublicKeyResponseBody{}
+	resp.Data = components.ActionsPublicKey{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2799,13 +2757,6 @@ func (r *ActionsGetOrgPublicKeyReq) Rel(link RelName, resp *ActionsGetOrgPublicK
 }
 
 /*
-ActionsGetOrgPublicKeyResponseBody is a response body for ActionsGetOrgPublicKey
-
-https://developer.github.com/v3/actions/secrets/#get-an-organization-public-key
-*/
-type ActionsGetOrgPublicKeyResponseBody components.ActionsPublicKey
-
-/*
 ActionsGetOrgPublicKeyResponse is a response for ActionsGetOrgPublicKey
 
 https://developer.github.com/v3/actions/secrets/#get-an-organization-public-key
@@ -2813,7 +2764,7 @@ https://developer.github.com/v3/actions/secrets/#get-an-organization-public-key
 type ActionsGetOrgPublicKeyResponse struct {
 	response
 	request *ActionsGetOrgPublicKeyReq
-	Data    ActionsGetOrgPublicKeyResponseBody
+	Data    components.ActionsPublicKey
 }
 
 /*
@@ -2837,7 +2788,7 @@ func ActionsGetOrgSecret(ctx context.Context, req *ActionsGetOrgSecretReq, opt .
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ActionsGetOrgSecretResponseBody{}
+	resp.Data = components.OrganizationActionsSecret{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2929,13 +2880,6 @@ func (r *ActionsGetOrgSecretReq) Rel(link RelName, resp *ActionsGetOrgSecretResp
 }
 
 /*
-ActionsGetOrgSecretResponseBody is a response body for ActionsGetOrgSecret
-
-https://developer.github.com/v3/actions/secrets/#get-an-organization-secret
-*/
-type ActionsGetOrgSecretResponseBody components.OrganizationActionsSecret
-
-/*
 ActionsGetOrgSecretResponse is a response for ActionsGetOrgSecret
 
 https://developer.github.com/v3/actions/secrets/#get-an-organization-secret
@@ -2943,7 +2887,7 @@ https://developer.github.com/v3/actions/secrets/#get-an-organization-secret
 type ActionsGetOrgSecretResponse struct {
 	response
 	request *ActionsGetOrgSecretReq
-	Data    ActionsGetOrgSecretResponseBody
+	Data    components.OrganizationActionsSecret
 }
 
 /*
@@ -2967,7 +2911,7 @@ func ActionsGetRepoPublicKey(ctx context.Context, req *ActionsGetRepoPublicKeyRe
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ActionsGetRepoPublicKeyResponseBody{}
+	resp.Data = components.ActionsPublicKey{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -3057,13 +3001,6 @@ func (r *ActionsGetRepoPublicKeyReq) Rel(link RelName, resp *ActionsGetRepoPubli
 }
 
 /*
-ActionsGetRepoPublicKeyResponseBody is a response body for ActionsGetRepoPublicKey
-
-https://developer.github.com/v3/actions/secrets/#get-a-repository-public-key
-*/
-type ActionsGetRepoPublicKeyResponseBody components.ActionsPublicKey
-
-/*
 ActionsGetRepoPublicKeyResponse is a response for ActionsGetRepoPublicKey
 
 https://developer.github.com/v3/actions/secrets/#get-a-repository-public-key
@@ -3071,7 +3008,7 @@ https://developer.github.com/v3/actions/secrets/#get-a-repository-public-key
 type ActionsGetRepoPublicKeyResponse struct {
 	response
 	request *ActionsGetRepoPublicKeyReq
-	Data    ActionsGetRepoPublicKeyResponseBody
+	Data    components.ActionsPublicKey
 }
 
 /*
@@ -3095,7 +3032,7 @@ func ActionsGetRepoSecret(ctx context.Context, req *ActionsGetRepoSecretReq, opt
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ActionsGetRepoSecretResponseBody{}
+	resp.Data = components.ActionsSecret{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -3188,13 +3125,6 @@ func (r *ActionsGetRepoSecretReq) Rel(link RelName, resp *ActionsGetRepoSecretRe
 }
 
 /*
-ActionsGetRepoSecretResponseBody is a response body for ActionsGetRepoSecret
-
-https://developer.github.com/v3/actions/secrets/#get-a-repository-secret
-*/
-type ActionsGetRepoSecretResponseBody components.ActionsSecret
-
-/*
 ActionsGetRepoSecretResponse is a response for ActionsGetRepoSecret
 
 https://developer.github.com/v3/actions/secrets/#get-a-repository-secret
@@ -3202,7 +3132,7 @@ https://developer.github.com/v3/actions/secrets/#get-a-repository-secret
 type ActionsGetRepoSecretResponse struct {
 	response
 	request *ActionsGetRepoSecretReq
-	Data    ActionsGetRepoSecretResponseBody
+	Data    components.ActionsSecret
 }
 
 /*
@@ -3226,7 +3156,7 @@ func ActionsGetSelfHostedRunnerForOrg(ctx context.Context, req *ActionsGetSelfHo
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ActionsGetSelfHostedRunnerForOrgResponseBody{}
+	resp.Data = components.Runner{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -3318,13 +3248,6 @@ func (r *ActionsGetSelfHostedRunnerForOrgReq) Rel(link RelName, resp *ActionsGet
 }
 
 /*
-ActionsGetSelfHostedRunnerForOrgResponseBody is a response body for ActionsGetSelfHostedRunnerForOrg
-
-https://developer.github.com/v3/actions/self-hosted-runners/#get-a-self-hosted-runner-for-an-organization
-*/
-type ActionsGetSelfHostedRunnerForOrgResponseBody components.Runner
-
-/*
 ActionsGetSelfHostedRunnerForOrgResponse is a response for ActionsGetSelfHostedRunnerForOrg
 
 https://developer.github.com/v3/actions/self-hosted-runners/#get-a-self-hosted-runner-for-an-organization
@@ -3332,7 +3255,7 @@ https://developer.github.com/v3/actions/self-hosted-runners/#get-a-self-hosted-r
 type ActionsGetSelfHostedRunnerForOrgResponse struct {
 	response
 	request *ActionsGetSelfHostedRunnerForOrgReq
-	Data    ActionsGetSelfHostedRunnerForOrgResponseBody
+	Data    components.Runner
 }
 
 /*
@@ -3356,7 +3279,7 @@ func ActionsGetSelfHostedRunnerForRepo(ctx context.Context, req *ActionsGetSelfH
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ActionsGetSelfHostedRunnerForRepoResponseBody{}
+	resp.Data = components.Runner{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -3449,13 +3372,6 @@ func (r *ActionsGetSelfHostedRunnerForRepoReq) Rel(link RelName, resp *ActionsGe
 }
 
 /*
-ActionsGetSelfHostedRunnerForRepoResponseBody is a response body for ActionsGetSelfHostedRunnerForRepo
-
-https://developer.github.com/v3/actions/self-hosted-runners/#get-a-self-hosted-runner-for-a-repository
-*/
-type ActionsGetSelfHostedRunnerForRepoResponseBody components.Runner
-
-/*
 ActionsGetSelfHostedRunnerForRepoResponse is a response for ActionsGetSelfHostedRunnerForRepo
 
 https://developer.github.com/v3/actions/self-hosted-runners/#get-a-self-hosted-runner-for-a-repository
@@ -3463,7 +3379,7 @@ https://developer.github.com/v3/actions/self-hosted-runners/#get-a-self-hosted-r
 type ActionsGetSelfHostedRunnerForRepoResponse struct {
 	response
 	request *ActionsGetSelfHostedRunnerForRepoReq
-	Data    ActionsGetSelfHostedRunnerForRepoResponseBody
+	Data    components.Runner
 }
 
 /*
@@ -3487,7 +3403,7 @@ func ActionsGetWorkflow(ctx context.Context, req *ActionsGetWorkflowReq, opt ...
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ActionsGetWorkflowResponseBody{}
+	resp.Data = components.Workflow{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -3578,13 +3494,6 @@ func (r *ActionsGetWorkflowReq) Rel(link RelName, resp *ActionsGetWorkflowRespon
 }
 
 /*
-ActionsGetWorkflowResponseBody is a response body for ActionsGetWorkflow
-
-https://developer.github.com/v3/actions/workflows/#get-a-workflow
-*/
-type ActionsGetWorkflowResponseBody components.Workflow
-
-/*
 ActionsGetWorkflowResponse is a response for ActionsGetWorkflow
 
 https://developer.github.com/v3/actions/workflows/#get-a-workflow
@@ -3592,7 +3501,7 @@ https://developer.github.com/v3/actions/workflows/#get-a-workflow
 type ActionsGetWorkflowResponse struct {
 	response
 	request *ActionsGetWorkflowReq
-	Data    ActionsGetWorkflowResponseBody
+	Data    components.Workflow
 }
 
 /*
@@ -3616,7 +3525,7 @@ func ActionsGetWorkflowRun(ctx context.Context, req *ActionsGetWorkflowRunReq, o
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ActionsGetWorkflowRunResponseBody{}
+	resp.Data = components.WorkflowRun{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -3707,13 +3616,6 @@ func (r *ActionsGetWorkflowRunReq) Rel(link RelName, resp *ActionsGetWorkflowRun
 }
 
 /*
-ActionsGetWorkflowRunResponseBody is a response body for ActionsGetWorkflowRun
-
-https://developer.github.com/v3/actions/workflow-runs/#get-a-workflow-run
-*/
-type ActionsGetWorkflowRunResponseBody components.WorkflowRun
-
-/*
 ActionsGetWorkflowRunResponse is a response for ActionsGetWorkflowRun
 
 https://developer.github.com/v3/actions/workflow-runs/#get-a-workflow-run
@@ -3721,7 +3623,7 @@ https://developer.github.com/v3/actions/workflow-runs/#get-a-workflow-run
 type ActionsGetWorkflowRunResponse struct {
 	response
 	request *ActionsGetWorkflowRunReq
-	Data    ActionsGetWorkflowRunResponseBody
+	Data    components.WorkflowRun
 }
 
 /*
@@ -3745,7 +3647,7 @@ func ActionsGetWorkflowRunUsage(ctx context.Context, req *ActionsGetWorkflowRunU
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ActionsGetWorkflowRunUsageResponseBody{}
+	resp.Data = components.WorkflowRunUsage{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -3836,13 +3738,6 @@ func (r *ActionsGetWorkflowRunUsageReq) Rel(link RelName, resp *ActionsGetWorkfl
 }
 
 /*
-ActionsGetWorkflowRunUsageResponseBody is a response body for ActionsGetWorkflowRunUsage
-
-https://developer.github.com/v3/actions/workflow-runs/#get-workflow-run-usage
-*/
-type ActionsGetWorkflowRunUsageResponseBody components.WorkflowRunUsage
-
-/*
 ActionsGetWorkflowRunUsageResponse is a response for ActionsGetWorkflowRunUsage
 
 https://developer.github.com/v3/actions/workflow-runs/#get-workflow-run-usage
@@ -3850,7 +3745,7 @@ https://developer.github.com/v3/actions/workflow-runs/#get-workflow-run-usage
 type ActionsGetWorkflowRunUsageResponse struct {
 	response
 	request *ActionsGetWorkflowRunUsageReq
-	Data    ActionsGetWorkflowRunUsageResponseBody
+	Data    components.WorkflowRunUsage
 }
 
 /*
@@ -3874,7 +3769,7 @@ func ActionsGetWorkflowUsage(ctx context.Context, req *ActionsGetWorkflowUsageRe
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ActionsGetWorkflowUsageResponseBody{}
+	resp.Data = components.WorkflowUsage{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -3965,13 +3860,6 @@ func (r *ActionsGetWorkflowUsageReq) Rel(link RelName, resp *ActionsGetWorkflowU
 }
 
 /*
-ActionsGetWorkflowUsageResponseBody is a response body for ActionsGetWorkflowUsage
-
-https://developer.github.com/v3/actions/workflows/#get-workflow-usage
-*/
-type ActionsGetWorkflowUsageResponseBody components.WorkflowUsage
-
-/*
 ActionsGetWorkflowUsageResponse is a response for ActionsGetWorkflowUsage
 
 https://developer.github.com/v3/actions/workflows/#get-workflow-usage
@@ -3979,7 +3867,7 @@ https://developer.github.com/v3/actions/workflows/#get-workflow-usage
 type ActionsGetWorkflowUsageResponse struct {
 	response
 	request *ActionsGetWorkflowUsageReq
-	Data    ActionsGetWorkflowUsageResponseBody
+	Data    components.WorkflowUsage
 }
 
 /*

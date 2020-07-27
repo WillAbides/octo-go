@@ -637,7 +637,7 @@ func OrgsCreateInvitation(ctx context.Context, req *OrgsCreateInvitationReq, opt
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = OrgsCreateInvitationResponseBody{}
+	resp.Data = components.OrganizationInvitation{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -761,13 +761,6 @@ type OrgsCreateInvitationReqBody struct {
 }
 
 /*
-OrgsCreateInvitationResponseBody is a response body for OrgsCreateInvitation
-
-https://developer.github.com/v3/orgs/members/#create-an-organization-invitation
-*/
-type OrgsCreateInvitationResponseBody components.OrganizationInvitation
-
-/*
 OrgsCreateInvitationResponse is a response for OrgsCreateInvitation
 
 https://developer.github.com/v3/orgs/members/#create-an-organization-invitation
@@ -775,7 +768,7 @@ https://developer.github.com/v3/orgs/members/#create-an-organization-invitation
 type OrgsCreateInvitationResponse struct {
 	response
 	request *OrgsCreateInvitationReq
-	Data    OrgsCreateInvitationResponseBody
+	Data    components.OrganizationInvitation
 }
 
 /*
@@ -799,7 +792,7 @@ func OrgsCreateWebhook(ctx context.Context, req *OrgsCreateWebhookReq, opt ...Re
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = OrgsCreateWebhookResponseBody{}
+	resp.Data = components.OrgHook{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -944,13 +937,6 @@ type OrgsCreateWebhookReqBody struct {
 }
 
 /*
-OrgsCreateWebhookResponseBody is a response body for OrgsCreateWebhook
-
-https://developer.github.com/v3/orgs/hooks/#create-an-organization-webhook
-*/
-type OrgsCreateWebhookResponseBody components.OrgHook
-
-/*
 OrgsCreateWebhookResponse is a response for OrgsCreateWebhook
 
 https://developer.github.com/v3/orgs/hooks/#create-an-organization-webhook
@@ -958,7 +944,7 @@ https://developer.github.com/v3/orgs/hooks/#create-an-organization-webhook
 type OrgsCreateWebhookResponse struct {
 	response
 	request *OrgsCreateWebhookReq
-	Data    OrgsCreateWebhookResponseBody
+	Data    components.OrgHook
 }
 
 /*
@@ -1106,7 +1092,7 @@ func OrgsGet(ctx context.Context, req *OrgsGetReq, opt ...RequestOption) (*OrgsG
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = OrgsGetResponseBody{}
+	resp.Data = components.OrganizationFull{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1213,13 +1199,6 @@ func (r *OrgsGetReq) Rel(link RelName, resp *OrgsGetResponse) bool {
 }
 
 /*
-OrgsGetResponseBody is a response body for OrgsGet
-
-https://developer.github.com/v3/orgs/#get-an-organization
-*/
-type OrgsGetResponseBody components.OrganizationFull
-
-/*
 OrgsGetResponse is a response for OrgsGet
 
 https://developer.github.com/v3/orgs/#get-an-organization
@@ -1227,7 +1206,7 @@ https://developer.github.com/v3/orgs/#get-an-organization
 type OrgsGetResponse struct {
 	response
 	request *OrgsGetReq
-	Data    OrgsGetResponseBody
+	Data    components.OrganizationFull
 }
 
 /*
@@ -1251,7 +1230,7 @@ func OrgsGetMembershipForAuthenticatedUser(ctx context.Context, req *OrgsGetMemb
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = OrgsGetMembershipForAuthenticatedUserResponseBody{}
+	resp.Data = components.OrgMembership{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1340,13 +1319,6 @@ func (r *OrgsGetMembershipForAuthenticatedUserReq) Rel(link RelName, resp *OrgsG
 }
 
 /*
-OrgsGetMembershipForAuthenticatedUserResponseBody is a response body for OrgsGetMembershipForAuthenticatedUser
-
-https://developer.github.com/v3/orgs/members/#get-an-organization-membership-for-the-authenticated-user
-*/
-type OrgsGetMembershipForAuthenticatedUserResponseBody components.OrgMembership
-
-/*
 OrgsGetMembershipForAuthenticatedUserResponse is a response for OrgsGetMembershipForAuthenticatedUser
 
 https://developer.github.com/v3/orgs/members/#get-an-organization-membership-for-the-authenticated-user
@@ -1354,7 +1326,7 @@ https://developer.github.com/v3/orgs/members/#get-an-organization-membership-for
 type OrgsGetMembershipForAuthenticatedUserResponse struct {
 	response
 	request *OrgsGetMembershipForAuthenticatedUserReq
-	Data    OrgsGetMembershipForAuthenticatedUserResponseBody
+	Data    components.OrgMembership
 }
 
 /*
@@ -1378,7 +1350,7 @@ func OrgsGetMembershipForUser(ctx context.Context, req *OrgsGetMembershipForUser
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = OrgsGetMembershipForUserResponseBody{}
+	resp.Data = components.OrgMembership{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1468,13 +1440,6 @@ func (r *OrgsGetMembershipForUserReq) Rel(link RelName, resp *OrgsGetMembershipF
 }
 
 /*
-OrgsGetMembershipForUserResponseBody is a response body for OrgsGetMembershipForUser
-
-https://developer.github.com/v3/orgs/members/#get-organization-membership-for-a-user
-*/
-type OrgsGetMembershipForUserResponseBody components.OrgMembership
-
-/*
 OrgsGetMembershipForUserResponse is a response for OrgsGetMembershipForUser
 
 https://developer.github.com/v3/orgs/members/#get-organization-membership-for-a-user
@@ -1482,7 +1447,7 @@ https://developer.github.com/v3/orgs/members/#get-organization-membership-for-a-
 type OrgsGetMembershipForUserResponse struct {
 	response
 	request *OrgsGetMembershipForUserReq
-	Data    OrgsGetMembershipForUserResponseBody
+	Data    components.OrgMembership
 }
 
 /*
@@ -1506,7 +1471,7 @@ func OrgsGetWebhook(ctx context.Context, req *OrgsGetWebhookReq, opt ...RequestO
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = OrgsGetWebhookResponseBody{}
+	resp.Data = components.OrgHook{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1596,13 +1561,6 @@ func (r *OrgsGetWebhookReq) Rel(link RelName, resp *OrgsGetWebhookResponse) bool
 }
 
 /*
-OrgsGetWebhookResponseBody is a response body for OrgsGetWebhook
-
-https://developer.github.com/v3/orgs/hooks/#get-an-organization-webhook
-*/
-type OrgsGetWebhookResponseBody components.OrgHook
-
-/*
 OrgsGetWebhookResponse is a response for OrgsGetWebhook
 
 https://developer.github.com/v3/orgs/hooks/#get-an-organization-webhook
@@ -1610,7 +1568,7 @@ https://developer.github.com/v3/orgs/hooks/#get-an-organization-webhook
 type OrgsGetWebhookResponse struct {
 	response
 	request *OrgsGetWebhookReq
-	Data    OrgsGetWebhookResponseBody
+	Data    components.OrgHook
 }
 
 /*
@@ -4206,7 +4164,7 @@ func OrgsSetMembershipForUser(ctx context.Context, req *OrgsSetMembershipForUser
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = OrgsSetMembershipForUserResponseBody{}
+	resp.Data = components.OrgMembership{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -4315,13 +4273,6 @@ type OrgsSetMembershipForUserReqBody struct {
 }
 
 /*
-OrgsSetMembershipForUserResponseBody is a response body for OrgsSetMembershipForUser
-
-https://developer.github.com/v3/orgs/members/#set-organization-membership-for-a-user
-*/
-type OrgsSetMembershipForUserResponseBody components.OrgMembership
-
-/*
 OrgsSetMembershipForUserResponse is a response for OrgsSetMembershipForUser
 
 https://developer.github.com/v3/orgs/members/#set-organization-membership-for-a-user
@@ -4329,7 +4280,7 @@ https://developer.github.com/v3/orgs/members/#set-organization-membership-for-a-
 type OrgsSetMembershipForUserResponse struct {
 	response
 	request *OrgsSetMembershipForUserReq
-	Data    OrgsSetMembershipForUserResponseBody
+	Data    components.OrgMembership
 }
 
 /*
@@ -4591,7 +4542,7 @@ func OrgsUpdate(ctx context.Context, req *OrgsUpdateReq, opt ...RequestOption) (
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = OrgsUpdateResponseBody{}
+	resp.Data = components.OrganizationFull{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -4814,13 +4765,6 @@ type OrgsUpdateReqBody struct {
 }
 
 /*
-OrgsUpdateResponseBody is a response body for OrgsUpdate
-
-https://developer.github.com/v3/orgs/#update-an-organization
-*/
-type OrgsUpdateResponseBody components.OrganizationFull
-
-/*
 OrgsUpdateResponse is a response for OrgsUpdate
 
 https://developer.github.com/v3/orgs/#update-an-organization
@@ -4828,7 +4772,7 @@ https://developer.github.com/v3/orgs/#update-an-organization
 type OrgsUpdateResponse struct {
 	response
 	request *OrgsUpdateReq
-	Data    OrgsUpdateResponseBody
+	Data    components.OrganizationFull
 }
 
 /*
@@ -4852,7 +4796,7 @@ func OrgsUpdateMembershipForAuthenticatedUser(ctx context.Context, req *OrgsUpda
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = OrgsUpdateMembershipForAuthenticatedUserResponseBody{}
+	resp.Data = components.OrgMembership{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -4956,13 +4900,6 @@ type OrgsUpdateMembershipForAuthenticatedUserReqBody struct {
 }
 
 /*
-OrgsUpdateMembershipForAuthenticatedUserResponseBody is a response body for OrgsUpdateMembershipForAuthenticatedUser
-
-https://developer.github.com/v3/orgs/members/#update-an-organization-membership-for-the-authenticated-user
-*/
-type OrgsUpdateMembershipForAuthenticatedUserResponseBody components.OrgMembership
-
-/*
 OrgsUpdateMembershipForAuthenticatedUserResponse is a response for OrgsUpdateMembershipForAuthenticatedUser
 
 https://developer.github.com/v3/orgs/members/#update-an-organization-membership-for-the-authenticated-user
@@ -4970,7 +4907,7 @@ https://developer.github.com/v3/orgs/members/#update-an-organization-membership-
 type OrgsUpdateMembershipForAuthenticatedUserResponse struct {
 	response
 	request *OrgsUpdateMembershipForAuthenticatedUserReq
-	Data    OrgsUpdateMembershipForAuthenticatedUserResponseBody
+	Data    components.OrgMembership
 }
 
 /*
@@ -4994,7 +4931,7 @@ func OrgsUpdateWebhook(ctx context.Context, req *OrgsUpdateWebhookReq, opt ...Re
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = OrgsUpdateWebhookResponseBody{}
+	resp.Data = components.OrgHook{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -5136,13 +5073,6 @@ type OrgsUpdateWebhookReqBody struct {
 }
 
 /*
-OrgsUpdateWebhookResponseBody is a response body for OrgsUpdateWebhook
-
-https://developer.github.com/v3/orgs/hooks/#update-an-organization-webhook
-*/
-type OrgsUpdateWebhookResponseBody components.OrgHook
-
-/*
 OrgsUpdateWebhookResponse is a response for OrgsUpdateWebhook
 
 https://developer.github.com/v3/orgs/hooks/#update-an-organization-webhook
@@ -5150,5 +5080,5 @@ https://developer.github.com/v3/orgs/hooks/#update-an-organization-webhook
 type OrgsUpdateWebhookResponse struct {
 	response
 	request *OrgsUpdateWebhookReq
-	Data    OrgsUpdateWebhookResponseBody
+	Data    components.OrgHook
 }

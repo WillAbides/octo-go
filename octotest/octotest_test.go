@@ -6,6 +6,7 @@ import (
 
 	"github.com/stretchr/testify/require"
 	"github.com/willabides/octo-go"
+	"github.com/willabides/octo-go/components"
 )
 
 func TestPaging(t *testing.T) {
@@ -81,8 +82,8 @@ func TestDistinguishesBodies(t *testing.T) {
 			HeadSha: octo.String("deadbeef"),
 		},
 	}
-	respBody1 := octo.ChecksCreateResponseBody{Conclusion: "conclusion 1"}
-	respBody2 := octo.ChecksCreateResponseBody{Conclusion: "conclusion 2"}
+	respBody1 := components.CheckRun{Conclusion: "conclusion 1"}
+	respBody2 := components.CheckRun{Conclusion: "conclusion 2"}
 	ctx := context.Background()
 	server := New(octo.PreserveResponseBody())
 	t.Cleanup(server.Finish)

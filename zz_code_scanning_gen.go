@@ -31,7 +31,7 @@ func CodeScanningGetAlert(ctx context.Context, req *CodeScanningGetAlertReq, opt
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = CodeScanningGetAlertResponseBody{}
+	resp.Data = components.CodeScanningAlert{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -124,13 +124,6 @@ func (r *CodeScanningGetAlertReq) Rel(link RelName, resp *CodeScanningGetAlertRe
 }
 
 /*
-CodeScanningGetAlertResponseBody is a response body for CodeScanningGetAlert
-
-https://developer.github.com/v3/code-scanning/#get-a-code-scanning-alert
-*/
-type CodeScanningGetAlertResponseBody components.CodeScanningAlert
-
-/*
 CodeScanningGetAlertResponse is a response for CodeScanningGetAlert
 
 https://developer.github.com/v3/code-scanning/#get-a-code-scanning-alert
@@ -138,7 +131,7 @@ https://developer.github.com/v3/code-scanning/#get-a-code-scanning-alert
 type CodeScanningGetAlertResponse struct {
 	response
 	request *CodeScanningGetAlertReq
-	Data    CodeScanningGetAlertResponseBody
+	Data    components.CodeScanningAlert
 }
 
 /*

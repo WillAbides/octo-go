@@ -812,7 +812,7 @@ func MigrationsGetImportStatus(ctx context.Context, req *MigrationsGetImportStat
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = MigrationsGetImportStatusResponseBody{}
+	resp.Data = components.Import{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -902,13 +902,6 @@ func (r *MigrationsGetImportStatusReq) Rel(link RelName, resp *MigrationsGetImpo
 }
 
 /*
-MigrationsGetImportStatusResponseBody is a response body for MigrationsGetImportStatus
-
-https://developer.github.com/v3/migrations/source_imports/#get-an-import-status
-*/
-type MigrationsGetImportStatusResponseBody components.Import
-
-/*
 MigrationsGetImportStatusResponse is a response for MigrationsGetImportStatus
 
 https://developer.github.com/v3/migrations/source_imports/#get-an-import-status
@@ -916,7 +909,7 @@ https://developer.github.com/v3/migrations/source_imports/#get-an-import-status
 type MigrationsGetImportStatusResponse struct {
 	response
 	request *MigrationsGetImportStatusReq
-	Data    MigrationsGetImportStatusResponseBody
+	Data    components.Import
 }
 
 /*
@@ -1068,7 +1061,7 @@ func MigrationsGetStatusForAuthenticatedUser(ctx context.Context, req *Migration
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = MigrationsGetStatusForAuthenticatedUserResponseBody{}
+	resp.Data = components.Migration{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1168,13 +1161,6 @@ func (r *MigrationsGetStatusForAuthenticatedUserReq) Rel(link RelName, resp *Mig
 }
 
 /*
-MigrationsGetStatusForAuthenticatedUserResponseBody is a response body for MigrationsGetStatusForAuthenticatedUser
-
-https://developer.github.com/v3/migrations/users/#get-a-user-migration-status
-*/
-type MigrationsGetStatusForAuthenticatedUserResponseBody components.Migration
-
-/*
 MigrationsGetStatusForAuthenticatedUserResponse is a response for MigrationsGetStatusForAuthenticatedUser
 
 https://developer.github.com/v3/migrations/users/#get-a-user-migration-status
@@ -1182,7 +1168,7 @@ https://developer.github.com/v3/migrations/users/#get-a-user-migration-status
 type MigrationsGetStatusForAuthenticatedUserResponse struct {
 	response
 	request *MigrationsGetStatusForAuthenticatedUserReq
-	Data    MigrationsGetStatusForAuthenticatedUserResponseBody
+	Data    components.Migration
 }
 
 /*
@@ -1206,7 +1192,7 @@ func MigrationsGetStatusForOrg(ctx context.Context, req *MigrationsGetStatusForO
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = MigrationsGetStatusForOrgResponseBody{}
+	resp.Data = components.Migration{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1307,13 +1293,6 @@ func (r *MigrationsGetStatusForOrgReq) Rel(link RelName, resp *MigrationsGetStat
 }
 
 /*
-MigrationsGetStatusForOrgResponseBody is a response body for MigrationsGetStatusForOrg
-
-https://developer.github.com/v3/migrations/orgs/#get-an-organization-migration-status
-*/
-type MigrationsGetStatusForOrgResponseBody components.Migration
-
-/*
 MigrationsGetStatusForOrgResponse is a response for MigrationsGetStatusForOrg
 
 https://developer.github.com/v3/migrations/orgs/#get-an-organization-migration-status
@@ -1321,7 +1300,7 @@ https://developer.github.com/v3/migrations/orgs/#get-an-organization-migration-s
 type MigrationsGetStatusForOrgResponse struct {
 	response
 	request *MigrationsGetStatusForOrgReq
-	Data    MigrationsGetStatusForOrgResponseBody
+	Data    components.Migration
 }
 
 /*
@@ -1941,7 +1920,7 @@ func MigrationsMapCommitAuthor(ctx context.Context, req *MigrationsMapCommitAuth
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = MigrationsMapCommitAuthorResponseBody{}
+	resp.Data = components.PorterAuthor{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2053,13 +2032,6 @@ type MigrationsMapCommitAuthorReqBody struct {
 }
 
 /*
-MigrationsMapCommitAuthorResponseBody is a response body for MigrationsMapCommitAuthor
-
-https://developer.github.com/v3/migrations/source_imports/#map-a-commit-author
-*/
-type MigrationsMapCommitAuthorResponseBody components.PorterAuthor
-
-/*
 MigrationsMapCommitAuthorResponse is a response for MigrationsMapCommitAuthor
 
 https://developer.github.com/v3/migrations/source_imports/#map-a-commit-author
@@ -2067,7 +2039,7 @@ https://developer.github.com/v3/migrations/source_imports/#map-a-commit-author
 type MigrationsMapCommitAuthorResponse struct {
 	response
 	request *MigrationsMapCommitAuthorReq
-	Data    MigrationsMapCommitAuthorResponseBody
+	Data    components.PorterAuthor
 }
 
 /*
@@ -2091,7 +2063,7 @@ func MigrationsSetLfsPreference(ctx context.Context, req *MigrationsSetLfsPrefer
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = MigrationsSetLfsPreferenceResponseBody{}
+	resp.Data = components.Import{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2199,13 +2171,6 @@ type MigrationsSetLfsPreferenceReqBody struct {
 }
 
 /*
-MigrationsSetLfsPreferenceResponseBody is a response body for MigrationsSetLfsPreference
-
-https://developer.github.com/v3/migrations/source_imports/#update-git-lfs-preference
-*/
-type MigrationsSetLfsPreferenceResponseBody components.Import
-
-/*
 MigrationsSetLfsPreferenceResponse is a response for MigrationsSetLfsPreference
 
 https://developer.github.com/v3/migrations/source_imports/#update-git-lfs-preference
@@ -2213,7 +2178,7 @@ https://developer.github.com/v3/migrations/source_imports/#update-git-lfs-prefer
 type MigrationsSetLfsPreferenceResponse struct {
 	response
 	request *MigrationsSetLfsPreferenceReq
-	Data    MigrationsSetLfsPreferenceResponseBody
+	Data    components.Import
 }
 
 /*
@@ -2237,7 +2202,7 @@ func MigrationsStartForAuthenticatedUser(ctx context.Context, req *MigrationsSta
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = MigrationsStartForAuthenticatedUserResponseBody{}
+	resp.Data = components.Migration{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2347,13 +2312,6 @@ type MigrationsStartForAuthenticatedUserReqBody struct {
 }
 
 /*
-MigrationsStartForAuthenticatedUserResponseBody is a response body for MigrationsStartForAuthenticatedUser
-
-https://developer.github.com/v3/migrations/users/#start-a-user-migration
-*/
-type MigrationsStartForAuthenticatedUserResponseBody components.Migration
-
-/*
 MigrationsStartForAuthenticatedUserResponse is a response for MigrationsStartForAuthenticatedUser
 
 https://developer.github.com/v3/migrations/users/#start-a-user-migration
@@ -2361,7 +2319,7 @@ https://developer.github.com/v3/migrations/users/#start-a-user-migration
 type MigrationsStartForAuthenticatedUserResponse struct {
 	response
 	request *MigrationsStartForAuthenticatedUserReq
-	Data    MigrationsStartForAuthenticatedUserResponseBody
+	Data    components.Migration
 }
 
 /*
@@ -2385,7 +2343,7 @@ func MigrationsStartForOrg(ctx context.Context, req *MigrationsStartForOrgReq, o
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = MigrationsStartForOrgResponseBody{}
+	resp.Data = components.Migration{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2496,13 +2454,6 @@ type MigrationsStartForOrgReqBody struct {
 }
 
 /*
-MigrationsStartForOrgResponseBody is a response body for MigrationsStartForOrg
-
-https://developer.github.com/v3/migrations/orgs/#start-an-organization-migration
-*/
-type MigrationsStartForOrgResponseBody components.Migration
-
-/*
 MigrationsStartForOrgResponse is a response for MigrationsStartForOrg
 
 https://developer.github.com/v3/migrations/orgs/#start-an-organization-migration
@@ -2510,7 +2461,7 @@ https://developer.github.com/v3/migrations/orgs/#start-an-organization-migration
 type MigrationsStartForOrgResponse struct {
 	response
 	request *MigrationsStartForOrgReq
-	Data    MigrationsStartForOrgResponseBody
+	Data    components.Migration
 }
 
 /*
@@ -2534,7 +2485,7 @@ func MigrationsStartImport(ctx context.Context, req *MigrationsStartImportReq, o
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = MigrationsStartImportResponseBody{}
+	resp.Data = components.Import{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2656,13 +2607,6 @@ type MigrationsStartImportReqBody struct {
 }
 
 /*
-MigrationsStartImportResponseBody is a response body for MigrationsStartImport
-
-https://developer.github.com/v3/migrations/source_imports/#start-an-import
-*/
-type MigrationsStartImportResponseBody components.Import
-
-/*
 MigrationsStartImportResponse is a response for MigrationsStartImport
 
 https://developer.github.com/v3/migrations/source_imports/#start-an-import
@@ -2670,7 +2614,7 @@ https://developer.github.com/v3/migrations/source_imports/#start-an-import
 type MigrationsStartImportResponse struct {
 	response
 	request *MigrationsStartImportReq
-	Data    MigrationsStartImportResponseBody
+	Data    components.Import
 }
 
 /*
@@ -2964,7 +2908,7 @@ func MigrationsUpdateImport(ctx context.Context, req *MigrationsUpdateImportReq,
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = MigrationsUpdateImportResponseBody{}
+	resp.Data = components.Import{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -3074,13 +3018,6 @@ type MigrationsUpdateImportReqBody struct {
 }
 
 /*
-MigrationsUpdateImportResponseBody is a response body for MigrationsUpdateImport
-
-https://developer.github.com/v3/migrations/source_imports/#update-an-import
-*/
-type MigrationsUpdateImportResponseBody components.Import
-
-/*
 MigrationsUpdateImportResponse is a response for MigrationsUpdateImport
 
 https://developer.github.com/v3/migrations/source_imports/#update-an-import
@@ -3088,5 +3025,5 @@ https://developer.github.com/v3/migrations/source_imports/#update-an-import
 type MigrationsUpdateImportResponse struct {
 	response
 	request *MigrationsUpdateImportReq
-	Data    MigrationsUpdateImportResponseBody
+	Data    components.Import
 }

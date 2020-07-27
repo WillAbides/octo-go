@@ -32,7 +32,7 @@ func OauthAuthorizationsCreateAuthorization(ctx context.Context, req *OauthAutho
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = OauthAuthorizationsCreateAuthorizationResponseBody{}
+	resp.Data = components.Authorization{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -150,13 +150,6 @@ type OauthAuthorizationsCreateAuthorizationReqBody struct {
 }
 
 /*
-OauthAuthorizationsCreateAuthorizationResponseBody is a response body for OauthAuthorizationsCreateAuthorization
-
-https://developer.github.com/v3/oauth_authorizations/#create-a-new-authorization
-*/
-type OauthAuthorizationsCreateAuthorizationResponseBody components.Authorization
-
-/*
 OauthAuthorizationsCreateAuthorizationResponse is a response for OauthAuthorizationsCreateAuthorization
 
 https://developer.github.com/v3/oauth_authorizations/#create-a-new-authorization
@@ -164,7 +157,7 @@ https://developer.github.com/v3/oauth_authorizations/#create-a-new-authorization
 type OauthAuthorizationsCreateAuthorizationResponse struct {
 	response
 	request *OauthAuthorizationsCreateAuthorizationReq
-	Data    OauthAuthorizationsCreateAuthorizationResponseBody
+	Data    components.Authorization
 }
 
 /*
@@ -428,7 +421,7 @@ func OauthAuthorizationsGetAuthorization(ctx context.Context, req *OauthAuthoriz
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = OauthAuthorizationsGetAuthorizationResponseBody{}
+	resp.Data = components.Authorization{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -519,13 +512,6 @@ func (r *OauthAuthorizationsGetAuthorizationReq) Rel(link RelName, resp *OauthAu
 }
 
 /*
-OauthAuthorizationsGetAuthorizationResponseBody is a response body for OauthAuthorizationsGetAuthorization
-
-https://developer.github.com/v3/oauth_authorizations/#get-a-single-authorization
-*/
-type OauthAuthorizationsGetAuthorizationResponseBody components.Authorization
-
-/*
 OauthAuthorizationsGetAuthorizationResponse is a response for OauthAuthorizationsGetAuthorization
 
 https://developer.github.com/v3/oauth_authorizations/#get-a-single-authorization
@@ -533,7 +519,7 @@ https://developer.github.com/v3/oauth_authorizations/#get-a-single-authorization
 type OauthAuthorizationsGetAuthorizationResponse struct {
 	response
 	request *OauthAuthorizationsGetAuthorizationReq
-	Data    OauthAuthorizationsGetAuthorizationResponseBody
+	Data    components.Authorization
 }
 
 /*
@@ -557,7 +543,7 @@ func OauthAuthorizationsGetGrant(ctx context.Context, req *OauthAuthorizationsGe
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = OauthAuthorizationsGetGrantResponseBody{}
+	resp.Data = components.ApplicationGrant{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -648,13 +634,6 @@ func (r *OauthAuthorizationsGetGrantReq) Rel(link RelName, resp *OauthAuthorizat
 }
 
 /*
-OauthAuthorizationsGetGrantResponseBody is a response body for OauthAuthorizationsGetGrant
-
-https://developer.github.com/v3/oauth_authorizations/#get-a-single-grant
-*/
-type OauthAuthorizationsGetGrantResponseBody components.ApplicationGrant
-
-/*
 OauthAuthorizationsGetGrantResponse is a response for OauthAuthorizationsGetGrant
 
 https://developer.github.com/v3/oauth_authorizations/#get-a-single-grant
@@ -662,7 +641,7 @@ https://developer.github.com/v3/oauth_authorizations/#get-a-single-grant
 type OauthAuthorizationsGetGrantResponse struct {
 	response
 	request *OauthAuthorizationsGetGrantReq
-	Data    OauthAuthorizationsGetGrantResponseBody
+	Data    components.ApplicationGrant
 }
 
 /*
@@ -686,7 +665,7 @@ func OauthAuthorizationsGetOrCreateAuthorizationForApp(ctx context.Context, req 
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = OauthAuthorizationsGetOrCreateAuthorizationForAppResponseBody{}
+	resp.Data = components.Authorization{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -802,13 +781,6 @@ type OauthAuthorizationsGetOrCreateAuthorizationForAppReqBody struct {
 }
 
 /*
-OauthAuthorizationsGetOrCreateAuthorizationForAppResponseBody is a response body for OauthAuthorizationsGetOrCreateAuthorizationForApp
-
-https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app
-*/
-type OauthAuthorizationsGetOrCreateAuthorizationForAppResponseBody components.Authorization
-
-/*
 OauthAuthorizationsGetOrCreateAuthorizationForAppResponse is a response for OauthAuthorizationsGetOrCreateAuthorizationForApp
 
 https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app
@@ -816,7 +788,7 @@ https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authoriza
 type OauthAuthorizationsGetOrCreateAuthorizationForAppResponse struct {
 	response
 	request *OauthAuthorizationsGetOrCreateAuthorizationForAppReq
-	Data    OauthAuthorizationsGetOrCreateAuthorizationForAppResponseBody
+	Data    components.Authorization
 }
 
 /*
@@ -840,7 +812,7 @@ func OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprint(ctx context
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintResponseBody{}
+	resp.Data = components.Authorization{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -956,13 +928,6 @@ type OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReqBody stru
 }
 
 /*
-OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintResponseBody is a response body for OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprint
-
-https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app-and-fingerprint
-*/
-type OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintResponseBody components.Authorization
-
-/*
 OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintResponse is a response for OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprint
 
 https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app-and-fingerprint
@@ -970,7 +935,7 @@ https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authoriza
 type OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintResponse struct {
 	response
 	request *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq
-	Data    OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintResponseBody
+	Data    components.Authorization
 }
 
 /*
@@ -1270,7 +1235,7 @@ func OauthAuthorizationsUpdateAuthorization(ctx context.Context, req *OauthAutho
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = OauthAuthorizationsUpdateAuthorizationResponseBody{}
+	resp.Data = components.Authorization{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1391,13 +1356,6 @@ type OauthAuthorizationsUpdateAuthorizationReqBody struct {
 }
 
 /*
-OauthAuthorizationsUpdateAuthorizationResponseBody is a response body for OauthAuthorizationsUpdateAuthorization
-
-https://developer.github.com/v3/oauth_authorizations/#update-an-existing-authorization
-*/
-type OauthAuthorizationsUpdateAuthorizationResponseBody components.Authorization
-
-/*
 OauthAuthorizationsUpdateAuthorizationResponse is a response for OauthAuthorizationsUpdateAuthorization
 
 https://developer.github.com/v3/oauth_authorizations/#update-an-existing-authorization
@@ -1405,5 +1363,5 @@ https://developer.github.com/v3/oauth_authorizations/#update-an-existing-authori
 type OauthAuthorizationsUpdateAuthorizationResponse struct {
 	response
 	request *OauthAuthorizationsUpdateAuthorizationReq
-	Data    OauthAuthorizationsUpdateAuthorizationResponseBody
+	Data    components.Authorization
 }

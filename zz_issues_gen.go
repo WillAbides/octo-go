@@ -32,7 +32,7 @@ func IssuesAddAssignees(ctx context.Context, req *IssuesAddAssigneesReq, opt ...
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = IssuesAddAssigneesResponseBody{}
+	resp.Data = components.IssueSimple{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -143,13 +143,6 @@ type IssuesAddAssigneesReqBody struct {
 }
 
 /*
-IssuesAddAssigneesResponseBody is a response body for IssuesAddAssignees
-
-https://developer.github.com/v3/issues/assignees/#add-assignees-to-an-issue
-*/
-type IssuesAddAssigneesResponseBody components.IssueSimple
-
-/*
 IssuesAddAssigneesResponse is a response for IssuesAddAssignees
 
 https://developer.github.com/v3/issues/assignees/#add-assignees-to-an-issue
@@ -157,7 +150,7 @@ https://developer.github.com/v3/issues/assignees/#add-assignees-to-an-issue
 type IssuesAddAssigneesResponse struct {
 	response
 	request *IssuesAddAssigneesReq
-	Data    IssuesAddAssigneesResponseBody
+	Data    components.IssueSimple
 }
 
 /*
@@ -459,7 +452,7 @@ func IssuesCreate(ctx context.Context, req *IssuesCreateReq, opt ...RequestOptio
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = IssuesCreateResponseBody{}
+	resp.Data = components.Issue{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -593,13 +586,6 @@ type IssuesCreateReqBody struct {
 }
 
 /*
-IssuesCreateResponseBody is a response body for IssuesCreate
-
-https://developer.github.com/v3/issues/#create-an-issue
-*/
-type IssuesCreateResponseBody components.Issue
-
-/*
 IssuesCreateResponse is a response for IssuesCreate
 
 https://developer.github.com/v3/issues/#create-an-issue
@@ -607,7 +593,7 @@ https://developer.github.com/v3/issues/#create-an-issue
 type IssuesCreateResponse struct {
 	response
 	request *IssuesCreateReq
-	Data    IssuesCreateResponseBody
+	Data    components.Issue
 }
 
 /*
@@ -631,7 +617,7 @@ func IssuesCreateComment(ctx context.Context, req *IssuesCreateCommentReq, opt .
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = IssuesCreateCommentResponseBody{}
+	resp.Data = components.IssueComment{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -739,13 +725,6 @@ type IssuesCreateCommentReqBody struct {
 }
 
 /*
-IssuesCreateCommentResponseBody is a response body for IssuesCreateComment
-
-https://developer.github.com/v3/issues/comments/#create-an-issue-comment
-*/
-type IssuesCreateCommentResponseBody components.IssueComment
-
-/*
 IssuesCreateCommentResponse is a response for IssuesCreateComment
 
 https://developer.github.com/v3/issues/comments/#create-an-issue-comment
@@ -753,7 +732,7 @@ https://developer.github.com/v3/issues/comments/#create-an-issue-comment
 type IssuesCreateCommentResponse struct {
 	response
 	request *IssuesCreateCommentReq
-	Data    IssuesCreateCommentResponseBody
+	Data    components.IssueComment
 }
 
 /*
@@ -777,7 +756,7 @@ func IssuesCreateLabel(ctx context.Context, req *IssuesCreateLabelReq, opt ...Re
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = IssuesCreateLabelResponseBody{}
+	resp.Data = components.Label{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -895,13 +874,6 @@ type IssuesCreateLabelReqBody struct {
 }
 
 /*
-IssuesCreateLabelResponseBody is a response body for IssuesCreateLabel
-
-https://developer.github.com/v3/issues/labels/#create-a-label
-*/
-type IssuesCreateLabelResponseBody components.Label
-
-/*
 IssuesCreateLabelResponse is a response for IssuesCreateLabel
 
 https://developer.github.com/v3/issues/labels/#create-a-label
@@ -909,7 +881,7 @@ https://developer.github.com/v3/issues/labels/#create-a-label
 type IssuesCreateLabelResponse struct {
 	response
 	request *IssuesCreateLabelReq
-	Data    IssuesCreateLabelResponseBody
+	Data    components.Label
 }
 
 /*
@@ -933,7 +905,7 @@ func IssuesCreateMilestone(ctx context.Context, req *IssuesCreateMilestoneReq, o
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = IssuesCreateMilestoneResponseBody{}
+	resp.Data = components.Milestone{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1050,13 +1022,6 @@ type IssuesCreateMilestoneReqBody struct {
 }
 
 /*
-IssuesCreateMilestoneResponseBody is a response body for IssuesCreateMilestone
-
-https://developer.github.com/v3/issues/milestones/#create-a-milestone
-*/
-type IssuesCreateMilestoneResponseBody components.Milestone
-
-/*
 IssuesCreateMilestoneResponse is a response for IssuesCreateMilestone
 
 https://developer.github.com/v3/issues/milestones/#create-a-milestone
@@ -1064,7 +1029,7 @@ https://developer.github.com/v3/issues/milestones/#create-a-milestone
 type IssuesCreateMilestoneResponse struct {
 	response
 	request *IssuesCreateMilestoneReq
-	Data    IssuesCreateMilestoneResponseBody
+	Data    components.Milestone
 }
 
 /*
@@ -1459,7 +1424,7 @@ func IssuesGet(ctx context.Context, req *IssuesGetReq, opt ...RequestOption) (*I
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = IssuesGetResponseBody{}
+	resp.Data = components.Issue{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1566,13 +1531,6 @@ func (r *IssuesGetReq) Rel(link RelName, resp *IssuesGetResponse) bool {
 }
 
 /*
-IssuesGetResponseBody is a response body for IssuesGet
-
-https://developer.github.com/v3/issues/#get-an-issue
-*/
-type IssuesGetResponseBody components.Issue
-
-/*
 IssuesGetResponse is a response for IssuesGet
 
 https://developer.github.com/v3/issues/#get-an-issue
@@ -1580,7 +1538,7 @@ https://developer.github.com/v3/issues/#get-an-issue
 type IssuesGetResponse struct {
 	response
 	request *IssuesGetReq
-	Data    IssuesGetResponseBody
+	Data    components.Issue
 }
 
 /*
@@ -1604,7 +1562,7 @@ func IssuesGetComment(ctx context.Context, req *IssuesGetCommentReq, opt ...Requ
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = IssuesGetCommentResponseBody{}
+	resp.Data = components.IssueComment{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1721,13 +1679,6 @@ func (r *IssuesGetCommentReq) Rel(link RelName, resp *IssuesGetCommentResponse) 
 }
 
 /*
-IssuesGetCommentResponseBody is a response body for IssuesGetComment
-
-https://developer.github.com/v3/issues/comments/#get-an-issue-comment
-*/
-type IssuesGetCommentResponseBody components.IssueComment
-
-/*
 IssuesGetCommentResponse is a response for IssuesGetComment
 
 https://developer.github.com/v3/issues/comments/#get-an-issue-comment
@@ -1735,7 +1686,7 @@ https://developer.github.com/v3/issues/comments/#get-an-issue-comment
 type IssuesGetCommentResponse struct {
 	response
 	request *IssuesGetCommentReq
-	Data    IssuesGetCommentResponseBody
+	Data    components.IssueComment
 }
 
 /*
@@ -1759,7 +1710,7 @@ func IssuesGetEvent(ctx context.Context, req *IssuesGetEventReq, opt ...RequestO
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = IssuesGetEventResponseBody{}
+	resp.Data = components.IssueEvent{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1889,13 +1840,6 @@ func (r *IssuesGetEventReq) Rel(link RelName, resp *IssuesGetEventResponse) bool
 }
 
 /*
-IssuesGetEventResponseBody is a response body for IssuesGetEvent
-
-https://developer.github.com/v3/issues/events/#get-an-issue-event
-*/
-type IssuesGetEventResponseBody components.IssueEvent
-
-/*
 IssuesGetEventResponse is a response for IssuesGetEvent
 
 https://developer.github.com/v3/issues/events/#get-an-issue-event
@@ -1903,7 +1847,7 @@ https://developer.github.com/v3/issues/events/#get-an-issue-event
 type IssuesGetEventResponse struct {
 	response
 	request *IssuesGetEventReq
-	Data    IssuesGetEventResponseBody
+	Data    components.IssueEvent
 }
 
 /*
@@ -1927,7 +1871,7 @@ func IssuesGetLabel(ctx context.Context, req *IssuesGetLabelReq, opt ...RequestO
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = IssuesGetLabelResponseBody{}
+	resp.Data = components.Label{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2020,13 +1964,6 @@ func (r *IssuesGetLabelReq) Rel(link RelName, resp *IssuesGetLabelResponse) bool
 }
 
 /*
-IssuesGetLabelResponseBody is a response body for IssuesGetLabel
-
-https://developer.github.com/v3/issues/labels/#get-a-label
-*/
-type IssuesGetLabelResponseBody components.Label
-
-/*
 IssuesGetLabelResponse is a response for IssuesGetLabel
 
 https://developer.github.com/v3/issues/labels/#get-a-label
@@ -2034,7 +1971,7 @@ https://developer.github.com/v3/issues/labels/#get-a-label
 type IssuesGetLabelResponse struct {
 	response
 	request *IssuesGetLabelReq
-	Data    IssuesGetLabelResponseBody
+	Data    components.Label
 }
 
 /*
@@ -2058,7 +1995,7 @@ func IssuesGetMilestone(ctx context.Context, req *IssuesGetMilestoneReq, opt ...
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = IssuesGetMilestoneResponseBody{}
+	resp.Data = components.Milestone{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2151,13 +2088,6 @@ func (r *IssuesGetMilestoneReq) Rel(link RelName, resp *IssuesGetMilestoneRespon
 }
 
 /*
-IssuesGetMilestoneResponseBody is a response body for IssuesGetMilestone
-
-https://developer.github.com/v3/issues/milestones/#get-a-milestone
-*/
-type IssuesGetMilestoneResponseBody components.Milestone
-
-/*
 IssuesGetMilestoneResponse is a response for IssuesGetMilestone
 
 https://developer.github.com/v3/issues/milestones/#get-a-milestone
@@ -2165,7 +2095,7 @@ https://developer.github.com/v3/issues/milestones/#get-a-milestone
 type IssuesGetMilestoneResponse struct {
 	response
 	request *IssuesGetMilestoneReq
-	Data    IssuesGetMilestoneResponseBody
+	Data    components.Milestone
 }
 
 /*
@@ -4938,7 +4868,7 @@ func IssuesRemoveAssignees(ctx context.Context, req *IssuesRemoveAssigneesReq, o
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = IssuesRemoveAssigneesResponseBody{}
+	resp.Data = components.IssueSimple{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -5050,13 +4980,6 @@ type IssuesRemoveAssigneesReqBody struct {
 }
 
 /*
-IssuesRemoveAssigneesResponseBody is a response body for IssuesRemoveAssignees
-
-https://developer.github.com/v3/issues/assignees/#remove-assignees-from-an-issue
-*/
-type IssuesRemoveAssigneesResponseBody components.IssueSimple
-
-/*
 IssuesRemoveAssigneesResponse is a response for IssuesRemoveAssignees
 
 https://developer.github.com/v3/issues/assignees/#remove-assignees-from-an-issue
@@ -5064,7 +4987,7 @@ https://developer.github.com/v3/issues/assignees/#remove-assignees-from-an-issue
 type IssuesRemoveAssigneesResponse struct {
 	response
 	request *IssuesRemoveAssigneesReq
-	Data    IssuesRemoveAssigneesResponseBody
+	Data    components.IssueSimple
 }
 
 /*
@@ -5495,7 +5418,7 @@ func IssuesUpdate(ctx context.Context, req *IssuesUpdateReq, opt ...RequestOptio
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = IssuesUpdateResponseBody{}
+	resp.Data = components.Issue{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -5635,13 +5558,6 @@ type IssuesUpdateReqBody struct {
 }
 
 /*
-IssuesUpdateResponseBody is a response body for IssuesUpdate
-
-https://developer.github.com/v3/issues/#update-an-issue
-*/
-type IssuesUpdateResponseBody components.Issue
-
-/*
 IssuesUpdateResponse is a response for IssuesUpdate
 
 https://developer.github.com/v3/issues/#update-an-issue
@@ -5649,7 +5565,7 @@ https://developer.github.com/v3/issues/#update-an-issue
 type IssuesUpdateResponse struct {
 	response
 	request *IssuesUpdateReq
-	Data    IssuesUpdateResponseBody
+	Data    components.Issue
 }
 
 /*
@@ -5673,7 +5589,7 @@ func IssuesUpdateComment(ctx context.Context, req *IssuesUpdateCommentReq, opt .
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = IssuesUpdateCommentResponseBody{}
+	resp.Data = components.IssueComment{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -5781,13 +5697,6 @@ type IssuesUpdateCommentReqBody struct {
 }
 
 /*
-IssuesUpdateCommentResponseBody is a response body for IssuesUpdateComment
-
-https://developer.github.com/v3/issues/comments/#update-an-issue-comment
-*/
-type IssuesUpdateCommentResponseBody components.IssueComment
-
-/*
 IssuesUpdateCommentResponse is a response for IssuesUpdateComment
 
 https://developer.github.com/v3/issues/comments/#update-an-issue-comment
@@ -5795,7 +5704,7 @@ https://developer.github.com/v3/issues/comments/#update-an-issue-comment
 type IssuesUpdateCommentResponse struct {
 	response
 	request *IssuesUpdateCommentReq
-	Data    IssuesUpdateCommentResponseBody
+	Data    components.IssueComment
 }
 
 /*
@@ -5819,7 +5728,7 @@ func IssuesUpdateLabel(ctx context.Context, req *IssuesUpdateLabelReq, opt ...Re
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = IssuesUpdateLabelResponseBody{}
+	resp.Data = components.Label{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -5941,13 +5850,6 @@ type IssuesUpdateLabelReqBody struct {
 }
 
 /*
-IssuesUpdateLabelResponseBody is a response body for IssuesUpdateLabel
-
-https://developer.github.com/v3/issues/labels/#update-a-label
-*/
-type IssuesUpdateLabelResponseBody components.Label
-
-/*
 IssuesUpdateLabelResponse is a response for IssuesUpdateLabel
 
 https://developer.github.com/v3/issues/labels/#update-a-label
@@ -5955,7 +5857,7 @@ https://developer.github.com/v3/issues/labels/#update-a-label
 type IssuesUpdateLabelResponse struct {
 	response
 	request *IssuesUpdateLabelReq
-	Data    IssuesUpdateLabelResponseBody
+	Data    components.Label
 }
 
 /*
@@ -5979,7 +5881,7 @@ func IssuesUpdateMilestone(ctx context.Context, req *IssuesUpdateMilestoneReq, o
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = IssuesUpdateMilestoneResponseBody{}
+	resp.Data = components.Milestone{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -6099,13 +6001,6 @@ type IssuesUpdateMilestoneReqBody struct {
 }
 
 /*
-IssuesUpdateMilestoneResponseBody is a response body for IssuesUpdateMilestone
-
-https://developer.github.com/v3/issues/milestones/#update-a-milestone
-*/
-type IssuesUpdateMilestoneResponseBody components.Milestone
-
-/*
 IssuesUpdateMilestoneResponse is a response for IssuesUpdateMilestone
 
 https://developer.github.com/v3/issues/milestones/#update-a-milestone
@@ -6113,5 +6008,5 @@ https://developer.github.com/v3/issues/milestones/#update-a-milestone
 type IssuesUpdateMilestoneResponse struct {
 	response
 	request *IssuesUpdateMilestoneReq
-	Data    IssuesUpdateMilestoneResponseBody
+	Data    components.Milestone
 }

@@ -170,7 +170,7 @@ func CodesOfConductGetConductCode(ctx context.Context, req *CodesOfConductGetCon
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = CodesOfConductGetConductCodeResponseBody{}
+	resp.Data = components.CodeOfConduct{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -274,13 +274,6 @@ func (r *CodesOfConductGetConductCodeReq) Rel(link RelName, resp *CodesOfConduct
 }
 
 /*
-CodesOfConductGetConductCodeResponseBody is a response body for CodesOfConductGetConductCode
-
-https://developer.github.com/v3/codes_of_conduct/#get-a-code-of-conduct
-*/
-type CodesOfConductGetConductCodeResponseBody components.CodeOfConduct
-
-/*
 CodesOfConductGetConductCodeResponse is a response for CodesOfConductGetConductCode
 
 https://developer.github.com/v3/codes_of_conduct/#get-a-code-of-conduct
@@ -288,7 +281,7 @@ https://developer.github.com/v3/codes_of_conduct/#get-a-code-of-conduct
 type CodesOfConductGetConductCodeResponse struct {
 	response
 	request *CodesOfConductGetConductCodeReq
-	Data    CodesOfConductGetConductCodeResponseBody
+	Data    components.CodeOfConduct
 }
 
 /*
@@ -312,7 +305,7 @@ func CodesOfConductGetForRepo(ctx context.Context, req *CodesOfConductGetForRepo
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = CodesOfConductGetForRepoResponseBody{}
+	resp.Data = components.CodeOfConduct{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -415,13 +408,6 @@ func (r *CodesOfConductGetForRepoReq) Rel(link RelName, resp *CodesOfConductGetF
 }
 
 /*
-CodesOfConductGetForRepoResponseBody is a response body for CodesOfConductGetForRepo
-
-https://developer.github.com/v3/codes_of_conduct/#get-the-code-of-conduct-for-a-repository
-*/
-type CodesOfConductGetForRepoResponseBody components.CodeOfConduct
-
-/*
 CodesOfConductGetForRepoResponse is a response for CodesOfConductGetForRepo
 
 https://developer.github.com/v3/codes_of_conduct/#get-the-code-of-conduct-for-a-repository
@@ -429,5 +415,5 @@ https://developer.github.com/v3/codes_of_conduct/#get-the-code-of-conduct-for-a-
 type CodesOfConductGetForRepoResponse struct {
 	response
 	request *CodesOfConductGetForRepoReq
-	Data    CodesOfConductGetForRepoResponseBody
+	Data    components.CodeOfConduct
 }

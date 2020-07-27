@@ -1,8 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/dave/jennifer/jen"
 	"github.com/willabides/octo-go/generator/internal/model"
@@ -37,16 +39,21 @@ func endpointUnmarshalTests(grp *jen.Group, endpoint *model.Endpoint) {
 		if !response.HasExample {
 			continue
 		}
+		bodyType := respBodyType(endpoint)
+		testName := fmt.Sprintf("octo.%s", bodyType.name)
+		if strings.HasSuffix(bodyType.pkg, "/components") {
+			testName = fmt.Sprintf("components.%s", bodyType.name)
+		}
 		grp.Values(jen.DictFunc(func(dict jen.Dict) {
 			dict[jen.Id("operationID")] = jen.Lit(endpoint.ID)
-			dict[jen.Id("name")] = jen.Lit(respBodyStructName(endpoint))
+			dict[jen.Id("name")] = jen.Lit(testName)
 			dict[jen.Id("endpointPath")] = jen.Lit(endpoint.Path)
 			dict[jen.Id("httpMethod")] = jen.Lit(endpoint.Method)
 			dict[jen.Id("httpStatusCode")] = jen.Lit(code)
 			dict[jen.Id("decode")] = jen.Func().Params(
 				jen.Id("decoder").Op("*").Qual("encoding/json", "Decoder"),
 			).Error().Block(
-				jen.Id("target").Op(":=").Qual("github.com/willabides/octo-go", respBodyStructName(endpoint)).Values(),
+				jen.Id("target").Op(":=").Qual(bodyType.pkg, bodyType.name).Values(),
 				jen.Return(jen.Id("decoder.Decode(&target)")),
 			)
 		}))

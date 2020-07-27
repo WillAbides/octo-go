@@ -31,7 +31,7 @@ func InteractionsGetRestrictionsForOrg(ctx context.Context, req *InteractionsGet
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = InteractionsGetRestrictionsForOrgResponseBody{}
+	resp.Data = components.InteractionLimit{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -134,13 +134,6 @@ func (r *InteractionsGetRestrictionsForOrgReq) Rel(link RelName, resp *Interacti
 }
 
 /*
-InteractionsGetRestrictionsForOrgResponseBody is a response body for InteractionsGetRestrictionsForOrg
-
-https://developer.github.com/v3/interactions/orgs/#get-interaction-restrictions-for-an-organization
-*/
-type InteractionsGetRestrictionsForOrgResponseBody components.InteractionLimit
-
-/*
 InteractionsGetRestrictionsForOrgResponse is a response for InteractionsGetRestrictionsForOrg
 
 https://developer.github.com/v3/interactions/orgs/#get-interaction-restrictions-for-an-organization
@@ -148,7 +141,7 @@ https://developer.github.com/v3/interactions/orgs/#get-interaction-restrictions-
 type InteractionsGetRestrictionsForOrgResponse struct {
 	response
 	request *InteractionsGetRestrictionsForOrgReq
-	Data    InteractionsGetRestrictionsForOrgResponseBody
+	Data    components.InteractionLimit
 }
 
 /*
@@ -172,7 +165,7 @@ func InteractionsGetRestrictionsForRepo(ctx context.Context, req *InteractionsGe
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = InteractionsGetRestrictionsForRepoResponseBody{}
+	resp.Data = components.InteractionLimit{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -276,13 +269,6 @@ func (r *InteractionsGetRestrictionsForRepoReq) Rel(link RelName, resp *Interact
 }
 
 /*
-InteractionsGetRestrictionsForRepoResponseBody is a response body for InteractionsGetRestrictionsForRepo
-
-https://developer.github.com/v3/interactions/repos/#get-interaction-restrictions-for-a-repository
-*/
-type InteractionsGetRestrictionsForRepoResponseBody components.InteractionLimit
-
-/*
 InteractionsGetRestrictionsForRepoResponse is a response for InteractionsGetRestrictionsForRepo
 
 https://developer.github.com/v3/interactions/repos/#get-interaction-restrictions-for-a-repository
@@ -290,7 +276,7 @@ https://developer.github.com/v3/interactions/repos/#get-interaction-restrictions
 type InteractionsGetRestrictionsForRepoResponse struct {
 	response
 	request *InteractionsGetRestrictionsForRepoReq
-	Data    InteractionsGetRestrictionsForRepoResponseBody
+	Data    components.InteractionLimit
 }
 
 /*
@@ -579,7 +565,7 @@ func InteractionsSetRestrictionsForOrg(ctx context.Context, req *InteractionsSet
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = InteractionsSetRestrictionsForOrgResponseBody{}
+	resp.Data = components.InteractionLimit{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -701,13 +687,6 @@ type InteractionsSetRestrictionsForOrgReqBody struct {
 }
 
 /*
-InteractionsSetRestrictionsForOrgResponseBody is a response body for InteractionsSetRestrictionsForOrg
-
-https://developer.github.com/v3/interactions/orgs/#set-interaction-restrictions-for-an-organization
-*/
-type InteractionsSetRestrictionsForOrgResponseBody components.InteractionLimit
-
-/*
 InteractionsSetRestrictionsForOrgResponse is a response for InteractionsSetRestrictionsForOrg
 
 https://developer.github.com/v3/interactions/orgs/#set-interaction-restrictions-for-an-organization
@@ -715,7 +694,7 @@ https://developer.github.com/v3/interactions/orgs/#set-interaction-restrictions-
 type InteractionsSetRestrictionsForOrgResponse struct {
 	response
 	request *InteractionsSetRestrictionsForOrgReq
-	Data    InteractionsSetRestrictionsForOrgResponseBody
+	Data    components.InteractionLimit
 }
 
 /*
@@ -739,7 +718,7 @@ func InteractionsSetRestrictionsForRepo(ctx context.Context, req *InteractionsSe
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = InteractionsSetRestrictionsForRepoResponseBody{}
+	resp.Data = components.InteractionLimit{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -862,13 +841,6 @@ type InteractionsSetRestrictionsForRepoReqBody struct {
 }
 
 /*
-InteractionsSetRestrictionsForRepoResponseBody is a response body for InteractionsSetRestrictionsForRepo
-
-https://developer.github.com/v3/interactions/repos/#set-interaction-restrictions-for-a-repository
-*/
-type InteractionsSetRestrictionsForRepoResponseBody components.InteractionLimit
-
-/*
 InteractionsSetRestrictionsForRepoResponse is a response for InteractionsSetRestrictionsForRepo
 
 https://developer.github.com/v3/interactions/repos/#set-interaction-restrictions-for-a-repository
@@ -876,5 +848,5 @@ https://developer.github.com/v3/interactions/repos/#set-interaction-restrictions
 type InteractionsSetRestrictionsForRepoResponse struct {
 	response
 	request *InteractionsSetRestrictionsForRepoReq
-	Data    InteractionsSetRestrictionsForRepoResponseBody
+	Data    components.InteractionLimit
 }

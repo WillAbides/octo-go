@@ -659,7 +659,7 @@ func UsersCreateGpgKeyForAuthenticated(ctx context.Context, req *UsersCreateGpgK
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = UsersCreateGpgKeyForAuthenticatedResponseBody{}
+	resp.Data = components.GpgKey{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -762,13 +762,6 @@ type UsersCreateGpgKeyForAuthenticatedReqBody struct {
 }
 
 /*
-UsersCreateGpgKeyForAuthenticatedResponseBody is a response body for UsersCreateGpgKeyForAuthenticated
-
-https://developer.github.com/v3/users/gpg_keys/#create-a-gpg-key-for-the-authenticated-user
-*/
-type UsersCreateGpgKeyForAuthenticatedResponseBody components.GpgKey
-
-/*
 UsersCreateGpgKeyForAuthenticatedResponse is a response for UsersCreateGpgKeyForAuthenticated
 
 https://developer.github.com/v3/users/gpg_keys/#create-a-gpg-key-for-the-authenticated-user
@@ -776,7 +769,7 @@ https://developer.github.com/v3/users/gpg_keys/#create-a-gpg-key-for-the-authent
 type UsersCreateGpgKeyForAuthenticatedResponse struct {
 	response
 	request *UsersCreateGpgKeyForAuthenticatedReq
-	Data    UsersCreateGpgKeyForAuthenticatedResponseBody
+	Data    components.GpgKey
 }
 
 /*
@@ -800,7 +793,7 @@ func UsersCreatePublicSshKeyForAuthenticated(ctx context.Context, req *UsersCrea
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = UsersCreatePublicSshKeyForAuthenticatedResponseBody{}
+	resp.Data = components.Key{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -906,13 +899,6 @@ type UsersCreatePublicSshKeyForAuthenticatedReqBody struct {
 }
 
 /*
-UsersCreatePublicSshKeyForAuthenticatedResponseBody is a response body for UsersCreatePublicSshKeyForAuthenticated
-
-https://developer.github.com/v3/users/keys/#create-a-public-ssh-key-for-the-authenticated-user
-*/
-type UsersCreatePublicSshKeyForAuthenticatedResponseBody components.Key
-
-/*
 UsersCreatePublicSshKeyForAuthenticatedResponse is a response for UsersCreatePublicSshKeyForAuthenticated
 
 https://developer.github.com/v3/users/keys/#create-a-public-ssh-key-for-the-authenticated-user
@@ -920,7 +906,7 @@ https://developer.github.com/v3/users/keys/#create-a-public-ssh-key-for-the-auth
 type UsersCreatePublicSshKeyForAuthenticatedResponse struct {
 	response
 	request *UsersCreatePublicSshKeyForAuthenticatedReq
-	Data    UsersCreatePublicSshKeyForAuthenticatedResponseBody
+	Data    components.Key
 }
 
 /*
@@ -1796,7 +1782,7 @@ func UsersGetContextForUser(ctx context.Context, req *UsersGetContextForUserReq,
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = UsersGetContextForUserResponseBody{}
+	resp.Data = components.Hovercard{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1904,13 +1890,6 @@ func (r *UsersGetContextForUserReq) Rel(link RelName, resp *UsersGetContextForUs
 }
 
 /*
-UsersGetContextForUserResponseBody is a response body for UsersGetContextForUser
-
-https://developer.github.com/v3/users/#get-contextual-information-for-a-user
-*/
-type UsersGetContextForUserResponseBody components.Hovercard
-
-/*
 UsersGetContextForUserResponse is a response for UsersGetContextForUser
 
 https://developer.github.com/v3/users/#get-contextual-information-for-a-user
@@ -1918,7 +1897,7 @@ https://developer.github.com/v3/users/#get-contextual-information-for-a-user
 type UsersGetContextForUserResponse struct {
 	response
 	request *UsersGetContextForUserReq
-	Data    UsersGetContextForUserResponseBody
+	Data    components.Hovercard
 }
 
 /*
@@ -1942,7 +1921,7 @@ func UsersGetGpgKeyForAuthenticated(ctx context.Context, req *UsersGetGpgKeyForA
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = UsersGetGpgKeyForAuthenticatedResponseBody{}
+	resp.Data = components.GpgKey{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2033,13 +2012,6 @@ func (r *UsersGetGpgKeyForAuthenticatedReq) Rel(link RelName, resp *UsersGetGpgK
 }
 
 /*
-UsersGetGpgKeyForAuthenticatedResponseBody is a response body for UsersGetGpgKeyForAuthenticated
-
-https://developer.github.com/v3/users/gpg_keys/#get-a-gpg-key-for-the-authenticated-user
-*/
-type UsersGetGpgKeyForAuthenticatedResponseBody components.GpgKey
-
-/*
 UsersGetGpgKeyForAuthenticatedResponse is a response for UsersGetGpgKeyForAuthenticated
 
 https://developer.github.com/v3/users/gpg_keys/#get-a-gpg-key-for-the-authenticated-user
@@ -2047,7 +2019,7 @@ https://developer.github.com/v3/users/gpg_keys/#get-a-gpg-key-for-the-authentica
 type UsersGetGpgKeyForAuthenticatedResponse struct {
 	response
 	request *UsersGetGpgKeyForAuthenticatedReq
-	Data    UsersGetGpgKeyForAuthenticatedResponseBody
+	Data    components.GpgKey
 }
 
 /*
@@ -2071,7 +2043,7 @@ func UsersGetPublicSshKeyForAuthenticated(ctx context.Context, req *UsersGetPubl
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = UsersGetPublicSshKeyForAuthenticatedResponseBody{}
+	resp.Data = components.Key{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2162,13 +2134,6 @@ func (r *UsersGetPublicSshKeyForAuthenticatedReq) Rel(link RelName, resp *UsersG
 }
 
 /*
-UsersGetPublicSshKeyForAuthenticatedResponseBody is a response body for UsersGetPublicSshKeyForAuthenticated
-
-https://developer.github.com/v3/users/keys/#get-a-public-ssh-key-for-the-authenticated-user
-*/
-type UsersGetPublicSshKeyForAuthenticatedResponseBody components.Key
-
-/*
 UsersGetPublicSshKeyForAuthenticatedResponse is a response for UsersGetPublicSshKeyForAuthenticated
 
 https://developer.github.com/v3/users/keys/#get-a-public-ssh-key-for-the-authenticated-user
@@ -2176,7 +2141,7 @@ https://developer.github.com/v3/users/keys/#get-a-public-ssh-key-for-the-authent
 type UsersGetPublicSshKeyForAuthenticatedResponse struct {
 	response
 	request *UsersGetPublicSshKeyForAuthenticatedReq
-	Data    UsersGetPublicSshKeyForAuthenticatedResponseBody
+	Data    components.Key
 }
 
 /*
@@ -4232,7 +4197,7 @@ func UsersUpdateAuthenticated(ctx context.Context, req *UsersUpdateAuthenticated
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = UsersUpdateAuthenticatedResponseBody{}
+	resp.Data = components.PrivateUser{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -4356,13 +4321,6 @@ type UsersUpdateAuthenticatedReqBody struct {
 }
 
 /*
-UsersUpdateAuthenticatedResponseBody is a response body for UsersUpdateAuthenticated
-
-https://developer.github.com/v3/users/#update-the-authenticated-user
-*/
-type UsersUpdateAuthenticatedResponseBody components.PrivateUser
-
-/*
 UsersUpdateAuthenticatedResponse is a response for UsersUpdateAuthenticated
 
 https://developer.github.com/v3/users/#update-the-authenticated-user
@@ -4370,5 +4328,5 @@ https://developer.github.com/v3/users/#update-the-authenticated-user
 type UsersUpdateAuthenticatedResponse struct {
 	response
 	request *UsersUpdateAuthenticatedReq
-	Data    UsersUpdateAuthenticatedResponseBody
+	Data    components.PrivateUser
 }

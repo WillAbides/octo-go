@@ -178,7 +178,7 @@ func ProjectsCreateCard(ctx context.Context, req *ProjectsCreateCardReq, opt ...
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ProjectsCreateCardResponseBody{}
+	resp.Data = components.ProjectCard{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -302,13 +302,6 @@ type ProjectsCreateCardReqBody struct {
 }
 
 /*
-ProjectsCreateCardResponseBody is a response body for ProjectsCreateCard
-
-https://developer.github.com/v3/projects/cards/#create-a-project-card
-*/
-type ProjectsCreateCardResponseBody components.ProjectCard
-
-/*
 ProjectsCreateCardResponse is a response for ProjectsCreateCard
 
 https://developer.github.com/v3/projects/cards/#create-a-project-card
@@ -316,7 +309,7 @@ https://developer.github.com/v3/projects/cards/#create-a-project-card
 type ProjectsCreateCardResponse struct {
 	response
 	request *ProjectsCreateCardReq
-	Data    ProjectsCreateCardResponseBody
+	Data    components.ProjectCard
 }
 
 /*
@@ -340,7 +333,7 @@ func ProjectsCreateColumn(ctx context.Context, req *ProjectsCreateColumnReq, opt
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ProjectsCreateColumnResponseBody{}
+	resp.Data = components.ProjectColumn{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -459,13 +452,6 @@ type ProjectsCreateColumnReqBody struct {
 }
 
 /*
-ProjectsCreateColumnResponseBody is a response body for ProjectsCreateColumn
-
-https://developer.github.com/v3/projects/columns/#create-a-project-column
-*/
-type ProjectsCreateColumnResponseBody components.ProjectColumn
-
-/*
 ProjectsCreateColumnResponse is a response for ProjectsCreateColumn
 
 https://developer.github.com/v3/projects/columns/#create-a-project-column
@@ -473,7 +459,7 @@ https://developer.github.com/v3/projects/columns/#create-a-project-column
 type ProjectsCreateColumnResponse struct {
 	response
 	request *ProjectsCreateColumnReq
-	Data    ProjectsCreateColumnResponseBody
+	Data    components.ProjectColumn
 }
 
 /*
@@ -497,7 +483,7 @@ func ProjectsCreateForAuthenticatedUser(ctx context.Context, req *ProjectsCreate
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ProjectsCreateForAuthenticatedUserResponseBody{}
+	resp.Data = components.Project{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -618,13 +604,6 @@ type ProjectsCreateForAuthenticatedUserReqBody struct {
 }
 
 /*
-ProjectsCreateForAuthenticatedUserResponseBody is a response body for ProjectsCreateForAuthenticatedUser
-
-https://developer.github.com/v3/projects/#create-a-user-project
-*/
-type ProjectsCreateForAuthenticatedUserResponseBody components.Project
-
-/*
 ProjectsCreateForAuthenticatedUserResponse is a response for ProjectsCreateForAuthenticatedUser
 
 https://developer.github.com/v3/projects/#create-a-user-project
@@ -632,7 +611,7 @@ https://developer.github.com/v3/projects/#create-a-user-project
 type ProjectsCreateForAuthenticatedUserResponse struct {
 	response
 	request *ProjectsCreateForAuthenticatedUserReq
-	Data    ProjectsCreateForAuthenticatedUserResponseBody
+	Data    components.Project
 }
 
 /*
@@ -656,7 +635,7 @@ func ProjectsCreateForOrg(ctx context.Context, req *ProjectsCreateForOrgReq, opt
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ProjectsCreateForOrgResponseBody{}
+	resp.Data = components.Project{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -778,13 +757,6 @@ type ProjectsCreateForOrgReqBody struct {
 }
 
 /*
-ProjectsCreateForOrgResponseBody is a response body for ProjectsCreateForOrg
-
-https://developer.github.com/v3/projects/#create-an-organization-project
-*/
-type ProjectsCreateForOrgResponseBody components.Project
-
-/*
 ProjectsCreateForOrgResponse is a response for ProjectsCreateForOrg
 
 https://developer.github.com/v3/projects/#create-an-organization-project
@@ -792,7 +764,7 @@ https://developer.github.com/v3/projects/#create-an-organization-project
 type ProjectsCreateForOrgResponse struct {
 	response
 	request *ProjectsCreateForOrgReq
-	Data    ProjectsCreateForOrgResponseBody
+	Data    components.Project
 }
 
 /*
@@ -816,7 +788,7 @@ func ProjectsCreateForRepo(ctx context.Context, req *ProjectsCreateForRepoReq, o
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ProjectsCreateForRepoResponseBody{}
+	resp.Data = components.Project{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -939,13 +911,6 @@ type ProjectsCreateForRepoReqBody struct {
 }
 
 /*
-ProjectsCreateForRepoResponseBody is a response body for ProjectsCreateForRepo
-
-https://developer.github.com/v3/projects/#create-a-repository-project
-*/
-type ProjectsCreateForRepoResponseBody components.Project
-
-/*
 ProjectsCreateForRepoResponse is a response for ProjectsCreateForRepo
 
 https://developer.github.com/v3/projects/#create-a-repository-project
@@ -953,7 +918,7 @@ https://developer.github.com/v3/projects/#create-a-repository-project
 type ProjectsCreateForRepoResponse struct {
 	response
 	request *ProjectsCreateForRepoReq
-	Data    ProjectsCreateForRepoResponseBody
+	Data    components.Project
 }
 
 /*
@@ -1380,7 +1345,7 @@ func ProjectsGet(ctx context.Context, req *ProjectsGetReq, opt ...RequestOption)
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ProjectsGetResponseBody{}
+	resp.Data = components.Project{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1484,13 +1449,6 @@ func (r *ProjectsGetReq) Rel(link RelName, resp *ProjectsGetResponse) bool {
 }
 
 /*
-ProjectsGetResponseBody is a response body for ProjectsGet
-
-https://developer.github.com/v3/projects/#get-a-project
-*/
-type ProjectsGetResponseBody components.Project
-
-/*
 ProjectsGetResponse is a response for ProjectsGet
 
 https://developer.github.com/v3/projects/#get-a-project
@@ -1498,7 +1456,7 @@ https://developer.github.com/v3/projects/#get-a-project
 type ProjectsGetResponse struct {
 	response
 	request *ProjectsGetReq
-	Data    ProjectsGetResponseBody
+	Data    components.Project
 }
 
 /*
@@ -1522,7 +1480,7 @@ func ProjectsGetCard(ctx context.Context, req *ProjectsGetCardReq, opt ...Reques
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ProjectsGetCardResponseBody{}
+	resp.Data = components.ProjectCard{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1628,13 +1586,6 @@ func (r *ProjectsGetCardReq) Rel(link RelName, resp *ProjectsGetCardResponse) bo
 }
 
 /*
-ProjectsGetCardResponseBody is a response body for ProjectsGetCard
-
-https://developer.github.com/v3/projects/cards/#get-a-project-card
-*/
-type ProjectsGetCardResponseBody components.ProjectCard
-
-/*
 ProjectsGetCardResponse is a response for ProjectsGetCard
 
 https://developer.github.com/v3/projects/cards/#get-a-project-card
@@ -1642,7 +1593,7 @@ https://developer.github.com/v3/projects/cards/#get-a-project-card
 type ProjectsGetCardResponse struct {
 	response
 	request *ProjectsGetCardReq
-	Data    ProjectsGetCardResponseBody
+	Data    components.ProjectCard
 }
 
 /*
@@ -1666,7 +1617,7 @@ func ProjectsGetColumn(ctx context.Context, req *ProjectsGetColumnReq, opt ...Re
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ProjectsGetColumnResponseBody{}
+	resp.Data = components.ProjectColumn{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1772,13 +1723,6 @@ func (r *ProjectsGetColumnReq) Rel(link RelName, resp *ProjectsGetColumnResponse
 }
 
 /*
-ProjectsGetColumnResponseBody is a response body for ProjectsGetColumn
-
-https://developer.github.com/v3/projects/columns/#get-a-project-column
-*/
-type ProjectsGetColumnResponseBody components.ProjectColumn
-
-/*
 ProjectsGetColumnResponse is a response for ProjectsGetColumn
 
 https://developer.github.com/v3/projects/columns/#get-a-project-column
@@ -1786,7 +1730,7 @@ https://developer.github.com/v3/projects/columns/#get-a-project-column
 type ProjectsGetColumnResponse struct {
 	response
 	request *ProjectsGetColumnReq
-	Data    ProjectsGetColumnResponseBody
+	Data    components.ProjectColumn
 }
 
 /*
@@ -1810,7 +1754,7 @@ func ProjectsGetPermissionForUser(ctx context.Context, req *ProjectsGetPermissio
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ProjectsGetPermissionForUserResponseBody{}
+	resp.Data = components.RepositoryCollaboratorPermission{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1915,13 +1859,6 @@ func (r *ProjectsGetPermissionForUserReq) Rel(link RelName, resp *ProjectsGetPer
 }
 
 /*
-ProjectsGetPermissionForUserResponseBody is a response body for ProjectsGetPermissionForUser
-
-https://developer.github.com/v3/projects/collaborators/#get-project-permission-for-a-user
-*/
-type ProjectsGetPermissionForUserResponseBody components.RepositoryCollaboratorPermission
-
-/*
 ProjectsGetPermissionForUserResponse is a response for ProjectsGetPermissionForUser
 
 https://developer.github.com/v3/projects/collaborators/#get-project-permission-for-a-user
@@ -1929,7 +1866,7 @@ https://developer.github.com/v3/projects/collaborators/#get-project-permission-f
 type ProjectsGetPermissionForUserResponse struct {
 	response
 	request *ProjectsGetPermissionForUserReq
-	Data    ProjectsGetPermissionForUserResponseBody
+	Data    components.RepositoryCollaboratorPermission
 }
 
 /*
@@ -3366,7 +3303,7 @@ func ProjectsUpdate(ctx context.Context, req *ProjectsUpdateReq, opt ...RequestO
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ProjectsUpdateResponseBody{}
+	resp.Data = components.Project{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -3497,13 +3434,6 @@ type ProjectsUpdateReqBody struct {
 }
 
 /*
-ProjectsUpdateResponseBody is a response body for ProjectsUpdate
-
-https://developer.github.com/v3/projects/#update-a-project
-*/
-type ProjectsUpdateResponseBody components.Project
-
-/*
 ProjectsUpdateResponse is a response for ProjectsUpdate
 
 https://developer.github.com/v3/projects/#update-a-project
@@ -3511,7 +3441,7 @@ https://developer.github.com/v3/projects/#update-a-project
 type ProjectsUpdateResponse struct {
 	response
 	request *ProjectsUpdateReq
-	Data    ProjectsUpdateResponseBody
+	Data    components.Project
 }
 
 /*
@@ -3535,7 +3465,7 @@ func ProjectsUpdateCard(ctx context.Context, req *ProjectsUpdateCardReq, opt ...
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ProjectsUpdateCardResponseBody{}
+	resp.Data = components.ProjectCard{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -3659,13 +3589,6 @@ type ProjectsUpdateCardReqBody struct {
 }
 
 /*
-ProjectsUpdateCardResponseBody is a response body for ProjectsUpdateCard
-
-https://developer.github.com/v3/projects/cards/#update-a-project-card
-*/
-type ProjectsUpdateCardResponseBody components.ProjectCard
-
-/*
 ProjectsUpdateCardResponse is a response for ProjectsUpdateCard
 
 https://developer.github.com/v3/projects/cards/#update-a-project-card
@@ -3673,7 +3596,7 @@ https://developer.github.com/v3/projects/cards/#update-a-project-card
 type ProjectsUpdateCardResponse struct {
 	response
 	request *ProjectsUpdateCardReq
-	Data    ProjectsUpdateCardResponseBody
+	Data    components.ProjectCard
 }
 
 /*
@@ -3697,7 +3620,7 @@ func ProjectsUpdateColumn(ctx context.Context, req *ProjectsUpdateColumnReq, opt
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ProjectsUpdateColumnResponseBody{}
+	resp.Data = components.ProjectColumn{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -3818,13 +3741,6 @@ type ProjectsUpdateColumnReqBody struct {
 }
 
 /*
-ProjectsUpdateColumnResponseBody is a response body for ProjectsUpdateColumn
-
-https://developer.github.com/v3/projects/columns/#update-a-project-column
-*/
-type ProjectsUpdateColumnResponseBody components.ProjectColumn
-
-/*
 ProjectsUpdateColumnResponse is a response for ProjectsUpdateColumn
 
 https://developer.github.com/v3/projects/columns/#update-a-project-column
@@ -3832,5 +3748,5 @@ https://developer.github.com/v3/projects/columns/#update-a-project-column
 type ProjectsUpdateColumnResponse struct {
 	response
 	request *ProjectsUpdateColumnReq
-	Data    ProjectsUpdateColumnResponseBody
+	Data    components.ProjectColumn
 }

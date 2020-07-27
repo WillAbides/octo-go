@@ -152,7 +152,7 @@ func GistsCreate(ctx context.Context, req *GistsCreateReq, opt ...RequestOption)
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = GistsCreateResponseBody{}
+	resp.Data = components.GistFull{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -268,13 +268,6 @@ type GistsCreateReqBody struct {
 }
 
 /*
-GistsCreateResponseBody is a response body for GistsCreate
-
-https://developer.github.com/v3/gists/#create-a-gist
-*/
-type GistsCreateResponseBody components.GistFull
-
-/*
 GistsCreateResponse is a response for GistsCreate
 
 https://developer.github.com/v3/gists/#create-a-gist
@@ -282,7 +275,7 @@ https://developer.github.com/v3/gists/#create-a-gist
 type GistsCreateResponse struct {
 	response
 	request *GistsCreateReq
-	Data    GistsCreateResponseBody
+	Data    components.GistFull
 }
 
 /*
@@ -306,7 +299,7 @@ func GistsCreateComment(ctx context.Context, req *GistsCreateCommentReq, opt ...
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = GistsCreateCommentResponseBody{}
+	resp.Data = components.GistComment{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -412,13 +405,6 @@ type GistsCreateCommentReqBody struct {
 }
 
 /*
-GistsCreateCommentResponseBody is a response body for GistsCreateComment
-
-https://developer.github.com/v3/gists/comments/#create-a-gist-comment
-*/
-type GistsCreateCommentResponseBody components.GistComment
-
-/*
 GistsCreateCommentResponse is a response for GistsCreateComment
 
 https://developer.github.com/v3/gists/comments/#create-a-gist-comment
@@ -426,7 +412,7 @@ https://developer.github.com/v3/gists/comments/#create-a-gist-comment
 type GistsCreateCommentResponse struct {
 	response
 	request *GistsCreateCommentReq
-	Data    GistsCreateCommentResponseBody
+	Data    components.GistComment
 }
 
 /*
@@ -693,7 +679,7 @@ func GistsFork(ctx context.Context, req *GistsForkReq, opt ...RequestOption) (*G
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = GistsForkResponseBody{}
+	resp.Data = components.BaseGist{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -784,13 +770,6 @@ func (r *GistsForkReq) Rel(link RelName, resp *GistsForkResponse) bool {
 }
 
 /*
-GistsForkResponseBody is a response body for GistsFork
-
-https://developer.github.com/v3/gists/#fork-a-gist
-*/
-type GistsForkResponseBody components.BaseGist
-
-/*
 GistsForkResponse is a response for GistsFork
 
 https://developer.github.com/v3/gists/#fork-a-gist
@@ -798,7 +777,7 @@ https://developer.github.com/v3/gists/#fork-a-gist
 type GistsForkResponse struct {
 	response
 	request *GistsForkReq
-	Data    GistsForkResponseBody
+	Data    components.BaseGist
 }
 
 /*
@@ -822,7 +801,7 @@ func GistsGet(ctx context.Context, req *GistsGetReq, opt ...RequestOption) (*Gis
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = GistsGetResponseBody{}
+	resp.Data = components.GistFull{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -913,13 +892,6 @@ func (r *GistsGetReq) Rel(link RelName, resp *GistsGetResponse) bool {
 }
 
 /*
-GistsGetResponseBody is a response body for GistsGet
-
-https://developer.github.com/v3/gists/#get-a-gist
-*/
-type GistsGetResponseBody components.GistFull
-
-/*
 GistsGetResponse is a response for GistsGet
 
 https://developer.github.com/v3/gists/#get-a-gist
@@ -927,7 +899,7 @@ https://developer.github.com/v3/gists/#get-a-gist
 type GistsGetResponse struct {
 	response
 	request *GistsGetReq
-	Data    GistsGetResponseBody
+	Data    components.GistFull
 }
 
 /*
@@ -951,7 +923,7 @@ func GistsGetComment(ctx context.Context, req *GistsGetCommentReq, opt ...Reques
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = GistsGetCommentResponseBody{}
+	resp.Data = components.GistComment{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1045,13 +1017,6 @@ func (r *GistsGetCommentReq) Rel(link RelName, resp *GistsGetCommentResponse) bo
 }
 
 /*
-GistsGetCommentResponseBody is a response body for GistsGetComment
-
-https://developer.github.com/v3/gists/comments/#get-a-gist-comment
-*/
-type GistsGetCommentResponseBody components.GistComment
-
-/*
 GistsGetCommentResponse is a response for GistsGetComment
 
 https://developer.github.com/v3/gists/comments/#get-a-gist-comment
@@ -1059,7 +1024,7 @@ https://developer.github.com/v3/gists/comments/#get-a-gist-comment
 type GistsGetCommentResponse struct {
 	response
 	request *GistsGetCommentReq
-	Data    GistsGetCommentResponseBody
+	Data    components.GistComment
 }
 
 /*
@@ -1083,7 +1048,7 @@ func GistsGetRevision(ctx context.Context, req *GistsGetRevisionReq, opt ...Requ
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = GistsGetRevisionResponseBody{}
+	resp.Data = components.GistFull{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -1177,13 +1142,6 @@ func (r *GistsGetRevisionReq) Rel(link RelName, resp *GistsGetRevisionResponse) 
 }
 
 /*
-GistsGetRevisionResponseBody is a response body for GistsGetRevision
-
-https://developer.github.com/v3/gists/#get-a-gist-revision
-*/
-type GistsGetRevisionResponseBody components.GistFull
-
-/*
 GistsGetRevisionResponse is a response for GistsGetRevision
 
 https://developer.github.com/v3/gists/#get-a-gist-revision
@@ -1191,7 +1149,7 @@ https://developer.github.com/v3/gists/#get-a-gist-revision
 type GistsGetRevisionResponse struct {
 	response
 	request *GistsGetRevisionReq
-	Data    GistsGetRevisionResponseBody
+	Data    components.GistFull
 }
 
 /*
@@ -2471,7 +2429,7 @@ func GistsUpdate(ctx context.Context, req *GistsUpdateReq, opt ...RequestOption)
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = GistsUpdateResponseBody{}
+	resp.Data = components.GistFull{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2590,13 +2548,6 @@ type GistsUpdateReqBody struct {
 }
 
 /*
-GistsUpdateResponseBody is a response body for GistsUpdate
-
-https://developer.github.com/v3/gists/#update-a-gist
-*/
-type GistsUpdateResponseBody components.GistFull
-
-/*
 GistsUpdateResponse is a response for GistsUpdate
 
 https://developer.github.com/v3/gists/#update-a-gist
@@ -2604,7 +2555,7 @@ https://developer.github.com/v3/gists/#update-a-gist
 type GistsUpdateResponse struct {
 	response
 	request *GistsUpdateReq
-	Data    GistsUpdateResponseBody
+	Data    components.GistFull
 }
 
 /*
@@ -2628,7 +2579,7 @@ func GistsUpdateComment(ctx context.Context, req *GistsUpdateCommentReq, opt ...
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = GistsUpdateCommentResponseBody{}
+	resp.Data = components.GistComment{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2737,13 +2688,6 @@ type GistsUpdateCommentReqBody struct {
 }
 
 /*
-GistsUpdateCommentResponseBody is a response body for GistsUpdateComment
-
-https://developer.github.com/v3/gists/comments/#update-a-gist-comment
-*/
-type GistsUpdateCommentResponseBody components.GistComment
-
-/*
 GistsUpdateCommentResponse is a response for GistsUpdateComment
 
 https://developer.github.com/v3/gists/comments/#update-a-gist-comment
@@ -2751,5 +2695,5 @@ https://developer.github.com/v3/gists/comments/#update-a-gist-comment
 type GistsUpdateCommentResponse struct {
 	response
 	request *GistsUpdateCommentReq
-	Data    GistsUpdateCommentResponseBody
+	Data    components.GistComment
 }

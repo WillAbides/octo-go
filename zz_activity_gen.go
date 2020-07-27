@@ -390,7 +390,7 @@ func ActivityGetFeeds(ctx context.Context, req *ActivityGetFeedsReq, opt ...Requ
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ActivityGetFeedsResponseBody{}
+	resp.Data = components.Feed{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -478,13 +478,6 @@ func (r *ActivityGetFeedsReq) Rel(link RelName, resp *ActivityGetFeedsResponse) 
 }
 
 /*
-ActivityGetFeedsResponseBody is a response body for ActivityGetFeeds
-
-https://developer.github.com/v3/activity/feeds/#get-feeds
-*/
-type ActivityGetFeedsResponseBody components.Feed
-
-/*
 ActivityGetFeedsResponse is a response for ActivityGetFeeds
 
 https://developer.github.com/v3/activity/feeds/#get-feeds
@@ -492,7 +485,7 @@ https://developer.github.com/v3/activity/feeds/#get-feeds
 type ActivityGetFeedsResponse struct {
 	response
 	request *ActivityGetFeedsReq
-	Data    ActivityGetFeedsResponseBody
+	Data    components.Feed
 }
 
 /*
@@ -516,7 +509,7 @@ func ActivityGetRepoSubscription(ctx context.Context, req *ActivityGetRepoSubscr
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ActivityGetRepoSubscriptionResponseBody{}
+	resp.Data = components.RepositorySubscription{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -606,13 +599,6 @@ func (r *ActivityGetRepoSubscriptionReq) Rel(link RelName, resp *ActivityGetRepo
 }
 
 /*
-ActivityGetRepoSubscriptionResponseBody is a response body for ActivityGetRepoSubscription
-
-https://developer.github.com/v3/activity/watching/#get-a-repository-subscription
-*/
-type ActivityGetRepoSubscriptionResponseBody components.RepositorySubscription
-
-/*
 ActivityGetRepoSubscriptionResponse is a response for ActivityGetRepoSubscription
 
 https://developer.github.com/v3/activity/watching/#get-a-repository-subscription
@@ -620,7 +606,7 @@ https://developer.github.com/v3/activity/watching/#get-a-repository-subscription
 type ActivityGetRepoSubscriptionResponse struct {
 	response
 	request *ActivityGetRepoSubscriptionReq
-	Data    ActivityGetRepoSubscriptionResponseBody
+	Data    components.RepositorySubscription
 }
 
 /*
@@ -644,7 +630,7 @@ func ActivityGetThread(ctx context.Context, req *ActivityGetThreadReq, opt ...Re
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ActivityGetThreadResponseBody{}
+	resp.Data = components.Thread{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -735,13 +721,6 @@ func (r *ActivityGetThreadReq) Rel(link RelName, resp *ActivityGetThreadResponse
 }
 
 /*
-ActivityGetThreadResponseBody is a response body for ActivityGetThread
-
-https://developer.github.com/v3/activity/notifications/#get-a-thread
-*/
-type ActivityGetThreadResponseBody components.Thread
-
-/*
 ActivityGetThreadResponse is a response for ActivityGetThread
 
 https://developer.github.com/v3/activity/notifications/#get-a-thread
@@ -749,7 +728,7 @@ https://developer.github.com/v3/activity/notifications/#get-a-thread
 type ActivityGetThreadResponse struct {
 	response
 	request *ActivityGetThreadReq
-	Data    ActivityGetThreadResponseBody
+	Data    components.Thread
 }
 
 /*
@@ -773,7 +752,7 @@ func ActivityGetThreadSubscriptionForAuthenticatedUser(ctx context.Context, req 
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ActivityGetThreadSubscriptionForAuthenticatedUserResponseBody{}
+	resp.Data = components.ThreadSubscription{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -864,13 +843,6 @@ func (r *ActivityGetThreadSubscriptionForAuthenticatedUserReq) Rel(link RelName,
 }
 
 /*
-ActivityGetThreadSubscriptionForAuthenticatedUserResponseBody is a response body for ActivityGetThreadSubscriptionForAuthenticatedUser
-
-https://developer.github.com/v3/activity/notifications/#get-a-thread-subscription-for-the-authenticated-user
-*/
-type ActivityGetThreadSubscriptionForAuthenticatedUserResponseBody components.ThreadSubscription
-
-/*
 ActivityGetThreadSubscriptionForAuthenticatedUserResponse is a response for ActivityGetThreadSubscriptionForAuthenticatedUser
 
 https://developer.github.com/v3/activity/notifications/#get-a-thread-subscription-for-the-authenticated-user
@@ -878,7 +850,7 @@ https://developer.github.com/v3/activity/notifications/#get-a-thread-subscriptio
 type ActivityGetThreadSubscriptionForAuthenticatedUserResponse struct {
 	response
 	request *ActivityGetThreadSubscriptionForAuthenticatedUserReq
-	Data    ActivityGetThreadSubscriptionForAuthenticatedUserResponseBody
+	Data    components.ThreadSubscription
 }
 
 /*
@@ -3770,7 +3742,7 @@ func ActivitySetRepoSubscription(ctx context.Context, req *ActivitySetRepoSubscr
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ActivitySetRepoSubscriptionResponseBody{}
+	resp.Data = components.RepositorySubscription{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -3878,13 +3850,6 @@ type ActivitySetRepoSubscriptionReqBody struct {
 }
 
 /*
-ActivitySetRepoSubscriptionResponseBody is a response body for ActivitySetRepoSubscription
-
-https://developer.github.com/v3/activity/watching/#set-a-repository-subscription
-*/
-type ActivitySetRepoSubscriptionResponseBody components.RepositorySubscription
-
-/*
 ActivitySetRepoSubscriptionResponse is a response for ActivitySetRepoSubscription
 
 https://developer.github.com/v3/activity/watching/#set-a-repository-subscription
@@ -3892,7 +3857,7 @@ https://developer.github.com/v3/activity/watching/#set-a-repository-subscription
 type ActivitySetRepoSubscriptionResponse struct {
 	response
 	request *ActivitySetRepoSubscriptionReq
-	Data    ActivitySetRepoSubscriptionResponseBody
+	Data    components.RepositorySubscription
 }
 
 /*
@@ -3916,7 +3881,7 @@ func ActivitySetThreadSubscription(ctx context.Context, req *ActivitySetThreadSu
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = ActivitySetThreadSubscriptionResponseBody{}
+	resp.Data = components.ThreadSubscription{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -4022,13 +3987,6 @@ type ActivitySetThreadSubscriptionReqBody struct {
 }
 
 /*
-ActivitySetThreadSubscriptionResponseBody is a response body for ActivitySetThreadSubscription
-
-https://developer.github.com/v3/activity/notifications/#set-a-thread-subscription
-*/
-type ActivitySetThreadSubscriptionResponseBody components.ThreadSubscription
-
-/*
 ActivitySetThreadSubscriptionResponse is a response for ActivitySetThreadSubscription
 
 https://developer.github.com/v3/activity/notifications/#set-a-thread-subscription
@@ -4036,7 +3994,7 @@ https://developer.github.com/v3/activity/notifications/#set-a-thread-subscriptio
 type ActivitySetThreadSubscriptionResponse struct {
 	response
 	request *ActivitySetThreadSubscriptionReq
-	Data    ActivitySetThreadSubscriptionResponseBody
+	Data    components.ThreadSubscription
 }
 
 /*
