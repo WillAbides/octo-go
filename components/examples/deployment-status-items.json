@@ -24,7 +24,7 @@
     "deployment_url": "https://api.github.com/repos/octocat/example/deployments/42",
     "description": "Deployment finished successfully.",
     "environment": "production",
-    "environment_url": "",
+    "environment_url": "https://test-branch.lab.acme.com",
     "id": 1,
     "log_url": "https://example.com/deployment/42/output",
     "node_id": "MDE2OkRlcGxveW1lbnRTdGF0dXMx",

@@ -61,7 +61,7 @@ type BillingGetGithubActionsBillingGheReq struct {
 	_url string
 
 	// Unique identifier of the GitHub Enterprise Cloud instance.
-	EnterpriseId int64
+	EnterpriseId string
 }
 
 func (r *BillingGetGithubActionsBillingGheReq) url() string {
@@ -82,7 +82,7 @@ func (r *BillingGetGithubActionsBillingGheReq) urlQuery() url.Values {
 }
 
 func (r *BillingGetGithubActionsBillingGheReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -209,7 +209,7 @@ func (r *BillingGetGithubActionsBillingOrgReq) urlQuery() url.Values {
 }
 
 func (r *BillingGetGithubActionsBillingOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -336,7 +336,7 @@ func (r *BillingGetGithubActionsBillingUserReq) urlQuery() url.Values {
 }
 
 func (r *BillingGetGithubActionsBillingUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -444,7 +444,7 @@ type BillingGetGithubPackagesBillingGheReq struct {
 	_url string
 
 	// Unique identifier of the GitHub Enterprise Cloud instance.
-	EnterpriseId int64
+	EnterpriseId string
 }
 
 func (r *BillingGetGithubPackagesBillingGheReq) url() string {
@@ -465,7 +465,7 @@ func (r *BillingGetGithubPackagesBillingGheReq) urlQuery() url.Values {
 }
 
 func (r *BillingGetGithubPackagesBillingGheReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -592,7 +592,7 @@ func (r *BillingGetGithubPackagesBillingOrgReq) urlQuery() url.Values {
 }
 
 func (r *BillingGetGithubPackagesBillingOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -719,7 +719,7 @@ func (r *BillingGetGithubPackagesBillingUserReq) urlQuery() url.Values {
 }
 
 func (r *BillingGetGithubPackagesBillingUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -827,7 +827,7 @@ type BillingGetSharedStorageBillingGheReq struct {
 	_url string
 
 	// Unique identifier of the GitHub Enterprise Cloud instance.
-	EnterpriseId int64
+	EnterpriseId string
 }
 
 func (r *BillingGetSharedStorageBillingGheReq) url() string {
@@ -848,7 +848,7 @@ func (r *BillingGetSharedStorageBillingGheReq) urlQuery() url.Values {
 }
 
 func (r *BillingGetSharedStorageBillingGheReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -975,7 +975,7 @@ func (r *BillingGetSharedStorageBillingOrgReq) urlQuery() url.Values {
 }
 
 func (r *BillingGetSharedStorageBillingOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -1102,7 +1102,7 @@ func (r *BillingGetSharedStorageBillingUserReq) urlQuery() url.Values {
 }
 
 func (r *BillingGetSharedStorageBillingUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }

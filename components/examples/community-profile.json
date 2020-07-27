@@ -1,6 +1,6 @@
 {
   "description": "My first repository on GitHub!",
-  "documentation": true,
+  "documentation": null,
   "files": {
     "code_of_conduct": {
       "html_url": "https://github.com/octocat/Hello-World/blob/master/CODE_OF_CONDUCT.md",
@@ -20,6 +20,7 @@
       "html_url": "https://github.com/octocat/Hello-World/blob/master/LICENSE",
       "key": "mit",
       "name": "MIT License",
+      "node_id": "MDc6TGljZW5zZW1pdA==",
       "spdx_id": "MIT",
       "url": "https://api.github.com/licenses/mit"
     },

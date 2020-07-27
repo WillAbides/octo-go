@@ -58,9 +58,13 @@ MigrationsCancelImportReq is request data for Client.MigrationsCancelImport
 https://developer.github.com/v3/migrations/source_imports/#cancel-an-import
 */
 type MigrationsCancelImportReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 }
 
 func (r *MigrationsCancelImportReq) url() string {
@@ -177,7 +181,9 @@ MigrationsDeleteArchiveForAuthenticatedUserReq is request data for Client.Migrat
 https://developer.github.com/v3/migrations/users/#delete-a-user-migration-archive
 */
 type MigrationsDeleteArchiveForAuthenticatedUserReq struct {
-	_url        string
+	_url string
+
+	// migration_id parameter
 	MigrationId int64
 
 	// To access the Migrations API, you must set this to true.
@@ -222,7 +228,7 @@ func (r *MigrationsDeleteArchiveForAuthenticatedUserReq) dataStatuses() []int {
 }
 
 func (r *MigrationsDeleteArchiveForAuthenticatedUserReq) validStatuses() []int {
-	return []int{204}
+	return []int{204, 304}
 }
 
 func (r *MigrationsDeleteArchiveForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
@@ -278,6 +284,10 @@ func MigrationsDeleteArchiveForOrg(ctx context.Context, req *MigrationsDeleteArc
 	if err != nil {
 		return resp, err
 	}
+	err = r.setBoolResult(&resp.Data)
+	if err != nil {
+		return nil, err
+	}
 	err = r.decodeBody(nil)
 	if err != nil {
 		return nil, err
@@ -304,8 +314,12 @@ MigrationsDeleteArchiveForOrgReq is request data for Client.MigrationsDeleteArch
 https://developer.github.com/v3/migrations/orgs/#delete-an-organization-migration-archive
 */
 type MigrationsDeleteArchiveForOrgReq struct {
-	_url        string
-	Org         string
+	_url string
+
+	// org parameter
+	Org string
+
+	// migration_id parameter
 	MigrationId int64
 
 	// To access the Migrations API, you must set this to true.
@@ -354,7 +368,7 @@ func (r *MigrationsDeleteArchiveForOrgReq) validStatuses() []int {
 }
 
 func (r *MigrationsDeleteArchiveForOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrBoolean}
 }
 
 // HTTPRequest builds an *http.Request
@@ -383,6 +397,7 @@ https://developer.github.com/v3/migrations/orgs/#delete-an-organization-migratio
 type MigrationsDeleteArchiveForOrgResponse struct {
 	response
 	request *MigrationsDeleteArchiveForOrgReq
+	Data    bool
 }
 
 /*
@@ -432,8 +447,12 @@ MigrationsDownloadArchiveForOrgReq is request data for Client.MigrationsDownload
 https://developer.github.com/v3/migrations/orgs/#download-an-organization-migration-archive
 */
 type MigrationsDownloadArchiveForOrgReq struct {
-	_url        string
-	Org         string
+	_url string
+
+	// org parameter
+	Org string
+
+	// migration_id parameter
 	MigrationId int64
 
 	// To access the Migrations API, you must set this to true.
@@ -482,7 +501,7 @@ func (r *MigrationsDownloadArchiveForOrgReq) validStatuses() []int {
 }
 
 func (r *MigrationsDownloadArchiveForOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRedirectOnly}
+	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -560,7 +579,9 @@ MigrationsGetArchiveForAuthenticatedUserReq is request data for Client.Migration
 https://developer.github.com/v3/migrations/users/#download-a-user-migration-archive
 */
 type MigrationsGetArchiveForAuthenticatedUserReq struct {
-	_url        string
+	_url string
+
+	// migration_id parameter
 	MigrationId int64
 
 	// To access the Migrations API, you must set this to true.
@@ -605,11 +626,11 @@ func (r *MigrationsGetArchiveForAuthenticatedUserReq) dataStatuses() []int {
 }
 
 func (r *MigrationsGetArchiveForAuthenticatedUserReq) validStatuses() []int {
-	return []int{302}
+	return []int{302, 304}
 }
 
 func (r *MigrationsGetArchiveForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRedirectOnly}
+	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -688,9 +709,13 @@ MigrationsGetCommitAuthorsReq is request data for Client.MigrationsGetCommitAuth
 https://developer.github.com/v3/migrations/source_imports/#get-commit-authors
 */
 type MigrationsGetCommitAuthorsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	/*
 	Only authors found after this id are returned. Provide the highest author ID
@@ -721,7 +746,7 @@ func (r *MigrationsGetCommitAuthorsReq) urlQuery() url.Values {
 }
 
 func (r *MigrationsGetCommitAuthorsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -826,9 +851,13 @@ MigrationsGetImportStatusReq is request data for Client.MigrationsGetImportStatu
 https://developer.github.com/v3/migrations/source_imports/#get-an-import-status
 */
 type MigrationsGetImportStatusReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 }
 
 func (r *MigrationsGetImportStatusReq) url() string {
@@ -849,7 +878,7 @@ func (r *MigrationsGetImportStatusReq) urlQuery() url.Values {
 }
 
 func (r *MigrationsGetImportStatusReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -954,9 +983,13 @@ MigrationsGetLargeFilesReq is request data for Client.MigrationsGetLargeFiles
 https://developer.github.com/v3/migrations/source_imports/#get-large-files
 */
 type MigrationsGetLargeFilesReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 }
 
 func (r *MigrationsGetLargeFilesReq) url() string {
@@ -977,7 +1010,7 @@ func (r *MigrationsGetLargeFilesReq) urlQuery() url.Values {
 }
 
 func (r *MigrationsGetLargeFilesReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -1082,7 +1115,9 @@ MigrationsGetStatusForAuthenticatedUserReq is request data for Client.Migrations
 https://developer.github.com/v3/migrations/users/#get-a-user-migration-status
 */
 type MigrationsGetStatusForAuthenticatedUserReq struct {
-	_url        string
+	_url string
+
+	// migration_id parameter
 	MigrationId int64
 
 	// To access the Migrations API, you must set this to true.
@@ -1107,7 +1142,7 @@ func (r *MigrationsGetStatusForAuthenticatedUserReq) urlQuery() url.Values {
 }
 
 func (r *MigrationsGetStatusForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"wyandotte": r.WyandottePreview}
 	if requiredPreviews {
 		previewVals["wyandotte"] = true
@@ -1127,7 +1162,7 @@ func (r *MigrationsGetStatusForAuthenticatedUserReq) dataStatuses() []int {
 }
 
 func (r *MigrationsGetStatusForAuthenticatedUserReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *MigrationsGetStatusForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
@@ -1218,8 +1253,12 @@ MigrationsGetStatusForOrgReq is request data for Client.MigrationsGetStatusForOr
 https://developer.github.com/v3/migrations/orgs/#get-an-organization-migration-status
 */
 type MigrationsGetStatusForOrgReq struct {
-	_url        string
-	Org         string
+	_url string
+
+	// org parameter
+	Org string
+
+	// migration_id parameter
 	MigrationId int64
 
 	// To access the Migrations API, you must set this to true.
@@ -1244,7 +1283,7 @@ func (r *MigrationsGetStatusForOrgReq) urlQuery() url.Values {
 }
 
 func (r *MigrationsGetStatusForOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"wyandotte": r.WyandottePreview}
 	if requiredPreviews {
 		previewVals["wyandotte"] = true
@@ -1294,7 +1333,7 @@ MigrationsGetStatusForOrgResponseBody is a response body for MigrationsGetStatus
 
 https://developer.github.com/v3/migrations/orgs/#get-an-organization-migration-status
 */
-type MigrationsGetStatusForOrgResponseBody components.MigrationWithShortOrg
+type MigrationsGetStatusForOrgResponseBody components.Migration
 
 /*
 MigrationsGetStatusForOrgResponse is a response for MigrationsGetStatusForOrg
@@ -1391,7 +1430,7 @@ func (r *MigrationsListForAuthenticatedUserReq) urlQuery() url.Values {
 }
 
 func (r *MigrationsListForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"wyandotte": r.WyandottePreview}
 	if requiredPreviews {
 		previewVals["wyandotte"] = true
@@ -1411,7 +1450,7 @@ func (r *MigrationsListForAuthenticatedUserReq) dataStatuses() []int {
 }
 
 func (r *MigrationsListForAuthenticatedUserReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *MigrationsListForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
@@ -1503,7 +1542,9 @@ https://developer.github.com/v3/migrations/orgs/#list-organization-migrations
 */
 type MigrationsListForOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -1539,7 +1580,7 @@ func (r *MigrationsListForOrgReq) urlQuery() url.Values {
 }
 
 func (r *MigrationsListForOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"wyandotte": r.WyandottePreview}
 	if requiredPreviews {
 		previewVals["wyandotte"] = true
@@ -1589,7 +1630,7 @@ MigrationsListForOrgResponseBody is a response body for MigrationsListForOrg
 
 https://developer.github.com/v3/migrations/orgs/#list-organization-migrations
 */
-type MigrationsListForOrgResponseBody []components.MigrationWithShortOrg
+type MigrationsListForOrgResponseBody []components.Migration
 
 /*
 MigrationsListForOrgResponse is a response for MigrationsListForOrg
@@ -1650,8 +1691,12 @@ MigrationsListReposForOrgReq is request data for Client.MigrationsListReposForOr
 https://developer.github.com/v3/migrations/orgs/#list-repositories-in-an-organization-migration
 */
 type MigrationsListReposForOrgReq struct {
-	_url        string
-	Org         string
+	_url string
+
+	// org parameter
+	Org string
+
+	// migration_id parameter
 	MigrationId int64
 
 	// Results per page (max 100)
@@ -1688,7 +1733,7 @@ func (r *MigrationsListReposForOrgReq) urlQuery() url.Values {
 }
 
 func (r *MigrationsListReposForOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"wyandotte": r.WyandottePreview}
 	if requiredPreviews {
 		previewVals["wyandotte"] = true
@@ -1756,7 +1801,7 @@ MigrationsListReposForUser performs requests for "migrations/list-repos-for-user
 
 List repositories for a user migration.
 
-  GET /user/{migration_id}/repositories
+  GET /user/migrations/{migration_id}/repositories
 
 https://developer.github.com/v3/migrations/users/#list-repositories-for-a-user-migration
 */
@@ -1785,7 +1830,7 @@ MigrationsListReposForUser performs requests for "migrations/list-repos-for-user
 
 List repositories for a user migration.
 
-  GET /user/{migration_id}/repositories
+  GET /user/migrations/{migration_id}/repositories
 
 https://developer.github.com/v3/migrations/users/#list-repositories-for-a-user-migration
 */
@@ -1799,7 +1844,9 @@ MigrationsListReposForUserReq is request data for Client.MigrationsListReposForU
 https://developer.github.com/v3/migrations/users/#list-repositories-for-a-user-migration
 */
 type MigrationsListReposForUserReq struct {
-	_url        string
+	_url string
+
+	// migration_id parameter
 	MigrationId int64
 
 	// Results per page (max 100)
@@ -1817,7 +1864,7 @@ func (r *MigrationsListReposForUserReq) url() string {
 }
 
 func (r *MigrationsListReposForUserReq) urlPath() string {
-	return fmt.Sprintf("/user/%v/repositories", r.MigrationId)
+	return fmt.Sprintf("/user/migrations/%v/repositories", r.MigrationId)
 }
 
 func (r *MigrationsListReposForUserReq) method() string {
@@ -1836,7 +1883,7 @@ func (r *MigrationsListReposForUserReq) urlQuery() url.Values {
 }
 
 func (r *MigrationsListReposForUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"wyandotte": r.WyandottePreview}
 	if requiredPreviews {
 		previewVals["wyandotte"] = true
@@ -1947,9 +1994,15 @@ MigrationsMapCommitAuthorReq is request data for Client.MigrationsMapCommitAutho
 https://developer.github.com/v3/migrations/source_imports/#map-a-commit-author
 */
 type MigrationsMapCommitAuthorReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// author_id parameter
 	AuthorId    int64
 	RequestBody MigrationsMapCommitAuthorReqBody
 }
@@ -1972,7 +2025,10 @@ func (r *MigrationsMapCommitAuthorReq) urlQuery() url.Values {
 }
 
 func (r *MigrationsMapCommitAuthorReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -2022,7 +2078,8 @@ type MigrationsMapCommitAuthorReqBody struct {
 	Email *string `json:"email,omitempty"`
 
 	// The new Git author name.
-	Name *string `json:"name,omitempty"`
+	Name     *string `json:"name,omitempty"`
+	RemoteId *string `json:"remote_id,omitempty"`
 }
 
 /*
@@ -2091,8 +2148,12 @@ MigrationsSetLfsPreferenceReq is request data for Client.MigrationsSetLfsPrefere
 https://developer.github.com/v3/migrations/source_imports/#update-git-lfs-preference
 */
 type MigrationsSetLfsPreferenceReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody MigrationsSetLfsPreferenceReqBody
 }
@@ -2115,7 +2176,10 @@ func (r *MigrationsSetLfsPreferenceReq) urlQuery() url.Values {
 }
 
 func (r *MigrationsSetLfsPreferenceReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -2162,8 +2226,8 @@ https://developer.github.com/v3/migrations/source_imports/#update-git-lfs-prefer
 type MigrationsSetLfsPreferenceReqBody struct {
 
 	/*
-	   Can be one of `opt_in` (large files will be stored using Git LFS) or `opt_out`
-	   (large files will be removed during the import).
+	Can be one of `opt_in` (large files will be stored using Git LFS) or `opt_out`
+	(large files will be removed during the import).
 	*/
 	UseLfs *string `json:"use_lfs"`
 }
@@ -2256,7 +2320,10 @@ func (r *MigrationsStartForAuthenticatedUserReq) urlQuery() url.Values {
 }
 
 func (r *MigrationsStartForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -2270,7 +2337,7 @@ func (r *MigrationsStartForAuthenticatedUserReq) dataStatuses() []int {
 }
 
 func (r *MigrationsStartForAuthenticatedUserReq) validStatuses() []int {
-	return []int{201}
+	return []int{201, 304}
 }
 
 func (r *MigrationsStartForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
@@ -2302,21 +2369,15 @@ https://developer.github.com/v3/migrations/users/#start-a-user-migration
 */
 type MigrationsStartForAuthenticatedUserReqBody struct {
 
-	/*
-	   Does not include attachments uploaded to GitHub.com in the migration data when
-	   set to `true`. Excluding attachments will reduce the migration archive file
-	   size.
-	*/
+	// Exclude attributes from the API response to improve performance
+	Exclude []string `json:"exclude,omitempty"`
+
+	// Do not include attachments in the migration
 	ExcludeAttachments *bool `json:"exclude_attachments,omitempty"`
 
-	/*
-	   Locks the `repositories` to prevent changes during the migration when set to
-	   `true`.
-	*/
-	LockRepositories *bool `json:"lock_repositories,omitempty"`
-
-	// An array of repositories to include in the migration.
-	Repositories []string `json:"repositories"`
+	// Lock the repositories being migrated at the start of the migration
+	LockRepositories *bool    `json:"lock_repositories,omitempty"`
+	Repositories     []string `json:"repositories"`
 }
 
 /*
@@ -2385,7 +2446,9 @@ MigrationsStartForOrgReq is request data for Client.MigrationsStartForOrg
 https://developer.github.com/v3/migrations/orgs/#start-an-organization-migration
 */
 type MigrationsStartForOrgReq struct {
-	_url        string
+	_url string
+
+	// org parameter
 	Org         string
 	RequestBody MigrationsStartForOrgReqBody
 }
@@ -2408,7 +2471,10 @@ func (r *MigrationsStartForOrgReq) urlQuery() url.Values {
 }
 
 func (r *MigrationsStartForOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -2453,17 +2519,12 @@ MigrationsStartForOrgReqBody is a request body for migrations/start-for-org
 https://developer.github.com/v3/migrations/orgs/#start-an-organization-migration
 */
 type MigrationsStartForOrgReqBody struct {
+	Exclude []string `json:"exclude,omitempty"`
 
-	/*
-	   Indicates whether attachments should be excluded from the migration (to reduce
-	   migration archive file size).
-	*/
+	// Indicates whether attachments should be excluded from the migration (to reduce migration archive file size).
 	ExcludeAttachments *bool `json:"exclude_attachments,omitempty"`
 
-	/*
-	   Indicates whether repositories should be locked (to prevent manipulation) while
-	   migrating data.
-	*/
+	// Indicates whether repositories should be locked (to prevent manipulation) while migrating data.
 	LockRepositories *bool `json:"lock_repositories,omitempty"`
 
 	// A list of arrays indicating which repositories should be migrated.
@@ -2475,7 +2536,7 @@ MigrationsStartForOrgResponseBody is a response body for MigrationsStartForOrg
 
 https://developer.github.com/v3/migrations/orgs/#start-an-organization-migration
 */
-type MigrationsStartForOrgResponseBody components.MigrationWithShortOrg
+type MigrationsStartForOrgResponseBody components.Migration
 
 /*
 MigrationsStartForOrgResponse is a response for MigrationsStartForOrg
@@ -2536,8 +2597,12 @@ MigrationsStartImportReq is request data for Client.MigrationsStartImport
 https://developer.github.com/v3/migrations/source_imports/#start-an-import
 */
 type MigrationsStartImportReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody MigrationsStartImportReqBody
 }
@@ -2560,7 +2625,10 @@ func (r *MigrationsStartImportReq) urlQuery() url.Values {
 }
 
 func (r *MigrationsStartImportReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -2610,10 +2678,10 @@ type MigrationsStartImportReqBody struct {
 	TfvcProject *string `json:"tfvc_project,omitempty"`
 
 	/*
-	   The originating VCS type. Can be one of `subversion`, `git`, `mercurial`, or
-	   `tfvc`. Please be aware that without this parameter, the import job will take
-	   additional time to detect the VCS type before beginning the import. This
-	   detection step will be reflected in the response.
+	The originating VCS type. Can be one of `subversion`, `git`, `mercurial`, or
+	`tfvc`. Please be aware that without this parameter, the import job will take
+	additional time to detect the VCS type before beginning the import. This
+	detection step will be reflected in the response.
 	*/
 	Vcs *string `json:"vcs,omitempty"`
 
@@ -2632,7 +2700,7 @@ MigrationsStartImportResponseBody is a response body for MigrationsStartImport
 
 https://developer.github.com/v3/migrations/source_imports/#start-an-import
 */
-type MigrationsStartImportResponseBody components.Import2
+type MigrationsStartImportResponseBody components.Import
 
 /*
 MigrationsStartImportResponse is a response for MigrationsStartImport
@@ -2692,9 +2760,13 @@ MigrationsUnlockRepoForAuthenticatedUserReq is request data for Client.Migration
 https://developer.github.com/v3/migrations/users/#unlock-a-user-repository
 */
 type MigrationsUnlockRepoForAuthenticatedUserReq struct {
-	_url        string
+	_url string
+
+	// migration_id parameter
 	MigrationId int64
-	RepoName    string
+
+	// repo_name parameter
+	RepoName string
 
 	// To access the Migrations API, you must set this to true.
 	WyandottePreview bool
@@ -2738,7 +2810,7 @@ func (r *MigrationsUnlockRepoForAuthenticatedUserReq) dataStatuses() []int {
 }
 
 func (r *MigrationsUnlockRepoForAuthenticatedUserReq) validStatuses() []int {
-	return []int{204}
+	return []int{204, 304}
 }
 
 func (r *MigrationsUnlockRepoForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
@@ -2794,6 +2866,10 @@ func MigrationsUnlockRepoForOrg(ctx context.Context, req *MigrationsUnlockRepoFo
 	if err != nil {
 		return resp, err
 	}
+	err = r.setBoolResult(&resp.Data)
+	if err != nil {
+		return nil, err
+	}
 	err = r.decodeBody(nil)
 	if err != nil {
 		return nil, err
@@ -2820,10 +2896,16 @@ MigrationsUnlockRepoForOrgReq is request data for Client.MigrationsUnlockRepoFor
 https://developer.github.com/v3/migrations/orgs/#unlock-an-organization-repository
 */
 type MigrationsUnlockRepoForOrgReq struct {
-	_url        string
-	Org         string
+	_url string
+
+	// org parameter
+	Org string
+
+	// migration_id parameter
 	MigrationId int64
-	RepoName    string
+
+	// repo_name parameter
+	RepoName string
 
 	// To access the Migrations API, you must set this to true.
 	WyandottePreview bool
@@ -2871,7 +2953,7 @@ func (r *MigrationsUnlockRepoForOrgReq) validStatuses() []int {
 }
 
 func (r *MigrationsUnlockRepoForOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrBoolean}
 }
 
 // HTTPRequest builds an *http.Request
@@ -2900,6 +2982,7 @@ https://developer.github.com/v3/migrations/orgs/#unlock-an-organization-reposito
 type MigrationsUnlockRepoForOrgResponse struct {
 	response
 	request *MigrationsUnlockRepoForOrgReq
+	Data    bool
 }
 
 /*
@@ -2950,8 +3033,12 @@ MigrationsUpdateImportReq is request data for Client.MigrationsUpdateImport
 https://developer.github.com/v3/migrations/source_imports/#update-an-import
 */
 type MigrationsUpdateImportReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody MigrationsUpdateImportReqBody
 }
@@ -2974,7 +3061,10 @@ func (r *MigrationsUpdateImportReq) urlQuery() url.Values {
 }
 
 func (r *MigrationsUpdateImportReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -3019,6 +3109,8 @@ MigrationsUpdateImportReqBody is a request body for migrations/update-import
 https://developer.github.com/v3/migrations/source_imports/#update-an-import
 */
 type MigrationsUpdateImportReqBody struct {
+	TfvcProject *string `json:"tfvc_project,omitempty"`
+	Vcs         *string `json:"vcs,omitempty"`
 
 	// The password to provide to the originating repository.
 	VcsPassword *string `json:"vcs_password,omitempty"`
@@ -3032,7 +3124,7 @@ MigrationsUpdateImportResponseBody is a response body for MigrationsUpdateImport
 
 https://developer.github.com/v3/migrations/source_imports/#update-an-import
 */
-type MigrationsUpdateImportResponseBody components.Import2
+type MigrationsUpdateImportResponseBody components.Import
 
 /*
 MigrationsUpdateImportResponse is a response for MigrationsUpdateImport

@@ -34,8 +34,8 @@
       "public_members_url": "https://api.github.com/orgs/github/public_members{/member}",
       "public_repos": 2,
       "repos_url": "https://api.github.com/orgs/github/repos",
-      "twitter_username": "github",
       "type": "Organization",
+      "updated_at": "2017-08-17T12:37:15Z",
       "url": "https://api.github.com/orgs/github"
     },
     "parent": null,

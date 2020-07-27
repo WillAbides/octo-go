@@ -58,9 +58,13 @@ AppsAddRepoToInstallationReq is request data for Client.AppsAddRepoToInstallatio
 https://developer.github.com/v3/apps/installations/#add-a-repository-to-an-app-installation
 */
 type AppsAddRepoToInstallationReq struct {
-	_url           string
+	_url string
+
+	// installation_id parameter
 	InstallationId int64
-	RepositoryId   int64
+
+	// repository_id parameter
+	RepositoryId int64
 
 	/*
 	To access the API with your GitHub App, you must set this to true for your
@@ -107,7 +111,7 @@ func (r *AppsAddRepoToInstallationReq) dataStatuses() []int {
 }
 
 func (r *AppsAddRepoToInstallationReq) validStatuses() []int {
-	return []int{204}
+	return []int{204, 304}
 }
 
 func (r *AppsAddRepoToInstallationReq) endpointAttributes() []endpointAttribute {
@@ -190,8 +194,12 @@ AppsCheckAuthorizationReq is request data for Client.AppsCheckAuthorization
 https://developer.github.com/v3/apps/oauth_applications/#check-an-authorization
 */
 type AppsCheckAuthorizationReq struct {
-	_url        string
-	ClientId    string
+	_url string
+
+	// client_id parameter
+	ClientId string
+
+	// access_token parameter
 	AccessToken string
 }
 
@@ -213,7 +221,7 @@ func (r *AppsCheckAuthorizationReq) urlQuery() url.Values {
 }
 
 func (r *AppsCheckAuthorizationReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -257,7 +265,58 @@ AppsCheckAuthorizationResponseBody is a response body for AppsCheckAuthorization
 
 https://developer.github.com/v3/apps/oauth_applications/#check-an-authorization
 */
-type AppsCheckAuthorizationResponseBody components.AuthorizationWithUser
+type AppsCheckAuthorizationResponseBody struct {
+	App struct {
+		ClientId string `json:"client_id"`
+		Name     string `json:"name"`
+		Url      string `json:"url"`
+	} `json:"app,omitempty"`
+	CreatedAt    string `json:"created_at,omitempty"`
+	Fingerprint  string `json:"fingerprint,omitempty"`
+	HashedToken  string `json:"hashed_token,omitempty"`
+	Id           int64  `json:"id,omitempty"`
+	Installation *struct {
+
+		// Simple User
+		Account         *components.SimpleUser `json:"account,omitempty"`
+		Permissions     interface{}            `json:"permissions,omitempty"`
+		RepositoriesUrl string                 `json:"repositories_url,omitempty"`
+
+		// Describe whether all repositories have been selected or there's a selection involved
+		RepositorySelection string `json:"repository_selection,omitempty"`
+		SingleFileName      string `json:"single_file_name,omitempty"`
+	} `json:"installation,omitempty"`
+	Note    string `json:"note,omitempty"`
+	NoteUrl string `json:"note_url,omitempty"`
+
+	// A list of scopes that this authorization is in.
+	Scopes         []string `json:"scopes,omitempty"`
+	Token          string   `json:"token,omitempty"`
+	TokenLastEight string   `json:"token_last_eight,omitempty"`
+	UpdatedAt      string   `json:"updated_at,omitempty"`
+	Url            string   `json:"url,omitempty"`
+	User           *struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredAt         string `json:"starred_at,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"user,omitempty"`
+}
 
 /*
 AppsCheckAuthorizationResponse is a response for AppsCheckAuthorization
@@ -318,7 +377,9 @@ AppsCheckTokenReq is request data for Client.AppsCheckToken
 https://developer.github.com/v3/apps/oauth_applications/#check-a-token
 */
 type AppsCheckTokenReq struct {
-	_url        string
+	_url string
+
+	// client_id parameter
 	ClientId    string
 	RequestBody AppsCheckTokenReqBody
 }
@@ -341,7 +402,10 @@ func (r *AppsCheckTokenReq) urlQuery() url.Values {
 }
 
 func (r *AppsCheckTokenReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -387,8 +451,8 @@ https://developer.github.com/v3/apps/oauth_applications/#check-a-token
 */
 type AppsCheckTokenReqBody struct {
 
-	// The OAuth access token used to authenticate to the GitHub API.
-	AccessToken *string `json:"access_token,omitempty"`
+	// The access_token of the OAuth application.
+	AccessToken *string `json:"access_token"`
 }
 
 /*
@@ -396,7 +460,7 @@ AppsCheckTokenResponseBody is a response body for AppsCheckToken
 
 https://developer.github.com/v3/apps/oauth_applications/#check-a-token
 */
-type AppsCheckTokenResponseBody components.AuthorizationWithUser
+type AppsCheckTokenResponseBody components.Authorization
 
 /*
 AppsCheckTokenResponse is a response for AppsCheckToken
@@ -457,7 +521,9 @@ AppsCreateContentAttachmentReq is request data for Client.AppsCreateContentAttac
 https://developer.github.com/v3/apps/installations/#create-a-content-attachment
 */
 type AppsCreateContentAttachmentReq struct {
-	_url               string
+	_url string
+
+	// content_reference_id parameter
 	ContentReferenceId int64
 	RequestBody        AppsCreateContentAttachmentReqBody
 
@@ -486,7 +552,10 @@ func (r *AppsCreateContentAttachmentReq) urlQuery() url.Values {
 }
 
 func (r *AppsCreateContentAttachmentReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{"corsair": r.CorsairPreview}
 	if requiredPreviews {
 		previewVals["corsair"] = true
@@ -506,7 +575,7 @@ func (r *AppsCreateContentAttachmentReq) dataStatuses() []int {
 }
 
 func (r *AppsCreateContentAttachmentReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *AppsCreateContentAttachmentReq) endpointAttributes() []endpointAttribute {
@@ -538,16 +607,10 @@ https://developer.github.com/v3/apps/installations/#create-a-content-attachment
 */
 type AppsCreateContentAttachmentReqBody struct {
 
-	/*
-	   The body text of the content attachment displayed in the body or comment of an
-	   issue or pull request. This parameter supports markdown.
-	*/
+	// The body of the attachment
 	Body *string `json:"body"`
 
-	/*
-	   The title of the content attachment displayed in the body or comment of an issue
-	   or pull request.
-	*/
+	// The title of the attachment
 	Title *string `json:"title"`
 }
 
@@ -618,6 +681,8 @@ https://developer.github.com/v3/apps/#create-a-github-app-from-a-manifest
 */
 type AppsCreateFromManifestReq struct {
 	_url string
+
+	// code parameter
 	Code string
 }
 
@@ -639,7 +704,7 @@ func (r *AppsCreateFromManifestReq) urlQuery() url.Values {
 }
 
 func (r *AppsCreateFromManifestReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -649,11 +714,11 @@ func (r *AppsCreateFromManifestReq) body() interface{} {
 }
 
 func (r *AppsCreateFromManifestReq) dataStatuses() []int {
-	return []int{200}
+	return []int{201}
 }
 
 func (r *AppsCreateFromManifestReq) validStatuses() []int {
-	return []int{200}
+	return []int{201}
 }
 
 func (r *AppsCreateFromManifestReq) endpointAttributes() []endpointAttribute {
@@ -683,7 +748,57 @@ AppsCreateFromManifestResponseBody is a response body for AppsCreateFromManifest
 
 https://developer.github.com/v3/apps/#create-a-github-app-from-a-manifest
 */
-type AppsCreateFromManifestResponseBody components.IntegrationFromManifest
+type AppsCreateFromManifestResponseBody struct {
+	ClientId     string `json:"client_id,omitempty"`
+	ClientSecret string `json:"client_secret,omitempty"`
+	CreatedAt    string `json:"created_at,omitempty"`
+	Description  string `json:"description,omitempty"`
+
+	// The list of events for the GitHub app
+	Events      []string `json:"events,omitempty"`
+	ExternalUrl string   `json:"external_url,omitempty"`
+	HtmlUrl     string   `json:"html_url,omitempty"`
+
+	// Unique identifier of the GitHub app
+	Id int64 `json:"id,omitempty"`
+
+	// The number of installations associated with the GitHub app
+	InstallationsCount int64 `json:"installations_count,omitempty"`
+
+	// The name of the GitHub app
+	Name   string `json:"name,omitempty"`
+	NodeId string `json:"node_id,omitempty"`
+	Owner  *struct {
+		AvatarUrl         string `json:"avatar_url,omitempty"`
+		EventsUrl         string `json:"events_url,omitempty"`
+		FollowersUrl      string `json:"followers_url,omitempty"`
+		FollowingUrl      string `json:"following_url,omitempty"`
+		GistsUrl          string `json:"gists_url,omitempty"`
+		GravatarId        string `json:"gravatar_id,omitempty"`
+		HtmlUrl           string `json:"html_url,omitempty"`
+		Id                int64  `json:"id,omitempty"`
+		Login             string `json:"login,omitempty"`
+		NodeId            string `json:"node_id,omitempty"`
+		OrganizationsUrl  string `json:"organizations_url,omitempty"`
+		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+		ReposUrl          string `json:"repos_url,omitempty"`
+		SiteAdmin         bool   `json:"site_admin,omitempty"`
+		StarredAt         string `json:"starred_at,omitempty"`
+		StarredUrl        string `json:"starred_url,omitempty"`
+		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+		Type              string `json:"type,omitempty"`
+		Url               string `json:"url,omitempty"`
+	} `json:"owner,omitempty"`
+	Pem string `json:"pem,omitempty"`
+
+	// The set of permissions for the GitHub app
+	Permissions map[string]string `json:"permissions,omitempty"`
+
+	// The slug name of the GitHub app
+	Slug          string `json:"slug,omitempty"`
+	UpdatedAt     string `json:"updated_at,omitempty"`
+	WebhookSecret string `json:"webhook_secret,omitempty"`
+}
 
 /*
 AppsCreateFromManifestResponse is a response for AppsCreateFromManifest
@@ -744,7 +859,9 @@ AppsCreateInstallationAccessTokenReq is request data for Client.AppsCreateInstal
 https://developer.github.com/v3/apps/#create-an-installation-access-token-for-an-app
 */
 type AppsCreateInstallationAccessTokenReq struct {
-	_url           string
+	_url string
+
+	// installation_id parameter
 	InstallationId int64
 	RequestBody    AppsCreateInstallationAccessTokenReqBody
 
@@ -773,7 +890,10 @@ func (r *AppsCreateInstallationAccessTokenReq) urlQuery() url.Values {
 }
 
 func (r *AppsCreateInstallationAccessTokenReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{"machine-man": r.MachineManPreview}
 	if requiredPreviews {
 		previewVals["machine-man"] = true
@@ -818,30 +938,21 @@ func (r *AppsCreateInstallationAccessTokenReq) Rel(link RelName, resp *AppsCreat
 	return true
 }
 
+// AppsCreateInstallationAccessTokenReqBodyPermissions is a value for AppsCreateInstallationAccessTokenReqBody's Permissions field
+type AppsCreateInstallationAccessTokenReqBodyPermissions map[string]string
+
 /*
 AppsCreateInstallationAccessTokenReqBody is a request body for apps/create-installation-access-token
 
 https://developer.github.com/v3/apps/#create-an-installation-access-token-for-an-app
 */
 type AppsCreateInstallationAccessTokenReqBody struct {
+	Permissions map[string]string `json:"permissions,omitempty"`
 
-	/*
-	   The permissions granted to the access token. The permissions object includes the
-	   permission names and their access type. For a complete list of permissions and
-	   allowable values, see "[GitHub App
-	   permissions](https://developer.github.com/apps/building-github-apps/creating-github-apps-using-url-parameters/#github-app-permissions)."
-	*/
-	Permissions interface{} `json:"permissions,omitempty"`
+	// List of repository names that the token should have access to
+	Repositories []string `json:"repositories,omitempty"`
 
-	/*
-	   The `id`s of the repositories that the installation token can access. Providing
-	   repository `id`s restricts the access of an installation token to specific
-	   repositories. You can use the "[List repositories accessible to the app
-	   installation](https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-app-installation)"
-	   endpoint to get the `id` of all repositories that an installation can access.
-	   For example, you can select specific repositories when creating an installation
-	   token to restrict the number of repositories that can be cloned using the token.
-	*/
+	// List of repository IDs that the token should have access to
 	RepositoryIds []int64 `json:"repository_ids,omitempty"`
 }
 
@@ -910,7 +1021,9 @@ AppsDeleteAuthorizationReq is request data for Client.AppsDeleteAuthorization
 https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-authorization
 */
 type AppsDeleteAuthorizationReq struct {
-	_url        string
+	_url string
+
+	// client_id parameter
 	ClientId    string
 	RequestBody AppsDeleteAuthorizationReqBody
 }
@@ -933,7 +1046,7 @@ func (r *AppsDeleteAuthorizationReq) urlQuery() url.Values {
 }
 
 func (r *AppsDeleteAuthorizationReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"content-type": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -1014,6 +1127,10 @@ func AppsDeleteInstallation(ctx context.Context, req *AppsDeleteInstallationReq,
 	if err != nil {
 		return resp, err
 	}
+	err = r.setBoolResult(&resp.Data)
+	if err != nil {
+		return nil, err
+	}
 	err = r.decodeBody(nil)
 	if err != nil {
 		return nil, err
@@ -1040,7 +1157,9 @@ AppsDeleteInstallationReq is request data for Client.AppsDeleteInstallation
 https://developer.github.com/v3/apps/#delete-an-installation-for-the-authenticated-app
 */
 type AppsDeleteInstallationReq struct {
-	_url           string
+	_url string
+
+	// installation_id parameter
 	InstallationId int64
 
 	/*
@@ -1092,7 +1211,7 @@ func (r *AppsDeleteInstallationReq) validStatuses() []int {
 }
 
 func (r *AppsDeleteInstallationReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrBoolean}
 }
 
 // HTTPRequest builds an *http.Request
@@ -1121,6 +1240,7 @@ https://developer.github.com/v3/apps/#delete-an-installation-for-the-authenticat
 type AppsDeleteInstallationResponse struct {
 	response
 	request *AppsDeleteInstallationReq
+	Data    bool
 }
 
 /*
@@ -1170,7 +1290,9 @@ AppsDeleteTokenReq is request data for Client.AppsDeleteToken
 https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-token
 */
 type AppsDeleteTokenReq struct {
-	_url        string
+	_url string
+
+	// client_id parameter
 	ClientId    string
 	RequestBody AppsDeleteTokenReqBody
 }
@@ -1193,7 +1315,7 @@ func (r *AppsDeleteTokenReq) urlQuery() url.Values {
 }
 
 func (r *AppsDeleteTokenReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"content-type": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -1328,7 +1450,7 @@ func (r *AppsGetAuthenticatedReq) urlQuery() url.Values {
 }
 
 func (r *AppsGetAuthenticatedReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"machine-man": r.MachineManPreview}
 	if requiredPreviews {
 		previewVals["machine-man"] = true
@@ -1378,7 +1500,7 @@ AppsGetAuthenticatedResponseBody is a response body for AppsGetAuthenticated
 
 https://developer.github.com/v3/apps/#get-the-authenticated-app
 */
-type AppsGetAuthenticatedResponseBody components.InstalledIntegration
+type AppsGetAuthenticatedResponseBody components.Integration
 
 /*
 AppsGetAuthenticatedResponse is a response for AppsGetAuthenticated
@@ -1439,7 +1561,9 @@ AppsGetBySlugReq is request data for Client.AppsGetBySlug
 https://developer.github.com/v3/apps/#get-an-app
 */
 type AppsGetBySlugReq struct {
-	_url    string
+	_url string
+
+	// app_slug parameter
 	AppSlug string
 
 	/*
@@ -1467,7 +1591,7 @@ func (r *AppsGetBySlugReq) urlQuery() url.Values {
 }
 
 func (r *AppsGetBySlugReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"machine-man": r.MachineManPreview}
 	if requiredPreviews {
 		previewVals["machine-man"] = true
@@ -1578,7 +1702,9 @@ AppsGetInstallationReq is request data for Client.AppsGetInstallation
 https://developer.github.com/v3/apps/#get-an-installation-for-the-authenticated-app
 */
 type AppsGetInstallationReq struct {
-	_url           string
+	_url string
+
+	// installation_id parameter
 	InstallationId int64
 
 	/*
@@ -1606,7 +1732,7 @@ func (r *AppsGetInstallationReq) urlQuery() url.Values {
 }
 
 func (r *AppsGetInstallationReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"machine-man": r.MachineManPreview}
 	if requiredPreviews {
 		previewVals["machine-man"] = true
@@ -1656,7 +1782,7 @@ AppsGetInstallationResponseBody is a response body for AppsGetInstallation
 
 https://developer.github.com/v3/apps/#get-an-installation-for-the-authenticated-app
 */
-type AppsGetInstallationResponseBody components.BaseInstallation
+type AppsGetInstallationResponseBody components.Installation
 
 /*
 AppsGetInstallationResponse is a response for AppsGetInstallation
@@ -1718,7 +1844,9 @@ https://developer.github.com/v3/apps/#get-an-organization-installation-for-the-a
 */
 type AppsGetOrgInstallationReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	/*
 	To access the API with your GitHub App, you must set this to true for your
@@ -1745,7 +1873,7 @@ func (r *AppsGetOrgInstallationReq) urlQuery() url.Values {
 }
 
 func (r *AppsGetOrgInstallationReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"machine-man": r.MachineManPreview}
 	if requiredPreviews {
 		previewVals["machine-man"] = true
@@ -1856,9 +1984,13 @@ AppsGetRepoInstallationReq is request data for Client.AppsGetRepoInstallation
 https://developer.github.com/v3/apps/#get-a-repository-installation-for-the-authenticated-app
 */
 type AppsGetRepoInstallationReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	/*
 	To access the API with your GitHub App, you must set this to true for your
@@ -1885,7 +2017,7 @@ func (r *AppsGetRepoInstallationReq) urlQuery() url.Values {
 }
 
 func (r *AppsGetRepoInstallationReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"machine-man": r.MachineManPreview}
 	if requiredPreviews {
 		previewVals["machine-man"] = true
@@ -1905,7 +2037,7 @@ func (r *AppsGetRepoInstallationReq) dataStatuses() []int {
 }
 
 func (r *AppsGetRepoInstallationReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 301}
 }
 
 func (r *AppsGetRepoInstallationReq) endpointAttributes() []endpointAttribute {
@@ -1996,7 +2128,9 @@ AppsGetSubscriptionPlanForAccountReq is request data for Client.AppsGetSubscript
 https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account
 */
 type AppsGetSubscriptionPlanForAccountReq struct {
-	_url      string
+	_url string
+
+	// account_id parameter
 	AccountId int64
 }
 
@@ -2018,7 +2152,7 @@ func (r *AppsGetSubscriptionPlanForAccountReq) urlQuery() url.Values {
 }
 
 func (r *AppsGetSubscriptionPlanForAccountReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -2123,7 +2257,9 @@ AppsGetSubscriptionPlanForAccountStubbedReq is request data for Client.AppsGetSu
 https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account-stubbed
 */
 type AppsGetSubscriptionPlanForAccountStubbedReq struct {
-	_url      string
+	_url string
+
+	// account_id parameter
 	AccountId int64
 }
 
@@ -2145,7 +2281,7 @@ func (r *AppsGetSubscriptionPlanForAccountStubbedReq) urlQuery() url.Values {
 }
 
 func (r *AppsGetSubscriptionPlanForAccountStubbedReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -2250,7 +2386,9 @@ AppsGetUserInstallationReq is request data for Client.AppsGetUserInstallation
 https://developer.github.com/v3/apps/#get-a-user-installation-for-the-authenticated-app
 */
 type AppsGetUserInstallationReq struct {
-	_url     string
+	_url string
+
+	// username parameter
 	Username string
 
 	/*
@@ -2278,7 +2416,7 @@ func (r *AppsGetUserInstallationReq) urlQuery() url.Values {
 }
 
 func (r *AppsGetUserInstallationReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"machine-man": r.MachineManPreview}
 	if requiredPreviews {
 		previewVals["machine-man"] = true
@@ -2389,7 +2527,9 @@ AppsListAccountsForPlanReq is request data for Client.AppsListAccountsForPlan
 https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan
 */
 type AppsListAccountsForPlanReq struct {
-	_url   string
+	_url string
+
+	// plan_id parameter
 	PlanId int64
 
 	/*
@@ -2441,7 +2581,7 @@ func (r *AppsListAccountsForPlanReq) urlQuery() url.Values {
 }
 
 func (r *AppsListAccountsForPlanReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -2546,7 +2686,9 @@ AppsListAccountsForPlanStubbedReq is request data for Client.AppsListAccountsFor
 https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan-stubbed
 */
 type AppsListAccountsForPlanStubbedReq struct {
-	_url   string
+	_url string
+
+	// plan_id parameter
 	PlanId int64
 
 	/*
@@ -2598,7 +2740,7 @@ func (r *AppsListAccountsForPlanStubbedReq) urlQuery() url.Values {
 }
 
 func (r *AppsListAccountsForPlanStubbedReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -2703,7 +2845,9 @@ AppsListInstallationReposForAuthenticatedUserReq is request data for Client.Apps
 https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-access-token
 */
 type AppsListInstallationReposForAuthenticatedUserReq struct {
-	_url           string
+	_url string
+
+	// installation_id parameter
 	InstallationId int64
 
 	// Results per page (max 100)
@@ -2750,7 +2894,7 @@ func (r *AppsListInstallationReposForAuthenticatedUserReq) urlQuery() url.Values
 }
 
 func (r *AppsListInstallationReposForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{
 		"machine-man": r.MachineManPreview,
 		"mercy":       r.MercyPreview,
@@ -2774,7 +2918,7 @@ func (r *AppsListInstallationReposForAuthenticatedUserReq) dataStatuses() []int 
 }
 
 func (r *AppsListInstallationReposForAuthenticatedUserReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *AppsListInstallationReposForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
@@ -2805,8 +2949,9 @@ AppsListInstallationReposForAuthenticatedUserResponseBody is a response body for
 https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-access-token
 */
 type AppsListInstallationReposForAuthenticatedUserResponseBody struct {
-	Repositories []components.Repository `json:"repositories,omitempty"`
-	TotalCount   int64                   `json:"total_count,omitempty"`
+	Repositories        []components.Repository `json:"repositories,omitempty"`
+	RepositorySelection string                  `json:"repository_selection,omitempty"`
+	TotalCount          int64                   `json:"total_count,omitempty"`
 }
 
 /*
@@ -2877,6 +3022,14 @@ type AppsListInstallationsReq struct {
 	Page *int64
 
 	/*
+	Only show notifications updated after the given time. This is a timestamp in
+	[ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format:
+	`YYYY-MM-DDTHH:MM:SSZ`.
+	*/
+	Since    *string
+	Outdated *string
+
+	/*
 	To access the API with your GitHub App, you must set this to true for your
 	requests.
 	*/
@@ -2903,11 +3056,17 @@ func (r *AppsListInstallationsReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
+	if r.Since != nil {
+		query.Set("since", *r.Since)
+	}
+	if r.Outdated != nil {
+		query.Set("outdated", *r.Outdated)
+	}
 	return query
 }
 
 func (r *AppsListInstallationsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"machine-man": r.MachineManPreview}
 	if requiredPreviews {
 		previewVals["machine-man"] = true
@@ -2957,7 +3116,7 @@ AppsListInstallationsResponseBody is a response body for AppsListInstallations
 
 https://developer.github.com/v3/apps/#list-installations-for-the-authenticated-app
 */
-type AppsListInstallationsResponseBody []components.BaseInstallation
+type AppsListInstallationsResponseBody []components.Installation
 
 /*
 AppsListInstallationsResponse is a response for AppsListInstallations
@@ -3057,7 +3216,7 @@ func (r *AppsListInstallationsForAuthenticatedUserReq) urlQuery() url.Values {
 }
 
 func (r *AppsListInstallationsForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"machine-man": r.MachineManPreview}
 	if requiredPreviews {
 		previewVals["machine-man"] = true
@@ -3077,7 +3236,7 @@ func (r *AppsListInstallationsForAuthenticatedUserReq) dataStatuses() []int {
 }
 
 func (r *AppsListInstallationsForAuthenticatedUserReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *AppsListInstallationsForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
@@ -3108,8 +3267,8 @@ AppsListInstallationsForAuthenticatedUserResponseBody is a response body for App
 https://developer.github.com/v3/apps/installations/#list-app-installations-accessible-to-the-user-access-token
 */
 type AppsListInstallationsForAuthenticatedUserResponseBody struct {
-	Installations []components.BaseInstallationForAuthUser `json:"installations,omitempty"`
-	TotalCount    int64                                    `json:"total_count,omitempty"`
+	Installations []components.Installation `json:"installations,omitempty"`
+	TotalCount    int64                     `json:"total_count,omitempty"`
 }
 
 /*
@@ -3204,7 +3363,7 @@ func (r *AppsListPlansReq) urlQuery() url.Values {
 }
 
 func (r *AppsListPlansReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -3342,7 +3501,7 @@ func (r *AppsListPlansStubbedReq) urlQuery() url.Values {
 }
 
 func (r *AppsListPlansStubbedReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -3493,7 +3652,7 @@ func (r *AppsListReposAccessibleToInstallationReq) urlQuery() url.Values {
 }
 
 func (r *AppsListReposAccessibleToInstallationReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{
 		"machine-man": r.MachineManPreview,
 		"mercy":       r.MercyPreview,
@@ -3517,7 +3676,7 @@ func (r *AppsListReposAccessibleToInstallationReq) dataStatuses() []int {
 }
 
 func (r *AppsListReposAccessibleToInstallationReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *AppsListReposAccessibleToInstallationReq) endpointAttributes() []endpointAttribute {
@@ -3548,8 +3707,9 @@ AppsListReposAccessibleToInstallationResponseBody is a response body for AppsLis
 https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-app-installation
 */
 type AppsListReposAccessibleToInstallationResponseBody struct {
-	Repositories []components.Repository2 `json:"repositories,omitempty"`
-	TotalCount   int64                    `json:"total_count,omitempty"`
+	Repositories        []components.Repository `json:"repositories,omitempty"`
+	RepositorySelection string                  `json:"repository_selection,omitempty"`
+	TotalCount          int64                   `json:"total_count,omitempty"`
 }
 
 /*
@@ -3644,7 +3804,7 @@ func (r *AppsListSubscriptionsForAuthenticatedUserReq) urlQuery() url.Values {
 }
 
 func (r *AppsListSubscriptionsForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -3658,7 +3818,7 @@ func (r *AppsListSubscriptionsForAuthenticatedUserReq) dataStatuses() []int {
 }
 
 func (r *AppsListSubscriptionsForAuthenticatedUserReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *AppsListSubscriptionsForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
@@ -3782,7 +3942,7 @@ func (r *AppsListSubscriptionsForAuthenticatedUserStubbedReq) urlQuery() url.Val
 }
 
 func (r *AppsListSubscriptionsForAuthenticatedUserStubbedReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -3796,7 +3956,7 @@ func (r *AppsListSubscriptionsForAuthenticatedUserStubbedReq) dataStatuses() []i
 }
 
 func (r *AppsListSubscriptionsForAuthenticatedUserStubbedReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *AppsListSubscriptionsForAuthenticatedUserStubbedReq) endpointAttributes() []endpointAttribute {
@@ -3886,9 +4046,13 @@ AppsRemoveRepoFromInstallationReq is request data for Client.AppsRemoveRepoFromI
 https://developer.github.com/v3/apps/installations/#remove-a-repository-from-an-app-installation
 */
 type AppsRemoveRepoFromInstallationReq struct {
-	_url           string
+	_url string
+
+	// installation_id parameter
 	InstallationId int64
-	RepositoryId   int64
+
+	// repository_id parameter
+	RepositoryId int64
 
 	/*
 	To access the API with your GitHub App, you must set this to true for your
@@ -3935,7 +4099,7 @@ func (r *AppsRemoveRepoFromInstallationReq) dataStatuses() []int {
 }
 
 func (r *AppsRemoveRepoFromInstallationReq) validStatuses() []int {
-	return []int{204}
+	return []int{204, 304}
 }
 
 func (r *AppsRemoveRepoFromInstallationReq) endpointAttributes() []endpointAttribute {
@@ -4018,8 +4182,12 @@ AppsResetAuthorizationReq is request data for Client.AppsResetAuthorization
 https://developer.github.com/v3/apps/oauth_applications/#reset-an-authorization
 */
 type AppsResetAuthorizationReq struct {
-	_url        string
-	ClientId    string
+	_url string
+
+	// client_id parameter
+	ClientId string
+
+	// access_token parameter
 	AccessToken string
 }
 
@@ -4041,7 +4209,7 @@ func (r *AppsResetAuthorizationReq) urlQuery() url.Values {
 }
 
 func (r *AppsResetAuthorizationReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -4085,7 +4253,7 @@ AppsResetAuthorizationResponseBody is a response body for AppsResetAuthorization
 
 https://developer.github.com/v3/apps/oauth_applications/#reset-an-authorization
 */
-type AppsResetAuthorizationResponseBody components.AuthorizationWithUser
+type AppsResetAuthorizationResponseBody components.Authorization
 
 /*
 AppsResetAuthorizationResponse is a response for AppsResetAuthorization
@@ -4146,7 +4314,9 @@ AppsResetTokenReq is request data for Client.AppsResetToken
 https://developer.github.com/v3/apps/oauth_applications/#reset-a-token
 */
 type AppsResetTokenReq struct {
-	_url        string
+	_url string
+
+	// client_id parameter
 	ClientId    string
 	RequestBody AppsResetTokenReqBody
 }
@@ -4169,7 +4339,10 @@ func (r *AppsResetTokenReq) urlQuery() url.Values {
 }
 
 func (r *AppsResetTokenReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -4215,8 +4388,8 @@ https://developer.github.com/v3/apps/oauth_applications/#reset-a-token
 */
 type AppsResetTokenReqBody struct {
 
-	// The OAuth access token used to authenticate to the GitHub API.
-	AccessToken *string `json:"access_token,omitempty"`
+	// The access_token of the OAuth application.
+	AccessToken *string `json:"access_token"`
 }
 
 /*
@@ -4224,7 +4397,7 @@ AppsResetTokenResponseBody is a response body for AppsResetToken
 
 https://developer.github.com/v3/apps/oauth_applications/#reset-a-token
 */
-type AppsResetTokenResponseBody components.AuthorizationWithUser
+type AppsResetTokenResponseBody components.Authorization
 
 /*
 AppsResetTokenResponse is a response for AppsResetToken
@@ -4284,8 +4457,12 @@ AppsRevokeAuthorizationForApplicationReq is request data for Client.AppsRevokeAu
 https://developer.github.com/v3/apps/oauth_applications/#revoke-an-authorization-for-an-application
 */
 type AppsRevokeAuthorizationForApplicationReq struct {
-	_url        string
-	ClientId    string
+	_url string
+
+	// client_id parameter
+	ClientId string
+
+	// access_token parameter
 	AccessToken string
 }
 
@@ -4403,8 +4580,12 @@ AppsRevokeGrantForApplicationReq is request data for Client.AppsRevokeGrantForAp
 https://developer.github.com/v3/apps/oauth_applications/#revoke-a-grant-for-an-application
 */
 type AppsRevokeGrantForApplicationReq struct {
-	_url        string
-	ClientId    string
+	_url string
+
+	// client_id parameter
+	ClientId string
+
+	// access_token parameter
 	AccessToken string
 }
 
@@ -4613,6 +4794,10 @@ func AppsSuspendInstallation(ctx context.Context, req *AppsSuspendInstallationRe
 	if err != nil {
 		return resp, err
 	}
+	err = r.setBoolResult(&resp.Data)
+	if err != nil {
+		return nil, err
+	}
 	err = r.decodeBody(nil)
 	if err != nil {
 		return nil, err
@@ -4639,7 +4824,9 @@ AppsSuspendInstallationReq is request data for Client.AppsSuspendInstallation
 https://developer.github.com/v3/apps/#suspend-an-app-installation
 */
 type AppsSuspendInstallationReq struct {
-	_url           string
+	_url string
+
+	// installation_id parameter
 	InstallationId int64
 }
 
@@ -4679,7 +4866,7 @@ func (r *AppsSuspendInstallationReq) validStatuses() []int {
 }
 
 func (r *AppsSuspendInstallationReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrBoolean}
 }
 
 // HTTPRequest builds an *http.Request
@@ -4708,6 +4895,7 @@ https://developer.github.com/v3/apps/#suspend-an-app-installation
 type AppsSuspendInstallationResponse struct {
 	response
 	request *AppsSuspendInstallationReq
+	Data    bool
 }
 
 /*
@@ -4730,6 +4918,10 @@ func AppsUnsuspendInstallation(ctx context.Context, req *AppsUnsuspendInstallati
 	}
 	if err != nil {
 		return resp, err
+	}
+	err = r.setBoolResult(&resp.Data)
+	if err != nil {
+		return nil, err
 	}
 	err = r.decodeBody(nil)
 	if err != nil {
@@ -4757,7 +4949,9 @@ AppsUnsuspendInstallationReq is request data for Client.AppsUnsuspendInstallatio
 https://developer.github.com/v3/apps/#unsuspend-an-app-installation
 */
 type AppsUnsuspendInstallationReq struct {
-	_url           string
+	_url string
+
+	// installation_id parameter
 	InstallationId int64
 }
 
@@ -4797,7 +4991,7 @@ func (r *AppsUnsuspendInstallationReq) validStatuses() []int {
 }
 
 func (r *AppsUnsuspendInstallationReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrBoolean}
 }
 
 // HTTPRequest builds an *http.Request
@@ -4826,4 +5020,5 @@ https://developer.github.com/v3/apps/#unsuspend-an-app-installation
 type AppsUnsuspendInstallationResponse struct {
 	response
 	request *AppsUnsuspendInstallationReq
+	Data    bool
 }

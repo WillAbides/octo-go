@@ -121,14 +121,13 @@ func renderConcernFiles(concernFiles map[string]*jen.File, outputPath string) er
 	return nil
 }
 
-func addEndpointToConcernFiles(endpoint model.Endpoint, concernFiles map[string]*jen.File, pkgPath, pkgName string) error {
-	endpoint = endpointWithOverrides(endpoint)
+func addEndpointToConcernFiles(endpoint *model.Endpoint, concernFiles map[string]*jen.File, pkgPath, pkgName string) error {
+	err := applyEndpointOverrides(endpoint)
+	if err != nil {
+		return err
+	}
 	if endpoint.Legacy {
 		return nil
-	}
-	if len(endpoint.Requests) > 1 {
-		// better safe than sorry.  check on what triggers this and make sure it's handled right.
-		return fmt.Errorf("we've never had an endpoint with multiple requests before. endpoint: %s", endpoint.ID)
 	}
 	if concernFiles[endpoint.Concern] == nil {
 		cf := jen.NewFilePathName(pkgPath, pkgName)

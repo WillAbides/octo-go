@@ -6,7 +6,7 @@ interactions:
     form: {}
     headers:
       Accept:
-      - application/vnd.github.v3+json
+      - application/json
       User-Agent:
       - octo-go
     url: https://api.github.com/repos/WillAbides/octo-go/compare/2c80673f15b275cbb22fc167cb1b9aa43ba7a27a...ceac7c6d9a134326a0871174423bea19acbb122a

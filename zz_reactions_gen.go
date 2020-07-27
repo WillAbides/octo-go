@@ -59,20 +59,24 @@ ReactionsCreateForCommitCommentReq is request data for Client.ReactionsCreateFor
 https://developer.github.com/v3/reactions/#create-reaction-for-a-commit-comment
 */
 type ReactionsCreateForCommitCommentReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// comment_id parameter
 	CommentId   int64
 	RequestBody ReactionsCreateForCommitCommentReqBody
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During
-	the preview period, the APIs may change without advance notice. Please see the
-	[blog
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
-
 
 	To access the API you must set this to true.
 	*/
@@ -97,7 +101,10 @@ func (r *ReactionsCreateForCommitCommentReq) urlQuery() url.Values {
 }
 
 func (r *ReactionsCreateForCommitCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
 	if requiredPreviews {
 		previewVals["squirrel-girl"] = true
@@ -113,11 +120,11 @@ func (r *ReactionsCreateForCommitCommentReq) body() interface{} {
 }
 
 func (r *ReactionsCreateForCommitCommentReq) dataStatuses() []int {
-	return []int{201}
+	return []int{200, 201}
 }
 
 func (r *ReactionsCreateForCommitCommentReq) validStatuses() []int {
-	return []int{201}
+	return []int{200, 201}
 }
 
 func (r *ReactionsCreateForCommitCommentReq) endpointAttributes() []endpointAttribute {
@@ -149,10 +156,7 @@ https://developer.github.com/v3/reactions/#create-reaction-for-a-commit-comment
 */
 type ReactionsCreateForCommitCommentReqBody struct {
 
-	/*
-	   The [reaction type](https://developer.github.com/v3/reactions/#reaction-types)
-	   to add to the commit comment.
-	*/
+	// The [reaction type](https://developer.github.com/v3/reactions/#reaction-types) to add to the commit comment.
 	Content *string `json:"content"`
 }
 
@@ -222,20 +226,24 @@ ReactionsCreateForIssueReq is request data for Client.ReactionsCreateForIssue
 https://developer.github.com/v3/reactions/#create-reaction-for-an-issue
 */
 type ReactionsCreateForIssueReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// issue_number parameter
 	IssueNumber int64
 	RequestBody ReactionsCreateForIssueReqBody
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During
-	the preview period, the APIs may change without advance notice. Please see the
-	[blog
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
-
 
 	To access the API you must set this to true.
 	*/
@@ -260,7 +268,10 @@ func (r *ReactionsCreateForIssueReq) urlQuery() url.Values {
 }
 
 func (r *ReactionsCreateForIssueReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
 	if requiredPreviews {
 		previewVals["squirrel-girl"] = true
@@ -312,10 +323,7 @@ https://developer.github.com/v3/reactions/#create-reaction-for-an-issue
 */
 type ReactionsCreateForIssueReqBody struct {
 
-	/*
-	   The [reaction type](https://developer.github.com/v3/reactions/#reaction-types)
-	   to add to the issue.
-	*/
+	// The [reaction type](https://developer.github.com/v3/reactions/#reaction-types) to add to the issue.
 	Content *string `json:"content"`
 }
 
@@ -385,20 +393,24 @@ ReactionsCreateForIssueCommentReq is request data for Client.ReactionsCreateForI
 https://developer.github.com/v3/reactions/#create-reaction-for-an-issue-comment
 */
 type ReactionsCreateForIssueCommentReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// comment_id parameter
 	CommentId   int64
 	RequestBody ReactionsCreateForIssueCommentReqBody
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During
-	the preview period, the APIs may change without advance notice. Please see the
-	[blog
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
-
 
 	To access the API you must set this to true.
 	*/
@@ -423,7 +435,10 @@ func (r *ReactionsCreateForIssueCommentReq) urlQuery() url.Values {
 }
 
 func (r *ReactionsCreateForIssueCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
 	if requiredPreviews {
 		previewVals["squirrel-girl"] = true
@@ -439,11 +454,11 @@ func (r *ReactionsCreateForIssueCommentReq) body() interface{} {
 }
 
 func (r *ReactionsCreateForIssueCommentReq) dataStatuses() []int {
-	return []int{201}
+	return []int{200, 201}
 }
 
 func (r *ReactionsCreateForIssueCommentReq) validStatuses() []int {
-	return []int{201}
+	return []int{200, 201}
 }
 
 func (r *ReactionsCreateForIssueCommentReq) endpointAttributes() []endpointAttribute {
@@ -475,10 +490,7 @@ https://developer.github.com/v3/reactions/#create-reaction-for-an-issue-comment
 */
 type ReactionsCreateForIssueCommentReqBody struct {
 
-	/*
-	   The [reaction type](https://developer.github.com/v3/reactions/#reaction-types)
-	   to add to the issue comment.
-	*/
+	// The [reaction type](https://developer.github.com/v3/reactions/#reaction-types) to add to the issue comment.
 	Content *string `json:"content"`
 }
 
@@ -548,20 +560,24 @@ ReactionsCreateForPullRequestReviewCommentReq is request data for Client.Reactio
 https://developer.github.com/v3/reactions/#create-reaction-for-a-pull-request-review-comment
 */
 type ReactionsCreateForPullRequestReviewCommentReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// comment_id parameter
 	CommentId   int64
 	RequestBody ReactionsCreateForPullRequestReviewCommentReqBody
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During
-	the preview period, the APIs may change without advance notice. Please see the
-	[blog
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
-
 
 	To access the API you must set this to true.
 	*/
@@ -586,7 +602,10 @@ func (r *ReactionsCreateForPullRequestReviewCommentReq) urlQuery() url.Values {
 }
 
 func (r *ReactionsCreateForPullRequestReviewCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
 	if requiredPreviews {
 		previewVals["squirrel-girl"] = true
@@ -602,11 +621,11 @@ func (r *ReactionsCreateForPullRequestReviewCommentReq) body() interface{} {
 }
 
 func (r *ReactionsCreateForPullRequestReviewCommentReq) dataStatuses() []int {
-	return []int{201}
+	return []int{200, 201}
 }
 
 func (r *ReactionsCreateForPullRequestReviewCommentReq) validStatuses() []int {
-	return []int{201}
+	return []int{200, 201}
 }
 
 func (r *ReactionsCreateForPullRequestReviewCommentReq) endpointAttributes() []endpointAttribute {
@@ -639,8 +658,8 @@ https://developer.github.com/v3/reactions/#create-reaction-for-a-pull-request-re
 type ReactionsCreateForPullRequestReviewCommentReqBody struct {
 
 	/*
-	   The [reaction type](https://developer.github.com/v3/reactions/#reaction-types)
-	   to add to the pull request review comment.
+	The [reaction type](https://developer.github.com/v3/reactions/#reaction-types)
+	to add to the pull request review comment.
 	*/
 	Content *string `json:"content"`
 }
@@ -711,21 +730,27 @@ ReactionsCreateForTeamDiscussionCommentInOrgReq is request data for Client.React
 https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-comment
 */
 type ReactionsCreateForTeamDiscussionCommentInOrgReq struct {
-	_url             string
-	Org              string
-	TeamSlug         string
+	_url string
+
+	// org parameter
+	Org string
+
+	// team_slug parameter
+	TeamSlug string
+
+	// discussion_number parameter
 	DiscussionNumber int64
-	CommentNumber    int64
-	RequestBody      ReactionsCreateForTeamDiscussionCommentInOrgReqBody
+
+	// comment_number parameter
+	CommentNumber int64
+	RequestBody   ReactionsCreateForTeamDiscussionCommentInOrgReqBody
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During
-	the preview period, the APIs may change without advance notice. Please see the
-	[blog
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
-
 
 	To access the API you must set this to true.
 	*/
@@ -750,7 +775,10 @@ func (r *ReactionsCreateForTeamDiscussionCommentInOrgReq) urlQuery() url.Values 
 }
 
 func (r *ReactionsCreateForTeamDiscussionCommentInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
 	if requiredPreviews {
 		previewVals["squirrel-girl"] = true
@@ -802,10 +830,7 @@ https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion
 */
 type ReactionsCreateForTeamDiscussionCommentInOrgReqBody struct {
 
-	/*
-	   The [reaction type](https://developer.github.com/v3/reactions/#reaction-types)
-	   to add to the team discussion comment.
-	*/
+	// The [reaction type](https://developer.github.com/v3/reactions/#reaction-types) to add to the team discussion comment.
 	Content *string `json:"content"`
 }
 
@@ -875,20 +900,24 @@ ReactionsCreateForTeamDiscussionCommentLegacyReq is request data for Client.Reac
 https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-comment-legacy
 */
 type ReactionsCreateForTeamDiscussionCommentLegacyReq struct {
-	_url             string
-	TeamId           int64
+	_url string
+
+	// team_id parameter
+	TeamId int64
+
+	// discussion_number parameter
 	DiscussionNumber int64
-	CommentNumber    int64
-	RequestBody      ReactionsCreateForTeamDiscussionCommentLegacyReqBody
+
+	// comment_number parameter
+	CommentNumber int64
+	RequestBody   ReactionsCreateForTeamDiscussionCommentLegacyReqBody
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During
-	the preview period, the APIs may change without advance notice. Please see the
-	[blog
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
-
 
 	To access the API you must set this to true.
 	*/
@@ -913,7 +942,10 @@ func (r *ReactionsCreateForTeamDiscussionCommentLegacyReq) urlQuery() url.Values
 }
 
 func (r *ReactionsCreateForTeamDiscussionCommentLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
 	if requiredPreviews {
 		previewVals["squirrel-girl"] = true
@@ -965,10 +997,7 @@ https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion
 */
 type ReactionsCreateForTeamDiscussionCommentLegacyReqBody struct {
 
-	/*
-	   The [reaction type](https://developer.github.com/v3/reactions/#reaction-types)
-	   to add to the team discussion comment.
-	*/
+	// The [reaction type](https://developer.github.com/v3/reactions/#reaction-types) to add to the team discussion comment.
 	Content *string `json:"content"`
 }
 
@@ -1038,20 +1067,24 @@ ReactionsCreateForTeamDiscussionInOrgReq is request data for Client.ReactionsCre
 https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion
 */
 type ReactionsCreateForTeamDiscussionInOrgReq struct {
-	_url             string
-	Org              string
-	TeamSlug         string
+	_url string
+
+	// org parameter
+	Org string
+
+	// team_slug parameter
+	TeamSlug string
+
+	// discussion_number parameter
 	DiscussionNumber int64
 	RequestBody      ReactionsCreateForTeamDiscussionInOrgReqBody
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During
-	the preview period, the APIs may change without advance notice. Please see the
-	[blog
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
-
 
 	To access the API you must set this to true.
 	*/
@@ -1076,7 +1109,10 @@ func (r *ReactionsCreateForTeamDiscussionInOrgReq) urlQuery() url.Values {
 }
 
 func (r *ReactionsCreateForTeamDiscussionInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
 	if requiredPreviews {
 		previewVals["squirrel-girl"] = true
@@ -1128,10 +1164,7 @@ https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion
 */
 type ReactionsCreateForTeamDiscussionInOrgReqBody struct {
 
-	/*
-	   The [reaction type](https://developer.github.com/v3/reactions/#reaction-types)
-	   to add to the team discussion.
-	*/
+	// The [reaction type](https://developer.github.com/v3/reactions/#reaction-types) to add to the team discussion.
 	Content *string `json:"content"`
 }
 
@@ -1201,19 +1234,21 @@ ReactionsCreateForTeamDiscussionLegacyReq is request data for Client.ReactionsCr
 https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-legacy
 */
 type ReactionsCreateForTeamDiscussionLegacyReq struct {
-	_url             string
-	TeamId           int64
+	_url string
+
+	// team_id parameter
+	TeamId int64
+
+	// discussion_number parameter
 	DiscussionNumber int64
 	RequestBody      ReactionsCreateForTeamDiscussionLegacyReqBody
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During
-	the preview period, the APIs may change without advance notice. Please see the
-	[blog
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
-
 
 	To access the API you must set this to true.
 	*/
@@ -1238,7 +1273,10 @@ func (r *ReactionsCreateForTeamDiscussionLegacyReq) urlQuery() url.Values {
 }
 
 func (r *ReactionsCreateForTeamDiscussionLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
 	if requiredPreviews {
 		previewVals["squirrel-girl"] = true
@@ -1290,10 +1328,7 @@ https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion
 */
 type ReactionsCreateForTeamDiscussionLegacyReqBody struct {
 
-	/*
-	   The [reaction type](https://developer.github.com/v3/reactions/#reaction-types)
-	   to add to the team discussion.
-	*/
+	// The [reaction type](https://developer.github.com/v3/reactions/#reaction-types) to add to the team discussion.
 	Content *string `json:"content"`
 }
 
@@ -1362,20 +1397,26 @@ ReactionsDeleteForCommitCommentReq is request data for Client.ReactionsDeleteFor
 https://developer.github.com/v3/reactions/#delete-a-commit-comment-reaction
 */
 type ReactionsDeleteForCommitCommentReq struct {
-	_url       string
-	Owner      string
-	Repo       string
-	CommentId  int64
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// comment_id parameter
+	CommentId int64
+
+	// reaction_id parameter
 	ReactionId int64
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During
-	the preview period, the APIs may change without advance notice. Please see the
-	[blog
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
-
 
 	To access the API you must set this to true.
 	*/
@@ -1502,20 +1543,26 @@ ReactionsDeleteForIssueReq is request data for Client.ReactionsDeleteForIssue
 https://developer.github.com/v3/reactions/#delete-an-issue-reaction
 */
 type ReactionsDeleteForIssueReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// issue_number parameter
 	IssueNumber int64
-	ReactionId  int64
+
+	// reaction_id parameter
+	ReactionId int64
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During
-	the preview period, the APIs may change without advance notice. Please see the
-	[blog
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
-
 
 	To access the API you must set this to true.
 	*/
@@ -1642,20 +1689,26 @@ ReactionsDeleteForIssueCommentReq is request data for Client.ReactionsDeleteForI
 https://developer.github.com/v3/reactions/#delete-an-issue-comment-reaction
 */
 type ReactionsDeleteForIssueCommentReq struct {
-	_url       string
-	Owner      string
-	Repo       string
-	CommentId  int64
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// comment_id parameter
+	CommentId int64
+
+	// reaction_id parameter
 	ReactionId int64
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During
-	the preview period, the APIs may change without advance notice. Please see the
-	[blog
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
-
 
 	To access the API you must set this to true.
 	*/
@@ -1782,20 +1835,26 @@ ReactionsDeleteForPullRequestCommentReq is request data for Client.ReactionsDele
 https://developer.github.com/v3/reactions/#delete-a-pull-request-comment-reaction
 */
 type ReactionsDeleteForPullRequestCommentReq struct {
-	_url       string
-	Owner      string
-	Repo       string
-	CommentId  int64
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// comment_id parameter
+	CommentId int64
+
+	// reaction_id parameter
 	ReactionId int64
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During
-	the preview period, the APIs may change without advance notice. Please see the
-	[blog
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
-
 
 	To access the API you must set this to true.
 	*/
@@ -1922,20 +1981,26 @@ ReactionsDeleteForTeamDiscussionReq is request data for Client.ReactionsDeleteFo
 https://developer.github.com/v3/reactions/#delete-team-discussion-reaction
 */
 type ReactionsDeleteForTeamDiscussionReq struct {
-	_url             string
-	Org              string
-	TeamSlug         string
+	_url string
+
+	// org parameter
+	Org string
+
+	// team_slug parameter
+	TeamSlug string
+
+	// discussion_number parameter
 	DiscussionNumber int64
-	ReactionId       int64
+
+	// reaction_id parameter
+	ReactionId int64
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During
-	the preview period, the APIs may change without advance notice. Please see the
-	[blog
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
-
 
 	To access the API you must set this to true.
 	*/
@@ -2062,21 +2127,29 @@ ReactionsDeleteForTeamDiscussionCommentReq is request data for Client.ReactionsD
 https://developer.github.com/v3/reactions/#delete-team-discussion-comment-reaction
 */
 type ReactionsDeleteForTeamDiscussionCommentReq struct {
-	_url             string
-	Org              string
-	TeamSlug         string
+	_url string
+
+	// org parameter
+	Org string
+
+	// team_slug parameter
+	TeamSlug string
+
+	// discussion_number parameter
 	DiscussionNumber int64
-	CommentNumber    int64
-	ReactionId       int64
+
+	// comment_number parameter
+	CommentNumber int64
+
+	// reaction_id parameter
+	ReactionId int64
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During
-	the preview period, the APIs may change without advance notice. Please see the
-	[blog
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
-
 
 	To access the API you must set this to true.
 	*/
@@ -2203,17 +2276,17 @@ ReactionsDeleteLegacyReq is request data for Client.ReactionsDeleteLegacy
 https://developer.github.com/v3/reactions/#delete-a-reaction-legacy
 */
 type ReactionsDeleteLegacyReq struct {
-	_url       string
+	_url string
+
+	// reaction_id parameter
 	ReactionId int64
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During
-	the preview period, the APIs may change without advance notice. Please see the
-	[blog
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
-
 
 	To access the API you must set this to true.
 	*/
@@ -2258,7 +2331,7 @@ func (r *ReactionsDeleteLegacyReq) dataStatuses() []int {
 }
 
 func (r *ReactionsDeleteLegacyReq) validStatuses() []int {
-	return []int{204}
+	return []int{204, 304}
 }
 
 func (r *ReactionsDeleteLegacyReq) endpointAttributes() []endpointAttribute {
@@ -2341,9 +2414,15 @@ ReactionsListForCommitCommentReq is request data for Client.ReactionsListForComm
 https://developer.github.com/v3/reactions/#list-reactions-for-a-commit-comment
 */
 type ReactionsListForCommitCommentReq struct {
-	_url      string
-	Owner     string
-	Repo      string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// comment_id parameter
 	CommentId int64
 
 	/*
@@ -2361,12 +2440,10 @@ type ReactionsListForCommitCommentReq struct {
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During
-	the preview period, the APIs may change without advance notice. Please see the
-	[blog
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
-
 
 	To access the API you must set this to true.
 	*/
@@ -2400,7 +2477,7 @@ func (r *ReactionsListForCommitCommentReq) urlQuery() url.Values {
 }
 
 func (r *ReactionsListForCommitCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
 	if requiredPreviews {
 		previewVals["squirrel-girl"] = true
@@ -2511,9 +2588,15 @@ ReactionsListForIssueReq is request data for Client.ReactionsListForIssue
 https://developer.github.com/v3/reactions/#list-reactions-for-an-issue
 */
 type ReactionsListForIssueReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// issue_number parameter
 	IssueNumber int64
 
 	/*
@@ -2531,12 +2614,10 @@ type ReactionsListForIssueReq struct {
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During
-	the preview period, the APIs may change without advance notice. Please see the
-	[blog
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
-
 
 	To access the API you must set this to true.
 	*/
@@ -2570,7 +2651,7 @@ func (r *ReactionsListForIssueReq) urlQuery() url.Values {
 }
 
 func (r *ReactionsListForIssueReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
 	if requiredPreviews {
 		previewVals["squirrel-girl"] = true
@@ -2681,9 +2762,15 @@ ReactionsListForIssueCommentReq is request data for Client.ReactionsListForIssue
 https://developer.github.com/v3/reactions/#list-reactions-for-an-issue-comment
 */
 type ReactionsListForIssueCommentReq struct {
-	_url      string
-	Owner     string
-	Repo      string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// comment_id parameter
 	CommentId int64
 
 	/*
@@ -2701,12 +2788,10 @@ type ReactionsListForIssueCommentReq struct {
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During
-	the preview period, the APIs may change without advance notice. Please see the
-	[blog
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
-
 
 	To access the API you must set this to true.
 	*/
@@ -2740,7 +2825,7 @@ func (r *ReactionsListForIssueCommentReq) urlQuery() url.Values {
 }
 
 func (r *ReactionsListForIssueCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
 	if requiredPreviews {
 		previewVals["squirrel-girl"] = true
@@ -2851,9 +2936,15 @@ ReactionsListForPullRequestReviewCommentReq is request data for Client.Reactions
 https://developer.github.com/v3/reactions/#list-reactions-for-a-pull-request-review-comment
 */
 type ReactionsListForPullRequestReviewCommentReq struct {
-	_url      string
-	Owner     string
-	Repo      string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// comment_id parameter
 	CommentId int64
 
 	/*
@@ -2871,12 +2962,10 @@ type ReactionsListForPullRequestReviewCommentReq struct {
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During
-	the preview period, the APIs may change without advance notice. Please see the
-	[blog
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
-
 
 	To access the API you must set this to true.
 	*/
@@ -2910,7 +2999,7 @@ func (r *ReactionsListForPullRequestReviewCommentReq) urlQuery() url.Values {
 }
 
 func (r *ReactionsListForPullRequestReviewCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
 	if requiredPreviews {
 		previewVals["squirrel-girl"] = true
@@ -3021,11 +3110,19 @@ ReactionsListForTeamDiscussionCommentInOrgReq is request data for Client.Reactio
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-comment
 */
 type ReactionsListForTeamDiscussionCommentInOrgReq struct {
-	_url             string
-	Org              string
-	TeamSlug         string
+	_url string
+
+	// org parameter
+	Org string
+
+	// team_slug parameter
+	TeamSlug string
+
+	// discussion_number parameter
 	DiscussionNumber int64
-	CommentNumber    int64
+
+	// comment_number parameter
+	CommentNumber int64
 
 	/*
 	Returns a single [reaction
@@ -3042,12 +3139,10 @@ type ReactionsListForTeamDiscussionCommentInOrgReq struct {
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During
-	the preview period, the APIs may change without advance notice. Please see the
-	[blog
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
-
 
 	To access the API you must set this to true.
 	*/
@@ -3081,7 +3176,7 @@ func (r *ReactionsListForTeamDiscussionCommentInOrgReq) urlQuery() url.Values {
 }
 
 func (r *ReactionsListForTeamDiscussionCommentInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
 	if requiredPreviews {
 		previewVals["squirrel-girl"] = true
@@ -3192,10 +3287,16 @@ ReactionsListForTeamDiscussionCommentLegacyReq is request data for Client.Reacti
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-comment-legacy
 */
 type ReactionsListForTeamDiscussionCommentLegacyReq struct {
-	_url             string
-	TeamId           int64
+	_url string
+
+	// team_id parameter
+	TeamId int64
+
+	// discussion_number parameter
 	DiscussionNumber int64
-	CommentNumber    int64
+
+	// comment_number parameter
+	CommentNumber int64
 
 	/*
 	Returns a single [reaction
@@ -3212,12 +3313,10 @@ type ReactionsListForTeamDiscussionCommentLegacyReq struct {
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During
-	the preview period, the APIs may change without advance notice. Please see the
-	[blog
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
-
 
 	To access the API you must set this to true.
 	*/
@@ -3251,7 +3350,7 @@ func (r *ReactionsListForTeamDiscussionCommentLegacyReq) urlQuery() url.Values {
 }
 
 func (r *ReactionsListForTeamDiscussionCommentLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
 	if requiredPreviews {
 		previewVals["squirrel-girl"] = true
@@ -3362,9 +3461,15 @@ ReactionsListForTeamDiscussionInOrgReq is request data for Client.ReactionsListF
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion
 */
 type ReactionsListForTeamDiscussionInOrgReq struct {
-	_url             string
-	Org              string
-	TeamSlug         string
+	_url string
+
+	// org parameter
+	Org string
+
+	// team_slug parameter
+	TeamSlug string
+
+	// discussion_number parameter
 	DiscussionNumber int64
 
 	/*
@@ -3382,12 +3487,10 @@ type ReactionsListForTeamDiscussionInOrgReq struct {
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During
-	the preview period, the APIs may change without advance notice. Please see the
-	[blog
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
-
 
 	To access the API you must set this to true.
 	*/
@@ -3421,7 +3524,7 @@ func (r *ReactionsListForTeamDiscussionInOrgReq) urlQuery() url.Values {
 }
 
 func (r *ReactionsListForTeamDiscussionInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
 	if requiredPreviews {
 		previewVals["squirrel-girl"] = true
@@ -3532,8 +3635,12 @@ ReactionsListForTeamDiscussionLegacyReq is request data for Client.ReactionsList
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-legacy
 */
 type ReactionsListForTeamDiscussionLegacyReq struct {
-	_url             string
-	TeamId           int64
+	_url string
+
+	// team_id parameter
+	TeamId int64
+
+	// discussion_number parameter
 	DiscussionNumber int64
 
 	/*
@@ -3551,12 +3658,10 @@ type ReactionsListForTeamDiscussionLegacyReq struct {
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During
-	the preview period, the APIs may change without advance notice. Please see the
-	[blog
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
-
 
 	To access the API you must set this to true.
 	*/
@@ -3590,7 +3695,7 @@ func (r *ReactionsListForTeamDiscussionLegacyReq) urlQuery() url.Values {
 }
 
 func (r *ReactionsListForTeamDiscussionLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
 	if requiredPreviews {
 		previewVals["squirrel-girl"] = true

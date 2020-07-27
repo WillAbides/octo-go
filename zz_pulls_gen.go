@@ -62,9 +62,15 @@ PullsCheckIfMergedReq is request data for Client.PullsCheckIfMerged
 https://developer.github.com/v3/pulls/#check-if-a-pull-request-has-been-merged
 */
 type PullsCheckIfMergedReq struct {
-	_url       string
-	Owner      string
-	Repo       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// pull_number parameter
 	PullNumber int64
 }
 
@@ -184,8 +190,12 @@ PullsCreateReq is request data for Client.PullsCreate
 https://developer.github.com/v3/pulls/#create-a-pull-request
 */
 type PullsCreateReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody PullsCreateReqBody
 
@@ -218,7 +228,10 @@ func (r *PullsCreateReq) urlQuery() url.Values {
 }
 
 func (r *PullsCreateReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{"sailor-v": r.SailorVPreview}
 	if allPreviews {
 		previewVals["sailor-v"] = true
@@ -268,9 +281,9 @@ https://developer.github.com/v3/pulls/#create-a-pull-request
 type PullsCreateReqBody struct {
 
 	/*
-	   The name of the branch you want the changes pulled into. This should be an
-	   existing branch on the current repository. You cannot submit a pull request to
-	   one repository that requests a merge to a base of another repository.
+	The name of the branch you want the changes pulled into. This should be an
+	existing branch on the current repository. You cannot submit a pull request to
+	one repository that requests a merge to a base of another repository.
 	*/
 	Base *string `json:"base"`
 
@@ -278,28 +291,29 @@ type PullsCreateReqBody struct {
 	Body *string `json:"body,omitempty"`
 
 	/*
-	   Indicates whether the pull request is a draft. See "[Draft Pull
-	   Requests](https://help.github.com/en/articles/about-pull-requests#draft-pull-requests)"
-	   in the GitHub Help documentation to learn more.
+	Indicates whether the pull request is a draft. See "[Draft Pull
+	Requests](https://help.github.com/en/articles/about-pull-requests#draft-pull-requests)"
+	in the GitHub Help documentation to learn more.
 	*/
 	Draft *bool `json:"draft,omitempty"`
 
 	/*
-	   The name of the branch where your changes are implemented. For cross-repository
-	   pull requests in the same network, namespace `head` with a user like this:
-	   `username:branch`.
+	The name of the branch where your changes are implemented. For cross-repository
+	pull requests in the same network, namespace `head` with a user like this:
+	`username:branch`.
 	*/
-	Head *string `json:"head"`
+	Head  *string `json:"head"`
+	Issue *int64  `json:"issue,omitempty"`
 
 	/*
-	   Indicates whether [maintainers can
-	   modify](https://help.github.com/articles/allowing-changes-to-a-pull-request-branch-created-from-a-fork/)
-	   the pull request.
+	Indicates whether [maintainers can
+	modify](https://help.github.com/articles/allowing-changes-to-a-pull-request-branch-created-from-a-fork/)
+	the pull request.
 	*/
 	MaintainerCanModify *bool `json:"maintainer_can_modify,omitempty"`
 
 	// The title of the new pull request.
-	Title *string `json:"title"`
+	Title *string `json:"title,omitempty"`
 }
 
 /*
@@ -368,10 +382,18 @@ PullsCreateReplyForReviewCommentReq is request data for Client.PullsCreateReplyF
 https://developer.github.com/v3/pulls/comments/#create-a-reply-for-a-review-comment
 */
 type PullsCreateReplyForReviewCommentReq struct {
-	_url        string
-	Owner       string
-	Repo        string
-	PullNumber  int64
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// pull_number parameter
+	PullNumber int64
+
+	// comment_id parameter
 	CommentId   int64
 	RequestBody PullsCreateReplyForReviewCommentReqBody
 }
@@ -394,7 +416,10 @@ func (r *PullsCreateReplyForReviewCommentReq) urlQuery() url.Values {
 }
 
 func (r *PullsCreateReplyForReviewCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -510,9 +535,15 @@ PullsCreateReviewReq is request data for Client.PullsCreateReview
 https://developer.github.com/v3/pulls/reviews/#create-a-review-for-a-pull-request
 */
 type PullsCreateReviewReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// pull_number parameter
 	PullNumber  int64
 	RequestBody PullsCreateReviewReqBody
 }
@@ -535,7 +566,10 @@ func (r *PullsCreateReviewReq) urlQuery() url.Values {
 }
 
 func (r *PullsCreateReviewReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -579,16 +613,20 @@ type PullsCreateReviewReqBodyComments struct {
 
 	// Text of the review comment.
 	Body *string `json:"body"`
+	Line *int64  `json:"line,omitempty"`
 
 	// The relative path to the file that necessitates a review comment.
 	Path *string `json:"path"`
 
 	/*
-	   The position in the diff where you want to add a review comment. Note this value
-	   is not the same as the line number in the file. For help finding the position
-	   value, read the note below.
+	The position in the diff where you want to add a review comment. Note this value
+	is not the same as the line number in the file. For help finding the position
+	value, read the note below.
 	*/
-	Position *int64 `json:"position"`
+	Position  *int64  `json:"position,omitempty"`
+	Side      *string `json:"side,omitempty"`
+	StartLine *int64  `json:"start_line,omitempty"`
+	StartSide *string `json:"start_side,omitempty"`
 }
 
 /*
@@ -599,31 +637,28 @@ https://developer.github.com/v3/pulls/reviews/#create-a-review-for-a-pull-reques
 type PullsCreateReviewReqBody struct {
 
 	/*
-	   **Required** when using `REQUEST_CHANGES` or `COMMENT` for the `event`
-	   parameter. The body text of the pull request review.
+	**Required** when using `REQUEST_CHANGES` or `COMMENT` for the `event`
+	parameter. The body text of the pull request review.
 	*/
 	Body *string `json:"body,omitempty"`
 
-	/*
-	   Use the following table to specify the location, destination, and contents of
-	   the draft review comment.
-	*/
+	// Use the following table to specify the location, destination, and contents of the draft review comment.
 	Comments []PullsCreateReviewReqBodyComments `json:"comments,omitempty"`
 
 	/*
-	   The SHA of the commit that needs a review. Not using the latest commit SHA may
-	   render your review comment outdated if a subsequent commit modifies the line you
-	   specify as the `position`. Defaults to the most recent commit in the pull
-	   request when you do not specify a value.
+	The SHA of the commit that needs a review. Not using the latest commit SHA may
+	render your review comment outdated if a subsequent commit modifies the line you
+	specify as the `position`. Defaults to the most recent commit in the pull
+	request when you do not specify a value.
 	*/
 	CommitId *string `json:"commit_id,omitempty"`
 
 	/*
-	   The review action you want to perform. The review actions include: `APPROVE`,
-	   `REQUEST_CHANGES`, or `COMMENT`. By leaving this blank, you set the review
-	   action state to `PENDING`, which means you will need to [submit the pull request
-	   review](https://developer.github.com/v3/pulls/reviews/#submit-a-review-for-a-pull-request)
-	   when you are ready.
+	The review action you want to perform. The review actions include: `APPROVE`,
+	`REQUEST_CHANGES`, or `COMMENT`. By leaving this blank, you set the review
+	action state to `PENDING`, which means you will need to [submit the pull request
+	review](https://developer.github.com/v3/pulls/reviews/#submit-a-review-for-a-pull-request)
+	when you are ready.
 	*/
 	Event *string `json:"event,omitempty"`
 }
@@ -694,9 +729,15 @@ PullsCreateReviewCommentReq is request data for Client.PullsCreateReviewComment
 https://developer.github.com/v3/pulls/comments/#create-a-review-comment-for-a-pull-request
 */
 type PullsCreateReviewCommentReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// pull_number parameter
 	PullNumber  int64
 	RequestBody PullsCreateReviewCommentReqBody
 
@@ -726,7 +767,10 @@ func (r *PullsCreateReviewCommentReq) urlQuery() url.Values {
 }
 
 func (r *PullsCreateReviewCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{"comfort-fade": r.ComfortFadePreview}
 	if allPreviews {
 		previewVals["comfort-fade"] = true
@@ -779,16 +823,17 @@ type PullsCreateReviewCommentReqBody struct {
 	Body *string `json:"body"`
 
 	/*
-	   The SHA of the commit needing a comment. Not using the latest commit SHA may
-	   render your comment outdated if a subsequent commit modifies the line you
-	   specify as the `position`.
+	The SHA of the commit needing a comment. Not using the latest commit SHA may
+	render your comment outdated if a subsequent commit modifies the line you
+	specify as the `position`.
 	*/
-	CommitId *string `json:"commit_id"`
+	CommitId  *string `json:"commit_id,omitempty"`
+	InReplyTo *int64  `json:"in_reply_to,omitempty"`
 
 	/*
-	   **Required with `comfort-fade` preview**. The line of the blob in the pull
-	   request diff that the comment applies to. For a multi-line comment, the last
-	   line of the range that your comment applies to.
+	**Required with `comfort-fade` preview**. The line of the blob in the pull
+	request diff that the comment applies to. For a multi-line comment, the last
+	line of the range that your comment applies to.
 	*/
 	Line *int64 `json:"line,omitempty"`
 
@@ -796,39 +841,42 @@ type PullsCreateReviewCommentReqBody struct {
 	Path *string `json:"path"`
 
 	/*
-	   **Required without `comfort-fade` preview**. The position in the diff where you
-	   want to add a review comment. Note this value is not the same as the line number
-	   in the file. For help finding the position value, read the note above.
+	**Required without `comfort-fade` preview**. The position in the diff where you
+	want to add a review comment. Note this value is not the same as the line number
+	in the file. For help finding the position value, read the note above.
 	*/
 	Position *int64 `json:"position,omitempty"`
 
 	/*
-	   **Required with `comfort-fade` preview**. In a split diff view, the side of the
-	   diff that the pull request's changes appear on. Can be `LEFT` or `RIGHT`. Use
-	   `LEFT` for deletions that appear in red. Use `RIGHT` for additions that appear
-	   in green or unchanged lines that appear in white and are shown for context. For
-	   a multi-line comment, side represents whether the last line of the comment range
-	   is a deletion or addition. For more information, see "[Diff view
-	   options](https://help.github.com/en/articles/about-comparing-branches-in-pull-requests#diff-view-options)".
+	**Required with `comfort-fade` preview**. In a split diff view, the side of the
+	diff that the pull request's changes appear on. Can be `LEFT` or `RIGHT`. Use
+	`LEFT` for deletions that appear in red. Use `RIGHT` for additions that appear
+	in green or unchanged lines that appear in white and are shown for context. For
+	a multi-line comment, side represents whether the last line of the comment range
+	is a deletion or addition. For more information, see "[Diff view
+	options](https://help.github.com/en/articles/about-comparing-branches-in-pull-requests#diff-view-options)"
+	in the GitHub Help documentation.
 	*/
 	Side *string `json:"side,omitempty"`
 
 	/*
-	   **Required when using multi-line comments**. To create multi-line comments, you
-	   must use the `comfort-fade` preview header. The `start_line` is the first line
-	   in the pull request diff that your multi-line comment applies to. To learn more
-	   about multi-line comments, see "[Commenting on a pull
-	   request](https://help.github.com/en/articles/commenting-on-a-pull-request#adding-line-comments-to-a-pull-request)".
+	**Required when using multi-line comments**. To create multi-line comments, you
+	must use the `comfort-fade` preview header. The `start_line` is the first line
+	in the pull request diff that your multi-line comment applies to. To learn more
+	about multi-line comments, see "[Commenting on a pull
+	request](https://help.github.com/en/articles/commenting-on-a-pull-request#adding-line-comments-to-a-pull-request)"
+	in the GitHub Help documentation.
 	*/
 	StartLine *int64 `json:"start_line,omitempty"`
 
 	/*
-	   **Required when using multi-line comments**. To create multi-line comments, you
-	   must use the `comfort-fade` preview header. The `start_side` is the starting
-	   side of the diff that the comment applies to. Can be `LEFT` or `RIGHT`. To learn
-	   more about multi-line comments, see "[Commenting on a pull
-	   request](https://help.github.com/en/articles/commenting-on-a-pull-request#adding-line-comments-to-a-pull-request)".
-	   See `side` in this table for additional context.
+	**Required when using multi-line comments**. To create multi-line comments, you
+	must use the `comfort-fade` preview header. The `start_side` is the starting
+	side of the diff that the comment applies to. Can be `LEFT` or `RIGHT`. To learn
+	more about multi-line comments, see "[Commenting on a pull
+	request](https://help.github.com/en/articles/commenting-on-a-pull-request#adding-line-comments-to-a-pull-request)"
+	in the GitHub Help documentation. See `side` in this table for additional
+	context.
 	*/
 	StartSide *string `json:"start_side,omitempty"`
 }
@@ -899,11 +947,19 @@ PullsDeletePendingReviewReq is request data for Client.PullsDeletePendingReview
 https://developer.github.com/v3/pulls/reviews/#delete-a-pending-review-for-a-pull-request
 */
 type PullsDeletePendingReviewReq struct {
-	_url       string
-	Owner      string
-	Repo       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// pull_number parameter
 	PullNumber int64
-	ReviewId   int64
+
+	// review_id parameter
+	ReviewId int64
 }
 
 func (r *PullsDeletePendingReviewReq) url() string {
@@ -924,7 +980,7 @@ func (r *PullsDeletePendingReviewReq) urlQuery() url.Values {
 }
 
 func (r *PullsDeletePendingReviewReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -968,7 +1024,7 @@ PullsDeletePendingReviewResponseBody is a response body for PullsDeletePendingRe
 
 https://developer.github.com/v3/pulls/reviews/#delete-a-pending-review-for-a-pull-request
 */
-type PullsDeletePendingReviewResponseBody components.PullRequestReview2
+type PullsDeletePendingReviewResponseBody components.PullRequestReview
 
 /*
 PullsDeletePendingReviewResponse is a response for PullsDeletePendingReview
@@ -1002,6 +1058,10 @@ func PullsDeleteReviewComment(ctx context.Context, req *PullsDeleteReviewComment
 	if err != nil {
 		return resp, err
 	}
+	err = r.setBoolResult(&resp.Data)
+	if err != nil {
+		return nil, err
+	}
 	err = r.decodeBody(nil)
 	if err != nil {
 		return nil, err
@@ -1028,9 +1088,15 @@ PullsDeleteReviewCommentReq is request data for Client.PullsDeleteReviewComment
 https://developer.github.com/v3/pulls/comments/#delete-a-review-comment-for-a-pull-request
 */
 type PullsDeleteReviewCommentReq struct {
-	_url      string
-	Owner     string
-	Repo      string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// comment_id parameter
 	CommentId int64
 }
 
@@ -1070,7 +1136,7 @@ func (r *PullsDeleteReviewCommentReq) validStatuses() []int {
 }
 
 func (r *PullsDeleteReviewCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrBoolean}
 }
 
 // HTTPRequest builds an *http.Request
@@ -1099,6 +1165,7 @@ https://developer.github.com/v3/pulls/comments/#delete-a-review-comment-for-a-pu
 type PullsDeleteReviewCommentResponse struct {
 	response
 	request *PullsDeleteReviewCommentReq
+	Data    bool
 }
 
 /*
@@ -1149,10 +1216,18 @@ PullsDismissReviewReq is request data for Client.PullsDismissReview
 https://developer.github.com/v3/pulls/reviews/#dismiss-a-review-for-a-pull-request
 */
 type PullsDismissReviewReq struct {
-	_url        string
-	Owner       string
-	Repo        string
-	PullNumber  int64
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// pull_number parameter
+	PullNumber int64
+
+	// review_id parameter
 	ReviewId    int64
 	RequestBody PullsDismissReviewReqBody
 }
@@ -1175,7 +1250,10 @@ func (r *PullsDismissReviewReq) urlQuery() url.Values {
 }
 
 func (r *PullsDismissReviewReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -1220,6 +1298,7 @@ PullsDismissReviewReqBody is a request body for pulls/dismiss-review
 https://developer.github.com/v3/pulls/reviews/#dismiss-a-review-for-a-pull-request
 */
 type PullsDismissReviewReqBody struct {
+	Event *string `json:"event,omitempty"`
 
 	// The message for the pull request review dismissal
 	Message *string `json:"message"`
@@ -1291,9 +1370,15 @@ PullsGetReq is request data for Client.PullsGet
 https://developer.github.com/v3/pulls/#get-a-pull-request
 */
 type PullsGetReq struct {
-	_url       string
-	Owner      string
-	Repo       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// pull_number parameter
 	PullNumber int64
 
 	/*
@@ -1325,7 +1410,7 @@ func (r *PullsGetReq) urlQuery() url.Values {
 }
 
 func (r *PullsGetReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"sailor-v": r.SailorVPreview}
 	if allPreviews {
 		previewVals["sailor-v"] = true
@@ -1342,7 +1427,7 @@ func (r *PullsGetReq) dataStatuses() []int {
 }
 
 func (r *PullsGetReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *PullsGetReq) endpointAttributes() []endpointAttribute {
@@ -1433,11 +1518,19 @@ PullsGetReviewReq is request data for Client.PullsGetReview
 https://developer.github.com/v3/pulls/reviews/#get-a-review-for-a-pull-request
 */
 type PullsGetReviewReq struct {
-	_url       string
-	Owner      string
-	Repo       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// pull_number parameter
 	PullNumber int64
-	ReviewId   int64
+
+	// review_id parameter
+	ReviewId int64
 }
 
 func (r *PullsGetReviewReq) url() string {
@@ -1458,7 +1551,7 @@ func (r *PullsGetReviewReq) urlQuery() url.Values {
 }
 
 func (r *PullsGetReviewReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -1563,9 +1656,15 @@ PullsGetReviewCommentReq is request data for Client.PullsGetReviewComment
 https://developer.github.com/v3/pulls/comments/#get-a-review-comment-for-a-pull-request
 */
 type PullsGetReviewCommentReq struct {
-	_url      string
-	Owner     string
-	Repo      string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// comment_id parameter
 	CommentId int64
 
 	/*
@@ -1577,12 +1676,10 @@ type PullsGetReviewCommentReq struct {
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During
-	the preview period, the APIs may change without advance notice. Please see the
-	[blog
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
-
 
 	To access the API you must set this to true.
 	*/
@@ -1607,7 +1704,7 @@ func (r *PullsGetReviewCommentReq) urlQuery() url.Values {
 }
 
 func (r *PullsGetReviewCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{
 		"comfort-fade":  r.ComfortFadePreview,
 		"squirrel-girl": r.SquirrelGirlPreview,
@@ -1719,9 +1816,13 @@ PullsListReq is request data for Client.PullsList
 https://developer.github.com/v3/pulls/#list-pull-requests
 */
 type PullsListReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// Either `open`, `closed`, or `all` to filter by state.
 	State *string
@@ -1805,7 +1906,7 @@ func (r *PullsListReq) urlQuery() url.Values {
 }
 
 func (r *PullsListReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"sailor-v": r.SailorVPreview}
 	if allPreviews {
 		previewVals["sailor-v"] = true
@@ -1822,7 +1923,7 @@ func (r *PullsListReq) dataStatuses() []int {
 }
 
 func (r *PullsListReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *PullsListReq) endpointAttributes() []endpointAttribute {
@@ -1913,11 +2014,19 @@ PullsListCommentsForReviewReq is request data for Client.PullsListCommentsForRev
 https://developer.github.com/v3/pulls/reviews/#list-comments-for-a-pull-request-review
 */
 type PullsListCommentsForReviewReq struct {
-	_url       string
-	Owner      string
-	Repo       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// pull_number parameter
 	PullNumber int64
-	ReviewId   int64
+
+	// review_id parameter
+	ReviewId int64
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -1950,7 +2059,7 @@ func (r *PullsListCommentsForReviewReq) urlQuery() url.Values {
 }
 
 func (r *PullsListCommentsForReviewReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -1994,7 +2103,7 @@ PullsListCommentsForReviewResponseBody is a response body for PullsListCommentsF
 
 https://developer.github.com/v3/pulls/reviews/#list-comments-for-a-pull-request-review
 */
-type PullsListCommentsForReviewResponseBody []components.LegacyReviewComment
+type PullsListCommentsForReviewResponseBody []components.ReviewComment
 
 /*
 PullsListCommentsForReviewResponse is a response for PullsListCommentsForReview
@@ -2055,9 +2164,15 @@ PullsListCommitsReq is request data for Client.PullsListCommits
 https://developer.github.com/v3/pulls/#list-commits-on-a-pull-request
 */
 type PullsListCommitsReq struct {
-	_url       string
-	Owner      string
-	Repo       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// pull_number parameter
 	PullNumber int64
 
 	// Results per page (max 100)
@@ -2091,7 +2206,7 @@ func (r *PullsListCommitsReq) urlQuery() url.Values {
 }
 
 func (r *PullsListCommitsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -2196,9 +2311,15 @@ PullsListFilesReq is request data for Client.PullsListFiles
 https://developer.github.com/v3/pulls/#list-pull-requests-files
 */
 type PullsListFilesReq struct {
-	_url       string
-	Owner      string
-	Repo       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// pull_number parameter
 	PullNumber int64
 
 	// Results per page (max 100)
@@ -2232,7 +2353,7 @@ func (r *PullsListFilesReq) urlQuery() url.Values {
 }
 
 func (r *PullsListFilesReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -2337,9 +2458,15 @@ PullsListRequestedReviewersReq is request data for Client.PullsListRequestedRevi
 https://developer.github.com/v3/pulls/review_requests/#list-requested-reviewers-for-a-pull-request
 */
 type PullsListRequestedReviewersReq struct {
-	_url       string
-	Owner      string
-	Repo       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// pull_number parameter
 	PullNumber int64
 
 	// Results per page (max 100)
@@ -2373,7 +2500,7 @@ func (r *PullsListRequestedReviewersReq) urlQuery() url.Values {
 }
 
 func (r *PullsListRequestedReviewersReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -2417,7 +2544,7 @@ PullsListRequestedReviewersResponseBody is a response body for PullsListRequeste
 
 https://developer.github.com/v3/pulls/review_requests/#list-requested-reviewers-for-a-pull-request
 */
-type PullsListRequestedReviewersResponseBody components.SimplePullRequestReviewRequest
+type PullsListRequestedReviewersResponseBody components.PullRequestReviewRequest
 
 /*
 PullsListRequestedReviewersResponse is a response for PullsListRequestedReviewers
@@ -2478,9 +2605,15 @@ PullsListReviewCommentsReq is request data for Client.PullsListReviewComments
 https://developer.github.com/v3/pulls/comments/#list-review-comments-on-a-pull-request
 */
 type PullsListReviewCommentsReq struct {
-	_url       string
-	Owner      string
-	Repo       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// pull_number parameter
 	PullNumber int64
 
 	// Can be either `created` or `updated` comments.
@@ -2511,12 +2644,10 @@ type PullsListReviewCommentsReq struct {
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During
-	the preview period, the APIs may change without advance notice. Please see the
-	[blog
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
-
 
 	To access the API you must set this to true.
 	*/
@@ -2556,7 +2687,7 @@ func (r *PullsListReviewCommentsReq) urlQuery() url.Values {
 }
 
 func (r *PullsListReviewCommentsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{
 		"comfort-fade":  r.ComfortFadePreview,
 		"squirrel-girl": r.SquirrelGirlPreview,
@@ -2668,9 +2799,13 @@ PullsListReviewCommentsForRepoReq is request data for Client.PullsListReviewComm
 https://developer.github.com/v3/pulls/comments/#list-review-comments-in-a-repository
 */
 type PullsListReviewCommentsForRepoReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// Can be either `created` or `updated` comments.
 	Sort *string
@@ -2700,12 +2835,10 @@ type PullsListReviewCommentsForRepoReq struct {
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During
-	the preview period, the APIs may change without advance notice. Please see the
-	[blog
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
-
 
 	To access the API you must set this to true.
 	*/
@@ -2745,7 +2878,7 @@ func (r *PullsListReviewCommentsForRepoReq) urlQuery() url.Values {
 }
 
 func (r *PullsListReviewCommentsForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{
 		"comfort-fade":  r.ComfortFadePreview,
 		"squirrel-girl": r.SquirrelGirlPreview,
@@ -2857,9 +2990,15 @@ PullsListReviewsReq is request data for Client.PullsListReviews
 https://developer.github.com/v3/pulls/reviews/#list-reviews-for-a-pull-request
 */
 type PullsListReviewsReq struct {
-	_url       string
-	Owner      string
-	Repo       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// pull_number parameter
 	PullNumber int64
 
 	// Results per page (max 100)
@@ -2893,7 +3032,7 @@ func (r *PullsListReviewsReq) urlQuery() url.Values {
 }
 
 func (r *PullsListReviewsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -2998,9 +3137,15 @@ PullsMergeReq is request data for Client.PullsMerge
 https://developer.github.com/v3/pulls/#merge-a-pull-request
 */
 type PullsMergeReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// pull_number parameter
 	PullNumber  int64
 	RequestBody PullsMergeReqBody
 }
@@ -3023,7 +3168,10 @@ func (r *PullsMergeReq) urlQuery() url.Values {
 }
 
 func (r *PullsMergeReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -3075,10 +3223,7 @@ type PullsMergeReqBody struct {
 	// Title for the automatic commit message.
 	CommitTitle *string `json:"commit_title,omitempty"`
 
-	/*
-	   Merge method to use. Possible values are `merge`, `squash` or `rebase`. Default
-	   is `merge`.
-	*/
+	// Merge method to use. Possible values are `merge`, `squash` or `rebase`. Default is `merge`.
 	MergeMethod *string `json:"merge_method,omitempty"`
 
 	// SHA that pull request head must match to allow merge.
@@ -3150,9 +3295,15 @@ PullsRemoveRequestedReviewersReq is request data for Client.PullsRemoveRequested
 https://developer.github.com/v3/pulls/review_requests/#remove-requested-reviewers-from-a-pull-request
 */
 type PullsRemoveRequestedReviewersReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// pull_number parameter
 	PullNumber  int64
 	RequestBody PullsRemoveRequestedReviewersReqBody
 }
@@ -3175,7 +3326,7 @@ func (r *PullsRemoveRequestedReviewersReq) urlQuery() url.Values {
 }
 
 func (r *PullsRemoveRequestedReviewersReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"content-type": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -3286,9 +3437,15 @@ PullsRequestReviewersReq is request data for Client.PullsRequestReviewers
 https://developer.github.com/v3/pulls/review_requests/#request-reviewers-for-a-pull-request
 */
 type PullsRequestReviewersReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// pull_number parameter
 	PullNumber  int64
 	RequestBody PullsRequestReviewersReqBody
 }
@@ -3311,7 +3468,10 @@ func (r *PullsRequestReviewersReq) urlQuery() url.Values {
 }
 
 func (r *PullsRequestReviewersReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -3369,7 +3529,7 @@ PullsRequestReviewersResponseBody is a response body for PullsRequestReviewers
 
 https://developer.github.com/v3/pulls/review_requests/#request-reviewers-for-a-pull-request
 */
-type PullsRequestReviewersResponseBody components.PullRequestReviewRequest
+type PullsRequestReviewersResponseBody components.PullRequestSimple
 
 /*
 PullsRequestReviewersResponse is a response for PullsRequestReviewers
@@ -3430,10 +3590,18 @@ PullsSubmitReviewReq is request data for Client.PullsSubmitReview
 https://developer.github.com/v3/pulls/reviews/#submit-a-review-for-a-pull-request
 */
 type PullsSubmitReviewReq struct {
-	_url        string
-	Owner       string
-	Repo        string
-	PullNumber  int64
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// pull_number parameter
+	PullNumber int64
+
+	// review_id parameter
 	ReviewId    int64
 	RequestBody PullsSubmitReviewReqBody
 }
@@ -3456,7 +3624,10 @@ func (r *PullsSubmitReviewReq) urlQuery() url.Values {
 }
 
 func (r *PullsSubmitReviewReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -3506,11 +3677,11 @@ type PullsSubmitReviewReqBody struct {
 	Body *string `json:"body,omitempty"`
 
 	/*
-	   The review action you want to perform. The review actions include: `APPROVE`,
-	   `REQUEST_CHANGES`, or `COMMENT`. When you leave this blank, the API returns
-	   _HTTP 422 (Unrecognizable entity)_ and sets the review action state to
-	   `PENDING`, which means you will need to re-submit the pull request review using
-	   a review action.
+	The review action you want to perform. The review actions include: `APPROVE`,
+	`REQUEST_CHANGES`, or `COMMENT`. When you leave this blank, the API returns
+	_HTTP 422 (Unrecognizable entity)_ and sets the review action state to
+	`PENDING`, which means you will need to re-submit the pull request review using
+	a review action.
 	*/
 	Event *string `json:"event"`
 }
@@ -3581,9 +3752,15 @@ PullsUpdateReq is request data for Client.PullsUpdate
 https://developer.github.com/v3/pulls/#update-a-pull-request
 */
 type PullsUpdateReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// pull_number parameter
 	PullNumber  int64
 	RequestBody PullsUpdateReqBody
 
@@ -3616,7 +3793,10 @@ func (r *PullsUpdateReq) urlQuery() url.Values {
 }
 
 func (r *PullsUpdateReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{"sailor-v": r.SailorVPreview}
 	if allPreviews {
 		previewVals["sailor-v"] = true
@@ -3666,9 +3846,9 @@ https://developer.github.com/v3/pulls/#update-a-pull-request
 type PullsUpdateReqBody struct {
 
 	/*
-	   The name of the branch you want your changes pulled into. This should be an
-	   existing branch on the current repository. You cannot update the base branch on
-	   a pull request to point to another repository.
+	The name of the branch you want your changes pulled into. This should be an
+	existing branch on the current repository. You cannot update the base branch on
+	a pull request to point to another repository.
 	*/
 	Base *string `json:"base,omitempty"`
 
@@ -3676,9 +3856,9 @@ type PullsUpdateReqBody struct {
 	Body *string `json:"body,omitempty"`
 
 	/*
-	   Indicates whether [maintainers can
-	   modify](https://help.github.com/articles/allowing-changes-to-a-pull-request-branch-created-from-a-fork/)
-	   the pull request.
+	Indicates whether [maintainers can
+	modify](https://help.github.com/articles/allowing-changes-to-a-pull-request-branch-created-from-a-fork/)
+	the pull request.
 	*/
 	MaintainerCanModify *bool `json:"maintainer_can_modify,omitempty"`
 
@@ -3755,9 +3935,15 @@ PullsUpdateBranchReq is request data for Client.PullsUpdateBranch
 https://developer.github.com/v3/pulls/#update-a-pull-request-branch
 */
 type PullsUpdateBranchReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// pull_number parameter
 	PullNumber  int64
 	RequestBody PullsUpdateBranchReqBody
 
@@ -3787,7 +3973,10 @@ func (r *PullsUpdateBranchReq) urlQuery() url.Values {
 }
 
 func (r *PullsUpdateBranchReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{"lydian": r.LydianPreview}
 	if requiredPreviews {
 		previewVals["lydian"] = true
@@ -3840,13 +4029,13 @@ https://developer.github.com/v3/pulls/#update-a-pull-request-branch
 type PullsUpdateBranchReqBody struct {
 
 	/*
-	   The expected SHA of the pull request's HEAD ref. This is the most recent commit
-	   on the pull request's branch. If the expected SHA does not match the pull
-	   request's HEAD, you will receive a `422 Unprocessable Entity` status. You can
-	   use the "[List
-	   commits](https://developer.github.com/v3/repos/commits/#list-commits)" endpoint
-	   to find the most recent commit SHA. Default: SHA of the pull request's current
-	   HEAD ref.
+	The expected SHA of the pull request's HEAD ref. This is the most recent commit
+	on the pull request's branch. If the expected SHA does not match the pull
+	request's HEAD, you will receive a `422 Unprocessable Entity` status. You can
+	use the "[List
+	commits](https://developer.github.com/v3/repos/commits/#list-commits)" endpoint
+	to find the most recent commit SHA. Default: SHA of the pull request's current
+	HEAD ref.
 	*/
 	ExpectedHeadSha *string `json:"expected_head_sha,omitempty"`
 }
@@ -3920,10 +4109,18 @@ PullsUpdateReviewReq is request data for Client.PullsUpdateReview
 https://developer.github.com/v3/pulls/reviews/#update-a-review-for-a-pull-request
 */
 type PullsUpdateReviewReq struct {
-	_url        string
-	Owner       string
-	Repo        string
-	PullNumber  int64
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// pull_number parameter
+	PullNumber int64
+
+	// review_id parameter
 	ReviewId    int64
 	RequestBody PullsUpdateReviewReqBody
 }
@@ -3946,7 +4143,10 @@ func (r *PullsUpdateReviewReq) urlQuery() url.Values {
 }
 
 func (r *PullsUpdateReviewReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -4062,9 +4262,15 @@ PullsUpdateReviewCommentReq is request data for Client.PullsUpdateReviewComment
 https://developer.github.com/v3/pulls/comments/#update-a-review-comment-for-a-pull-request
 */
 type PullsUpdateReviewCommentReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// comment_id parameter
 	CommentId   int64
 	RequestBody PullsUpdateReviewCommentReqBody
 
@@ -4094,7 +4300,10 @@ func (r *PullsUpdateReviewCommentReq) urlQuery() url.Values {
 }
 
 func (r *PullsUpdateReviewCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{"comfort-fade": r.ComfortFadePreview}
 	if allPreviews {
 		previewVals["comfort-fade"] = true

@@ -5,7 +5,6 @@
       "emails": [
         {
           "primary": true,
-          "type": "work",
           "value": "mona.octocat@okta.example.com"
         }
       ],
@@ -31,7 +30,6 @@
       "emails": [
         {
           "primary": true,
-          "type": "work",
           "value": "hubot@example.com"
         }
       ],

@@ -3,11 +3,13 @@ package octo_test
 import (
 	"bytes"
 	"context"
+	"fmt"
 	"io/ioutil"
 	"testing"
 
 	"github.com/stretchr/testify/require"
 	"github.com/willabides/octo-go"
+	"github.com/willabides/octo-go/components"
 )
 
 func TestReposGetContent(t *testing.T) {
@@ -21,7 +23,9 @@ func TestReposGetContent(t *testing.T) {
 			Path:  "generator/main.go",
 		})
 		require.NoError(t, err)
-		require.Len(t, response.Data, 1)
+		gotVal, ok := response.Data.Value().(components.ContentFile)
+		require.True(t, ok)
+		require.Equal(t, "main.go", gotVal.Name)
 	})
 
 	t.Run("directory", func(t *testing.T) {
@@ -34,19 +38,21 @@ func TestReposGetContent(t *testing.T) {
 			Path:  "generator",
 		})
 		require.NoError(t, err)
-		require.Greater(t, len(response.Data), 1)
+		fmt.Printf("%T\n", response.Data.Value())
+		gotVal, ok := response.Data.Value().(components.ContentDirectory)
+		require.True(t, ok)
+		require.Greater(t, len(gotVal), 1)
 	})
 }
 
-func TestReposDownloadArchive(t *testing.T) {
+func TestReposDownloadTarballArchive(t *testing.T) {
 	ctx := context.Background()
 	client := vcrClient(t, t.Name(), patAuth())
 
-	resp, err := client.ReposDownloadArchive(ctx, &octo.ReposDownloadArchiveReq{
-		Owner:         "octocat",
-		Repo:          "Hello-World",
-		ArchiveFormat: "tarball",
-		Ref:           "master",
+	resp, err := client.ReposDownloadTarballArchive(ctx, &octo.ReposDownloadTarballArchiveReq{
+		Owner: "octocat",
+		Repo:  "Hello-World",
+		Ref:   "master",
 	})
 	require.NoError(t, err)
 	g, err := ioutil.ReadAll(resp.HTTPResponse().Body)

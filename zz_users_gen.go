@@ -4,6 +4,7 @@ package octo
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	components "github.com/willabides/octo-go/components"
 	"net/http"
@@ -81,7 +82,10 @@ func (r *UsersAddEmailForAuthenticatedReq) urlQuery() url.Values {
 }
 
 func (r *UsersAddEmailForAuthenticatedReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -95,7 +99,7 @@ func (r *UsersAddEmailForAuthenticatedReq) dataStatuses() []int {
 }
 
 func (r *UsersAddEmailForAuthenticatedReq) validStatuses() []int {
-	return []int{201}
+	return []int{201, 304}
 }
 
 func (r *UsersAddEmailForAuthenticatedReq) endpointAttributes() []endpointAttribute {
@@ -128,10 +132,10 @@ https://developer.github.com/v3/users/emails/#add-an-email-address-for-the-authe
 type UsersAddEmailForAuthenticatedReqBody struct {
 
 	/*
-	   Adds one or more email addresses to your GitHub account. Must contain at least
-	   one email address. **Note:** Alternatively, you can pass a single email address
-	   or an `array` of emails addresses directly, but we recommend that you pass an
-	   object using the `emails` key.
+	Adds one or more email addresses to your GitHub account. Must contain at least
+	one email address. **Note:** Alternatively, you can pass a single email address
+	or an `array` of emails addresses directly, but we recommend that you pass an
+	object using the `emails` key.
 	*/
 	Emails []string `json:"emails"`
 }
@@ -201,7 +205,9 @@ UsersBlockReq is request data for Client.UsersBlock
 https://developer.github.com/v3/users/blocking/#block-a-user
 */
 type UsersBlockReq struct {
-	_url     string
+	_url string
+
+	// username parameter
 	Username string
 }
 
@@ -237,7 +243,7 @@ func (r *UsersBlockReq) dataStatuses() []int {
 }
 
 func (r *UsersBlockReq) validStatuses() []int {
-	return []int{204}
+	return []int{204, 304}
 }
 
 func (r *UsersBlockReq) endpointAttributes() []endpointAttribute {
@@ -293,10 +299,6 @@ func UsersCheckBlocked(ctx context.Context, req *UsersCheckBlockedReq, opt ...Re
 	if err != nil {
 		return resp, err
 	}
-	err = r.setBoolResult(&resp.Data)
-	if err != nil {
-		return nil, err
-	}
 	err = r.decodeBody(nil)
 	if err != nil {
 		return nil, err
@@ -323,7 +325,9 @@ UsersCheckBlockedReq is request data for Client.UsersCheckBlocked
 https://developer.github.com/v3/users/blocking/#check-if-a-user-is-blocked-by-the-authenticated-user
 */
 type UsersCheckBlockedReq struct {
-	_url     string
+	_url string
+
+	// username parameter
 	Username string
 }
 
@@ -359,11 +363,11 @@ func (r *UsersCheckBlockedReq) dataStatuses() []int {
 }
 
 func (r *UsersCheckBlockedReq) validStatuses() []int {
-	return []int{204}
+	return []int{204, 304}
 }
 
 func (r *UsersCheckBlockedReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrBoolean}
+	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -392,7 +396,6 @@ https://developer.github.com/v3/users/blocking/#check-if-a-user-is-blocked-by-th
 type UsersCheckBlockedResponse struct {
 	response
 	request *UsersCheckBlockedReq
-	Data    bool
 }
 
 /*
@@ -446,8 +449,12 @@ UsersCheckFollowingForUserReq is request data for Client.UsersCheckFollowingForU
 https://developer.github.com/v3/users/followers/#check-if-a-user-follows-another-user
 */
 type UsersCheckFollowingForUserReq struct {
-	_url       string
-	Username   string
+	_url string
+
+	// username parameter
+	Username string
+
+	// target_user parameter
 	TargetUser string
 }
 
@@ -540,10 +547,6 @@ func UsersCheckPersonIsFollowedByAuthenticated(ctx context.Context, req *UsersCh
 	if err != nil {
 		return resp, err
 	}
-	err = r.setBoolResult(&resp.Data)
-	if err != nil {
-		return nil, err
-	}
 	err = r.decodeBody(nil)
 	if err != nil {
 		return nil, err
@@ -570,7 +573,9 @@ UsersCheckPersonIsFollowedByAuthenticatedReq is request data for Client.UsersChe
 https://developer.github.com/v3/users/followers/#check-if-a-person-is-followed-by-the-authenticated-user
 */
 type UsersCheckPersonIsFollowedByAuthenticatedReq struct {
-	_url     string
+	_url string
+
+	// username parameter
 	Username string
 }
 
@@ -606,11 +611,11 @@ func (r *UsersCheckPersonIsFollowedByAuthenticatedReq) dataStatuses() []int {
 }
 
 func (r *UsersCheckPersonIsFollowedByAuthenticatedReq) validStatuses() []int {
-	return []int{204}
+	return []int{204, 304}
 }
 
 func (r *UsersCheckPersonIsFollowedByAuthenticatedReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrBoolean}
+	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -639,7 +644,6 @@ https://developer.github.com/v3/users/followers/#check-if-a-person-is-followed-b
 type UsersCheckPersonIsFollowedByAuthenticatedResponse struct {
 	response
 	request *UsersCheckPersonIsFollowedByAuthenticatedReq
-	Data    bool
 }
 
 /*
@@ -712,7 +716,10 @@ func (r *UsersCreateGpgKeyForAuthenticatedReq) urlQuery() url.Values {
 }
 
 func (r *UsersCreateGpgKeyForAuthenticatedReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -726,7 +733,7 @@ func (r *UsersCreateGpgKeyForAuthenticatedReq) dataStatuses() []int {
 }
 
 func (r *UsersCreateGpgKeyForAuthenticatedReq) validStatuses() []int {
-	return []int{201}
+	return []int{201, 304}
 }
 
 func (r *UsersCreateGpgKeyForAuthenticatedReq) endpointAttributes() []endpointAttribute {
@@ -758,12 +765,8 @@ https://developer.github.com/v3/users/gpg_keys/#create-a-gpg-key-for-the-authent
 */
 type UsersCreateGpgKeyForAuthenticatedReqBody struct {
 
-	/*
-	   Your GPG key, generated in ASCII-armored format. See "[Generating a new GPG
-	   key](https://help.github.com/articles/generating-a-new-gpg-key/)" for help
-	   creating a GPG key.
-	*/
-	ArmoredPublicKey *string `json:"armored_public_key,omitempty"`
+	// A GPG key in ASCII-armored format.
+	ArmoredPublicKey *string `json:"armored_public_key"`
 }
 
 /*
@@ -854,7 +857,10 @@ func (r *UsersCreatePublicSshKeyForAuthenticatedReq) urlQuery() url.Values {
 }
 
 func (r *UsersCreatePublicSshKeyForAuthenticatedReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -868,7 +874,7 @@ func (r *UsersCreatePublicSshKeyForAuthenticatedReq) dataStatuses() []int {
 }
 
 func (r *UsersCreatePublicSshKeyForAuthenticatedReq) validStatuses() []int {
-	return []int{201}
+	return []int{201, 304}
 }
 
 func (r *UsersCreatePublicSshKeyForAuthenticatedReq) endpointAttributes() []endpointAttribute {
@@ -900,18 +906,10 @@ https://developer.github.com/v3/users/keys/#create-a-public-ssh-key-for-the-auth
 */
 type UsersCreatePublicSshKeyForAuthenticatedReqBody struct {
 
-	/*
-	   The public SSH key to add to your GitHub account. See "[Generating a new SSH
-	   key](https://help.github.com/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent/)"
-	   for guidance on how to create a public SSH key.
-	*/
-	Key *string `json:"key,omitempty"`
+	// The public SSH key to add to your GitHub account.
+	Key *string `json:"key"`
 
-	/*
-	   A descriptive name for the new key. Use a name that will help you recognize this
-	   key in your GitHub account. For example, if you're using a personal Mac, you
-	   might call this key "Personal MacBook Air".
-	*/
+	// A descriptive name for the new key.
 	Title *string `json:"title,omitempty"`
 }
 
@@ -920,7 +918,7 @@ UsersCreatePublicSshKeyForAuthenticatedResponseBody is a response body for Users
 
 https://developer.github.com/v3/users/keys/#create-a-public-ssh-key-for-the-authenticated-user
 */
-type UsersCreatePublicSshKeyForAuthenticatedResponseBody components.ActionsPublicKey
+type UsersCreatePublicSshKeyForAuthenticatedResponseBody components.Key
 
 /*
 UsersCreatePublicSshKeyForAuthenticatedResponse is a response for UsersCreatePublicSshKeyForAuthenticated
@@ -1002,7 +1000,7 @@ func (r *UsersDeleteEmailForAuthenticatedReq) urlQuery() url.Values {
 }
 
 func (r *UsersDeleteEmailForAuthenticatedReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"content-type": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -1016,7 +1014,7 @@ func (r *UsersDeleteEmailForAuthenticatedReq) dataStatuses() []int {
 }
 
 func (r *UsersDeleteEmailForAuthenticatedReq) validStatuses() []int {
-	return []int{204}
+	return []int{204, 304}
 }
 
 func (r *UsersDeleteEmailForAuthenticatedReq) endpointAttributes() []endpointAttribute {
@@ -1048,12 +1046,7 @@ https://developer.github.com/v3/users/emails/#delete-an-email-address-for-the-au
 */
 type UsersDeleteEmailForAuthenticatedReqBody struct {
 
-	/*
-	   Deletes one or more email addresses from your GitHub account. Must contain at
-	   least one email address. **Note:** Alternatively, you can pass a single email
-	   address or an `array` of emails addresses directly, but we recommend that you
-	   pass an object using the `emails` key.
-	*/
+	// Email addresses associated with the GitHub user account.
 	Emails []string `json:"emails"`
 }
 
@@ -1114,7 +1107,9 @@ UsersDeleteGpgKeyForAuthenticatedReq is request data for Client.UsersDeleteGpgKe
 https://developer.github.com/v3/users/gpg_keys/#delete-a-gpg-key-for-the-authenticated-user
 */
 type UsersDeleteGpgKeyForAuthenticatedReq struct {
-	_url     string
+	_url string
+
+	// gpg_key_id parameter
 	GpgKeyId int64
 }
 
@@ -1150,7 +1145,7 @@ func (r *UsersDeleteGpgKeyForAuthenticatedReq) dataStatuses() []int {
 }
 
 func (r *UsersDeleteGpgKeyForAuthenticatedReq) validStatuses() []int {
-	return []int{204}
+	return []int{204, 304}
 }
 
 func (r *UsersDeleteGpgKeyForAuthenticatedReq) endpointAttributes() []endpointAttribute {
@@ -1232,7 +1227,9 @@ UsersDeletePublicSshKeyForAuthenticatedReq is request data for Client.UsersDelet
 https://developer.github.com/v3/users/keys/#delete-a-public-ssh-key-for-the-authenticated-user
 */
 type UsersDeletePublicSshKeyForAuthenticatedReq struct {
-	_url  string
+	_url string
+
+	// key_id parameter
 	KeyId int64
 }
 
@@ -1268,7 +1265,7 @@ func (r *UsersDeletePublicSshKeyForAuthenticatedReq) dataStatuses() []int {
 }
 
 func (r *UsersDeletePublicSshKeyForAuthenticatedReq) validStatuses() []int {
-	return []int{204}
+	return []int{204, 304}
 }
 
 func (r *UsersDeletePublicSshKeyForAuthenticatedReq) endpointAttributes() []endpointAttribute {
@@ -1350,7 +1347,9 @@ UsersFollowReq is request data for Client.UsersFollow
 https://developer.github.com/v3/users/followers/#follow-a-user
 */
 type UsersFollowReq struct {
-	_url     string
+	_url string
+
+	// username parameter
 	Username string
 }
 
@@ -1386,7 +1385,7 @@ func (r *UsersFollowReq) dataStatuses() []int {
 }
 
 func (r *UsersFollowReq) validStatuses() []int {
-	return []int{204}
+	return []int{204, 304}
 }
 
 func (r *UsersFollowReq) endpointAttributes() []endpointAttribute {
@@ -1490,7 +1489,7 @@ func (r *UsersGetAuthenticatedReq) urlQuery() url.Values {
 }
 
 func (r *UsersGetAuthenticatedReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -1504,7 +1503,7 @@ func (r *UsersGetAuthenticatedReq) dataStatuses() []int {
 }
 
 func (r *UsersGetAuthenticatedReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *UsersGetAuthenticatedReq) endpointAttributes() []endpointAttribute {
@@ -1534,7 +1533,63 @@ UsersGetAuthenticatedResponseBody is a response body for UsersGetAuthenticated
 
 https://developer.github.com/v3/users/#get-the-authenticated-user
 */
-type UsersGetAuthenticatedResponseBody components.PrivateUser
+type UsersGetAuthenticatedResponseBody struct {
+	oneOfField string
+
+	// Private User
+	privateUser components.PrivateUser
+
+	// Public User
+	publicUser components.PublicUser
+}
+
+// Value returns UsersGetAuthenticatedResponseBody's value. The type will be one of PrivateUser or PublicUser.
+func (c *UsersGetAuthenticatedResponseBody) Value() interface{} {
+	switch c.oneOfField {
+	case "privateUser":
+		return c.privateUser
+	case "publicUser":
+		return c.publicUser
+	}
+	return nil
+}
+
+// SetValue sets UsersGetAuthenticatedResponseBody's value. The type must be one of PrivateUser or PublicUser.
+func (c *UsersGetAuthenticatedResponseBody) SetValue(value interface{}) {
+	switch v := value.(type) {
+	case components.PrivateUser:
+		c.privateUser = v
+	case components.PublicUser:
+		c.publicUser = v
+	default:
+		panic("type not acceptable")
+	}
+}
+
+func (c *UsersGetAuthenticatedResponseBody) MarshalJSON() ([]byte, error) {
+	switch c.oneOfField {
+	case "privateUser":
+		return json.Marshal(&c.privateUser)
+	case "publicUser":
+		return json.Marshal(&c.publicUser)
+	}
+	return json.Marshal(interface{}(nil))
+}
+
+func (c *UsersGetAuthenticatedResponseBody) UnmarshalJSON(data []byte) error {
+	var err error
+	err = json.Unmarshal(data, &c.privateUser)
+	if err == nil {
+		c.oneOfField = "privateUser"
+		return nil
+	}
+	err = json.Unmarshal(data, &c.publicUser)
+	if err == nil {
+		c.oneOfField = "publicUser"
+		return nil
+	}
+	return fmt.Errorf("could not unmarshal json")
+}
 
 /*
 UsersGetAuthenticatedResponse is a response for UsersGetAuthenticated
@@ -1595,7 +1650,9 @@ UsersGetByUsernameReq is request data for Client.UsersGetByUsername
 https://developer.github.com/v3/users/#get-a-user
 */
 type UsersGetByUsernameReq struct {
-	_url     string
+	_url string
+
+	// username parameter
 	Username string
 }
 
@@ -1617,7 +1674,7 @@ func (r *UsersGetByUsernameReq) urlQuery() url.Values {
 }
 
 func (r *UsersGetByUsernameReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -1661,7 +1718,63 @@ UsersGetByUsernameResponseBody is a response body for UsersGetByUsername
 
 https://developer.github.com/v3/users/#get-a-user
 */
-type UsersGetByUsernameResponseBody components.PublicUser
+type UsersGetByUsernameResponseBody struct {
+	oneOfField string
+
+	// Private User
+	privateUser components.PrivateUser
+
+	// Public User
+	publicUser components.PublicUser
+}
+
+// Value returns UsersGetByUsernameResponseBody's value. The type will be one of PrivateUser or PublicUser.
+func (c *UsersGetByUsernameResponseBody) Value() interface{} {
+	switch c.oneOfField {
+	case "privateUser":
+		return c.privateUser
+	case "publicUser":
+		return c.publicUser
+	}
+	return nil
+}
+
+// SetValue sets UsersGetByUsernameResponseBody's value. The type must be one of PrivateUser or PublicUser.
+func (c *UsersGetByUsernameResponseBody) SetValue(value interface{}) {
+	switch v := value.(type) {
+	case components.PrivateUser:
+		c.privateUser = v
+	case components.PublicUser:
+		c.publicUser = v
+	default:
+		panic("type not acceptable")
+	}
+}
+
+func (c *UsersGetByUsernameResponseBody) MarshalJSON() ([]byte, error) {
+	switch c.oneOfField {
+	case "privateUser":
+		return json.Marshal(&c.privateUser)
+	case "publicUser":
+		return json.Marshal(&c.publicUser)
+	}
+	return json.Marshal(interface{}(nil))
+}
+
+func (c *UsersGetByUsernameResponseBody) UnmarshalJSON(data []byte) error {
+	var err error
+	err = json.Unmarshal(data, &c.privateUser)
+	if err == nil {
+		c.oneOfField = "privateUser"
+		return nil
+	}
+	err = json.Unmarshal(data, &c.publicUser)
+	if err == nil {
+		c.oneOfField = "publicUser"
+		return nil
+	}
+	return fmt.Errorf("could not unmarshal json")
+}
 
 /*
 UsersGetByUsernameResponse is a response for UsersGetByUsername
@@ -1722,7 +1835,9 @@ UsersGetContextForUserReq is request data for Client.UsersGetContextForUser
 https://developer.github.com/v3/users/#get-contextual-information-for-a-user
 */
 type UsersGetContextForUserReq struct {
-	_url     string
+	_url string
+
+	// username parameter
 	Username string
 
 	/*
@@ -1763,7 +1878,7 @@ func (r *UsersGetContextForUserReq) urlQuery() url.Values {
 }
 
 func (r *UsersGetContextForUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -1868,7 +1983,9 @@ UsersGetGpgKeyForAuthenticatedReq is request data for Client.UsersGetGpgKeyForAu
 https://developer.github.com/v3/users/gpg_keys/#get-a-gpg-key-for-the-authenticated-user
 */
 type UsersGetGpgKeyForAuthenticatedReq struct {
-	_url     string
+	_url string
+
+	// gpg_key_id parameter
 	GpgKeyId int64
 }
 
@@ -1890,7 +2007,7 @@ func (r *UsersGetGpgKeyForAuthenticatedReq) urlQuery() url.Values {
 }
 
 func (r *UsersGetGpgKeyForAuthenticatedReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -1904,7 +2021,7 @@ func (r *UsersGetGpgKeyForAuthenticatedReq) dataStatuses() []int {
 }
 
 func (r *UsersGetGpgKeyForAuthenticatedReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *UsersGetGpgKeyForAuthenticatedReq) endpointAttributes() []endpointAttribute {
@@ -1995,7 +2112,9 @@ UsersGetPublicSshKeyForAuthenticatedReq is request data for Client.UsersGetPubli
 https://developer.github.com/v3/users/keys/#get-a-public-ssh-key-for-the-authenticated-user
 */
 type UsersGetPublicSshKeyForAuthenticatedReq struct {
-	_url  string
+	_url string
+
+	// key_id parameter
 	KeyId int64
 }
 
@@ -2017,7 +2136,7 @@ func (r *UsersGetPublicSshKeyForAuthenticatedReq) urlQuery() url.Values {
 }
 
 func (r *UsersGetPublicSshKeyForAuthenticatedReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -2031,7 +2150,7 @@ func (r *UsersGetPublicSshKeyForAuthenticatedReq) dataStatuses() []int {
 }
 
 func (r *UsersGetPublicSshKeyForAuthenticatedReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *UsersGetPublicSshKeyForAuthenticatedReq) endpointAttributes() []endpointAttribute {
@@ -2061,7 +2180,7 @@ UsersGetPublicSshKeyForAuthenticatedResponseBody is a response body for UsersGet
 
 https://developer.github.com/v3/users/keys/#get-a-public-ssh-key-for-the-authenticated-user
 */
-type UsersGetPublicSshKeyForAuthenticatedResponseBody components.ActionsPublicKey
+type UsersGetPublicSshKeyForAuthenticatedResponseBody components.Key
 
 /*
 UsersGetPublicSshKeyForAuthenticatedResponse is a response for UsersGetPublicSshKeyForAuthenticated
@@ -2124,8 +2243,15 @@ https://developer.github.com/v3/users/#list-users
 type UsersListReq struct {
 	_url string
 
-	// The integer ID of the last User that you've seen.
+	/*
+	Only show notifications updated after the given time. This is a timestamp in
+	[ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format:
+	`YYYY-MM-DDTHH:MM:SSZ`.
+	*/
 	Since *string
+
+	// Results per page (max 100)
+	PerPage *int64
 }
 
 func (r *UsersListReq) url() string {
@@ -2145,11 +2271,14 @@ func (r *UsersListReq) urlQuery() url.Values {
 	if r.Since != nil {
 		query.Set("since", *r.Since)
 	}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
 	return query
 }
 
 func (r *UsersListReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -2163,7 +2292,7 @@ func (r *UsersListReq) dataStatuses() []int {
 }
 
 func (r *UsersListReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *UsersListReq) endpointAttributes() []endpointAttribute {
@@ -2275,7 +2404,7 @@ func (r *UsersListBlockedByAuthenticatedReq) urlQuery() url.Values {
 }
 
 func (r *UsersListBlockedByAuthenticatedReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -2289,7 +2418,7 @@ func (r *UsersListBlockedByAuthenticatedReq) dataStatuses() []int {
 }
 
 func (r *UsersListBlockedByAuthenticatedReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *UsersListBlockedByAuthenticatedReq) endpointAttributes() []endpointAttribute {
@@ -2413,7 +2542,7 @@ func (r *UsersListEmailsForAuthenticatedReq) urlQuery() url.Values {
 }
 
 func (r *UsersListEmailsForAuthenticatedReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -2427,7 +2556,7 @@ func (r *UsersListEmailsForAuthenticatedReq) dataStatuses() []int {
 }
 
 func (r *UsersListEmailsForAuthenticatedReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *UsersListEmailsForAuthenticatedReq) endpointAttributes() []endpointAttribute {
@@ -2551,7 +2680,7 @@ func (r *UsersListFollowedByAuthenticatedReq) urlQuery() url.Values {
 }
 
 func (r *UsersListFollowedByAuthenticatedReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -2565,7 +2694,7 @@ func (r *UsersListFollowedByAuthenticatedReq) dataStatuses() []int {
 }
 
 func (r *UsersListFollowedByAuthenticatedReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *UsersListFollowedByAuthenticatedReq) endpointAttributes() []endpointAttribute {
@@ -2689,7 +2818,7 @@ func (r *UsersListFollowersForAuthenticatedUserReq) urlQuery() url.Values {
 }
 
 func (r *UsersListFollowersForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -2703,7 +2832,7 @@ func (r *UsersListFollowersForAuthenticatedUserReq) dataStatuses() []int {
 }
 
 func (r *UsersListFollowersForAuthenticatedUserReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *UsersListFollowersForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
@@ -2794,7 +2923,9 @@ UsersListFollowersForUserReq is request data for Client.UsersListFollowersForUse
 https://developer.github.com/v3/users/followers/#list-followers-of-a-user
 */
 type UsersListFollowersForUserReq struct {
-	_url     string
+	_url string
+
+	// username parameter
 	Username string
 
 	// Results per page (max 100)
@@ -2828,7 +2959,7 @@ func (r *UsersListFollowersForUserReq) urlQuery() url.Values {
 }
 
 func (r *UsersListFollowersForUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -2933,7 +3064,9 @@ UsersListFollowingForUserReq is request data for Client.UsersListFollowingForUse
 https://developer.github.com/v3/users/followers/#list-the-people-a-user-follows
 */
 type UsersListFollowingForUserReq struct {
-	_url     string
+	_url string
+
+	// username parameter
 	Username string
 
 	// Results per page (max 100)
@@ -2967,7 +3100,7 @@ func (r *UsersListFollowingForUserReq) urlQuery() url.Values {
 }
 
 func (r *UsersListFollowingForUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -3105,7 +3238,7 @@ func (r *UsersListGpgKeysForAuthenticatedReq) urlQuery() url.Values {
 }
 
 func (r *UsersListGpgKeysForAuthenticatedReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -3119,7 +3252,7 @@ func (r *UsersListGpgKeysForAuthenticatedReq) dataStatuses() []int {
 }
 
 func (r *UsersListGpgKeysForAuthenticatedReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *UsersListGpgKeysForAuthenticatedReq) endpointAttributes() []endpointAttribute {
@@ -3210,7 +3343,9 @@ UsersListGpgKeysForUserReq is request data for Client.UsersListGpgKeysForUser
 https://developer.github.com/v3/users/gpg_keys/#list-gpg-keys-for-a-user
 */
 type UsersListGpgKeysForUserReq struct {
-	_url     string
+	_url string
+
+	// username parameter
 	Username string
 
 	// Results per page (max 100)
@@ -3244,7 +3379,7 @@ func (r *UsersListGpgKeysForUserReq) urlQuery() url.Values {
 }
 
 func (r *UsersListGpgKeysForUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -3382,7 +3517,7 @@ func (r *UsersListPublicEmailsForAuthenticatedReq) urlQuery() url.Values {
 }
 
 func (r *UsersListPublicEmailsForAuthenticatedReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -3396,7 +3531,7 @@ func (r *UsersListPublicEmailsForAuthenticatedReq) dataStatuses() []int {
 }
 
 func (r *UsersListPublicEmailsForAuthenticatedReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *UsersListPublicEmailsForAuthenticatedReq) endpointAttributes() []endpointAttribute {
@@ -3487,7 +3622,9 @@ UsersListPublicKeysForUserReq is request data for Client.UsersListPublicKeysForU
 https://developer.github.com/v3/users/keys/#list-public-keys-for-a-user
 */
 type UsersListPublicKeysForUserReq struct {
-	_url     string
+	_url string
+
+	// username parameter
 	Username string
 
 	// Results per page (max 100)
@@ -3521,7 +3658,7 @@ func (r *UsersListPublicKeysForUserReq) urlQuery() url.Values {
 }
 
 func (r *UsersListPublicKeysForUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -3659,7 +3796,7 @@ func (r *UsersListPublicSshKeysForAuthenticatedReq) urlQuery() url.Values {
 }
 
 func (r *UsersListPublicSshKeysForAuthenticatedReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -3673,7 +3810,7 @@ func (r *UsersListPublicSshKeysForAuthenticatedReq) dataStatuses() []int {
 }
 
 func (r *UsersListPublicSshKeysForAuthenticatedReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *UsersListPublicSshKeysForAuthenticatedReq) endpointAttributes() []endpointAttribute {
@@ -3703,7 +3840,7 @@ UsersListPublicSshKeysForAuthenticatedResponseBody is a response body for UsersL
 
 https://developer.github.com/v3/users/keys/#list-public-ssh-keys-for-the-authenticated-user
 */
-type UsersListPublicSshKeysForAuthenticatedResponseBody []components.ActionsPublicKey
+type UsersListPublicSshKeysForAuthenticatedResponseBody []components.Key
 
 /*
 UsersListPublicSshKeysForAuthenticatedResponse is a response for UsersListPublicSshKeysForAuthenticated
@@ -3786,7 +3923,10 @@ func (r *UsersSetPrimaryEmailVisibilityForAuthenticatedReq) urlQuery() url.Value
 }
 
 func (r *UsersSetPrimaryEmailVisibilityForAuthenticatedReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -3800,7 +3940,7 @@ func (r *UsersSetPrimaryEmailVisibilityForAuthenticatedReq) dataStatuses() []int
 }
 
 func (r *UsersSetPrimaryEmailVisibilityForAuthenticatedReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *UsersSetPrimaryEmailVisibilityForAuthenticatedReq) endpointAttributes() []endpointAttribute {
@@ -3832,13 +3972,10 @@ https://developer.github.com/v3/users/emails/#set-primary-email-visibility-for-t
 */
 type UsersSetPrimaryEmailVisibilityForAuthenticatedReqBody struct {
 
-	// Specify the _primary_ email address that needs a visibility change.
+	// An email address associated with the GitHub user account to manage.
 	Email *string `json:"email"`
 
-	/*
-	   Use `public` to enable an authenticated user to view the specified email
-	   address, or use `private` so this primary email address cannot be seen publicly.
-	*/
+	// Denotes whether an email is publically visible.
 	Visibility *string `json:"visibility"`
 }
 
@@ -3907,7 +4044,9 @@ UsersUnblockReq is request data for Client.UsersUnblock
 https://developer.github.com/v3/users/blocking/#unblock-a-user
 */
 type UsersUnblockReq struct {
-	_url     string
+	_url string
+
+	// username parameter
 	Username string
 }
 
@@ -3943,7 +4082,7 @@ func (r *UsersUnblockReq) dataStatuses() []int {
 }
 
 func (r *UsersUnblockReq) validStatuses() []int {
-	return []int{204}
+	return []int{204, 304}
 }
 
 func (r *UsersUnblockReq) endpointAttributes() []endpointAttribute {
@@ -4025,7 +4164,9 @@ UsersUnfollowReq is request data for Client.UsersUnfollow
 https://developer.github.com/v3/users/followers/#unfollow-a-user
 */
 type UsersUnfollowReq struct {
-	_url     string
+	_url string
+
+	// username parameter
 	Username string
 }
 
@@ -4061,7 +4202,7 @@ func (r *UsersUnfollowReq) dataStatuses() []int {
 }
 
 func (r *UsersUnfollowReq) validStatuses() []int {
-	return []int{204}
+	return []int{204, 304}
 }
 
 func (r *UsersUnfollowReq) endpointAttributes() []endpointAttribute {
@@ -4166,7 +4307,10 @@ func (r *UsersUpdateAuthenticatedReq) urlQuery() url.Values {
 }
 
 func (r *UsersUpdateAuthenticatedReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -4180,7 +4324,7 @@ func (r *UsersUpdateAuthenticatedReq) dataStatuses() []int {
 }
 
 func (r *UsersUpdateAuthenticatedReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *UsersUpdateAuthenticatedReq) endpointAttributes() []endpointAttribute {

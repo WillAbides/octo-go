@@ -32,10 +32,6 @@ func GistsCheckIsStarred(ctx context.Context, req *GistsCheckIsStarredReq, opt .
 	if err != nil {
 		return resp, err
 	}
-	err = r.setBoolResult(&resp.Data)
-	if err != nil {
-		return nil, err
-	}
 	err = r.decodeBody(nil)
 	if err != nil {
 		return nil, err
@@ -62,7 +58,9 @@ GistsCheckIsStarredReq is request data for Client.GistsCheckIsStarred
 https://developer.github.com/v3/gists/#check-if-a-gist-is-starred
 */
 type GistsCheckIsStarredReq struct {
-	_url   string
+	_url string
+
+	// gist_id parameter
 	GistId string
 }
 
@@ -98,11 +96,11 @@ func (r *GistsCheckIsStarredReq) dataStatuses() []int {
 }
 
 func (r *GistsCheckIsStarredReq) validStatuses() []int {
-	return []int{204}
+	return []int{204, 304}
 }
 
 func (r *GistsCheckIsStarredReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrBoolean}
+	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -131,7 +129,6 @@ https://developer.github.com/v3/gists/#check-if-a-gist-is-starred
 type GistsCheckIsStarredResponse struct {
 	response
 	request *GistsCheckIsStarredReq
-	Data    bool
 }
 
 /*
@@ -204,7 +201,10 @@ func (r *GistsCreateReq) urlQuery() url.Values {
 }
 
 func (r *GistsCreateReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -218,7 +218,7 @@ func (r *GistsCreateReq) dataStatuses() []int {
 }
 
 func (r *GistsCreateReq) validStatuses() []int {
-	return []int{201}
+	return []int{201, 304}
 }
 
 func (r *GistsCreateReq) endpointAttributes() []endpointAttribute {
@@ -246,8 +246,8 @@ func (r *GistsCreateReq) Rel(link RelName, resp *GistsCreateResponse) bool {
 // GistsCreateReqBodyFiles is a value for GistsCreateReqBody's Files field
 type GistsCreateReqBodyFiles struct {
 
-	// The content of the file.
-	Content *string `json:"content,omitempty"`
+	// Content of the file
+	Content *string `json:"content"`
 }
 
 /*
@@ -257,16 +257,13 @@ https://developer.github.com/v3/gists/#create-a-gist
 */
 type GistsCreateReqBody struct {
 
-	// A descriptive name for this gist.
+	// Description of the gist
 	Description *string `json:"description,omitempty"`
 
-	/*
-	   The filenames and content of each file in the gist. The keys in the `files`
-	   object represent the filename and have the type `string`.
-	*/
+	// Names and content for the files that make up the gist
 	Files map[string]GistsCreateReqBodyFiles `json:"files"`
 
-	// When `true`, the gist will be public and available for anyone to see.
+	// Flag indicating whether the gist is public
 	Public *bool `json:"public,omitempty"`
 }
 
@@ -275,7 +272,7 @@ GistsCreateResponseBody is a response body for GistsCreate
 
 https://developer.github.com/v3/gists/#create-a-gist
 */
-type GistsCreateResponseBody components.Gist
+type GistsCreateResponseBody components.GistFull
 
 /*
 GistsCreateResponse is a response for GistsCreate
@@ -336,7 +333,9 @@ GistsCreateCommentReq is request data for Client.GistsCreateComment
 https://developer.github.com/v3/gists/comments/#create-a-gist-comment
 */
 type GistsCreateCommentReq struct {
-	_url        string
+	_url string
+
+	// gist_id parameter
 	GistId      string
 	RequestBody GistsCreateCommentReqBody
 }
@@ -359,7 +358,10 @@ func (r *GistsCreateCommentReq) urlQuery() url.Values {
 }
 
 func (r *GistsCreateCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -373,7 +375,7 @@ func (r *GistsCreateCommentReq) dataStatuses() []int {
 }
 
 func (r *GistsCreateCommentReq) validStatuses() []int {
-	return []int{201}
+	return []int{201, 304}
 }
 
 func (r *GistsCreateCommentReq) endpointAttributes() []endpointAttribute {
@@ -474,7 +476,9 @@ GistsDeleteReq is request data for Client.GistsDelete
 https://developer.github.com/v3/gists/#delete-a-gist
 */
 type GistsDeleteReq struct {
-	_url   string
+	_url string
+
+	// gist_id parameter
 	GistId string
 }
 
@@ -510,7 +514,7 @@ func (r *GistsDeleteReq) dataStatuses() []int {
 }
 
 func (r *GistsDeleteReq) validStatuses() []int {
-	return []int{204}
+	return []int{204, 304}
 }
 
 func (r *GistsDeleteReq) endpointAttributes() []endpointAttribute {
@@ -592,8 +596,12 @@ GistsDeleteCommentReq is request data for Client.GistsDeleteComment
 https://developer.github.com/v3/gists/comments/#delete-a-gist-comment
 */
 type GistsDeleteCommentReq struct {
-	_url      string
-	GistId    string
+	_url string
+
+	// gist_id parameter
+	GistId string
+
+	// comment_id parameter
 	CommentId int64
 }
 
@@ -629,7 +637,7 @@ func (r *GistsDeleteCommentReq) dataStatuses() []int {
 }
 
 func (r *GistsDeleteCommentReq) validStatuses() []int {
-	return []int{204}
+	return []int{204, 304}
 }
 
 func (r *GistsDeleteCommentReq) endpointAttributes() []endpointAttribute {
@@ -712,7 +720,9 @@ GistsForkReq is request data for Client.GistsFork
 https://developer.github.com/v3/gists/#fork-a-gist
 */
 type GistsForkReq struct {
-	_url   string
+	_url string
+
+	// gist_id parameter
 	GistId string
 }
 
@@ -734,7 +744,7 @@ func (r *GistsForkReq) urlQuery() url.Values {
 }
 
 func (r *GistsForkReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -748,7 +758,7 @@ func (r *GistsForkReq) dataStatuses() []int {
 }
 
 func (r *GistsForkReq) validStatuses() []int {
-	return []int{201}
+	return []int{201, 304}
 }
 
 func (r *GistsForkReq) endpointAttributes() []endpointAttribute {
@@ -839,7 +849,9 @@ GistsGetReq is request data for Client.GistsGet
 https://developer.github.com/v3/gists/#get-a-gist
 */
 type GistsGetReq struct {
-	_url   string
+	_url string
+
+	// gist_id parameter
 	GistId string
 }
 
@@ -861,7 +873,7 @@ func (r *GistsGetReq) urlQuery() url.Values {
 }
 
 func (r *GistsGetReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -875,7 +887,7 @@ func (r *GistsGetReq) dataStatuses() []int {
 }
 
 func (r *GistsGetReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *GistsGetReq) endpointAttributes() []endpointAttribute {
@@ -905,7 +917,7 @@ GistsGetResponseBody is a response body for GistsGet
 
 https://developer.github.com/v3/gists/#get-a-gist
 */
-type GistsGetResponseBody components.Gist
+type GistsGetResponseBody components.GistFull
 
 /*
 GistsGetResponse is a response for GistsGet
@@ -966,8 +978,12 @@ GistsGetCommentReq is request data for Client.GistsGetComment
 https://developer.github.com/v3/gists/comments/#get-a-gist-comment
 */
 type GistsGetCommentReq struct {
-	_url      string
-	GistId    string
+	_url string
+
+	// gist_id parameter
+	GistId string
+
+	// comment_id parameter
 	CommentId int64
 }
 
@@ -989,7 +1005,7 @@ func (r *GistsGetCommentReq) urlQuery() url.Values {
 }
 
 func (r *GistsGetCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -1003,7 +1019,7 @@ func (r *GistsGetCommentReq) dataStatuses() []int {
 }
 
 func (r *GistsGetCommentReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *GistsGetCommentReq) endpointAttributes() []endpointAttribute {
@@ -1094,9 +1110,13 @@ GistsGetRevisionReq is request data for Client.GistsGetRevision
 https://developer.github.com/v3/gists/#get-a-gist-revision
 */
 type GistsGetRevisionReq struct {
-	_url   string
+	_url string
+
+	// gist_id parameter
 	GistId string
-	Sha    string
+
+	// sha parameter
+	Sha string
 }
 
 func (r *GistsGetRevisionReq) url() string {
@@ -1117,7 +1137,7 @@ func (r *GistsGetRevisionReq) urlQuery() url.Values {
 }
 
 func (r *GistsGetRevisionReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -1161,7 +1181,7 @@ GistsGetRevisionResponseBody is a response body for GistsGetRevision
 
 https://developer.github.com/v3/gists/#get-a-gist-revision
 */
-type GistsGetRevisionResponseBody components.Gist
+type GistsGetRevisionResponseBody components.GistFull
 
 /*
 GistsGetRevisionResponse is a response for GistsGetRevision
@@ -1265,7 +1285,7 @@ func (r *GistsListReq) urlQuery() url.Values {
 }
 
 func (r *GistsListReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -1279,7 +1299,7 @@ func (r *GistsListReq) dataStatuses() []int {
 }
 
 func (r *GistsListReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *GistsListReq) endpointAttributes() []endpointAttribute {
@@ -1370,7 +1390,9 @@ GistsListCommentsReq is request data for Client.GistsListComments
 https://developer.github.com/v3/gists/comments/#list-gist-comments
 */
 type GistsListCommentsReq struct {
-	_url   string
+	_url string
+
+	// gist_id parameter
 	GistId string
 
 	// Results per page (max 100)
@@ -1404,7 +1426,7 @@ func (r *GistsListCommentsReq) urlQuery() url.Values {
 }
 
 func (r *GistsListCommentsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -1418,7 +1440,7 @@ func (r *GistsListCommentsReq) dataStatuses() []int {
 }
 
 func (r *GistsListCommentsReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *GistsListCommentsReq) endpointAttributes() []endpointAttribute {
@@ -1509,7 +1531,9 @@ GistsListCommitsReq is request data for Client.GistsListCommits
 https://developer.github.com/v3/gists/#list-gist-commits
 */
 type GistsListCommitsReq struct {
-	_url   string
+	_url string
+
+	// gist_id parameter
 	GistId string
 
 	// Results per page (max 100)
@@ -1543,7 +1567,7 @@ func (r *GistsListCommitsReq) urlQuery() url.Values {
 }
 
 func (r *GistsListCommitsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -1557,7 +1581,7 @@ func (r *GistsListCommitsReq) dataStatuses() []int {
 }
 
 func (r *GistsListCommitsReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *GistsListCommitsReq) endpointAttributes() []endpointAttribute {
@@ -1648,7 +1672,9 @@ GistsListForUserReq is request data for Client.GistsListForUser
 https://developer.github.com/v3/gists/#list-gists-for-a-user
 */
 type GistsListForUserReq struct {
-	_url     string
+	_url string
+
+	// username parameter
 	Username string
 
 	/*
@@ -1692,7 +1718,7 @@ func (r *GistsListForUserReq) urlQuery() url.Values {
 }
 
 func (r *GistsListForUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -1797,7 +1823,9 @@ GistsListForksReq is request data for Client.GistsListForks
 https://developer.github.com/v3/gists/#list-gist-forks
 */
 type GistsListForksReq struct {
-	_url   string
+	_url string
+
+	// gist_id parameter
 	GistId string
 
 	// Results per page (max 100)
@@ -1831,7 +1859,7 @@ func (r *GistsListForksReq) urlQuery() url.Values {
 }
 
 func (r *GistsListForksReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -1845,7 +1873,7 @@ func (r *GistsListForksReq) dataStatuses() []int {
 }
 
 func (r *GistsListForksReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *GistsListForksReq) endpointAttributes() []endpointAttribute {
@@ -1875,7 +1903,7 @@ GistsListForksResponseBody is a response body for GistsListForks
 
 https://developer.github.com/v3/gists/#list-gist-forks
 */
-type GistsListForksResponseBody []components.GistFork
+type GistsListForksResponseBody []components.GistFull
 
 /*
 GistsListForksResponse is a response for GistsListForks
@@ -1979,7 +2007,7 @@ func (r *GistsListPublicReq) urlQuery() url.Values {
 }
 
 func (r *GistsListPublicReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -1993,7 +2021,7 @@ func (r *GistsListPublicReq) dataStatuses() []int {
 }
 
 func (r *GistsListPublicReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *GistsListPublicReq) endpointAttributes() []endpointAttribute {
@@ -2127,7 +2155,7 @@ func (r *GistsListStarredReq) urlQuery() url.Values {
 }
 
 func (r *GistsListStarredReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -2141,7 +2169,7 @@ func (r *GistsListStarredReq) dataStatuses() []int {
 }
 
 func (r *GistsListStarredReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *GistsListStarredReq) endpointAttributes() []endpointAttribute {
@@ -2231,7 +2259,9 @@ GistsStarReq is request data for Client.GistsStar
 https://developer.github.com/v3/gists/#star-a-gist
 */
 type GistsStarReq struct {
-	_url   string
+	_url string
+
+	// gist_id parameter
 	GistId string
 }
 
@@ -2267,7 +2297,7 @@ func (r *GistsStarReq) dataStatuses() []int {
 }
 
 func (r *GistsStarReq) validStatuses() []int {
-	return []int{204}
+	return []int{204, 304}
 }
 
 func (r *GistsStarReq) endpointAttributes() []endpointAttribute {
@@ -2349,7 +2379,9 @@ GistsUnstarReq is request data for Client.GistsUnstar
 https://developer.github.com/v3/gists/#unstar-a-gist
 */
 type GistsUnstarReq struct {
-	_url   string
+	_url string
+
+	// gist_id parameter
 	GistId string
 }
 
@@ -2385,7 +2417,7 @@ func (r *GistsUnstarReq) dataStatuses() []int {
 }
 
 func (r *GistsUnstarReq) validStatuses() []int {
-	return []int{204}
+	return []int{204, 304}
 }
 
 func (r *GistsUnstarReq) endpointAttributes() []endpointAttribute {
@@ -2468,7 +2500,9 @@ GistsUpdateReq is request data for Client.GistsUpdate
 https://developer.github.com/v3/gists/#update-a-gist
 */
 type GistsUpdateReq struct {
-	_url        string
+	_url string
+
+	// gist_id parameter
 	GistId      string
 	RequestBody GistsUpdateReqBody
 }
@@ -2491,7 +2525,10 @@ func (r *GistsUpdateReq) urlQuery() url.Values {
 }
 
 func (r *GistsUpdateReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -2533,13 +2570,10 @@ func (r *GistsUpdateReq) Rel(link RelName, resp *GistsUpdateResponse) bool {
 // GistsUpdateReqBodyFiles is a value for GistsUpdateReqBody's Files field
 type GistsUpdateReqBodyFiles struct {
 
-	// The updated content of the file.
+	// The new content of the file
 	Content *string `json:"content,omitempty"`
 
-	/*
-	   The new name for this file. To delete a file, set the value of the filename to
-	   `null`.
-	*/
+	// The new filename for the file
 	Filename *string `json:"filename,omitempty"`
 }
 
@@ -2550,10 +2584,10 @@ https://developer.github.com/v3/gists/#update-a-gist
 */
 type GistsUpdateReqBody struct {
 
-	// A descriptive name for this gist.
+	// Description of the gist
 	Description *string `json:"description,omitempty"`
 
-	// The filenames and content that make up this gist.
+	// Names of files to be updated
 	Files map[string]GistsUpdateReqBodyFiles `json:"files,omitempty"`
 }
 
@@ -2562,7 +2596,7 @@ GistsUpdateResponseBody is a response body for GistsUpdate
 
 https://developer.github.com/v3/gists/#update-a-gist
 */
-type GistsUpdateResponseBody components.Gist
+type GistsUpdateResponseBody components.GistFull
 
 /*
 GistsUpdateResponse is a response for GistsUpdate
@@ -2623,8 +2657,12 @@ GistsUpdateCommentReq is request data for Client.GistsUpdateComment
 https://developer.github.com/v3/gists/comments/#update-a-gist-comment
 */
 type GistsUpdateCommentReq struct {
-	_url        string
-	GistId      string
+	_url string
+
+	// gist_id parameter
+	GistId string
+
+	// comment_id parameter
 	CommentId   int64
 	RequestBody GistsUpdateCommentReqBody
 }
@@ -2647,7 +2685,10 @@ func (r *GistsUpdateCommentReq) urlQuery() url.Values {
 }
 
 func (r *GistsUpdateCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }

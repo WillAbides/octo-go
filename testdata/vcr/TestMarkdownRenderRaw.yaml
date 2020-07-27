@@ -8,7 +8,7 @@ interactions:
       Accept:
       - application/vnd.github.v3+json
       Content-Type:
-      - text/plain
+      - text/x-markdown
       User-Agent:
       - octo-go
     url: https://api.github.com/markdown/raw

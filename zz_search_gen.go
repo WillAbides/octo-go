@@ -126,7 +126,7 @@ func (r *SearchCodeReq) urlQuery() url.Values {
 }
 
 func (r *SearchCodeReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -140,7 +140,7 @@ func (r *SearchCodeReq) dataStatuses() []int {
 }
 
 func (r *SearchCodeReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *SearchCodeReq) endpointAttributes() []endpointAttribute {
@@ -311,7 +311,7 @@ func (r *SearchCommitsReq) urlQuery() url.Values {
 }
 
 func (r *SearchCommitsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"cloak": r.CloakPreview}
 	if requiredPreviews {
 		previewVals["cloak"] = true
@@ -331,7 +331,7 @@ func (r *SearchCommitsReq) dataStatuses() []int {
 }
 
 func (r *SearchCommitsReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *SearchCommitsReq) endpointAttributes() []endpointAttribute {
@@ -496,7 +496,7 @@ func (r *SearchIssuesAndPullRequestsReq) urlQuery() url.Values {
 }
 
 func (r *SearchIssuesAndPullRequestsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -510,7 +510,7 @@ func (r *SearchIssuesAndPullRequestsReq) dataStatuses() []int {
 }
 
 func (r *SearchIssuesAndPullRequestsReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *SearchIssuesAndPullRequestsReq) endpointAttributes() []endpointAttribute {
@@ -662,7 +662,7 @@ func (r *SearchLabelsReq) urlQuery() url.Values {
 }
 
 func (r *SearchLabelsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -676,7 +676,7 @@ func (r *SearchLabelsReq) dataStatuses() []int {
 }
 
 func (r *SearchLabelsReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *SearchLabelsReq) endpointAttributes() []endpointAttribute {
@@ -846,7 +846,7 @@ func (r *SearchReposReq) urlQuery() url.Values {
 }
 
 func (r *SearchReposReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"mercy": r.MercyPreview}
 	if allPreviews {
 		previewVals["mercy"] = true
@@ -863,7 +863,7 @@ func (r *SearchReposReq) dataStatuses() []int {
 }
 
 func (r *SearchReposReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *SearchReposReq) endpointAttributes() []endpointAttribute {
@@ -998,7 +998,7 @@ func (r *SearchTopicsReq) urlQuery() url.Values {
 }
 
 func (r *SearchTopicsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"mercy": r.MercyPreview}
 	if requiredPreviews {
 		previewVals["mercy"] = true
@@ -1018,7 +1018,7 @@ func (r *SearchTopicsReq) dataStatuses() []int {
 }
 
 func (r *SearchTopicsReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *SearchTopicsReq) endpointAttributes() []endpointAttribute {
@@ -1180,7 +1180,7 @@ func (r *SearchUsersReq) urlQuery() url.Values {
 }
 
 func (r *SearchUsersReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -1194,7 +1194,7 @@ func (r *SearchUsersReq) dataStatuses() []int {
 }
 
 func (r *SearchUsersReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *SearchUsersReq) endpointAttributes() []endpointAttribute {

@@ -1,14 +1,12 @@
 {
   "runners": [
     {
-      "busy": true,
       "id": 23,
       "name": "MBP",
       "os": "macos",
       "status": "online"
     },
     {
-      "busy": false,
       "id": 24,
       "name": "iMac",
       "os": "macos",

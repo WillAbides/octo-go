@@ -3,13 +3,45 @@
 [![godoc](https://godoc.org/github.com/WillAbides/octo-go?status.svg)](https://godoc.org/github.com/WillAbides/octo-go)
 [![ci](https://github.com/WillAbides/octo-go/workflows/ci/badge.svg?branch=master&event=push)](https://github.com/WillAbides/octo-go/actions?query=workflow%3Aci+branch%3Amaster+event%3Apush)
 
-octo-go is an experimental client for GitHub's v3 API. It is generated from the openapi schema that GitHub covertly
- publishes at https://unpkg.com/browse/@github/openapi@latest/ (this schema is in alpha/prerelease state. if you want
- to use it yourself, do so at your own risk).
- 
-This is WIP. Don't depend on it.
+octo-go is an experimental client for GitHub's v3 API. It is generated from the openapi schema published at 
+https://github.com/github/rest-api-description
 
-Until I write more about it, you can get an idea of how it works in "./examples".
+Project status: __BETA__
+
+## Overview
+
+For every API endpoint, octo-cli provides a request struct and a reponse struct. The request struct is used to build 
+the http request, and the response struct is used to handle the api's response. You can use these structs as-is and 
+handle all the http details yourself, or you can let octo-go do the request for you as well. Each endpoint also has a 
+function that accepts the endpoints request struct and returns the response struct.
+
+Let's use the `issues/create` endpoint as an example. You would use `IssuesCreateReq` to build your request.
+
+You can build a request like this:
+
+```go
+req := octo.IssuesCreateReq{
+    Owner: "myorg",
+    Repo:  "myrepo",
+    RequestBody: octo.IssuesCreateReqBody{
+        Title: octo.String("hello world"),
+        Body:  octo.String("greetings from octo-cli"),
+        Labels: []string{"test", "hello-world"},
+    },
+}
+```
+
+Then you can perform the request with:
+
+```go
+resp, err := octo.IssuesCreate(ctx, &req)
+```
+
+And finally get the id of the newly created issue with:
+
+```go
+issueID := resp.Data.Id
+```
 
 ## User Agent
 
@@ -108,9 +140,7 @@ func getReleaseBlockers(ctx context.Context, client octo.Client) ([]string, erro
 	}
 
 	// ok will be true as long as there is a next page.
-	ok := true
-
-	for ok {
+	for ok := true; ok; {
 		// Get a page of issues.
 		resp, err := client.IssuesListForRepo(ctx, req)
 		if err != nil {

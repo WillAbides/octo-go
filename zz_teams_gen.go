@@ -58,8 +58,12 @@ TeamsAddMemberLegacyReq is request data for Client.TeamsAddMemberLegacy
 https://developer.github.com/v3/teams/members/#add-team-member-legacy
 */
 type TeamsAddMemberLegacyReq struct {
-	_url     string
-	TeamId   int64
+	_url string
+
+	// team_id parameter
+	TeamId int64
+
+	// username parameter
 	Username string
 }
 
@@ -178,9 +182,15 @@ TeamsAddOrUpdateMembershipForUserInOrgReq is request data for Client.TeamsAddOrU
 https://developer.github.com/v3/teams/members/#add-or-update-team-membership-for-a-user
 */
 type TeamsAddOrUpdateMembershipForUserInOrgReq struct {
-	_url        string
-	Org         string
-	TeamSlug    string
+	_url string
+
+	// org parameter
+	Org string
+
+	// team_slug parameter
+	TeamSlug string
+
+	// username parameter
 	Username    string
 	RequestBody TeamsAddOrUpdateMembershipForUserInOrgReqBody
 }
@@ -203,7 +213,10 @@ func (r *TeamsAddOrUpdateMembershipForUserInOrgReq) urlQuery() url.Values {
 }
 
 func (r *TeamsAddOrUpdateMembershipForUserInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -250,11 +263,11 @@ https://developer.github.com/v3/teams/members/#add-or-update-team-membership-for
 type TeamsAddOrUpdateMembershipForUserInOrgReqBody struct {
 
 	/*
-	   The role that this user should have in the team. Can be one of:
-	   \* `member` - a normal member of the team.
-	   \* `maintainer` - a team maintainer. Able to add/remove other team members,
-	   promote other team members to team maintainer, and edit the team's name and
-	   description.
+	The role that this user should have in the team. Can be one of:
+	\* `member` - a normal member of the team.
+	\* `maintainer` - a team maintainer. Able to add/remove other team members,
+	promote other team members to team maintainer, and edit the team's name and
+	description.
 	*/
 	Role *string `json:"role,omitempty"`
 }
@@ -325,8 +338,12 @@ TeamsAddOrUpdateMembershipForUserLegacyReq is request data for Client.TeamsAddOr
 https://developer.github.com/v3/teams/members/#add-or-update-team-membership-for-a-user-legacy
 */
 type TeamsAddOrUpdateMembershipForUserLegacyReq struct {
-	_url        string
-	TeamId      int64
+	_url string
+
+	// team_id parameter
+	TeamId int64
+
+	// username parameter
 	Username    string
 	RequestBody TeamsAddOrUpdateMembershipForUserLegacyReqBody
 }
@@ -349,7 +366,10 @@ func (r *TeamsAddOrUpdateMembershipForUserLegacyReq) urlQuery() url.Values {
 }
 
 func (r *TeamsAddOrUpdateMembershipForUserLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -396,11 +416,11 @@ https://developer.github.com/v3/teams/members/#add-or-update-team-membership-for
 type TeamsAddOrUpdateMembershipForUserLegacyReqBody struct {
 
 	/*
-	   The role that this user should have in the team. Can be one of:
-	   \* `member` - a normal member of the team.
-	   \* `maintainer` - a team maintainer. Able to add/remove other team members,
-	   promote other team members to team maintainer, and edit the team's name and
-	   description.
+	The role that this user should have in the team. Can be one of:
+	\* `member` - a normal member of the team.
+	\* `maintainer` - a team maintainer. Able to add/remove other team members,
+	promote other team members to team maintainer, and edit the team's name and
+	description.
 	*/
 	Role *string `json:"role,omitempty"`
 }
@@ -470,9 +490,15 @@ TeamsAddOrUpdateProjectPermissionsInOrgReq is request data for Client.TeamsAddOr
 https://developer.github.com/v3/teams/#add-or-update-team-project-permissions
 */
 type TeamsAddOrUpdateProjectPermissionsInOrgReq struct {
-	_url        string
-	Org         string
-	TeamSlug    string
+	_url string
+
+	// org parameter
+	Org string
+
+	// team_slug parameter
+	TeamSlug string
+
+	// project_id parameter
 	ProjectId   int64
 	RequestBody TeamsAddOrUpdateProjectPermissionsInOrgReqBody
 
@@ -504,7 +530,7 @@ func (r *TeamsAddOrUpdateProjectPermissionsInOrgReq) urlQuery() url.Values {
 }
 
 func (r *TeamsAddOrUpdateProjectPermissionsInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"content-type": String("application/json")}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
 	if requiredPreviews {
 		previewVals["inertia"] = true
@@ -557,15 +583,15 @@ https://developer.github.com/v3/teams/#add-or-update-team-project-permissions
 type TeamsAddOrUpdateProjectPermissionsInOrgReqBody struct {
 
 	/*
-	   The permission to grant to the team for this project. Can be one of:
-	   \* `read` - team members can read, but not write to or administer this project.
-	   \* `write` - team members can read and write, but not administer this project.
-	   \* `admin` - team members can read, write and administer this project.
-	   Default: the team's `permission` attribute will be used to determine what
-	   permission to grant the team on this project. Note that, if you choose not to
-	   pass any parameters, you'll need to set `Content-Length` to zero when calling
-	   out to this endpoint. For more information, see "[HTTP
-	   verbs](https://developer.github.com/v3/#http-verbs)."
+	The permission to grant to the team for this project. Can be one of:
+	\* `read` - team members can read, but not write to or administer this project.
+	\* `write` - team members can read and write, but not administer this project.
+	\* `admin` - team members can read, write and administer this project.
+	Default: the team's `permission` attribute will be used to determine what
+	permission to grant the team on this project. Note that, if you choose not to
+	pass any parameters, you'll need to set `Content-Length` to zero when calling
+	out to this endpoint. For more information, see "[HTTP
+	verbs](https://developer.github.com/v3/#http-verbs)."
 	*/
 	Permission *string `json:"permission,omitempty"`
 }
@@ -627,8 +653,12 @@ TeamsAddOrUpdateProjectPermissionsLegacyReq is request data for Client.TeamsAddO
 https://developer.github.com/v3/teams/#add-or-update-team-project-permissions-legacy
 */
 type TeamsAddOrUpdateProjectPermissionsLegacyReq struct {
-	_url        string
-	TeamId      int64
+	_url string
+
+	// team_id parameter
+	TeamId int64
+
+	// project_id parameter
 	ProjectId   int64
 	RequestBody TeamsAddOrUpdateProjectPermissionsLegacyReqBody
 
@@ -660,7 +690,7 @@ func (r *TeamsAddOrUpdateProjectPermissionsLegacyReq) urlQuery() url.Values {
 }
 
 func (r *TeamsAddOrUpdateProjectPermissionsLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"content-type": String("application/json")}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
 	if requiredPreviews {
 		previewVals["inertia"] = true
@@ -713,15 +743,15 @@ https://developer.github.com/v3/teams/#add-or-update-team-project-permissions-le
 type TeamsAddOrUpdateProjectPermissionsLegacyReqBody struct {
 
 	/*
-	   The permission to grant to the team for this project. Can be one of:
-	   \* `read` - team members can read, but not write to or administer this project.
-	   \* `write` - team members can read and write, but not administer this project.
-	   \* `admin` - team members can read, write and administer this project.
-	   Default: the team's `permission` attribute will be used to determine what
-	   permission to grant the team on this project. Note that, if you choose not to
-	   pass any parameters, you'll need to set `Content-Length` to zero when calling
-	   out to this endpoint. For more information, see "[HTTP
-	   verbs](https://developer.github.com/v3/#http-verbs)."
+	The permission to grant to the team for this project. Can be one of:
+	\* `read` - team members can read, but not write to or administer this project.
+	\* `write` - team members can read and write, but not administer this project.
+	\* `admin` - team members can read, write and administer this project.
+	Default: the team's `permission` attribute will be used to determine what
+	permission to grant the team on this project. Note that, if you choose not to
+	pass any parameters, you'll need to set `Content-Length` to zero when calling
+	out to this endpoint. For more information, see "[HTTP
+	verbs](https://developer.github.com/v3/#http-verbs)."
 	*/
 	Permission *string `json:"permission,omitempty"`
 }
@@ -783,10 +813,18 @@ TeamsAddOrUpdateRepoPermissionsInOrgReq is request data for Client.TeamsAddOrUpd
 https://developer.github.com/v3/teams/#add-or-update-team-repository-permissions
 */
 type TeamsAddOrUpdateRepoPermissionsInOrgReq struct {
-	_url        string
-	Org         string
-	TeamSlug    string
-	Owner       string
+	_url string
+
+	// org parameter
+	Org string
+
+	// team_slug parameter
+	TeamSlug string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody TeamsAddOrUpdateRepoPermissionsInOrgReqBody
 }
@@ -809,7 +847,7 @@ func (r *TeamsAddOrUpdateRepoPermissionsInOrgReq) urlQuery() url.Values {
 }
 
 func (r *TeamsAddOrUpdateRepoPermissionsInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"content-type": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -856,20 +894,20 @@ https://developer.github.com/v3/teams/#add-or-update-team-repository-permissions
 type TeamsAddOrUpdateRepoPermissionsInOrgReqBody struct {
 
 	/*
-	   The permission to grant the team on this repository. Can be one of:
-	   \* `pull` - team members can pull, but not push to or administer this
-	   repository.
-	   \* `push` - team members can pull and push, but not administer this repository.
-	   \* `admin` - team members can pull, push and administer this repository.
-	   \* `maintain` - team members can manage the repository without access to
-	   sensitive or destructive actions. Recommended for project managers. Only applies
-	   to repositories owned by organizations.
-	   \* `triage` - team members can proactively manage issues and pull requests
-	   without write access. Recommended for contributors who triage a repository. Only
-	   applies to repositories owned by organizations.
+	The permission to grant the team on this repository. Can be one of:
+	\* `pull` - team members can pull, but not push to or administer this
+	repository.
+	\* `push` - team members can pull and push, but not administer this repository.
+	\* `admin` - team members can pull, push and administer this repository.
+	\* `maintain` - team members can manage the repository without access to
+	sensitive or destructive actions. Recommended for project managers. Only applies
+	to repositories owned by organizations.
+	\* `triage` - team members can proactively manage issues and pull requests
+	without write access. Recommended for contributors who triage a repository. Only
+	applies to repositories owned by organizations.
 
-	   If no permission is specified, the team's `permission` attribute will be used to
-	   determine what permission to grant the team on this repository.
+	If no permission is specified, the team's `permission` attribute will be used to
+	determine what permission to grant the team on this repository.
 	*/
 	Permission *string `json:"permission,omitempty"`
 }
@@ -931,9 +969,15 @@ TeamsAddOrUpdateRepoPermissionsLegacyReq is request data for Client.TeamsAddOrUp
 https://developer.github.com/v3/teams/#add-or-update-team-repository-permissions-legacy
 */
 type TeamsAddOrUpdateRepoPermissionsLegacyReq struct {
-	_url        string
-	TeamId      int64
-	Owner       string
+	_url string
+
+	// team_id parameter
+	TeamId int64
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody TeamsAddOrUpdateRepoPermissionsLegacyReqBody
 }
@@ -956,7 +1000,7 @@ func (r *TeamsAddOrUpdateRepoPermissionsLegacyReq) urlQuery() url.Values {
 }
 
 func (r *TeamsAddOrUpdateRepoPermissionsLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"content-type": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -1003,14 +1047,14 @@ https://developer.github.com/v3/teams/#add-or-update-team-repository-permissions
 type TeamsAddOrUpdateRepoPermissionsLegacyReqBody struct {
 
 	/*
-	   The permission to grant the team on this repository. Can be one of:
-	   \* `pull` - team members can pull, but not push to or administer this
-	   repository.
-	   \* `push` - team members can pull and push, but not administer this repository.
-	   \* `admin` - team members can pull, push and administer this repository.
+	The permission to grant the team on this repository. Can be one of:
+	\* `pull` - team members can pull, but not push to or administer this
+	repository.
+	\* `push` - team members can pull and push, but not administer this repository.
+	\* `admin` - team members can pull, push and administer this repository.
 
-	   If no permission is specified, the team's `permission` attribute will be used to
-	   determine what permission to grant the team on this repository.
+	If no permission is specified, the team's `permission` attribute will be used to
+	determine what permission to grant the team on this repository.
 	*/
 	Permission *string `json:"permission,omitempty"`
 }
@@ -1073,9 +1117,15 @@ TeamsCheckPermissionsForProjectInOrgReq is request data for Client.TeamsCheckPer
 https://developer.github.com/v3/teams/#check-team-permissions-for-a-project
 */
 type TeamsCheckPermissionsForProjectInOrgReq struct {
-	_url      string
-	Org       string
-	TeamSlug  string
+	_url string
+
+	// org parameter
+	Org string
+
+	// team_slug parameter
+	TeamSlug string
+
+	// project_id parameter
 	ProjectId int64
 
 	/*
@@ -1106,7 +1156,7 @@ func (r *TeamsCheckPermissionsForProjectInOrgReq) urlQuery() url.Values {
 }
 
 func (r *TeamsCheckPermissionsForProjectInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
 	if requiredPreviews {
 		previewVals["inertia"] = true
@@ -1217,8 +1267,12 @@ TeamsCheckPermissionsForProjectLegacyReq is request data for Client.TeamsCheckPe
 https://developer.github.com/v3/teams/#check-team-permissions-for-a-project-legacy
 */
 type TeamsCheckPermissionsForProjectLegacyReq struct {
-	_url      string
-	TeamId    int64
+	_url string
+
+	// team_id parameter
+	TeamId int64
+
+	// project_id parameter
 	ProjectId int64
 
 	/*
@@ -1249,7 +1303,7 @@ func (r *TeamsCheckPermissionsForProjectLegacyReq) urlQuery() url.Values {
 }
 
 func (r *TeamsCheckPermissionsForProjectLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
 	if requiredPreviews {
 		previewVals["inertia"] = true
@@ -1360,11 +1414,19 @@ TeamsCheckPermissionsForRepoInOrgReq is request data for Client.TeamsCheckPermis
 https://developer.github.com/v3/teams/#check-team-permissions-for-a-repository
 */
 type TeamsCheckPermissionsForRepoInOrgReq struct {
-	_url     string
-	Org      string
+	_url string
+
+	// org parameter
+	Org string
+
+	// team_slug parameter
 	TeamSlug string
-	Owner    string
-	Repo     string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
 }
 
 func (r *TeamsCheckPermissionsForRepoInOrgReq) url() string {
@@ -1385,7 +1447,7 @@ func (r *TeamsCheckPermissionsForRepoInOrgReq) urlQuery() url.Values {
 }
 
 func (r *TeamsCheckPermissionsForRepoInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/vnd.github.v3.repository+json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -1490,10 +1552,16 @@ TeamsCheckPermissionsForRepoLegacyReq is request data for Client.TeamsCheckPermi
 https://developer.github.com/v3/teams/#check-team-permissions-for-a-repository-legacy
 */
 type TeamsCheckPermissionsForRepoLegacyReq struct {
-	_url   string
+	_url string
+
+	// team_id parameter
 	TeamId int64
-	Owner  string
-	Repo   string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
 }
 
 func (r *TeamsCheckPermissionsForRepoLegacyReq) url() string {
@@ -1514,7 +1582,7 @@ func (r *TeamsCheckPermissionsForRepoLegacyReq) urlQuery() url.Values {
 }
 
 func (r *TeamsCheckPermissionsForRepoLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/vnd.github.v3.repository+json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -1619,7 +1687,9 @@ TeamsCreateReq is request data for Client.TeamsCreate
 https://developer.github.com/v3/teams/#create-a-team
 */
 type TeamsCreateReq struct {
-	_url        string
+	_url string
+
+	// org parameter
 	Org         string
 	RequestBody TeamsCreateReqBody
 }
@@ -1642,7 +1712,10 @@ func (r *TeamsCreateReq) urlQuery() url.Values {
 }
 
 func (r *TeamsCreateReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -1701,33 +1774,30 @@ type TeamsCreateReqBody struct {
 	ParentTeamId *int64 `json:"parent_team_id,omitempty"`
 
 	/*
-	   **Deprecated**. The permission that new repositories will be added to the team
-	   with when none is specified. Can be one of:
-	   \* `pull` - team members can pull, but not push to or administer newly-added
-	   repositories.
-	   \* `push` - team members can pull and push, but not administer newly-added
-	   repositories.
-	   \* `admin` - team members can pull, push and administer newly-added
-	   repositories.
+	**Deprecated**. The permission that new repositories will be added to the team
+	with when none is specified. Can be one of:
+	\* `pull` - team members can pull, but not push to or administer newly-added
+	repositories.
+	\* `push` - team members can pull and push, but not administer newly-added
+	repositories.
+	\* `admin` - team members can pull, push and administer newly-added
+	repositories.
 	*/
 	Permission *string `json:"permission,omitempty"`
 
 	/*
-	   The level of privacy this team should have. The options are:
-	   **For a non-nested team:**
-	   \* `secret` - only visible to organization owners and members of this team.
-	   \* `closed` - visible to all members of this organization.
-	   Default: `secret`
-	   **For a parent or child team:**
-	   \* `closed` - visible to all members of this organization.
-	   Default for child team: `closed`
+	The level of privacy this team should have. The options are:
+	**For a non-nested team:**
+	\* `secret` - only visible to organization owners and members of this team.
+	\* `closed` - visible to all members of this organization.
+	Default: `secret`
+	**For a parent or child team:**
+	\* `closed` - visible to all members of this organization.
+	Default for child team: `closed`
 	*/
 	Privacy *string `json:"privacy,omitempty"`
 
-	/*
-	   The full name (e.g., "organization-name/repository-name") of repositories to add
-	   the team to.
-	*/
+	// The full name (e.g., "organization-name/repository-name") of repositories to add the team to.
 	RepoNames []string `json:"repo_names,omitempty"`
 }
 
@@ -1797,20 +1867,24 @@ TeamsCreateDiscussionCommentInOrgReq is request data for Client.TeamsCreateDiscu
 https://developer.github.com/v3/teams/discussion_comments/#create-a-discussion-comment
 */
 type TeamsCreateDiscussionCommentInOrgReq struct {
-	_url             string
-	Org              string
-	TeamSlug         string
+	_url string
+
+	// org parameter
+	Org string
+
+	// team_slug parameter
+	TeamSlug string
+
+	// discussion_number parameter
 	DiscussionNumber int64
 	RequestBody      TeamsCreateDiscussionCommentInOrgReqBody
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During
-	the preview period, the APIs may change without advance notice. Please see the
-	[blog
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
-
 
 	To access the API you must set this to true.
 	*/
@@ -1835,7 +1909,10 @@ func (r *TeamsCreateDiscussionCommentInOrgReq) urlQuery() url.Values {
 }
 
 func (r *TeamsCreateDiscussionCommentInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
 	if allPreviews {
 		previewVals["squirrel-girl"] = true
@@ -1954,19 +2031,21 @@ TeamsCreateDiscussionCommentLegacyReq is request data for Client.TeamsCreateDisc
 https://developer.github.com/v3/teams/discussion_comments/#create-a-discussion-comment-legacy
 */
 type TeamsCreateDiscussionCommentLegacyReq struct {
-	_url             string
-	TeamId           int64
+	_url string
+
+	// team_id parameter
+	TeamId int64
+
+	// discussion_number parameter
 	DiscussionNumber int64
 	RequestBody      TeamsCreateDiscussionCommentLegacyReqBody
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During
-	the preview period, the APIs may change without advance notice. Please see the
-	[blog
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
-
 
 	To access the API you must set this to true.
 	*/
@@ -1991,7 +2070,10 @@ func (r *TeamsCreateDiscussionCommentLegacyReq) urlQuery() url.Values {
 }
 
 func (r *TeamsCreateDiscussionCommentLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
 	if allPreviews {
 		previewVals["squirrel-girl"] = true
@@ -2110,19 +2192,21 @@ TeamsCreateDiscussionInOrgReq is request data for Client.TeamsCreateDiscussionIn
 https://developer.github.com/v3/teams/discussions/#create-a-discussion
 */
 type TeamsCreateDiscussionInOrgReq struct {
-	_url        string
-	Org         string
+	_url string
+
+	// org parameter
+	Org string
+
+	// team_slug parameter
 	TeamSlug    string
 	RequestBody TeamsCreateDiscussionInOrgReqBody
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During
-	the preview period, the APIs may change without advance notice. Please see the
-	[blog
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
-
 
 	To access the API you must set this to true.
 	*/
@@ -2147,7 +2231,10 @@ func (r *TeamsCreateDiscussionInOrgReq) urlQuery() url.Values {
 }
 
 func (r *TeamsCreateDiscussionInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
 	if allPreviews {
 		previewVals["squirrel-girl"] = true
@@ -2200,9 +2287,9 @@ type TeamsCreateDiscussionInOrgReqBody struct {
 	Body *string `json:"body"`
 
 	/*
-	   Private posts are only visible to team members, organization owners, and team
-	   maintainers. Public posts are visible to all members of the organization. Set to
-	   `true` to create a private post.
+	Private posts are only visible to team members, organization owners, and team
+	maintainers. Public posts are visible to all members of the organization. Set to
+	`true` to create a private post.
 	*/
 	Private *bool `json:"private,omitempty"`
 
@@ -2276,18 +2363,18 @@ TeamsCreateDiscussionLegacyReq is request data for Client.TeamsCreateDiscussionL
 https://developer.github.com/v3/teams/discussions/#create-a-discussion-legacy
 */
 type TeamsCreateDiscussionLegacyReq struct {
-	_url        string
+	_url string
+
+	// team_id parameter
 	TeamId      int64
 	RequestBody TeamsCreateDiscussionLegacyReqBody
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During
-	the preview period, the APIs may change without advance notice. Please see the
-	[blog
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
-
 
 	To access the API you must set this to true.
 	*/
@@ -2312,7 +2399,10 @@ func (r *TeamsCreateDiscussionLegacyReq) urlQuery() url.Values {
 }
 
 func (r *TeamsCreateDiscussionLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
 	if allPreviews {
 		previewVals["squirrel-girl"] = true
@@ -2365,9 +2455,9 @@ type TeamsCreateDiscussionLegacyReqBody struct {
 	Body *string `json:"body"`
 
 	/*
-	   Private posts are only visible to team members, organization owners, and team
-	   maintainers. Public posts are visible to all members of the organization. Set to
-	   `true` to create a private post.
+	Private posts are only visible to team members, organization owners, and team
+	maintainers. Public posts are visible to all members of the organization. Set to
+	`true` to create a private post.
 	*/
 	Private *bool `json:"private,omitempty"`
 
@@ -2394,7 +2484,7 @@ type TeamsCreateDiscussionLegacyResponse struct {
 }
 
 /*
-TeamsCreateOrUpdateIdPGroupConnectionsInOrg performs requests for "teams/create-or-update-id-p-group-connections-in-org"
+TeamsCreateOrUpdateIdpGroupConnectionsInOrg performs requests for "teams/create-or-update-idp-group-connections-in-org"
 
 Create or update IdP group connections.
 
@@ -2402,11 +2492,11 @@ Create or update IdP group connections.
 
 https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections
 */
-func TeamsCreateOrUpdateIdPGroupConnectionsInOrg(ctx context.Context, req *TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq, opt ...RequestOption) (*TeamsCreateOrUpdateIdPGroupConnectionsInOrgResponse, error) {
+func TeamsCreateOrUpdateIdpGroupConnectionsInOrg(ctx context.Context, req *TeamsCreateOrUpdateIdpGroupConnectionsInOrgReq, opt ...RequestOption) (*TeamsCreateOrUpdateIdpGroupConnectionsInOrgResponse, error) {
 	if req == nil {
-		req = new(TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq)
+		req = new(TeamsCreateOrUpdateIdpGroupConnectionsInOrgReq)
 	}
-	resp := &TeamsCreateOrUpdateIdPGroupConnectionsInOrgResponse{request: req}
+	resp := &TeamsCreateOrUpdateIdpGroupConnectionsInOrgResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -2414,7 +2504,7 @@ func TeamsCreateOrUpdateIdPGroupConnectionsInOrg(ctx context.Context, req *Teams
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = TeamsCreateOrUpdateIdPGroupConnectionsInOrgResponseBody{}
+	resp.Data = TeamsCreateOrUpdateIdpGroupConnectionsInOrgResponseBody{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2423,7 +2513,7 @@ func TeamsCreateOrUpdateIdPGroupConnectionsInOrg(ctx context.Context, req *Teams
 }
 
 /*
-TeamsCreateOrUpdateIdPGroupConnectionsInOrg performs requests for "teams/create-or-update-id-p-group-connections-in-org"
+TeamsCreateOrUpdateIdpGroupConnectionsInOrg performs requests for "teams/create-or-update-idp-group-connections-in-org"
 
 Create or update IdP group connections.
 
@@ -2431,63 +2521,70 @@ Create or update IdP group connections.
 
 https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections
 */
-func (c Client) TeamsCreateOrUpdateIdPGroupConnectionsInOrg(ctx context.Context, req *TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq, opt ...RequestOption) (*TeamsCreateOrUpdateIdPGroupConnectionsInOrgResponse, error) {
-	return TeamsCreateOrUpdateIdPGroupConnectionsInOrg(ctx, req, append(c, opt...)...)
+func (c Client) TeamsCreateOrUpdateIdpGroupConnectionsInOrg(ctx context.Context, req *TeamsCreateOrUpdateIdpGroupConnectionsInOrgReq, opt ...RequestOption) (*TeamsCreateOrUpdateIdpGroupConnectionsInOrgResponse, error) {
+	return TeamsCreateOrUpdateIdpGroupConnectionsInOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
-TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq is request data for Client.TeamsCreateOrUpdateIdPGroupConnectionsInOrg
+TeamsCreateOrUpdateIdpGroupConnectionsInOrgReq is request data for Client.TeamsCreateOrUpdateIdpGroupConnectionsInOrg
 
 https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections
 */
-type TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq struct {
-	_url        string
-	Org         string
+type TeamsCreateOrUpdateIdpGroupConnectionsInOrgReq struct {
+	_url string
+
+	// org parameter
+	Org string
+
+	// team_slug parameter
 	TeamSlug    string
-	RequestBody TeamsCreateOrUpdateIdPGroupConnectionsInOrgReqBody
+	RequestBody TeamsCreateOrUpdateIdpGroupConnectionsInOrgReqBody
 }
 
-func (r *TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq) url() string {
+func (r *TeamsCreateOrUpdateIdpGroupConnectionsInOrgReq) url() string {
 	return r._url
 }
 
-func (r *TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq) urlPath() string {
+func (r *TeamsCreateOrUpdateIdpGroupConnectionsInOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/teams/%v/team-sync/group-mappings", r.Org, r.TeamSlug)
 }
 
-func (r *TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq) method() string {
+func (r *TeamsCreateOrUpdateIdpGroupConnectionsInOrgReq) method() string {
 	return "PATCH"
 }
 
-func (r *TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq) urlQuery() url.Values {
+func (r *TeamsCreateOrUpdateIdpGroupConnectionsInOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r *TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+func (r *TeamsCreateOrUpdateIdpGroupConnectionsInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq) body() interface{} {
+func (r *TeamsCreateOrUpdateIdpGroupConnectionsInOrgReq) body() interface{} {
 	return r.RequestBody
 }
 
-func (r *TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq) dataStatuses() []int {
+func (r *TeamsCreateOrUpdateIdpGroupConnectionsInOrgReq) dataStatuses() []int {
 	return []int{200}
 }
 
-func (r *TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq) validStatuses() []int {
+func (r *TeamsCreateOrUpdateIdpGroupConnectionsInOrgReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq) endpointAttributes() []endpointAttribute {
+func (r *TeamsCreateOrUpdateIdpGroupConnectionsInOrgReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *TeamsCreateOrUpdateIdpGroupConnectionsInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -2495,7 +2592,7 @@ func (r *TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq) HTTPRequest(ctx context
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq) Rel(link RelName, resp *TeamsCreateOrUpdateIdPGroupConnectionsInOrgResponse) bool {
+func (r *TeamsCreateOrUpdateIdpGroupConnectionsInOrgReq) Rel(link RelName, resp *TeamsCreateOrUpdateIdpGroupConnectionsInOrgResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -2504,8 +2601,8 @@ func (r *TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq) Rel(link RelName, resp 
 	return true
 }
 
-// TeamsCreateOrUpdateIdPGroupConnectionsInOrgReqBodyGroups is a value for TeamsCreateOrUpdateIdPGroupConnectionsInOrgReqBody's Groups field
-type TeamsCreateOrUpdateIdPGroupConnectionsInOrgReqBodyGroups struct {
+// TeamsCreateOrUpdateIdpGroupConnectionsInOrgReqBodyGroups is a value for TeamsCreateOrUpdateIdpGroupConnectionsInOrgReqBody's Groups field
+type TeamsCreateOrUpdateIdpGroupConnectionsInOrgReqBodyGroups struct {
 
 	// Description of the IdP group.
 	GroupDescription *string `json:"group_description"`
@@ -2518,40 +2615,40 @@ type TeamsCreateOrUpdateIdPGroupConnectionsInOrgReqBodyGroups struct {
 }
 
 /*
-TeamsCreateOrUpdateIdPGroupConnectionsInOrgReqBody is a request body for teams/create-or-update-id-p-group-connections-in-org
+TeamsCreateOrUpdateIdpGroupConnectionsInOrgReqBody is a request body for teams/create-or-update-idp-group-connections-in-org
 
 https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections
 */
-type TeamsCreateOrUpdateIdPGroupConnectionsInOrgReqBody struct {
+type TeamsCreateOrUpdateIdpGroupConnectionsInOrgReqBody struct {
 
 	/*
-	   The IdP groups you want to connect to a GitHub team. When updating, the new
-	   `groups` object will replace the original one. You must include any existing
-	   groups that you don't want to remove.
+	The IdP groups you want to connect to a GitHub team. When updating, the new
+	`groups` object will replace the original one. You must include any existing
+	groups that you don't want to remove.
 	*/
-	Groups []TeamsCreateOrUpdateIdPGroupConnectionsInOrgReqBodyGroups `json:"groups"`
+	Groups []TeamsCreateOrUpdateIdpGroupConnectionsInOrgReqBodyGroups `json:"groups"`
 }
 
 /*
-TeamsCreateOrUpdateIdPGroupConnectionsInOrgResponseBody is a response body for TeamsCreateOrUpdateIdPGroupConnectionsInOrg
+TeamsCreateOrUpdateIdpGroupConnectionsInOrgResponseBody is a response body for TeamsCreateOrUpdateIdpGroupConnectionsInOrg
 
 https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections
 */
-type TeamsCreateOrUpdateIdPGroupConnectionsInOrgResponseBody components.GroupMapping
+type TeamsCreateOrUpdateIdpGroupConnectionsInOrgResponseBody components.GroupMapping
 
 /*
-TeamsCreateOrUpdateIdPGroupConnectionsInOrgResponse is a response for TeamsCreateOrUpdateIdPGroupConnectionsInOrg
+TeamsCreateOrUpdateIdpGroupConnectionsInOrgResponse is a response for TeamsCreateOrUpdateIdpGroupConnectionsInOrg
 
 https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections
 */
-type TeamsCreateOrUpdateIdPGroupConnectionsInOrgResponse struct {
+type TeamsCreateOrUpdateIdpGroupConnectionsInOrgResponse struct {
 	response
-	request *TeamsCreateOrUpdateIdPGroupConnectionsInOrgReq
-	Data    TeamsCreateOrUpdateIdPGroupConnectionsInOrgResponseBody
+	request *TeamsCreateOrUpdateIdpGroupConnectionsInOrgReq
+	Data    TeamsCreateOrUpdateIdpGroupConnectionsInOrgResponseBody
 }
 
 /*
-TeamsCreateOrUpdateIdPGroupConnectionsLegacy performs requests for "teams/create-or-update-id-p-group-connections-legacy"
+TeamsCreateOrUpdateIdpGroupConnectionsLegacy performs requests for "teams/create-or-update-idp-group-connections-legacy"
 
 Create or update IdP group connections (Legacy).
 
@@ -2559,11 +2656,11 @@ Create or update IdP group connections (Legacy).
 
 https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections-legacy
 */
-func TeamsCreateOrUpdateIdPGroupConnectionsLegacy(ctx context.Context, req *TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq, opt ...RequestOption) (*TeamsCreateOrUpdateIdPGroupConnectionsLegacyResponse, error) {
+func TeamsCreateOrUpdateIdpGroupConnectionsLegacy(ctx context.Context, req *TeamsCreateOrUpdateIdpGroupConnectionsLegacyReq, opt ...RequestOption) (*TeamsCreateOrUpdateIdpGroupConnectionsLegacyResponse, error) {
 	if req == nil {
-		req = new(TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq)
+		req = new(TeamsCreateOrUpdateIdpGroupConnectionsLegacyReq)
 	}
-	resp := &TeamsCreateOrUpdateIdPGroupConnectionsLegacyResponse{request: req}
+	resp := &TeamsCreateOrUpdateIdpGroupConnectionsLegacyResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -2571,7 +2668,7 @@ func TeamsCreateOrUpdateIdPGroupConnectionsLegacy(ctx context.Context, req *Team
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = TeamsCreateOrUpdateIdPGroupConnectionsLegacyResponseBody{}
+	resp.Data = TeamsCreateOrUpdateIdpGroupConnectionsLegacyResponseBody{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -2580,7 +2677,7 @@ func TeamsCreateOrUpdateIdPGroupConnectionsLegacy(ctx context.Context, req *Team
 }
 
 /*
-TeamsCreateOrUpdateIdPGroupConnectionsLegacy performs requests for "teams/create-or-update-id-p-group-connections-legacy"
+TeamsCreateOrUpdateIdpGroupConnectionsLegacy performs requests for "teams/create-or-update-idp-group-connections-legacy"
 
 Create or update IdP group connections (Legacy).
 
@@ -2588,62 +2685,67 @@ Create or update IdP group connections (Legacy).
 
 https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections-legacy
 */
-func (c Client) TeamsCreateOrUpdateIdPGroupConnectionsLegacy(ctx context.Context, req *TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq, opt ...RequestOption) (*TeamsCreateOrUpdateIdPGroupConnectionsLegacyResponse, error) {
-	return TeamsCreateOrUpdateIdPGroupConnectionsLegacy(ctx, req, append(c, opt...)...)
+func (c Client) TeamsCreateOrUpdateIdpGroupConnectionsLegacy(ctx context.Context, req *TeamsCreateOrUpdateIdpGroupConnectionsLegacyReq, opt ...RequestOption) (*TeamsCreateOrUpdateIdpGroupConnectionsLegacyResponse, error) {
+	return TeamsCreateOrUpdateIdpGroupConnectionsLegacy(ctx, req, append(c, opt...)...)
 }
 
 /*
-TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq is request data for Client.TeamsCreateOrUpdateIdPGroupConnectionsLegacy
+TeamsCreateOrUpdateIdpGroupConnectionsLegacyReq is request data for Client.TeamsCreateOrUpdateIdpGroupConnectionsLegacy
 
 https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections-legacy
 */
-type TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq struct {
-	_url        string
+type TeamsCreateOrUpdateIdpGroupConnectionsLegacyReq struct {
+	_url string
+
+	// team_id parameter
 	TeamId      int64
-	RequestBody TeamsCreateOrUpdateIdPGroupConnectionsLegacyReqBody
+	RequestBody TeamsCreateOrUpdateIdpGroupConnectionsLegacyReqBody
 }
 
-func (r *TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq) url() string {
+func (r *TeamsCreateOrUpdateIdpGroupConnectionsLegacyReq) url() string {
 	return r._url
 }
 
-func (r *TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq) urlPath() string {
+func (r *TeamsCreateOrUpdateIdpGroupConnectionsLegacyReq) urlPath() string {
 	return fmt.Sprintf("/teams/%v/team-sync/group-mappings", r.TeamId)
 }
 
-func (r *TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq) method() string {
+func (r *TeamsCreateOrUpdateIdpGroupConnectionsLegacyReq) method() string {
 	return "PATCH"
 }
 
-func (r *TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq) urlQuery() url.Values {
+func (r *TeamsCreateOrUpdateIdpGroupConnectionsLegacyReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r *TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+func (r *TeamsCreateOrUpdateIdpGroupConnectionsLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq) body() interface{} {
+func (r *TeamsCreateOrUpdateIdpGroupConnectionsLegacyReq) body() interface{} {
 	return r.RequestBody
 }
 
-func (r *TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq) dataStatuses() []int {
+func (r *TeamsCreateOrUpdateIdpGroupConnectionsLegacyReq) dataStatuses() []int {
 	return []int{200}
 }
 
-func (r *TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq) validStatuses() []int {
+func (r *TeamsCreateOrUpdateIdpGroupConnectionsLegacyReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq) endpointAttributes() []endpointAttribute {
+func (r *TeamsCreateOrUpdateIdpGroupConnectionsLegacyReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *TeamsCreateOrUpdateIdpGroupConnectionsLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -2651,7 +2753,7 @@ func (r *TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq) HTTPRequest(ctx contex
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq) Rel(link RelName, resp *TeamsCreateOrUpdateIdPGroupConnectionsLegacyResponse) bool {
+func (r *TeamsCreateOrUpdateIdpGroupConnectionsLegacyReq) Rel(link RelName, resp *TeamsCreateOrUpdateIdpGroupConnectionsLegacyResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -2660,8 +2762,9 @@ func (r *TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq) Rel(link RelName, resp
 	return true
 }
 
-// TeamsCreateOrUpdateIdPGroupConnectionsLegacyReqBodyGroups is a value for TeamsCreateOrUpdateIdPGroupConnectionsLegacyReqBody's Groups field
-type TeamsCreateOrUpdateIdPGroupConnectionsLegacyReqBodyGroups struct {
+// TeamsCreateOrUpdateIdpGroupConnectionsLegacyReqBodyGroups is a value for TeamsCreateOrUpdateIdpGroupConnectionsLegacyReqBody's Groups field
+type TeamsCreateOrUpdateIdpGroupConnectionsLegacyReqBodyGroups struct {
+	Description *string `json:"description,omitempty"`
 
 	// Description of the IdP group.
 	GroupDescription *string `json:"group_description"`
@@ -2671,39 +2774,42 @@ type TeamsCreateOrUpdateIdPGroupConnectionsLegacyReqBodyGroups struct {
 
 	// Name of the IdP group.
 	GroupName *string `json:"group_name"`
+	Id        *string `json:"id,omitempty"`
+	Name      *string `json:"name,omitempty"`
 }
 
 /*
-TeamsCreateOrUpdateIdPGroupConnectionsLegacyReqBody is a request body for teams/create-or-update-id-p-group-connections-legacy
+TeamsCreateOrUpdateIdpGroupConnectionsLegacyReqBody is a request body for teams/create-or-update-idp-group-connections-legacy
 
 https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections-legacy
 */
-type TeamsCreateOrUpdateIdPGroupConnectionsLegacyReqBody struct {
+type TeamsCreateOrUpdateIdpGroupConnectionsLegacyReqBody struct {
 
 	/*
-	   The IdP groups you want to connect to a GitHub team. When updating, the new
-	   `groups` object will replace the original one. You must include any existing
-	   groups that you don't want to remove.
+	The IdP groups you want to connect to a GitHub team. When updating, the new
+	`groups` object will replace the original one. You must include any existing
+	groups that you don't want to remove.
 	*/
-	Groups []TeamsCreateOrUpdateIdPGroupConnectionsLegacyReqBodyGroups `json:"groups"`
+	Groups   []TeamsCreateOrUpdateIdpGroupConnectionsLegacyReqBodyGroups `json:"groups"`
+	SyncedAt *string                                                     `json:"synced_at,omitempty"`
 }
 
 /*
-TeamsCreateOrUpdateIdPGroupConnectionsLegacyResponseBody is a response body for TeamsCreateOrUpdateIdPGroupConnectionsLegacy
+TeamsCreateOrUpdateIdpGroupConnectionsLegacyResponseBody is a response body for TeamsCreateOrUpdateIdpGroupConnectionsLegacy
 
 https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections-legacy
 */
-type TeamsCreateOrUpdateIdPGroupConnectionsLegacyResponseBody components.GroupMapping2
+type TeamsCreateOrUpdateIdpGroupConnectionsLegacyResponseBody components.GroupMapping
 
 /*
-TeamsCreateOrUpdateIdPGroupConnectionsLegacyResponse is a response for TeamsCreateOrUpdateIdPGroupConnectionsLegacy
+TeamsCreateOrUpdateIdpGroupConnectionsLegacyResponse is a response for TeamsCreateOrUpdateIdpGroupConnectionsLegacy
 
 https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections-legacy
 */
-type TeamsCreateOrUpdateIdPGroupConnectionsLegacyResponse struct {
+type TeamsCreateOrUpdateIdpGroupConnectionsLegacyResponse struct {
 	response
-	request *TeamsCreateOrUpdateIdPGroupConnectionsLegacyReq
-	Data    TeamsCreateOrUpdateIdPGroupConnectionsLegacyResponseBody
+	request *TeamsCreateOrUpdateIdpGroupConnectionsLegacyReq
+	Data    TeamsCreateOrUpdateIdpGroupConnectionsLegacyResponseBody
 }
 
 /*
@@ -2753,11 +2859,19 @@ TeamsDeleteDiscussionCommentInOrgReq is request data for Client.TeamsDeleteDiscu
 https://developer.github.com/v3/teams/discussion_comments/#delete-a-discussion-comment
 */
 type TeamsDeleteDiscussionCommentInOrgReq struct {
-	_url             string
-	Org              string
-	TeamSlug         string
+	_url string
+
+	// org parameter
+	Org string
+
+	// team_slug parameter
+	TeamSlug string
+
+	// discussion_number parameter
 	DiscussionNumber int64
-	CommentNumber    int64
+
+	// comment_number parameter
+	CommentNumber int64
 }
 
 func (r *TeamsDeleteDiscussionCommentInOrgReq) url() string {
@@ -2874,10 +2988,16 @@ TeamsDeleteDiscussionCommentLegacyReq is request data for Client.TeamsDeleteDisc
 https://developer.github.com/v3/teams/discussion_comments/#delete-a-discussion-comment-legacy
 */
 type TeamsDeleteDiscussionCommentLegacyReq struct {
-	_url             string
-	TeamId           int64
+	_url string
+
+	// team_id parameter
+	TeamId int64
+
+	// discussion_number parameter
 	DiscussionNumber int64
-	CommentNumber    int64
+
+	// comment_number parameter
+	CommentNumber int64
 }
 
 func (r *TeamsDeleteDiscussionCommentLegacyReq) url() string {
@@ -2994,9 +3114,15 @@ TeamsDeleteDiscussionInOrgReq is request data for Client.TeamsDeleteDiscussionIn
 https://developer.github.com/v3/teams/discussions/#delete-a-discussion
 */
 type TeamsDeleteDiscussionInOrgReq struct {
-	_url             string
-	Org              string
-	TeamSlug         string
+	_url string
+
+	// org parameter
+	Org string
+
+	// team_slug parameter
+	TeamSlug string
+
+	// discussion_number parameter
 	DiscussionNumber int64
 }
 
@@ -3114,8 +3240,12 @@ TeamsDeleteDiscussionLegacyReq is request data for Client.TeamsDeleteDiscussionL
 https://developer.github.com/v3/teams/discussions/#delete-a-discussion-legacy
 */
 type TeamsDeleteDiscussionLegacyReq struct {
-	_url             string
-	TeamId           int64
+	_url string
+
+	// team_id parameter
+	TeamId int64
+
+	// discussion_number parameter
 	DiscussionNumber int64
 }
 
@@ -3233,8 +3363,12 @@ TeamsDeleteInOrgReq is request data for Client.TeamsDeleteInOrg
 https://developer.github.com/v3/teams/#delete-a-team
 */
 type TeamsDeleteInOrgReq struct {
-	_url     string
-	Org      string
+	_url string
+
+	// org parameter
+	Org string
+
+	// team_slug parameter
 	TeamSlug string
 }
 
@@ -3352,7 +3486,9 @@ TeamsDeleteLegacyReq is request data for Client.TeamsDeleteLegacy
 https://developer.github.com/v3/teams/#delete-a-team-legacy
 */
 type TeamsDeleteLegacyReq struct {
-	_url   string
+	_url string
+
+	// team_id parameter
 	TeamId int64
 }
 
@@ -3471,8 +3607,12 @@ TeamsGetByNameReq is request data for Client.TeamsGetByName
 https://developer.github.com/v3/teams/#get-a-team-by-name
 */
 type TeamsGetByNameReq struct {
-	_url     string
-	Org      string
+	_url string
+
+	// org parameter
+	Org string
+
+	// team_slug parameter
 	TeamSlug string
 }
 
@@ -3494,7 +3634,7 @@ func (r *TeamsGetByNameReq) urlQuery() url.Values {
 }
 
 func (r *TeamsGetByNameReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -3599,20 +3739,26 @@ TeamsGetDiscussionCommentInOrgReq is request data for Client.TeamsGetDiscussionC
 https://developer.github.com/v3/teams/discussion_comments/#get-a-discussion-comment
 */
 type TeamsGetDiscussionCommentInOrgReq struct {
-	_url             string
-	Org              string
-	TeamSlug         string
+	_url string
+
+	// org parameter
+	Org string
+
+	// team_slug parameter
+	TeamSlug string
+
+	// discussion_number parameter
 	DiscussionNumber int64
-	CommentNumber    int64
+
+	// comment_number parameter
+	CommentNumber int64
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During
-	the preview period, the APIs may change without advance notice. Please see the
-	[blog
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
-
 
 	To access the API you must set this to true.
 	*/
@@ -3637,7 +3783,7 @@ func (r *TeamsGetDiscussionCommentInOrgReq) urlQuery() url.Values {
 }
 
 func (r *TeamsGetDiscussionCommentInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
 	if allPreviews {
 		previewVals["squirrel-girl"] = true
@@ -3745,19 +3891,23 @@ TeamsGetDiscussionCommentLegacyReq is request data for Client.TeamsGetDiscussion
 https://developer.github.com/v3/teams/discussion_comments/#get-a-discussion-comment-legacy
 */
 type TeamsGetDiscussionCommentLegacyReq struct {
-	_url             string
-	TeamId           int64
+	_url string
+
+	// team_id parameter
+	TeamId int64
+
+	// discussion_number parameter
 	DiscussionNumber int64
-	CommentNumber    int64
+
+	// comment_number parameter
+	CommentNumber int64
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During
-	the preview period, the APIs may change without advance notice. Please see the
-	[blog
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
-
 
 	To access the API you must set this to true.
 	*/
@@ -3782,7 +3932,7 @@ func (r *TeamsGetDiscussionCommentLegacyReq) urlQuery() url.Values {
 }
 
 func (r *TeamsGetDiscussionCommentLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
 	if allPreviews {
 		previewVals["squirrel-girl"] = true
@@ -3890,19 +4040,23 @@ TeamsGetDiscussionInOrgReq is request data for Client.TeamsGetDiscussionInOrg
 https://developer.github.com/v3/teams/discussions/#get-a-discussion
 */
 type TeamsGetDiscussionInOrgReq struct {
-	_url             string
-	Org              string
-	TeamSlug         string
+	_url string
+
+	// org parameter
+	Org string
+
+	// team_slug parameter
+	TeamSlug string
+
+	// discussion_number parameter
 	DiscussionNumber int64
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During
-	the preview period, the APIs may change without advance notice. Please see the
-	[blog
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
-
 
 	To access the API you must set this to true.
 	*/
@@ -3927,7 +4081,7 @@ func (r *TeamsGetDiscussionInOrgReq) urlQuery() url.Values {
 }
 
 func (r *TeamsGetDiscussionInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
 	if allPreviews {
 		previewVals["squirrel-girl"] = true
@@ -4035,18 +4189,20 @@ TeamsGetDiscussionLegacyReq is request data for Client.TeamsGetDiscussionLegacy
 https://developer.github.com/v3/teams/discussions/#get-a-discussion-legacy
 */
 type TeamsGetDiscussionLegacyReq struct {
-	_url             string
-	TeamId           int64
+	_url string
+
+	// team_id parameter
+	TeamId int64
+
+	// discussion_number parameter
 	DiscussionNumber int64
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During
-	the preview period, the APIs may change without advance notice. Please see the
-	[blog
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
-
 
 	To access the API you must set this to true.
 	*/
@@ -4071,7 +4227,7 @@ func (r *TeamsGetDiscussionLegacyReq) urlQuery() url.Values {
 }
 
 func (r *TeamsGetDiscussionLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
 	if allPreviews {
 		previewVals["squirrel-girl"] = true
@@ -4179,7 +4335,9 @@ TeamsGetLegacyReq is request data for Client.TeamsGetLegacy
 https://developer.github.com/v3/teams/#get-a-team-legacy
 */
 type TeamsGetLegacyReq struct {
-	_url   string
+	_url string
+
+	// team_id parameter
 	TeamId int64
 }
 
@@ -4201,7 +4359,7 @@ func (r *TeamsGetLegacyReq) urlQuery() url.Values {
 }
 
 func (r *TeamsGetLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -4309,8 +4467,12 @@ TeamsGetMemberLegacyReq is request data for Client.TeamsGetMemberLegacy
 https://developer.github.com/v3/teams/members/#get-team-member-legacy
 */
 type TeamsGetMemberLegacyReq struct {
-	_url     string
-	TeamId   int64
+	_url string
+
+	// team_id parameter
+	TeamId int64
+
+	// username parameter
 	Username string
 }
 
@@ -4430,9 +4592,15 @@ TeamsGetMembershipForUserInOrgReq is request data for Client.TeamsGetMembershipF
 https://developer.github.com/v3/teams/members/#get-team-membership-for-a-user
 */
 type TeamsGetMembershipForUserInOrgReq struct {
-	_url     string
-	Org      string
+	_url string
+
+	// org parameter
+	Org string
+
+	// team_slug parameter
 	TeamSlug string
+
+	// username parameter
 	Username string
 }
 
@@ -4454,7 +4622,7 @@ func (r *TeamsGetMembershipForUserInOrgReq) urlQuery() url.Values {
 }
 
 func (r *TeamsGetMembershipForUserInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -4559,8 +4727,12 @@ TeamsGetMembershipForUserLegacyReq is request data for Client.TeamsGetMembership
 https://developer.github.com/v3/teams/members/#get-team-membership-for-a-user-legacy
 */
 type TeamsGetMembershipForUserLegacyReq struct {
-	_url     string
-	TeamId   int64
+	_url string
+
+	// team_id parameter
+	TeamId int64
+
+	// username parameter
 	Username string
 }
 
@@ -4582,7 +4754,7 @@ func (r *TeamsGetMembershipForUserLegacyReq) urlQuery() url.Values {
 }
 
 func (r *TeamsGetMembershipForUserLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -4688,7 +4860,9 @@ https://developer.github.com/v3/teams/#list-teams
 */
 type TeamsListReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -4721,7 +4895,7 @@ func (r *TeamsListReq) urlQuery() url.Values {
 }
 
 func (r *TeamsListReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -4826,8 +5000,12 @@ TeamsListChildInOrgReq is request data for Client.TeamsListChildInOrg
 https://developer.github.com/v3/teams/#list-child-teams
 */
 type TeamsListChildInOrgReq struct {
-	_url     string
-	Org      string
+	_url string
+
+	// org parameter
+	Org string
+
+	// team_slug parameter
 	TeamSlug string
 
 	// Results per page (max 100)
@@ -4861,7 +5039,7 @@ func (r *TeamsListChildInOrgReq) urlQuery() url.Values {
 }
 
 func (r *TeamsListChildInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -4905,7 +5083,7 @@ TeamsListChildInOrgResponseBody is a response body for TeamsListChildInOrg
 
 https://developer.github.com/v3/teams/#list-child-teams
 */
-type TeamsListChildInOrgResponseBody []components.Team2
+type TeamsListChildInOrgResponseBody []components.Team
 
 /*
 TeamsListChildInOrgResponse is a response for TeamsListChildInOrg
@@ -4966,7 +5144,9 @@ TeamsListChildLegacyReq is request data for Client.TeamsListChildLegacy
 https://developer.github.com/v3/teams/#list-child-teams-legacy
 */
 type TeamsListChildLegacyReq struct {
-	_url   string
+	_url string
+
+	// team_id parameter
 	TeamId int64
 
 	// Results per page (max 100)
@@ -5000,7 +5180,7 @@ func (r *TeamsListChildLegacyReq) urlQuery() url.Values {
 }
 
 func (r *TeamsListChildLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -5044,7 +5224,7 @@ TeamsListChildLegacyResponseBody is a response body for TeamsListChildLegacy
 
 https://developer.github.com/v3/teams/#list-child-teams-legacy
 */
-type TeamsListChildLegacyResponseBody []components.Team2
+type TeamsListChildLegacyResponseBody []components.Team
 
 /*
 TeamsListChildLegacyResponse is a response for TeamsListChildLegacy
@@ -5105,9 +5285,15 @@ TeamsListDiscussionCommentsInOrgReq is request data for Client.TeamsListDiscussi
 https://developer.github.com/v3/teams/discussion_comments/#list-discussion-comments
 */
 type TeamsListDiscussionCommentsInOrgReq struct {
-	_url             string
-	Org              string
-	TeamSlug         string
+	_url string
+
+	// org parameter
+	Org string
+
+	// team_slug parameter
+	TeamSlug string
+
+	// discussion_number parameter
 	DiscussionNumber int64
 
 	/*
@@ -5124,12 +5310,10 @@ type TeamsListDiscussionCommentsInOrgReq struct {
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During
-	the preview period, the APIs may change without advance notice. Please see the
-	[blog
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
-
 
 	To access the API you must set this to true.
 	*/
@@ -5163,7 +5347,7 @@ func (r *TeamsListDiscussionCommentsInOrgReq) urlQuery() url.Values {
 }
 
 func (r *TeamsListDiscussionCommentsInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
 	if allPreviews {
 		previewVals["squirrel-girl"] = true
@@ -5271,8 +5455,12 @@ TeamsListDiscussionCommentsLegacyReq is request data for Client.TeamsListDiscuss
 https://developer.github.com/v3/teams/discussion_comments/#list-discussion-comments-legacy
 */
 type TeamsListDiscussionCommentsLegacyReq struct {
-	_url             string
-	TeamId           int64
+	_url string
+
+	// team_id parameter
+	TeamId int64
+
+	// discussion_number parameter
 	DiscussionNumber int64
 
 	/*
@@ -5289,12 +5477,10 @@ type TeamsListDiscussionCommentsLegacyReq struct {
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During
-	the preview period, the APIs may change without advance notice. Please see the
-	[blog
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
-
 
 	To access the API you must set this to true.
 	*/
@@ -5328,7 +5514,7 @@ func (r *TeamsListDiscussionCommentsLegacyReq) urlQuery() url.Values {
 }
 
 func (r *TeamsListDiscussionCommentsLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
 	if allPreviews {
 		previewVals["squirrel-girl"] = true
@@ -5436,8 +5622,12 @@ TeamsListDiscussionsInOrgReq is request data for Client.TeamsListDiscussionsInOr
 https://developer.github.com/v3/teams/discussions/#list-discussions
 */
 type TeamsListDiscussionsInOrgReq struct {
-	_url     string
-	Org      string
+	_url string
+
+	// org parameter
+	Org string
+
+	// team_slug parameter
 	TeamSlug string
 
 	/*
@@ -5454,12 +5644,10 @@ type TeamsListDiscussionsInOrgReq struct {
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During
-	the preview period, the APIs may change without advance notice. Please see the
-	[blog
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
-
 
 	To access the API you must set this to true.
 	*/
@@ -5493,7 +5681,7 @@ func (r *TeamsListDiscussionsInOrgReq) urlQuery() url.Values {
 }
 
 func (r *TeamsListDiscussionsInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
 	if allPreviews {
 		previewVals["squirrel-girl"] = true
@@ -5601,7 +5789,9 @@ TeamsListDiscussionsLegacyReq is request data for Client.TeamsListDiscussionsLeg
 https://developer.github.com/v3/teams/discussions/#list-discussions-legacy
 */
 type TeamsListDiscussionsLegacyReq struct {
-	_url   string
+	_url string
+
+	// team_id parameter
 	TeamId int64
 
 	/*
@@ -5618,12 +5808,10 @@ type TeamsListDiscussionsLegacyReq struct {
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During
-	the preview period, the APIs may change without advance notice. Please see the
-	[blog
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
-
 
 	To access the API you must set this to true.
 	*/
@@ -5657,7 +5845,7 @@ func (r *TeamsListDiscussionsLegacyReq) urlQuery() url.Values {
 }
 
 func (r *TeamsListDiscussionsLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
 	if allPreviews {
 		previewVals["squirrel-girl"] = true
@@ -5798,7 +5986,7 @@ func (r *TeamsListForAuthenticatedUserReq) urlQuery() url.Values {
 }
 
 func (r *TeamsListForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -5812,7 +6000,7 @@ func (r *TeamsListForAuthenticatedUserReq) dataStatuses() []int {
 }
 
 func (r *TeamsListForAuthenticatedUserReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *TeamsListForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
@@ -5856,7 +6044,7 @@ type TeamsListForAuthenticatedUserResponse struct {
 }
 
 /*
-TeamsListIdPGroupsForLegacy performs requests for "teams/list-id-p-groups-for-legacy"
+TeamsListIdpGroupsForLegacy performs requests for "teams/list-idp-groups-for-legacy"
 
 List IdP groups for a team (Legacy).
 
@@ -5864,11 +6052,11 @@ List IdP groups for a team (Legacy).
 
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team-legacy
 */
-func TeamsListIdPGroupsForLegacy(ctx context.Context, req *TeamsListIdPGroupsForLegacyReq, opt ...RequestOption) (*TeamsListIdPGroupsForLegacyResponse, error) {
+func TeamsListIdpGroupsForLegacy(ctx context.Context, req *TeamsListIdpGroupsForLegacyReq, opt ...RequestOption) (*TeamsListIdpGroupsForLegacyResponse, error) {
 	if req == nil {
-		req = new(TeamsListIdPGroupsForLegacyReq)
+		req = new(TeamsListIdpGroupsForLegacyReq)
 	}
-	resp := &TeamsListIdPGroupsForLegacyResponse{request: req}
+	resp := &TeamsListIdpGroupsForLegacyResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -5876,7 +6064,7 @@ func TeamsListIdPGroupsForLegacy(ctx context.Context, req *TeamsListIdPGroupsFor
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = TeamsListIdPGroupsForLegacyResponseBody{}
+	resp.Data = TeamsListIdpGroupsForLegacyResponseBody{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -5885,7 +6073,7 @@ func TeamsListIdPGroupsForLegacy(ctx context.Context, req *TeamsListIdPGroupsFor
 }
 
 /*
-TeamsListIdPGroupsForLegacy performs requests for "teams/list-id-p-groups-for-legacy"
+TeamsListIdpGroupsForLegacy performs requests for "teams/list-idp-groups-for-legacy"
 
 List IdP groups for a team (Legacy).
 
@@ -5893,61 +6081,63 @@ List IdP groups for a team (Legacy).
 
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team-legacy
 */
-func (c Client) TeamsListIdPGroupsForLegacy(ctx context.Context, req *TeamsListIdPGroupsForLegacyReq, opt ...RequestOption) (*TeamsListIdPGroupsForLegacyResponse, error) {
-	return TeamsListIdPGroupsForLegacy(ctx, req, append(c, opt...)...)
+func (c Client) TeamsListIdpGroupsForLegacy(ctx context.Context, req *TeamsListIdpGroupsForLegacyReq, opt ...RequestOption) (*TeamsListIdpGroupsForLegacyResponse, error) {
+	return TeamsListIdpGroupsForLegacy(ctx, req, append(c, opt...)...)
 }
 
 /*
-TeamsListIdPGroupsForLegacyReq is request data for Client.TeamsListIdPGroupsForLegacy
+TeamsListIdpGroupsForLegacyReq is request data for Client.TeamsListIdpGroupsForLegacy
 
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team-legacy
 */
-type TeamsListIdPGroupsForLegacyReq struct {
-	_url   string
+type TeamsListIdpGroupsForLegacyReq struct {
+	_url string
+
+	// team_id parameter
 	TeamId int64
 }
 
-func (r *TeamsListIdPGroupsForLegacyReq) url() string {
+func (r *TeamsListIdpGroupsForLegacyReq) url() string {
 	return r._url
 }
 
-func (r *TeamsListIdPGroupsForLegacyReq) urlPath() string {
+func (r *TeamsListIdpGroupsForLegacyReq) urlPath() string {
 	return fmt.Sprintf("/teams/%v/team-sync/group-mappings", r.TeamId)
 }
 
-func (r *TeamsListIdPGroupsForLegacyReq) method() string {
+func (r *TeamsListIdpGroupsForLegacyReq) method() string {
 	return "GET"
 }
 
-func (r *TeamsListIdPGroupsForLegacyReq) urlQuery() url.Values {
+func (r *TeamsListIdpGroupsForLegacyReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r *TeamsListIdPGroupsForLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+func (r *TeamsListIdpGroupsForLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *TeamsListIdPGroupsForLegacyReq) body() interface{} {
+func (r *TeamsListIdpGroupsForLegacyReq) body() interface{} {
 	return nil
 }
 
-func (r *TeamsListIdPGroupsForLegacyReq) dataStatuses() []int {
+func (r *TeamsListIdpGroupsForLegacyReq) dataStatuses() []int {
 	return []int{200}
 }
 
-func (r *TeamsListIdPGroupsForLegacyReq) validStatuses() []int {
+func (r *TeamsListIdpGroupsForLegacyReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *TeamsListIdPGroupsForLegacyReq) endpointAttributes() []endpointAttribute {
+func (r *TeamsListIdpGroupsForLegacyReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *TeamsListIdPGroupsForLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *TeamsListIdpGroupsForLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -5955,7 +6145,7 @@ func (r *TeamsListIdPGroupsForLegacyReq) HTTPRequest(ctx context.Context, opt ..
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *TeamsListIdPGroupsForLegacyReq) Rel(link RelName, resp *TeamsListIdPGroupsForLegacyResponse) bool {
+func (r *TeamsListIdpGroupsForLegacyReq) Rel(link RelName, resp *TeamsListIdpGroupsForLegacyResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -5965,25 +6155,25 @@ func (r *TeamsListIdPGroupsForLegacyReq) Rel(link RelName, resp *TeamsListIdPGro
 }
 
 /*
-TeamsListIdPGroupsForLegacyResponseBody is a response body for TeamsListIdPGroupsForLegacy
+TeamsListIdpGroupsForLegacyResponseBody is a response body for TeamsListIdpGroupsForLegacy
 
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team-legacy
 */
-type TeamsListIdPGroupsForLegacyResponseBody components.GroupMapping3
+type TeamsListIdpGroupsForLegacyResponseBody components.GroupMapping
 
 /*
-TeamsListIdPGroupsForLegacyResponse is a response for TeamsListIdPGroupsForLegacy
+TeamsListIdpGroupsForLegacyResponse is a response for TeamsListIdpGroupsForLegacy
 
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team-legacy
 */
-type TeamsListIdPGroupsForLegacyResponse struct {
+type TeamsListIdpGroupsForLegacyResponse struct {
 	response
-	request *TeamsListIdPGroupsForLegacyReq
-	Data    TeamsListIdPGroupsForLegacyResponseBody
+	request *TeamsListIdpGroupsForLegacyReq
+	Data    TeamsListIdpGroupsForLegacyResponseBody
 }
 
 /*
-TeamsListIdPGroupsForOrg performs requests for "teams/list-id-p-groups-for-org"
+TeamsListIdpGroupsForOrg performs requests for "teams/list-idp-groups-for-org"
 
 List IdP groups for an organization.
 
@@ -5991,11 +6181,11 @@ List IdP groups for an organization.
 
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-an-organization
 */
-func TeamsListIdPGroupsForOrg(ctx context.Context, req *TeamsListIdPGroupsForOrgReq, opt ...RequestOption) (*TeamsListIdPGroupsForOrgResponse, error) {
+func TeamsListIdpGroupsForOrg(ctx context.Context, req *TeamsListIdpGroupsForOrgReq, opt ...RequestOption) (*TeamsListIdpGroupsForOrgResponse, error) {
 	if req == nil {
-		req = new(TeamsListIdPGroupsForOrgReq)
+		req = new(TeamsListIdpGroupsForOrgReq)
 	}
-	resp := &TeamsListIdPGroupsForOrgResponse{request: req}
+	resp := &TeamsListIdpGroupsForOrgResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -6003,7 +6193,7 @@ func TeamsListIdPGroupsForOrg(ctx context.Context, req *TeamsListIdPGroupsForOrg
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = TeamsListIdPGroupsForOrgResponseBody{}
+	resp.Data = TeamsListIdpGroupsForOrgResponseBody{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -6012,7 +6202,7 @@ func TeamsListIdPGroupsForOrg(ctx context.Context, req *TeamsListIdPGroupsForOrg
 }
 
 /*
-TeamsListIdPGroupsForOrg performs requests for "teams/list-id-p-groups-for-org"
+TeamsListIdpGroupsForOrg performs requests for "teams/list-idp-groups-for-org"
 
 List IdP groups for an organization.
 
@@ -6020,18 +6210,20 @@ List IdP groups for an organization.
 
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-an-organization
 */
-func (c Client) TeamsListIdPGroupsForOrg(ctx context.Context, req *TeamsListIdPGroupsForOrgReq, opt ...RequestOption) (*TeamsListIdPGroupsForOrgResponse, error) {
-	return TeamsListIdPGroupsForOrg(ctx, req, append(c, opt...)...)
+func (c Client) TeamsListIdpGroupsForOrg(ctx context.Context, req *TeamsListIdpGroupsForOrgReq, opt ...RequestOption) (*TeamsListIdpGroupsForOrgResponse, error) {
+	return TeamsListIdpGroupsForOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
-TeamsListIdPGroupsForOrgReq is request data for Client.TeamsListIdPGroupsForOrg
+TeamsListIdpGroupsForOrgReq is request data for Client.TeamsListIdpGroupsForOrg
 
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-an-organization
 */
-type TeamsListIdPGroupsForOrgReq struct {
+type TeamsListIdpGroupsForOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -6040,19 +6232,19 @@ type TeamsListIdPGroupsForOrgReq struct {
 	Page *int64
 }
 
-func (r *TeamsListIdPGroupsForOrgReq) url() string {
+func (r *TeamsListIdpGroupsForOrgReq) url() string {
 	return r._url
 }
 
-func (r *TeamsListIdPGroupsForOrgReq) urlPath() string {
+func (r *TeamsListIdpGroupsForOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/team-sync/groups", r.Org)
 }
 
-func (r *TeamsListIdPGroupsForOrgReq) method() string {
+func (r *TeamsListIdpGroupsForOrgReq) method() string {
 	return "GET"
 }
 
-func (r *TeamsListIdPGroupsForOrgReq) urlQuery() url.Values {
+func (r *TeamsListIdpGroupsForOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -6063,30 +6255,30 @@ func (r *TeamsListIdPGroupsForOrgReq) urlQuery() url.Values {
 	return query
 }
 
-func (r *TeamsListIdPGroupsForOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+func (r *TeamsListIdpGroupsForOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *TeamsListIdPGroupsForOrgReq) body() interface{} {
+func (r *TeamsListIdpGroupsForOrgReq) body() interface{} {
 	return nil
 }
 
-func (r *TeamsListIdPGroupsForOrgReq) dataStatuses() []int {
+func (r *TeamsListIdpGroupsForOrgReq) dataStatuses() []int {
 	return []int{200}
 }
 
-func (r *TeamsListIdPGroupsForOrgReq) validStatuses() []int {
+func (r *TeamsListIdpGroupsForOrgReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *TeamsListIdPGroupsForOrgReq) endpointAttributes() []endpointAttribute {
+func (r *TeamsListIdpGroupsForOrgReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *TeamsListIdPGroupsForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *TeamsListIdpGroupsForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -6094,7 +6286,7 @@ func (r *TeamsListIdPGroupsForOrgReq) HTTPRequest(ctx context.Context, opt ...Re
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *TeamsListIdPGroupsForOrgReq) Rel(link RelName, resp *TeamsListIdPGroupsForOrgResponse) bool {
+func (r *TeamsListIdpGroupsForOrgReq) Rel(link RelName, resp *TeamsListIdpGroupsForOrgResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -6104,25 +6296,25 @@ func (r *TeamsListIdPGroupsForOrgReq) Rel(link RelName, resp *TeamsListIdPGroups
 }
 
 /*
-TeamsListIdPGroupsForOrgResponseBody is a response body for TeamsListIdPGroupsForOrg
+TeamsListIdpGroupsForOrgResponseBody is a response body for TeamsListIdpGroupsForOrg
 
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-an-organization
 */
-type TeamsListIdPGroupsForOrgResponseBody components.GroupMapping3
+type TeamsListIdpGroupsForOrgResponseBody components.GroupMapping
 
 /*
-TeamsListIdPGroupsForOrgResponse is a response for TeamsListIdPGroupsForOrg
+TeamsListIdpGroupsForOrgResponse is a response for TeamsListIdpGroupsForOrg
 
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-an-organization
 */
-type TeamsListIdPGroupsForOrgResponse struct {
+type TeamsListIdpGroupsForOrgResponse struct {
 	response
-	request *TeamsListIdPGroupsForOrgReq
-	Data    TeamsListIdPGroupsForOrgResponseBody
+	request *TeamsListIdpGroupsForOrgReq
+	Data    TeamsListIdpGroupsForOrgResponseBody
 }
 
 /*
-TeamsListIdPGroupsInOrg performs requests for "teams/list-id-p-groups-in-org"
+TeamsListIdpGroupsInOrg performs requests for "teams/list-idp-groups-in-org"
 
 List IdP groups for a team.
 
@@ -6130,11 +6322,11 @@ List IdP groups for a team.
 
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team
 */
-func TeamsListIdPGroupsInOrg(ctx context.Context, req *TeamsListIdPGroupsInOrgReq, opt ...RequestOption) (*TeamsListIdPGroupsInOrgResponse, error) {
+func TeamsListIdpGroupsInOrg(ctx context.Context, req *TeamsListIdpGroupsInOrgReq, opt ...RequestOption) (*TeamsListIdpGroupsInOrgResponse, error) {
 	if req == nil {
-		req = new(TeamsListIdPGroupsInOrgReq)
+		req = new(TeamsListIdpGroupsInOrgReq)
 	}
-	resp := &TeamsListIdPGroupsInOrgResponse{request: req}
+	resp := &TeamsListIdpGroupsInOrgResponse{request: req}
 	r, err := doRequest(ctx, req, opt...)
 	if r != nil {
 		resp.response = *r
@@ -6142,7 +6334,7 @@ func TeamsListIdPGroupsInOrg(ctx context.Context, req *TeamsListIdPGroupsInOrgRe
 	if err != nil {
 		return resp, err
 	}
-	resp.Data = TeamsListIdPGroupsInOrgResponseBody{}
+	resp.Data = TeamsListIdpGroupsInOrgResponseBody{}
 	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
@@ -6151,7 +6343,7 @@ func TeamsListIdPGroupsInOrg(ctx context.Context, req *TeamsListIdPGroupsInOrgRe
 }
 
 /*
-TeamsListIdPGroupsInOrg performs requests for "teams/list-id-p-groups-in-org"
+TeamsListIdpGroupsInOrg performs requests for "teams/list-idp-groups-in-org"
 
 List IdP groups for a team.
 
@@ -6159,62 +6351,66 @@ List IdP groups for a team.
 
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team
 */
-func (c Client) TeamsListIdPGroupsInOrg(ctx context.Context, req *TeamsListIdPGroupsInOrgReq, opt ...RequestOption) (*TeamsListIdPGroupsInOrgResponse, error) {
-	return TeamsListIdPGroupsInOrg(ctx, req, append(c, opt...)...)
+func (c Client) TeamsListIdpGroupsInOrg(ctx context.Context, req *TeamsListIdpGroupsInOrgReq, opt ...RequestOption) (*TeamsListIdpGroupsInOrgResponse, error) {
+	return TeamsListIdpGroupsInOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
-TeamsListIdPGroupsInOrgReq is request data for Client.TeamsListIdPGroupsInOrg
+TeamsListIdpGroupsInOrgReq is request data for Client.TeamsListIdpGroupsInOrg
 
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team
 */
-type TeamsListIdPGroupsInOrgReq struct {
-	_url     string
-	Org      string
+type TeamsListIdpGroupsInOrgReq struct {
+	_url string
+
+	// org parameter
+	Org string
+
+	// team_slug parameter
 	TeamSlug string
 }
 
-func (r *TeamsListIdPGroupsInOrgReq) url() string {
+func (r *TeamsListIdpGroupsInOrgReq) url() string {
 	return r._url
 }
 
-func (r *TeamsListIdPGroupsInOrgReq) urlPath() string {
+func (r *TeamsListIdpGroupsInOrgReq) urlPath() string {
 	return fmt.Sprintf("/orgs/%v/teams/%v/team-sync/group-mappings", r.Org, r.TeamSlug)
 }
 
-func (r *TeamsListIdPGroupsInOrgReq) method() string {
+func (r *TeamsListIdpGroupsInOrgReq) method() string {
 	return "GET"
 }
 
-func (r *TeamsListIdPGroupsInOrgReq) urlQuery() url.Values {
+func (r *TeamsListIdpGroupsInOrgReq) urlQuery() url.Values {
 	query := url.Values{}
 	return query
 }
 
-func (r *TeamsListIdPGroupsInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+func (r *TeamsListIdpGroupsInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
 
-func (r *TeamsListIdPGroupsInOrgReq) body() interface{} {
+func (r *TeamsListIdpGroupsInOrgReq) body() interface{} {
 	return nil
 }
 
-func (r *TeamsListIdPGroupsInOrgReq) dataStatuses() []int {
+func (r *TeamsListIdpGroupsInOrgReq) dataStatuses() []int {
 	return []int{200}
 }
 
-func (r *TeamsListIdPGroupsInOrgReq) validStatuses() []int {
+func (r *TeamsListIdpGroupsInOrgReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *TeamsListIdPGroupsInOrgReq) endpointAttributes() []endpointAttribute {
+func (r *TeamsListIdpGroupsInOrgReq) endpointAttributes() []endpointAttribute {
 	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
-func (r *TeamsListIdPGroupsInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
+func (r *TeamsListIdpGroupsInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
 }
 
@@ -6222,7 +6418,7 @@ func (r *TeamsListIdPGroupsInOrgReq) HTTPRequest(ctx context.Context, opt ...Req
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *TeamsListIdPGroupsInOrgReq) Rel(link RelName, resp *TeamsListIdPGroupsInOrgResponse) bool {
+func (r *TeamsListIdpGroupsInOrgReq) Rel(link RelName, resp *TeamsListIdpGroupsInOrgResponse) bool {
 	u := resp.RelLink(link)
 	if u == "" {
 		return false
@@ -6232,21 +6428,21 @@ func (r *TeamsListIdPGroupsInOrgReq) Rel(link RelName, resp *TeamsListIdPGroupsI
 }
 
 /*
-TeamsListIdPGroupsInOrgResponseBody is a response body for TeamsListIdPGroupsInOrg
+TeamsListIdpGroupsInOrgResponseBody is a response body for TeamsListIdpGroupsInOrg
 
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team
 */
-type TeamsListIdPGroupsInOrgResponseBody components.GroupMapping3
+type TeamsListIdpGroupsInOrgResponseBody components.GroupMapping
 
 /*
-TeamsListIdPGroupsInOrgResponse is a response for TeamsListIdPGroupsInOrg
+TeamsListIdpGroupsInOrgResponse is a response for TeamsListIdpGroupsInOrg
 
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team
 */
-type TeamsListIdPGroupsInOrgResponse struct {
+type TeamsListIdpGroupsInOrgResponse struct {
 	response
-	request *TeamsListIdPGroupsInOrgReq
-	Data    TeamsListIdPGroupsInOrgResponseBody
+	request *TeamsListIdpGroupsInOrgReq
+	Data    TeamsListIdpGroupsInOrgResponseBody
 }
 
 /*
@@ -6297,8 +6493,12 @@ TeamsListMembersInOrgReq is request data for Client.TeamsListMembersInOrg
 https://developer.github.com/v3/teams/members/#list-team-members
 */
 type TeamsListMembersInOrgReq struct {
-	_url     string
-	Org      string
+	_url string
+
+	// org parameter
+	Org string
+
+	// team_slug parameter
 	TeamSlug string
 
 	/*
@@ -6343,7 +6543,7 @@ func (r *TeamsListMembersInOrgReq) urlQuery() url.Values {
 }
 
 func (r *TeamsListMembersInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -6448,7 +6648,9 @@ TeamsListMembersLegacyReq is request data for Client.TeamsListMembersLegacy
 https://developer.github.com/v3/teams/members/#list-team-members-legacy
 */
 type TeamsListMembersLegacyReq struct {
-	_url   string
+	_url string
+
+	// team_id parameter
 	TeamId int64
 
 	/*
@@ -6493,7 +6695,7 @@ func (r *TeamsListMembersLegacyReq) urlQuery() url.Values {
 }
 
 func (r *TeamsListMembersLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -6598,8 +6800,12 @@ TeamsListPendingInvitationsInOrgReq is request data for Client.TeamsListPendingI
 https://developer.github.com/v3/teams/members/#list-pending-team-invitations
 */
 type TeamsListPendingInvitationsInOrgReq struct {
-	_url     string
-	Org      string
+	_url string
+
+	// org parameter
+	Org string
+
+	// team_slug parameter
 	TeamSlug string
 
 	// Results per page (max 100)
@@ -6633,7 +6839,7 @@ func (r *TeamsListPendingInvitationsInOrgReq) urlQuery() url.Values {
 }
 
 func (r *TeamsListPendingInvitationsInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -6738,7 +6944,9 @@ TeamsListPendingInvitationsLegacyReq is request data for Client.TeamsListPending
 https://developer.github.com/v3/teams/members/#list-pending-team-invitations-legacy
 */
 type TeamsListPendingInvitationsLegacyReq struct {
-	_url   string
+	_url string
+
+	// team_id parameter
 	TeamId int64
 
 	// Results per page (max 100)
@@ -6772,7 +6980,7 @@ func (r *TeamsListPendingInvitationsLegacyReq) urlQuery() url.Values {
 }
 
 func (r *TeamsListPendingInvitationsLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -6877,8 +7085,12 @@ TeamsListProjectsInOrgReq is request data for Client.TeamsListProjectsInOrg
 https://developer.github.com/v3/teams/#list-team-projects
 */
 type TeamsListProjectsInOrgReq struct {
-	_url     string
-	Org      string
+	_url string
+
+	// org parameter
+	Org string
+
+	// team_slug parameter
 	TeamSlug string
 
 	// Results per page (max 100)
@@ -6921,7 +7133,7 @@ func (r *TeamsListProjectsInOrgReq) urlQuery() url.Values {
 }
 
 func (r *TeamsListProjectsInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
 	if requiredPreviews {
 		previewVals["inertia"] = true
@@ -7032,7 +7244,9 @@ TeamsListProjectsLegacyReq is request data for Client.TeamsListProjectsLegacy
 https://developer.github.com/v3/teams/#list-team-projects-legacy
 */
 type TeamsListProjectsLegacyReq struct {
-	_url   string
+	_url string
+
+	// team_id parameter
 	TeamId int64
 
 	// Results per page (max 100)
@@ -7075,7 +7289,7 @@ func (r *TeamsListProjectsLegacyReq) urlQuery() url.Values {
 }
 
 func (r *TeamsListProjectsLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
 	if requiredPreviews {
 		previewVals["inertia"] = true
@@ -7186,8 +7400,12 @@ TeamsListReposInOrgReq is request data for Client.TeamsListReposInOrg
 https://developer.github.com/v3/teams/#list-team-repositories
 */
 type TeamsListReposInOrgReq struct {
-	_url     string
-	Org      string
+	_url string
+
+	// org parameter
+	Org string
+
+	// team_slug parameter
 	TeamSlug string
 
 	// Results per page (max 100)
@@ -7221,7 +7439,7 @@ func (r *TeamsListReposInOrgReq) urlQuery() url.Values {
 }
 
 func (r *TeamsListReposInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -7326,7 +7544,9 @@ TeamsListReposLegacyReq is request data for Client.TeamsListReposLegacy
 https://developer.github.com/v3/teams/#list-team-repositories-legacy
 */
 type TeamsListReposLegacyReq struct {
-	_url   string
+	_url string
+
+	// team_id parameter
 	TeamId int64
 
 	// Results per page (max 100)
@@ -7360,7 +7580,7 @@ func (r *TeamsListReposLegacyReq) urlQuery() url.Values {
 }
 
 func (r *TeamsListReposLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -7468,8 +7688,12 @@ TeamsRemoveMemberLegacyReq is request data for Client.TeamsRemoveMemberLegacy
 https://developer.github.com/v3/teams/members/#remove-team-member-legacy
 */
 type TeamsRemoveMemberLegacyReq struct {
-	_url     string
-	TeamId   int64
+	_url string
+
+	// team_id parameter
+	TeamId int64
+
+	// username parameter
 	Username string
 }
 
@@ -7588,9 +7812,15 @@ TeamsRemoveMembershipForUserInOrgReq is request data for Client.TeamsRemoveMembe
 https://developer.github.com/v3/teams/members/#remove-team-membership-for-a-user
 */
 type TeamsRemoveMembershipForUserInOrgReq struct {
-	_url     string
-	Org      string
+	_url string
+
+	// org parameter
+	Org string
+
+	// team_slug parameter
 	TeamSlug string
+
+	// username parameter
 	Username string
 }
 
@@ -7708,8 +7938,12 @@ TeamsRemoveMembershipForUserLegacyReq is request data for Client.TeamsRemoveMemb
 https://developer.github.com/v3/teams/members/#remove-team-membership-for-a-user-legacy
 */
 type TeamsRemoveMembershipForUserLegacyReq struct {
-	_url     string
-	TeamId   int64
+	_url string
+
+	// team_id parameter
+	TeamId int64
+
+	// username parameter
 	Username string
 }
 
@@ -7827,9 +8061,15 @@ TeamsRemoveProjectInOrgReq is request data for Client.TeamsRemoveProjectInOrg
 https://developer.github.com/v3/teams/#remove-a-project-from-a-team
 */
 type TeamsRemoveProjectInOrgReq struct {
-	_url      string
-	Org       string
-	TeamSlug  string
+	_url string
+
+	// org parameter
+	Org string
+
+	// team_slug parameter
+	TeamSlug string
+
+	// project_id parameter
 	ProjectId int64
 }
 
@@ -7947,8 +8187,12 @@ TeamsRemoveProjectLegacyReq is request data for Client.TeamsRemoveProjectLegacy
 https://developer.github.com/v3/teams/#remove-a-project-from-a-team-legacy
 */
 type TeamsRemoveProjectLegacyReq struct {
-	_url      string
-	TeamId    int64
+	_url string
+
+	// team_id parameter
+	TeamId int64
+
+	// project_id parameter
 	ProjectId int64
 }
 
@@ -8066,11 +8310,19 @@ TeamsRemoveRepoInOrgReq is request data for Client.TeamsRemoveRepoInOrg
 https://developer.github.com/v3/teams/#remove-a-repository-from-a-team
 */
 type TeamsRemoveRepoInOrgReq struct {
-	_url     string
-	Org      string
+	_url string
+
+	// org parameter
+	Org string
+
+	// team_slug parameter
 	TeamSlug string
-	Owner    string
-	Repo     string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
 }
 
 func (r *TeamsRemoveRepoInOrgReq) url() string {
@@ -8187,10 +8439,16 @@ TeamsRemoveRepoLegacyReq is request data for Client.TeamsRemoveRepoLegacy
 https://developer.github.com/v3/teams/#remove-a-repository-from-a-team-legacy
 */
 type TeamsRemoveRepoLegacyReq struct {
-	_url   string
+	_url string
+
+	// team_id parameter
 	TeamId int64
-	Owner  string
-	Repo   string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
 }
 
 func (r *TeamsRemoveRepoLegacyReq) url() string {
@@ -8308,21 +8566,27 @@ TeamsUpdateDiscussionCommentInOrgReq is request data for Client.TeamsUpdateDiscu
 https://developer.github.com/v3/teams/discussion_comments/#update-a-discussion-comment
 */
 type TeamsUpdateDiscussionCommentInOrgReq struct {
-	_url             string
-	Org              string
-	TeamSlug         string
+	_url string
+
+	// org parameter
+	Org string
+
+	// team_slug parameter
+	TeamSlug string
+
+	// discussion_number parameter
 	DiscussionNumber int64
-	CommentNumber    int64
-	RequestBody      TeamsUpdateDiscussionCommentInOrgReqBody
+
+	// comment_number parameter
+	CommentNumber int64
+	RequestBody   TeamsUpdateDiscussionCommentInOrgReqBody
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During
-	the preview period, the APIs may change without advance notice. Please see the
-	[blog
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
-
 
 	To access the API you must set this to true.
 	*/
@@ -8347,7 +8611,10 @@ func (r *TeamsUpdateDiscussionCommentInOrgReq) urlQuery() url.Values {
 }
 
 func (r *TeamsUpdateDiscussionCommentInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
 	if allPreviews {
 		previewVals["squirrel-girl"] = true
@@ -8466,20 +8733,24 @@ TeamsUpdateDiscussionCommentLegacyReq is request data for Client.TeamsUpdateDisc
 https://developer.github.com/v3/teams/discussion_comments/#update-a-discussion-comment-legacy
 */
 type TeamsUpdateDiscussionCommentLegacyReq struct {
-	_url             string
-	TeamId           int64
+	_url string
+
+	// team_id parameter
+	TeamId int64
+
+	// discussion_number parameter
 	DiscussionNumber int64
-	CommentNumber    int64
-	RequestBody      TeamsUpdateDiscussionCommentLegacyReqBody
+
+	// comment_number parameter
+	CommentNumber int64
+	RequestBody   TeamsUpdateDiscussionCommentLegacyReqBody
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During
-	the preview period, the APIs may change without advance notice. Please see the
-	[blog
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
-
 
 	To access the API you must set this to true.
 	*/
@@ -8504,7 +8775,10 @@ func (r *TeamsUpdateDiscussionCommentLegacyReq) urlQuery() url.Values {
 }
 
 func (r *TeamsUpdateDiscussionCommentLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
 	if allPreviews {
 		previewVals["squirrel-girl"] = true
@@ -8623,20 +8897,24 @@ TeamsUpdateDiscussionInOrgReq is request data for Client.TeamsUpdateDiscussionIn
 https://developer.github.com/v3/teams/discussions/#update-a-discussion
 */
 type TeamsUpdateDiscussionInOrgReq struct {
-	_url             string
-	Org              string
-	TeamSlug         string
+	_url string
+
+	// org parameter
+	Org string
+
+	// team_slug parameter
+	TeamSlug string
+
+	// discussion_number parameter
 	DiscussionNumber int64
 	RequestBody      TeamsUpdateDiscussionInOrgReqBody
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During
-	the preview period, the APIs may change without advance notice. Please see the
-	[blog
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
-
 
 	To access the API you must set this to true.
 	*/
@@ -8661,7 +8939,10 @@ func (r *TeamsUpdateDiscussionInOrgReq) urlQuery() url.Values {
 }
 
 func (r *TeamsUpdateDiscussionInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
 	if allPreviews {
 		previewVals["squirrel-girl"] = true
@@ -8783,19 +9064,21 @@ TeamsUpdateDiscussionLegacyReq is request data for Client.TeamsUpdateDiscussionL
 https://developer.github.com/v3/teams/discussions/#update-a-discussion-legacy
 */
 type TeamsUpdateDiscussionLegacyReq struct {
-	_url             string
-	TeamId           int64
+	_url string
+
+	// team_id parameter
+	TeamId int64
+
+	// discussion_number parameter
 	DiscussionNumber int64
 	RequestBody      TeamsUpdateDiscussionLegacyReqBody
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
-	available for developers to preview. During
-	the preview period, the APIs may change without advance notice. Please see the
-	[blog
+	available for developers to preview. During the preview period, the APIs may
+	change without advance notice. Please see the [blog
 	post](https://developer.github.com/changes/2016-05-12-reactions-api-preview) for
 	full details.
-
 
 	To access the API you must set this to true.
 	*/
@@ -8820,7 +9103,10 @@ func (r *TeamsUpdateDiscussionLegacyReq) urlQuery() url.Values {
 }
 
 func (r *TeamsUpdateDiscussionLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
 	if allPreviews {
 		previewVals["squirrel-girl"] = true
@@ -8942,8 +9228,12 @@ TeamsUpdateInOrgReq is request data for Client.TeamsUpdateInOrg
 https://developer.github.com/v3/teams/#update-a-team
 */
 type TeamsUpdateInOrgReq struct {
-	_url        string
-	Org         string
+	_url string
+
+	// org parameter
+	Org string
+
+	// team_slug parameter
 	TeamSlug    string
 	RequestBody TeamsUpdateInOrgReqBody
 }
@@ -8966,7 +9256,10 @@ func (r *TeamsUpdateInOrgReq) urlQuery() url.Values {
 }
 
 func (r *TeamsUpdateInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -9022,26 +9315,26 @@ type TeamsUpdateInOrgReqBody struct {
 	ParentTeamId *int64 `json:"parent_team_id,omitempty"`
 
 	/*
-	   **Deprecated**. The permission that new repositories will be added to the team
-	   with when none is specified. Can be one of:
-	   \* `pull` - team members can pull, but not push to or administer newly-added
-	   repositories.
-	   \* `push` - team members can pull and push, but not administer newly-added
-	   repositories.
-	   \* `admin` - team members can pull, push and administer newly-added
-	   repositories.
+	**Deprecated**. The permission that new repositories will be added to the team
+	with when none is specified. Can be one of:
+	\* `pull` - team members can pull, but not push to or administer newly-added
+	repositories.
+	\* `push` - team members can pull and push, but not administer newly-added
+	repositories.
+	\* `admin` - team members can pull, push and administer newly-added
+	repositories.
 	*/
 	Permission *string `json:"permission,omitempty"`
 
 	/*
-	   The level of privacy this team should have. Editing teams without specifying
-	   this parameter leaves `privacy` intact. When a team is nested, the `privacy` for
-	   parent teams cannot be `secret`. The options are:
-	   **For a non-nested team:**
-	   \* `secret` - only visible to organization owners and members of this team.
-	   \* `closed` - visible to all members of this organization.
-	   **For a parent or child team:**
-	   \* `closed` - visible to all members of this organization.
+	The level of privacy this team should have. Editing teams without specifying
+	this parameter leaves `privacy` intact. When a team is nested, the `privacy` for
+	parent teams cannot be `secret`. The options are:
+	**For a non-nested team:**
+	\* `secret` - only visible to organization owners and members of this team.
+	\* `closed` - visible to all members of this organization.
+	**For a parent or child team:**
+	\* `closed` - visible to all members of this organization.
 	*/
 	Privacy *string `json:"privacy,omitempty"`
 }
@@ -9112,7 +9405,9 @@ TeamsUpdateLegacyReq is request data for Client.TeamsUpdateLegacy
 https://developer.github.com/v3/teams/#update-a-team-legacy
 */
 type TeamsUpdateLegacyReq struct {
-	_url        string
+	_url string
+
+	// team_id parameter
 	TeamId      int64
 	RequestBody TeamsUpdateLegacyReqBody
 }
@@ -9135,7 +9430,10 @@ func (r *TeamsUpdateLegacyReq) urlQuery() url.Values {
 }
 
 func (r *TeamsUpdateLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -9191,25 +9489,25 @@ type TeamsUpdateLegacyReqBody struct {
 	ParentTeamId *int64 `json:"parent_team_id,omitempty"`
 
 	/*
-	   **Deprecated**. The permission that new repositories will be added to the team
-	   with when none is specified. Can be one of:
-	   \* `pull` - team members can pull, but not push to or administer newly-added
-	   repositories.
-	   \* `push` - team members can pull and push, but not administer newly-added
-	   repositories.
-	   \* `admin` - team members can pull, push and administer newly-added
-	   repositories.
+	**Deprecated**. The permission that new repositories will be added to the team
+	with when none is specified. Can be one of:
+	\* `pull` - team members can pull, but not push to or administer newly-added
+	repositories.
+	\* `push` - team members can pull and push, but not administer newly-added
+	repositories.
+	\* `admin` - team members can pull, push and administer newly-added
+	repositories.
 	*/
 	Permission *string `json:"permission,omitempty"`
 
 	/*
-	   The level of privacy this team should have. Editing teams without specifying
-	   this parameter leaves `privacy` intact. The options are:
-	   **For a non-nested team:**
-	   \* `secret` - only visible to organization owners and members of this team.
-	   \* `closed` - visible to all members of this organization.
-	   **For a parent or child team:**
-	   \* `closed` - visible to all members of this organization.
+	The level of privacy this team should have. Editing teams without specifying
+	this parameter leaves `privacy` intact. The options are:
+	**For a non-nested team:**
+	\* `secret` - only visible to organization owners and members of this team.
+	\* `closed` - visible to all members of this organization.
+	**For a parent or child team:**
+	\* `closed` - visible to all members of this organization.
 	*/
 	Privacy *string `json:"privacy,omitempty"`
 }

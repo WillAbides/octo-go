@@ -8,7 +8,7 @@ import (
 	"github.com/willabides/octo-go/generator/internal/model"
 )
 
-func addRequestFunc(file *jen.File, endpoint model.Endpoint) {
+func addRequestFunc(file *jen.File, endpoint *model.Endpoint) {
 	file.Commentf("%s performs requests for \"%s\"\n\n%s.\n\n  %s %s\n\n%s",
 		toExportedName(endpoint.ID),
 		endpoint.ID,
@@ -38,6 +38,8 @@ func addRequestFunc(file *jen.File, endpoint model.Endpoint) {
 		group.If(jen.Id("err != nil")).Block(jen.Id("return resp, err"))
 
 		switch {
+		case endpointHasAttribute(endpoint, attrNoResponseBody):
+			group.Id("err").Op("=").Id("r.decodeBody(nil)")
 		case endpointHasAttribute(endpoint, attrBoolean):
 			group.Id("err").Op("=").Id("r.setBoolResult(&resp.Data)")
 			group.If(jen.Id("err != nil")).Block(jen.Id("return nil, err"))
@@ -53,7 +55,7 @@ func addRequestFunc(file *jen.File, endpoint model.Endpoint) {
 	})
 }
 
-func addClientMethod(file *jen.File, endpoint model.Endpoint) {
+func addClientMethod(file *jen.File, endpoint *model.Endpoint) {
 	file.Commentf("%s performs requests for \"%s\"\n\n%s.\n\n  %s %s\n\n%s",
 		toExportedName(endpoint.ID),
 		endpoint.ID,
@@ -80,9 +82,27 @@ func addClientMethod(file *jen.File, endpoint model.Endpoint) {
 	)
 }
 
+func toUnexportedName(in string) string {
+	if _, ok := nameOverrides[in]; ok {
+		in = nameOverrides[in]
+	}
+	out := in
+	for _, separator := range []string{"_", "-", ".", "/"} {
+		words := strings.Split(out, separator)
+		for i := range words {
+			if i == 0 {
+				continue
+			}
+			words[i] = strings.Title(words[i])
+		}
+		out = strings.Join(words, "")
+	}
+	return out
+}
+
 func toExportedName(in string) string {
-	if _, ok := exportedNameOverrides[in]; ok {
-		return exportedNameOverrides[in]
+	if _, ok := nameOverrides[in]; ok {
+		in = nameOverrides[in]
 	}
 	out := in
 	for _, separator := range []string{"_", "-", ".", "/"} {
@@ -146,8 +166,24 @@ func paramSchemaFieldType(schema *model.ParamSchema, schemaPath []string, opts *
 		return jen.Id("[]").Add(paramSchemaFieldType(schema.ItemSchema, append(schemaPath, "ITEM_SCHEMA"), opts))
 	case model.ParamTypeObject:
 		return paramSchemaObjectFieldType(schema, schemaPath, opts)
+	case model.ParamTypeOneOf:
+		return paramSchemaOneOfFieldType(schema, schemaPath, opts)
 	}
 	return nil
+}
+
+func paramSchemaOneOfFieldType(schema *model.ParamSchema, schemaPath []string, opts *paramSchemaFieldTypeOptions) *jen.Statement {
+	if opts == nil {
+		opts = new(paramSchemaFieldTypeOptions)
+	}
+	if !opts.noHelperRecursive {
+		opts.noHelper = false
+	}
+	paramFields := []jen.Code{jen.Id("oneOfField").String()}
+	for _, param := range schema.ObjectParams {
+		paramFields = append(paramFields, oneOfParamStmt(param, schemaPath, opts))
+	}
+	return jen.Struct(paramFields...)
 }
 
 func paramSchemaObjectFieldType(schema *model.ParamSchema, schemaPath []string, opts *paramSchemaFieldTypeOptions) *jen.Statement {
@@ -157,29 +193,12 @@ func paramSchemaObjectFieldType(schema *model.ParamSchema, schemaPath []string, 
 	if !opts.noHelperRecursive {
 		opts.noHelper = false
 	}
-	if len(schema.ObjectParams) > 0 {
-		return jen.StructFunc(func(group *jen.Group) {
-			for _, param := range schema.ObjectParams {
-				if param.HelpText != "" {
-					group.Line()
-				}
-				gStmt := jen.Id(toExportedName(param.Name))
-				pType := paramSchemaFieldType(param.Schema, append(schemaPath, param.Name), opts)
-				if opts.usePointers && needsPointer(param.Schema) {
-					gStmt.Op("*")
-				}
-				jsonTag := param.Name
-				if !param.Required {
-					jsonTag += ",omitempty"
-				}
-				if param.HelpText != "" {
-					group.Comment(wordwrap.WrapString(param.HelpText, 80))
-				}
-				group.Add(gStmt.Add(pType).Tag(map[string]string{
-					"json": jsonTag,
-				}))
-			}
-		})
+	var paramFields []jen.Code
+	for _, param := range schema.ObjectParams {
+		paramFields = append(paramFields, objectParamStmt(param, schemaPath, opts))
+	}
+	if len(paramFields) > 0 {
+		return jen.Struct(paramFields...)
 	}
 	if schema.ItemSchema != nil {
 		stmt := jen.Map(jen.String())
@@ -188,22 +207,57 @@ func paramSchemaObjectFieldType(schema *model.ParamSchema, schemaPath []string, 
 	return jen.Interface()
 }
 
-func needsPointer(schema *model.ParamSchema) bool {
-	if schema.Type == model.ParamTypeInterface {
-		return false
+func oneOfParamStmt(param *model.Param, schemaPath []string, opts *paramSchemaFieldTypeOptions) *jen.Statement {
+	stmt := jen.Id(toUnexportedName(param.Name))
+	pType := paramSchemaFieldType(param.Schema, append(schemaPath, param.Name), opts)
+	if needsPointer(param.Schema, opts.usePointers) {
+		stmt.Op("*")
 	}
-	if schema.Type == model.ParamTypeArray {
-		return false
-	}
-	if schema.Type == model.ParamTypeObject && len(schema.ObjectParams) == 0 {
-		return false
-	}
-	return true
+	stmt.Add(pType)
+	return prependCodeWithComment(param.HelpText, stmt)
 }
 
-func endpointFirstRequestSchema(endpoint model.Endpoint) *model.ParamSchema {
-	if len(endpoint.Requests) == 0 {
-		return nil
+// prependCodeWithComment returns a statement that is code with a comment prepended, or just the code if the comment is ""
+func prependCodeWithComment(comment string, code ...jen.Code) *jen.Statement {
+	if comment == "" {
+		return jen.Add(code...)
 	}
-	return endpoint.Requests[0].Schema
+	if len(comment) > 120 {
+		comment = wordwrap.WrapString(comment, 80)
+	}
+	return jen.Line().Comment(comment).Line().Add(code...)
+}
+
+func objectParamStmt(param *model.Param, schemaPath []string, opts *paramSchemaFieldTypeOptions) *jen.Statement {
+	stmt := jen.Id(toExportedName(param.Name))
+	if needsPointer(param.Schema, opts.usePointers) {
+		stmt.Op("*")
+	}
+	stmt.Add(paramSchemaFieldType(param.Schema, append(schemaPath, param.Name), opts))
+	jsonTag := param.Name
+	if !param.Required {
+		jsonTag += ",omitempty"
+	}
+	stmt.Tag(map[string]string{
+		"json": jsonTag,
+	})
+	return prependCodeWithComment(param.HelpText, stmt)
+}
+
+func needsPointer(schema *model.ParamSchema, usePointers bool) bool {
+	if !usePointers && !schema.Nullable {
+		return false
+	}
+	switch schema.Type {
+	case model.ParamTypeInterface, model.ParamTypeArray:
+		return false
+	case model.ParamTypeObject, model.ParamTypeOneOf:
+		if len(schema.ObjectParams) == 0 {
+			return false
+		}
+		if schema.Nullable {
+			return true
+		}
+	}
+	return usePointers
 }

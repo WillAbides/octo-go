@@ -6,7 +6,7 @@ interactions:
     form: {}
     headers:
       Accept:
-      - application/vnd.github.v3+json
+      - application/json
       User-Agent:
       - octo-go
     url: https://api.github.com/repos/golang/go/issues/1/comments?per_page=4
@@ -91,7 +91,7 @@ interactions:
     form: {}
     headers:
       Accept:
-      - application/vnd.github.v3+json
+      - application/json
       User-Agent:
       - octo-go
     url: https://api.github.com/repositories/23096959/issues/1/comments?per_page=4&page=2
@@ -170,7 +170,7 @@ interactions:
     form: {}
     headers:
       Accept:
-      - application/vnd.github.v3+json
+      - application/json
       User-Agent:
       - octo-go
     url: https://api.github.com/repositories/23096959/issues/1/comments?per_page=4&page=3

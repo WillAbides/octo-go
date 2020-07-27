@@ -79,7 +79,7 @@ func (r *GitignoreGetAllTemplatesReq) urlQuery() url.Values {
 }
 
 func (r *GitignoreGetAllTemplatesReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -93,7 +93,7 @@ func (r *GitignoreGetAllTemplatesReq) dataStatuses() []int {
 }
 
 func (r *GitignoreGetAllTemplatesReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *GitignoreGetAllTemplatesReq) endpointAttributes() []endpointAttribute {
@@ -185,6 +185,8 @@ https://developer.github.com/v3/gitignore/#get-a-gitignore-template
 */
 type GitignoreGetTemplateReq struct {
 	_url string
+
+	// name parameter
 	Name string
 }
 
@@ -206,7 +208,7 @@ func (r *GitignoreGetTemplateReq) urlQuery() url.Values {
 }
 
 func (r *GitignoreGetTemplateReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -220,7 +222,7 @@ func (r *GitignoreGetTemplateReq) dataStatuses() []int {
 }
 
 func (r *GitignoreGetTemplateReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *GitignoreGetTemplateReq) endpointAttributes() []endpointAttribute {

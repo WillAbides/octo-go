@@ -8,6 +8,7 @@ import (
 	components "github.com/willabides/octo-go/components"
 	"net/http"
 	"net/url"
+	"strconv"
 )
 
 /*
@@ -58,7 +59,9 @@ LicensesGetReq is request data for Client.LicensesGet
 https://developer.github.com/v3/licenses/#get-a-license
 */
 type LicensesGetReq struct {
-	_url    string
+	_url string
+
+	// license parameter
 	License string
 }
 
@@ -80,7 +83,7 @@ func (r *LicensesGetReq) urlQuery() url.Values {
 }
 
 func (r *LicensesGetReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -94,7 +97,7 @@ func (r *LicensesGetReq) dataStatuses() []int {
 }
 
 func (r *LicensesGetReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *LicensesGetReq) endpointAttributes() []endpointAttribute {
@@ -185,7 +188,11 @@ LicensesGetAllCommonlyUsedReq is request data for Client.LicensesGetAllCommonlyU
 https://developer.github.com/v3/licenses/#get-all-commonly-used-licenses
 */
 type LicensesGetAllCommonlyUsedReq struct {
-	_url string
+	_url     string
+	Featured *bool
+
+	// Results per page (max 100)
+	PerPage *int64
 }
 
 func (r *LicensesGetAllCommonlyUsedReq) url() string {
@@ -202,11 +209,17 @@ func (r *LicensesGetAllCommonlyUsedReq) method() string {
 
 func (r *LicensesGetAllCommonlyUsedReq) urlQuery() url.Values {
 	query := url.Values{}
+	if r.Featured != nil {
+		query.Set("featured", strconv.FormatBool(*r.Featured))
+	}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
+	}
 	return query
 }
 
 func (r *LicensesGetAllCommonlyUsedReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -220,7 +233,7 @@ func (r *LicensesGetAllCommonlyUsedReq) dataStatuses() []int {
 }
 
 func (r *LicensesGetAllCommonlyUsedReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *LicensesGetAllCommonlyUsedReq) endpointAttributes() []endpointAttribute {
@@ -311,9 +324,13 @@ LicensesGetForRepoReq is request data for Client.LicensesGetForRepo
 https://developer.github.com/v3/licenses/#get-the-license-for-a-repository
 */
 type LicensesGetForRepoReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 }
 
 func (r *LicensesGetForRepoReq) url() string {
@@ -334,7 +351,7 @@ func (r *LicensesGetForRepoReq) urlQuery() url.Values {
 }
 
 func (r *LicensesGetForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }

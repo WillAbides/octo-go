@@ -58,8 +58,12 @@ ProjectsAddCollaboratorReq is request data for Client.ProjectsAddCollaborator
 https://developer.github.com/v3/projects/collaborators/#add-project-collaborator
 */
 type ProjectsAddCollaboratorReq struct {
-	_url        string
-	ProjectId   int64
+	_url string
+
+	// project_id parameter
+	ProjectId int64
+
+	// username parameter
 	Username    string
 	RequestBody ProjectsAddCollaboratorReqBody
 
@@ -91,7 +95,7 @@ func (r *ProjectsAddCollaboratorReq) urlQuery() url.Values {
 }
 
 func (r *ProjectsAddCollaboratorReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"content-type": String("application/json")}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
 	if requiredPreviews {
 		previewVals["inertia"] = true
@@ -111,7 +115,7 @@ func (r *ProjectsAddCollaboratorReq) dataStatuses() []int {
 }
 
 func (r *ProjectsAddCollaboratorReq) validStatuses() []int {
-	return []int{204}
+	return []int{204, 304}
 }
 
 func (r *ProjectsAddCollaboratorReq) endpointAttributes() []endpointAttribute {
@@ -143,15 +147,7 @@ https://developer.github.com/v3/projects/collaborators/#add-project-collaborator
 */
 type ProjectsAddCollaboratorReqBody struct {
 
-	/*
-	   The permission to grant the collaborator. Note that, if you choose not to pass
-	   any parameters, you'll need to set `Content-Length` to zero when calling out to
-	   this endpoint. For more information, see "[HTTP
-	   verbs](https://developer.github.com/v3/#http-verbs)." Can be one of:
-	   \* `read` - can read, but not write to or administer this project.
-	   \* `write` - can read and write, but not administer this project.
-	   \* `admin` - can read, write and administer this project.
-	*/
+	// The permission to grant the collaborator.
 	Permission *string `json:"permission,omitempty"`
 }
 
@@ -213,7 +209,9 @@ ProjectsCreateCardReq is request data for Client.ProjectsCreateCard
 https://developer.github.com/v3/projects/cards/#create-a-project-card
 */
 type ProjectsCreateCardReq struct {
-	_url        string
+	_url string
+
+	// column_id parameter
 	ColumnId    int64
 	RequestBody ProjectsCreateCardReqBody
 
@@ -245,7 +243,10 @@ func (r *ProjectsCreateCardReq) urlQuery() url.Values {
 }
 
 func (r *ProjectsCreateCardReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
 	if requiredPreviews {
 		previewVals["inertia"] = true
@@ -265,7 +266,7 @@ func (r *ProjectsCreateCardReq) dataStatuses() []int {
 }
 
 func (r *ProjectsCreateCardReq) validStatuses() []int {
-	return []int{201}
+	return []int{201, 304}
 }
 
 func (r *ProjectsCreateCardReq) endpointAttributes() []endpointAttribute {
@@ -297,29 +298,11 @@ https://developer.github.com/v3/projects/cards/#create-a-project-card
 */
 type ProjectsCreateCardReqBody struct {
 
-	/*
-	   The issue or pull request id you want to associate with this card. You can use
-	   the [List repository
-	   issues](https://developer.github.com/v3/issues/#list-repository-issues) and
-	   [List pull requests](https://developer.github.com/v3/pulls/#list-pull-requests)
-	   endpoints to find this id.
-	   **Note:** Depending on whether you use the issue id or pull request id, you will
-	   need to specify `Issue` or `PullRequest` as the `content_type`.
-	*/
-	ContentId *int64 `json:"content_id,omitempty"`
+	// The unique identifier of the content associated with the card
+	ContentId *int64 `json:"content_id"`
 
-	/*
-	   **Required if you provide `content_id`**. The type of content you want to
-	   associate with this card. Use `Issue` when `content_id` is an issue id and use
-	   `PullRequest` when `content_id` is a pull request id.
-	*/
-	ContentType *string `json:"content_type,omitempty"`
-
-	/*
-	   The card's note content. Only valid for cards without another type of content,
-	   so you must omit when specifying `content_id` and `content_type`.
-	*/
-	Note *string `json:"note,omitempty"`
+	// The piece of content associated with the card
+	ContentType *string `json:"content_type"`
 }
 
 /*
@@ -388,7 +371,9 @@ ProjectsCreateColumnReq is request data for Client.ProjectsCreateColumn
 https://developer.github.com/v3/projects/columns/#create-a-project-column
 */
 type ProjectsCreateColumnReq struct {
-	_url        string
+	_url string
+
+	// project_id parameter
 	ProjectId   int64
 	RequestBody ProjectsCreateColumnReqBody
 
@@ -420,7 +405,10 @@ func (r *ProjectsCreateColumnReq) urlQuery() url.Values {
 }
 
 func (r *ProjectsCreateColumnReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
 	if requiredPreviews {
 		previewVals["inertia"] = true
@@ -436,11 +424,11 @@ func (r *ProjectsCreateColumnReq) body() interface{} {
 }
 
 func (r *ProjectsCreateColumnReq) dataStatuses() []int {
-	return []int{200}
+	return []int{201}
 }
 
 func (r *ProjectsCreateColumnReq) validStatuses() []int {
-	return []int{200}
+	return []int{201, 304}
 }
 
 func (r *ProjectsCreateColumnReq) endpointAttributes() []endpointAttribute {
@@ -472,7 +460,7 @@ https://developer.github.com/v3/projects/columns/#create-a-project-column
 */
 type ProjectsCreateColumnReqBody struct {
 
-	// The name of the column.
+	// Name of the project column
 	Name *string `json:"name"`
 }
 
@@ -573,7 +561,10 @@ func (r *ProjectsCreateForAuthenticatedUserReq) urlQuery() url.Values {
 }
 
 func (r *ProjectsCreateForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
 	if requiredPreviews {
 		previewVals["inertia"] = true
@@ -593,7 +584,7 @@ func (r *ProjectsCreateForAuthenticatedUserReq) dataStatuses() []int {
 }
 
 func (r *ProjectsCreateForAuthenticatedUserReq) validStatuses() []int {
-	return []int{201}
+	return []int{201, 304}
 }
 
 func (r *ProjectsCreateForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
@@ -625,10 +616,10 @@ https://developer.github.com/v3/projects/#create-a-user-project
 */
 type ProjectsCreateForAuthenticatedUserReqBody struct {
 
-	// The description of the project.
+	// Body of the project
 	Body *string `json:"body,omitempty"`
 
-	// The name of the project.
+	// Name of the project
 	Name *string `json:"name"`
 }
 
@@ -698,7 +689,9 @@ ProjectsCreateForOrgReq is request data for Client.ProjectsCreateForOrg
 https://developer.github.com/v3/projects/#create-an-organization-project
 */
 type ProjectsCreateForOrgReq struct {
-	_url        string
+	_url string
+
+	// org parameter
 	Org         string
 	RequestBody ProjectsCreateForOrgReqBody
 
@@ -730,7 +723,10 @@ func (r *ProjectsCreateForOrgReq) urlQuery() url.Values {
 }
 
 func (r *ProjectsCreateForOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
 	if requiredPreviews {
 		previewVals["inertia"] = true
@@ -855,8 +851,12 @@ ProjectsCreateForRepoReq is request data for Client.ProjectsCreateForRepo
 https://developer.github.com/v3/projects/#create-a-repository-project
 */
 type ProjectsCreateForRepoReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody ProjectsCreateForRepoReqBody
 
@@ -888,7 +888,10 @@ func (r *ProjectsCreateForRepoReq) urlQuery() url.Values {
 }
 
 func (r *ProjectsCreateForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
 	if requiredPreviews {
 		previewVals["inertia"] = true
@@ -1012,7 +1015,9 @@ ProjectsDeleteReq is request data for Client.ProjectsDelete
 https://developer.github.com/v3/projects/#delete-a-project
 */
 type ProjectsDeleteReq struct {
-	_url      string
+	_url string
+
+	// project_id parameter
 	ProjectId int64
 
 	/*
@@ -1063,7 +1068,7 @@ func (r *ProjectsDeleteReq) dataStatuses() []int {
 }
 
 func (r *ProjectsDeleteReq) validStatuses() []int {
-	return []int{}
+	return []int{204, 304}
 }
 
 func (r *ProjectsDeleteReq) endpointAttributes() []endpointAttribute {
@@ -1145,7 +1150,9 @@ ProjectsDeleteCardReq is request data for Client.ProjectsDeleteCard
 https://developer.github.com/v3/projects/cards/#delete-a-project-card
 */
 type ProjectsDeleteCardReq struct {
-	_url   string
+	_url string
+
+	// card_id parameter
 	CardId int64
 
 	/*
@@ -1196,7 +1203,7 @@ func (r *ProjectsDeleteCardReq) dataStatuses() []int {
 }
 
 func (r *ProjectsDeleteCardReq) validStatuses() []int {
-	return []int{204}
+	return []int{204, 304}
 }
 
 func (r *ProjectsDeleteCardReq) endpointAttributes() []endpointAttribute {
@@ -1278,7 +1285,9 @@ ProjectsDeleteColumnReq is request data for Client.ProjectsDeleteColumn
 https://developer.github.com/v3/projects/columns/#delete-a-project-column
 */
 type ProjectsDeleteColumnReq struct {
-	_url     string
+	_url string
+
+	// column_id parameter
 	ColumnId int64
 
 	/*
@@ -1329,7 +1338,7 @@ func (r *ProjectsDeleteColumnReq) dataStatuses() []int {
 }
 
 func (r *ProjectsDeleteColumnReq) validStatuses() []int {
-	return []int{204}
+	return []int{204, 304}
 }
 
 func (r *ProjectsDeleteColumnReq) endpointAttributes() []endpointAttribute {
@@ -1412,7 +1421,9 @@ ProjectsGetReq is request data for Client.ProjectsGet
 https://developer.github.com/v3/projects/#get-a-project
 */
 type ProjectsGetReq struct {
-	_url      string
+	_url string
+
+	// project_id parameter
 	ProjectId int64
 
 	/*
@@ -1443,7 +1454,7 @@ func (r *ProjectsGetReq) urlQuery() url.Values {
 }
 
 func (r *ProjectsGetReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
 	if requiredPreviews {
 		previewVals["inertia"] = true
@@ -1463,7 +1474,7 @@ func (r *ProjectsGetReq) dataStatuses() []int {
 }
 
 func (r *ProjectsGetReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *ProjectsGetReq) endpointAttributes() []endpointAttribute {
@@ -1554,7 +1565,9 @@ ProjectsGetCardReq is request data for Client.ProjectsGetCard
 https://developer.github.com/v3/projects/cards/#get-a-project-card
 */
 type ProjectsGetCardReq struct {
-	_url   string
+	_url string
+
+	// card_id parameter
 	CardId int64
 
 	/*
@@ -1585,7 +1598,7 @@ func (r *ProjectsGetCardReq) urlQuery() url.Values {
 }
 
 func (r *ProjectsGetCardReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
 	if requiredPreviews {
 		previewVals["inertia"] = true
@@ -1605,7 +1618,7 @@ func (r *ProjectsGetCardReq) dataStatuses() []int {
 }
 
 func (r *ProjectsGetCardReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *ProjectsGetCardReq) endpointAttributes() []endpointAttribute {
@@ -1696,7 +1709,9 @@ ProjectsGetColumnReq is request data for Client.ProjectsGetColumn
 https://developer.github.com/v3/projects/columns/#get-a-project-column
 */
 type ProjectsGetColumnReq struct {
-	_url     string
+	_url string
+
+	// column_id parameter
 	ColumnId int64
 
 	/*
@@ -1727,7 +1742,7 @@ func (r *ProjectsGetColumnReq) urlQuery() url.Values {
 }
 
 func (r *ProjectsGetColumnReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
 	if requiredPreviews {
 		previewVals["inertia"] = true
@@ -1747,7 +1762,7 @@ func (r *ProjectsGetColumnReq) dataStatuses() []int {
 }
 
 func (r *ProjectsGetColumnReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *ProjectsGetColumnReq) endpointAttributes() []endpointAttribute {
@@ -1838,9 +1853,13 @@ ProjectsGetPermissionForUserReq is request data for Client.ProjectsGetPermission
 https://developer.github.com/v3/projects/collaborators/#get-project-permission-for-a-user
 */
 type ProjectsGetPermissionForUserReq struct {
-	_url      string
+	_url string
+
+	// project_id parameter
 	ProjectId int64
-	Username  string
+
+	// username parameter
+	Username string
 
 	/*
 	The Projects API is currently available for developers to preview. During the
@@ -1870,7 +1889,7 @@ func (r *ProjectsGetPermissionForUserReq) urlQuery() url.Values {
 }
 
 func (r *ProjectsGetPermissionForUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
 	if requiredPreviews {
 		previewVals["inertia"] = true
@@ -1890,7 +1909,7 @@ func (r *ProjectsGetPermissionForUserReq) dataStatuses() []int {
 }
 
 func (r *ProjectsGetPermissionForUserReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *ProjectsGetPermissionForUserReq) endpointAttributes() []endpointAttribute {
@@ -1981,7 +2000,9 @@ ProjectsListCardsReq is request data for Client.ProjectsListCards
 https://developer.github.com/v3/projects/cards/#list-project-cards
 */
 type ProjectsListCardsReq struct {
-	_url     string
+	_url string
+
+	// column_id parameter
 	ColumnId int64
 
 	/*
@@ -2033,7 +2054,7 @@ func (r *ProjectsListCardsReq) urlQuery() url.Values {
 }
 
 func (r *ProjectsListCardsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
 	if requiredPreviews {
 		previewVals["inertia"] = true
@@ -2053,7 +2074,7 @@ func (r *ProjectsListCardsReq) dataStatuses() []int {
 }
 
 func (r *ProjectsListCardsReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *ProjectsListCardsReq) endpointAttributes() []endpointAttribute {
@@ -2144,7 +2165,9 @@ ProjectsListCollaboratorsReq is request data for Client.ProjectsListCollaborator
 https://developer.github.com/v3/projects/collaborators/#list-project-collaborators
 */
 type ProjectsListCollaboratorsReq struct {
-	_url      string
+	_url string
+
+	// project_id parameter
 	ProjectId int64
 
 	/*
@@ -2200,7 +2223,7 @@ func (r *ProjectsListCollaboratorsReq) urlQuery() url.Values {
 }
 
 func (r *ProjectsListCollaboratorsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
 	if requiredPreviews {
 		previewVals["inertia"] = true
@@ -2220,7 +2243,7 @@ func (r *ProjectsListCollaboratorsReq) dataStatuses() []int {
 }
 
 func (r *ProjectsListCollaboratorsReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *ProjectsListCollaboratorsReq) endpointAttributes() []endpointAttribute {
@@ -2311,7 +2334,9 @@ ProjectsListColumnsReq is request data for Client.ProjectsListColumns
 https://developer.github.com/v3/projects/columns/#list-project-columns
 */
 type ProjectsListColumnsReq struct {
-	_url      string
+	_url string
+
+	// project_id parameter
 	ProjectId int64
 
 	// Results per page (max 100)
@@ -2354,7 +2379,7 @@ func (r *ProjectsListColumnsReq) urlQuery() url.Values {
 }
 
 func (r *ProjectsListColumnsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
 	if requiredPreviews {
 		previewVals["inertia"] = true
@@ -2374,7 +2399,7 @@ func (r *ProjectsListColumnsReq) dataStatuses() []int {
 }
 
 func (r *ProjectsListColumnsReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *ProjectsListColumnsReq) endpointAttributes() []endpointAttribute {
@@ -2466,7 +2491,9 @@ https://developer.github.com/v3/projects/#list-organization-projects
 */
 type ProjectsListForOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	/*
 	Indicates the state of the projects to return. Can be either `open`, `closed`,
@@ -2517,7 +2544,7 @@ func (r *ProjectsListForOrgReq) urlQuery() url.Values {
 }
 
 func (r *ProjectsListForOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
 	if requiredPreviews {
 		previewVals["inertia"] = true
@@ -2628,9 +2655,13 @@ ProjectsListForRepoReq is request data for Client.ProjectsListForRepo
 https://developer.github.com/v3/projects/#list-repository-projects
 */
 type ProjectsListForRepoReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	/*
 	Indicates the state of the projects to return. Can be either `open`, `closed`,
@@ -2681,7 +2712,7 @@ func (r *ProjectsListForRepoReq) urlQuery() url.Values {
 }
 
 func (r *ProjectsListForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
 	if requiredPreviews {
 		previewVals["inertia"] = true
@@ -2792,7 +2823,9 @@ ProjectsListForUserReq is request data for Client.ProjectsListForUser
 https://developer.github.com/v3/projects/#list-user-projects
 */
 type ProjectsListForUserReq struct {
-	_url     string
+	_url string
+
+	// username parameter
 	Username string
 
 	/*
@@ -2844,7 +2877,7 @@ func (r *ProjectsListForUserReq) urlQuery() url.Values {
 }
 
 func (r *ProjectsListForUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
 	if requiredPreviews {
 		previewVals["inertia"] = true
@@ -2954,7 +2987,9 @@ ProjectsMoveCardReq is request data for Client.ProjectsMoveCard
 https://developer.github.com/v3/projects/cards/#move-a-project-card
 */
 type ProjectsMoveCardReq struct {
-	_url        string
+	_url string
+
+	// card_id parameter
 	CardId      int64
 	RequestBody ProjectsMoveCardReqBody
 
@@ -2986,7 +3021,10 @@ func (r *ProjectsMoveCardReq) urlQuery() url.Values {
 }
 
 func (r *ProjectsMoveCardReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
 	if requiredPreviews {
 		previewVals["inertia"] = true
@@ -3002,15 +3040,15 @@ func (r *ProjectsMoveCardReq) body() interface{} {
 }
 
 func (r *ProjectsMoveCardReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *ProjectsMoveCardReq) validStatuses() []int {
 	return []int{201}
 }
 
+func (r *ProjectsMoveCardReq) validStatuses() []int {
+	return []int{201, 304}
+}
+
 func (r *ProjectsMoveCardReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
+	return []endpointAttribute{attrJSONRequestBody, attrNoResponseBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -3038,14 +3076,10 @@ https://developer.github.com/v3/projects/cards/#move-a-project-card
 */
 type ProjectsMoveCardReqBody struct {
 
-	// The `id` value of a column in the same project.
+	// The unique identifier of the column the card should be moved to
 	ColumnId *int64 `json:"column_id,omitempty"`
 
-	/*
-	   Can be one of `top`, `bottom`, or `after:<card_id>`, where `<card_id>` is the
-	   `id` value of a card in the same column, or in the new column specified by
-	   `column_id`.
-	*/
+	// The position of the card in a column
 	Position *string `json:"position"`
 }
 
@@ -3106,7 +3140,9 @@ ProjectsMoveColumnReq is request data for Client.ProjectsMoveColumn
 https://developer.github.com/v3/projects/columns/#move-a-project-column
 */
 type ProjectsMoveColumnReq struct {
-	_url        string
+	_url string
+
+	// column_id parameter
 	ColumnId    int64
 	RequestBody ProjectsMoveColumnReqBody
 
@@ -3138,7 +3174,10 @@ func (r *ProjectsMoveColumnReq) urlQuery() url.Values {
 }
 
 func (r *ProjectsMoveColumnReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
 	if requiredPreviews {
 		previewVals["inertia"] = true
@@ -3154,15 +3193,15 @@ func (r *ProjectsMoveColumnReq) body() interface{} {
 }
 
 func (r *ProjectsMoveColumnReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *ProjectsMoveColumnReq) validStatuses() []int {
 	return []int{201}
 }
 
+func (r *ProjectsMoveColumnReq) validStatuses() []int {
+	return []int{201, 304}
+}
+
 func (r *ProjectsMoveColumnReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
+	return []endpointAttribute{attrJSONRequestBody, attrNoResponseBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -3190,10 +3229,7 @@ https://developer.github.com/v3/projects/columns/#move-a-project-column
 */
 type ProjectsMoveColumnReqBody struct {
 
-	/*
-	   Can be one of `first`, `last`, or `after:<column_id>`, where `<column_id>` is
-	   the `id` value of a column in the same project.
-	*/
+	// The position of the column in a project
 	Position *string `json:"position"`
 }
 
@@ -3210,7 +3246,7 @@ type ProjectsMoveColumnResponse struct {
 /*
 ProjectsRemoveCollaborator performs requests for "projects/remove-collaborator"
 
-Remove project collaborator.
+Remove user as a collaborator.
 
   DELETE /projects/{project_id}/collaborators/{username}
 
@@ -3238,7 +3274,7 @@ func ProjectsRemoveCollaborator(ctx context.Context, req *ProjectsRemoveCollabor
 /*
 ProjectsRemoveCollaborator performs requests for "projects/remove-collaborator"
 
-Remove project collaborator.
+Remove user as a collaborator.
 
   DELETE /projects/{project_id}/collaborators/{username}
 
@@ -3254,9 +3290,13 @@ ProjectsRemoveCollaboratorReq is request data for Client.ProjectsRemoveCollabora
 https://developer.github.com/v3/projects/collaborators/#remove-project-collaborator
 */
 type ProjectsRemoveCollaboratorReq struct {
-	_url      string
+	_url string
+
+	// project_id parameter
 	ProjectId int64
-	Username  string
+
+	// username parameter
+	Username string
 
 	/*
 	The Projects API is currently available for developers to preview. During the
@@ -3306,7 +3346,7 @@ func (r *ProjectsRemoveCollaboratorReq) dataStatuses() []int {
 }
 
 func (r *ProjectsRemoveCollaboratorReq) validStatuses() []int {
-	return []int{204}
+	return []int{204, 304}
 }
 
 func (r *ProjectsRemoveCollaboratorReq) endpointAttributes() []endpointAttribute {
@@ -3389,7 +3429,9 @@ ProjectsUpdateReq is request data for Client.ProjectsUpdate
 https://developer.github.com/v3/projects/#update-a-project
 */
 type ProjectsUpdateReq struct {
-	_url        string
+	_url string
+
+	// project_id parameter
 	ProjectId   int64
 	RequestBody ProjectsUpdateReqBody
 
@@ -3421,7 +3463,10 @@ func (r *ProjectsUpdateReq) urlQuery() url.Values {
 }
 
 func (r *ProjectsUpdateReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
 	if requiredPreviews {
 		previewVals["inertia"] = true
@@ -3441,7 +3486,7 @@ func (r *ProjectsUpdateReq) dataStatuses() []int {
 }
 
 func (r *ProjectsUpdateReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *ProjectsUpdateReq) endpointAttributes() []endpointAttribute {
@@ -3473,51 +3518,19 @@ https://developer.github.com/v3/projects/#update-a-project
 */
 type ProjectsUpdateReqBody struct {
 
-	// The description of the project.
+	// Body of the project
 	Body *string `json:"body,omitempty"`
 
-	// The name of the project.
+	// Name of the project
 	Name *string `json:"name,omitempty"`
 
-	/*
-	   The permission level that determines whether all members of the project's
-	   organization can see and/or make changes to the project. Setting
-	   `organization_permission` is only available for organization projects. If an
-	   organization member belongs to a team with a higher level of access or is a
-	   collaborator with a higher level of access, their permission level is not
-	   lowered by `organization_permission`. For information on changing access for a
-	   team or collaborator, see [Add or update team project
-	   permissions](https://developer.github.com/v3/teams/#add-or-update-team-project-permissions)
-	   or [Add project
-	   collaborator](https://developer.github.com/v3/projects/collaborators/#add-project-collaborator).
-
-	   **Note:** Updating a project's `organization_permission` requires `admin` access
-	   to the project.
-
-	   Can be one of:
-	   \* `read` - Organization members can read, but not write to or administer this
-	   project.
-	   \* `write` - Organization members can read and write, but not administer this
-	   project.
-	   \* `admin` - Organization members can read, write and administer this project.
-	   \* `none` - Organization members can only see this project if it is public.
-	*/
+	// The baseline permission that all organization members have on this project
 	OrganizationPermission *string `json:"organization_permission,omitempty"`
 
-	/*
-	   Sets the visibility of a project board. Setting `private` is only available for
-	   organization and user projects. **Note:** Updating a project's visibility
-	   requires `admin` access to the project.
-
-	   Can be one of:
-	   \* `false` - Anyone can see the project.
-	   \* `true` - Only the user can view a project board created on a user account.
-	   Organization members with the appropriate `organization_permission` can see
-	   project boards in an organization account.
-	*/
+	// Whether or not this project can be seen by everyone.
 	Private *bool `json:"private,omitempty"`
 
-	// State of the project. Either `open` or `closed`.
+	// State of the project; either 'open' or 'closed'
 	State *string `json:"state,omitempty"`
 }
 
@@ -3542,7 +3555,7 @@ type ProjectsUpdateResponse struct {
 /*
 ProjectsUpdateCard performs requests for "projects/update-card"
 
-Update a project card.
+Update an existing project card.
 
   PATCH /projects/columns/cards/{card_id}
 
@@ -3571,7 +3584,7 @@ func ProjectsUpdateCard(ctx context.Context, req *ProjectsUpdateCardReq, opt ...
 /*
 ProjectsUpdateCard performs requests for "projects/update-card"
 
-Update a project card.
+Update an existing project card.
 
   PATCH /projects/columns/cards/{card_id}
 
@@ -3587,7 +3600,9 @@ ProjectsUpdateCardReq is request data for Client.ProjectsUpdateCard
 https://developer.github.com/v3/projects/cards/#update-a-project-card
 */
 type ProjectsUpdateCardReq struct {
-	_url        string
+	_url string
+
+	// card_id parameter
 	CardId      int64
 	RequestBody ProjectsUpdateCardReqBody
 
@@ -3619,7 +3634,10 @@ func (r *ProjectsUpdateCardReq) urlQuery() url.Values {
 }
 
 func (r *ProjectsUpdateCardReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
 	if requiredPreviews {
 		previewVals["inertia"] = true
@@ -3639,7 +3657,7 @@ func (r *ProjectsUpdateCardReq) dataStatuses() []int {
 }
 
 func (r *ProjectsUpdateCardReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *ProjectsUpdateCardReq) endpointAttributes() []endpointAttribute {
@@ -3671,17 +3689,10 @@ https://developer.github.com/v3/projects/cards/#update-a-project-card
 */
 type ProjectsUpdateCardReqBody struct {
 
-	/*
-	   Use `true` to archive a project card. Specify `false` if you need to restore a
-	   previously archived project card.
-	*/
+	// Whether or not the card is archived
 	Archived *bool `json:"archived,omitempty"`
 
-	/*
-	   The card's note content. Only valid for cards without another type of content,
-	   so this cannot be specified if the card already has a `content_id` and
-	   `content_type`.
-	*/
+	// The project card's note
 	Note *string `json:"note,omitempty"`
 }
 
@@ -3706,7 +3717,7 @@ type ProjectsUpdateCardResponse struct {
 /*
 ProjectsUpdateColumn performs requests for "projects/update-column"
 
-Update a project column.
+Update an existing project column.
 
   PATCH /projects/columns/{column_id}
 
@@ -3735,7 +3746,7 @@ func ProjectsUpdateColumn(ctx context.Context, req *ProjectsUpdateColumnReq, opt
 /*
 ProjectsUpdateColumn performs requests for "projects/update-column"
 
-Update a project column.
+Update an existing project column.
 
   PATCH /projects/columns/{column_id}
 
@@ -3751,7 +3762,9 @@ ProjectsUpdateColumnReq is request data for Client.ProjectsUpdateColumn
 https://developer.github.com/v3/projects/columns/#update-a-project-column
 */
 type ProjectsUpdateColumnReq struct {
-	_url        string
+	_url string
+
+	// column_id parameter
 	ColumnId    int64
 	RequestBody ProjectsUpdateColumnReqBody
 
@@ -3783,7 +3796,10 @@ func (r *ProjectsUpdateColumnReq) urlQuery() url.Values {
 }
 
 func (r *ProjectsUpdateColumnReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{"inertia": r.InertiaPreview}
 	if requiredPreviews {
 		previewVals["inertia"] = true
@@ -3803,7 +3819,7 @@ func (r *ProjectsUpdateColumnReq) dataStatuses() []int {
 }
 
 func (r *ProjectsUpdateColumnReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *ProjectsUpdateColumnReq) endpointAttributes() []endpointAttribute {
@@ -3835,7 +3851,7 @@ https://developer.github.com/v3/projects/columns/#update-a-project-column
 */
 type ProjectsUpdateColumnReqBody struct {
 
-	// The new name of the column.
+	// Name of the project column
 	Name *string `json:"name"`
 }
 

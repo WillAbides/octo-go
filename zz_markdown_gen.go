@@ -79,7 +79,7 @@ func (r *MarkdownRenderReq) urlQuery() url.Values {
 }
 
 func (r *MarkdownRenderReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"content-type": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -93,7 +93,7 @@ func (r *MarkdownRenderReq) dataStatuses() []int {
 }
 
 func (r *MarkdownRenderReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *MarkdownRenderReq) endpointAttributes() []endpointAttribute {
@@ -125,23 +125,13 @@ https://developer.github.com/v3/markdown/#render-a-markdown-document
 */
 type MarkdownRenderReqBody struct {
 
-	/*
-	   The repository context to use when creating references in `gfm` mode. Omit this
-	   parameter when using `markdown` mode.
-	*/
+	// The repository context to use when creating references in `gfm` mode.
 	Context *string `json:"context,omitempty"`
 
-	/*
-	   The rendering mode. Can be either:
-	   \* `markdown` to render a document in plain Markdown, just like README.md files
-	   are rendered.
-	   \* `gfm` to render a document in [GitHub Flavored
-	   Markdown](https://github.github.com/gfm/), which creates links for user mentions
-	   as well as references to SHA-1 hashes, issues, and pull requests.
-	*/
+	// The rendering mode.
 	Mode *string `json:"mode,omitempty"`
 
-	// The Markdown text to render in HTML. Markdown content must be 400 KB or less.
+	// The Markdown text to render in HTML.
 	Text *string `json:"text"`
 }
 
@@ -206,9 +196,6 @@ type MarkdownRenderRawReq struct {
 
 	// http request's body
 	RequestBody io.Reader
-
-	// Setting content-type header is required for this endpoint
-	ContentTypeHeader *string
 }
 
 func (r *MarkdownRenderRawReq) url() string {
@@ -229,7 +216,7 @@ func (r *MarkdownRenderRawReq) urlQuery() url.Values {
 }
 
 func (r *MarkdownRenderRawReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"content-type": r.ContentTypeHeader}
+	headerVals := map[string]*string{"content-type": String("text/x-markdown")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -243,7 +230,7 @@ func (r *MarkdownRenderRawReq) dataStatuses() []int {
 }
 
 func (r *MarkdownRenderRawReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *MarkdownRenderRawReq) endpointAttributes() []endpointAttribute {

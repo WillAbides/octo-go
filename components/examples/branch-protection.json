@@ -5,6 +5,7 @@
   "allow_force_pushes": {
     "enabled": true
   },
+  "enabled": true,
   "enforce_admins": {
     "enabled": true,
     "url": "https://api.github.com/repos/octocat/Hello-World/branches/master/protection/enforce_admins"
@@ -66,7 +67,7 @@
       "continuous-integration/travis-ci"
     ],
     "contexts_url": "https://api.github.com/repos/octocat/Hello-World/branches/master/protection/required_status_checks/contexts",
-    "strict": true,
+    "enforcement_level": "string",
     "url": "https://api.github.com/repos/octocat/Hello-World/branches/master/protection/required_status_checks"
   },
   "restrictions": {

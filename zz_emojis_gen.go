@@ -30,7 +30,8 @@ func EmojisGet(ctx context.Context, req *EmojisGetReq, opt ...RequestOption) (*E
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	resp.Data = EmojisGetResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -77,7 +78,7 @@ func (r *EmojisGetReq) urlQuery() url.Values {
 }
 
 func (r *EmojisGetReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -87,11 +88,11 @@ func (r *EmojisGetReq) body() interface{} {
 }
 
 func (r *EmojisGetReq) dataStatuses() []int {
-	return []int{}
+	return []int{200}
 }
 
 func (r *EmojisGetReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *EmojisGetReq) endpointAttributes() []endpointAttribute {
@@ -117,6 +118,13 @@ func (r *EmojisGetReq) Rel(link RelName, resp *EmojisGetResponse) bool {
 }
 
 /*
+EmojisGetResponseBody is a response body for EmojisGet
+
+https://developer.github.com/v3/emojis/#get-emojis
+*/
+type EmojisGetResponseBody map[string]string
+
+/*
 EmojisGetResponse is a response for EmojisGet
 
 https://developer.github.com/v3/emojis/#get-emojis
@@ -124,4 +132,5 @@ https://developer.github.com/v3/emojis/#get-emojis
 type EmojisGetResponse struct {
 	response
 	request *EmojisGetReq
+	Data    EmojisGetResponseBody
 }

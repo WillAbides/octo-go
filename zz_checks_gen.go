@@ -59,8 +59,12 @@ ChecksCreateReq is request data for Client.ChecksCreate
 https://developer.github.com/v3/checks/runs/#create-a-check-run
 */
 type ChecksCreateReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody ChecksCreateReqBody
 
@@ -92,7 +96,10 @@ func (r *ChecksCreateReq) urlQuery() url.Values {
 }
 
 func (r *ChecksCreateReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{"antiope": r.AntiopePreview}
 	if requiredPreviews {
 		previewVals["antiope"] = true
@@ -140,22 +147,13 @@ func (r *ChecksCreateReq) Rel(link RelName, resp *ChecksCreateResponse) bool {
 // ChecksCreateReqBodyActions is a value for ChecksCreateReqBody's Actions field
 type ChecksCreateReqBodyActions struct {
 
-	/*
-	   A short explanation of what this action would do. The maximum size is 40
-	   characters.
-	*/
+	// A short explanation of what this action would do. The maximum size is 40 characters.
 	Description *string `json:"description"`
 
-	/*
-	   A reference for the action on the integrator's system. The maximum size is 20
-	   characters.
-	*/
+	// A reference for the action on the integrator's system. The maximum size is 20 characters.
 	Identifier *string `json:"identifier"`
 
-	/*
-	   The text to be displayed on a button in the web UI. The maximum size is 20
-	   characters.
-	*/
+	// The text to be displayed on a button in the web UI. The maximum size is 20 characters.
 	Label *string `json:"label"`
 }
 
@@ -163,26 +161,26 @@ type ChecksCreateReqBodyActions struct {
 type ChecksCreateReqBodyOutput struct {
 
 	/*
-	   Adds information from your analysis to specific lines of code. Annotations are
-	   visible on GitHub in the **Checks** and **Files changed** tab of the pull
-	   request. The Checks API limits the number of annotations to a maximum of 50 per
-	   API request. To create more than 50 annotations, you have to make multiple
-	   requests to the [Update a check
-	   run](https://developer.github.com/v3/checks/runs/#update-a-check-run) endpoint.
-	   Each time you update the check run, annotations are appended to the list of
-	   annotations that already exist for the check run. For details about how you can
-	   view annotations on GitHub, see "[About status
-	   checks](https://help.github.com/articles/about-status-checks#checks)". See the
-	   [`annotations`
-	   object](https://developer.github.com/v3/checks/runs/#annotations-object)
-	   description for details about how to use this parameter.
+	Adds information from your analysis to specific lines of code. Annotations are
+	visible on GitHub in the **Checks** and **Files changed** tab of the pull
+	request. The Checks API limits the number of annotations to a maximum of 50 per
+	API request. To create more than 50 annotations, you have to make multiple
+	requests to the [Update a check
+	run](https://developer.github.com/v3/checks/runs/#update-a-check-run) endpoint.
+	Each time you update the check run, annotations are appended to the list of
+	annotations that already exist for the check run. For details about how you can
+	view annotations on GitHub, see "[About status
+	checks](https://help.github.com/articles/about-status-checks#checks)". See the
+	[`annotations`
+	object](https://developer.github.com/v3/checks/runs/#annotations-object)
+	description for details about how to use this parameter.
 	*/
 	Annotations []ChecksCreateReqBodyOutputAnnotations `json:"annotations,omitempty"`
 
 	/*
-	   Adds images to the output displayed in the GitHub pull request UI. See the
-	   [`images` object](https://developer.github.com/v3/checks/runs/#images-object)
-	   description for details.
+	Adds images to the output displayed in the GitHub pull request UI. See the
+	[`images` object](https://developer.github.com/v3/checks/runs/#images-object)
+	description for details.
 	*/
 	Images []ChecksCreateReqBodyOutputImages `json:"images,omitempty"`
 
@@ -203,34 +201,28 @@ type ChecksCreateReqBodyOutputAnnotations struct {
 	AnnotationLevel *string `json:"annotation_level"`
 
 	/*
-	   The end column of the annotation. Annotations only support `start_column` and
-	   `end_column` on the same line. Omit this parameter if `start_line` and
-	   `end_line` have different values.
+	The end column of the annotation. Annotations only support `start_column` and
+	`end_column` on the same line. Omit this parameter if `start_line` and
+	`end_line` have different values.
 	*/
 	EndColumn *int64 `json:"end_column,omitempty"`
 
 	// The end line of the annotation.
 	EndLine *int64 `json:"end_line"`
 
-	/*
-	   A short description of the feedback for these lines of code. The maximum size is
-	   64 KB.
-	*/
+	// A short description of the feedback for these lines of code. The maximum size is 64 KB.
 	Message *string `json:"message"`
 
-	/*
-	   The path of the file to add an annotation to. For example,
-	   `assets/css/main.css`.
-	*/
+	// The path of the file to add an annotation to. For example, `assets/css/main.css`.
 	Path *string `json:"path"`
 
 	// Details about this annotation. The maximum size is 64 KB.
 	RawDetails *string `json:"raw_details,omitempty"`
 
 	/*
-	   The start column of the annotation. Annotations only support `start_column` and
-	   `end_column` on the same line. Omit this parameter if `start_line` and
-	   `end_line` have different values.
+	The start column of the annotation. Annotations only support `start_column` and
+	`end_column` on the same line. Omit this parameter if `start_line` and
+	`end_line` have different values.
 	*/
 	StartColumn *int64 `json:"start_column,omitempty"`
 
@@ -262,44 +254,44 @@ https://developer.github.com/v3/checks/runs/#create-a-check-run
 type ChecksCreateReqBody struct {
 
 	/*
-	   Displays a button on GitHub that can be clicked to alert your app to do
-	   additional tasks. For example, a code linting app can display a button that
-	   automatically fixes detected errors. The button created in this object is
-	   displayed after the check run completes. When a user clicks the button, GitHub
-	   sends the [`check_run.requested_action`
-	   webhook](https://developer.github.com/webhooks/event-payloads/#check_run) to
-	   your app. Each action includes a `label`, `identifier` and `description`. A
-	   maximum of three actions are accepted. See the [`actions`
-	   object](https://developer.github.com/v3/checks/runs/#actions-object)
-	   description. To learn more about check runs and requested actions, see "[Check
-	   runs and requested
-	   actions](https://developer.github.com/v3/checks/runs/#check-runs-and-requested-actions)."
-	   To learn more about check runs and requested actions, see "[Check runs and
-	   requested
-	   actions](https://developer.github.com/v3/checks/runs/#check-runs-and-requested-actions)."
+	Displays a button on GitHub that can be clicked to alert your app to do
+	additional tasks. For example, a code linting app can display a button that
+	automatically fixes detected errors. The button created in this object is
+	displayed after the check run completes. When a user clicks the button, GitHub
+	sends the [`check_run.requested_action`
+	webhook](https://developer.github.com/webhooks/event-payloads/#check_run) to
+	your app. Each action includes a `label`, `identifier` and `description`. A
+	maximum of three actions are accepted. See the [`actions`
+	object](https://developer.github.com/v3/checks/runs/#actions-object)
+	description. To learn more about check runs and requested actions, see "[Check
+	runs and requested
+	actions](https://developer.github.com/v3/checks/runs/#check-runs-and-requested-actions)."
+	To learn more about check runs and requested actions, see "[Check runs and
+	requested
+	actions](https://developer.github.com/v3/checks/runs/#check-runs-and-requested-actions)."
 	*/
 	Actions []ChecksCreateReqBodyActions `json:"actions,omitempty"`
 
 	/*
-	   The time the check completed. This is a timestamp in [ISO
-	   8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ`.
+	The time the check completed. This is a timestamp in [ISO
+	8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ`.
 	*/
 	CompletedAt *string `json:"completed_at,omitempty"`
 
 	/*
-	   **Required if you provide `completed_at` or a `status` of `completed`**. The
-	   final conclusion of the check. Can be one of `success`, `failure`, `neutral`,
-	   `cancelled`, `skipped`, `timed_out`, or `action_required`. When the conclusion
-	   is `action_required`, additional details should be provided on the site
-	   specified by `details_url`.
-	   **Note:** Providing `conclusion` will automatically set the `status` parameter
-	   to `completed`. Only GitHub can change a check run conclusion to `stale`.
+	**Required if you provide `completed_at` or a `status` of `completed`**. The
+	final conclusion of the check. Can be one of `success`, `failure`, `neutral`,
+	`cancelled`, `skipped`, `timed_out`, or `action_required`. When the conclusion
+	is `action_required`, additional details should be provided on the site
+	specified by `details_url`.
+	**Note:** Providing `conclusion` will automatically set the `status` parameter
+	to `completed`. Only GitHub can change a check run conclusion to `stale`.
 	*/
 	Conclusion *string `json:"conclusion,omitempty"`
 
 	/*
-	   The URL of the integrator's site that has the full details of the check. If the
-	   integrator does not provide this, then the homepage of the GitHub app is used.
+	The URL of the integrator's site that has the full details of the check. If the
+	integrator does not provide this, then the homepage of the GitHub app is used.
 	*/
 	DetailsUrl *string `json:"details_url,omitempty"`
 
@@ -313,16 +305,16 @@ type ChecksCreateReqBody struct {
 	Name *string `json:"name"`
 
 	/*
-	   Check runs can accept a variety of data in the `output` object, including a
-	   `title` and `summary` and can optionally provide descriptive details about the
-	   run. See the [`output`
-	   object](https://developer.github.com/v3/checks/runs/#output-object) description.
+	Check runs can accept a variety of data in the `output` object, including a
+	`title` and `summary` and can optionally provide descriptive details about the
+	run. See the [`output`
+	object](https://developer.github.com/v3/checks/runs/#output-object) description.
 	*/
 	Output *ChecksCreateReqBodyOutput `json:"output,omitempty"`
 
 	/*
-	   The time that the check run began. This is a timestamp in [ISO
-	   8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ`.
+	The time that the check run began. This is a timestamp in [ISO
+	8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ`.
 	*/
 	StartedAt *string `json:"started_at,omitempty"`
 
@@ -396,8 +388,12 @@ ChecksCreateSuiteReq is request data for Client.ChecksCreateSuite
 https://developer.github.com/v3/checks/suites/#create-a-check-suite
 */
 type ChecksCreateSuiteReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody ChecksCreateSuiteReqBody
 
@@ -429,7 +425,10 @@ func (r *ChecksCreateSuiteReq) urlQuery() url.Values {
 }
 
 func (r *ChecksCreateSuiteReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{"antiope": r.AntiopePreview}
 	if requiredPreviews {
 		previewVals["antiope"] = true
@@ -551,9 +550,15 @@ ChecksGetReq is request data for Client.ChecksGet
 https://developer.github.com/v3/checks/runs/#get-a-check-run
 */
 type ChecksGetReq struct {
-	_url       string
-	Owner      string
-	Repo       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// check_run_id parameter
 	CheckRunId int64
 
 	/*
@@ -584,7 +589,7 @@ func (r *ChecksGetReq) urlQuery() url.Values {
 }
 
 func (r *ChecksGetReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"antiope": r.AntiopePreview}
 	if requiredPreviews {
 		previewVals["antiope"] = true
@@ -634,7 +639,7 @@ ChecksGetResponseBody is a response body for ChecksGet
 
 https://developer.github.com/v3/checks/runs/#get-a-check-run
 */
-type ChecksGetResponseBody components.CheckRun2
+type ChecksGetResponseBody components.CheckRun
 
 /*
 ChecksGetResponse is a response for ChecksGet
@@ -695,9 +700,15 @@ ChecksGetSuiteReq is request data for Client.ChecksGetSuite
 https://developer.github.com/v3/checks/suites/#get-a-check-suite
 */
 type ChecksGetSuiteReq struct {
-	_url         string
-	Owner        string
-	Repo         string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// check_suite_id parameter
 	CheckSuiteId int64
 
 	/*
@@ -728,7 +739,7 @@ func (r *ChecksGetSuiteReq) urlQuery() url.Values {
 }
 
 func (r *ChecksGetSuiteReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"antiope": r.AntiopePreview}
 	if requiredPreviews {
 		previewVals["antiope"] = true
@@ -839,9 +850,15 @@ ChecksListAnnotationsReq is request data for Client.ChecksListAnnotations
 https://developer.github.com/v3/checks/runs/#list-check-run-annotations
 */
 type ChecksListAnnotationsReq struct {
-	_url       string
-	Owner      string
-	Repo       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// check_run_id parameter
 	CheckRunId int64
 
 	// Results per page (max 100)
@@ -884,7 +901,7 @@ func (r *ChecksListAnnotationsReq) urlQuery() url.Values {
 }
 
 func (r *ChecksListAnnotationsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"antiope": r.AntiopePreview}
 	if requiredPreviews {
 		previewVals["antiope"] = true
@@ -995,10 +1012,16 @@ ChecksListForRefReq is request data for Client.ChecksListForRef
 https://developer.github.com/v3/checks/runs/#list-check-runs-for-a-git-reference
 */
 type ChecksListForRefReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
-	Ref   string
+
+	// repo parameter
+	Repo string
+
+	// ref+ parameter
+	Ref string
 
 	// Returns check runs with the specified `name`.
 	CheckName *string
@@ -1064,7 +1087,7 @@ func (r *ChecksListForRefReq) urlQuery() url.Values {
 }
 
 func (r *ChecksListForRefReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"antiope": r.AntiopePreview}
 	if requiredPreviews {
 		previewVals["antiope"] = true
@@ -1115,8 +1138,8 @@ ChecksListForRefResponseBody is a response body for ChecksListForRef
 https://developer.github.com/v3/checks/runs/#list-check-runs-for-a-git-reference
 */
 type ChecksListForRefResponseBody struct {
-	CheckRuns  []components.CheckRun2 `json:"check_runs,omitempty"`
-	TotalCount int64                  `json:"total_count,omitempty"`
+	CheckRuns  []components.CheckRun `json:"check_runs,omitempty"`
+	TotalCount int64                 `json:"total_count,omitempty"`
 }
 
 /*
@@ -1178,9 +1201,15 @@ ChecksListForSuiteReq is request data for Client.ChecksListForSuite
 https://developer.github.com/v3/checks/runs/#list-check-runs-in-a-check-suite
 */
 type ChecksListForSuiteReq struct {
-	_url         string
-	Owner        string
-	Repo         string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// check_suite_id parameter
 	CheckSuiteId int64
 
 	// Returns check runs with the specified `name`.
@@ -1247,7 +1276,7 @@ func (r *ChecksListForSuiteReq) urlQuery() url.Values {
 }
 
 func (r *ChecksListForSuiteReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"antiope": r.AntiopePreview}
 	if requiredPreviews {
 		previewVals["antiope"] = true
@@ -1298,8 +1327,8 @@ ChecksListForSuiteResponseBody is a response body for ChecksListForSuite
 https://developer.github.com/v3/checks/runs/#list-check-runs-in-a-check-suite
 */
 type ChecksListForSuiteResponseBody struct {
-	CheckRuns  []components.CheckRun2 `json:"check_runs,omitempty"`
-	TotalCount int64                  `json:"total_count,omitempty"`
+	CheckRuns  []components.CheckRun `json:"check_runs,omitempty"`
+	TotalCount int64                 `json:"total_count,omitempty"`
 }
 
 /*
@@ -1361,10 +1390,16 @@ ChecksListSuitesForRefReq is request data for Client.ChecksListSuitesForRef
 https://developer.github.com/v3/checks/suites/#list-check-suites-for-a-git-reference
 */
 type ChecksListSuitesForRefReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
-	Ref   string
+
+	// repo parameter
+	Repo string
+
+	// ref+ parameter
+	Ref string
 
 	// Filters check suites by GitHub App `id`.
 	AppId *int64
@@ -1421,7 +1456,7 @@ func (r *ChecksListSuitesForRefReq) urlQuery() url.Values {
 }
 
 func (r *ChecksListSuitesForRefReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"antiope": r.AntiopePreview}
 	if requiredPreviews {
 		previewVals["antiope"] = true
@@ -1534,9 +1569,15 @@ ChecksRerequestSuiteReq is request data for Client.ChecksRerequestSuite
 https://developer.github.com/v3/checks/suites/#rerequest-a-check-suite
 */
 type ChecksRerequestSuiteReq struct {
-	_url         string
-	Owner        string
-	Repo         string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// check_suite_id parameter
 	CheckSuiteId int64
 
 	/*
@@ -1670,8 +1711,12 @@ ChecksSetSuitesPreferencesReq is request data for Client.ChecksSetSuitesPreferen
 https://developer.github.com/v3/checks/suites/#update-repository-preferences-for-check-suites
 */
 type ChecksSetSuitesPreferencesReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody ChecksSetSuitesPreferencesReqBody
 
@@ -1703,7 +1748,10 @@ func (r *ChecksSetSuitesPreferencesReq) urlQuery() url.Values {
 }
 
 func (r *ChecksSetSuitesPreferencesReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{"antiope": r.AntiopePreview}
 	if requiredPreviews {
 		previewVals["antiope"] = true
@@ -1755,8 +1803,8 @@ type ChecksSetSuitesPreferencesReqBodyAutoTriggerChecks struct {
 	AppId *int64 `json:"app_id"`
 
 	/*
-	   Set to `true` to enable automatic creation of CheckSuite events upon pushes to
-	   the repository, or `false` to disable them.
+	Set to `true` to enable automatic creation of CheckSuite events upon pushes to
+	the repository, or `false` to disable them.
 	*/
 	Setting *bool `json:"setting"`
 }
@@ -1769,10 +1817,10 @@ https://developer.github.com/v3/checks/suites/#update-repository-preferences-for
 type ChecksSetSuitesPreferencesReqBody struct {
 
 	/*
-	   Enables or disables automatic creation of CheckSuite events upon pushes to the
-	   repository. Enabled by default. See the [`auto_trigger_checks`
-	   object](https://developer.github.com/v3/checks/suites/#auto_trigger_checks-object)
-	   description for details.
+	Enables or disables automatic creation of CheckSuite events upon pushes to the
+	repository. Enabled by default. See the [`auto_trigger_checks`
+	object](https://developer.github.com/v3/checks/suites/#auto_trigger_checks-object)
+	description for details.
 	*/
 	AutoTriggerChecks []ChecksSetSuitesPreferencesReqBodyAutoTriggerChecks `json:"auto_trigger_checks,omitempty"`
 }
@@ -1843,9 +1891,15 @@ ChecksUpdateReq is request data for Client.ChecksUpdate
 https://developer.github.com/v3/checks/runs/#update-a-check-run
 */
 type ChecksUpdateReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// check_run_id parameter
 	CheckRunId  int64
 	RequestBody ChecksUpdateReqBody
 
@@ -1877,7 +1931,10 @@ func (r *ChecksUpdateReq) urlQuery() url.Values {
 }
 
 func (r *ChecksUpdateReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{"antiope": r.AntiopePreview}
 	if requiredPreviews {
 		previewVals["antiope"] = true
@@ -1925,22 +1982,13 @@ func (r *ChecksUpdateReq) Rel(link RelName, resp *ChecksUpdateResponse) bool {
 // ChecksUpdateReqBodyActions is a value for ChecksUpdateReqBody's Actions field
 type ChecksUpdateReqBodyActions struct {
 
-	/*
-	   A short explanation of what this action would do. The maximum size is 40
-	   characters.
-	*/
+	// A short explanation of what this action would do. The maximum size is 40 characters.
 	Description *string `json:"description"`
 
-	/*
-	   A reference for the action on the integrator's system. The maximum size is 20
-	   characters.
-	*/
+	// A reference for the action on the integrator's system. The maximum size is 20 characters.
 	Identifier *string `json:"identifier"`
 
-	/*
-	   The text to be displayed on a button in the web UI. The maximum size is 20
-	   characters.
-	*/
+	// The text to be displayed on a button in the web UI. The maximum size is 20 characters.
 	Label *string `json:"label"`
 }
 
@@ -1948,27 +1996,27 @@ type ChecksUpdateReqBodyActions struct {
 type ChecksUpdateReqBodyOutput struct {
 
 	/*
-	   Adds information from your analysis to specific lines of code. Annotations are
-	   visible in GitHub's pull request UI. Annotations are visible in GitHub's pull
-	   request UI. The Checks API limits the number of annotations to a maximum of 50
-	   per API request. To create more than 50 annotations, you have to make multiple
-	   requests to the [Update a check
-	   run](https://developer.github.com/v3/checks/runs/#update-a-check-run) endpoint.
-	   Each time you update the check run, annotations are appended to the list of
-	   annotations that already exist for the check run. For details about annotations
-	   in the UI, see "[About status
-	   checks](https://help.github.com/articles/about-status-checks#checks)". See the
-	   [`annotations`
-	   object](https://developer.github.com/v3/checks/runs/#annotations-object-1)
-	   description for details.
+	Adds information from your analysis to specific lines of code. Annotations are
+	visible in GitHub's pull request UI. Annotations are visible in GitHub's pull
+	request UI. The Checks API limits the number of annotations to a maximum of 50
+	per API request. To create more than 50 annotations, you have to make multiple
+	requests to the [Update a check
+	run](https://developer.github.com/v3/checks/runs/#update-a-check-run) endpoint.
+	Each time you update the check run, annotations are appended to the list of
+	annotations that already exist for the check run. For details about annotations
+	in the UI, see "[About status
+	checks](https://help.github.com/articles/about-status-checks#checks)". See the
+	[`annotations`
+	object](https://developer.github.com/v3/checks/runs/#annotations-object-1)
+	description for details.
 	*/
 	Annotations []ChecksUpdateReqBodyOutputAnnotations `json:"annotations,omitempty"`
 
 	/*
-	   Adds images to the output displayed in the GitHub pull request UI. See the
-	   [`images`
-	   object](https://developer.github.com/v3/checks/runs/#annotations-object-1)
-	   description for details.
+	Adds images to the output displayed in the GitHub pull request UI. See the
+	[`images`
+	object](https://developer.github.com/v3/checks/runs/#annotations-object-1)
+	description for details.
 	*/
 	Images []ChecksUpdateReqBodyOutputImages `json:"images,omitempty"`
 
@@ -1989,34 +2037,28 @@ type ChecksUpdateReqBodyOutputAnnotations struct {
 	AnnotationLevel *string `json:"annotation_level"`
 
 	/*
-	   The end column of the annotation. Annotations only support `start_column` and
-	   `end_column` on the same line. Omit this parameter if `start_line` and
-	   `end_line` have different values.
+	The end column of the annotation. Annotations only support `start_column` and
+	`end_column` on the same line. Omit this parameter if `start_line` and
+	`end_line` have different values.
 	*/
 	EndColumn *int64 `json:"end_column,omitempty"`
 
 	// The end line of the annotation.
 	EndLine *int64 `json:"end_line"`
 
-	/*
-	   A short description of the feedback for these lines of code. The maximum size is
-	   64 KB.
-	*/
+	// A short description of the feedback for these lines of code. The maximum size is 64 KB.
 	Message *string `json:"message"`
 
-	/*
-	   The path of the file to add an annotation to. For example,
-	   `assets/css/main.css`.
-	*/
+	// The path of the file to add an annotation to. For example, `assets/css/main.css`.
 	Path *string `json:"path"`
 
 	// Details about this annotation. The maximum size is 64 KB.
 	RawDetails *string `json:"raw_details,omitempty"`
 
 	/*
-	   The start column of the annotation. Annotations only support `start_column` and
-	   `end_column` on the same line. Omit this parameter if `start_line` and
-	   `end_line` have different values.
+	The start column of the annotation. Annotations only support `start_column` and
+	`end_column` on the same line. Omit this parameter if `start_line` and
+	`end_line` have different values.
 	*/
 	StartColumn *int64 `json:"start_column,omitempty"`
 
@@ -2048,28 +2090,28 @@ https://developer.github.com/v3/checks/runs/#update-a-check-run
 type ChecksUpdateReqBody struct {
 
 	/*
-	   Possible further actions the integrator can perform, which a user may trigger.
-	   Each action includes a `label`, `identifier` and `description`. A maximum of
-	   three actions are accepted. See the [`actions`
-	   object](https://developer.github.com/v3/checks/runs/#actions-object)
-	   description. To learn more about check runs and requested actions, see "[Check
-	   runs and requested
-	   actions](https://developer.github.com/v3/checks/runs/#check-runs-and-requested-actions)."
+	Possible further actions the integrator can perform, which a user may trigger.
+	Each action includes a `label`, `identifier` and `description`. A maximum of
+	three actions are accepted. See the [`actions`
+	object](https://developer.github.com/v3/checks/runs/#actions-object)
+	description. To learn more about check runs and requested actions, see "[Check
+	runs and requested
+	actions](https://developer.github.com/v3/checks/runs/#check-runs-and-requested-actions)."
 	*/
 	Actions []ChecksUpdateReqBodyActions `json:"actions,omitempty"`
 
 	/*
-	   The time the check completed. This is a timestamp in [ISO
-	   8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ`.
+	The time the check completed. This is a timestamp in [ISO
+	8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ`.
 	*/
 	CompletedAt *string `json:"completed_at,omitempty"`
 
 	/*
-	   **Required if you provide `completed_at` or a `status` of `completed`**. The
-	   final conclusion of the check. Can be one of `success`, `failure`, `neutral`,
-	   `cancelled`, `skipped`, `timed_out`, or `action_required`.
-	   **Note:** Providing `conclusion` will automatically set the `status` parameter
-	   to `completed`. Only GitHub can change a check run conclusion to `stale`.
+	**Required if you provide `completed_at` or a `status` of `completed`**. The
+	final conclusion of the check. Can be one of `success`, `failure`, `neutral`,
+	`cancelled`, `skipped`, `timed_out`, or `action_required`.
+	**Note:** Providing `conclusion` will automatically set the `status` parameter
+	to `completed`. Only GitHub can change a check run conclusion to `stale`.
 	*/
 	Conclusion *string `json:"conclusion,omitempty"`
 
@@ -2083,18 +2125,15 @@ type ChecksUpdateReqBody struct {
 	Name *string `json:"name,omitempty"`
 
 	/*
-	   Check runs can accept a variety of data in the `output` object, including a
-	   `title` and `summary` and can optionally provide descriptive details about the
-	   run. See the [`output`
-	   object](https://developer.github.com/v3/checks/runs/#output-object-1)
-	   description.
+	Check runs can accept a variety of data in the `output` object, including a
+	`title` and `summary` and can optionally provide descriptive details about the
+	run. See the [`output`
+	object](https://developer.github.com/v3/checks/runs/#output-object-1)
+	description.
 	*/
 	Output *ChecksUpdateReqBodyOutput `json:"output,omitempty"`
 
-	/*
-	   This is a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
-	   format: `YYYY-MM-DDTHH:MM:SSZ`.
-	*/
+	// This is a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ`.
 	StartedAt *string `json:"started_at,omitempty"`
 
 	// The current status. Can be one of `queued`, `in_progress`, or `completed`.
@@ -2106,7 +2145,7 @@ ChecksUpdateResponseBody is a response body for ChecksUpdate
 
 https://developer.github.com/v3/checks/runs/#update-a-check-run
 */
-type ChecksUpdateResponseBody components.CheckRun2
+type ChecksUpdateResponseBody components.CheckRun
 
 /*
 ChecksUpdateResponse is a response for ChecksUpdate

@@ -32,10 +32,6 @@ func ActivityCheckRepoIsStarredByAuthenticatedUser(ctx context.Context, req *Act
 	if err != nil {
 		return resp, err
 	}
-	err = r.setBoolResult(&resp.Data)
-	if err != nil {
-		return nil, err
-	}
 	err = r.decodeBody(nil)
 	if err != nil {
 		return nil, err
@@ -62,9 +58,13 @@ ActivityCheckRepoIsStarredByAuthenticatedUserReq is request data for Client.Acti
 https://developer.github.com/v3/activity/starring/#check-if-a-repository-is-starred-by-the-authenticated-user
 */
 type ActivityCheckRepoIsStarredByAuthenticatedUserReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 }
 
 func (r *ActivityCheckRepoIsStarredByAuthenticatedUserReq) url() string {
@@ -99,11 +99,11 @@ func (r *ActivityCheckRepoIsStarredByAuthenticatedUserReq) dataStatuses() []int 
 }
 
 func (r *ActivityCheckRepoIsStarredByAuthenticatedUserReq) validStatuses() []int {
-	return []int{204}
+	return []int{204, 304}
 }
 
 func (r *ActivityCheckRepoIsStarredByAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrBoolean}
+	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -132,7 +132,6 @@ https://developer.github.com/v3/activity/starring/#check-if-a-repository-is-star
 type ActivityCheckRepoIsStarredByAuthenticatedUserResponse struct {
 	response
 	request *ActivityCheckRepoIsStarredByAuthenticatedUserReq
-	Data    bool
 }
 
 /*
@@ -182,9 +181,13 @@ ActivityDeleteRepoSubscriptionReq is request data for Client.ActivityDeleteRepoS
 https://developer.github.com/v3/activity/watching/#delete-a-repository-subscription
 */
 type ActivityDeleteRepoSubscriptionReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 }
 
 func (r *ActivityDeleteRepoSubscriptionReq) url() string {
@@ -301,7 +304,9 @@ ActivityDeleteThreadSubscriptionReq is request data for Client.ActivityDeleteThr
 https://developer.github.com/v3/activity/notifications/#delete-a-thread-subscription
 */
 type ActivityDeleteThreadSubscriptionReq struct {
-	_url     string
+	_url string
+
+	// thread_id parameter
 	ThreadId int64
 }
 
@@ -337,7 +342,7 @@ func (r *ActivityDeleteThreadSubscriptionReq) dataStatuses() []int {
 }
 
 func (r *ActivityDeleteThreadSubscriptionReq) validStatuses() []int {
-	return []int{204}
+	return []int{204, 304}
 }
 
 func (r *ActivityDeleteThreadSubscriptionReq) endpointAttributes() []endpointAttribute {
@@ -441,7 +446,7 @@ func (r *ActivityGetFeedsReq) urlQuery() url.Values {
 }
 
 func (r *ActivityGetFeedsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -546,9 +551,13 @@ ActivityGetRepoSubscriptionReq is request data for Client.ActivityGetRepoSubscri
 https://developer.github.com/v3/activity/watching/#get-a-repository-subscription
 */
 type ActivityGetRepoSubscriptionReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 }
 
 func (r *ActivityGetRepoSubscriptionReq) url() string {
@@ -569,7 +578,7 @@ func (r *ActivityGetRepoSubscriptionReq) urlQuery() url.Values {
 }
 
 func (r *ActivityGetRepoSubscriptionReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -674,7 +683,9 @@ ActivityGetThreadReq is request data for Client.ActivityGetThread
 https://developer.github.com/v3/activity/notifications/#get-a-thread
 */
 type ActivityGetThreadReq struct {
-	_url     string
+	_url string
+
+	// thread_id parameter
 	ThreadId int64
 }
 
@@ -696,7 +707,7 @@ func (r *ActivityGetThreadReq) urlQuery() url.Values {
 }
 
 func (r *ActivityGetThreadReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -710,7 +721,7 @@ func (r *ActivityGetThreadReq) dataStatuses() []int {
 }
 
 func (r *ActivityGetThreadReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *ActivityGetThreadReq) endpointAttributes() []endpointAttribute {
@@ -801,7 +812,9 @@ ActivityGetThreadSubscriptionForAuthenticatedUserReq is request data for Client.
 https://developer.github.com/v3/activity/notifications/#get-a-thread-subscription-for-the-authenticated-user
 */
 type ActivityGetThreadSubscriptionForAuthenticatedUserReq struct {
-	_url     string
+	_url string
+
+	// thread_id parameter
 	ThreadId int64
 }
 
@@ -823,7 +836,7 @@ func (r *ActivityGetThreadSubscriptionForAuthenticatedUserReq) urlQuery() url.Va
 }
 
 func (r *ActivityGetThreadSubscriptionForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -837,7 +850,7 @@ func (r *ActivityGetThreadSubscriptionForAuthenticatedUserReq) dataStatuses() []
 }
 
 func (r *ActivityGetThreadSubscriptionForAuthenticatedUserReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *ActivityGetThreadSubscriptionForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
@@ -901,7 +914,8 @@ func ActivityListEventsForAuthenticatedUser(ctx context.Context, req *ActivityLi
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	resp.Data = ActivityListEventsForAuthenticatedUserResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -927,7 +941,9 @@ ActivityListEventsForAuthenticatedUserReq is request data for Client.ActivityLis
 https://developer.github.com/v3/activity/events/#list-events-for-the-authenticated-user
 */
 type ActivityListEventsForAuthenticatedUserReq struct {
-	_url     string
+	_url string
+
+	// username parameter
 	Username string
 
 	// Results per page (max 100)
@@ -961,7 +977,7 @@ func (r *ActivityListEventsForAuthenticatedUserReq) urlQuery() url.Values {
 }
 
 func (r *ActivityListEventsForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -971,7 +987,7 @@ func (r *ActivityListEventsForAuthenticatedUserReq) body() interface{} {
 }
 
 func (r *ActivityListEventsForAuthenticatedUserReq) dataStatuses() []int {
-	return []int{}
+	return []int{200}
 }
 
 func (r *ActivityListEventsForAuthenticatedUserReq) validStatuses() []int {
@@ -1001,6 +1017,13 @@ func (r *ActivityListEventsForAuthenticatedUserReq) Rel(link RelName, resp *Acti
 }
 
 /*
+ActivityListEventsForAuthenticatedUserResponseBody is a response body for ActivityListEventsForAuthenticatedUser
+
+https://developer.github.com/v3/activity/events/#list-events-for-the-authenticated-user
+*/
+type ActivityListEventsForAuthenticatedUserResponseBody []components.Event
+
+/*
 ActivityListEventsForAuthenticatedUserResponse is a response for ActivityListEventsForAuthenticatedUser
 
 https://developer.github.com/v3/activity/events/#list-events-for-the-authenticated-user
@@ -1008,6 +1031,7 @@ https://developer.github.com/v3/activity/events/#list-events-for-the-authenticat
 type ActivityListEventsForAuthenticatedUserResponse struct {
 	response
 	request *ActivityListEventsForAuthenticatedUserReq
+	Data    ActivityListEventsForAuthenticatedUserResponseBody
 }
 
 /*
@@ -1126,7 +1150,7 @@ func (r *ActivityListNotificationsForAuthenticatedUserReq) urlQuery() url.Values
 }
 
 func (r *ActivityListNotificationsForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -1140,7 +1164,7 @@ func (r *ActivityListNotificationsForAuthenticatedUserReq) dataStatuses() []int 
 }
 
 func (r *ActivityListNotificationsForAuthenticatedUserReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *ActivityListNotificationsForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
@@ -1204,7 +1228,8 @@ func ActivityListOrgEventsForAuthenticatedUser(ctx context.Context, req *Activit
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	resp.Data = ActivityListOrgEventsForAuthenticatedUserResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1230,9 +1255,13 @@ ActivityListOrgEventsForAuthenticatedUserReq is request data for Client.Activity
 https://developer.github.com/v3/activity/events/#list-organization-events-for-the-authenticated-user
 */
 type ActivityListOrgEventsForAuthenticatedUserReq struct {
-	_url     string
+	_url string
+
+	// username parameter
 	Username string
-	Org      string
+
+	// org parameter
+	Org string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -1265,7 +1294,7 @@ func (r *ActivityListOrgEventsForAuthenticatedUserReq) urlQuery() url.Values {
 }
 
 func (r *ActivityListOrgEventsForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -1275,7 +1304,7 @@ func (r *ActivityListOrgEventsForAuthenticatedUserReq) body() interface{} {
 }
 
 func (r *ActivityListOrgEventsForAuthenticatedUserReq) dataStatuses() []int {
-	return []int{}
+	return []int{200}
 }
 
 func (r *ActivityListOrgEventsForAuthenticatedUserReq) validStatuses() []int {
@@ -1305,6 +1334,13 @@ func (r *ActivityListOrgEventsForAuthenticatedUserReq) Rel(link RelName, resp *A
 }
 
 /*
+ActivityListOrgEventsForAuthenticatedUserResponseBody is a response body for ActivityListOrgEventsForAuthenticatedUser
+
+https://developer.github.com/v3/activity/events/#list-organization-events-for-the-authenticated-user
+*/
+type ActivityListOrgEventsForAuthenticatedUserResponseBody []components.Event
+
+/*
 ActivityListOrgEventsForAuthenticatedUserResponse is a response for ActivityListOrgEventsForAuthenticatedUser
 
 https://developer.github.com/v3/activity/events/#list-organization-events-for-the-authenticated-user
@@ -1312,6 +1348,7 @@ https://developer.github.com/v3/activity/events/#list-organization-events-for-th
 type ActivityListOrgEventsForAuthenticatedUserResponse struct {
 	response
 	request *ActivityListOrgEventsForAuthenticatedUserReq
+	Data    ActivityListOrgEventsForAuthenticatedUserResponseBody
 }
 
 /*
@@ -1335,7 +1372,8 @@ func ActivityListPublicEvents(ctx context.Context, req *ActivityListPublicEvents
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	resp.Data = ActivityListPublicEventsResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1394,7 +1432,7 @@ func (r *ActivityListPublicEventsReq) urlQuery() url.Values {
 }
 
 func (r *ActivityListPublicEventsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -1404,11 +1442,11 @@ func (r *ActivityListPublicEventsReq) body() interface{} {
 }
 
 func (r *ActivityListPublicEventsReq) dataStatuses() []int {
-	return []int{}
+	return []int{200}
 }
 
 func (r *ActivityListPublicEventsReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *ActivityListPublicEventsReq) endpointAttributes() []endpointAttribute {
@@ -1434,6 +1472,13 @@ func (r *ActivityListPublicEventsReq) Rel(link RelName, resp *ActivityListPublic
 }
 
 /*
+ActivityListPublicEventsResponseBody is a response body for ActivityListPublicEvents
+
+https://developer.github.com/v3/activity/events/#list-public-events
+*/
+type ActivityListPublicEventsResponseBody []components.Event
+
+/*
 ActivityListPublicEventsResponse is a response for ActivityListPublicEvents
 
 https://developer.github.com/v3/activity/events/#list-public-events
@@ -1441,6 +1486,7 @@ https://developer.github.com/v3/activity/events/#list-public-events
 type ActivityListPublicEventsResponse struct {
 	response
 	request *ActivityListPublicEventsReq
+	Data    ActivityListPublicEventsResponseBody
 }
 
 /*
@@ -1464,7 +1510,8 @@ func ActivityListPublicEventsForRepoNetwork(ctx context.Context, req *ActivityLi
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	resp.Data = ActivityListPublicEventsForRepoNetworkResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1490,9 +1537,13 @@ ActivityListPublicEventsForRepoNetworkReq is request data for Client.ActivityLis
 https://developer.github.com/v3/activity/events/#list-public-events-for-a-network-of-repositories
 */
 type ActivityListPublicEventsForRepoNetworkReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -1525,7 +1576,7 @@ func (r *ActivityListPublicEventsForRepoNetworkReq) urlQuery() url.Values {
 }
 
 func (r *ActivityListPublicEventsForRepoNetworkReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -1535,11 +1586,11 @@ func (r *ActivityListPublicEventsForRepoNetworkReq) body() interface{} {
 }
 
 func (r *ActivityListPublicEventsForRepoNetworkReq) dataStatuses() []int {
-	return []int{}
+	return []int{200}
 }
 
 func (r *ActivityListPublicEventsForRepoNetworkReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 301, 304}
 }
 
 func (r *ActivityListPublicEventsForRepoNetworkReq) endpointAttributes() []endpointAttribute {
@@ -1565,6 +1616,13 @@ func (r *ActivityListPublicEventsForRepoNetworkReq) Rel(link RelName, resp *Acti
 }
 
 /*
+ActivityListPublicEventsForRepoNetworkResponseBody is a response body for ActivityListPublicEventsForRepoNetwork
+
+https://developer.github.com/v3/activity/events/#list-public-events-for-a-network-of-repositories
+*/
+type ActivityListPublicEventsForRepoNetworkResponseBody []components.Event
+
+/*
 ActivityListPublicEventsForRepoNetworkResponse is a response for ActivityListPublicEventsForRepoNetwork
 
 https://developer.github.com/v3/activity/events/#list-public-events-for-a-network-of-repositories
@@ -1572,6 +1630,7 @@ https://developer.github.com/v3/activity/events/#list-public-events-for-a-networ
 type ActivityListPublicEventsForRepoNetworkResponse struct {
 	response
 	request *ActivityListPublicEventsForRepoNetworkReq
+	Data    ActivityListPublicEventsForRepoNetworkResponseBody
 }
 
 /*
@@ -1595,7 +1654,8 @@ func ActivityListPublicEventsForUser(ctx context.Context, req *ActivityListPubli
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	resp.Data = ActivityListPublicEventsForUserResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1621,7 +1681,9 @@ ActivityListPublicEventsForUserReq is request data for Client.ActivityListPublic
 https://developer.github.com/v3/activity/events/#list-public-events-for-a-user
 */
 type ActivityListPublicEventsForUserReq struct {
-	_url     string
+	_url string
+
+	// username parameter
 	Username string
 
 	// Results per page (max 100)
@@ -1655,7 +1717,7 @@ func (r *ActivityListPublicEventsForUserReq) urlQuery() url.Values {
 }
 
 func (r *ActivityListPublicEventsForUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -1665,7 +1727,7 @@ func (r *ActivityListPublicEventsForUserReq) body() interface{} {
 }
 
 func (r *ActivityListPublicEventsForUserReq) dataStatuses() []int {
-	return []int{}
+	return []int{200}
 }
 
 func (r *ActivityListPublicEventsForUserReq) validStatuses() []int {
@@ -1695,6 +1757,13 @@ func (r *ActivityListPublicEventsForUserReq) Rel(link RelName, resp *ActivityLis
 }
 
 /*
+ActivityListPublicEventsForUserResponseBody is a response body for ActivityListPublicEventsForUser
+
+https://developer.github.com/v3/activity/events/#list-public-events-for-a-user
+*/
+type ActivityListPublicEventsForUserResponseBody []components.Event
+
+/*
 ActivityListPublicEventsForUserResponse is a response for ActivityListPublicEventsForUser
 
 https://developer.github.com/v3/activity/events/#list-public-events-for-a-user
@@ -1702,6 +1771,7 @@ https://developer.github.com/v3/activity/events/#list-public-events-for-a-user
 type ActivityListPublicEventsForUserResponse struct {
 	response
 	request *ActivityListPublicEventsForUserReq
+	Data    ActivityListPublicEventsForUserResponseBody
 }
 
 /*
@@ -1725,7 +1795,8 @@ func ActivityListPublicOrgEvents(ctx context.Context, req *ActivityListPublicOrg
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	resp.Data = ActivityListPublicOrgEventsResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1752,7 +1823,9 @@ https://developer.github.com/v3/activity/events/#list-public-organization-events
 */
 type ActivityListPublicOrgEventsReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -1785,7 +1858,7 @@ func (r *ActivityListPublicOrgEventsReq) urlQuery() url.Values {
 }
 
 func (r *ActivityListPublicOrgEventsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -1795,7 +1868,7 @@ func (r *ActivityListPublicOrgEventsReq) body() interface{} {
 }
 
 func (r *ActivityListPublicOrgEventsReq) dataStatuses() []int {
-	return []int{}
+	return []int{200}
 }
 
 func (r *ActivityListPublicOrgEventsReq) validStatuses() []int {
@@ -1825,6 +1898,13 @@ func (r *ActivityListPublicOrgEventsReq) Rel(link RelName, resp *ActivityListPub
 }
 
 /*
+ActivityListPublicOrgEventsResponseBody is a response body for ActivityListPublicOrgEvents
+
+https://developer.github.com/v3/activity/events/#list-public-organization-events
+*/
+type ActivityListPublicOrgEventsResponseBody []components.Event
+
+/*
 ActivityListPublicOrgEventsResponse is a response for ActivityListPublicOrgEvents
 
 https://developer.github.com/v3/activity/events/#list-public-organization-events
@@ -1832,6 +1912,7 @@ https://developer.github.com/v3/activity/events/#list-public-organization-events
 type ActivityListPublicOrgEventsResponse struct {
 	response
 	request *ActivityListPublicOrgEventsReq
+	Data    ActivityListPublicOrgEventsResponseBody
 }
 
 /*
@@ -1855,7 +1936,8 @@ func ActivityListReceivedEventsForUser(ctx context.Context, req *ActivityListRec
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	resp.Data = ActivityListReceivedEventsForUserResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1881,7 +1963,9 @@ ActivityListReceivedEventsForUserReq is request data for Client.ActivityListRece
 https://developer.github.com/v3/activity/events/#list-events-received-by-the-authenticated-user
 */
 type ActivityListReceivedEventsForUserReq struct {
-	_url     string
+	_url string
+
+	// username parameter
 	Username string
 
 	// Results per page (max 100)
@@ -1915,7 +1999,7 @@ func (r *ActivityListReceivedEventsForUserReq) urlQuery() url.Values {
 }
 
 func (r *ActivityListReceivedEventsForUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -1925,7 +2009,7 @@ func (r *ActivityListReceivedEventsForUserReq) body() interface{} {
 }
 
 func (r *ActivityListReceivedEventsForUserReq) dataStatuses() []int {
-	return []int{}
+	return []int{200}
 }
 
 func (r *ActivityListReceivedEventsForUserReq) validStatuses() []int {
@@ -1955,6 +2039,13 @@ func (r *ActivityListReceivedEventsForUserReq) Rel(link RelName, resp *ActivityL
 }
 
 /*
+ActivityListReceivedEventsForUserResponseBody is a response body for ActivityListReceivedEventsForUser
+
+https://developer.github.com/v3/activity/events/#list-events-received-by-the-authenticated-user
+*/
+type ActivityListReceivedEventsForUserResponseBody []components.Event
+
+/*
 ActivityListReceivedEventsForUserResponse is a response for ActivityListReceivedEventsForUser
 
 https://developer.github.com/v3/activity/events/#list-events-received-by-the-authenticated-user
@@ -1962,6 +2053,7 @@ https://developer.github.com/v3/activity/events/#list-events-received-by-the-aut
 type ActivityListReceivedEventsForUserResponse struct {
 	response
 	request *ActivityListReceivedEventsForUserReq
+	Data    ActivityListReceivedEventsForUserResponseBody
 }
 
 /*
@@ -1985,7 +2077,8 @@ func ActivityListReceivedPublicEventsForUser(ctx context.Context, req *ActivityL
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	resp.Data = ActivityListReceivedPublicEventsForUserResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2011,7 +2104,9 @@ ActivityListReceivedPublicEventsForUserReq is request data for Client.ActivityLi
 https://developer.github.com/v3/activity/events/#list-public-events-received-by-a-user
 */
 type ActivityListReceivedPublicEventsForUserReq struct {
-	_url     string
+	_url string
+
+	// username parameter
 	Username string
 
 	// Results per page (max 100)
@@ -2045,7 +2140,7 @@ func (r *ActivityListReceivedPublicEventsForUserReq) urlQuery() url.Values {
 }
 
 func (r *ActivityListReceivedPublicEventsForUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -2055,7 +2150,7 @@ func (r *ActivityListReceivedPublicEventsForUserReq) body() interface{} {
 }
 
 func (r *ActivityListReceivedPublicEventsForUserReq) dataStatuses() []int {
-	return []int{}
+	return []int{200}
 }
 
 func (r *ActivityListReceivedPublicEventsForUserReq) validStatuses() []int {
@@ -2085,6 +2180,13 @@ func (r *ActivityListReceivedPublicEventsForUserReq) Rel(link RelName, resp *Act
 }
 
 /*
+ActivityListReceivedPublicEventsForUserResponseBody is a response body for ActivityListReceivedPublicEventsForUser
+
+https://developer.github.com/v3/activity/events/#list-public-events-received-by-a-user
+*/
+type ActivityListReceivedPublicEventsForUserResponseBody []components.Event
+
+/*
 ActivityListReceivedPublicEventsForUserResponse is a response for ActivityListReceivedPublicEventsForUser
 
 https://developer.github.com/v3/activity/events/#list-public-events-received-by-a-user
@@ -2092,6 +2194,7 @@ https://developer.github.com/v3/activity/events/#list-public-events-received-by-
 type ActivityListReceivedPublicEventsForUserResponse struct {
 	response
 	request *ActivityListReceivedPublicEventsForUserReq
+	Data    ActivityListReceivedPublicEventsForUserResponseBody
 }
 
 /*
@@ -2115,7 +2218,8 @@ func ActivityListRepoEvents(ctx context.Context, req *ActivityListRepoEventsReq,
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	resp.Data = ActivityListRepoEventsResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2141,9 +2245,13 @@ ActivityListRepoEventsReq is request data for Client.ActivityListRepoEvents
 https://developer.github.com/v3/activity/events/#list-repository-events
 */
 type ActivityListRepoEventsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -2176,7 +2284,7 @@ func (r *ActivityListRepoEventsReq) urlQuery() url.Values {
 }
 
 func (r *ActivityListRepoEventsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -2186,7 +2294,7 @@ func (r *ActivityListRepoEventsReq) body() interface{} {
 }
 
 func (r *ActivityListRepoEventsReq) dataStatuses() []int {
-	return []int{}
+	return []int{200}
 }
 
 func (r *ActivityListRepoEventsReq) validStatuses() []int {
@@ -2216,6 +2324,13 @@ func (r *ActivityListRepoEventsReq) Rel(link RelName, resp *ActivityListRepoEven
 }
 
 /*
+ActivityListRepoEventsResponseBody is a response body for ActivityListRepoEvents
+
+https://developer.github.com/v3/activity/events/#list-repository-events
+*/
+type ActivityListRepoEventsResponseBody []components.Event
+
+/*
 ActivityListRepoEventsResponse is a response for ActivityListRepoEvents
 
 https://developer.github.com/v3/activity/events/#list-repository-events
@@ -2223,6 +2338,7 @@ https://developer.github.com/v3/activity/events/#list-repository-events
 type ActivityListRepoEventsResponse struct {
 	response
 	request *ActivityListRepoEventsReq
+	Data    ActivityListRepoEventsResponseBody
 }
 
 /*
@@ -2273,9 +2389,13 @@ ActivityListRepoNotificationsForAuthenticatedUserReq is request data for Client.
 https://developer.github.com/v3/activity/notifications/#list-repository-notifications-for-the-authenticated-user
 */
 type ActivityListRepoNotificationsForAuthenticatedUserReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// If `true`, show notifications marked as read.
 	All *bool
@@ -2343,7 +2463,7 @@ func (r *ActivityListRepoNotificationsForAuthenticatedUserReq) urlQuery() url.Va
 }
 
 func (r *ActivityListRepoNotificationsForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -2496,7 +2616,7 @@ func (r *ActivityListReposStarredByAuthenticatedUserReq) urlQuery() url.Values {
 }
 
 func (r *ActivityListReposStarredByAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/vnd.github.v3.star+json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -2510,7 +2630,7 @@ func (r *ActivityListReposStarredByAuthenticatedUserReq) dataStatuses() []int {
 }
 
 func (r *ActivityListReposStarredByAuthenticatedUserReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *ActivityListReposStarredByAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
@@ -2540,7 +2660,7 @@ ActivityListReposStarredByAuthenticatedUserResponseBody is a response body for A
 
 https://developer.github.com/v3/activity/starring/#list-repositories-starred-by-the-authenticated-user
 */
-type ActivityListReposStarredByAuthenticatedUserResponseBody []components.Repository
+type ActivityListReposStarredByAuthenticatedUserResponseBody []components.StarredRepository
 
 /*
 ActivityListReposStarredByAuthenticatedUserResponse is a response for ActivityListReposStarredByAuthenticatedUser
@@ -2601,7 +2721,9 @@ ActivityListReposStarredByUserReq is request data for Client.ActivityListReposSt
 https://developer.github.com/v3/activity/starring/#list-repositories-starred-by-a-user
 */
 type ActivityListReposStarredByUserReq struct {
-	_url     string
+	_url string
+
+	// username parameter
 	Username string
 
 	/*
@@ -2650,7 +2772,7 @@ func (r *ActivityListReposStarredByUserReq) urlQuery() url.Values {
 }
 
 func (r *ActivityListReposStarredByUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/vnd.github.v3.star+json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -2694,7 +2816,7 @@ ActivityListReposStarredByUserResponseBody is a response body for ActivityListRe
 
 https://developer.github.com/v3/activity/starring/#list-repositories-starred-by-a-user
 */
-type ActivityListReposStarredByUserResponseBody []components.Repository
+type ActivityListReposStarredByUserResponseBody []components.StarredRepository
 
 /*
 ActivityListReposStarredByUserResponse is a response for ActivityListReposStarredByUser
@@ -2755,7 +2877,9 @@ ActivityListReposWatchedByUserReq is request data for Client.ActivityListReposWa
 https://developer.github.com/v3/activity/watching/#list-repositories-watched-by-a-user
 */
 type ActivityListReposWatchedByUserReq struct {
-	_url     string
+	_url string
+
+	// username parameter
 	Username string
 
 	// Results per page (max 100)
@@ -2789,7 +2913,7 @@ func (r *ActivityListReposWatchedByUserReq) urlQuery() url.Values {
 }
 
 func (r *ActivityListReposWatchedByUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -2894,9 +3018,13 @@ ActivityListStargazersForRepoReq is request data for Client.ActivityListStargaze
 https://developer.github.com/v3/activity/starring/#list-stargazers
 */
 type ActivityListStargazersForRepoReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -2929,7 +3057,7 @@ func (r *ActivityListStargazersForRepoReq) urlQuery() url.Values {
 }
 
 func (r *ActivityListStargazersForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/vnd.github.v3.star+json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -2973,7 +3101,7 @@ ActivityListStargazersForRepoResponseBody is a response body for ActivityListSta
 
 https://developer.github.com/v3/activity/starring/#list-stargazers
 */
-type ActivityListStargazersForRepoResponseBody []components.SimpleUser
+type ActivityListStargazersForRepoResponseBody []components.Stargazer
 
 /*
 ActivityListStargazersForRepoResponse is a response for ActivityListStargazersForRepo
@@ -3067,7 +3195,7 @@ func (r *ActivityListWatchedReposForAuthenticatedUserReq) urlQuery() url.Values 
 }
 
 func (r *ActivityListWatchedReposForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -3081,7 +3209,7 @@ func (r *ActivityListWatchedReposForAuthenticatedUserReq) dataStatuses() []int {
 }
 
 func (r *ActivityListWatchedReposForAuthenticatedUserReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *ActivityListWatchedReposForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
@@ -3172,9 +3300,13 @@ ActivityListWatchersForRepoReq is request data for Client.ActivityListWatchersFo
 https://developer.github.com/v3/activity/watching/#list-watchers
 */
 type ActivityListWatchersForRepoReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -3207,7 +3339,7 @@ func (r *ActivityListWatchersForRepoReq) urlQuery() url.Values {
 }
 
 func (r *ActivityListWatchersForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -3285,7 +3417,8 @@ func ActivityMarkNotificationsAsRead(ctx context.Context, req *ActivityMarkNotif
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	resp.Data = ActivityMarkNotificationsAsReadResponseBody{}
+	err = r.decodeBody(&resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3333,7 +3466,10 @@ func (r *ActivityMarkNotificationsAsReadReq) urlQuery() url.Values {
 }
 
 func (r *ActivityMarkNotificationsAsReadReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -3343,11 +3479,11 @@ func (r *ActivityMarkNotificationsAsReadReq) body() interface{} {
 }
 
 func (r *ActivityMarkNotificationsAsReadReq) dataStatuses() []int {
-	return []int{}
+	return []int{202}
 }
 
 func (r *ActivityMarkNotificationsAsReadReq) validStatuses() []int {
-	return []int{205}
+	return []int{202, 205, 304}
 }
 
 func (r *ActivityMarkNotificationsAsReadReq) endpointAttributes() []endpointAttribute {
@@ -3379,14 +3515,20 @@ https://developer.github.com/v3/activity/notifications/#mark-notifications-as-re
 */
 type ActivityMarkNotificationsAsReadReqBody struct {
 
-	/*
-	   Describes the last point that notifications were checked. Anything updated since
-	   this time will not be marked as read. If you omit this parameter, all
-	   notifications are marked as read. This is a timestamp in [ISO
-	   8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ`.
-	   Default: The current timestamp.
-	*/
+	// Describes the last point that notifications were checked.
 	LastReadAt *string `json:"last_read_at,omitempty"`
+
+	// Whether the notification has been read.
+	Read *bool `json:"read,omitempty"`
+}
+
+/*
+ActivityMarkNotificationsAsReadResponseBody is a response body for ActivityMarkNotificationsAsRead
+
+https://developer.github.com/v3/activity/notifications/#mark-notifications-as-read
+*/
+type ActivityMarkNotificationsAsReadResponseBody struct {
+	Message string `json:"message,omitempty"`
 }
 
 /*
@@ -3397,6 +3539,7 @@ https://developer.github.com/v3/activity/notifications/#mark-notifications-as-re
 type ActivityMarkNotificationsAsReadResponse struct {
 	response
 	request *ActivityMarkNotificationsAsReadReq
+	Data    ActivityMarkNotificationsAsReadResponseBody
 }
 
 /*
@@ -3446,8 +3589,12 @@ ActivityMarkRepoNotificationsAsReadReq is request data for Client.ActivityMarkRe
 https://developer.github.com/v3/activity/notifications/#mark-repository-notifications-as-read
 */
 type ActivityMarkRepoNotificationsAsReadReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody ActivityMarkRepoNotificationsAsReadReqBody
 }
@@ -3470,7 +3617,7 @@ func (r *ActivityMarkRepoNotificationsAsReadReq) urlQuery() url.Values {
 }
 
 func (r *ActivityMarkRepoNotificationsAsReadReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"content-type": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -3484,7 +3631,7 @@ func (r *ActivityMarkRepoNotificationsAsReadReq) dataStatuses() []int {
 }
 
 func (r *ActivityMarkRepoNotificationsAsReadReq) validStatuses() []int {
-	return []int{205}
+	return []int{202}
 }
 
 func (r *ActivityMarkRepoNotificationsAsReadReq) endpointAttributes() []endpointAttribute {
@@ -3517,11 +3664,11 @@ https://developer.github.com/v3/activity/notifications/#mark-repository-notifica
 type ActivityMarkRepoNotificationsAsReadReqBody struct {
 
 	/*
-	   Describes the last point that notifications were checked. Anything updated since
-	   this time will not be marked as read. If you omit this parameter, all
-	   notifications are marked as read. This is a timestamp in [ISO
-	   8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ`.
-	   Default: The current timestamp.
+	Describes the last point that notifications were checked. Anything updated since
+	this time will not be marked as read. If you omit this parameter, all
+	notifications are marked as read. This is a timestamp in [ISO
+	8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ`.
+	Default: The current timestamp.
 	*/
 	LastReadAt *string `json:"last_read_at,omitempty"`
 }
@@ -3583,7 +3730,9 @@ ActivityMarkThreadAsReadReq is request data for Client.ActivityMarkThreadAsRead
 https://developer.github.com/v3/activity/notifications/#mark-a-thread-as-read
 */
 type ActivityMarkThreadAsReadReq struct {
-	_url     string
+	_url string
+
+	// thread_id parameter
 	ThreadId int64
 }
 
@@ -3619,7 +3768,7 @@ func (r *ActivityMarkThreadAsReadReq) dataStatuses() []int {
 }
 
 func (r *ActivityMarkThreadAsReadReq) validStatuses() []int {
-	return []int{205}
+	return []int{205, 304}
 }
 
 func (r *ActivityMarkThreadAsReadReq) endpointAttributes() []endpointAttribute {
@@ -3702,8 +3851,12 @@ ActivitySetRepoSubscriptionReq is request data for Client.ActivitySetRepoSubscri
 https://developer.github.com/v3/activity/watching/#set-a-repository-subscription
 */
 type ActivitySetRepoSubscriptionReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody ActivitySetRepoSubscriptionReqBody
 }
@@ -3726,7 +3879,10 @@ func (r *ActivitySetRepoSubscriptionReq) urlQuery() url.Values {
 }
 
 func (r *ActivitySetRepoSubscriptionReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -3845,7 +4001,9 @@ ActivitySetThreadSubscriptionReq is request data for Client.ActivitySetThreadSub
 https://developer.github.com/v3/activity/notifications/#set-a-thread-subscription
 */
 type ActivitySetThreadSubscriptionReq struct {
-	_url        string
+	_url string
+
+	// thread_id parameter
 	ThreadId    int64
 	RequestBody ActivitySetThreadSubscriptionReqBody
 }
@@ -3868,7 +4026,10 @@ func (r *ActivitySetThreadSubscriptionReq) urlQuery() url.Values {
 }
 
 func (r *ActivitySetThreadSubscriptionReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -3882,7 +4043,7 @@ func (r *ActivitySetThreadSubscriptionReq) dataStatuses() []int {
 }
 
 func (r *ActivitySetThreadSubscriptionReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *ActivitySetThreadSubscriptionReq) endpointAttributes() []endpointAttribute {
@@ -3914,10 +4075,7 @@ https://developer.github.com/v3/activity/notifications/#set-a-thread-subscriptio
 */
 type ActivitySetThreadSubscriptionReqBody struct {
 
-	/*
-	   Unsubscribes and subscribes you to a conversation. Set `ignored` to `true` to
-	   block all notifications from this thread.
-	*/
+	// Whether to block all notifications from a thread.
 	Ignored *bool `json:"ignored,omitempty"`
 }
 
@@ -3986,9 +4144,13 @@ ActivityStarRepoForAuthenticatedUserReq is request data for Client.ActivityStarR
 https://developer.github.com/v3/activity/starring/#star-a-repository-for-the-authenticated-user
 */
 type ActivityStarRepoForAuthenticatedUserReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 }
 
 func (r *ActivityStarRepoForAuthenticatedUserReq) url() string {
@@ -4023,7 +4185,7 @@ func (r *ActivityStarRepoForAuthenticatedUserReq) dataStatuses() []int {
 }
 
 func (r *ActivityStarRepoForAuthenticatedUserReq) validStatuses() []int {
-	return []int{204}
+	return []int{204, 304}
 }
 
 func (r *ActivityStarRepoForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
@@ -4105,9 +4267,13 @@ ActivityUnstarRepoForAuthenticatedUserReq is request data for Client.ActivityUns
 https://developer.github.com/v3/activity/starring/#unstar-a-repository-for-the-authenticated-user
 */
 type ActivityUnstarRepoForAuthenticatedUserReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 }
 
 func (r *ActivityUnstarRepoForAuthenticatedUserReq) url() string {
@@ -4142,7 +4308,7 @@ func (r *ActivityUnstarRepoForAuthenticatedUserReq) dataStatuses() []int {
 }
 
 func (r *ActivityUnstarRepoForAuthenticatedUserReq) validStatuses() []int {
-	return []int{204}
+	return []int{204, 304}
 }
 
 func (r *ActivityUnstarRepoForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {

@@ -20,11 +20,10 @@ func main() {
 
 	ghAuth := octo.WithPATAuth(os.Getenv("GITHUB_TOKEN"))
 
-	resp, err := octo.ReposDownloadArchive(ctx, &octo.ReposDownloadArchiveReq{
-		Owner:         "WillAbides",
-		Repo:          "octo-go",
-		ArchiveFormat: "tarball",
-		Ref:           "master",
+	resp, err := octo.ReposDownloadTarballArchive(ctx, &octo.ReposDownloadTarballArchiveReq{
+		Owner: "WillAbides",
+		Repo:  "octo-go",
+		Ref:   "master",
 	}, ghAuth)
 	if err != nil {
 		log.Fatal(err)

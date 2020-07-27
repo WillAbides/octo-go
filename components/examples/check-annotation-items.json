@@ -1,6 +1,7 @@
 [
   {
     "annotation_level": "warning",
+    "blob_href": "string",
     "end_column": 10,
     "end_line": 2,
     "message": "Check your spelling for 'banaas'.",

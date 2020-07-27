@@ -58,9 +58,15 @@ CodeScanningGetAlertReq is request data for Client.CodeScanningGetAlert
 https://developer.github.com/v3/code-scanning/#get-a-code-scanning-alert
 */
 type CodeScanningGetAlertReq struct {
-	_url    string
-	Owner   string
-	Repo    string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// alert_id parameter
 	AlertId int64
 }
 
@@ -82,7 +88,7 @@ func (r *CodeScanningGetAlertReq) urlQuery() url.Values {
 }
 
 func (r *CodeScanningGetAlertReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -187,9 +193,13 @@ CodeScanningListAlertsForRepoReq is request data for Client.CodeScanningListAler
 https://developer.github.com/v3/code-scanning/#list-code-scanning-alerts-for-a-repository
 */
 type CodeScanningListAlertsForRepoReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// Set to `closed` to list only closed code scanning alerts.
 	State *string
@@ -225,7 +235,7 @@ func (r *CodeScanningListAlertsForRepoReq) urlQuery() url.Values {
 }
 
 func (r *CodeScanningListAlertsForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }

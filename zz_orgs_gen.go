@@ -58,8 +58,12 @@ OrgsBlockUserReq is request data for Client.OrgsBlockUser
 https://developer.github.com/v3/orgs/blocking/#block-a-user-from-an-organization
 */
 type OrgsBlockUserReq struct {
-	_url     string
-	Org      string
+	_url string
+
+	// org parameter
+	Org string
+
+	// username parameter
 	Username string
 }
 
@@ -181,8 +185,12 @@ OrgsCheckBlockedUserReq is request data for Client.OrgsCheckBlockedUser
 https://developer.github.com/v3/orgs/blocking/#check-if-a-user-is-blocked-by-an-organization
 */
 type OrgsCheckBlockedUserReq struct {
-	_url     string
-	Org      string
+	_url string
+
+	// org parameter
+	Org string
+
+	// username parameter
 	Username string
 }
 
@@ -301,8 +309,12 @@ OrgsCheckMembershipForUserReq is request data for Client.OrgsCheckMembershipForU
 https://developer.github.com/v3/orgs/members/#check-organization-membership-for-a-user
 */
 type OrgsCheckMembershipForUserReq struct {
-	_url     string
-	Org      string
+	_url string
+
+	// org parameter
+	Org string
+
+	// username parameter
 	Username string
 }
 
@@ -424,8 +436,12 @@ OrgsCheckPublicMembershipForUserReq is request data for Client.OrgsCheckPublicMe
 https://developer.github.com/v3/orgs/members/#check-public-organization-membership-for-a-user
 */
 type OrgsCheckPublicMembershipForUserReq struct {
-	_url     string
-	Org      string
+	_url string
+
+	// org parameter
+	Org string
+
+	// username parameter
 	Username string
 }
 
@@ -544,8 +560,12 @@ OrgsConvertMemberToOutsideCollaboratorReq is request data for Client.OrgsConvert
 https://developer.github.com/v3/orgs/outside_collaborators/#convert-an-organization-member-to-outside-collaborator
 */
 type OrgsConvertMemberToOutsideCollaboratorReq struct {
-	_url     string
-	Org      string
+	_url string
+
+	// org parameter
+	Org string
+
+	// username parameter
 	Username string
 }
 
@@ -581,7 +601,7 @@ func (r *OrgsConvertMemberToOutsideCollaboratorReq) dataStatuses() []int {
 }
 
 func (r *OrgsConvertMemberToOutsideCollaboratorReq) validStatuses() []int {
-	return []int{204}
+	return []int{202, 204}
 }
 
 func (r *OrgsConvertMemberToOutsideCollaboratorReq) endpointAttributes() []endpointAttribute {
@@ -664,7 +684,9 @@ OrgsCreateInvitationReq is request data for Client.OrgsCreateInvitation
 https://developer.github.com/v3/orgs/members/#create-an-organization-invitation
 */
 type OrgsCreateInvitationReq struct {
-	_url        string
+	_url string
+
+	// org parameter
 	Org         string
 	RequestBody OrgsCreateInvitationReqBody
 }
@@ -687,7 +709,10 @@ func (r *OrgsCreateInvitationReq) urlQuery() url.Values {
 }
 
 func (r *OrgsCreateInvitationReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -734,25 +759,22 @@ https://developer.github.com/v3/orgs/members/#create-an-organization-invitation
 type OrgsCreateInvitationReqBody struct {
 
 	/*
-	   **Required unless you provide `invitee_id`**. Email address of the person you
-	   are inviting, which can be an existing GitHub user.
+	**Required unless you provide `invitee_id`**. Email address of the person you
+	are inviting, which can be an existing GitHub user.
 	*/
 	Email *string `json:"email,omitempty"`
 
-	/*
-	   **Required unless you provide `email`**. GitHub user ID for the person you are
-	   inviting.
-	*/
+	// **Required unless you provide `email`**. GitHub user ID for the person you are inviting.
 	InviteeId *int64 `json:"invitee_id,omitempty"`
 
 	/*
-	   Specify role for new member. Can be one of:
-	   \* `admin` - Organization owners with full administrative rights to the
-	   organization and complete access to all repositories and teams.
-	   \* `direct_member` - Non-owner organization members with ability to see other
-	   members and join teams by invitation.
-	   \* `billing_manager` - Non-owner organization members with ability to manage the
-	   billing settings of your organization.
+	Specify role for new member. Can be one of:
+	\* `admin` - Organization owners with full administrative rights to the
+	organization and complete access to all repositories and teams.
+	\* `direct_member` - Non-owner organization members with ability to see other
+	members and join teams by invitation.
+	\* `billing_manager` - Non-owner organization members with ability to manage the
+	billing settings of your organization.
 	*/
 	Role *string `json:"role,omitempty"`
 
@@ -826,7 +848,9 @@ OrgsCreateWebhookReq is request data for Client.OrgsCreateWebhook
 https://developer.github.com/v3/orgs/hooks/#create-an-organization-webhook
 */
 type OrgsCreateWebhookReq struct {
-	_url        string
+	_url string
+
+	// org parameter
 	Org         string
 	RequestBody OrgsCreateWebhookReqBody
 }
@@ -849,7 +873,10 @@ func (r *OrgsCreateWebhookReq) urlQuery() url.Values {
 }
 
 func (r *OrgsCreateWebhookReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -891,31 +918,30 @@ func (r *OrgsCreateWebhookReq) Rel(link RelName, resp *OrgsCreateWebhookResponse
 // OrgsCreateWebhookReqBodyConfig is a value for OrgsCreateWebhookReqBody's Config field
 type OrgsCreateWebhookReqBodyConfig struct {
 
-	/*
-	   The media type used to serialize the payloads. Supported values include `json`
-	   and `form`. The default is `form`.
-	*/
+	// The media type used to serialize the payloads. Supported values include `json` and `form`. The default is `form`.
 	ContentType *string `json:"content_type,omitempty"`
 
 	/*
-	   Determines whether the SSL certificate of the host for `url` will be verified
-	   when delivering payloads. Supported values include `0` (verification is
-	   performed) and `1` (verification is not performed). The default is `0`. **We
-	   strongly recommend not setting this to `1` as you are subject to
-	   man-in-the-middle and other attacks.**
+	Determines whether the SSL certificate of the host for `url` will be verified
+	when delivering payloads. Supported values include `0` (verification is
+	performed) and `1` (verification is not performed). The default is `0`. **We
+	strongly recommend not setting this to `1` as you are subject to
+	man-in-the-middle and other attacks.**
 	*/
 	InsecureSsl *string `json:"insecure_ssl,omitempty"`
+	Password    *string `json:"password,omitempty"`
 
 	/*
-	   If provided, the `secret` will be used as the `key` to generate the HMAC hex
-	   digest value in the
-	   [`X-Hub-Signature`](https://developer.github.com/webhooks/event-payloads/#delivery-headers)
-	   header.
+	If provided, the `secret` will be used as the `key` to generate the HMAC hex
+	digest value in the
+	[`X-Hub-Signature`](https://developer.github.com/webhooks/event-payloads/#delivery-headers)
+	header.
 	*/
 	Secret *string `json:"secret,omitempty"`
 
 	// The URL to which the payloads will be delivered.
-	Url *string `json:"url"`
+	Url      *string `json:"url"`
+	Username *string `json:"username,omitempty"`
 }
 
 /*
@@ -925,22 +951,16 @@ https://developer.github.com/v3/orgs/hooks/#create-an-organization-webhook
 */
 type OrgsCreateWebhookReqBody struct {
 
-	/*
-	   Determines if notifications are sent when the webhook is triggered. Set to
-	   `true` to send notifications.
-	*/
+	// Determines if notifications are sent when the webhook is triggered. Set to `true` to send notifications.
 	Active *bool `json:"active,omitempty"`
 
 	/*
-	   Key/value pairs to provide settings for this webhook. [These are defined
-	   below](https://developer.github.com/v3/orgs/hooks/#create-hook-config-params).
+	Key/value pairs to provide settings for this webhook. [These are defined
+	below](https://developer.github.com/v3/orgs/hooks/#create-hook-config-params).
 	*/
 	Config *OrgsCreateWebhookReqBodyConfig `json:"config"`
 
-	/*
-	   Determines what [events](https://developer.github.com/webhooks/event-payloads)
-	   the hook is triggered for.
-	*/
+	// Determines what [events](https://developer.github.com/webhooks/event-payloads) the hook is triggered for.
 	Events []string `json:"events,omitempty"`
 
 	// Must be passed as "web".
@@ -986,6 +1006,10 @@ func OrgsDeleteWebhook(ctx context.Context, req *OrgsDeleteWebhookReq, opt ...Re
 	if err != nil {
 		return resp, err
 	}
+	err = r.setBoolResult(&resp.Data)
+	if err != nil {
+		return nil, err
+	}
 	err = r.decodeBody(nil)
 	if err != nil {
 		return nil, err
@@ -1012,8 +1036,12 @@ OrgsDeleteWebhookReq is request data for Client.OrgsDeleteWebhook
 https://developer.github.com/v3/orgs/hooks/#delete-an-organization-webhook
 */
 type OrgsDeleteWebhookReq struct {
-	_url   string
-	Org    string
+	_url string
+
+	// org parameter
+	Org string
+
+	// hook_id parameter
 	HookId int64
 }
 
@@ -1053,7 +1081,7 @@ func (r *OrgsDeleteWebhookReq) validStatuses() []int {
 }
 
 func (r *OrgsDeleteWebhookReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrBoolean}
 }
 
 // HTTPRequest builds an *http.Request
@@ -1082,6 +1110,7 @@ https://developer.github.com/v3/orgs/hooks/#delete-an-organization-webhook
 type OrgsDeleteWebhookResponse struct {
 	response
 	request *OrgsDeleteWebhookReq
+	Data    bool
 }
 
 /*
@@ -1133,7 +1162,9 @@ https://developer.github.com/v3/orgs/#get-an-organization
 */
 type OrgsGetReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	/*
 	New repository creation permissions are available to preview. You can now use
@@ -1169,7 +1200,7 @@ func (r *OrgsGetReq) urlQuery() url.Values {
 }
 
 func (r *OrgsGetReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"surtur": r.SurturPreview}
 	if allPreviews {
 		previewVals["surtur"] = true
@@ -1278,7 +1309,9 @@ https://developer.github.com/v3/orgs/members/#get-an-organization-membership-for
 */
 type OrgsGetMembershipForAuthenticatedUserReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 }
 
 func (r *OrgsGetMembershipForAuthenticatedUserReq) url() string {
@@ -1299,7 +1332,7 @@ func (r *OrgsGetMembershipForAuthenticatedUserReq) urlQuery() url.Values {
 }
 
 func (r *OrgsGetMembershipForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -1404,8 +1437,12 @@ OrgsGetMembershipForUserReq is request data for Client.OrgsGetMembershipForUser
 https://developer.github.com/v3/orgs/members/#get-organization-membership-for-a-user
 */
 type OrgsGetMembershipForUserReq struct {
-	_url     string
-	Org      string
+	_url string
+
+	// org parameter
+	Org string
+
+	// username parameter
 	Username string
 }
 
@@ -1427,7 +1464,7 @@ func (r *OrgsGetMembershipForUserReq) urlQuery() url.Values {
 }
 
 func (r *OrgsGetMembershipForUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -1532,8 +1569,12 @@ OrgsGetWebhookReq is request data for Client.OrgsGetWebhook
 https://developer.github.com/v3/orgs/hooks/#get-an-organization-webhook
 */
 type OrgsGetWebhookReq struct {
-	_url   string
-	Org    string
+	_url string
+
+	// org parameter
+	Org string
+
+	// hook_id parameter
 	HookId int64
 }
 
@@ -1555,7 +1596,7 @@ func (r *OrgsGetWebhookReq) urlQuery() url.Values {
 }
 
 func (r *OrgsGetWebhookReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -1662,8 +1703,15 @@ https://developer.github.com/v3/orgs/#list-organizations
 type OrgsListReq struct {
 	_url string
 
-	// The integer ID of the last organization that you've seen.
-	Since *int64
+	/*
+	Only show notifications updated after the given time. This is a timestamp in
+	[ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format:
+	`YYYY-MM-DDTHH:MM:SSZ`.
+	*/
+	Since *string
+
+	// Results per page (max 100)
+	PerPage *int64
 }
 
 func (r *OrgsListReq) url() string {
@@ -1681,13 +1729,16 @@ func (r *OrgsListReq) method() string {
 func (r *OrgsListReq) urlQuery() url.Values {
 	query := url.Values{}
 	if r.Since != nil {
-		query.Set("since", strconv.FormatInt(*r.Since, 10))
+		query.Set("since", *r.Since)
+	}
+	if r.PerPage != nil {
+		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
 	}
 	return query
 }
 
 func (r *OrgsListReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -1701,7 +1752,7 @@ func (r *OrgsListReq) dataStatuses() []int {
 }
 
 func (r *OrgsListReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *OrgsListReq) endpointAttributes() []endpointAttribute {
@@ -1793,7 +1844,9 @@ https://developer.github.com/v3/orgs/#list-app-installations-for-an-organization
 */
 type OrgsListAppInstallationsReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -1832,7 +1885,7 @@ func (r *OrgsListAppInstallationsReq) urlQuery() url.Values {
 }
 
 func (r *OrgsListAppInstallationsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{"machine-man": r.MachineManPreview}
 	if requiredPreviews {
 		previewVals["machine-man"] = true
@@ -1883,8 +1936,8 @@ OrgsListAppInstallationsResponseBody is a response body for OrgsListAppInstallat
 https://developer.github.com/v3/orgs/#list-app-installations-for-an-organization
 */
 type OrgsListAppInstallationsResponseBody struct {
-	Installations []components.Installation2 `json:"installations,omitempty"`
-	TotalCount    int64                      `json:"total_count,omitempty"`
+	Installations []components.Installation `json:"installations,omitempty"`
+	TotalCount    int64                     `json:"total_count,omitempty"`
 }
 
 /*
@@ -1947,7 +2000,9 @@ https://developer.github.com/v3/orgs/blocking/#list-users-blocked-by-an-organiza
 */
 type OrgsListBlockedUsersReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 }
 
 func (r *OrgsListBlockedUsersReq) url() string {
@@ -1968,7 +2023,7 @@ func (r *OrgsListBlockedUsersReq) urlQuery() url.Values {
 }
 
 func (r *OrgsListBlockedUsersReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -2106,7 +2161,7 @@ func (r *OrgsListForAuthenticatedUserReq) urlQuery() url.Values {
 }
 
 func (r *OrgsListForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -2120,7 +2175,7 @@ func (r *OrgsListForAuthenticatedUserReq) dataStatuses() []int {
 }
 
 func (r *OrgsListForAuthenticatedUserReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *OrgsListForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
@@ -2211,7 +2266,9 @@ OrgsListForUserReq is request data for Client.OrgsListForUser
 https://developer.github.com/v3/orgs/#list-organizations-for-a-user
 */
 type OrgsListForUserReq struct {
-	_url     string
+	_url string
+
+	// username parameter
 	Username string
 
 	// Results per page (max 100)
@@ -2245,7 +2302,7 @@ func (r *OrgsListForUserReq) urlQuery() url.Values {
 }
 
 func (r *OrgsListForUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -2350,8 +2407,12 @@ OrgsListInvitationTeamsReq is request data for Client.OrgsListInvitationTeams
 https://developer.github.com/v3/orgs/members/#list-organization-invitation-teams
 */
 type OrgsListInvitationTeamsReq struct {
-	_url         string
-	Org          string
+	_url string
+
+	// org parameter
+	Org string
+
+	// invitation_id parameter
 	InvitationId int64
 
 	// Results per page (max 100)
@@ -2385,7 +2446,7 @@ func (r *OrgsListInvitationTeamsReq) urlQuery() url.Values {
 }
 
 func (r *OrgsListInvitationTeamsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -2491,7 +2552,9 @@ https://developer.github.com/v3/orgs/members/#list-organization-members
 */
 type OrgsListMembersReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	/*
 	Filter members returned in the list. Can be one of:
@@ -2547,7 +2610,7 @@ func (r *OrgsListMembersReq) urlQuery() url.Values {
 }
 
 func (r *OrgsListMembersReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -2695,7 +2758,7 @@ func (r *OrgsListMembershipsForAuthenticatedUserReq) urlQuery() url.Values {
 }
 
 func (r *OrgsListMembershipsForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -2709,7 +2772,7 @@ func (r *OrgsListMembershipsForAuthenticatedUserReq) dataStatuses() []int {
 }
 
 func (r *OrgsListMembershipsForAuthenticatedUserReq) validStatuses() []int {
-	return []int{200}
+	return []int{200, 304}
 }
 
 func (r *OrgsListMembershipsForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
@@ -2801,7 +2864,9 @@ https://developer.github.com/v3/orgs/outside_collaborators/#list-outside-collabo
 */
 type OrgsListOutsideCollaboratorsReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	/*
 	Filter the list of outside collaborators. Can be one of:
@@ -2845,7 +2910,7 @@ func (r *OrgsListOutsideCollaboratorsReq) urlQuery() url.Values {
 }
 
 func (r *OrgsListOutsideCollaboratorsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -2951,7 +3016,9 @@ https://developer.github.com/v3/orgs/members/#list-pending-organization-invitati
 */
 type OrgsListPendingInvitationsReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -2984,7 +3051,7 @@ func (r *OrgsListPendingInvitationsReq) urlQuery() url.Values {
 }
 
 func (r *OrgsListPendingInvitationsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -3090,7 +3157,9 @@ https://developer.github.com/v3/orgs/members/#list-public-organization-members
 */
 type OrgsListPublicMembersReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -3123,7 +3192,7 @@ func (r *OrgsListPublicMembersReq) urlQuery() url.Values {
 }
 
 func (r *OrgsListPublicMembersReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -3229,7 +3298,9 @@ https://developer.github.com/v3/orgs/#list-saml-sso-authorizations-for-an-organi
 */
 type OrgsListSamlSsoAuthorizationsReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 }
 
 func (r *OrgsListSamlSsoAuthorizationsReq) url() string {
@@ -3250,7 +3321,7 @@ func (r *OrgsListSamlSsoAuthorizationsReq) urlQuery() url.Values {
 }
 
 func (r *OrgsListSamlSsoAuthorizationsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -3356,7 +3427,9 @@ https://developer.github.com/v3/orgs/hooks/#list-organization-webhooks
 */
 type OrgsListWebhooksReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -3389,7 +3462,7 @@ func (r *OrgsListWebhooksReq) urlQuery() url.Values {
 }
 
 func (r *OrgsListWebhooksReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -3467,6 +3540,10 @@ func OrgsPingWebhook(ctx context.Context, req *OrgsPingWebhookReq, opt ...Reques
 	if err != nil {
 		return resp, err
 	}
+	err = r.setBoolResult(&resp.Data)
+	if err != nil {
+		return nil, err
+	}
 	err = r.decodeBody(nil)
 	if err != nil {
 		return nil, err
@@ -3493,8 +3570,12 @@ OrgsPingWebhookReq is request data for Client.OrgsPingWebhook
 https://developer.github.com/v3/orgs/hooks/#ping-an-organization-webhook
 */
 type OrgsPingWebhookReq struct {
-	_url   string
-	Org    string
+	_url string
+
+	// org parameter
+	Org string
+
+	// hook_id parameter
 	HookId int64
 }
 
@@ -3534,7 +3615,7 @@ func (r *OrgsPingWebhookReq) validStatuses() []int {
 }
 
 func (r *OrgsPingWebhookReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrBoolean}
 }
 
 // HTTPRequest builds an *http.Request
@@ -3563,6 +3644,7 @@ https://developer.github.com/v3/orgs/hooks/#ping-an-organization-webhook
 type OrgsPingWebhookResponse struct {
 	response
 	request *OrgsPingWebhookReq
+	Data    bool
 }
 
 /*
@@ -3612,8 +3694,12 @@ OrgsRemoveMemberReq is request data for Client.OrgsRemoveMember
 https://developer.github.com/v3/orgs/members/#remove-an-organization-member
 */
 type OrgsRemoveMemberReq struct {
-	_url     string
-	Org      string
+	_url string
+
+	// org parameter
+	Org string
+
+	// username parameter
 	Username string
 }
 
@@ -3731,8 +3817,12 @@ OrgsRemoveMembershipForUserReq is request data for Client.OrgsRemoveMembershipFo
 https://developer.github.com/v3/orgs/members/#remove-organization-membership-for-a-user
 */
 type OrgsRemoveMembershipForUserReq struct {
-	_url     string
-	Org      string
+	_url string
+
+	// org parameter
+	Org string
+
+	// username parameter
 	Username string
 }
 
@@ -3850,8 +3940,12 @@ OrgsRemoveOutsideCollaboratorReq is request data for Client.OrgsRemoveOutsideCol
 https://developer.github.com/v3/orgs/outside_collaborators/#remove-outside-collaborator-from-an-organization
 */
 type OrgsRemoveOutsideCollaboratorReq struct {
-	_url     string
-	Org      string
+	_url string
+
+	// org parameter
+	Org string
+
+	// username parameter
 	Username string
 }
 
@@ -3969,8 +4063,12 @@ OrgsRemovePublicMembershipForAuthenticatedUserReq is request data for Client.Org
 https://developer.github.com/v3/orgs/members/#remove-public-organization-membership-for-the-authenticated-user
 */
 type OrgsRemovePublicMembershipForAuthenticatedUserReq struct {
-	_url     string
-	Org      string
+	_url string
+
+	// org parameter
+	Org string
+
+	// username parameter
 	Username string
 }
 
@@ -4062,6 +4160,10 @@ func OrgsRemoveSamlSsoAuthorization(ctx context.Context, req *OrgsRemoveSamlSsoA
 	if err != nil {
 		return resp, err
 	}
+	err = r.setBoolResult(&resp.Data)
+	if err != nil {
+		return nil, err
+	}
 	err = r.decodeBody(nil)
 	if err != nil {
 		return nil, err
@@ -4088,8 +4190,12 @@ OrgsRemoveSamlSsoAuthorizationReq is request data for Client.OrgsRemoveSamlSsoAu
 https://developer.github.com/v3/orgs/#remove-a-saml-sso-authorization-for-an-organization
 */
 type OrgsRemoveSamlSsoAuthorizationReq struct {
-	_url         string
-	Org          string
+	_url string
+
+	// org parameter
+	Org string
+
+	// credential_id parameter
 	CredentialId int64
 }
 
@@ -4129,7 +4235,7 @@ func (r *OrgsRemoveSamlSsoAuthorizationReq) validStatuses() []int {
 }
 
 func (r *OrgsRemoveSamlSsoAuthorizationReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
+	return []endpointAttribute{attrBoolean}
 }
 
 // HTTPRequest builds an *http.Request
@@ -4158,6 +4264,7 @@ https://developer.github.com/v3/orgs/#remove-a-saml-sso-authorization-for-an-org
 type OrgsRemoveSamlSsoAuthorizationResponse struct {
 	response
 	request *OrgsRemoveSamlSsoAuthorizationReq
+	Data    bool
 }
 
 /*
@@ -4208,8 +4315,12 @@ OrgsSetMembershipForUserReq is request data for Client.OrgsSetMembershipForUser
 https://developer.github.com/v3/orgs/members/#set-organization-membership-for-a-user
 */
 type OrgsSetMembershipForUserReq struct {
-	_url        string
-	Org         string
+	_url string
+
+	// org parameter
+	Org string
+
+	// username parameter
 	Username    string
 	RequestBody OrgsSetMembershipForUserReqBody
 }
@@ -4232,7 +4343,10 @@ func (r *OrgsSetMembershipForUserReq) urlQuery() url.Values {
 }
 
 func (r *OrgsSetMembershipForUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -4279,9 +4393,9 @@ https://developer.github.com/v3/orgs/members/#set-organization-membership-for-a-
 type OrgsSetMembershipForUserReqBody struct {
 
 	/*
-	   The role to give the user in the organization. Can be one of:
-	   \* `admin` - The user will become an owner of the organization.
-	   \* `member` - The user will become a non-owner member of the organization.
+	The role to give the user in the organization. Can be one of:
+	\* `admin` - The user will become an owner of the organization.
+	\* `member` - The user will become a non-owner member of the organization.
 	*/
 	Role *string `json:"role,omitempty"`
 }
@@ -4351,8 +4465,12 @@ OrgsSetPublicMembershipForAuthenticatedUserReq is request data for Client.OrgsSe
 https://developer.github.com/v3/orgs/members/#set-public-organization-membership-for-the-authenticated-user
 */
 type OrgsSetPublicMembershipForAuthenticatedUserReq struct {
-	_url     string
-	Org      string
+	_url string
+
+	// org parameter
+	Org string
+
+	// username parameter
 	Username string
 }
 
@@ -4470,8 +4588,12 @@ OrgsUnblockUserReq is request data for Client.OrgsUnblockUser
 https://developer.github.com/v3/orgs/blocking/#unblock-a-user-from-an-organization
 */
 type OrgsUnblockUserReq struct {
-	_url     string
-	Org      string
+	_url string
+
+	// org parameter
+	Org string
+
+	// username parameter
 	Username string
 }
 
@@ -4590,7 +4712,9 @@ OrgsUpdateReq is request data for Client.OrgsUpdate
 https://developer.github.com/v3/orgs/#update-an-organization
 */
 type OrgsUpdateReq struct {
-	_url        string
+	_url string
+
+	// org parameter
 	Org         string
 	RequestBody OrgsUpdateReqBody
 
@@ -4628,7 +4752,10 @@ func (r *OrgsUpdateReq) urlQuery() url.Values {
 }
 
 func (r *OrgsUpdateReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{"surtur": r.SurturPreview}
 	if allPreviews {
 		previewVals["surtur"] = true
@@ -4679,16 +4806,17 @@ type OrgsUpdateReqBody struct {
 
 	// Billing email address. This address is not publicized.
 	BillingEmail *string `json:"billing_email,omitempty"`
+	Blog         *string `json:"blog,omitempty"`
 
 	// The company name.
 	Company *string `json:"company,omitempty"`
 
 	/*
-	   Default permission level members have for organization repositories:
-	   \* `read` - can pull, but not push to or administer this repository.
-	   \* `write` - can pull and push, but not administer this repository.
-	   \* `admin` - can pull, push, and administer this repository.
-	   \* `none` - no permissions granted by default.
+	Default permission level members have for organization repositories:
+	\* `read` - can pull, but not push to or administer this repository.
+	\* `write` - can pull and push, but not administer this repository.
+	\* `admin` - can pull, push, and administer this repository.
+	\* `none` - no permissions granted by default.
 	*/
 	DefaultRepositoryPermission *string `json:"default_repository_permission,omitempty"`
 
@@ -4701,76 +4829,76 @@ type OrgsUpdateReqBody struct {
 	// Toggles whether an organization can use organization projects.
 	HasOrganizationProjects *bool `json:"has_organization_projects,omitempty"`
 
-	/*
-	   Toggles whether repositories that belong to the organization can use repository
-	   projects.
-	*/
+	// Toggles whether repositories that belong to the organization can use repository projects.
 	HasRepositoryProjects *bool `json:"has_repository_projects,omitempty"`
 
 	// The location.
 	Location *string `json:"location,omitempty"`
 
 	/*
-	   Specifies which types of repositories non-admin organization members can create.
-	   Can be one of:
-	   \* `all` - all organization members can create public and private repositories.
-	   \* `private` - members can create private repositories. This option is only
-	   available to repositories that are part of an organization on GitHub Enterprise
-	   Cloud.
-	   \* `none` - only admin members can create repositories.
-	   **Note:** This parameter is deprecated and will be removed in the future. Its
-	   return value ignores internal repositories. Using this parameter overrides
-	   values set in `members_can_create_repositories`. See [this
-	   note](https://developer.github.com/v3/orgs/#members_can_create_repositories) for
-	   details.
+	Specifies which types of repositories non-admin organization members can create.
+	Can be one of:
+	\* `all` - all organization members can create public and private repositories.
+	\* `private` - members can create private repositories. This option is only
+	available to repositories that are part of an organization on GitHub Enterprise
+	Cloud.
+	\* `none` - only admin members can create repositories.
+	**Note:** This parameter is deprecated and will be removed in the future. Its
+	return value ignores internal repositories. Using this parameter overrides
+	values set in `members_can_create_repositories`. See [this
+	note](https://developer.github.com/v3/orgs/#members_can_create_repositories) for
+	details.
 	*/
 	MembersAllowedRepositoryCreationType *string `json:"members_allowed_repository_creation_type,omitempty"`
 
 	/*
-	   Toggles whether organization members can create internal repositories, which are
-	   visible to all enterprise members. You can only allow members to create internal
-	   repositories if your organization is associated with an enterprise account using
-	   GitHub Enterprise Cloud or GitHub Enterprise Server 2.20+. Can be one of:
-	   \* `true` - all organization members can create internal repositories.
-	   \* `false` - only organization owners can create internal repositories.
-	   Default: `true`. For more information, see "[Restricting repository creation in
-	   your
-	   organization](https://help.github.com/github/setting-up-and-managing-organizations-and-teams/restricting-repository-creation-in-your-organization)".
+	Toggles whether organization members can create internal repositories, which are
+	visible to all enterprise members. You can only allow members to create internal
+	repositories if your organization is associated with an enterprise account using
+	GitHub Enterprise Cloud or GitHub Enterprise Server 2.20+. Can be one of:
+	\* `true` - all organization members can create internal repositories.
+	\* `false` - only organization owners can create internal repositories.
+	Default: `true`. For more information, see "[Restricting repository creation in
+	your
+	organization](https://help.github.com/github/setting-up-and-managing-organizations-and-teams/restricting-repository-creation-in-your-organization)"
+	in the GitHub Help documentation.
 	*/
 	MembersCanCreateInternalRepositories *bool `json:"members_can_create_internal_repositories,omitempty"`
 
 	/*
-	   Toggles whether organization members can create private repositories, which are
-	   visible to organization members with permission. Can be one of:
-	   \* `true` - all organization members can create private repositories.
-	   \* `false` - only organization owners can create private repositories.
-	   Default: `true`. For more information, see "[Restricting repository creation in
-	   your
-	   organization](https://help.github.com/github/setting-up-and-managing-organizations-and-teams/restricting-repository-creation-in-your-organization)".
+	Toggles whether organization members can create private repositories, which are
+	visible to organization members with permission. Can be one of:
+	\* `true` - all organization members can create private repositories.
+	\* `false` - only organization owners can create private repositories.
+	Default: `true`. For more information, see "[Restricting repository creation in
+	your
+	organization](https://help.github.com/github/setting-up-and-managing-organizations-and-teams/restricting-repository-creation-in-your-organization)"
+	in the GitHub Help documentation.
 	*/
 	MembersCanCreatePrivateRepositories *bool `json:"members_can_create_private_repositories,omitempty"`
 
 	/*
-	   Toggles whether organization members can create public repositories, which are
-	   visible to anyone. Can be one of:
-	   \* `true` - all organization members can create public repositories.
-	   \* `false` - only organization owners can create public repositories.
-	   Default: `true`. For more information, see "[Restricting repository creation in
-	   your
-	   organization](https://help.github.com/github/setting-up-and-managing-organizations-and-teams/restricting-repository-creation-in-your-organization)".
+	Toggles whether organization members can create public repositories, which are
+	visible to anyone. Can be one of:
+	\* `true` - all organization members can create public repositories.
+	\* `false` - only organization owners can create public repositories.
+	Default: `true`. For more information, see "[Restricting repository creation in
+	your
+	organization](https://help.github.com/github/setting-up-and-managing-organizations-and-teams/restricting-repository-creation-in-your-organization)"
+	in the GitHub Help documentation.
 	*/
 	MembersCanCreatePublicRepositories *bool `json:"members_can_create_public_repositories,omitempty"`
 
 	/*
-	   Toggles the ability of non-admin organization members to create repositories.
-	   Can be one of:
-	   \* `true` - all organization members can create repositories.
-	   \* `false` - only organization owners can create repositories.
-	   Default: `true`
-	   **Note:** A parameter can override this parameter. See
-	   `members_allowed_repository_creation_type` in this table for details. **Note:**
-	   A parameter can override this parameter. See
-	   `members_allowed_repository_creation_type` in this table for details.
+	Toggles the ability of non-admin organization members to create repositories.
+	Can be one of:
+	\* `true` - all organization members can create repositories.
+	\* `false` - only organization owners can create repositories.
+	Default: `true`
+	**Note:** A parameter can override this parameter. See
+	`members_allowed_repository_creation_type` in this table for details. **Note:**
+	A parameter can override this parameter. See
+	`members_allowed_repository_creation_type` in this table for details.
 	*/
 	MembersCanCreateRepositories *bool `json:"members_can_create_repositories,omitempty"`
 
@@ -4847,7 +4975,9 @@ OrgsUpdateMembershipForAuthenticatedUserReq is request data for Client.OrgsUpdat
 https://developer.github.com/v3/orgs/members/#update-an-organization-membership-for-the-authenticated-user
 */
 type OrgsUpdateMembershipForAuthenticatedUserReq struct {
-	_url        string
+	_url string
+
+	// org parameter
 	Org         string
 	RequestBody OrgsUpdateMembershipForAuthenticatedUserReqBody
 }
@@ -4870,7 +5000,10 @@ func (r *OrgsUpdateMembershipForAuthenticatedUserReq) urlQuery() url.Values {
 }
 
 func (r *OrgsUpdateMembershipForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -4986,8 +5119,12 @@ OrgsUpdateWebhookReq is request data for Client.OrgsUpdateWebhook
 https://developer.github.com/v3/orgs/hooks/#update-an-organization-webhook
 */
 type OrgsUpdateWebhookReq struct {
-	_url        string
-	Org         string
+	_url string
+
+	// org parameter
+	Org string
+
+	// hook_id parameter
 	HookId      int64
 	RequestBody OrgsUpdateWebhookReqBody
 }
@@ -5010,7 +5147,10 @@ func (r *OrgsUpdateWebhookReq) urlQuery() url.Values {
 }
 
 func (r *OrgsUpdateWebhookReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{
+		"accept":       String("application/json"),
+		"content-type": String("application/json"),
+	}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -5052,26 +5192,23 @@ func (r *OrgsUpdateWebhookReq) Rel(link RelName, resp *OrgsUpdateWebhookResponse
 // OrgsUpdateWebhookReqBodyConfig is a value for OrgsUpdateWebhookReqBody's Config field
 type OrgsUpdateWebhookReqBodyConfig struct {
 
-	/*
-	   The media type used to serialize the payloads. Supported values include `json`
-	   and `form`. The default is `form`.
-	*/
+	// The media type used to serialize the payloads. Supported values include `json` and `form`. The default is `form`.
 	ContentType *string `json:"content_type,omitempty"`
 
 	/*
-	   Determines whether the SSL certificate of the host for `url` will be verified
-	   when delivering payloads. Supported values include `0` (verification is
-	   performed) and `1` (verification is not performed). The default is `0`. **We
-	   strongly recommend not setting this to `1` as you are subject to
-	   man-in-the-middle and other attacks.**
+	Determines whether the SSL certificate of the host for `url` will be verified
+	when delivering payloads. Supported values include `0` (verification is
+	performed) and `1` (verification is not performed). The default is `0`. **We
+	strongly recommend not setting this to `1` as you are subject to
+	man-in-the-middle and other attacks.**
 	*/
 	InsecureSsl *string `json:"insecure_ssl,omitempty"`
 
 	/*
-	   If provided, the `secret` will be used as the `key` to generate the HMAC hex
-	   digest value in the
-	   [`X-Hub-Signature`](https://developer.github.com/webhooks/event-payloads/#delivery-headers)
-	   header.
+	If provided, the `secret` will be used as the `key` to generate the HMAC hex
+	digest value in the
+	[`X-Hub-Signature`](https://developer.github.com/webhooks/event-payloads/#delivery-headers)
+	header.
 	*/
 	Secret *string `json:"secret,omitempty"`
 
@@ -5086,23 +5223,18 @@ https://developer.github.com/v3/orgs/hooks/#update-an-organization-webhook
 */
 type OrgsUpdateWebhookReqBody struct {
 
-	/*
-	   Determines if notifications are sent when the webhook is triggered. Set to
-	   `true` to send notifications.
-	*/
+	// Determines if notifications are sent when the webhook is triggered. Set to `true` to send notifications.
 	Active *bool `json:"active,omitempty"`
 
 	/*
-	   Key/value pairs to provide settings for this webhook. [These are defined
-	   below](https://developer.github.com/v3/orgs/hooks/#update-hook-config-params).
+	Key/value pairs to provide settings for this webhook. [These are defined
+	below](https://developer.github.com/v3/orgs/hooks/#update-hook-config-params).
 	*/
 	Config *OrgsUpdateWebhookReqBodyConfig `json:"config,omitempty"`
 
-	/*
-	   Determines what [events](https://developer.github.com/webhooks/event-payloads)
-	   the hook is triggered for.
-	*/
+	// Determines what [events](https://developer.github.com/webhooks/event-payloads) the hook is triggered for.
 	Events []string `json:"events,omitempty"`
+	Name   *string  `json:"name,omitempty"`
 }
 
 /*

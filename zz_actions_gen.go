@@ -4,7 +4,6 @@ package octo
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
 	components "github.com/willabides/octo-go/components"
 	"net/http"
@@ -59,9 +58,15 @@ ActionsAddSelectedRepoToOrgSecretReq is request data for Client.ActionsAddSelect
 https://developer.github.com/v3/actions/secrets/#add-selected-repository-to-an-organization-secret
 */
 type ActionsAddSelectedRepoToOrgSecretReq struct {
-	_url         string
-	Org          string
-	SecretName   string
+	_url string
+
+	// org parameter
+	Org string
+
+	// secret_name parameter
+	SecretName string
+
+	// repository_id parameter
 	RepositoryId int64
 }
 
@@ -179,9 +184,15 @@ ActionsCancelWorkflowRunReq is request data for Client.ActionsCancelWorkflowRun
 https://developer.github.com/v3/actions/workflow-runs/#cancel-a-workflow-run
 */
 type ActionsCancelWorkflowRunReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
+
+	// run_id parameter
 	RunId int64
 }
 
@@ -299,8 +310,12 @@ ActionsCreateOrUpdateOrgSecretReq is request data for Client.ActionsCreateOrUpda
 https://developer.github.com/v3/actions/secrets/#create-or-update-an-organization-secret
 */
 type ActionsCreateOrUpdateOrgSecretReq struct {
-	_url        string
-	Org         string
+	_url string
+
+	// org parameter
+	Org string
+
+	// secret_name parameter
 	SecretName  string
 	RequestBody ActionsCreateOrUpdateOrgSecretReqBody
 }
@@ -323,7 +338,7 @@ func (r *ActionsCreateOrUpdateOrgSecretReq) urlQuery() url.Values {
 }
 
 func (r *ActionsCreateOrUpdateOrgSecretReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"content-type": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -370,11 +385,11 @@ https://developer.github.com/v3/actions/secrets/#create-or-update-an-organizatio
 type ActionsCreateOrUpdateOrgSecretReqBody struct {
 
 	/*
-	   Value for your secret, encrypted with
-	   [LibSodium](https://libsodium.gitbook.io/doc/bindings_for_other_languages) using
-	   the public key retrieved from the [Get an organization public
-	   key](https://developer.github.com/v3/actions/secrets/#get-an-organization-public-key)
-	   endpoint.
+	Value for your secret, encrypted with
+	[LibSodium](https://libsodium.gitbook.io/doc/bindings_for_other_languages) using
+	the public key retrieved from the [Get an organization public
+	key](https://developer.github.com/v3/actions/secrets/#get-an-organization-public-key)
+	endpoint.
 	*/
 	EncryptedValue *string `json:"encrypted_value,omitempty"`
 
@@ -382,25 +397,25 @@ type ActionsCreateOrUpdateOrgSecretReqBody struct {
 	KeyId *string `json:"key_id,omitempty"`
 
 	/*
-	   An array of repository ids that can access the organization secret. You can only
-	   provide a list of repository ids when the `visibility` is set to `selected`. You
-	   can manage the list of selected repositories using the [List selected
-	   repositories for an organization
-	   secret](https://developer.github.com/v3/actions/secrets/#list-selected-repositories-for-an-organization-secret),
-	   [Set selected repositories for an organization
-	   secret](https://developer.github.com/v3/actions/secrets/#set-selected-repositories-for-an-organization-secret),
-	   and [Remove selected repository from an organization
-	   secret](https://developer.github.com/v3/actions/secrets/#remove-selected-repository-from-an-organization-secret)
-	   endpoints.
+	An array of repository ids that can access the organization secret. You can only
+	provide a list of repository ids when the `visibility` is set to `selected`. You
+	can manage the list of selected repositories using the [List selected
+	repositories for an organization
+	secret](https://developer.github.com/v3/actions/secrets/#list-selected-repositories-for-an-organization-secret),
+	[Set selected repositories for an organization
+	secret](https://developer.github.com/v3/actions/secrets/#set-selected-repositories-for-an-organization-secret),
+	and [Remove selected repository from an organization
+	secret](https://developer.github.com/v3/actions/secrets/#remove-selected-repository-from-an-organization-secret)
+	endpoints.
 	*/
-	SelectedRepositoryIds []json.Number `json:"selected_repository_ids,omitempty"`
+	SelectedRepositoryIds []string `json:"selected_repository_ids,omitempty"`
 
 	/*
-	   Configures the access that repositories have to the organization secret. Can be
-	   one of:
-	   \- `all` - All repositories in an organization can access the secret.
-	   \- `private` - Private repositories in an organization can access the secret.
-	   \- `selected` - Only specific repositories can access the secret.
+	Configures the access that repositories have to the organization secret. Can be
+	one of:
+	\- `all` - All repositories in an organization can access the secret.
+	\- `private` - Private repositories in an organization can access the secret.
+	\- `selected` - Only specific repositories can access the secret.
 	*/
 	Visibility *string `json:"visibility,omitempty"`
 }
@@ -462,9 +477,15 @@ ActionsCreateOrUpdateRepoSecretReq is request data for Client.ActionsCreateOrUpd
 https://developer.github.com/v3/actions/secrets/#create-or-update-a-repository-secret
 */
 type ActionsCreateOrUpdateRepoSecretReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// secret_name parameter
 	SecretName  string
 	RequestBody ActionsCreateOrUpdateRepoSecretReqBody
 }
@@ -487,7 +508,7 @@ func (r *ActionsCreateOrUpdateRepoSecretReq) urlQuery() url.Values {
 }
 
 func (r *ActionsCreateOrUpdateRepoSecretReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"content-type": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -534,11 +555,11 @@ https://developer.github.com/v3/actions/secrets/#create-or-update-a-repository-s
 type ActionsCreateOrUpdateRepoSecretReqBody struct {
 
 	/*
-	   Value for your secret, encrypted with
-	   [LibSodium](https://libsodium.gitbook.io/doc/bindings_for_other_languages) using
-	   the public key retrieved from the [Get a repository public
-	   key](https://developer.github.com/v3/actions/secrets/#get-a-repository-public-key)
-	   endpoint.
+	Value for your secret, encrypted with
+	[LibSodium](https://libsodium.gitbook.io/doc/bindings_for_other_languages) using
+	the public key retrieved from the [Get a repository public
+	key](https://developer.github.com/v3/actions/secrets/#get-a-repository-public-key)
+	endpoint.
 	*/
 	EncryptedValue *string `json:"encrypted_value,omitempty"`
 
@@ -605,7 +626,9 @@ https://developer.github.com/v3/actions/self-hosted-runners/#create-a-registrati
 */
 type ActionsCreateRegistrationTokenForOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 }
 
 func (r *ActionsCreateRegistrationTokenForOrgReq) url() string {
@@ -626,7 +649,7 @@ func (r *ActionsCreateRegistrationTokenForOrgReq) urlQuery() url.Values {
 }
 
 func (r *ActionsCreateRegistrationTokenForOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -731,9 +754,13 @@ ActionsCreateRegistrationTokenForRepoReq is request data for Client.ActionsCreat
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-registration-token-for-a-repository
 */
 type ActionsCreateRegistrationTokenForRepoReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 }
 
 func (r *ActionsCreateRegistrationTokenForRepoReq) url() string {
@@ -754,7 +781,7 @@ func (r *ActionsCreateRegistrationTokenForRepoReq) urlQuery() url.Values {
 }
 
 func (r *ActionsCreateRegistrationTokenForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -860,7 +887,9 @@ https://developer.github.com/v3/actions/self-hosted-runners/#create-a-remove-tok
 */
 type ActionsCreateRemoveTokenForOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 }
 
 func (r *ActionsCreateRemoveTokenForOrgReq) url() string {
@@ -881,7 +910,7 @@ func (r *ActionsCreateRemoveTokenForOrgReq) urlQuery() url.Values {
 }
 
 func (r *ActionsCreateRemoveTokenForOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -986,9 +1015,13 @@ ActionsCreateRemoveTokenForRepoReq is request data for Client.ActionsCreateRemov
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-remove-token-for-a-repository
 */
 type ActionsCreateRemoveTokenForRepoReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 }
 
 func (r *ActionsCreateRemoveTokenForRepoReq) url() string {
@@ -1009,7 +1042,7 @@ func (r *ActionsCreateRemoveTokenForRepoReq) urlQuery() url.Values {
 }
 
 func (r *ActionsCreateRemoveTokenForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -1138,7 +1171,7 @@ func (r *ActionsCreateWorkflowDispatchReq) urlQuery() url.Values {
 }
 
 func (r *ActionsCreateWorkflowDispatchReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"content-type": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -1184,16 +1217,10 @@ https://developer.github.com/v3/actions/workflows/#create-a-workflow-dispatch-ev
 */
 type ActionsCreateWorkflowDispatchReqBody struct {
 
-	/*
-	   Input keys and values configured in the workflow file. The maximum number of
-	   properties is 10.
-	*/
+	// Input keys and values configured in the workflow file. The maximum number of properties is 10.
 	Inputs map[string]string `json:"inputs,omitempty"`
 
-	/*
-	   The reference of the workflow run. The reference can be a branch, tag, or a
-	   commit SHA.
-	*/
+	// The reference of the workflow run. The reference can be a branch, tag, or a commit SHA.
 	Ref *string `json:"ref"`
 }
 
@@ -1254,9 +1281,15 @@ ActionsDeleteArtifactReq is request data for Client.ActionsDeleteArtifact
 https://developer.github.com/v3/actions/artifacts/#delete-an-artifact
 */
 type ActionsDeleteArtifactReq struct {
-	_url       string
-	Owner      string
-	Repo       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// artifact_id parameter
 	ArtifactId int64
 }
 
@@ -1374,8 +1407,12 @@ ActionsDeleteOrgSecretReq is request data for Client.ActionsDeleteOrgSecret
 https://developer.github.com/v3/actions/secrets/#delete-an-organization-secret
 */
 type ActionsDeleteOrgSecretReq struct {
-	_url       string
-	Org        string
+	_url string
+
+	// org parameter
+	Org string
+
+	// secret_name parameter
 	SecretName string
 }
 
@@ -1493,9 +1530,15 @@ ActionsDeleteRepoSecretReq is request data for Client.ActionsDeleteRepoSecret
 https://developer.github.com/v3/actions/secrets/#delete-a-repository-secret
 */
 type ActionsDeleteRepoSecretReq struct {
-	_url       string
-	Owner      string
-	Repo       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// secret_name parameter
 	SecretName string
 }
 
@@ -1613,8 +1656,12 @@ ActionsDeleteSelfHostedRunnerFromOrgReq is request data for Client.ActionsDelete
 https://developer.github.com/v3/actions/self-hosted-runners/#delete-a-self-hosted-runner-from-an-organization
 */
 type ActionsDeleteSelfHostedRunnerFromOrgReq struct {
-	_url     string
-	Org      string
+	_url string
+
+	// org parameter
+	Org string
+
+	// runner_id parameter
 	RunnerId int64
 }
 
@@ -1732,9 +1779,15 @@ ActionsDeleteSelfHostedRunnerFromRepoReq is request data for Client.ActionsDelet
 https://developer.github.com/v3/actions/self-hosted-runners/#delete-a-self-hosted-runner-from-a-repository
 */
 type ActionsDeleteSelfHostedRunnerFromRepoReq struct {
-	_url     string
-	Owner    string
-	Repo     string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// runner_id parameter
 	RunnerId int64
 }
 
@@ -1972,9 +2025,15 @@ ActionsDeleteWorkflowRunLogsReq is request data for Client.ActionsDeleteWorkflow
 https://developer.github.com/v3/actions/workflow-runs/#delete-workflow-run-logs
 */
 type ActionsDeleteWorkflowRunLogsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
+
+	// run_id parameter
 	RunId int64
 }
 
@@ -2092,10 +2151,18 @@ ActionsDownloadArtifactReq is request data for Client.ActionsDownloadArtifact
 https://developer.github.com/v3/actions/artifacts/#download-an-artifact
 */
 type ActionsDownloadArtifactReq struct {
-	_url          string
-	Owner         string
-	Repo          string
-	ArtifactId    int64
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// artifact_id parameter
+	ArtifactId int64
+
+	// archive_format parameter
 	ArchiveFormat string
 }
 
@@ -2213,9 +2280,15 @@ ActionsDownloadJobLogsForWorkflowRunReq is request data for Client.ActionsDownlo
 https://developer.github.com/v3/actions/workflow-jobs/#download-job-logs-for-a-workflow-run
 */
 type ActionsDownloadJobLogsForWorkflowRunReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
+
+	// job_id parameter
 	JobId int64
 }
 
@@ -2333,9 +2406,15 @@ ActionsDownloadWorkflowRunLogsReq is request data for Client.ActionsDownloadWork
 https://developer.github.com/v3/actions/workflow-runs/#download-workflow-run-logs
 */
 type ActionsDownloadWorkflowRunLogsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
+
+	// run_id parameter
 	RunId int64
 }
 
@@ -2454,9 +2533,15 @@ ActionsGetArtifactReq is request data for Client.ActionsGetArtifact
 https://developer.github.com/v3/actions/artifacts/#get-an-artifact
 */
 type ActionsGetArtifactReq struct {
-	_url       string
-	Owner      string
-	Repo       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// artifact_id parameter
 	ArtifactId int64
 }
 
@@ -2478,7 +2563,7 @@ func (r *ActionsGetArtifactReq) urlQuery() url.Values {
 }
 
 func (r *ActionsGetArtifactReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -2583,9 +2668,15 @@ ActionsGetJobForWorkflowRunReq is request data for Client.ActionsGetJobForWorkfl
 https://developer.github.com/v3/actions/workflow-jobs/#get-a-job-for-a-workflow-run
 */
 type ActionsGetJobForWorkflowRunReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
+
+	// job_id parameter
 	JobId int64
 }
 
@@ -2607,7 +2698,7 @@ func (r *ActionsGetJobForWorkflowRunReq) urlQuery() url.Values {
 }
 
 func (r *ActionsGetJobForWorkflowRunReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -2713,7 +2804,9 @@ https://developer.github.com/v3/actions/secrets/#get-an-organization-public-key
 */
 type ActionsGetOrgPublicKeyReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 }
 
 func (r *ActionsGetOrgPublicKeyReq) url() string {
@@ -2734,7 +2827,7 @@ func (r *ActionsGetOrgPublicKeyReq) urlQuery() url.Values {
 }
 
 func (r *ActionsGetOrgPublicKeyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -2839,8 +2932,12 @@ ActionsGetOrgSecretReq is request data for Client.ActionsGetOrgSecret
 https://developer.github.com/v3/actions/secrets/#get-an-organization-secret
 */
 type ActionsGetOrgSecretReq struct {
-	_url       string
-	Org        string
+	_url string
+
+	// org parameter
+	Org string
+
+	// secret_name parameter
 	SecretName string
 }
 
@@ -2862,7 +2959,7 @@ func (r *ActionsGetOrgSecretReq) urlQuery() url.Values {
 }
 
 func (r *ActionsGetOrgSecretReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -2967,9 +3064,13 @@ ActionsGetRepoPublicKeyReq is request data for Client.ActionsGetRepoPublicKey
 https://developer.github.com/v3/actions/secrets/#get-a-repository-public-key
 */
 type ActionsGetRepoPublicKeyReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 }
 
 func (r *ActionsGetRepoPublicKeyReq) url() string {
@@ -2990,7 +3091,7 @@ func (r *ActionsGetRepoPublicKeyReq) urlQuery() url.Values {
 }
 
 func (r *ActionsGetRepoPublicKeyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -3095,9 +3196,15 @@ ActionsGetRepoSecretReq is request data for Client.ActionsGetRepoSecret
 https://developer.github.com/v3/actions/secrets/#get-a-repository-secret
 */
 type ActionsGetRepoSecretReq struct {
-	_url       string
-	Owner      string
-	Repo       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// secret_name parameter
 	SecretName string
 }
 
@@ -3119,7 +3226,7 @@ func (r *ActionsGetRepoSecretReq) urlQuery() url.Values {
 }
 
 func (r *ActionsGetRepoSecretReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -3224,8 +3331,12 @@ ActionsGetSelfHostedRunnerForOrgReq is request data for Client.ActionsGetSelfHos
 https://developer.github.com/v3/actions/self-hosted-runners/#get-a-self-hosted-runner-for-an-organization
 */
 type ActionsGetSelfHostedRunnerForOrgReq struct {
-	_url     string
-	Org      string
+	_url string
+
+	// org parameter
+	Org string
+
+	// runner_id parameter
 	RunnerId int64
 }
 
@@ -3247,7 +3358,7 @@ func (r *ActionsGetSelfHostedRunnerForOrgReq) urlQuery() url.Values {
 }
 
 func (r *ActionsGetSelfHostedRunnerForOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -3352,9 +3463,15 @@ ActionsGetSelfHostedRunnerForRepoReq is request data for Client.ActionsGetSelfHo
 https://developer.github.com/v3/actions/self-hosted-runners/#get-a-self-hosted-runner-for-a-repository
 */
 type ActionsGetSelfHostedRunnerForRepoReq struct {
-	_url     string
-	Owner    string
-	Repo     string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// runner_id parameter
 	RunnerId int64
 }
 
@@ -3376,7 +3493,7 @@ func (r *ActionsGetSelfHostedRunnerForRepoReq) urlQuery() url.Values {
 }
 
 func (r *ActionsGetSelfHostedRunnerForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -3481,9 +3598,15 @@ ActionsGetWorkflowReq is request data for Client.ActionsGetWorkflow
 https://developer.github.com/v3/actions/workflows/#get-a-workflow
 */
 type ActionsGetWorkflowReq struct {
-	_url       string
-	Owner      string
-	Repo       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// workflow_id parameter
 	WorkflowId int64
 }
 
@@ -3505,7 +3628,7 @@ func (r *ActionsGetWorkflowReq) urlQuery() url.Values {
 }
 
 func (r *ActionsGetWorkflowReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -3610,9 +3733,15 @@ ActionsGetWorkflowRunReq is request data for Client.ActionsGetWorkflowRun
 https://developer.github.com/v3/actions/workflow-runs/#get-a-workflow-run
 */
 type ActionsGetWorkflowRunReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
+
+	// run_id parameter
 	RunId int64
 }
 
@@ -3634,7 +3763,7 @@ func (r *ActionsGetWorkflowRunReq) urlQuery() url.Values {
 }
 
 func (r *ActionsGetWorkflowRunReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -3739,9 +3868,15 @@ ActionsGetWorkflowRunUsageReq is request data for Client.ActionsGetWorkflowRunUs
 https://developer.github.com/v3/actions/workflow-runs/#get-workflow-run-usage
 */
 type ActionsGetWorkflowRunUsageReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
+
+	// run_id parameter
 	RunId int64
 }
 
@@ -3763,7 +3898,7 @@ func (r *ActionsGetWorkflowRunUsageReq) urlQuery() url.Values {
 }
 
 func (r *ActionsGetWorkflowRunUsageReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -3868,9 +4003,15 @@ ActionsGetWorkflowUsageReq is request data for Client.ActionsGetWorkflowUsage
 https://developer.github.com/v3/actions/workflows/#get-workflow-usage
 */
 type ActionsGetWorkflowUsageReq struct {
-	_url       string
-	Owner      string
-	Repo       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// workflow_id parameter
 	WorkflowId int64
 }
 
@@ -3892,7 +4033,7 @@ func (r *ActionsGetWorkflowUsageReq) urlQuery() url.Values {
 }
 
 func (r *ActionsGetWorkflowUsageReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -3997,9 +4138,13 @@ ActionsListArtifactsForRepoReq is request data for Client.ActionsListArtifactsFo
 https://developer.github.com/v3/actions/artifacts/#list-artifacts-for-a-repository
 */
 type ActionsListArtifactsForRepoReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -4032,7 +4177,7 @@ func (r *ActionsListArtifactsForRepoReq) urlQuery() url.Values {
 }
 
 func (r *ActionsListArtifactsForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -4077,8 +4222,8 @@ ActionsListArtifactsForRepoResponseBody is a response body for ActionsListArtifa
 https://developer.github.com/v3/actions/artifacts/#list-artifacts-for-a-repository
 */
 type ActionsListArtifactsForRepoResponseBody struct {
-	Artifacts  []components.Artifact2 `json:"artifacts,omitempty"`
-	TotalCount int64                  `json:"total_count,omitempty"`
+	Artifacts  []components.Artifact `json:"artifacts,omitempty"`
+	TotalCount int64                 `json:"total_count,omitempty"`
 }
 
 /*
@@ -4140,9 +4285,15 @@ ActionsListJobsForWorkflowRunReq is request data for Client.ActionsListJobsForWo
 https://developer.github.com/v3/actions/workflow-jobs/#list-jobs-for-a-workflow-run
 */
 type ActionsListJobsForWorkflowRunReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
+
+	// run_id parameter
 	RunId int64
 
 	/*
@@ -4187,7 +4338,7 @@ func (r *ActionsListJobsForWorkflowRunReq) urlQuery() url.Values {
 }
 
 func (r *ActionsListJobsForWorkflowRunReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -4296,7 +4447,9 @@ https://developer.github.com/v3/actions/secrets/#list-organization-secrets
 */
 type ActionsListOrgSecretsReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -4329,7 +4482,7 @@ func (r *ActionsListOrgSecretsReq) urlQuery() url.Values {
 }
 
 func (r *ActionsListOrgSecretsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -4374,8 +4527,8 @@ ActionsListOrgSecretsResponseBody is a response body for ActionsListOrgSecrets
 https://developer.github.com/v3/actions/secrets/#list-organization-secrets
 */
 type ActionsListOrgSecretsResponseBody struct {
-	Secrets    []components.OrganizationActionsSecret2 `json:"secrets,omitempty"`
-	TotalCount int64                                   `json:"total_count,omitempty"`
+	Secrets    []components.OrganizationActionsSecret `json:"secrets,omitempty"`
+	TotalCount int64                                  `json:"total_count,omitempty"`
 }
 
 /*
@@ -4437,9 +4590,13 @@ ActionsListRepoSecretsReq is request data for Client.ActionsListRepoSecrets
 https://developer.github.com/v3/actions/secrets/#list-repository-secrets
 */
 type ActionsListRepoSecretsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -4472,7 +4629,7 @@ func (r *ActionsListRepoSecretsReq) urlQuery() url.Values {
 }
 
 func (r *ActionsListRepoSecretsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -4517,8 +4674,8 @@ ActionsListRepoSecretsResponseBody is a response body for ActionsListRepoSecrets
 https://developer.github.com/v3/actions/secrets/#list-repository-secrets
 */
 type ActionsListRepoSecretsResponseBody struct {
-	Secrets    []components.ActionsSecret2 `json:"secrets,omitempty"`
-	TotalCount int64                       `json:"total_count,omitempty"`
+	Secrets    []components.ActionsSecret `json:"secrets,omitempty"`
+	TotalCount int64                      `json:"total_count,omitempty"`
 }
 
 /*
@@ -4580,9 +4737,13 @@ ActionsListRepoWorkflowsReq is request data for Client.ActionsListRepoWorkflows
 https://developer.github.com/v3/actions/workflows/#list-repository-workflows
 */
 type ActionsListRepoWorkflowsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -4615,7 +4776,7 @@ func (r *ActionsListRepoWorkflowsReq) urlQuery() url.Values {
 }
 
 func (r *ActionsListRepoWorkflowsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -4660,8 +4821,8 @@ ActionsListRepoWorkflowsResponseBody is a response body for ActionsListRepoWorkf
 https://developer.github.com/v3/actions/workflows/#list-repository-workflows
 */
 type ActionsListRepoWorkflowsResponseBody struct {
-	TotalCount int64                  `json:"total_count,omitempty"`
-	Workflows  []components.Workflow2 `json:"workflows,omitempty"`
+	TotalCount int64                 `json:"total_count,omitempty"`
+	Workflows  []components.Workflow `json:"workflows,omitempty"`
 }
 
 /*
@@ -4724,7 +4885,9 @@ https://developer.github.com/v3/actions/self-hosted-runners/#list-runner-applica
 */
 type ActionsListRunnerApplicationsForOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 }
 
 func (r *ActionsListRunnerApplicationsForOrgReq) url() string {
@@ -4745,7 +4908,7 @@ func (r *ActionsListRunnerApplicationsForOrgReq) urlQuery() url.Values {
 }
 
 func (r *ActionsListRunnerApplicationsForOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -4850,9 +5013,13 @@ ActionsListRunnerApplicationsForRepoReq is request data for Client.ActionsListRu
 https://developer.github.com/v3/actions/self-hosted-runners/#list-runner-applications-for-a-repository
 */
 type ActionsListRunnerApplicationsForRepoReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 }
 
 func (r *ActionsListRunnerApplicationsForRepoReq) url() string {
@@ -4873,7 +5040,7 @@ func (r *ActionsListRunnerApplicationsForRepoReq) urlQuery() url.Values {
 }
 
 func (r *ActionsListRunnerApplicationsForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -4978,8 +5145,12 @@ ActionsListSelectedReposForOrgSecretReq is request data for Client.ActionsListSe
 https://developer.github.com/v3/actions/secrets/#list-selected-repositories-for-an-organization-secret
 */
 type ActionsListSelectedReposForOrgSecretReq struct {
-	_url       string
-	Org        string
+	_url string
+
+	// org parameter
+	Org string
+
+	// secret_name parameter
 	SecretName string
 }
 
@@ -5001,7 +5172,7 @@ func (r *ActionsListSelectedReposForOrgSecretReq) urlQuery() url.Values {
 }
 
 func (r *ActionsListSelectedReposForOrgSecretReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -5046,8 +5217,8 @@ ActionsListSelectedReposForOrgSecretResponseBody is a response body for ActionsL
 https://developer.github.com/v3/actions/secrets/#list-selected-repositories-for-an-organization-secret
 */
 type ActionsListSelectedReposForOrgSecretResponseBody struct {
-	Repositories []components.PublicRepository `json:"repositories,omitempty"`
-	TotalCount   int64                         `json:"total_count,omitempty"`
+	Repositories []components.MinimalRepository `json:"repositories,omitempty"`
+	TotalCount   int64                          `json:"total_count,omitempty"`
 }
 
 /*
@@ -5110,7 +5281,9 @@ https://developer.github.com/v3/actions/self-hosted-runners/#list-self-hosted-ru
 */
 type ActionsListSelfHostedRunnersForOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -5143,7 +5316,7 @@ func (r *ActionsListSelfHostedRunnersForOrgReq) urlQuery() url.Values {
 }
 
 func (r *ActionsListSelfHostedRunnersForOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -5188,8 +5361,8 @@ ActionsListSelfHostedRunnersForOrgResponseBody is a response body for ActionsLis
 https://developer.github.com/v3/actions/self-hosted-runners/#list-self-hosted-runners-for-an-organization
 */
 type ActionsListSelfHostedRunnersForOrgResponseBody struct {
-	Runners    []components.Runner2 `json:"runners,omitempty"`
-	TotalCount int64                `json:"total_count,omitempty"`
+	Runners    []components.Runner `json:"runners,omitempty"`
+	TotalCount int64               `json:"total_count,omitempty"`
 }
 
 /*
@@ -5251,9 +5424,13 @@ ActionsListSelfHostedRunnersForRepoReq is request data for Client.ActionsListSel
 https://developer.github.com/v3/actions/self-hosted-runners/#list-self-hosted-runners-for-a-repository
 */
 type ActionsListSelfHostedRunnersForRepoReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -5286,7 +5463,7 @@ func (r *ActionsListSelfHostedRunnersForRepoReq) urlQuery() url.Values {
 }
 
 func (r *ActionsListSelfHostedRunnersForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -5331,8 +5508,8 @@ ActionsListSelfHostedRunnersForRepoResponseBody is a response body for ActionsLi
 https://developer.github.com/v3/actions/self-hosted-runners/#list-self-hosted-runners-for-a-repository
 */
 type ActionsListSelfHostedRunnersForRepoResponseBody struct {
-	Runners    []components.Runner2 `json:"runners,omitempty"`
-	TotalCount int64                `json:"total_count,omitempty"`
+	Runners    []components.Runner `json:"runners,omitempty"`
+	TotalCount int64               `json:"total_count,omitempty"`
 }
 
 /*
@@ -5394,9 +5571,15 @@ ActionsListWorkflowRunArtifactsReq is request data for Client.ActionsListWorkflo
 https://developer.github.com/v3/actions/artifacts/#list-workflow-run-artifacts
 */
 type ActionsListWorkflowRunArtifactsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
+
+	// run_id parameter
 	RunId int64
 
 	// Results per page (max 100)
@@ -5430,7 +5613,7 @@ func (r *ActionsListWorkflowRunArtifactsReq) urlQuery() url.Values {
 }
 
 func (r *ActionsListWorkflowRunArtifactsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -5475,8 +5658,8 @@ ActionsListWorkflowRunArtifactsResponseBody is a response body for ActionsListWo
 https://developer.github.com/v3/actions/artifacts/#list-workflow-run-artifacts
 */
 type ActionsListWorkflowRunArtifactsResponseBody struct {
-	Artifacts  []components.Artifact2 `json:"artifacts,omitempty"`
-	TotalCount int64                  `json:"total_count,omitempty"`
+	Artifacts  []components.Artifact `json:"artifacts,omitempty"`
+	TotalCount int64                 `json:"total_count,omitempty"`
 }
 
 /*
@@ -5538,9 +5721,15 @@ ActionsListWorkflowRunsReq is request data for Client.ActionsListWorkflowRuns
 https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs
 */
 type ActionsListWorkflowRunsReq struct {
-	_url       string
-	Owner      string
-	Repo       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// workflow_id parameter
 	WorkflowId int64
 
 	/*
@@ -5614,7 +5803,7 @@ func (r *ActionsListWorkflowRunsReq) urlQuery() url.Values {
 }
 
 func (r *ActionsListWorkflowRunsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -5722,9 +5911,13 @@ ActionsListWorkflowRunsForRepoReq is request data for Client.ActionsListWorkflow
 https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs-for-a-repository
 */
 type ActionsListWorkflowRunsForRepoReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	/*
 	Returns someone's workflow runs. Use the login for the user who created the
@@ -5797,7 +5990,7 @@ func (r *ActionsListWorkflowRunsForRepoReq) urlQuery() url.Values {
 }
 
 func (r *ActionsListWorkflowRunsForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"accept": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -5904,9 +6097,15 @@ ActionsReRunWorkflowReq is request data for Client.ActionsReRunWorkflow
 https://developer.github.com/v3/actions/workflow-runs/#re-run-a-workflow
 */
 type ActionsReRunWorkflowReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
+
+	// run_id parameter
 	RunId int64
 }
 
@@ -6024,9 +6223,15 @@ ActionsRemoveSelectedRepoFromOrgSecretReq is request data for Client.ActionsRemo
 https://developer.github.com/v3/actions/secrets/#remove-selected-repository-from-an-organization-secret
 */
 type ActionsRemoveSelectedRepoFromOrgSecretReq struct {
-	_url         string
-	Org          string
-	SecretName   string
+	_url string
+
+	// org parameter
+	Org string
+
+	// secret_name parameter
+	SecretName string
+
+	// repository_id parameter
 	RepositoryId int64
 }
 
@@ -6144,8 +6349,12 @@ ActionsSetSelectedReposForOrgSecretReq is request data for Client.ActionsSetSele
 https://developer.github.com/v3/actions/secrets/#set-selected-repositories-for-an-organization-secret
 */
 type ActionsSetSelectedReposForOrgSecretReq struct {
-	_url        string
-	Org         string
+	_url string
+
+	// org parameter
+	Org string
+
+	// secret_name parameter
 	SecretName  string
 	RequestBody ActionsSetSelectedReposForOrgSecretReqBody
 }
@@ -6168,7 +6377,7 @@ func (r *ActionsSetSelectedReposForOrgSecretReq) urlQuery() url.Values {
 }
 
 func (r *ActionsSetSelectedReposForOrgSecretReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
+	headerVals := map[string]*string{"content-type": String("application/json")}
 	previewVals := map[string]bool{}
 	return requestHeaders(headerVals, previewVals)
 }
@@ -6215,14 +6424,14 @@ https://developer.github.com/v3/actions/secrets/#set-selected-repositories-for-a
 type ActionsSetSelectedReposForOrgSecretReqBody struct {
 
 	/*
-	   An array of repository ids that can access the organization secret. You can only
-	   provide a list of repository ids when the `visibility` is set to `selected`. You
-	   can add and remove individual repositories using the [Set selected repositories
-	   for an organization
-	   secret](https://developer.github.com/v3/actions/secrets/#set-selected-repositories-for-an-organization-secret)
-	   and [Remove selected repository from an organization
-	   secret](https://developer.github.com/v3/actions/secrets/#remove-selected-repository-from-an-organization-secret)
-	   endpoints.
+	An array of repository ids that can access the organization secret. You can only
+	provide a list of repository ids when the `visibility` is set to `selected`. You
+	can add and remove individual repositories using the [Set selected repositories
+	for an organization
+	secret](https://developer.github.com/v3/actions/secrets/#set-selected-repositories-for-an-organization-secret)
+	and [Remove selected repository from an organization
+	secret](https://developer.github.com/v3/actions/secrets/#remove-selected-repository-from-an-organization-secret)
+	endpoints.
 	*/
 	SelectedRepositoryIds []int64 `json:"selected_repository_ids,omitempty"`
 }
