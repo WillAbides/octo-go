@@ -2,6 +2,8 @@ GOCMD=go
 GOBUILD=$(GOCMD) build
 PATH := "${CURDIR}/bin:$(PATH)"
 
+.PHONY: gobincache
+
 bin/golangci-lint:
 	script/bindown install $(notdir $@)
 
@@ -13,6 +15,9 @@ bin/octo:
 
 bin/gobin:
 	script/bindown install $(notdir $@)
+
+bin/update-schema: gobincache
+	go build -o $@ ./tools/update-schema
 
 HANDCRAFTED_REV := 082e94edadf89c33db0afb48889c8419a2cb46a9
 bin/handcrafted: bin/gobin
