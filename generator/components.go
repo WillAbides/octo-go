@@ -166,7 +166,7 @@ func oneOfSetValueFunc(structName string, schema *model.ParamSchema) jen.Code {
 		paramTypes = append(paramTypes, oneOfQualifiedType(param.Name, param.Schema))
 	}
 	stmt := jen.Commentf("SetValue sets %s's value. The type must be one of %s.", structName, orList(paramCommentTypes)).Line()
-	stmt = stmt.Add(
+	stmt.Add(
 		jen.Func().Params(jen.Id("c").Op("*").Id(structName)).Id("SetValue(value interface{})").Block(
 			jen.Switch(jen.Id("v := value").Dot("(type)")).BlockFunc(func(group *jen.Group) {
 				for i := 0; i < len(paramNames); i++ {
@@ -202,7 +202,7 @@ func oneOfValueFunc(structName string, schema *model.ParamSchema) jen.Code {
 		paramTypes = append(paramTypes, oneOfReturnTypeForComment(param.Name, param.Schema))
 	}
 	stmt := jen.Commentf("Value returns %s's value. The type will be one of %s.", structName, orList(paramTypes)).Line()
-	stmt = stmt.Add(
+	stmt.Add(
 
 		jen.Func().Params(jen.Id("c").Op("*").Id(structName)).Id("Value").Params().Interface().Block(
 			jen.Switch(jen.Id("c.oneOfField")).BlockFunc(func(group *jen.Group) {

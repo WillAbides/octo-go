@@ -238,7 +238,7 @@ func objectParamStmt(param *model.Param, schemaPath []string, opts *paramSchemaF
 	if !param.Required {
 		jsonTag += ",omitempty"
 	}
-	stmt = stmt.Tag(map[string]string{
+	stmt.Tag(map[string]string{
 		"json": jsonTag,
 	})
 	return prependCodeWithComment(param.HelpText, stmt)
