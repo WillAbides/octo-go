@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"os"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -70,6 +71,7 @@ func TestUnmarshalResponseBody(t *testing.T) {
 	}
 	y, err := yaml.Marshal(output)
 	require.NoError(t, err)
+	require.NoError(t, os.MkdirAll("tmp", 0750))
 	err = ioutil.WriteFile("tmp/example_errs.yml", y, 0o640)
 	require.NoError(t, err)
 }
