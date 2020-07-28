@@ -69,7 +69,7 @@
           "url": "https://api.github.com/users/octocat"
         }
       ],
-      "author_association": "string",
+      "author_association": "collaborator",
       "body": "I'm having a problem with this.",
       "closed_at": null,
       "comments": 0,

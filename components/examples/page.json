@@ -4,7 +4,7 @@
   "html_url": "https://developer.github.com",
   "source": {
     "branch": "master",
-    "path": "string"
+    "path": "/"
   },
   "status": "built",
   "url": "https://api.github.com/repos/github/developer.github.com/pages"
