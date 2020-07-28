@@ -3,7 +3,7 @@
   "items": [
     {
       "assignee": null,
-      "author_association": "string",
+      "author_association": "collaborator",
       "body": "...",
       "closed_at": null,
       "comments": 15,
