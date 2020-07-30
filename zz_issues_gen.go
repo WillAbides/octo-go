@@ -5717,7 +5717,6 @@ type IssuesUpdateLabelReqBody struct {
 
 	// A short description of the label.
 	Description *string `json:"description,omitempty"`
-	Name        *string `json:"name,omitempty"`
 
 	/*
 	The new name of the label. Emoji can be added to label names, using either
