@@ -38,7 +38,8 @@ type response struct {
 }
 
 func (r *response) decodeBody(target interface{}) error {
-	if internal.ReqHasEndpointAttribute(r.httpRequester, internal.AttrRedirectOnly) {
+	opID := internal.ReqOperationID(r.httpRequester)
+	if internal.OperationHasAttribute(opID, internal.AttrRedirectOnly) {
 		return nil
 	}
 	origBody := r.httpResponse.Body
@@ -187,8 +188,9 @@ type requestBuilder interface {
 
 func httpRequestURL(builder requestBuilder, options requestOpts) (string, error) {
 	expURL := builder.url()
+	opID := internal.ReqOperationID(builder)
 	if expURL != "" {
-		if !internal.ReqHasEndpointAttribute(builder, internal.AttrExplicitURL) {
+		if !internal.OperationHasAttribute(opID, internal.AttrExplicitURL) {
 			return expURL, nil
 		}
 		// get rid of any {?templates}
@@ -208,7 +210,7 @@ func httpRequestURL(builder requestBuilder, options requestOpts) (string, error)
 		u.RawQuery = expQuery.Encode()
 		return u.String(), nil
 	}
-	if internal.ReqHasEndpointAttribute(builder, internal.AttrExplicitURL) {
+	if internal.OperationHasAttribute(opID, internal.AttrExplicitURL) {
 		return "", fmt.Errorf("URL must be set")
 	}
 
@@ -227,17 +229,18 @@ func buildHTTPRequest(ctx context.Context, builder requestBuilder, opts []Reques
 		return nil, err
 	}
 	var bodyReader io.Reader
+	opID := internal.ReqOperationID(builder)
 	body := builder.body()
 	switch {
 	case body == nil:
-	case internal.ReqHasEndpointAttribute(builder, internal.AttrJSONRequestBody):
+	case internal.OperationHasAttribute(opID, internal.AttrJSONRequestBody):
 		var buf bytes.Buffer
 		err = json.NewEncoder(&buf).Encode(&body)
 		if err != nil {
 			return nil, err
 		}
 		bodyReader = &buf
-	case internal.ReqHasEndpointAttribute(builder, internal.AttrBodyUploader):
+	case internal.OperationHasAttribute(opID, internal.AttrBodyUploader):
 		bodyReader = body.(io.Reader)
 	}
 	urlString, err := httpRequestURL(builder, options)

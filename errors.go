@@ -39,10 +39,11 @@ func (e *UnexpectedStatusCodeError) Error() string {
 
 func unexpectedStatusCheck(resp *response) error {
 	valid := resp.httpRequester.validStatuses()
-	if internal.ReqHasEndpointAttribute(resp.httpRequester, internal.AttrRedirectOnly) {
+	opID := internal.ReqOperationID(resp.httpRequester)
+	if internal.OperationHasAttribute(opID, internal.AttrRedirectOnly) {
 		return nil
 	}
-	if internal.ReqHasEndpointAttribute(resp.httpRequester, internal.AttrBoolean) {
+	if internal.OperationHasAttribute(opID, internal.AttrBoolean) {
 		valid = append(valid, 404)
 	}
 	statusCode := resp.httpResponse.StatusCode
@@ -74,9 +75,10 @@ func clientErrorCheck(resp *response) error {
 	if statusCode < 400 || statusCode > 499 {
 		return nil
 	}
+	opID := internal.ReqOperationID(resp.httpRequester)
 
 	// 404 isn't an error for boolean endpoints ¯\_(ツ)_/¯
-	if internal.ReqHasEndpointAttribute(resp.httpRequester, internal.AttrBoolean) && statusCode == 404 {
+	if internal.OperationHasAttribute(opID, internal.AttrBoolean) && statusCode == 404 {
 		return nil
 	}
 

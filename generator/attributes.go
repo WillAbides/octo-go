@@ -44,38 +44,24 @@ func (e endpointAttribute) String() string {
 	return attrNames[e]
 }
 
-func addEndpointAttributes(file *jen.File, endpoints []*model.Endpoint) {
-	file.Const().Parens(jen.Do(func(statement *jen.Statement) {
-		for i := endpointAttribute(0); i < attrInvalid; i++ {
-			statement.Id(toExportedName(attrNames[i]))
-			if i == 0 {
-				statement.Id("EndpointAttribute").Op("=").Iota()
+func opIdAttributesDict(endpoints []*model.Endpoint) jen.Code {
+	return jen.DictFunc(func(dict jen.Dict) {
+		for _, endpoint := range endpoints {
+			attrs := getEndpointAttributes(endpoint)
+			if len(attrs) == 0 {
+				continue
 			}
-			statement.Line()
-		}
-	}))
-
-	file.Func().Id("init()").Block(
-		jen.Id("endpointAttributes = map[string][]EndpointAttribute").Block(
-			jen.DictFunc(func(dict jen.Dict) {
-				for _, endpoint := range endpoints {
-					attrs := getEndpointAttributes(endpoint)
-					if len(attrs) == 0 {
-						continue
-					}
-					attrNames := make([]string, len(attrs))
-					for i, attr := range attrs {
-						attrNames[i] = attr.String()
-					}
-					dict[jen.Lit(reqStructName(endpoint))] = jen.ValuesFunc(func(group *jen.Group) {
-						for _, attr := range attrs {
-							group.Id(attr.String())
-						}
-					})
+			attrNames := make([]string, len(attrs))
+			for i, attr := range attrs {
+				attrNames[i] = attr.String()
+			}
+			dict[jen.Lit(endpoint.ID)] = jen.ValuesFunc(func(group *jen.Group) {
+				for _, attr := range attrs {
+					group.Id(attr.String())
 				}
-			}),
-		),
-	)
+			})
+		}
+	})
 }
 
 func endpointHasAttribute(endpoint *model.Endpoint, attribute endpointAttribute) bool {
