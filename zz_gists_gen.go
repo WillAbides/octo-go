@@ -25,14 +25,14 @@ func GistsCheckIsStarred(ctx context.Context, req *GistsCheckIsStarredReq, opt .
 		req = new(GistsCheckIsStarredReq)
 	}
 	resp := &GistsCheckIsStarredResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "gists/check-is-starred", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "gists/check-is-starred")
 	if err != nil {
 		return nil, err
 	}
@@ -101,7 +101,7 @@ func (r *GistsCheckIsStarredReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *GistsCheckIsStarredReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "gists/check-is-starred", opt)
 }
 
 /*
@@ -141,7 +141,7 @@ func GistsCreate(ctx context.Context, req *GistsCreateReq, opt ...RequestOption)
 		req = new(GistsCreateReq)
 	}
 	resp := &GistsCreateResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "gists/create", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -149,7 +149,7 @@ func GistsCreate(ctx context.Context, req *GistsCreateReq, opt ...RequestOption)
 		return resp, err
 	}
 	resp.Data = components.GistFull{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "gists/create")
 	if err != nil {
 		return nil, err
 	}
@@ -219,7 +219,7 @@ func (r *GistsCreateReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *GistsCreateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "gists/create", opt)
 }
 
 /*
@@ -284,7 +284,7 @@ func GistsCreateComment(ctx context.Context, req *GistsCreateCommentReq, opt ...
 		req = new(GistsCreateCommentReq)
 	}
 	resp := &GistsCreateCommentResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "gists/create-comment", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -292,7 +292,7 @@ func GistsCreateComment(ctx context.Context, req *GistsCreateCommentReq, opt ...
 		return resp, err
 	}
 	resp.Data = components.GistComment{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "gists/create-comment")
 	if err != nil {
 		return nil, err
 	}
@@ -365,7 +365,7 @@ func (r *GistsCreateCommentReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *GistsCreateCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "gists/create-comment", opt)
 }
 
 /*
@@ -417,14 +417,14 @@ func GistsDelete(ctx context.Context, req *GistsDeleteReq, opt ...RequestOption)
 		req = new(GistsDeleteReq)
 	}
 	resp := &GistsDeleteResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "gists/delete", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "gists/delete")
 	if err != nil {
 		return nil, err
 	}
@@ -493,7 +493,7 @@ func (r *GistsDeleteReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *GistsDeleteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "gists/delete", opt)
 }
 
 /*
@@ -533,14 +533,14 @@ func GistsDeleteComment(ctx context.Context, req *GistsDeleteCommentReq, opt ...
 		req = new(GistsDeleteCommentReq)
 	}
 	resp := &GistsDeleteCommentResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "gists/delete-comment", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "gists/delete-comment")
 	if err != nil {
 		return nil, err
 	}
@@ -612,7 +612,7 @@ func (r *GistsDeleteCommentReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *GistsDeleteCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "gists/delete-comment", opt)
 }
 
 /*
@@ -652,7 +652,7 @@ func GistsFork(ctx context.Context, req *GistsForkReq, opt ...RequestOption) (*G
 		req = new(GistsForkReq)
 	}
 	resp := &GistsForkResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "gists/fork", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -660,7 +660,7 @@ func GistsFork(ctx context.Context, req *GistsForkReq, opt ...RequestOption) (*G
 		return resp, err
 	}
 	resp.Data = components.BaseGist{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "gists/fork")
 	if err != nil {
 		return nil, err
 	}
@@ -729,7 +729,7 @@ func (r *GistsForkReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *GistsForkReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "gists/fork", opt)
 }
 
 /*
@@ -770,7 +770,7 @@ func GistsGet(ctx context.Context, req *GistsGetReq, opt ...RequestOption) (*Gis
 		req = new(GistsGetReq)
 	}
 	resp := &GistsGetResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "gists/get", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -778,7 +778,7 @@ func GistsGet(ctx context.Context, req *GistsGetReq, opt ...RequestOption) (*Gis
 		return resp, err
 	}
 	resp.Data = components.GistFull{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "gists/get")
 	if err != nil {
 		return nil, err
 	}
@@ -847,7 +847,7 @@ func (r *GistsGetReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *GistsGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "gists/get", opt)
 }
 
 /*
@@ -888,7 +888,7 @@ func GistsGetComment(ctx context.Context, req *GistsGetCommentReq, opt ...Reques
 		req = new(GistsGetCommentReq)
 	}
 	resp := &GistsGetCommentResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "gists/get-comment", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -896,7 +896,7 @@ func GistsGetComment(ctx context.Context, req *GistsGetCommentReq, opt ...Reques
 		return resp, err
 	}
 	resp.Data = components.GistComment{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "gists/get-comment")
 	if err != nil {
 		return nil, err
 	}
@@ -968,7 +968,7 @@ func (r *GistsGetCommentReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *GistsGetCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "gists/get-comment", opt)
 }
 
 /*
@@ -1009,7 +1009,7 @@ func GistsGetRevision(ctx context.Context, req *GistsGetRevisionReq, opt ...Requ
 		req = new(GistsGetRevisionReq)
 	}
 	resp := &GistsGetRevisionResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "gists/get-revision", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1017,7 +1017,7 @@ func GistsGetRevision(ctx context.Context, req *GistsGetRevisionReq, opt ...Requ
 		return resp, err
 	}
 	resp.Data = components.GistFull{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "gists/get-revision")
 	if err != nil {
 		return nil, err
 	}
@@ -1089,7 +1089,7 @@ func (r *GistsGetRevisionReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *GistsGetRevisionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "gists/get-revision", opt)
 }
 
 /*
@@ -1130,7 +1130,7 @@ func GistsList(ctx context.Context, req *GistsListReq, opt ...RequestOption) (*G
 		req = new(GistsListReq)
 	}
 	resp := &GistsListResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "gists/list", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1138,7 +1138,7 @@ func GistsList(ctx context.Context, req *GistsListReq, opt ...RequestOption) (*G
 		return resp, err
 	}
 	resp.Data = []components.BaseGist{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "gists/list")
 	if err != nil {
 		return nil, err
 	}
@@ -1226,7 +1226,7 @@ func (r *GistsListReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *GistsListReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "gists/list", opt)
 }
 
 /*
@@ -1267,7 +1267,7 @@ func GistsListComments(ctx context.Context, req *GistsListCommentsReq, opt ...Re
 		req = new(GistsListCommentsReq)
 	}
 	resp := &GistsListCommentsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "gists/list-comments", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1275,7 +1275,7 @@ func GistsListComments(ctx context.Context, req *GistsListCommentsReq, opt ...Re
 		return resp, err
 	}
 	resp.Data = []components.GistComment{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "gists/list-comments")
 	if err != nil {
 		return nil, err
 	}
@@ -1356,7 +1356,7 @@ func (r *GistsListCommentsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *GistsListCommentsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "gists/list-comments", opt)
 }
 
 /*
@@ -1397,7 +1397,7 @@ func GistsListCommits(ctx context.Context, req *GistsListCommitsReq, opt ...Requ
 		req = new(GistsListCommitsReq)
 	}
 	resp := &GistsListCommitsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "gists/list-commits", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1405,7 +1405,7 @@ func GistsListCommits(ctx context.Context, req *GistsListCommitsReq, opt ...Requ
 		return resp, err
 	}
 	resp.Data = []components.GistCommit{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "gists/list-commits")
 	if err != nil {
 		return nil, err
 	}
@@ -1486,7 +1486,7 @@ func (r *GistsListCommitsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *GistsListCommitsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "gists/list-commits", opt)
 }
 
 /*
@@ -1527,7 +1527,7 @@ func GistsListForUser(ctx context.Context, req *GistsListForUserReq, opt ...Requ
 		req = new(GistsListForUserReq)
 	}
 	resp := &GistsListForUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "gists/list-for-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1535,7 +1535,7 @@ func GistsListForUser(ctx context.Context, req *GistsListForUserReq, opt ...Requ
 		return resp, err
 	}
 	resp.Data = []components.BaseGist{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "gists/list-for-user")
 	if err != nil {
 		return nil, err
 	}
@@ -1624,7 +1624,7 @@ func (r *GistsListForUserReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *GistsListForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "gists/list-for-user", opt)
 }
 
 /*
@@ -1665,7 +1665,7 @@ func GistsListForks(ctx context.Context, req *GistsListForksReq, opt ...RequestO
 		req = new(GistsListForksReq)
 	}
 	resp := &GistsListForksResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "gists/list-forks", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1673,7 +1673,7 @@ func GistsListForks(ctx context.Context, req *GistsListForksReq, opt ...RequestO
 		return resp, err
 	}
 	resp.Data = []components.GistFull{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "gists/list-forks")
 	if err != nil {
 		return nil, err
 	}
@@ -1754,7 +1754,7 @@ func (r *GistsListForksReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *GistsListForksReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "gists/list-forks", opt)
 }
 
 /*
@@ -1795,7 +1795,7 @@ func GistsListPublic(ctx context.Context, req *GistsListPublicReq, opt ...Reques
 		req = new(GistsListPublicReq)
 	}
 	resp := &GistsListPublicResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "gists/list-public", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1803,7 +1803,7 @@ func GistsListPublic(ctx context.Context, req *GistsListPublicReq, opt ...Reques
 		return resp, err
 	}
 	resp.Data = []components.BaseGist{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "gists/list-public")
 	if err != nil {
 		return nil, err
 	}
@@ -1891,7 +1891,7 @@ func (r *GistsListPublicReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *GistsListPublicReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "gists/list-public", opt)
 }
 
 /*
@@ -1932,7 +1932,7 @@ func GistsListStarred(ctx context.Context, req *GistsListStarredReq, opt ...Requ
 		req = new(GistsListStarredReq)
 	}
 	resp := &GistsListStarredResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "gists/list-starred", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1940,7 +1940,7 @@ func GistsListStarred(ctx context.Context, req *GistsListStarredReq, opt ...Requ
 		return resp, err
 	}
 	resp.Data = []components.BaseGist{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "gists/list-starred")
 	if err != nil {
 		return nil, err
 	}
@@ -2028,7 +2028,7 @@ func (r *GistsListStarredReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *GistsListStarredReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "gists/list-starred", opt)
 }
 
 /*
@@ -2069,14 +2069,14 @@ func GistsStar(ctx context.Context, req *GistsStarReq, opt ...RequestOption) (*G
 		req = new(GistsStarReq)
 	}
 	resp := &GistsStarResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "gists/star", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "gists/star")
 	if err != nil {
 		return nil, err
 	}
@@ -2145,7 +2145,7 @@ func (r *GistsStarReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *GistsStarReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "gists/star", opt)
 }
 
 /*
@@ -2185,14 +2185,14 @@ func GistsUnstar(ctx context.Context, req *GistsUnstarReq, opt ...RequestOption)
 		req = new(GistsUnstarReq)
 	}
 	resp := &GistsUnstarResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "gists/unstar", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "gists/unstar")
 	if err != nil {
 		return nil, err
 	}
@@ -2261,7 +2261,7 @@ func (r *GistsUnstarReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *GistsUnstarReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "gists/unstar", opt)
 }
 
 /*
@@ -2301,7 +2301,7 @@ func GistsUpdate(ctx context.Context, req *GistsUpdateReq, opt ...RequestOption)
 		req = new(GistsUpdateReq)
 	}
 	resp := &GistsUpdateResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "gists/update", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2309,7 +2309,7 @@ func GistsUpdate(ctx context.Context, req *GistsUpdateReq, opt ...RequestOption)
 		return resp, err
 	}
 	resp.Data = components.GistFull{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "gists/update")
 	if err != nil {
 		return nil, err
 	}
@@ -2382,7 +2382,7 @@ func (r *GistsUpdateReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *GistsUpdateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "gists/update", opt)
 }
 
 /*
@@ -2447,7 +2447,7 @@ func GistsUpdateComment(ctx context.Context, req *GistsUpdateCommentReq, opt ...
 		req = new(GistsUpdateCommentReq)
 	}
 	resp := &GistsUpdateCommentResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "gists/update-comment", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2455,7 +2455,7 @@ func GistsUpdateComment(ctx context.Context, req *GistsUpdateCommentReq, opt ...
 		return resp, err
 	}
 	resp.Data = components.GistComment{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "gists/update-comment")
 	if err != nil {
 		return nil, err
 	}
@@ -2531,7 +2531,7 @@ func (r *GistsUpdateCommentReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *GistsUpdateCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "gists/update-comment", opt)
 }
 
 /*

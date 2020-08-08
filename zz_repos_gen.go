@@ -27,14 +27,14 @@ func ReposAcceptInvitation(ctx context.Context, req *ReposAcceptInvitationReq, o
 		req = new(ReposAcceptInvitationReq)
 	}
 	resp := &ReposAcceptInvitationResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/accept-invitation", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "repos/accept-invitation")
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (r *ReposAcceptInvitationReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposAcceptInvitationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/accept-invitation", opt)
 }
 
 /*
@@ -143,7 +143,7 @@ func ReposAddAppAccessRestrictions(ctx context.Context, req *ReposAddAppAccessRe
 		req = new(ReposAddAppAccessRestrictionsReq)
 	}
 	resp := &ReposAddAppAccessRestrictionsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/add-app-access-restrictions", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -151,7 +151,7 @@ func ReposAddAppAccessRestrictions(ctx context.Context, req *ReposAddAppAccessRe
 		return resp, err
 	}
 	resp.Data = []components.Integration{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/add-app-access-restrictions")
 	if err != nil {
 		return nil, err
 	}
@@ -226,7 +226,7 @@ func (r *ReposAddAppAccessRestrictionsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposAddAppAccessRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/add-app-access-restrictions", opt)
 }
 
 /*
@@ -274,7 +274,7 @@ func ReposAddCollaborator(ctx context.Context, req *ReposAddCollaboratorReq, opt
 		req = new(ReposAddCollaboratorReq)
 	}
 	resp := &ReposAddCollaboratorResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/add-collaborator", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -282,7 +282,7 @@ func ReposAddCollaborator(ctx context.Context, req *ReposAddCollaboratorReq, opt
 		return resp, err
 	}
 	resp.Data = components.RepositoryInvitation{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/add-collaborator")
 	if err != nil {
 		return nil, err
 	}
@@ -355,7 +355,7 @@ func (r *ReposAddCollaboratorReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposAddCollaboratorReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/add-collaborator", opt)
 }
 
 /*
@@ -418,7 +418,7 @@ func ReposAddStatusCheckContexts(ctx context.Context, req *ReposAddStatusCheckCo
 		req = new(ReposAddStatusCheckContextsReq)
 	}
 	resp := &ReposAddStatusCheckContextsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/add-status-check-contexts", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -426,7 +426,7 @@ func ReposAddStatusCheckContexts(ctx context.Context, req *ReposAddStatusCheckCo
 		return resp, err
 	}
 	resp.Data = ReposAddStatusCheckContextsResponseBody{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/add-status-check-contexts")
 	if err != nil {
 		return nil, err
 	}
@@ -501,7 +501,7 @@ func (r *ReposAddStatusCheckContextsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposAddStatusCheckContextsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/add-status-check-contexts", opt)
 }
 
 /*
@@ -556,7 +556,7 @@ func ReposAddTeamAccessRestrictions(ctx context.Context, req *ReposAddTeamAccess
 		req = new(ReposAddTeamAccessRestrictionsReq)
 	}
 	resp := &ReposAddTeamAccessRestrictionsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/add-team-access-restrictions", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -564,7 +564,7 @@ func ReposAddTeamAccessRestrictions(ctx context.Context, req *ReposAddTeamAccess
 		return resp, err
 	}
 	resp.Data = []components.Team{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/add-team-access-restrictions")
 	if err != nil {
 		return nil, err
 	}
@@ -639,7 +639,7 @@ func (r *ReposAddTeamAccessRestrictionsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposAddTeamAccessRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/add-team-access-restrictions", opt)
 }
 
 /*
@@ -687,7 +687,7 @@ func ReposAddUserAccessRestrictions(ctx context.Context, req *ReposAddUserAccess
 		req = new(ReposAddUserAccessRestrictionsReq)
 	}
 	resp := &ReposAddUserAccessRestrictionsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/add-user-access-restrictions", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -695,7 +695,7 @@ func ReposAddUserAccessRestrictions(ctx context.Context, req *ReposAddUserAccess
 		return resp, err
 	}
 	resp.Data = []components.SimpleUser{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/add-user-access-restrictions")
 	if err != nil {
 		return nil, err
 	}
@@ -770,7 +770,7 @@ func (r *ReposAddUserAccessRestrictionsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposAddUserAccessRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/add-user-access-restrictions", opt)
 }
 
 /*
@@ -818,7 +818,7 @@ func ReposCheckCollaborator(ctx context.Context, req *ReposCheckCollaboratorReq,
 		req = new(ReposCheckCollaboratorReq)
 	}
 	resp := &ReposCheckCollaboratorResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/check-collaborator", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -829,7 +829,7 @@ func ReposCheckCollaborator(ctx context.Context, req *ReposCheckCollaboratorReq,
 	if err != nil {
 		return nil, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "repos/check-collaborator")
 	if err != nil {
 		return nil, err
 	}
@@ -898,7 +898,7 @@ func (r *ReposCheckCollaboratorReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposCheckCollaboratorReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/check-collaborator", opt)
 }
 
 /*
@@ -939,7 +939,7 @@ func ReposCheckVulnerabilityAlerts(ctx context.Context, req *ReposCheckVulnerabi
 		req = new(ReposCheckVulnerabilityAlertsReq)
 	}
 	resp := &ReposCheckVulnerabilityAlertsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/check-vulnerability-alerts", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -950,7 +950,7 @@ func ReposCheckVulnerabilityAlerts(ctx context.Context, req *ReposCheckVulnerabi
 	if err != nil {
 		return nil, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "repos/check-vulnerability-alerts")
 	if err != nil {
 		return nil, err
 	}
@@ -1031,7 +1031,7 @@ func (r *ReposCheckVulnerabilityAlertsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposCheckVulnerabilityAlertsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/check-vulnerability-alerts", opt)
 }
 
 /*
@@ -1072,7 +1072,7 @@ func ReposCompareCommits(ctx context.Context, req *ReposCompareCommitsReq, opt .
 		req = new(ReposCompareCommitsReq)
 	}
 	resp := &ReposCompareCommitsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/compare-commits", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1080,7 +1080,7 @@ func ReposCompareCommits(ctx context.Context, req *ReposCompareCommitsReq, opt .
 		return resp, err
 	}
 	resp.Data = components.CommitComparison{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/compare-commits")
 	if err != nil {
 		return nil, err
 	}
@@ -1154,7 +1154,7 @@ func (r *ReposCompareCommitsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposCompareCommitsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/compare-commits", opt)
 }
 
 /*
@@ -1195,7 +1195,7 @@ func ReposCreateCommitComment(ctx context.Context, req *ReposCreateCommitComment
 		req = new(ReposCreateCommitCommentReq)
 	}
 	resp := &ReposCreateCommitCommentResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/create-commit-comment", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1203,7 +1203,7 @@ func ReposCreateCommitComment(ctx context.Context, req *ReposCreateCommitComment
 		return resp, err
 	}
 	resp.Data = components.CommitComment{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/create-commit-comment")
 	if err != nil {
 		return nil, err
 	}
@@ -1278,7 +1278,7 @@ func (r *ReposCreateCommitCommentReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposCreateCommitCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/create-commit-comment", opt)
 }
 
 /*
@@ -1339,7 +1339,7 @@ func ReposCreateCommitSignatureProtection(ctx context.Context, req *ReposCreateC
 		req = new(ReposCreateCommitSignatureProtectionReq)
 	}
 	resp := &ReposCreateCommitSignatureProtectionResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/create-commit-signature-protection", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1347,7 +1347,7 @@ func ReposCreateCommitSignatureProtection(ctx context.Context, req *ReposCreateC
 		return resp, err
 	}
 	resp.Data = components.ProtectedBranchAdminEnforced{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/create-commit-signature-protection")
 	if err != nil {
 		return nil, err
 	}
@@ -1433,7 +1433,7 @@ func (r *ReposCreateCommitSignatureProtectionReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposCreateCommitSignatureProtectionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/create-commit-signature-protection", opt)
 }
 
 /*
@@ -1474,7 +1474,7 @@ func ReposCreateCommitStatus(ctx context.Context, req *ReposCreateCommitStatusRe
 		req = new(ReposCreateCommitStatusReq)
 	}
 	resp := &ReposCreateCommitStatusResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/create-commit-status", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1482,7 +1482,7 @@ func ReposCreateCommitStatus(ctx context.Context, req *ReposCreateCommitStatusRe
 		return resp, err
 	}
 	resp.Data = components.Status{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/create-commit-status")
 	if err != nil {
 		return nil, err
 	}
@@ -1557,7 +1557,7 @@ func (r *ReposCreateCommitStatusReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposCreateCommitStatusReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/create-commit-status", opt)
 }
 
 /*
@@ -1624,7 +1624,7 @@ func ReposCreateDeployKey(ctx context.Context, req *ReposCreateDeployKeyReq, opt
 		req = new(ReposCreateDeployKeyReq)
 	}
 	resp := &ReposCreateDeployKeyResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/create-deploy-key", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1632,7 +1632,7 @@ func ReposCreateDeployKey(ctx context.Context, req *ReposCreateDeployKeyReq, opt
 		return resp, err
 	}
 	resp.Data = components.DeployKey{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/create-deploy-key")
 	if err != nil {
 		return nil, err
 	}
@@ -1704,7 +1704,7 @@ func (r *ReposCreateDeployKeyReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposCreateDeployKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/create-deploy-key", opt)
 }
 
 /*
@@ -1772,7 +1772,7 @@ func ReposCreateDeployment(ctx context.Context, req *ReposCreateDeploymentReq, o
 		req = new(ReposCreateDeploymentReq)
 	}
 	resp := &ReposCreateDeploymentResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/create-deployment", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1780,7 +1780,7 @@ func ReposCreateDeployment(ctx context.Context, req *ReposCreateDeploymentReq, o
 		return resp, err
 	}
 	resp.Data = components.Deployment{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/create-deployment")
 	if err != nil {
 		return nil, err
 	}
@@ -1866,7 +1866,7 @@ func (r *ReposCreateDeploymentReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposCreateDeploymentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/create-deployment", opt)
 }
 
 /*
@@ -1962,7 +1962,7 @@ func ReposCreateDeploymentStatus(ctx context.Context, req *ReposCreateDeployment
 		req = new(ReposCreateDeploymentStatusReq)
 	}
 	resp := &ReposCreateDeploymentStatusResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/create-deployment-status", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1970,7 +1970,7 @@ func ReposCreateDeploymentStatus(ctx context.Context, req *ReposCreateDeployment
 		return resp, err
 	}
 	resp.Data = components.DeploymentStatus{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/create-deployment-status")
 	if err != nil {
 		return nil, err
 	}
@@ -2075,7 +2075,7 @@ func (r *ReposCreateDeploymentStatusReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposCreateDeploymentStatusReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/create-deployment-status", opt)
 }
 
 /*
@@ -2195,14 +2195,14 @@ func ReposCreateDispatchEvent(ctx context.Context, req *ReposCreateDispatchEvent
 		req = new(ReposCreateDispatchEventReq)
 	}
 	resp := &ReposCreateDispatchEventResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/create-dispatch-event", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "repos/create-dispatch-event")
 	if err != nil {
 		return nil, err
 	}
@@ -2271,7 +2271,7 @@ func (r *ReposCreateDispatchEventReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposCreateDispatchEventReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/create-dispatch-event", opt)
 }
 
 /*
@@ -2325,7 +2325,7 @@ func ReposCreateForAuthenticatedUser(ctx context.Context, req *ReposCreateForAut
 		req = new(ReposCreateForAuthenticatedUserReq)
 	}
 	resp := &ReposCreateForAuthenticatedUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/create-for-authenticated-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2333,7 +2333,7 @@ func ReposCreateForAuthenticatedUser(ctx context.Context, req *ReposCreateForAut
 		return resp, err
 	}
 	resp.Data = components.Repository{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/create-for-authenticated-user")
 	if err != nil {
 		return nil, err
 	}
@@ -2431,7 +2431,7 @@ func (r *ReposCreateForAuthenticatedUserReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposCreateForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/create-for-authenticated-user", opt)
 }
 
 /*
@@ -2534,7 +2534,7 @@ func ReposCreateFork(ctx context.Context, req *ReposCreateForkReq, opt ...Reques
 		req = new(ReposCreateForkReq)
 	}
 	resp := &ReposCreateForkResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/create-fork", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2542,7 +2542,7 @@ func ReposCreateFork(ctx context.Context, req *ReposCreateForkReq, opt ...Reques
 		return resp, err
 	}
 	resp.Data = components.Repository{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/create-fork")
 	if err != nil {
 		return nil, err
 	}
@@ -2614,7 +2614,7 @@ func (r *ReposCreateForkReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposCreateForkReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/create-fork", opt)
 }
 
 /*
@@ -2666,7 +2666,7 @@ func ReposCreateInOrg(ctx context.Context, req *ReposCreateInOrgReq, opt ...Requ
 		req = new(ReposCreateInOrgReq)
 	}
 	resp := &ReposCreateInOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/create-in-org", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2674,7 +2674,7 @@ func ReposCreateInOrg(ctx context.Context, req *ReposCreateInOrgReq, opt ...Requ
 		return resp, err
 	}
 	resp.Data = components.Repository{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/create-in-org")
 	if err != nil {
 		return nil, err
 	}
@@ -2773,7 +2773,7 @@ func (r *ReposCreateInOrgReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposCreateInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/create-in-org", opt)
 }
 
 /*
@@ -2905,7 +2905,7 @@ func ReposCreateOrUpdateFileContents(ctx context.Context, req *ReposCreateOrUpda
 		req = new(ReposCreateOrUpdateFileContentsReq)
 	}
 	resp := &ReposCreateOrUpdateFileContentsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/create-or-update-file-contents", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2913,7 +2913,7 @@ func ReposCreateOrUpdateFileContents(ctx context.Context, req *ReposCreateOrUpda
 		return resp, err
 	}
 	resp.Data = components.FileCommit{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/create-or-update-file-contents")
 	if err != nil {
 		return nil, err
 	}
@@ -2988,7 +2988,7 @@ func (r *ReposCreateOrUpdateFileContentsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposCreateOrUpdateFileContentsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/create-or-update-file-contents", opt)
 }
 
 /*
@@ -3077,7 +3077,7 @@ func ReposCreatePagesSite(ctx context.Context, req *ReposCreatePagesSiteReq, opt
 		req = new(ReposCreatePagesSiteReq)
 	}
 	resp := &ReposCreatePagesSiteResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/create-pages-site", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3085,7 +3085,7 @@ func ReposCreatePagesSite(ctx context.Context, req *ReposCreatePagesSiteReq, opt
 		return resp, err
 	}
 	resp.Data = components.Page{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/create-pages-site")
 	if err != nil {
 		return nil, err
 	}
@@ -3172,7 +3172,7 @@ func (r *ReposCreatePagesSiteReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposCreatePagesSiteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/create-pages-site", opt)
 }
 
 /*
@@ -3240,7 +3240,7 @@ func ReposCreateRelease(ctx context.Context, req *ReposCreateReleaseReq, opt ...
 		req = new(ReposCreateReleaseReq)
 	}
 	resp := &ReposCreateReleaseResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/create-release", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3248,7 +3248,7 @@ func ReposCreateRelease(ctx context.Context, req *ReposCreateReleaseReq, opt ...
 		return resp, err
 	}
 	resp.Data = components.Release{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/create-release")
 	if err != nil {
 		return nil, err
 	}
@@ -3320,7 +3320,7 @@ func (r *ReposCreateReleaseReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposCreateReleaseReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/create-release", opt)
 }
 
 /*
@@ -3391,7 +3391,7 @@ func ReposCreateUsingTemplate(ctx context.Context, req *ReposCreateUsingTemplate
 		req = new(ReposCreateUsingTemplateReq)
 	}
 	resp := &ReposCreateUsingTemplateResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/create-using-template", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3399,7 +3399,7 @@ func ReposCreateUsingTemplate(ctx context.Context, req *ReposCreateUsingTemplate
 		return resp, err
 	}
 	resp.Data = components.Repository{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/create-using-template")
 	if err != nil {
 		return nil, err
 	}
@@ -3490,7 +3490,7 @@ func (r *ReposCreateUsingTemplateReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposCreateUsingTemplateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/create-using-template", opt)
 }
 
 /*
@@ -3555,7 +3555,7 @@ func ReposCreateWebhook(ctx context.Context, req *ReposCreateWebhookReq, opt ...
 		req = new(ReposCreateWebhookReq)
 	}
 	resp := &ReposCreateWebhookResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/create-webhook", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3563,7 +3563,7 @@ func ReposCreateWebhook(ctx context.Context, req *ReposCreateWebhookReq, opt ...
 		return resp, err
 	}
 	resp.Data = components.Hook{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/create-webhook")
 	if err != nil {
 		return nil, err
 	}
@@ -3635,7 +3635,7 @@ func (r *ReposCreateWebhookReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposCreateWebhookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/create-webhook", opt)
 }
 
 /*
@@ -3728,14 +3728,14 @@ func ReposDeclineInvitation(ctx context.Context, req *ReposDeclineInvitationReq,
 		req = new(ReposDeclineInvitationReq)
 	}
 	resp := &ReposDeclineInvitationResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/decline-invitation", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "repos/decline-invitation")
 	if err != nil {
 		return nil, err
 	}
@@ -3804,7 +3804,7 @@ func (r *ReposDeclineInvitationReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposDeclineInvitationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/decline-invitation", opt)
 }
 
 /*
@@ -3844,14 +3844,14 @@ func ReposDelete(ctx context.Context, req *ReposDeleteReq, opt ...RequestOption)
 		req = new(ReposDeleteReq)
 	}
 	resp := &ReposDeleteResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/delete", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "repos/delete")
 	if err != nil {
 		return nil, err
 	}
@@ -3919,7 +3919,7 @@ func (r *ReposDeleteReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposDeleteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/delete", opt)
 }
 
 /*
@@ -3959,14 +3959,14 @@ func ReposDeleteAccessRestrictions(ctx context.Context, req *ReposDeleteAccessRe
 		req = new(ReposDeleteAccessRestrictionsReq)
 	}
 	resp := &ReposDeleteAccessRestrictionsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/delete-access-restrictions", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "repos/delete-access-restrictions")
 	if err != nil {
 		return nil, err
 	}
@@ -4037,7 +4037,7 @@ func (r *ReposDeleteAccessRestrictionsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposDeleteAccessRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/delete-access-restrictions", opt)
 }
 
 /*
@@ -4077,7 +4077,7 @@ func ReposDeleteAdminBranchProtection(ctx context.Context, req *ReposDeleteAdmin
 		req = new(ReposDeleteAdminBranchProtectionReq)
 	}
 	resp := &ReposDeleteAdminBranchProtectionResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/delete-admin-branch-protection", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -4088,7 +4088,7 @@ func ReposDeleteAdminBranchProtection(ctx context.Context, req *ReposDeleteAdmin
 	if err != nil {
 		return nil, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "repos/delete-admin-branch-protection")
 	if err != nil {
 		return nil, err
 	}
@@ -4159,7 +4159,7 @@ func (r *ReposDeleteAdminBranchProtectionReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposDeleteAdminBranchProtectionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/delete-admin-branch-protection", opt)
 }
 
 /*
@@ -4200,14 +4200,14 @@ func ReposDeleteBranchProtection(ctx context.Context, req *ReposDeleteBranchProt
 		req = new(ReposDeleteBranchProtectionReq)
 	}
 	resp := &ReposDeleteBranchProtectionResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/delete-branch-protection", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "repos/delete-branch-protection")
 	if err != nil {
 		return nil, err
 	}
@@ -4278,7 +4278,7 @@ func (r *ReposDeleteBranchProtectionReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposDeleteBranchProtectionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/delete-branch-protection", opt)
 }
 
 /*
@@ -4318,7 +4318,7 @@ func ReposDeleteCommitComment(ctx context.Context, req *ReposDeleteCommitComment
 		req = new(ReposDeleteCommitCommentReq)
 	}
 	resp := &ReposDeleteCommitCommentResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/delete-commit-comment", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -4329,7 +4329,7 @@ func ReposDeleteCommitComment(ctx context.Context, req *ReposDeleteCommitComment
 	if err != nil {
 		return nil, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "repos/delete-commit-comment")
 	if err != nil {
 		return nil, err
 	}
@@ -4400,7 +4400,7 @@ func (r *ReposDeleteCommitCommentReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposDeleteCommitCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/delete-commit-comment", opt)
 }
 
 /*
@@ -4441,7 +4441,7 @@ func ReposDeleteCommitSignatureProtection(ctx context.Context, req *ReposDeleteC
 		req = new(ReposDeleteCommitSignatureProtectionReq)
 	}
 	resp := &ReposDeleteCommitSignatureProtectionResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/delete-commit-signature-protection", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -4452,7 +4452,7 @@ func ReposDeleteCommitSignatureProtection(ctx context.Context, req *ReposDeleteC
 	if err != nil {
 		return nil, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "repos/delete-commit-signature-protection")
 	if err != nil {
 		return nil, err
 	}
@@ -4538,7 +4538,7 @@ func (r *ReposDeleteCommitSignatureProtectionReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposDeleteCommitSignatureProtectionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/delete-commit-signature-protection", opt)
 }
 
 /*
@@ -4579,14 +4579,14 @@ func ReposDeleteDeployKey(ctx context.Context, req *ReposDeleteDeployKeyReq, opt
 		req = new(ReposDeleteDeployKeyReq)
 	}
 	resp := &ReposDeleteDeployKeyResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/delete-deploy-key", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "repos/delete-deploy-key")
 	if err != nil {
 		return nil, err
 	}
@@ -4657,7 +4657,7 @@ func (r *ReposDeleteDeployKeyReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposDeleteDeployKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/delete-deploy-key", opt)
 }
 
 /*
@@ -4697,14 +4697,14 @@ func ReposDeleteDeployment(ctx context.Context, req *ReposDeleteDeploymentReq, o
 		req = new(ReposDeleteDeploymentReq)
 	}
 	resp := &ReposDeleteDeploymentResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/delete-deployment", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "repos/delete-deployment")
 	if err != nil {
 		return nil, err
 	}
@@ -4775,7 +4775,7 @@ func (r *ReposDeleteDeploymentReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposDeleteDeploymentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/delete-deployment", opt)
 }
 
 /*
@@ -4815,7 +4815,7 @@ func ReposDeleteFile(ctx context.Context, req *ReposDeleteFileReq, opt ...Reques
 		req = new(ReposDeleteFileReq)
 	}
 	resp := &ReposDeleteFileResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/delete-file", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -4823,7 +4823,7 @@ func ReposDeleteFile(ctx context.Context, req *ReposDeleteFileReq, opt ...Reques
 		return resp, err
 	}
 	resp.Data = components.FileCommit{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/delete-file")
 	if err != nil {
 		return nil, err
 	}
@@ -4898,7 +4898,7 @@ func (r *ReposDeleteFileReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposDeleteFileReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/delete-file", opt)
 }
 
 /*
@@ -4982,14 +4982,14 @@ func ReposDeleteInvitation(ctx context.Context, req *ReposDeleteInvitationReq, o
 		req = new(ReposDeleteInvitationReq)
 	}
 	resp := &ReposDeleteInvitationResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/delete-invitation", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "repos/delete-invitation")
 	if err != nil {
 		return nil, err
 	}
@@ -5060,7 +5060,7 @@ func (r *ReposDeleteInvitationReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposDeleteInvitationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/delete-invitation", opt)
 }
 
 /*
@@ -5100,14 +5100,14 @@ func ReposDeletePagesSite(ctx context.Context, req *ReposDeletePagesSiteReq, opt
 		req = new(ReposDeletePagesSiteReq)
 	}
 	resp := &ReposDeletePagesSiteResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/delete-pages-site", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "repos/delete-pages-site")
 	if err != nil {
 		return nil, err
 	}
@@ -5190,7 +5190,7 @@ func (r *ReposDeletePagesSiteReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposDeletePagesSiteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/delete-pages-site", opt)
 }
 
 /*
@@ -5230,7 +5230,7 @@ func ReposDeletePullRequestReviewProtection(ctx context.Context, req *ReposDelet
 		req = new(ReposDeletePullRequestReviewProtectionReq)
 	}
 	resp := &ReposDeletePullRequestReviewProtectionResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/delete-pull-request-review-protection", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -5241,7 +5241,7 @@ func ReposDeletePullRequestReviewProtection(ctx context.Context, req *ReposDelet
 	if err != nil {
 		return nil, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "repos/delete-pull-request-review-protection")
 	if err != nil {
 		return nil, err
 	}
@@ -5312,7 +5312,7 @@ func (r *ReposDeletePullRequestReviewProtectionReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposDeletePullRequestReviewProtectionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/delete-pull-request-review-protection", opt)
 }
 
 /*
@@ -5353,14 +5353,14 @@ func ReposDeleteRelease(ctx context.Context, req *ReposDeleteReleaseReq, opt ...
 		req = new(ReposDeleteReleaseReq)
 	}
 	resp := &ReposDeleteReleaseResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/delete-release", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "repos/delete-release")
 	if err != nil {
 		return nil, err
 	}
@@ -5431,7 +5431,7 @@ func (r *ReposDeleteReleaseReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposDeleteReleaseReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/delete-release", opt)
 }
 
 /*
@@ -5471,14 +5471,14 @@ func ReposDeleteReleaseAsset(ctx context.Context, req *ReposDeleteReleaseAssetRe
 		req = new(ReposDeleteReleaseAssetReq)
 	}
 	resp := &ReposDeleteReleaseAssetResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/delete-release-asset", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "repos/delete-release-asset")
 	if err != nil {
 		return nil, err
 	}
@@ -5549,7 +5549,7 @@ func (r *ReposDeleteReleaseAssetReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposDeleteReleaseAssetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/delete-release-asset", opt)
 }
 
 /*
@@ -5589,7 +5589,7 @@ func ReposDeleteWebhook(ctx context.Context, req *ReposDeleteWebhookReq, opt ...
 		req = new(ReposDeleteWebhookReq)
 	}
 	resp := &ReposDeleteWebhookResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/delete-webhook", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -5600,7 +5600,7 @@ func ReposDeleteWebhook(ctx context.Context, req *ReposDeleteWebhookReq, opt ...
 	if err != nil {
 		return nil, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "repos/delete-webhook")
 	if err != nil {
 		return nil, err
 	}
@@ -5669,7 +5669,7 @@ func (r *ReposDeleteWebhookReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposDeleteWebhookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/delete-webhook", opt)
 }
 
 /*
@@ -5710,14 +5710,14 @@ func ReposDisableAutomatedSecurityFixes(ctx context.Context, req *ReposDisableAu
 		req = new(ReposDisableAutomatedSecurityFixesReq)
 	}
 	resp := &ReposDisableAutomatedSecurityFixesResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/disable-automated-security-fixes", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "repos/disable-automated-security-fixes")
 	if err != nil {
 		return nil, err
 	}
@@ -5798,7 +5798,7 @@ func (r *ReposDisableAutomatedSecurityFixesReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposDisableAutomatedSecurityFixesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/disable-automated-security-fixes", opt)
 }
 
 /*
@@ -5838,14 +5838,14 @@ func ReposDisableVulnerabilityAlerts(ctx context.Context, req *ReposDisableVulne
 		req = new(ReposDisableVulnerabilityAlertsReq)
 	}
 	resp := &ReposDisableVulnerabilityAlertsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/disable-vulnerability-alerts", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "repos/disable-vulnerability-alerts")
 	if err != nil {
 		return nil, err
 	}
@@ -5926,7 +5926,7 @@ func (r *ReposDisableVulnerabilityAlertsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposDisableVulnerabilityAlertsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/disable-vulnerability-alerts", opt)
 }
 
 /*
@@ -5966,14 +5966,14 @@ func ReposDownloadTarballArchive(ctx context.Context, req *ReposDownloadTarballA
 		req = new(ReposDownloadTarballArchiveReq)
 	}
 	resp := &ReposDownloadTarballArchiveResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/download-tarball-archive", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "repos/download-tarball-archive")
 	if err != nil {
 		return nil, err
 	}
@@ -6044,7 +6044,7 @@ func (r *ReposDownloadTarballArchiveReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposDownloadTarballArchiveReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/download-tarball-archive", opt)
 }
 
 /*
@@ -6084,14 +6084,14 @@ func ReposDownloadZipballArchive(ctx context.Context, req *ReposDownloadZipballA
 		req = new(ReposDownloadZipballArchiveReq)
 	}
 	resp := &ReposDownloadZipballArchiveResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/download-zipball-archive", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "repos/download-zipball-archive")
 	if err != nil {
 		return nil, err
 	}
@@ -6162,7 +6162,7 @@ func (r *ReposDownloadZipballArchiveReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposDownloadZipballArchiveReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/download-zipball-archive", opt)
 }
 
 /*
@@ -6202,14 +6202,14 @@ func ReposEnableAutomatedSecurityFixes(ctx context.Context, req *ReposEnableAuto
 		req = new(ReposEnableAutomatedSecurityFixesReq)
 	}
 	resp := &ReposEnableAutomatedSecurityFixesResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/enable-automated-security-fixes", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "repos/enable-automated-security-fixes")
 	if err != nil {
 		return nil, err
 	}
@@ -6290,7 +6290,7 @@ func (r *ReposEnableAutomatedSecurityFixesReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposEnableAutomatedSecurityFixesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/enable-automated-security-fixes", opt)
 }
 
 /*
@@ -6330,14 +6330,14 @@ func ReposEnableVulnerabilityAlerts(ctx context.Context, req *ReposEnableVulnera
 		req = new(ReposEnableVulnerabilityAlertsReq)
 	}
 	resp := &ReposEnableVulnerabilityAlertsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/enable-vulnerability-alerts", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "repos/enable-vulnerability-alerts")
 	if err != nil {
 		return nil, err
 	}
@@ -6418,7 +6418,7 @@ func (r *ReposEnableVulnerabilityAlertsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposEnableVulnerabilityAlertsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/enable-vulnerability-alerts", opt)
 }
 
 /*
@@ -6458,7 +6458,7 @@ func ReposGet(ctx context.Context, req *ReposGetReq, opt ...RequestOption) (*Rep
 		req = new(ReposGetReq)
 	}
 	resp := &ReposGetResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/get", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -6466,7 +6466,7 @@ func ReposGet(ctx context.Context, req *ReposGetReq, opt ...RequestOption) (*Rep
 		return resp, err
 	}
 	resp.Data = components.FullRepository{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/get")
 	if err != nil {
 		return nil, err
 	}
@@ -6560,7 +6560,7 @@ func (r *ReposGetReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/get", opt)
 }
 
 /*
@@ -6601,7 +6601,7 @@ func ReposGetAccessRestrictions(ctx context.Context, req *ReposGetAccessRestrict
 		req = new(ReposGetAccessRestrictionsReq)
 	}
 	resp := &ReposGetAccessRestrictionsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/get-access-restrictions", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -6609,7 +6609,7 @@ func ReposGetAccessRestrictions(ctx context.Context, req *ReposGetAccessRestrict
 		return resp, err
 	}
 	resp.Data = components.BranchRestrictionPolicy{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/get-access-restrictions")
 	if err != nil {
 		return nil, err
 	}
@@ -6680,7 +6680,7 @@ func (r *ReposGetAccessRestrictionsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposGetAccessRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/get-access-restrictions", opt)
 }
 
 /*
@@ -6721,7 +6721,7 @@ func ReposGetAdminBranchProtection(ctx context.Context, req *ReposGetAdminBranch
 		req = new(ReposGetAdminBranchProtectionReq)
 	}
 	resp := &ReposGetAdminBranchProtectionResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/get-admin-branch-protection", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -6729,7 +6729,7 @@ func ReposGetAdminBranchProtection(ctx context.Context, req *ReposGetAdminBranch
 		return resp, err
 	}
 	resp.Data = components.ProtectedBranchAdminEnforced{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/get-admin-branch-protection")
 	if err != nil {
 		return nil, err
 	}
@@ -6800,7 +6800,7 @@ func (r *ReposGetAdminBranchProtectionReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposGetAdminBranchProtectionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/get-admin-branch-protection", opt)
 }
 
 /*
@@ -6841,7 +6841,7 @@ func ReposGetAllStatusCheckContexts(ctx context.Context, req *ReposGetAllStatusC
 		req = new(ReposGetAllStatusCheckContextsReq)
 	}
 	resp := &ReposGetAllStatusCheckContextsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/get-all-status-check-contexts", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -6849,7 +6849,7 @@ func ReposGetAllStatusCheckContexts(ctx context.Context, req *ReposGetAllStatusC
 		return resp, err
 	}
 	resp.Data = ReposGetAllStatusCheckContextsResponseBody{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/get-all-status-check-contexts")
 	if err != nil {
 		return nil, err
 	}
@@ -6920,7 +6920,7 @@ func (r *ReposGetAllStatusCheckContextsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposGetAllStatusCheckContextsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/get-all-status-check-contexts", opt)
 }
 
 /*
@@ -6968,7 +6968,7 @@ func ReposGetAllTopics(ctx context.Context, req *ReposGetAllTopicsReq, opt ...Re
 		req = new(ReposGetAllTopicsReq)
 	}
 	resp := &ReposGetAllTopicsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/get-all-topics", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -6976,7 +6976,7 @@ func ReposGetAllTopics(ctx context.Context, req *ReposGetAllTopicsReq, opt ...Re
 		return resp, err
 	}
 	resp.Data = components.Topic{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/get-all-topics")
 	if err != nil {
 		return nil, err
 	}
@@ -7057,7 +7057,7 @@ func (r *ReposGetAllTopicsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposGetAllTopicsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/get-all-topics", opt)
 }
 
 /*
@@ -7098,7 +7098,7 @@ func ReposGetAppsWithAccessToProtectedBranch(ctx context.Context, req *ReposGetA
 		req = new(ReposGetAppsWithAccessToProtectedBranchReq)
 	}
 	resp := &ReposGetAppsWithAccessToProtectedBranchResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/get-apps-with-access-to-protected-branch", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -7106,7 +7106,7 @@ func ReposGetAppsWithAccessToProtectedBranch(ctx context.Context, req *ReposGetA
 		return resp, err
 	}
 	resp.Data = []components.Integration{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/get-apps-with-access-to-protected-branch")
 	if err != nil {
 		return nil, err
 	}
@@ -7177,7 +7177,7 @@ func (r *ReposGetAppsWithAccessToProtectedBranchReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposGetAppsWithAccessToProtectedBranchReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/get-apps-with-access-to-protected-branch", opt)
 }
 
 /*
@@ -7218,7 +7218,7 @@ func ReposGetBranch(ctx context.Context, req *ReposGetBranchReq, opt ...RequestO
 		req = new(ReposGetBranchReq)
 	}
 	resp := &ReposGetBranchResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/get-branch", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -7226,7 +7226,7 @@ func ReposGetBranch(ctx context.Context, req *ReposGetBranchReq, opt ...RequestO
 		return resp, err
 	}
 	resp.Data = components.BranchWithProtection{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/get-branch")
 	if err != nil {
 		return nil, err
 	}
@@ -7297,7 +7297,7 @@ func (r *ReposGetBranchReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposGetBranchReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/get-branch", opt)
 }
 
 /*
@@ -7338,7 +7338,7 @@ func ReposGetBranchProtection(ctx context.Context, req *ReposGetBranchProtection
 		req = new(ReposGetBranchProtectionReq)
 	}
 	resp := &ReposGetBranchProtectionResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/get-branch-protection", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -7346,7 +7346,7 @@ func ReposGetBranchProtection(ctx context.Context, req *ReposGetBranchProtection
 		return resp, err
 	}
 	resp.Data = components.BranchProtection{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/get-branch-protection")
 	if err != nil {
 		return nil, err
 	}
@@ -7430,7 +7430,7 @@ func (r *ReposGetBranchProtectionReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposGetBranchProtectionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/get-branch-protection", opt)
 }
 
 /*
@@ -7471,7 +7471,7 @@ func ReposGetClones(ctx context.Context, req *ReposGetClonesReq, opt ...RequestO
 		req = new(ReposGetClonesReq)
 	}
 	resp := &ReposGetClonesResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/get-clones", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -7479,7 +7479,7 @@ func ReposGetClones(ctx context.Context, req *ReposGetClonesReq, opt ...RequestO
 		return resp, err
 	}
 	resp.Data = components.CloneTraffic{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/get-clones")
 	if err != nil {
 		return nil, err
 	}
@@ -7553,7 +7553,7 @@ func (r *ReposGetClonesReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposGetClonesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/get-clones", opt)
 }
 
 /*
@@ -7594,7 +7594,7 @@ func ReposGetCodeFrequencyStats(ctx context.Context, req *ReposGetCodeFrequencyS
 		req = new(ReposGetCodeFrequencyStatsReq)
 	}
 	resp := &ReposGetCodeFrequencyStatsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/get-code-frequency-stats", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -7602,7 +7602,7 @@ func ReposGetCodeFrequencyStats(ctx context.Context, req *ReposGetCodeFrequencyS
 		return resp, err
 	}
 	resp.Data = []components.CodeFrequencyStat{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/get-code-frequency-stats")
 	if err != nil {
 		return nil, err
 	}
@@ -7670,7 +7670,7 @@ func (r *ReposGetCodeFrequencyStatsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposGetCodeFrequencyStatsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/get-code-frequency-stats", opt)
 }
 
 /*
@@ -7711,7 +7711,7 @@ func ReposGetCollaboratorPermissionLevel(ctx context.Context, req *ReposGetColla
 		req = new(ReposGetCollaboratorPermissionLevelReq)
 	}
 	resp := &ReposGetCollaboratorPermissionLevelResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/get-collaborator-permission-level", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -7719,7 +7719,7 @@ func ReposGetCollaboratorPermissionLevel(ctx context.Context, req *ReposGetColla
 		return resp, err
 	}
 	resp.Data = components.RepositoryCollaboratorPermission{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/get-collaborator-permission-level")
 	if err != nil {
 		return nil, err
 	}
@@ -7788,7 +7788,7 @@ func (r *ReposGetCollaboratorPermissionLevelReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposGetCollaboratorPermissionLevelReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/get-collaborator-permission-level", opt)
 }
 
 /*
@@ -7829,7 +7829,7 @@ func ReposGetCombinedStatusForRef(ctx context.Context, req *ReposGetCombinedStat
 		req = new(ReposGetCombinedStatusForRefReq)
 	}
 	resp := &ReposGetCombinedStatusForRefResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/get-combined-status-for-ref", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -7837,7 +7837,7 @@ func ReposGetCombinedStatusForRef(ctx context.Context, req *ReposGetCombinedStat
 		return resp, err
 	}
 	resp.Data = components.CombinedCommitStatus{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/get-combined-status-for-ref")
 	if err != nil {
 		return nil, err
 	}
@@ -7908,7 +7908,7 @@ func (r *ReposGetCombinedStatusForRefReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposGetCombinedStatusForRefReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/get-combined-status-for-ref", opt)
 }
 
 /*
@@ -7949,7 +7949,7 @@ func ReposGetCommit(ctx context.Context, req *ReposGetCommitReq, opt ...RequestO
 		req = new(ReposGetCommitReq)
 	}
 	resp := &ReposGetCommitResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/get-commit", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -7957,7 +7957,7 @@ func ReposGetCommit(ctx context.Context, req *ReposGetCommitReq, opt ...RequestO
 		return resp, err
 	}
 	resp.Data = components.Commit{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/get-commit")
 	if err != nil {
 		return nil, err
 	}
@@ -8028,7 +8028,7 @@ func (r *ReposGetCommitReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposGetCommitReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/get-commit", opt)
 }
 
 /*
@@ -8069,7 +8069,7 @@ func ReposGetCommitActivityStats(ctx context.Context, req *ReposGetCommitActivit
 		req = new(ReposGetCommitActivityStatsReq)
 	}
 	resp := &ReposGetCommitActivityStatsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/get-commit-activity-stats", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -8077,7 +8077,7 @@ func ReposGetCommitActivityStats(ctx context.Context, req *ReposGetCommitActivit
 		return resp, err
 	}
 	resp.Data = []components.CommitActivity{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/get-commit-activity-stats")
 	if err != nil {
 		return nil, err
 	}
@@ -8145,7 +8145,7 @@ func (r *ReposGetCommitActivityStatsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposGetCommitActivityStatsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/get-commit-activity-stats", opt)
 }
 
 /*
@@ -8186,7 +8186,7 @@ func ReposGetCommitComment(ctx context.Context, req *ReposGetCommitCommentReq, o
 		req = new(ReposGetCommitCommentReq)
 	}
 	resp := &ReposGetCommitCommentResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/get-commit-comment", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -8194,7 +8194,7 @@ func ReposGetCommitComment(ctx context.Context, req *ReposGetCommitCommentReq, o
 		return resp, err
 	}
 	resp.Data = components.CommitComment{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/get-commit-comment")
 	if err != nil {
 		return nil, err
 	}
@@ -8279,7 +8279,7 @@ func (r *ReposGetCommitCommentReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposGetCommitCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/get-commit-comment", opt)
 }
 
 /*
@@ -8320,7 +8320,7 @@ func ReposGetCommitSignatureProtection(ctx context.Context, req *ReposGetCommitS
 		req = new(ReposGetCommitSignatureProtectionReq)
 	}
 	resp := &ReposGetCommitSignatureProtectionResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/get-commit-signature-protection", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -8328,7 +8328,7 @@ func ReposGetCommitSignatureProtection(ctx context.Context, req *ReposGetCommitS
 		return resp, err
 	}
 	resp.Data = components.ProtectedBranchAdminEnforced{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/get-commit-signature-protection")
 	if err != nil {
 		return nil, err
 	}
@@ -8414,7 +8414,7 @@ func (r *ReposGetCommitSignatureProtectionReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposGetCommitSignatureProtectionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/get-commit-signature-protection", opt)
 }
 
 /*
@@ -8455,7 +8455,7 @@ func ReposGetCommunityProfileMetrics(ctx context.Context, req *ReposGetCommunity
 		req = new(ReposGetCommunityProfileMetricsReq)
 	}
 	resp := &ReposGetCommunityProfileMetricsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/get-community-profile-metrics", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -8463,7 +8463,7 @@ func ReposGetCommunityProfileMetrics(ctx context.Context, req *ReposGetCommunity
 		return resp, err
 	}
 	resp.Data = components.CommunityProfile{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/get-community-profile-metrics")
 	if err != nil {
 		return nil, err
 	}
@@ -8544,7 +8544,7 @@ func (r *ReposGetCommunityProfileMetricsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposGetCommunityProfileMetricsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/get-community-profile-metrics", opt)
 }
 
 /*
@@ -8585,7 +8585,7 @@ func ReposGetContent(ctx context.Context, req *ReposGetContentReq, opt ...Reques
 		req = new(ReposGetContentReq)
 	}
 	resp := &ReposGetContentResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/get-content", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -8593,7 +8593,7 @@ func ReposGetContent(ctx context.Context, req *ReposGetContentReq, opt ...Reques
 		return resp, err
 	}
 	resp.Data = ReposGetContentResponseBody{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/get-content")
 	if err != nil {
 		return nil, err
 	}
@@ -8673,7 +8673,7 @@ func (r *ReposGetContentReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposGetContentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/get-content", opt)
 }
 
 /*
@@ -8805,7 +8805,7 @@ func ReposGetContributorsStats(ctx context.Context, req *ReposGetContributorsSta
 		req = new(ReposGetContributorsStatsReq)
 	}
 	resp := &ReposGetContributorsStatsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/get-contributors-stats", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -8813,7 +8813,7 @@ func ReposGetContributorsStats(ctx context.Context, req *ReposGetContributorsSta
 		return resp, err
 	}
 	resp.Data = []components.ContributorActivity{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/get-contributors-stats")
 	if err != nil {
 		return nil, err
 	}
@@ -8881,7 +8881,7 @@ func (r *ReposGetContributorsStatsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposGetContributorsStatsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/get-contributors-stats", opt)
 }
 
 /*
@@ -8922,7 +8922,7 @@ func ReposGetDeployKey(ctx context.Context, req *ReposGetDeployKeyReq, opt ...Re
 		req = new(ReposGetDeployKeyReq)
 	}
 	resp := &ReposGetDeployKeyResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/get-deploy-key", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -8930,7 +8930,7 @@ func ReposGetDeployKey(ctx context.Context, req *ReposGetDeployKeyReq, opt ...Re
 		return resp, err
 	}
 	resp.Data = components.DeployKey{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/get-deploy-key")
 	if err != nil {
 		return nil, err
 	}
@@ -9001,7 +9001,7 @@ func (r *ReposGetDeployKeyReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposGetDeployKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/get-deploy-key", opt)
 }
 
 /*
@@ -9042,7 +9042,7 @@ func ReposGetDeployment(ctx context.Context, req *ReposGetDeploymentReq, opt ...
 		req = new(ReposGetDeploymentReq)
 	}
 	resp := &ReposGetDeploymentResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/get-deployment", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -9050,7 +9050,7 @@ func ReposGetDeployment(ctx context.Context, req *ReposGetDeploymentReq, opt ...
 		return resp, err
 	}
 	resp.Data = components.Deployment{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/get-deployment")
 	if err != nil {
 		return nil, err
 	}
@@ -9145,7 +9145,7 @@ func (r *ReposGetDeploymentReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposGetDeploymentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/get-deployment", opt)
 }
 
 /*
@@ -9186,7 +9186,7 @@ func ReposGetDeploymentStatus(ctx context.Context, req *ReposGetDeploymentStatus
 		req = new(ReposGetDeploymentStatusReq)
 	}
 	resp := &ReposGetDeploymentStatusResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/get-deployment-status", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -9194,7 +9194,7 @@ func ReposGetDeploymentStatus(ctx context.Context, req *ReposGetDeploymentStatus
 		return resp, err
 	}
 	resp.Data = components.DeploymentStatus{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/get-deployment-status")
 	if err != nil {
 		return nil, err
 	}
@@ -9306,7 +9306,7 @@ func (r *ReposGetDeploymentStatusReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposGetDeploymentStatusReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/get-deployment-status", opt)
 }
 
 /*
@@ -9347,7 +9347,7 @@ func ReposGetLatestPagesBuild(ctx context.Context, req *ReposGetLatestPagesBuild
 		req = new(ReposGetLatestPagesBuildReq)
 	}
 	resp := &ReposGetLatestPagesBuildResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/get-latest-pages-build", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -9355,7 +9355,7 @@ func ReposGetLatestPagesBuild(ctx context.Context, req *ReposGetLatestPagesBuild
 		return resp, err
 	}
 	resp.Data = components.PageBuild{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/get-latest-pages-build")
 	if err != nil {
 		return nil, err
 	}
@@ -9423,7 +9423,7 @@ func (r *ReposGetLatestPagesBuildReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposGetLatestPagesBuildReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/get-latest-pages-build", opt)
 }
 
 /*
@@ -9464,7 +9464,7 @@ func ReposGetLatestRelease(ctx context.Context, req *ReposGetLatestReleaseReq, o
 		req = new(ReposGetLatestReleaseReq)
 	}
 	resp := &ReposGetLatestReleaseResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/get-latest-release", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -9472,7 +9472,7 @@ func ReposGetLatestRelease(ctx context.Context, req *ReposGetLatestReleaseReq, o
 		return resp, err
 	}
 	resp.Data = components.Release{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/get-latest-release")
 	if err != nil {
 		return nil, err
 	}
@@ -9540,7 +9540,7 @@ func (r *ReposGetLatestReleaseReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposGetLatestReleaseReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/get-latest-release", opt)
 }
 
 /*
@@ -9581,7 +9581,7 @@ func ReposGetPages(ctx context.Context, req *ReposGetPagesReq, opt ...RequestOpt
 		req = new(ReposGetPagesReq)
 	}
 	resp := &ReposGetPagesResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/get-pages", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -9589,7 +9589,7 @@ func ReposGetPages(ctx context.Context, req *ReposGetPagesReq, opt ...RequestOpt
 		return resp, err
 	}
 	resp.Data = components.Page{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/get-pages")
 	if err != nil {
 		return nil, err
 	}
@@ -9657,7 +9657,7 @@ func (r *ReposGetPagesReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposGetPagesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/get-pages", opt)
 }
 
 /*
@@ -9698,7 +9698,7 @@ func ReposGetPagesBuild(ctx context.Context, req *ReposGetPagesBuildReq, opt ...
 		req = new(ReposGetPagesBuildReq)
 	}
 	resp := &ReposGetPagesBuildResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/get-pages-build", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -9706,7 +9706,7 @@ func ReposGetPagesBuild(ctx context.Context, req *ReposGetPagesBuildReq, opt ...
 		return resp, err
 	}
 	resp.Data = components.PageBuild{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/get-pages-build")
 	if err != nil {
 		return nil, err
 	}
@@ -9777,7 +9777,7 @@ func (r *ReposGetPagesBuildReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposGetPagesBuildReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/get-pages-build", opt)
 }
 
 /*
@@ -9818,7 +9818,7 @@ func ReposGetParticipationStats(ctx context.Context, req *ReposGetParticipationS
 		req = new(ReposGetParticipationStatsReq)
 	}
 	resp := &ReposGetParticipationStatsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/get-participation-stats", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -9826,7 +9826,7 @@ func ReposGetParticipationStats(ctx context.Context, req *ReposGetParticipationS
 		return resp, err
 	}
 	resp.Data = components.ParticipationStats{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/get-participation-stats")
 	if err != nil {
 		return nil, err
 	}
@@ -9894,7 +9894,7 @@ func (r *ReposGetParticipationStatsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposGetParticipationStatsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/get-participation-stats", opt)
 }
 
 /*
@@ -9935,7 +9935,7 @@ func ReposGetPullRequestReviewProtection(ctx context.Context, req *ReposGetPullR
 		req = new(ReposGetPullRequestReviewProtectionReq)
 	}
 	resp := &ReposGetPullRequestReviewProtectionResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/get-pull-request-review-protection", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -9943,7 +9943,7 @@ func ReposGetPullRequestReviewProtection(ctx context.Context, req *ReposGetPullR
 		return resp, err
 	}
 	resp.Data = components.ProtectedBranchPullRequestReview{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/get-pull-request-review-protection")
 	if err != nil {
 		return nil, err
 	}
@@ -10027,7 +10027,7 @@ func (r *ReposGetPullRequestReviewProtectionReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposGetPullRequestReviewProtectionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/get-pull-request-review-protection", opt)
 }
 
 /*
@@ -10068,7 +10068,7 @@ func ReposGetPunchCardStats(ctx context.Context, req *ReposGetPunchCardStatsReq,
 		req = new(ReposGetPunchCardStatsReq)
 	}
 	resp := &ReposGetPunchCardStatsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/get-punch-card-stats", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -10076,7 +10076,7 @@ func ReposGetPunchCardStats(ctx context.Context, req *ReposGetPunchCardStatsReq,
 		return resp, err
 	}
 	resp.Data = []components.CodeFrequencyStat{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/get-punch-card-stats")
 	if err != nil {
 		return nil, err
 	}
@@ -10144,7 +10144,7 @@ func (r *ReposGetPunchCardStatsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposGetPunchCardStatsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/get-punch-card-stats", opt)
 }
 
 /*
@@ -10185,7 +10185,7 @@ func ReposGetReadme(ctx context.Context, req *ReposGetReadmeReq, opt ...RequestO
 		req = new(ReposGetReadmeReq)
 	}
 	resp := &ReposGetReadmeResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/get-readme", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -10193,7 +10193,7 @@ func ReposGetReadme(ctx context.Context, req *ReposGetReadmeReq, opt ...RequestO
 		return resp, err
 	}
 	resp.Data = components.ContentFile{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/get-readme")
 	if err != nil {
 		return nil, err
 	}
@@ -10270,7 +10270,7 @@ func (r *ReposGetReadmeReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposGetReadmeReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/get-readme", opt)
 }
 
 /*
@@ -10311,7 +10311,7 @@ func ReposGetRelease(ctx context.Context, req *ReposGetReleaseReq, opt ...Reques
 		req = new(ReposGetReleaseReq)
 	}
 	resp := &ReposGetReleaseResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/get-release", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -10319,7 +10319,7 @@ func ReposGetRelease(ctx context.Context, req *ReposGetReleaseReq, opt ...Reques
 		return resp, err
 	}
 	resp.Data = components.Release{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/get-release")
 	if err != nil {
 		return nil, err
 	}
@@ -10390,7 +10390,7 @@ func (r *ReposGetReleaseReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposGetReleaseReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/get-release", opt)
 }
 
 /*
@@ -10431,7 +10431,7 @@ func ReposGetReleaseAsset(ctx context.Context, req *ReposGetReleaseAssetReq, opt
 		req = new(ReposGetReleaseAssetReq)
 	}
 	resp := &ReposGetReleaseAssetResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/get-release-asset", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -10439,7 +10439,7 @@ func ReposGetReleaseAsset(ctx context.Context, req *ReposGetReleaseAssetReq, opt
 		return resp, err
 	}
 	resp.Data = components.ReleaseAsset{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/get-release-asset")
 	if err != nil {
 		return nil, err
 	}
@@ -10510,7 +10510,7 @@ func (r *ReposGetReleaseAssetReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposGetReleaseAssetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/get-release-asset", opt)
 }
 
 /*
@@ -10551,7 +10551,7 @@ func ReposGetReleaseByTag(ctx context.Context, req *ReposGetReleaseByTagReq, opt
 		req = new(ReposGetReleaseByTagReq)
 	}
 	resp := &ReposGetReleaseByTagResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/get-release-by-tag", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -10559,7 +10559,7 @@ func ReposGetReleaseByTag(ctx context.Context, req *ReposGetReleaseByTagReq, opt
 		return resp, err
 	}
 	resp.Data = components.Release{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/get-release-by-tag")
 	if err != nil {
 		return nil, err
 	}
@@ -10630,7 +10630,7 @@ func (r *ReposGetReleaseByTagReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposGetReleaseByTagReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/get-release-by-tag", opt)
 }
 
 /*
@@ -10671,7 +10671,7 @@ func ReposGetStatusChecksProtection(ctx context.Context, req *ReposGetStatusChec
 		req = new(ReposGetStatusChecksProtectionReq)
 	}
 	resp := &ReposGetStatusChecksProtectionResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/get-status-checks-protection", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -10679,7 +10679,7 @@ func ReposGetStatusChecksProtection(ctx context.Context, req *ReposGetStatusChec
 		return resp, err
 	}
 	resp.Data = components.StatusCheckPolicy{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/get-status-checks-protection")
 	if err != nil {
 		return nil, err
 	}
@@ -10750,7 +10750,7 @@ func (r *ReposGetStatusChecksProtectionReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposGetStatusChecksProtectionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/get-status-checks-protection", opt)
 }
 
 /*
@@ -10791,7 +10791,7 @@ func ReposGetTeamsWithAccessToProtectedBranch(ctx context.Context, req *ReposGet
 		req = new(ReposGetTeamsWithAccessToProtectedBranchReq)
 	}
 	resp := &ReposGetTeamsWithAccessToProtectedBranchResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/get-teams-with-access-to-protected-branch", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -10799,7 +10799,7 @@ func ReposGetTeamsWithAccessToProtectedBranch(ctx context.Context, req *ReposGet
 		return resp, err
 	}
 	resp.Data = []components.Team{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/get-teams-with-access-to-protected-branch")
 	if err != nil {
 		return nil, err
 	}
@@ -10870,7 +10870,7 @@ func (r *ReposGetTeamsWithAccessToProtectedBranchReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposGetTeamsWithAccessToProtectedBranchReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/get-teams-with-access-to-protected-branch", opt)
 }
 
 /*
@@ -10911,7 +10911,7 @@ func ReposGetTopPaths(ctx context.Context, req *ReposGetTopPathsReq, opt ...Requ
 		req = new(ReposGetTopPathsReq)
 	}
 	resp := &ReposGetTopPathsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/get-top-paths", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -10919,7 +10919,7 @@ func ReposGetTopPaths(ctx context.Context, req *ReposGetTopPathsReq, opt ...Requ
 		return resp, err
 	}
 	resp.Data = []components.ContentTraffic{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/get-top-paths")
 	if err != nil {
 		return nil, err
 	}
@@ -10987,7 +10987,7 @@ func (r *ReposGetTopPathsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposGetTopPathsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/get-top-paths", opt)
 }
 
 /*
@@ -11028,7 +11028,7 @@ func ReposGetTopReferrers(ctx context.Context, req *ReposGetTopReferrersReq, opt
 		req = new(ReposGetTopReferrersReq)
 	}
 	resp := &ReposGetTopReferrersResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/get-top-referrers", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -11036,7 +11036,7 @@ func ReposGetTopReferrers(ctx context.Context, req *ReposGetTopReferrersReq, opt
 		return resp, err
 	}
 	resp.Data = []components.ReferrerTraffic{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/get-top-referrers")
 	if err != nil {
 		return nil, err
 	}
@@ -11104,7 +11104,7 @@ func (r *ReposGetTopReferrersReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposGetTopReferrersReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/get-top-referrers", opt)
 }
 
 /*
@@ -11145,7 +11145,7 @@ func ReposGetUsersWithAccessToProtectedBranch(ctx context.Context, req *ReposGet
 		req = new(ReposGetUsersWithAccessToProtectedBranchReq)
 	}
 	resp := &ReposGetUsersWithAccessToProtectedBranchResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/get-users-with-access-to-protected-branch", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -11153,7 +11153,7 @@ func ReposGetUsersWithAccessToProtectedBranch(ctx context.Context, req *ReposGet
 		return resp, err
 	}
 	resp.Data = []components.SimpleUser{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/get-users-with-access-to-protected-branch")
 	if err != nil {
 		return nil, err
 	}
@@ -11224,7 +11224,7 @@ func (r *ReposGetUsersWithAccessToProtectedBranchReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposGetUsersWithAccessToProtectedBranchReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/get-users-with-access-to-protected-branch", opt)
 }
 
 /*
@@ -11265,7 +11265,7 @@ func ReposGetViews(ctx context.Context, req *ReposGetViewsReq, opt ...RequestOpt
 		req = new(ReposGetViewsReq)
 	}
 	resp := &ReposGetViewsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/get-views", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -11273,7 +11273,7 @@ func ReposGetViews(ctx context.Context, req *ReposGetViewsReq, opt ...RequestOpt
 		return resp, err
 	}
 	resp.Data = components.ViewTraffic{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/get-views")
 	if err != nil {
 		return nil, err
 	}
@@ -11347,7 +11347,7 @@ func (r *ReposGetViewsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposGetViewsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/get-views", opt)
 }
 
 /*
@@ -11388,7 +11388,7 @@ func ReposGetWebhook(ctx context.Context, req *ReposGetWebhookReq, opt ...Reques
 		req = new(ReposGetWebhookReq)
 	}
 	resp := &ReposGetWebhookResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/get-webhook", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -11396,7 +11396,7 @@ func ReposGetWebhook(ctx context.Context, req *ReposGetWebhookReq, opt ...Reques
 		return resp, err
 	}
 	resp.Data = components.Hook{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/get-webhook")
 	if err != nil {
 		return nil, err
 	}
@@ -11465,7 +11465,7 @@ func (r *ReposGetWebhookReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposGetWebhookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/get-webhook", opt)
 }
 
 /*
@@ -11506,7 +11506,7 @@ func ReposListBranches(ctx context.Context, req *ReposListBranchesReq, opt ...Re
 		req = new(ReposListBranchesReq)
 	}
 	resp := &ReposListBranchesResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/list-branches", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -11514,7 +11514,7 @@ func ReposListBranches(ctx context.Context, req *ReposListBranchesReq, opt ...Re
 		return resp, err
 	}
 	resp.Data = []components.ShortBranch{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/list-branches")
 	if err != nil {
 		return nil, err
 	}
@@ -11603,7 +11603,7 @@ func (r *ReposListBranchesReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposListBranchesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/list-branches", opt)
 }
 
 /*
@@ -11644,7 +11644,7 @@ func ReposListBranchesForHeadCommit(ctx context.Context, req *ReposListBranchesF
 		req = new(ReposListBranchesForHeadCommitReq)
 	}
 	resp := &ReposListBranchesForHeadCommitResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/list-branches-for-head-commit", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -11652,7 +11652,7 @@ func ReposListBranchesForHeadCommit(ctx context.Context, req *ReposListBranchesF
 		return resp, err
 	}
 	resp.Data = []components.BranchShort{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/list-branches-for-head-commit")
 	if err != nil {
 		return nil, err
 	}
@@ -11738,7 +11738,7 @@ func (r *ReposListBranchesForHeadCommitReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposListBranchesForHeadCommitReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/list-branches-for-head-commit", opt)
 }
 
 /*
@@ -11779,7 +11779,7 @@ func ReposListCollaborators(ctx context.Context, req *ReposListCollaboratorsReq,
 		req = new(ReposListCollaboratorsReq)
 	}
 	resp := &ReposListCollaboratorsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/list-collaborators", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -11787,7 +11787,7 @@ func ReposListCollaborators(ctx context.Context, req *ReposListCollaboratorsReq,
 		return resp, err
 	}
 	resp.Data = []components.Collaborator{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/list-collaborators")
 	if err != nil {
 		return nil, err
 	}
@@ -11879,7 +11879,7 @@ func (r *ReposListCollaboratorsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposListCollaboratorsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/list-collaborators", opt)
 }
 
 /*
@@ -11920,7 +11920,7 @@ func ReposListCommentsForCommit(ctx context.Context, req *ReposListCommentsForCo
 		req = new(ReposListCommentsForCommitReq)
 	}
 	resp := &ReposListCommentsForCommitResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/list-comments-for-commit", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -11928,7 +11928,7 @@ func ReposListCommentsForCommit(ctx context.Context, req *ReposListCommentsForCo
 		return resp, err
 	}
 	resp.Data = []components.CommitComment{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/list-comments-for-commit")
 	if err != nil {
 		return nil, err
 	}
@@ -12025,7 +12025,7 @@ func (r *ReposListCommentsForCommitReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposListCommentsForCommitReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/list-comments-for-commit", opt)
 }
 
 /*
@@ -12066,7 +12066,7 @@ func ReposListCommitCommentsForRepo(ctx context.Context, req *ReposListCommitCom
 		req = new(ReposListCommitCommentsForRepoReq)
 	}
 	resp := &ReposListCommitCommentsForRepoResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/list-commit-comments-for-repo", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -12074,7 +12074,7 @@ func ReposListCommitCommentsForRepo(ctx context.Context, req *ReposListCommitCom
 		return resp, err
 	}
 	resp.Data = []components.CommitComment{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/list-commit-comments-for-repo")
 	if err != nil {
 		return nil, err
 	}
@@ -12168,7 +12168,7 @@ func (r *ReposListCommitCommentsForRepoReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposListCommitCommentsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/list-commit-comments-for-repo", opt)
 }
 
 /*
@@ -12209,7 +12209,7 @@ func ReposListCommitStatusesForRef(ctx context.Context, req *ReposListCommitStat
 		req = new(ReposListCommitStatusesForRefReq)
 	}
 	resp := &ReposListCommitStatusesForRefResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/list-commit-statuses-for-ref", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -12217,7 +12217,7 @@ func ReposListCommitStatusesForRef(ctx context.Context, req *ReposListCommitStat
 		return resp, err
 	}
 	resp.Data = []components.Status{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/list-commit-statuses-for-ref")
 	if err != nil {
 		return nil, err
 	}
@@ -12300,7 +12300,7 @@ func (r *ReposListCommitStatusesForRefReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposListCommitStatusesForRefReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/list-commit-statuses-for-ref", opt)
 }
 
 /*
@@ -12341,7 +12341,7 @@ func ReposListCommits(ctx context.Context, req *ReposListCommitsReq, opt ...Requ
 		req = new(ReposListCommitsReq)
 	}
 	resp := &ReposListCommitsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/list-commits", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -12349,7 +12349,7 @@ func ReposListCommits(ctx context.Context, req *ReposListCommitsReq, opt ...Requ
 		return resp, err
 	}
 	resp.Data = []components.SimpleCommit{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/list-commits")
 	if err != nil {
 		return nil, err
 	}
@@ -12469,7 +12469,7 @@ func (r *ReposListCommitsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposListCommitsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/list-commits", opt)
 }
 
 /*
@@ -12510,7 +12510,7 @@ func ReposListContributors(ctx context.Context, req *ReposListContributorsReq, o
 		req = new(ReposListContributorsReq)
 	}
 	resp := &ReposListContributorsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/list-contributors", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -12518,7 +12518,7 @@ func ReposListContributors(ctx context.Context, req *ReposListContributorsReq, o
 		return resp, err
 	}
 	resp.Data = []components.Contributor{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/list-contributors")
 	if err != nil {
 		return nil, err
 	}
@@ -12604,7 +12604,7 @@ func (r *ReposListContributorsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposListContributorsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/list-contributors", opt)
 }
 
 /*
@@ -12645,7 +12645,7 @@ func ReposListDeployKeys(ctx context.Context, req *ReposListDeployKeysReq, opt .
 		req = new(ReposListDeployKeysReq)
 	}
 	resp := &ReposListDeployKeysResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/list-deploy-keys", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -12653,7 +12653,7 @@ func ReposListDeployKeys(ctx context.Context, req *ReposListDeployKeysReq, opt .
 		return resp, err
 	}
 	resp.Data = []components.DeployKey{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/list-deploy-keys")
 	if err != nil {
 		return nil, err
 	}
@@ -12733,7 +12733,7 @@ func (r *ReposListDeployKeysReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposListDeployKeysReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/list-deploy-keys", opt)
 }
 
 /*
@@ -12774,7 +12774,7 @@ func ReposListDeploymentStatuses(ctx context.Context, req *ReposListDeploymentSt
 		req = new(ReposListDeploymentStatusesReq)
 	}
 	resp := &ReposListDeploymentStatusesResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/list-deployment-statuses", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -12782,7 +12782,7 @@ func ReposListDeploymentStatuses(ctx context.Context, req *ReposListDeploymentSt
 		return resp, err
 	}
 	resp.Data = []components.DeploymentStatus{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/list-deployment-statuses")
 	if err != nil {
 		return nil, err
 	}
@@ -12895,7 +12895,7 @@ func (r *ReposListDeploymentStatusesReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposListDeploymentStatusesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/list-deployment-statuses", opt)
 }
 
 /*
@@ -12936,7 +12936,7 @@ func ReposListDeployments(ctx context.Context, req *ReposListDeploymentsReq, opt
 		req = new(ReposListDeploymentsReq)
 	}
 	resp := &ReposListDeploymentsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/list-deployments", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -12944,7 +12944,7 @@ func ReposListDeployments(ctx context.Context, req *ReposListDeploymentsReq, opt
 		return resp, err
 	}
 	resp.Data = []components.Deployment{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/list-deployments")
 	if err != nil {
 		return nil, err
 	}
@@ -13065,7 +13065,7 @@ func (r *ReposListDeploymentsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposListDeploymentsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/list-deployments", opt)
 }
 
 /*
@@ -13106,7 +13106,7 @@ func ReposListForAuthenticatedUser(ctx context.Context, req *ReposListForAuthent
 		req = new(ReposListForAuthenticatedUserReq)
 	}
 	resp := &ReposListForAuthenticatedUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/list-for-authenticated-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -13114,7 +13114,7 @@ func ReposListForAuthenticatedUser(ctx context.Context, req *ReposListForAuthent
 		return resp, err
 	}
 	resp.Data = []components.Repository{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/list-for-authenticated-user")
 	if err != nil {
 		return nil, err
 	}
@@ -13259,7 +13259,7 @@ func (r *ReposListForAuthenticatedUserReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposListForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/list-for-authenticated-user", opt)
 }
 
 /*
@@ -13300,7 +13300,7 @@ func ReposListForOrg(ctx context.Context, req *ReposListForOrgReq, opt ...Reques
 		req = new(ReposListForOrgReq)
 	}
 	resp := &ReposListForOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/list-for-org", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -13308,7 +13308,7 @@ func ReposListForOrg(ctx context.Context, req *ReposListForOrgReq, opt ...Reques
 		return resp, err
 	}
 	resp.Data = []components.MinimalRepository{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/list-for-org")
 	if err != nil {
 		return nil, err
 	}
@@ -13442,7 +13442,7 @@ func (r *ReposListForOrgReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposListForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/list-for-org", opt)
 }
 
 /*
@@ -13483,7 +13483,7 @@ func ReposListForUser(ctx context.Context, req *ReposListForUserReq, opt ...Requ
 		req = new(ReposListForUserReq)
 	}
 	resp := &ReposListForUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/list-for-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -13491,7 +13491,7 @@ func ReposListForUser(ctx context.Context, req *ReposListForUserReq, opt ...Requ
 		return resp, err
 	}
 	resp.Data = []components.MinimalRepository{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/list-for-user")
 	if err != nil {
 		return nil, err
 	}
@@ -13606,7 +13606,7 @@ func (r *ReposListForUserReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposListForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/list-for-user", opt)
 }
 
 /*
@@ -13647,7 +13647,7 @@ func ReposListForks(ctx context.Context, req *ReposListForksReq, opt ...RequestO
 		req = new(ReposListForksReq)
 	}
 	resp := &ReposListForksResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/list-forks", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -13655,7 +13655,7 @@ func ReposListForks(ctx context.Context, req *ReposListForksReq, opt ...RequestO
 		return resp, err
 	}
 	resp.Data = []components.MinimalRepository{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/list-forks")
 	if err != nil {
 		return nil, err
 	}
@@ -13741,7 +13741,7 @@ func (r *ReposListForksReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposListForksReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/list-forks", opt)
 }
 
 /*
@@ -13782,7 +13782,7 @@ func ReposListInvitations(ctx context.Context, req *ReposListInvitationsReq, opt
 		req = new(ReposListInvitationsReq)
 	}
 	resp := &ReposListInvitationsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/list-invitations", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -13790,7 +13790,7 @@ func ReposListInvitations(ctx context.Context, req *ReposListInvitationsReq, opt
 		return resp, err
 	}
 	resp.Data = []components.RepositoryInvitation{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/list-invitations")
 	if err != nil {
 		return nil, err
 	}
@@ -13870,7 +13870,7 @@ func (r *ReposListInvitationsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposListInvitationsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/list-invitations", opt)
 }
 
 /*
@@ -13911,7 +13911,7 @@ func ReposListInvitationsForAuthenticatedUser(ctx context.Context, req *ReposLis
 		req = new(ReposListInvitationsForAuthenticatedUserReq)
 	}
 	resp := &ReposListInvitationsForAuthenticatedUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/list-invitations-for-authenticated-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -13919,7 +13919,7 @@ func ReposListInvitationsForAuthenticatedUser(ctx context.Context, req *ReposLis
 		return resp, err
 	}
 	resp.Data = []components.RepositoryInvitation{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/list-invitations-for-authenticated-user")
 	if err != nil {
 		return nil, err
 	}
@@ -13997,7 +13997,7 @@ func (r *ReposListInvitationsForAuthenticatedUserReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposListInvitationsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/list-invitations-for-authenticated-user", opt)
 }
 
 /*
@@ -14038,7 +14038,7 @@ func ReposListLanguages(ctx context.Context, req *ReposListLanguagesReq, opt ...
 		req = new(ReposListLanguagesReq)
 	}
 	resp := &ReposListLanguagesResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/list-languages", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -14046,7 +14046,7 @@ func ReposListLanguages(ctx context.Context, req *ReposListLanguagesReq, opt ...
 		return resp, err
 	}
 	resp.Data = components.Language{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/list-languages")
 	if err != nil {
 		return nil, err
 	}
@@ -14114,7 +14114,7 @@ func (r *ReposListLanguagesReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposListLanguagesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/list-languages", opt)
 }
 
 /*
@@ -14155,7 +14155,7 @@ func ReposListPagesBuilds(ctx context.Context, req *ReposListPagesBuildsReq, opt
 		req = new(ReposListPagesBuildsReq)
 	}
 	resp := &ReposListPagesBuildsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/list-pages-builds", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -14163,7 +14163,7 @@ func ReposListPagesBuilds(ctx context.Context, req *ReposListPagesBuildsReq, opt
 		return resp, err
 	}
 	resp.Data = []components.PageBuild{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/list-pages-builds")
 	if err != nil {
 		return nil, err
 	}
@@ -14243,7 +14243,7 @@ func (r *ReposListPagesBuildsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposListPagesBuildsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/list-pages-builds", opt)
 }
 
 /*
@@ -14284,7 +14284,7 @@ func ReposListPublic(ctx context.Context, req *ReposListPublicReq, opt ...Reques
 		req = new(ReposListPublicReq)
 	}
 	resp := &ReposListPublicResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/list-public", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -14292,7 +14292,7 @@ func ReposListPublic(ctx context.Context, req *ReposListPublicReq, opt ...Reques
 		return resp, err
 	}
 	resp.Data = []components.MinimalRepository{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/list-public")
 	if err != nil {
 		return nil, err
 	}
@@ -14378,7 +14378,7 @@ func (r *ReposListPublicReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposListPublicReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/list-public", opt)
 }
 
 /*
@@ -14419,7 +14419,7 @@ func ReposListPullRequestsAssociatedWithCommit(ctx context.Context, req *ReposLi
 		req = new(ReposListPullRequestsAssociatedWithCommitReq)
 	}
 	resp := &ReposListPullRequestsAssociatedWithCommitResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/list-pull-requests-associated-with-commit", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -14427,7 +14427,7 @@ func ReposListPullRequestsAssociatedWithCommit(ctx context.Context, req *ReposLi
 		return resp, err
 	}
 	resp.Data = []components.PullRequestSimple{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/list-pull-requests-associated-with-commit")
 	if err != nil {
 		return nil, err
 	}
@@ -14525,7 +14525,7 @@ func (r *ReposListPullRequestsAssociatedWithCommitReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposListPullRequestsAssociatedWithCommitReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/list-pull-requests-associated-with-commit", opt)
 }
 
 /*
@@ -14566,7 +14566,7 @@ func ReposListReleaseAssets(ctx context.Context, req *ReposListReleaseAssetsReq,
 		req = new(ReposListReleaseAssetsReq)
 	}
 	resp := &ReposListReleaseAssetsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/list-release-assets", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -14574,7 +14574,7 @@ func ReposListReleaseAssets(ctx context.Context, req *ReposListReleaseAssetsReq,
 		return resp, err
 	}
 	resp.Data = []components.ReleaseAsset{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/list-release-assets")
 	if err != nil {
 		return nil, err
 	}
@@ -14657,7 +14657,7 @@ func (r *ReposListReleaseAssetsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposListReleaseAssetsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/list-release-assets", opt)
 }
 
 /*
@@ -14698,7 +14698,7 @@ func ReposListReleases(ctx context.Context, req *ReposListReleasesReq, opt ...Re
 		req = new(ReposListReleasesReq)
 	}
 	resp := &ReposListReleasesResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/list-releases", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -14706,7 +14706,7 @@ func ReposListReleases(ctx context.Context, req *ReposListReleasesReq, opt ...Re
 		return resp, err
 	}
 	resp.Data = []components.Release{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/list-releases")
 	if err != nil {
 		return nil, err
 	}
@@ -14786,7 +14786,7 @@ func (r *ReposListReleasesReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposListReleasesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/list-releases", opt)
 }
 
 /*
@@ -14827,7 +14827,7 @@ func ReposListTags(ctx context.Context, req *ReposListTagsReq, opt ...RequestOpt
 		req = new(ReposListTagsReq)
 	}
 	resp := &ReposListTagsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/list-tags", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -14835,7 +14835,7 @@ func ReposListTags(ctx context.Context, req *ReposListTagsReq, opt ...RequestOpt
 		return resp, err
 	}
 	resp.Data = []components.Tag{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/list-tags")
 	if err != nil {
 		return nil, err
 	}
@@ -14915,7 +14915,7 @@ func (r *ReposListTagsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposListTagsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/list-tags", opt)
 }
 
 /*
@@ -14956,7 +14956,7 @@ func ReposListTeams(ctx context.Context, req *ReposListTeamsReq, opt ...RequestO
 		req = new(ReposListTeamsReq)
 	}
 	resp := &ReposListTeamsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/list-teams", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -14964,7 +14964,7 @@ func ReposListTeams(ctx context.Context, req *ReposListTeamsReq, opt ...RequestO
 		return resp, err
 	}
 	resp.Data = []components.Team{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/list-teams")
 	if err != nil {
 		return nil, err
 	}
@@ -15044,7 +15044,7 @@ func (r *ReposListTeamsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposListTeamsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/list-teams", opt)
 }
 
 /*
@@ -15085,7 +15085,7 @@ func ReposListWebhooks(ctx context.Context, req *ReposListWebhooksReq, opt ...Re
 		req = new(ReposListWebhooksReq)
 	}
 	resp := &ReposListWebhooksResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/list-webhooks", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -15093,7 +15093,7 @@ func ReposListWebhooks(ctx context.Context, req *ReposListWebhooksReq, opt ...Re
 		return resp, err
 	}
 	resp.Data = []components.Hook{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/list-webhooks")
 	if err != nil {
 		return nil, err
 	}
@@ -15173,7 +15173,7 @@ func (r *ReposListWebhooksReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposListWebhooksReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/list-webhooks", opt)
 }
 
 /*
@@ -15214,7 +15214,7 @@ func ReposMerge(ctx context.Context, req *ReposMergeReq, opt ...RequestOption) (
 		req = new(ReposMergeReq)
 	}
 	resp := &ReposMergeResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/merge", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -15222,7 +15222,7 @@ func ReposMerge(ctx context.Context, req *ReposMergeReq, opt ...RequestOption) (
 		return resp, err
 	}
 	resp.Data = components.Commit{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/merge")
 	if err != nil {
 		return nil, err
 	}
@@ -15294,7 +15294,7 @@ func (r *ReposMergeReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposMergeReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/merge", opt)
 }
 
 /*
@@ -15352,7 +15352,7 @@ func ReposPingWebhook(ctx context.Context, req *ReposPingWebhookReq, opt ...Requ
 		req = new(ReposPingWebhookReq)
 	}
 	resp := &ReposPingWebhookResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/ping-webhook", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -15363,7 +15363,7 @@ func ReposPingWebhook(ctx context.Context, req *ReposPingWebhookReq, opt ...Requ
 	if err != nil {
 		return nil, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "repos/ping-webhook")
 	if err != nil {
 		return nil, err
 	}
@@ -15432,7 +15432,7 @@ func (r *ReposPingWebhookReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposPingWebhookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/ping-webhook", opt)
 }
 
 /*
@@ -15473,7 +15473,7 @@ func ReposRemoveAppAccessRestrictions(ctx context.Context, req *ReposRemoveAppAc
 		req = new(ReposRemoveAppAccessRestrictionsReq)
 	}
 	resp := &ReposRemoveAppAccessRestrictionsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/remove-app-access-restrictions", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -15481,7 +15481,7 @@ func ReposRemoveAppAccessRestrictions(ctx context.Context, req *ReposRemoveAppAc
 		return resp, err
 	}
 	resp.Data = []components.Integration{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/remove-app-access-restrictions")
 	if err != nil {
 		return nil, err
 	}
@@ -15556,7 +15556,7 @@ func (r *ReposRemoveAppAccessRestrictionsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposRemoveAppAccessRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/remove-app-access-restrictions", opt)
 }
 
 /*
@@ -15604,14 +15604,14 @@ func ReposRemoveCollaborator(ctx context.Context, req *ReposRemoveCollaboratorRe
 		req = new(ReposRemoveCollaboratorReq)
 	}
 	resp := &ReposRemoveCollaboratorResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/remove-collaborator", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "repos/remove-collaborator")
 	if err != nil {
 		return nil, err
 	}
@@ -15680,7 +15680,7 @@ func (r *ReposRemoveCollaboratorReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposRemoveCollaboratorReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/remove-collaborator", opt)
 }
 
 /*
@@ -15720,7 +15720,7 @@ func ReposRemoveStatusCheckContexts(ctx context.Context, req *ReposRemoveStatusC
 		req = new(ReposRemoveStatusCheckContextsReq)
 	}
 	resp := &ReposRemoveStatusCheckContextsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/remove-status-check-contexts", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -15728,7 +15728,7 @@ func ReposRemoveStatusCheckContexts(ctx context.Context, req *ReposRemoveStatusC
 		return resp, err
 	}
 	resp.Data = ReposRemoveStatusCheckContextsResponseBody{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/remove-status-check-contexts")
 	if err != nil {
 		return nil, err
 	}
@@ -15803,7 +15803,7 @@ func (r *ReposRemoveStatusCheckContextsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposRemoveStatusCheckContextsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/remove-status-check-contexts", opt)
 }
 
 /*
@@ -15858,14 +15858,14 @@ func ReposRemoveStatusCheckProtection(ctx context.Context, req *ReposRemoveStatu
 		req = new(ReposRemoveStatusCheckProtectionReq)
 	}
 	resp := &ReposRemoveStatusCheckProtectionResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/remove-status-check-protection", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "repos/remove-status-check-protection")
 	if err != nil {
 		return nil, err
 	}
@@ -15936,7 +15936,7 @@ func (r *ReposRemoveStatusCheckProtectionReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposRemoveStatusCheckProtectionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/remove-status-check-protection", opt)
 }
 
 /*
@@ -15976,7 +15976,7 @@ func ReposRemoveTeamAccessRestrictions(ctx context.Context, req *ReposRemoveTeam
 		req = new(ReposRemoveTeamAccessRestrictionsReq)
 	}
 	resp := &ReposRemoveTeamAccessRestrictionsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/remove-team-access-restrictions", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -15984,7 +15984,7 @@ func ReposRemoveTeamAccessRestrictions(ctx context.Context, req *ReposRemoveTeam
 		return resp, err
 	}
 	resp.Data = []components.Team{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/remove-team-access-restrictions")
 	if err != nil {
 		return nil, err
 	}
@@ -16059,7 +16059,7 @@ func (r *ReposRemoveTeamAccessRestrictionsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposRemoveTeamAccessRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/remove-team-access-restrictions", opt)
 }
 
 /*
@@ -16107,7 +16107,7 @@ func ReposRemoveUserAccessRestrictions(ctx context.Context, req *ReposRemoveUser
 		req = new(ReposRemoveUserAccessRestrictionsReq)
 	}
 	resp := &ReposRemoveUserAccessRestrictionsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/remove-user-access-restrictions", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -16115,7 +16115,7 @@ func ReposRemoveUserAccessRestrictions(ctx context.Context, req *ReposRemoveUser
 		return resp, err
 	}
 	resp.Data = []components.SimpleUser{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/remove-user-access-restrictions")
 	if err != nil {
 		return nil, err
 	}
@@ -16190,7 +16190,7 @@ func (r *ReposRemoveUserAccessRestrictionsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposRemoveUserAccessRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/remove-user-access-restrictions", opt)
 }
 
 /*
@@ -16238,7 +16238,7 @@ func ReposReplaceAllTopics(ctx context.Context, req *ReposReplaceAllTopicsReq, o
 		req = new(ReposReplaceAllTopicsReq)
 	}
 	resp := &ReposReplaceAllTopicsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/replace-all-topics", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -16246,7 +16246,7 @@ func ReposReplaceAllTopics(ctx context.Context, req *ReposReplaceAllTopicsReq, o
 		return resp, err
 	}
 	resp.Data = components.Topic{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/replace-all-topics")
 	if err != nil {
 		return nil, err
 	}
@@ -16331,7 +16331,7 @@ func (r *ReposReplaceAllTopicsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposReplaceAllTopicsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/replace-all-topics", opt)
 }
 
 /*
@@ -16388,7 +16388,7 @@ func ReposRequestPagesBuild(ctx context.Context, req *ReposRequestPagesBuildReq,
 		req = new(ReposRequestPagesBuildReq)
 	}
 	resp := &ReposRequestPagesBuildResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/request-pages-build", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -16396,7 +16396,7 @@ func ReposRequestPagesBuild(ctx context.Context, req *ReposRequestPagesBuildReq,
 		return resp, err
 	}
 	resp.Data = components.PageBuildStatus{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/request-pages-build")
 	if err != nil {
 		return nil, err
 	}
@@ -16464,7 +16464,7 @@ func (r *ReposRequestPagesBuildReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposRequestPagesBuildReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/request-pages-build", opt)
 }
 
 /*
@@ -16505,7 +16505,7 @@ func ReposSetAdminBranchProtection(ctx context.Context, req *ReposSetAdminBranch
 		req = new(ReposSetAdminBranchProtectionReq)
 	}
 	resp := &ReposSetAdminBranchProtectionResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/set-admin-branch-protection", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -16513,7 +16513,7 @@ func ReposSetAdminBranchProtection(ctx context.Context, req *ReposSetAdminBranch
 		return resp, err
 	}
 	resp.Data = components.ProtectedBranchAdminEnforced{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/set-admin-branch-protection")
 	if err != nil {
 		return nil, err
 	}
@@ -16584,7 +16584,7 @@ func (r *ReposSetAdminBranchProtectionReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposSetAdminBranchProtectionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/set-admin-branch-protection", opt)
 }
 
 /*
@@ -16625,7 +16625,7 @@ func ReposSetAppAccessRestrictions(ctx context.Context, req *ReposSetAppAccessRe
 		req = new(ReposSetAppAccessRestrictionsReq)
 	}
 	resp := &ReposSetAppAccessRestrictionsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/set-app-access-restrictions", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -16633,7 +16633,7 @@ func ReposSetAppAccessRestrictions(ctx context.Context, req *ReposSetAppAccessRe
 		return resp, err
 	}
 	resp.Data = []components.Integration{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/set-app-access-restrictions")
 	if err != nil {
 		return nil, err
 	}
@@ -16708,7 +16708,7 @@ func (r *ReposSetAppAccessRestrictionsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposSetAppAccessRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/set-app-access-restrictions", opt)
 }
 
 /*
@@ -16756,7 +16756,7 @@ func ReposSetStatusCheckContexts(ctx context.Context, req *ReposSetStatusCheckCo
 		req = new(ReposSetStatusCheckContextsReq)
 	}
 	resp := &ReposSetStatusCheckContextsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/set-status-check-contexts", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -16764,7 +16764,7 @@ func ReposSetStatusCheckContexts(ctx context.Context, req *ReposSetStatusCheckCo
 		return resp, err
 	}
 	resp.Data = ReposSetStatusCheckContextsResponseBody{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/set-status-check-contexts")
 	if err != nil {
 		return nil, err
 	}
@@ -16839,7 +16839,7 @@ func (r *ReposSetStatusCheckContextsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposSetStatusCheckContextsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/set-status-check-contexts", opt)
 }
 
 /*
@@ -16894,7 +16894,7 @@ func ReposSetTeamAccessRestrictions(ctx context.Context, req *ReposSetTeamAccess
 		req = new(ReposSetTeamAccessRestrictionsReq)
 	}
 	resp := &ReposSetTeamAccessRestrictionsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/set-team-access-restrictions", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -16902,7 +16902,7 @@ func ReposSetTeamAccessRestrictions(ctx context.Context, req *ReposSetTeamAccess
 		return resp, err
 	}
 	resp.Data = []components.Team{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/set-team-access-restrictions")
 	if err != nil {
 		return nil, err
 	}
@@ -16977,7 +16977,7 @@ func (r *ReposSetTeamAccessRestrictionsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposSetTeamAccessRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/set-team-access-restrictions", opt)
 }
 
 /*
@@ -17025,7 +17025,7 @@ func ReposSetUserAccessRestrictions(ctx context.Context, req *ReposSetUserAccess
 		req = new(ReposSetUserAccessRestrictionsReq)
 	}
 	resp := &ReposSetUserAccessRestrictionsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/set-user-access-restrictions", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -17033,7 +17033,7 @@ func ReposSetUserAccessRestrictions(ctx context.Context, req *ReposSetUserAccess
 		return resp, err
 	}
 	resp.Data = []components.SimpleUser{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/set-user-access-restrictions")
 	if err != nil {
 		return nil, err
 	}
@@ -17108,7 +17108,7 @@ func (r *ReposSetUserAccessRestrictionsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposSetUserAccessRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/set-user-access-restrictions", opt)
 }
 
 /*
@@ -17156,7 +17156,7 @@ func ReposTestPushWebhook(ctx context.Context, req *ReposTestPushWebhookReq, opt
 		req = new(ReposTestPushWebhookReq)
 	}
 	resp := &ReposTestPushWebhookResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/test-push-webhook", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -17167,7 +17167,7 @@ func ReposTestPushWebhook(ctx context.Context, req *ReposTestPushWebhookReq, opt
 	if err != nil {
 		return nil, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "repos/test-push-webhook")
 	if err != nil {
 		return nil, err
 	}
@@ -17236,7 +17236,7 @@ func (r *ReposTestPushWebhookReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposTestPushWebhookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/test-push-webhook", opt)
 }
 
 /*
@@ -17277,7 +17277,7 @@ func ReposTransfer(ctx context.Context, req *ReposTransferReq, opt ...RequestOpt
 		req = new(ReposTransferReq)
 	}
 	resp := &ReposTransferResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/transfer", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -17285,7 +17285,7 @@ func ReposTransfer(ctx context.Context, req *ReposTransferReq, opt ...RequestOpt
 		return resp, err
 	}
 	resp.Data = components.Repository{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/transfer")
 	if err != nil {
 		return nil, err
 	}
@@ -17357,7 +17357,7 @@ func (r *ReposTransferReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposTransferReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/transfer", opt)
 }
 
 /*
@@ -17412,7 +17412,7 @@ func ReposUpdate(ctx context.Context, req *ReposUpdateReq, opt ...RequestOption)
 		req = new(ReposUpdateReq)
 	}
 	resp := &ReposUpdateResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/update", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -17420,7 +17420,7 @@ func ReposUpdate(ctx context.Context, req *ReposUpdateReq, opt ...RequestOption)
 		return resp, err
 	}
 	resp.Data = components.FullRepository{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/update")
 	if err != nil {
 		return nil, err
 	}
@@ -17520,7 +17520,7 @@ func (r *ReposUpdateReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposUpdateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/update", opt)
 }
 
 /*
@@ -17642,7 +17642,7 @@ func ReposUpdateBranchProtection(ctx context.Context, req *ReposUpdateBranchProt
 		req = new(ReposUpdateBranchProtectionReq)
 	}
 	resp := &ReposUpdateBranchProtectionResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/update-branch-protection", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -17650,7 +17650,7 @@ func ReposUpdateBranchProtection(ctx context.Context, req *ReposUpdateBranchProt
 		return resp, err
 	}
 	resp.Data = components.ProtectedBranch{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/update-branch-protection")
 	if err != nil {
 		return nil, err
 	}
@@ -17738,7 +17738,7 @@ func (r *ReposUpdateBranchProtectionReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposUpdateBranchProtectionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/update-branch-protection", opt)
 }
 
 /*
@@ -17890,7 +17890,7 @@ func ReposUpdateCommitComment(ctx context.Context, req *ReposUpdateCommitComment
 		req = new(ReposUpdateCommitCommentReq)
 	}
 	resp := &ReposUpdateCommitCommentResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/update-commit-comment", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -17898,7 +17898,7 @@ func ReposUpdateCommitComment(ctx context.Context, req *ReposUpdateCommitComment
 		return resp, err
 	}
 	resp.Data = components.CommitComment{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/update-commit-comment")
 	if err != nil {
 		return nil, err
 	}
@@ -17973,7 +17973,7 @@ func (r *ReposUpdateCommitCommentReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposUpdateCommitCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/update-commit-comment", opt)
 }
 
 /*
@@ -18025,14 +18025,14 @@ func ReposUpdateInformationAboutPagesSite(ctx context.Context, req *ReposUpdateI
 		req = new(ReposUpdateInformationAboutPagesSiteReq)
 	}
 	resp := &ReposUpdateInformationAboutPagesSiteResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/update-information-about-pages-site", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "repos/update-information-about-pages-site")
 	if err != nil {
 		return nil, err
 	}
@@ -18101,7 +18101,7 @@ func (r *ReposUpdateInformationAboutPagesSiteReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposUpdateInformationAboutPagesSiteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/update-information-about-pages-site", opt)
 }
 
 /*
@@ -18158,7 +18158,7 @@ func ReposUpdateInvitation(ctx context.Context, req *ReposUpdateInvitationReq, o
 		req = new(ReposUpdateInvitationReq)
 	}
 	resp := &ReposUpdateInvitationResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/update-invitation", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -18166,7 +18166,7 @@ func ReposUpdateInvitation(ctx context.Context, req *ReposUpdateInvitationReq, o
 		return resp, err
 	}
 	resp.Data = components.RepositoryInvitation{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/update-invitation")
 	if err != nil {
 		return nil, err
 	}
@@ -18241,7 +18241,7 @@ func (r *ReposUpdateInvitationReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposUpdateInvitationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/update-invitation", opt)
 }
 
 /*
@@ -18296,7 +18296,7 @@ func ReposUpdatePullRequestReviewProtection(ctx context.Context, req *ReposUpdat
 		req = new(ReposUpdatePullRequestReviewProtectionReq)
 	}
 	resp := &ReposUpdatePullRequestReviewProtectionResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/update-pull-request-review-protection", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -18304,7 +18304,7 @@ func ReposUpdatePullRequestReviewProtection(ctx context.Context, req *ReposUpdat
 		return resp, err
 	}
 	resp.Data = components.ProtectedBranchPullRequestReview{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/update-pull-request-review-protection")
 	if err != nil {
 		return nil, err
 	}
@@ -18392,7 +18392,7 @@ func (r *ReposUpdatePullRequestReviewProtectionReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposUpdatePullRequestReviewProtectionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/update-pull-request-review-protection", opt)
 }
 
 /*
@@ -18468,7 +18468,7 @@ func ReposUpdateRelease(ctx context.Context, req *ReposUpdateReleaseReq, opt ...
 		req = new(ReposUpdateReleaseReq)
 	}
 	resp := &ReposUpdateReleaseResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/update-release", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -18476,7 +18476,7 @@ func ReposUpdateRelease(ctx context.Context, req *ReposUpdateReleaseReq, opt ...
 		return resp, err
 	}
 	resp.Data = components.Release{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/update-release")
 	if err != nil {
 		return nil, err
 	}
@@ -18551,7 +18551,7 @@ func (r *ReposUpdateReleaseReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposUpdateReleaseReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/update-release", opt)
 }
 
 /*
@@ -18622,7 +18622,7 @@ func ReposUpdateReleaseAsset(ctx context.Context, req *ReposUpdateReleaseAssetRe
 		req = new(ReposUpdateReleaseAssetReq)
 	}
 	resp := &ReposUpdateReleaseAssetResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/update-release-asset", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -18630,7 +18630,7 @@ func ReposUpdateReleaseAsset(ctx context.Context, req *ReposUpdateReleaseAssetRe
 		return resp, err
 	}
 	resp.Data = components.ReleaseAsset{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/update-release-asset")
 	if err != nil {
 		return nil, err
 	}
@@ -18705,7 +18705,7 @@ func (r *ReposUpdateReleaseAssetReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposUpdateReleaseAssetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/update-release-asset", opt)
 }
 
 /*
@@ -18761,7 +18761,7 @@ func ReposUpdateStatusCheckProtection(ctx context.Context, req *ReposUpdateStatu
 		req = new(ReposUpdateStatusCheckProtectionReq)
 	}
 	resp := &ReposUpdateStatusCheckProtectionResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/update-status-check-protection", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -18769,7 +18769,7 @@ func ReposUpdateStatusCheckProtection(ctx context.Context, req *ReposUpdateStatu
 		return resp, err
 	}
 	resp.Data = components.StatusCheckPolicy{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/update-status-check-protection")
 	if err != nil {
 		return nil, err
 	}
@@ -18844,7 +18844,7 @@ func (r *ReposUpdateStatusCheckProtectionReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposUpdateStatusCheckProtectionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/update-status-check-protection", opt)
 }
 
 /*
@@ -18899,7 +18899,7 @@ func ReposUpdateWebhook(ctx context.Context, req *ReposUpdateWebhookReq, opt ...
 		req = new(ReposUpdateWebhookReq)
 	}
 	resp := &ReposUpdateWebhookResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/update-webhook", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -18907,7 +18907,7 @@ func ReposUpdateWebhook(ctx context.Context, req *ReposUpdateWebhookReq, opt ...
 		return resp, err
 	}
 	resp.Data = components.Hook{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/update-webhook")
 	if err != nil {
 		return nil, err
 	}
@@ -18980,7 +18980,7 @@ func (r *ReposUpdateWebhookReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposUpdateWebhookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/update-webhook", opt)
 }
 
 /*
@@ -19079,7 +19079,7 @@ func ReposUploadReleaseAsset(ctx context.Context, req *ReposUploadReleaseAssetRe
 		req = new(ReposUploadReleaseAssetReq)
 	}
 	resp := &ReposUploadReleaseAssetResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "repos/upload-release-asset", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -19087,7 +19087,7 @@ func ReposUploadReleaseAsset(ctx context.Context, req *ReposUploadReleaseAssetRe
 		return resp, err
 	}
 	resp.Data = components.ReleaseAsset{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "repos/upload-release-asset")
 	if err != nil {
 		return nil, err
 	}
@@ -19180,7 +19180,7 @@ func (r *ReposUploadReleaseAssetReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReposUploadReleaseAssetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "repos/upload-release-asset", opt)
 }
 
 /*

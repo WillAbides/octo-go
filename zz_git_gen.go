@@ -25,7 +25,7 @@ func GitCreateBlob(ctx context.Context, req *GitCreateBlobReq, opt ...RequestOpt
 		req = new(GitCreateBlobReq)
 	}
 	resp := &GitCreateBlobResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "git/create-blob", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -33,7 +33,7 @@ func GitCreateBlob(ctx context.Context, req *GitCreateBlobReq, opt ...RequestOpt
 		return resp, err
 	}
 	resp.Data = components.ShortBlob{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "git/create-blob")
 	if err != nil {
 		return nil, err
 	}
@@ -105,7 +105,7 @@ func (r *GitCreateBlobReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *GitCreateBlobReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "git/create-blob", opt)
 }
 
 /*
@@ -160,7 +160,7 @@ func GitCreateCommit(ctx context.Context, req *GitCreateCommitReq, opt ...Reques
 		req = new(GitCreateCommitReq)
 	}
 	resp := &GitCreateCommitResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "git/create-commit", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -168,7 +168,7 @@ func GitCreateCommit(ctx context.Context, req *GitCreateCommitReq, opt ...Reques
 		return resp, err
 	}
 	resp.Data = components.GitCommit{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "git/create-commit")
 	if err != nil {
 		return nil, err
 	}
@@ -240,7 +240,7 @@ func (r *GitCreateCommitReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *GitCreateCommitReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "git/create-commit", opt)
 }
 
 /*
@@ -364,7 +364,7 @@ func GitCreateRef(ctx context.Context, req *GitCreateRefReq, opt ...RequestOptio
 		req = new(GitCreateRefReq)
 	}
 	resp := &GitCreateRefResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "git/create-ref", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -372,7 +372,7 @@ func GitCreateRef(ctx context.Context, req *GitCreateRefReq, opt ...RequestOptio
 		return resp, err
 	}
 	resp.Data = components.GitRef{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "git/create-ref")
 	if err != nil {
 		return nil, err
 	}
@@ -444,7 +444,7 @@ func (r *GitCreateRefReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *GitCreateRefReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "git/create-ref", opt)
 }
 
 /*
@@ -503,7 +503,7 @@ func GitCreateTag(ctx context.Context, req *GitCreateTagReq, opt ...RequestOptio
 		req = new(GitCreateTagReq)
 	}
 	resp := &GitCreateTagResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "git/create-tag", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -511,7 +511,7 @@ func GitCreateTag(ctx context.Context, req *GitCreateTagReq, opt ...RequestOptio
 		return resp, err
 	}
 	resp.Data = components.GitTag{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "git/create-tag")
 	if err != nil {
 		return nil, err
 	}
@@ -583,7 +583,7 @@ func (r *GitCreateTagReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *GitCreateTagReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "git/create-tag", opt)
 }
 
 /*
@@ -663,7 +663,7 @@ func GitCreateTree(ctx context.Context, req *GitCreateTreeReq, opt ...RequestOpt
 		req = new(GitCreateTreeReq)
 	}
 	resp := &GitCreateTreeResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "git/create-tree", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -671,7 +671,7 @@ func GitCreateTree(ctx context.Context, req *GitCreateTreeReq, opt ...RequestOpt
 		return resp, err
 	}
 	resp.Data = components.GitTree{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "git/create-tree")
 	if err != nil {
 		return nil, err
 	}
@@ -743,7 +743,7 @@ func (r *GitCreateTreeReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *GitCreateTreeReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "git/create-tree", opt)
 }
 
 /*
@@ -837,14 +837,14 @@ func GitDeleteRef(ctx context.Context, req *GitDeleteRefReq, opt ...RequestOptio
 		req = new(GitDeleteRefReq)
 	}
 	resp := &GitDeleteRefResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "git/delete-ref", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "git/delete-ref")
 	if err != nil {
 		return nil, err
 	}
@@ -915,7 +915,7 @@ func (r *GitDeleteRefReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *GitDeleteRefReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "git/delete-ref", opt)
 }
 
 /*
@@ -955,7 +955,7 @@ func GitGetBlob(ctx context.Context, req *GitGetBlobReq, opt ...RequestOption) (
 		req = new(GitGetBlobReq)
 	}
 	resp := &GitGetBlobResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "git/get-blob", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -963,7 +963,7 @@ func GitGetBlob(ctx context.Context, req *GitGetBlobReq, opt ...RequestOption) (
 		return resp, err
 	}
 	resp.Data = components.Blob{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "git/get-blob")
 	if err != nil {
 		return nil, err
 	}
@@ -1034,7 +1034,7 @@ func (r *GitGetBlobReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *GitGetBlobReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "git/get-blob", opt)
 }
 
 /*
@@ -1075,7 +1075,7 @@ func GitGetCommit(ctx context.Context, req *GitGetCommitReq, opt ...RequestOptio
 		req = new(GitGetCommitReq)
 	}
 	resp := &GitGetCommitResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "git/get-commit", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1083,7 +1083,7 @@ func GitGetCommit(ctx context.Context, req *GitGetCommitReq, opt ...RequestOptio
 		return resp, err
 	}
 	resp.Data = components.GitCommit{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "git/get-commit")
 	if err != nil {
 		return nil, err
 	}
@@ -1154,7 +1154,7 @@ func (r *GitGetCommitReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *GitGetCommitReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "git/get-commit", opt)
 }
 
 /*
@@ -1195,7 +1195,7 @@ func GitGetRef(ctx context.Context, req *GitGetRefReq, opt ...RequestOption) (*G
 		req = new(GitGetRefReq)
 	}
 	resp := &GitGetRefResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "git/get-ref", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1203,7 +1203,7 @@ func GitGetRef(ctx context.Context, req *GitGetRefReq, opt ...RequestOption) (*G
 		return resp, err
 	}
 	resp.Data = components.GitRef{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "git/get-ref")
 	if err != nil {
 		return nil, err
 	}
@@ -1274,7 +1274,7 @@ func (r *GitGetRefReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *GitGetRefReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "git/get-ref", opt)
 }
 
 /*
@@ -1315,7 +1315,7 @@ func GitGetTag(ctx context.Context, req *GitGetTagReq, opt ...RequestOption) (*G
 		req = new(GitGetTagReq)
 	}
 	resp := &GitGetTagResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "git/get-tag", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1323,7 +1323,7 @@ func GitGetTag(ctx context.Context, req *GitGetTagReq, opt ...RequestOption) (*G
 		return resp, err
 	}
 	resp.Data = components.GitTag{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "git/get-tag")
 	if err != nil {
 		return nil, err
 	}
@@ -1394,7 +1394,7 @@ func (r *GitGetTagReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *GitGetTagReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "git/get-tag", opt)
 }
 
 /*
@@ -1435,7 +1435,7 @@ func GitGetTree(ctx context.Context, req *GitGetTreeReq, opt ...RequestOption) (
 		req = new(GitGetTreeReq)
 	}
 	resp := &GitGetTreeResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "git/get-tree", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1443,7 +1443,7 @@ func GitGetTree(ctx context.Context, req *GitGetTreeReq, opt ...RequestOption) (
 		return resp, err
 	}
 	resp.Data = components.GitTree{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "git/get-tree")
 	if err != nil {
 		return nil, err
 	}
@@ -1526,7 +1526,7 @@ func (r *GitGetTreeReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *GitGetTreeReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "git/get-tree", opt)
 }
 
 /*
@@ -1567,7 +1567,7 @@ func GitListMatchingRefs(ctx context.Context, req *GitListMatchingRefsReq, opt .
 		req = new(GitListMatchingRefsReq)
 	}
 	resp := &GitListMatchingRefsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "git/list-matching-refs", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1575,7 +1575,7 @@ func GitListMatchingRefs(ctx context.Context, req *GitListMatchingRefsReq, opt .
 		return resp, err
 	}
 	resp.Data = []components.GitRef{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "git/list-matching-refs")
 	if err != nil {
 		return nil, err
 	}
@@ -1658,7 +1658,7 @@ func (r *GitListMatchingRefsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *GitListMatchingRefsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "git/list-matching-refs", opt)
 }
 
 /*
@@ -1699,7 +1699,7 @@ func GitUpdateRef(ctx context.Context, req *GitUpdateRefReq, opt ...RequestOptio
 		req = new(GitUpdateRefReq)
 	}
 	resp := &GitUpdateRefResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "git/update-ref", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1707,7 +1707,7 @@ func GitUpdateRef(ctx context.Context, req *GitUpdateRefReq, opt ...RequestOptio
 		return resp, err
 	}
 	resp.Data = components.GitRef{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "git/update-ref")
 	if err != nil {
 		return nil, err
 	}
@@ -1782,7 +1782,7 @@ func (r *GitUpdateRefReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *GitUpdateRefReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "git/update-ref", opt)
 }
 
 /*

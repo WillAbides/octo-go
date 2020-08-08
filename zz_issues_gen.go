@@ -25,7 +25,7 @@ func IssuesAddAssignees(ctx context.Context, req *IssuesAddAssigneesReq, opt ...
 		req = new(IssuesAddAssigneesReq)
 	}
 	resp := &IssuesAddAssigneesResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "issues/add-assignees", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -33,7 +33,7 @@ func IssuesAddAssignees(ctx context.Context, req *IssuesAddAssigneesReq, opt ...
 		return resp, err
 	}
 	resp.Data = components.IssueSimple{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "issues/add-assignees")
 	if err != nil {
 		return nil, err
 	}
@@ -108,7 +108,7 @@ func (r *IssuesAddAssigneesReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *IssuesAddAssigneesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "issues/add-assignees", opt)
 }
 
 /*
@@ -163,7 +163,7 @@ func IssuesAddLabels(ctx context.Context, req *IssuesAddLabelsReq, opt ...Reques
 		req = new(IssuesAddLabelsReq)
 	}
 	resp := &IssuesAddLabelsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "issues/add-labels", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -171,7 +171,7 @@ func IssuesAddLabels(ctx context.Context, req *IssuesAddLabelsReq, opt ...Reques
 		return resp, err
 	}
 	resp.Data = []components.Label{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "issues/add-labels")
 	if err != nil {
 		return nil, err
 	}
@@ -246,7 +246,7 @@ func (r *IssuesAddLabelsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *IssuesAddLabelsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "issues/add-labels", opt)
 }
 
 /*
@@ -303,7 +303,7 @@ func IssuesCheckUserCanBeAssigned(ctx context.Context, req *IssuesCheckUserCanBe
 		req = new(IssuesCheckUserCanBeAssignedReq)
 	}
 	resp := &IssuesCheckUserCanBeAssignedResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "issues/check-user-can-be-assigned", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -314,7 +314,7 @@ func IssuesCheckUserCanBeAssigned(ctx context.Context, req *IssuesCheckUserCanBe
 	if err != nil {
 		return nil, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "issues/check-user-can-be-assigned")
 	if err != nil {
 		return nil, err
 	}
@@ -385,7 +385,7 @@ func (r *IssuesCheckUserCanBeAssignedReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *IssuesCheckUserCanBeAssignedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "issues/check-user-can-be-assigned", opt)
 }
 
 /*
@@ -426,7 +426,7 @@ func IssuesCreate(ctx context.Context, req *IssuesCreateReq, opt ...RequestOptio
 		req = new(IssuesCreateReq)
 	}
 	resp := &IssuesCreateResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "issues/create", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -434,7 +434,7 @@ func IssuesCreate(ctx context.Context, req *IssuesCreateReq, opt ...RequestOptio
 		return resp, err
 	}
 	resp.Data = components.Issue{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "issues/create")
 	if err != nil {
 		return nil, err
 	}
@@ -506,7 +506,7 @@ func (r *IssuesCreateReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *IssuesCreateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "issues/create", opt)
 }
 
 /*
@@ -587,7 +587,7 @@ func IssuesCreateComment(ctx context.Context, req *IssuesCreateCommentReq, opt .
 		req = new(IssuesCreateCommentReq)
 	}
 	resp := &IssuesCreateCommentResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "issues/create-comment", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -595,7 +595,7 @@ func IssuesCreateComment(ctx context.Context, req *IssuesCreateCommentReq, opt .
 		return resp, err
 	}
 	resp.Data = components.IssueComment{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "issues/create-comment")
 	if err != nil {
 		return nil, err
 	}
@@ -670,7 +670,7 @@ func (r *IssuesCreateCommentReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *IssuesCreateCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "issues/create-comment", opt)
 }
 
 /*
@@ -722,7 +722,7 @@ func IssuesCreateLabel(ctx context.Context, req *IssuesCreateLabelReq, opt ...Re
 		req = new(IssuesCreateLabelReq)
 	}
 	resp := &IssuesCreateLabelResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "issues/create-label", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -730,7 +730,7 @@ func IssuesCreateLabel(ctx context.Context, req *IssuesCreateLabelReq, opt ...Re
 		return resp, err
 	}
 	resp.Data = components.Label{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "issues/create-label")
 	if err != nil {
 		return nil, err
 	}
@@ -802,7 +802,7 @@ func (r *IssuesCreateLabelReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *IssuesCreateLabelReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "issues/create-label", opt)
 }
 
 /*
@@ -867,7 +867,7 @@ func IssuesCreateMilestone(ctx context.Context, req *IssuesCreateMilestoneReq, o
 		req = new(IssuesCreateMilestoneReq)
 	}
 	resp := &IssuesCreateMilestoneResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "issues/create-milestone", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -875,7 +875,7 @@ func IssuesCreateMilestone(ctx context.Context, req *IssuesCreateMilestoneReq, o
 		return resp, err
 	}
 	resp.Data = components.Milestone{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "issues/create-milestone")
 	if err != nil {
 		return nil, err
 	}
@@ -947,7 +947,7 @@ func (r *IssuesCreateMilestoneReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *IssuesCreateMilestoneReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "issues/create-milestone", opt)
 }
 
 /*
@@ -1011,14 +1011,14 @@ func IssuesDeleteComment(ctx context.Context, req *IssuesDeleteCommentReq, opt .
 		req = new(IssuesDeleteCommentReq)
 	}
 	resp := &IssuesDeleteCommentResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "issues/delete-comment", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "issues/delete-comment")
 	if err != nil {
 		return nil, err
 	}
@@ -1089,7 +1089,7 @@ func (r *IssuesDeleteCommentReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *IssuesDeleteCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "issues/delete-comment", opt)
 }
 
 /*
@@ -1129,14 +1129,14 @@ func IssuesDeleteLabel(ctx context.Context, req *IssuesDeleteLabelReq, opt ...Re
 		req = new(IssuesDeleteLabelReq)
 	}
 	resp := &IssuesDeleteLabelResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "issues/delete-label", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "issues/delete-label")
 	if err != nil {
 		return nil, err
 	}
@@ -1207,7 +1207,7 @@ func (r *IssuesDeleteLabelReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *IssuesDeleteLabelReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "issues/delete-label", opt)
 }
 
 /*
@@ -1247,7 +1247,7 @@ func IssuesDeleteMilestone(ctx context.Context, req *IssuesDeleteMilestoneReq, o
 		req = new(IssuesDeleteMilestoneReq)
 	}
 	resp := &IssuesDeleteMilestoneResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "issues/delete-milestone", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1258,7 +1258,7 @@ func IssuesDeleteMilestone(ctx context.Context, req *IssuesDeleteMilestoneReq, o
 	if err != nil {
 		return nil, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "issues/delete-milestone")
 	if err != nil {
 		return nil, err
 	}
@@ -1329,7 +1329,7 @@ func (r *IssuesDeleteMilestoneReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *IssuesDeleteMilestoneReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "issues/delete-milestone", opt)
 }
 
 /*
@@ -1370,7 +1370,7 @@ func IssuesGet(ctx context.Context, req *IssuesGetReq, opt ...RequestOption) (*I
 		req = new(IssuesGetReq)
 	}
 	resp := &IssuesGetResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "issues/get", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1378,7 +1378,7 @@ func IssuesGet(ctx context.Context, req *IssuesGetReq, opt ...RequestOption) (*I
 		return resp, err
 	}
 	resp.Data = components.Issue{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "issues/get")
 	if err != nil {
 		return nil, err
 	}
@@ -1463,7 +1463,7 @@ func (r *IssuesGetReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *IssuesGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "issues/get", opt)
 }
 
 /*
@@ -1504,7 +1504,7 @@ func IssuesGetComment(ctx context.Context, req *IssuesGetCommentReq, opt ...Requ
 		req = new(IssuesGetCommentReq)
 	}
 	resp := &IssuesGetCommentResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "issues/get-comment", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1512,7 +1512,7 @@ func IssuesGetComment(ctx context.Context, req *IssuesGetCommentReq, opt ...Requ
 		return resp, err
 	}
 	resp.Data = components.IssueComment{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "issues/get-comment")
 	if err != nil {
 		return nil, err
 	}
@@ -1607,7 +1607,7 @@ func (r *IssuesGetCommentReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *IssuesGetCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "issues/get-comment", opt)
 }
 
 /*
@@ -1648,7 +1648,7 @@ func IssuesGetEvent(ctx context.Context, req *IssuesGetEventReq, opt ...RequestO
 		req = new(IssuesGetEventReq)
 	}
 	resp := &IssuesGetEventResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "issues/get-event", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1656,7 +1656,7 @@ func IssuesGetEvent(ctx context.Context, req *IssuesGetEventReq, opt ...RequestO
 		return resp, err
 	}
 	resp.Data = components.IssueEvent{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "issues/get-event")
 	if err != nil {
 		return nil, err
 	}
@@ -1764,7 +1764,7 @@ func (r *IssuesGetEventReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *IssuesGetEventReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "issues/get-event", opt)
 }
 
 /*
@@ -1805,7 +1805,7 @@ func IssuesGetLabel(ctx context.Context, req *IssuesGetLabelReq, opt ...RequestO
 		req = new(IssuesGetLabelReq)
 	}
 	resp := &IssuesGetLabelResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "issues/get-label", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1813,7 +1813,7 @@ func IssuesGetLabel(ctx context.Context, req *IssuesGetLabelReq, opt ...RequestO
 		return resp, err
 	}
 	resp.Data = components.Label{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "issues/get-label")
 	if err != nil {
 		return nil, err
 	}
@@ -1884,7 +1884,7 @@ func (r *IssuesGetLabelReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *IssuesGetLabelReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "issues/get-label", opt)
 }
 
 /*
@@ -1925,7 +1925,7 @@ func IssuesGetMilestone(ctx context.Context, req *IssuesGetMilestoneReq, opt ...
 		req = new(IssuesGetMilestoneReq)
 	}
 	resp := &IssuesGetMilestoneResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "issues/get-milestone", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1933,7 +1933,7 @@ func IssuesGetMilestone(ctx context.Context, req *IssuesGetMilestoneReq, opt ...
 		return resp, err
 	}
 	resp.Data = components.Milestone{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "issues/get-milestone")
 	if err != nil {
 		return nil, err
 	}
@@ -2004,7 +2004,7 @@ func (r *IssuesGetMilestoneReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *IssuesGetMilestoneReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "issues/get-milestone", opt)
 }
 
 /*
@@ -2045,7 +2045,7 @@ func IssuesList(ctx context.Context, req *IssuesListReq, opt ...RequestOption) (
 		req = new(IssuesListReq)
 	}
 	resp := &IssuesListResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "issues/list", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2053,7 +2053,7 @@ func IssuesList(ctx context.Context, req *IssuesListReq, opt ...RequestOption) (
 		return resp, err
 	}
 	resp.Data = []components.Issue{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "issues/list")
 	if err != nil {
 		return nil, err
 	}
@@ -2222,7 +2222,7 @@ func (r *IssuesListReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *IssuesListReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "issues/list", opt)
 }
 
 /*
@@ -2263,7 +2263,7 @@ func IssuesListAssignees(ctx context.Context, req *IssuesListAssigneesReq, opt .
 		req = new(IssuesListAssigneesReq)
 	}
 	resp := &IssuesListAssigneesResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "issues/list-assignees", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2271,7 +2271,7 @@ func IssuesListAssignees(ctx context.Context, req *IssuesListAssigneesReq, opt .
 		return resp, err
 	}
 	resp.Data = []components.SimpleUser{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "issues/list-assignees")
 	if err != nil {
 		return nil, err
 	}
@@ -2351,7 +2351,7 @@ func (r *IssuesListAssigneesReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *IssuesListAssigneesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "issues/list-assignees", opt)
 }
 
 /*
@@ -2392,7 +2392,7 @@ func IssuesListComments(ctx context.Context, req *IssuesListCommentsReq, opt ...
 		req = new(IssuesListCommentsReq)
 	}
 	resp := &IssuesListCommentsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "issues/list-comments", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2400,7 +2400,7 @@ func IssuesListComments(ctx context.Context, req *IssuesListCommentsReq, opt ...
 		return resp, err
 	}
 	resp.Data = []components.IssueComment{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "issues/list-comments")
 	if err != nil {
 		return nil, err
 	}
@@ -2507,7 +2507,7 @@ func (r *IssuesListCommentsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *IssuesListCommentsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "issues/list-comments", opt)
 }
 
 /*
@@ -2548,7 +2548,7 @@ func IssuesListCommentsForRepo(ctx context.Context, req *IssuesListCommentsForRe
 		req = new(IssuesListCommentsForRepoReq)
 	}
 	resp := &IssuesListCommentsForRepoResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "issues/list-comments-for-repo", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2556,7 +2556,7 @@ func IssuesListCommentsForRepo(ctx context.Context, req *IssuesListCommentsForRe
 		return resp, err
 	}
 	resp.Data = []components.IssueComment{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "issues/list-comments-for-repo")
 	if err != nil {
 		return nil, err
 	}
@@ -2675,7 +2675,7 @@ func (r *IssuesListCommentsForRepoReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *IssuesListCommentsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "issues/list-comments-for-repo", opt)
 }
 
 /*
@@ -2716,7 +2716,7 @@ func IssuesListEvents(ctx context.Context, req *IssuesListEventsReq, opt ...Requ
 		req = new(IssuesListEventsReq)
 	}
 	resp := &IssuesListEventsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "issues/list-events", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2724,7 +2724,7 @@ func IssuesListEvents(ctx context.Context, req *IssuesListEventsReq, opt ...Requ
 		return resp, err
 	}
 	resp.Data = []components.IssueEventForIssue{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "issues/list-events")
 	if err != nil {
 		return nil, err
 	}
@@ -2836,7 +2836,7 @@ func (r *IssuesListEventsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *IssuesListEventsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "issues/list-events", opt)
 }
 
 /*
@@ -2877,7 +2877,7 @@ func IssuesListEventsForRepo(ctx context.Context, req *IssuesListEventsForRepoRe
 		req = new(IssuesListEventsForRepoReq)
 	}
 	resp := &IssuesListEventsForRepoResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "issues/list-events-for-repo", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2885,7 +2885,7 @@ func IssuesListEventsForRepo(ctx context.Context, req *IssuesListEventsForRepoRe
 		return resp, err
 	}
 	resp.Data = []components.IssueEvent{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "issues/list-events-for-repo")
 	if err != nil {
 		return nil, err
 	}
@@ -2994,7 +2994,7 @@ func (r *IssuesListEventsForRepoReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *IssuesListEventsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "issues/list-events-for-repo", opt)
 }
 
 /*
@@ -3035,7 +3035,7 @@ func IssuesListEventsForTimeline(ctx context.Context, req *IssuesListEventsForTi
 		req = new(IssuesListEventsForTimelineReq)
 	}
 	resp := &IssuesListEventsForTimelineResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "issues/list-events-for-timeline", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3043,7 +3043,7 @@ func IssuesListEventsForTimeline(ctx context.Context, req *IssuesListEventsForTi
 		return resp, err
 	}
 	resp.Data = []components.IssueEventForIssue{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "issues/list-events-for-timeline")
 	if err != nil {
 		return nil, err
 	}
@@ -3157,7 +3157,7 @@ func (r *IssuesListEventsForTimelineReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *IssuesListEventsForTimelineReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "issues/list-events-for-timeline", opt)
 }
 
 /*
@@ -3198,7 +3198,7 @@ func IssuesListForAuthenticatedUser(ctx context.Context, req *IssuesListForAuthe
 		req = new(IssuesListForAuthenticatedUserReq)
 	}
 	resp := &IssuesListForAuthenticatedUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "issues/list-for-authenticated-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3206,7 +3206,7 @@ func IssuesListForAuthenticatedUser(ctx context.Context, req *IssuesListForAuthe
 		return resp, err
 	}
 	resp.Data = []components.Issue{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "issues/list-for-authenticated-user")
 	if err != nil {
 		return nil, err
 	}
@@ -3359,7 +3359,7 @@ func (r *IssuesListForAuthenticatedUserReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *IssuesListForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "issues/list-for-authenticated-user", opt)
 }
 
 /*
@@ -3400,7 +3400,7 @@ func IssuesListForOrg(ctx context.Context, req *IssuesListForOrgReq, opt ...Requ
 		req = new(IssuesListForOrgReq)
 	}
 	resp := &IssuesListForOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "issues/list-for-org", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3408,7 +3408,7 @@ func IssuesListForOrg(ctx context.Context, req *IssuesListForOrgReq, opt ...Requ
 		return resp, err
 	}
 	resp.Data = []components.Issue{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "issues/list-for-org")
 	if err != nil {
 		return nil, err
 	}
@@ -3562,7 +3562,7 @@ func (r *IssuesListForOrgReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *IssuesListForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "issues/list-for-org", opt)
 }
 
 /*
@@ -3603,7 +3603,7 @@ func IssuesListForRepo(ctx context.Context, req *IssuesListForRepoReq, opt ...Re
 		req = new(IssuesListForRepoReq)
 	}
 	resp := &IssuesListForRepoResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "issues/list-for-repo", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3611,7 +3611,7 @@ func IssuesListForRepo(ctx context.Context, req *IssuesListForRepoReq, opt ...Re
 		return resp, err
 	}
 	resp.Data = []components.IssueSimple{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "issues/list-for-repo")
 	if err != nil {
 		return nil, err
 	}
@@ -3783,7 +3783,7 @@ func (r *IssuesListForRepoReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *IssuesListForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "issues/list-for-repo", opt)
 }
 
 /*
@@ -3824,7 +3824,7 @@ func IssuesListLabelsForMilestone(ctx context.Context, req *IssuesListLabelsForM
 		req = new(IssuesListLabelsForMilestoneReq)
 	}
 	resp := &IssuesListLabelsForMilestoneResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "issues/list-labels-for-milestone", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3832,7 +3832,7 @@ func IssuesListLabelsForMilestone(ctx context.Context, req *IssuesListLabelsForM
 		return resp, err
 	}
 	resp.Data = []components.Label{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "issues/list-labels-for-milestone")
 	if err != nil {
 		return nil, err
 	}
@@ -3915,7 +3915,7 @@ func (r *IssuesListLabelsForMilestoneReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *IssuesListLabelsForMilestoneReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "issues/list-labels-for-milestone", opt)
 }
 
 /*
@@ -3956,7 +3956,7 @@ func IssuesListLabelsForRepo(ctx context.Context, req *IssuesListLabelsForRepoRe
 		req = new(IssuesListLabelsForRepoReq)
 	}
 	resp := &IssuesListLabelsForRepoResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "issues/list-labels-for-repo", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3964,7 +3964,7 @@ func IssuesListLabelsForRepo(ctx context.Context, req *IssuesListLabelsForRepoRe
 		return resp, err
 	}
 	resp.Data = []components.Label{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "issues/list-labels-for-repo")
 	if err != nil {
 		return nil, err
 	}
@@ -4044,7 +4044,7 @@ func (r *IssuesListLabelsForRepoReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *IssuesListLabelsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "issues/list-labels-for-repo", opt)
 }
 
 /*
@@ -4085,7 +4085,7 @@ func IssuesListLabelsOnIssue(ctx context.Context, req *IssuesListLabelsOnIssueRe
 		req = new(IssuesListLabelsOnIssueReq)
 	}
 	resp := &IssuesListLabelsOnIssueResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "issues/list-labels-on-issue", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -4093,7 +4093,7 @@ func IssuesListLabelsOnIssue(ctx context.Context, req *IssuesListLabelsOnIssueRe
 		return resp, err
 	}
 	resp.Data = []components.Label{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "issues/list-labels-on-issue")
 	if err != nil {
 		return nil, err
 	}
@@ -4176,7 +4176,7 @@ func (r *IssuesListLabelsOnIssueReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *IssuesListLabelsOnIssueReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "issues/list-labels-on-issue", opt)
 }
 
 /*
@@ -4217,7 +4217,7 @@ func IssuesListMilestones(ctx context.Context, req *IssuesListMilestonesReq, opt
 		req = new(IssuesListMilestonesReq)
 	}
 	resp := &IssuesListMilestonesResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "issues/list-milestones", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -4225,7 +4225,7 @@ func IssuesListMilestones(ctx context.Context, req *IssuesListMilestonesReq, opt
 		return resp, err
 	}
 	resp.Data = []components.Milestone{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "issues/list-milestones")
 	if err != nil {
 		return nil, err
 	}
@@ -4323,7 +4323,7 @@ func (r *IssuesListMilestonesReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *IssuesListMilestonesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "issues/list-milestones", opt)
 }
 
 /*
@@ -4364,14 +4364,14 @@ func IssuesLock(ctx context.Context, req *IssuesLockReq, opt ...RequestOption) (
 		req = new(IssuesLockReq)
 	}
 	resp := &IssuesLockResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "issues/lock", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "issues/lock")
 	if err != nil {
 		return nil, err
 	}
@@ -4456,7 +4456,7 @@ func (r *IssuesLockReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *IssuesLockReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "issues/lock", opt)
 }
 
 /*
@@ -4514,14 +4514,14 @@ func IssuesRemoveAllLabels(ctx context.Context, req *IssuesRemoveAllLabelsReq, o
 		req = new(IssuesRemoveAllLabelsReq)
 	}
 	resp := &IssuesRemoveAllLabelsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "issues/remove-all-labels", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "issues/remove-all-labels")
 	if err != nil {
 		return nil, err
 	}
@@ -4592,7 +4592,7 @@ func (r *IssuesRemoveAllLabelsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *IssuesRemoveAllLabelsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "issues/remove-all-labels", opt)
 }
 
 /*
@@ -4632,7 +4632,7 @@ func IssuesRemoveAssignees(ctx context.Context, req *IssuesRemoveAssigneesReq, o
 		req = new(IssuesRemoveAssigneesReq)
 	}
 	resp := &IssuesRemoveAssigneesResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "issues/remove-assignees", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -4640,7 +4640,7 @@ func IssuesRemoveAssignees(ctx context.Context, req *IssuesRemoveAssigneesReq, o
 		return resp, err
 	}
 	resp.Data = components.IssueSimple{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "issues/remove-assignees")
 	if err != nil {
 		return nil, err
 	}
@@ -4715,7 +4715,7 @@ func (r *IssuesRemoveAssigneesReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *IssuesRemoveAssigneesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "issues/remove-assignees", opt)
 }
 
 /*
@@ -4771,7 +4771,7 @@ func IssuesRemoveLabel(ctx context.Context, req *IssuesRemoveLabelReq, opt ...Re
 		req = new(IssuesRemoveLabelReq)
 	}
 	resp := &IssuesRemoveLabelResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "issues/remove-label", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -4779,7 +4779,7 @@ func IssuesRemoveLabel(ctx context.Context, req *IssuesRemoveLabelReq, opt ...Re
 		return resp, err
 	}
 	resp.Data = []components.Label{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "issues/remove-label")
 	if err != nil {
 		return nil, err
 	}
@@ -4853,7 +4853,7 @@ func (r *IssuesRemoveLabelReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *IssuesRemoveLabelReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "issues/remove-label", opt)
 }
 
 /*
@@ -4894,7 +4894,7 @@ func IssuesSetLabels(ctx context.Context, req *IssuesSetLabelsReq, opt ...Reques
 		req = new(IssuesSetLabelsReq)
 	}
 	resp := &IssuesSetLabelsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "issues/set-labels", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -4902,7 +4902,7 @@ func IssuesSetLabels(ctx context.Context, req *IssuesSetLabelsReq, opt ...Reques
 		return resp, err
 	}
 	resp.Data = []components.Label{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "issues/set-labels")
 	if err != nil {
 		return nil, err
 	}
@@ -4977,7 +4977,7 @@ func (r *IssuesSetLabelsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *IssuesSetLabelsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "issues/set-labels", opt)
 }
 
 /*
@@ -5034,14 +5034,14 @@ func IssuesUnlock(ctx context.Context, req *IssuesUnlockReq, opt ...RequestOptio
 		req = new(IssuesUnlockReq)
 	}
 	resp := &IssuesUnlockResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "issues/unlock", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "issues/unlock")
 	if err != nil {
 		return nil, err
 	}
@@ -5112,7 +5112,7 @@ func (r *IssuesUnlockReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *IssuesUnlockReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "issues/unlock", opt)
 }
 
 /*
@@ -5152,7 +5152,7 @@ func IssuesUpdate(ctx context.Context, req *IssuesUpdateReq, opt ...RequestOptio
 		req = new(IssuesUpdateReq)
 	}
 	resp := &IssuesUpdateResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "issues/update", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -5160,7 +5160,7 @@ func IssuesUpdate(ctx context.Context, req *IssuesUpdateReq, opt ...RequestOptio
 		return resp, err
 	}
 	resp.Data = components.Issue{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "issues/update")
 	if err != nil {
 		return nil, err
 	}
@@ -5235,7 +5235,7 @@ func (r *IssuesUpdateReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *IssuesUpdateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "issues/update", opt)
 }
 
 /*
@@ -5319,7 +5319,7 @@ func IssuesUpdateComment(ctx context.Context, req *IssuesUpdateCommentReq, opt .
 		req = new(IssuesUpdateCommentReq)
 	}
 	resp := &IssuesUpdateCommentResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "issues/update-comment", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -5327,7 +5327,7 @@ func IssuesUpdateComment(ctx context.Context, req *IssuesUpdateCommentReq, opt .
 		return resp, err
 	}
 	resp.Data = components.IssueComment{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "issues/update-comment")
 	if err != nil {
 		return nil, err
 	}
@@ -5402,7 +5402,7 @@ func (r *IssuesUpdateCommentReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *IssuesUpdateCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "issues/update-comment", opt)
 }
 
 /*
@@ -5454,7 +5454,7 @@ func IssuesUpdateLabel(ctx context.Context, req *IssuesUpdateLabelReq, opt ...Re
 		req = new(IssuesUpdateLabelReq)
 	}
 	resp := &IssuesUpdateLabelResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "issues/update-label", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -5462,7 +5462,7 @@ func IssuesUpdateLabel(ctx context.Context, req *IssuesUpdateLabelReq, opt ...Re
 		return resp, err
 	}
 	resp.Data = components.Label{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "issues/update-label")
 	if err != nil {
 		return nil, err
 	}
@@ -5537,7 +5537,7 @@ func (r *IssuesUpdateLabelReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *IssuesUpdateLabelReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "issues/update-label", opt)
 }
 
 /*
@@ -5602,7 +5602,7 @@ func IssuesUpdateMilestone(ctx context.Context, req *IssuesUpdateMilestoneReq, o
 		req = new(IssuesUpdateMilestoneReq)
 	}
 	resp := &IssuesUpdateMilestoneResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "issues/update-milestone", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -5610,7 +5610,7 @@ func IssuesUpdateMilestone(ctx context.Context, req *IssuesUpdateMilestoneReq, o
 		return resp, err
 	}
 	resp.Data = components.Milestone{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "issues/update-milestone")
 	if err != nil {
 		return nil, err
 	}
@@ -5685,7 +5685,7 @@ func (r *IssuesUpdateMilestoneReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *IssuesUpdateMilestoneReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "issues/update-milestone", opt)
 }
 
 /*

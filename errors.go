@@ -11,16 +11,18 @@ import (
 	"github.com/willabides/octo-go/internal"
 )
 
-func errorCheck(resp *response) error {
-	for _, fn := range []func(*response) error{
-		clientErrorCheck,
-		serverErrorCheck,
-		unexpectedStatusCheck,
-	} {
-		err := fn(resp)
-		if err != nil {
-			return err
-		}
+func errorCheck(resp *response, opID string) error {
+	err := clientErrorCheck(resp, opID)
+	if err != nil {
+		return err
+	}
+	err = serverErrorCheck(resp)
+	if err != nil {
+		return err
+	}
+	err = unexpectedStatusCheck(resp, opID)
+	if err != nil {
+		return err
 	}
 	return nil
 }
@@ -37,9 +39,8 @@ func (e *UnexpectedStatusCodeError) Error() string {
 	return fmt.Sprintf("received unexpected http status code %d, expected codes are %v", e.gotCode, e.wantedCodes)
 }
 
-func unexpectedStatusCheck(resp *response) error {
+func unexpectedStatusCheck(resp *response, opID string) error {
 	valid := resp.httpRequester.validStatuses()
-	opID := internal.ReqOperationID(resp.httpRequester)
 	if internal.OperationHasAttribute(opID, internal.AttrRedirectOnly) {
 		return nil
 	}
@@ -70,12 +71,11 @@ func (e *ClientError) Error() string {
 	return fmt.Sprintf("client error %d: %s", e.response.httpResponse.StatusCode, e.ErrorData.Message)
 }
 
-func clientErrorCheck(resp *response) error {
+func clientErrorCheck(resp *response, opID string) error {
 	statusCode := resp.httpResponse.StatusCode
 	if statusCode < 400 || statusCode > 499 {
 		return nil
 	}
-	opID := internal.ReqOperationID(resp.httpRequester)
 
 	// 404 isn't an error for boolean endpoints ¯\_(ツ)_/¯
 	if internal.OperationHasAttribute(opID, internal.AttrBoolean) && statusCode == 404 {

@@ -5,14 +5,9 @@ import (
 )
 
 var (
-	reqOperationIDs     map[string]string
+	reqOperationIDs     map[string]string //nolint:unused // save for later
 	operationAttributes map[string][]EndpointAttribute
 )
-
-// ReqOperationID returns the operation id associated with a request struct
-func ReqOperationID(req interface{}) string {
-	return reqOperationIDs[structName(reflect.TypeOf(req))]
-}
 
 // EndpointAttribute is an attribute for an endpoint
 type EndpointAttribute int
@@ -34,6 +29,7 @@ func OperationHasAttribute(id string, attr EndpointAttribute) bool {
 }
 
 // structName returns the name of a struct from its reflect type or a pointer
+//nolint:unused // save for later
 func structName(tp reflect.Type) string {
 	if tp.Kind() == reflect.Ptr {
 		return structName(tp.Elem())

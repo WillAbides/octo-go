@@ -24,7 +24,7 @@ func GitignoreGetAllTemplates(ctx context.Context, req *GitignoreGetAllTemplates
 		req = new(GitignoreGetAllTemplatesReq)
 	}
 	resp := &GitignoreGetAllTemplatesResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "gitignore/get-all-templates", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -32,7 +32,7 @@ func GitignoreGetAllTemplates(ctx context.Context, req *GitignoreGetAllTemplates
 		return resp, err
 	}
 	resp.Data = GitignoreGetAllTemplatesResponseBody{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "gitignore/get-all-templates")
 	if err != nil {
 		return nil, err
 	}
@@ -98,7 +98,7 @@ func (r *GitignoreGetAllTemplatesReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *GitignoreGetAllTemplatesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "gitignore/get-all-templates", opt)
 }
 
 /*
@@ -146,7 +146,7 @@ func GitignoreGetTemplate(ctx context.Context, req *GitignoreGetTemplateReq, opt
 		req = new(GitignoreGetTemplateReq)
 	}
 	resp := &GitignoreGetTemplateResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "gitignore/get-template", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -154,7 +154,7 @@ func GitignoreGetTemplate(ctx context.Context, req *GitignoreGetTemplateReq, opt
 		return resp, err
 	}
 	resp.Data = components.GitignoreTemplate{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "gitignore/get-template")
 	if err != nil {
 		return nil, err
 	}
@@ -223,7 +223,7 @@ func (r *GitignoreGetTemplateReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *GitignoreGetTemplateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "gitignore/get-template", opt)
 }
 
 /*

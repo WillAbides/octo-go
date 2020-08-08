@@ -25,14 +25,14 @@ func TeamsAddMemberLegacy(ctx context.Context, req *TeamsAddMemberLegacyReq, opt
 		req = new(TeamsAddMemberLegacyReq)
 	}
 	resp := &TeamsAddMemberLegacyResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/add-member-legacy", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "teams/add-member-legacy")
 	if err != nil {
 		return nil, err
 	}
@@ -100,7 +100,7 @@ func (r *TeamsAddMemberLegacyReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsAddMemberLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/add-member-legacy", opt)
 }
 
 /*
@@ -140,7 +140,7 @@ func TeamsAddOrUpdateMembershipForUserInOrg(ctx context.Context, req *TeamsAddOr
 		req = new(TeamsAddOrUpdateMembershipForUserInOrgReq)
 	}
 	resp := &TeamsAddOrUpdateMembershipForUserInOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/add-or-update-membership-for-user-in-org", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -148,7 +148,7 @@ func TeamsAddOrUpdateMembershipForUserInOrg(ctx context.Context, req *TeamsAddOr
 		return resp, err
 	}
 	resp.Data = components.TeamMembership{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "teams/add-or-update-membership-for-user-in-org")
 	if err != nil {
 		return nil, err
 	}
@@ -223,7 +223,7 @@ func (r *TeamsAddOrUpdateMembershipForUserInOrgReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsAddOrUpdateMembershipForUserInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/add-or-update-membership-for-user-in-org", opt)
 }
 
 /*
@@ -281,7 +281,7 @@ func TeamsAddOrUpdateMembershipForUserLegacy(ctx context.Context, req *TeamsAddO
 		req = new(TeamsAddOrUpdateMembershipForUserLegacyReq)
 	}
 	resp := &TeamsAddOrUpdateMembershipForUserLegacyResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/add-or-update-membership-for-user-legacy", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -289,7 +289,7 @@ func TeamsAddOrUpdateMembershipForUserLegacy(ctx context.Context, req *TeamsAddO
 		return resp, err
 	}
 	resp.Data = components.TeamMembership{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "teams/add-or-update-membership-for-user-legacy")
 	if err != nil {
 		return nil, err
 	}
@@ -361,7 +361,7 @@ func (r *TeamsAddOrUpdateMembershipForUserLegacyReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsAddOrUpdateMembershipForUserLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/add-or-update-membership-for-user-legacy", opt)
 }
 
 /*
@@ -419,14 +419,14 @@ func TeamsAddOrUpdateProjectPermissionsInOrg(ctx context.Context, req *TeamsAddO
 		req = new(TeamsAddOrUpdateProjectPermissionsInOrgReq)
 	}
 	resp := &TeamsAddOrUpdateProjectPermissionsInOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/add-or-update-project-permissions-in-org", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "teams/add-or-update-project-permissions-in-org")
 	if err != nil {
 		return nil, err
 	}
@@ -513,7 +513,7 @@ func (r *TeamsAddOrUpdateProjectPermissionsInOrgReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsAddOrUpdateProjectPermissionsInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/add-or-update-project-permissions-in-org", opt)
 }
 
 /*
@@ -574,14 +574,14 @@ func TeamsAddOrUpdateProjectPermissionsLegacy(ctx context.Context, req *TeamsAdd
 		req = new(TeamsAddOrUpdateProjectPermissionsLegacyReq)
 	}
 	resp := &TeamsAddOrUpdateProjectPermissionsLegacyResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/add-or-update-project-permissions-legacy", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "teams/add-or-update-project-permissions-legacy")
 	if err != nil {
 		return nil, err
 	}
@@ -665,7 +665,7 @@ func (r *TeamsAddOrUpdateProjectPermissionsLegacyReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsAddOrUpdateProjectPermissionsLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/add-or-update-project-permissions-legacy", opt)
 }
 
 /*
@@ -726,14 +726,14 @@ func TeamsAddOrUpdateRepoPermissionsInOrg(ctx context.Context, req *TeamsAddOrUp
 		req = new(TeamsAddOrUpdateRepoPermissionsInOrgReq)
 	}
 	resp := &TeamsAddOrUpdateRepoPermissionsInOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/add-or-update-repo-permissions-in-org", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "teams/add-or-update-repo-permissions-in-org")
 	if err != nil {
 		return nil, err
 	}
@@ -806,7 +806,7 @@ func (r *TeamsAddOrUpdateRepoPermissionsInOrgReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsAddOrUpdateRepoPermissionsInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/add-or-update-repo-permissions-in-org", opt)
 }
 
 /*
@@ -872,14 +872,14 @@ func TeamsAddOrUpdateRepoPermissionsLegacy(ctx context.Context, req *TeamsAddOrU
 		req = new(TeamsAddOrUpdateRepoPermissionsLegacyReq)
 	}
 	resp := &TeamsAddOrUpdateRepoPermissionsLegacyResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/add-or-update-repo-permissions-legacy", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "teams/add-or-update-repo-permissions-legacy")
 	if err != nil {
 		return nil, err
 	}
@@ -949,7 +949,7 @@ func (r *TeamsAddOrUpdateRepoPermissionsLegacyReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsAddOrUpdateRepoPermissionsLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/add-or-update-repo-permissions-legacy", opt)
 }
 
 /*
@@ -1009,7 +1009,7 @@ func TeamsCheckPermissionsForProjectInOrg(ctx context.Context, req *TeamsCheckPe
 		req = new(TeamsCheckPermissionsForProjectInOrgReq)
 	}
 	resp := &TeamsCheckPermissionsForProjectInOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/check-permissions-for-project-in-org", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1017,7 +1017,7 @@ func TeamsCheckPermissionsForProjectInOrg(ctx context.Context, req *TeamsCheckPe
 		return resp, err
 	}
 	resp.Data = components.TeamProject{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "teams/check-permissions-for-project-in-org")
 	if err != nil {
 		return nil, err
 	}
@@ -1103,7 +1103,7 @@ func (r *TeamsCheckPermissionsForProjectInOrgReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsCheckPermissionsForProjectInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/check-permissions-for-project-in-org", opt)
 }
 
 /*
@@ -1144,7 +1144,7 @@ func TeamsCheckPermissionsForProjectLegacy(ctx context.Context, req *TeamsCheckP
 		req = new(TeamsCheckPermissionsForProjectLegacyReq)
 	}
 	resp := &TeamsCheckPermissionsForProjectLegacyResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/check-permissions-for-project-legacy", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1152,7 +1152,7 @@ func TeamsCheckPermissionsForProjectLegacy(ctx context.Context, req *TeamsCheckP
 		return resp, err
 	}
 	resp.Data = components.TeamProject{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "teams/check-permissions-for-project-legacy")
 	if err != nil {
 		return nil, err
 	}
@@ -1235,7 +1235,7 @@ func (r *TeamsCheckPermissionsForProjectLegacyReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsCheckPermissionsForProjectLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/check-permissions-for-project-legacy", opt)
 }
 
 /*
@@ -1276,7 +1276,7 @@ func TeamsCheckPermissionsForRepoInOrg(ctx context.Context, req *TeamsCheckPermi
 		req = new(TeamsCheckPermissionsForRepoInOrgReq)
 	}
 	resp := &TeamsCheckPermissionsForRepoInOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/check-permissions-for-repo-in-org", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1284,7 +1284,7 @@ func TeamsCheckPermissionsForRepoInOrg(ctx context.Context, req *TeamsCheckPermi
 		return resp, err
 	}
 	resp.Data = components.TeamRepository{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "teams/check-permissions-for-repo-in-org")
 	if err != nil {
 		return nil, err
 	}
@@ -1356,7 +1356,7 @@ func (r *TeamsCheckPermissionsForRepoInOrgReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsCheckPermissionsForRepoInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/check-permissions-for-repo-in-org", opt)
 }
 
 /*
@@ -1397,7 +1397,7 @@ func TeamsCheckPermissionsForRepoLegacy(ctx context.Context, req *TeamsCheckPerm
 		req = new(TeamsCheckPermissionsForRepoLegacyReq)
 	}
 	resp := &TeamsCheckPermissionsForRepoLegacyResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/check-permissions-for-repo-legacy", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1405,7 +1405,7 @@ func TeamsCheckPermissionsForRepoLegacy(ctx context.Context, req *TeamsCheckPerm
 		return resp, err
 	}
 	resp.Data = components.TeamRepository{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "teams/check-permissions-for-repo-legacy")
 	if err != nil {
 		return nil, err
 	}
@@ -1474,7 +1474,7 @@ func (r *TeamsCheckPermissionsForRepoLegacyReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsCheckPermissionsForRepoLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/check-permissions-for-repo-legacy", opt)
 }
 
 /*
@@ -1515,7 +1515,7 @@ func TeamsCreate(ctx context.Context, req *TeamsCreateReq, opt ...RequestOption)
 		req = new(TeamsCreateReq)
 	}
 	resp := &TeamsCreateResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/create", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1523,7 +1523,7 @@ func TeamsCreate(ctx context.Context, req *TeamsCreateReq, opt ...RequestOption)
 		return resp, err
 	}
 	resp.Data = components.TeamFull{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "teams/create")
 	if err != nil {
 		return nil, err
 	}
@@ -1594,7 +1594,7 @@ func (r *TeamsCreateReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsCreateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/create", opt)
 }
 
 /*
@@ -1682,7 +1682,7 @@ func TeamsCreateDiscussionCommentInOrg(ctx context.Context, req *TeamsCreateDisc
 		req = new(TeamsCreateDiscussionCommentInOrgReq)
 	}
 	resp := &TeamsCreateDiscussionCommentInOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/create-discussion-comment-in-org", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1690,7 +1690,7 @@ func TeamsCreateDiscussionCommentInOrg(ctx context.Context, req *TeamsCreateDisc
 		return resp, err
 	}
 	resp.Data = components.TeamDiscussionComment{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "teams/create-discussion-comment-in-org")
 	if err != nil {
 		return nil, err
 	}
@@ -1779,7 +1779,7 @@ func (r *TeamsCreateDiscussionCommentInOrgReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsCreateDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/create-discussion-comment-in-org", opt)
 }
 
 /*
@@ -1831,7 +1831,7 @@ func TeamsCreateDiscussionCommentLegacy(ctx context.Context, req *TeamsCreateDis
 		req = new(TeamsCreateDiscussionCommentLegacyReq)
 	}
 	resp := &TeamsCreateDiscussionCommentLegacyResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/create-discussion-comment-legacy", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1839,7 +1839,7 @@ func TeamsCreateDiscussionCommentLegacy(ctx context.Context, req *TeamsCreateDis
 		return resp, err
 	}
 	resp.Data = components.TeamDiscussionComment{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "teams/create-discussion-comment-legacy")
 	if err != nil {
 		return nil, err
 	}
@@ -1925,7 +1925,7 @@ func (r *TeamsCreateDiscussionCommentLegacyReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsCreateDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/create-discussion-comment-legacy", opt)
 }
 
 /*
@@ -1977,7 +1977,7 @@ func TeamsCreateDiscussionInOrg(ctx context.Context, req *TeamsCreateDiscussionI
 		req = new(TeamsCreateDiscussionInOrgReq)
 	}
 	resp := &TeamsCreateDiscussionInOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/create-discussion-in-org", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1985,7 +1985,7 @@ func TeamsCreateDiscussionInOrg(ctx context.Context, req *TeamsCreateDiscussionI
 		return resp, err
 	}
 	resp.Data = components.TeamDiscussion{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "teams/create-discussion-in-org")
 	if err != nil {
 		return nil, err
 	}
@@ -2073,7 +2073,7 @@ func (r *TeamsCreateDiscussionInOrgReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsCreateDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/create-discussion-in-org", opt)
 }
 
 /*
@@ -2135,7 +2135,7 @@ func TeamsCreateDiscussionLegacy(ctx context.Context, req *TeamsCreateDiscussion
 		req = new(TeamsCreateDiscussionLegacyReq)
 	}
 	resp := &TeamsCreateDiscussionLegacyResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/create-discussion-legacy", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2143,7 +2143,7 @@ func TeamsCreateDiscussionLegacy(ctx context.Context, req *TeamsCreateDiscussion
 		return resp, err
 	}
 	resp.Data = components.TeamDiscussion{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "teams/create-discussion-legacy")
 	if err != nil {
 		return nil, err
 	}
@@ -2228,7 +2228,7 @@ func (r *TeamsCreateDiscussionLegacyReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsCreateDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/create-discussion-legacy", opt)
 }
 
 /*
@@ -2290,7 +2290,7 @@ func TeamsCreateOrUpdateIdpGroupConnectionsInOrg(ctx context.Context, req *Teams
 		req = new(TeamsCreateOrUpdateIdpGroupConnectionsInOrgReq)
 	}
 	resp := &TeamsCreateOrUpdateIdpGroupConnectionsInOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/create-or-update-idp-group-connections-in-org", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2298,7 +2298,7 @@ func TeamsCreateOrUpdateIdpGroupConnectionsInOrg(ctx context.Context, req *Teams
 		return resp, err
 	}
 	resp.Data = components.GroupMapping{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "teams/create-or-update-idp-group-connections-in-org")
 	if err != nil {
 		return nil, err
 	}
@@ -2372,7 +2372,7 @@ func (r *TeamsCreateOrUpdateIdpGroupConnectionsInOrgReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsCreateOrUpdateIdpGroupConnectionsInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/create-or-update-idp-group-connections-in-org", opt)
 }
 
 /*
@@ -2441,7 +2441,7 @@ func TeamsCreateOrUpdateIdpGroupConnectionsLegacy(ctx context.Context, req *Team
 		req = new(TeamsCreateOrUpdateIdpGroupConnectionsLegacyReq)
 	}
 	resp := &TeamsCreateOrUpdateIdpGroupConnectionsLegacyResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/create-or-update-idp-group-connections-legacy", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2449,7 +2449,7 @@ func TeamsCreateOrUpdateIdpGroupConnectionsLegacy(ctx context.Context, req *Team
 		return resp, err
 	}
 	resp.Data = components.GroupMapping{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "teams/create-or-update-idp-group-connections-legacy")
 	if err != nil {
 		return nil, err
 	}
@@ -2520,7 +2520,7 @@ func (r *TeamsCreateOrUpdateIdpGroupConnectionsLegacyReq) validStatuses() []int 
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsCreateOrUpdateIdpGroupConnectionsLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/create-or-update-idp-group-connections-legacy", opt)
 }
 
 /*
@@ -2593,14 +2593,14 @@ func TeamsDeleteDiscussionCommentInOrg(ctx context.Context, req *TeamsDeleteDisc
 		req = new(TeamsDeleteDiscussionCommentInOrgReq)
 	}
 	resp := &TeamsDeleteDiscussionCommentInOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/delete-discussion-comment-in-org", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "teams/delete-discussion-comment-in-org")
 	if err != nil {
 		return nil, err
 	}
@@ -2672,7 +2672,7 @@ func (r *TeamsDeleteDiscussionCommentInOrgReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsDeleteDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/delete-discussion-comment-in-org", opt)
 }
 
 /*
@@ -2712,14 +2712,14 @@ func TeamsDeleteDiscussionCommentLegacy(ctx context.Context, req *TeamsDeleteDis
 		req = new(TeamsDeleteDiscussionCommentLegacyReq)
 	}
 	resp := &TeamsDeleteDiscussionCommentLegacyResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/delete-discussion-comment-legacy", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "teams/delete-discussion-comment-legacy")
 	if err != nil {
 		return nil, err
 	}
@@ -2788,7 +2788,7 @@ func (r *TeamsDeleteDiscussionCommentLegacyReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsDeleteDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/delete-discussion-comment-legacy", opt)
 }
 
 /*
@@ -2828,14 +2828,14 @@ func TeamsDeleteDiscussionInOrg(ctx context.Context, req *TeamsDeleteDiscussionI
 		req = new(TeamsDeleteDiscussionInOrgReq)
 	}
 	resp := &TeamsDeleteDiscussionInOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/delete-discussion-in-org", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "teams/delete-discussion-in-org")
 	if err != nil {
 		return nil, err
 	}
@@ -2906,7 +2906,7 @@ func (r *TeamsDeleteDiscussionInOrgReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsDeleteDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/delete-discussion-in-org", opt)
 }
 
 /*
@@ -2946,14 +2946,14 @@ func TeamsDeleteDiscussionLegacy(ctx context.Context, req *TeamsDeleteDiscussion
 		req = new(TeamsDeleteDiscussionLegacyReq)
 	}
 	resp := &TeamsDeleteDiscussionLegacyResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/delete-discussion-legacy", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "teams/delete-discussion-legacy")
 	if err != nil {
 		return nil, err
 	}
@@ -3021,7 +3021,7 @@ func (r *TeamsDeleteDiscussionLegacyReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsDeleteDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/delete-discussion-legacy", opt)
 }
 
 /*
@@ -3061,14 +3061,14 @@ func TeamsDeleteInOrg(ctx context.Context, req *TeamsDeleteInOrgReq, opt ...Requ
 		req = new(TeamsDeleteInOrgReq)
 	}
 	resp := &TeamsDeleteInOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/delete-in-org", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "teams/delete-in-org")
 	if err != nil {
 		return nil, err
 	}
@@ -3138,7 +3138,7 @@ func (r *TeamsDeleteInOrgReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsDeleteInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/delete-in-org", opt)
 }
 
 /*
@@ -3178,14 +3178,14 @@ func TeamsDeleteLegacy(ctx context.Context, req *TeamsDeleteLegacyReq, opt ...Re
 		req = new(TeamsDeleteLegacyReq)
 	}
 	resp := &TeamsDeleteLegacyResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/delete-legacy", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "teams/delete-legacy")
 	if err != nil {
 		return nil, err
 	}
@@ -3252,7 +3252,7 @@ func (r *TeamsDeleteLegacyReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsDeleteLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/delete-legacy", opt)
 }
 
 /*
@@ -3292,7 +3292,7 @@ func TeamsGetByName(ctx context.Context, req *TeamsGetByNameReq, opt ...RequestO
 		req = new(TeamsGetByNameReq)
 	}
 	resp := &TeamsGetByNameResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/get-by-name", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3300,7 +3300,7 @@ func TeamsGetByName(ctx context.Context, req *TeamsGetByNameReq, opt ...RequestO
 		return resp, err
 	}
 	resp.Data = components.TeamFull{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "teams/get-by-name")
 	if err != nil {
 		return nil, err
 	}
@@ -3370,7 +3370,7 @@ func (r *TeamsGetByNameReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsGetByNameReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/get-by-name", opt)
 }
 
 /*
@@ -3411,7 +3411,7 @@ func TeamsGetDiscussionCommentInOrg(ctx context.Context, req *TeamsGetDiscussion
 		req = new(TeamsGetDiscussionCommentInOrgReq)
 	}
 	resp := &TeamsGetDiscussionCommentInOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/get-discussion-comment-in-org", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3419,7 +3419,7 @@ func TeamsGetDiscussionCommentInOrg(ctx context.Context, req *TeamsGetDiscussion
 		return resp, err
 	}
 	resp.Data = components.TeamDiscussionComment{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "teams/get-discussion-comment-in-org")
 	if err != nil {
 		return nil, err
 	}
@@ -3505,7 +3505,7 @@ func (r *TeamsGetDiscussionCommentInOrgReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsGetDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/get-discussion-comment-in-org", opt)
 }
 
 /*
@@ -3546,7 +3546,7 @@ func TeamsGetDiscussionCommentLegacy(ctx context.Context, req *TeamsGetDiscussio
 		req = new(TeamsGetDiscussionCommentLegacyReq)
 	}
 	resp := &TeamsGetDiscussionCommentLegacyResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/get-discussion-comment-legacy", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3554,7 +3554,7 @@ func TeamsGetDiscussionCommentLegacy(ctx context.Context, req *TeamsGetDiscussio
 		return resp, err
 	}
 	resp.Data = components.TeamDiscussionComment{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "teams/get-discussion-comment-legacy")
 	if err != nil {
 		return nil, err
 	}
@@ -3637,7 +3637,7 @@ func (r *TeamsGetDiscussionCommentLegacyReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsGetDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/get-discussion-comment-legacy", opt)
 }
 
 /*
@@ -3678,7 +3678,7 @@ func TeamsGetDiscussionInOrg(ctx context.Context, req *TeamsGetDiscussionInOrgRe
 		req = new(TeamsGetDiscussionInOrgReq)
 	}
 	resp := &TeamsGetDiscussionInOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/get-discussion-in-org", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3686,7 +3686,7 @@ func TeamsGetDiscussionInOrg(ctx context.Context, req *TeamsGetDiscussionInOrgRe
 		return resp, err
 	}
 	resp.Data = components.TeamDiscussion{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "teams/get-discussion-in-org")
 	if err != nil {
 		return nil, err
 	}
@@ -3771,7 +3771,7 @@ func (r *TeamsGetDiscussionInOrgReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsGetDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/get-discussion-in-org", opt)
 }
 
 /*
@@ -3812,7 +3812,7 @@ func TeamsGetDiscussionLegacy(ctx context.Context, req *TeamsGetDiscussionLegacy
 		req = new(TeamsGetDiscussionLegacyReq)
 	}
 	resp := &TeamsGetDiscussionLegacyResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/get-discussion-legacy", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3820,7 +3820,7 @@ func TeamsGetDiscussionLegacy(ctx context.Context, req *TeamsGetDiscussionLegacy
 		return resp, err
 	}
 	resp.Data = components.TeamDiscussion{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "teams/get-discussion-legacy")
 	if err != nil {
 		return nil, err
 	}
@@ -3902,7 +3902,7 @@ func (r *TeamsGetDiscussionLegacyReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsGetDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/get-discussion-legacy", opt)
 }
 
 /*
@@ -3943,7 +3943,7 @@ func TeamsGetLegacy(ctx context.Context, req *TeamsGetLegacyReq, opt ...RequestO
 		req = new(TeamsGetLegacyReq)
 	}
 	resp := &TeamsGetLegacyResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/get-legacy", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3951,7 +3951,7 @@ func TeamsGetLegacy(ctx context.Context, req *TeamsGetLegacyReq, opt ...RequestO
 		return resp, err
 	}
 	resp.Data = components.TeamFull{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "teams/get-legacy")
 	if err != nil {
 		return nil, err
 	}
@@ -4018,7 +4018,7 @@ func (r *TeamsGetLegacyReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsGetLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/get-legacy", opt)
 }
 
 /*
@@ -4059,7 +4059,7 @@ func TeamsGetMemberLegacy(ctx context.Context, req *TeamsGetMemberLegacyReq, opt
 		req = new(TeamsGetMemberLegacyReq)
 	}
 	resp := &TeamsGetMemberLegacyResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/get-member-legacy", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -4070,7 +4070,7 @@ func TeamsGetMemberLegacy(ctx context.Context, req *TeamsGetMemberLegacyReq, opt
 	if err != nil {
 		return nil, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "teams/get-member-legacy")
 	if err != nil {
 		return nil, err
 	}
@@ -4138,7 +4138,7 @@ func (r *TeamsGetMemberLegacyReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsGetMemberLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/get-member-legacy", opt)
 }
 
 /*
@@ -4179,7 +4179,7 @@ func TeamsGetMembershipForUserInOrg(ctx context.Context, req *TeamsGetMembership
 		req = new(TeamsGetMembershipForUserInOrgReq)
 	}
 	resp := &TeamsGetMembershipForUserInOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/get-membership-for-user-in-org", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -4187,7 +4187,7 @@ func TeamsGetMembershipForUserInOrg(ctx context.Context, req *TeamsGetMembership
 		return resp, err
 	}
 	resp.Data = components.TeamMembership{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "teams/get-membership-for-user-in-org")
 	if err != nil {
 		return nil, err
 	}
@@ -4258,7 +4258,7 @@ func (r *TeamsGetMembershipForUserInOrgReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsGetMembershipForUserInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/get-membership-for-user-in-org", opt)
 }
 
 /*
@@ -4299,7 +4299,7 @@ func TeamsGetMembershipForUserLegacy(ctx context.Context, req *TeamsGetMembershi
 		req = new(TeamsGetMembershipForUserLegacyReq)
 	}
 	resp := &TeamsGetMembershipForUserLegacyResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/get-membership-for-user-legacy", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -4307,7 +4307,7 @@ func TeamsGetMembershipForUserLegacy(ctx context.Context, req *TeamsGetMembershi
 		return resp, err
 	}
 	resp.Data = components.TeamMembership{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "teams/get-membership-for-user-legacy")
 	if err != nil {
 		return nil, err
 	}
@@ -4375,7 +4375,7 @@ func (r *TeamsGetMembershipForUserLegacyReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsGetMembershipForUserLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/get-membership-for-user-legacy", opt)
 }
 
 /*
@@ -4416,7 +4416,7 @@ func TeamsList(ctx context.Context, req *TeamsListReq, opt ...RequestOption) (*T
 		req = new(TeamsListReq)
 	}
 	resp := &TeamsListResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/list", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -4424,7 +4424,7 @@ func TeamsList(ctx context.Context, req *TeamsListReq, opt ...RequestOption) (*T
 		return resp, err
 	}
 	resp.Data = []components.Team{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "teams/list")
 	if err != nil {
 		return nil, err
 	}
@@ -4503,7 +4503,7 @@ func (r *TeamsListReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsListReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/list", opt)
 }
 
 /*
@@ -4544,7 +4544,7 @@ func TeamsListChildInOrg(ctx context.Context, req *TeamsListChildInOrgReq, opt .
 		req = new(TeamsListChildInOrgReq)
 	}
 	resp := &TeamsListChildInOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/list-child-in-org", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -4552,7 +4552,7 @@ func TeamsListChildInOrg(ctx context.Context, req *TeamsListChildInOrgReq, opt .
 		return resp, err
 	}
 	resp.Data = []components.Team{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "teams/list-child-in-org")
 	if err != nil {
 		return nil, err
 	}
@@ -4634,7 +4634,7 @@ func (r *TeamsListChildInOrgReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsListChildInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/list-child-in-org", opt)
 }
 
 /*
@@ -4675,7 +4675,7 @@ func TeamsListChildLegacy(ctx context.Context, req *TeamsListChildLegacyReq, opt
 		req = new(TeamsListChildLegacyReq)
 	}
 	resp := &TeamsListChildLegacyResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/list-child-legacy", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -4683,7 +4683,7 @@ func TeamsListChildLegacy(ctx context.Context, req *TeamsListChildLegacyReq, opt
 		return resp, err
 	}
 	resp.Data = []components.Team{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "teams/list-child-legacy")
 	if err != nil {
 		return nil, err
 	}
@@ -4762,7 +4762,7 @@ func (r *TeamsListChildLegacyReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsListChildLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/list-child-legacy", opt)
 }
 
 /*
@@ -4803,7 +4803,7 @@ func TeamsListDiscussionCommentsInOrg(ctx context.Context, req *TeamsListDiscuss
 		req = new(TeamsListDiscussionCommentsInOrgReq)
 	}
 	resp := &TeamsListDiscussionCommentsInOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/list-discussion-comments-in-org", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -4811,7 +4811,7 @@ func TeamsListDiscussionCommentsInOrg(ctx context.Context, req *TeamsListDiscuss
 		return resp, err
 	}
 	resp.Data = []components.TeamDiscussionComment{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "teams/list-discussion-comments-in-org")
 	if err != nil {
 		return nil, err
 	}
@@ -4914,7 +4914,7 @@ func (r *TeamsListDiscussionCommentsInOrgReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsListDiscussionCommentsInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/list-discussion-comments-in-org", opt)
 }
 
 /*
@@ -4955,7 +4955,7 @@ func TeamsListDiscussionCommentsLegacy(ctx context.Context, req *TeamsListDiscus
 		req = new(TeamsListDiscussionCommentsLegacyReq)
 	}
 	resp := &TeamsListDiscussionCommentsLegacyResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/list-discussion-comments-legacy", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -4963,7 +4963,7 @@ func TeamsListDiscussionCommentsLegacy(ctx context.Context, req *TeamsListDiscus
 		return resp, err
 	}
 	resp.Data = []components.TeamDiscussionComment{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "teams/list-discussion-comments-legacy")
 	if err != nil {
 		return nil, err
 	}
@@ -5063,7 +5063,7 @@ func (r *TeamsListDiscussionCommentsLegacyReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsListDiscussionCommentsLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/list-discussion-comments-legacy", opt)
 }
 
 /*
@@ -5104,7 +5104,7 @@ func TeamsListDiscussionsInOrg(ctx context.Context, req *TeamsListDiscussionsInO
 		req = new(TeamsListDiscussionsInOrgReq)
 	}
 	resp := &TeamsListDiscussionsInOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/list-discussions-in-org", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -5112,7 +5112,7 @@ func TeamsListDiscussionsInOrg(ctx context.Context, req *TeamsListDiscussionsInO
 		return resp, err
 	}
 	resp.Data = []components.TeamDiscussion{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "teams/list-discussions-in-org")
 	if err != nil {
 		return nil, err
 	}
@@ -5214,7 +5214,7 @@ func (r *TeamsListDiscussionsInOrgReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsListDiscussionsInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/list-discussions-in-org", opt)
 }
 
 /*
@@ -5255,7 +5255,7 @@ func TeamsListDiscussionsLegacy(ctx context.Context, req *TeamsListDiscussionsLe
 		req = new(TeamsListDiscussionsLegacyReq)
 	}
 	resp := &TeamsListDiscussionsLegacyResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/list-discussions-legacy", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -5263,7 +5263,7 @@ func TeamsListDiscussionsLegacy(ctx context.Context, req *TeamsListDiscussionsLe
 		return resp, err
 	}
 	resp.Data = []components.TeamDiscussion{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "teams/list-discussions-legacy")
 	if err != nil {
 		return nil, err
 	}
@@ -5362,7 +5362,7 @@ func (r *TeamsListDiscussionsLegacyReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsListDiscussionsLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/list-discussions-legacy", opt)
 }
 
 /*
@@ -5403,7 +5403,7 @@ func TeamsListForAuthenticatedUser(ctx context.Context, req *TeamsListForAuthent
 		req = new(TeamsListForAuthenticatedUserReq)
 	}
 	resp := &TeamsListForAuthenticatedUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/list-for-authenticated-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -5411,7 +5411,7 @@ func TeamsListForAuthenticatedUser(ctx context.Context, req *TeamsListForAuthent
 		return resp, err
 	}
 	resp.Data = []components.TeamFull{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "teams/list-for-authenticated-user")
 	if err != nil {
 		return nil, err
 	}
@@ -5489,7 +5489,7 @@ func (r *TeamsListForAuthenticatedUserReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsListForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/list-for-authenticated-user", opt)
 }
 
 /*
@@ -5530,7 +5530,7 @@ func TeamsListIdpGroupsForLegacy(ctx context.Context, req *TeamsListIdpGroupsFor
 		req = new(TeamsListIdpGroupsForLegacyReq)
 	}
 	resp := &TeamsListIdpGroupsForLegacyResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/list-idp-groups-for-legacy", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -5538,7 +5538,7 @@ func TeamsListIdpGroupsForLegacy(ctx context.Context, req *TeamsListIdpGroupsFor
 		return resp, err
 	}
 	resp.Data = components.GroupMapping{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "teams/list-idp-groups-for-legacy")
 	if err != nil {
 		return nil, err
 	}
@@ -5605,7 +5605,7 @@ func (r *TeamsListIdpGroupsForLegacyReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsListIdpGroupsForLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/list-idp-groups-for-legacy", opt)
 }
 
 /*
@@ -5646,7 +5646,7 @@ func TeamsListIdpGroupsForOrg(ctx context.Context, req *TeamsListIdpGroupsForOrg
 		req = new(TeamsListIdpGroupsForOrgReq)
 	}
 	resp := &TeamsListIdpGroupsForOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/list-idp-groups-for-org", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -5654,7 +5654,7 @@ func TeamsListIdpGroupsForOrg(ctx context.Context, req *TeamsListIdpGroupsForOrg
 		return resp, err
 	}
 	resp.Data = components.GroupMapping{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "teams/list-idp-groups-for-org")
 	if err != nil {
 		return nil, err
 	}
@@ -5733,7 +5733,7 @@ func (r *TeamsListIdpGroupsForOrgReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsListIdpGroupsForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/list-idp-groups-for-org", opt)
 }
 
 /*
@@ -5774,7 +5774,7 @@ func TeamsListIdpGroupsInOrg(ctx context.Context, req *TeamsListIdpGroupsInOrgRe
 		req = new(TeamsListIdpGroupsInOrgReq)
 	}
 	resp := &TeamsListIdpGroupsInOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/list-idp-groups-in-org", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -5782,7 +5782,7 @@ func TeamsListIdpGroupsInOrg(ctx context.Context, req *TeamsListIdpGroupsInOrgRe
 		return resp, err
 	}
 	resp.Data = components.GroupMapping{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "teams/list-idp-groups-in-org")
 	if err != nil {
 		return nil, err
 	}
@@ -5852,7 +5852,7 @@ func (r *TeamsListIdpGroupsInOrgReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsListIdpGroupsInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/list-idp-groups-in-org", opt)
 }
 
 /*
@@ -5893,7 +5893,7 @@ func TeamsListMembersInOrg(ctx context.Context, req *TeamsListMembersInOrgReq, o
 		req = new(TeamsListMembersInOrgReq)
 	}
 	resp := &TeamsListMembersInOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/list-members-in-org", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -5901,7 +5901,7 @@ func TeamsListMembersInOrg(ctx context.Context, req *TeamsListMembersInOrgReq, o
 		return resp, err
 	}
 	resp.Data = []components.SimpleUser{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "teams/list-members-in-org")
 	if err != nil {
 		return nil, err
 	}
@@ -5994,7 +5994,7 @@ func (r *TeamsListMembersInOrgReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsListMembersInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/list-members-in-org", opt)
 }
 
 /*
@@ -6035,7 +6035,7 @@ func TeamsListMembersLegacy(ctx context.Context, req *TeamsListMembersLegacyReq,
 		req = new(TeamsListMembersLegacyReq)
 	}
 	resp := &TeamsListMembersLegacyResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/list-members-legacy", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -6043,7 +6043,7 @@ func TeamsListMembersLegacy(ctx context.Context, req *TeamsListMembersLegacyReq,
 		return resp, err
 	}
 	resp.Data = []components.SimpleUser{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "teams/list-members-legacy")
 	if err != nil {
 		return nil, err
 	}
@@ -6133,7 +6133,7 @@ func (r *TeamsListMembersLegacyReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsListMembersLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/list-members-legacy", opt)
 }
 
 /*
@@ -6174,7 +6174,7 @@ func TeamsListPendingInvitationsInOrg(ctx context.Context, req *TeamsListPending
 		req = new(TeamsListPendingInvitationsInOrgReq)
 	}
 	resp := &TeamsListPendingInvitationsInOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/list-pending-invitations-in-org", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -6182,7 +6182,7 @@ func TeamsListPendingInvitationsInOrg(ctx context.Context, req *TeamsListPending
 		return resp, err
 	}
 	resp.Data = []components.OrganizationInvitation{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "teams/list-pending-invitations-in-org")
 	if err != nil {
 		return nil, err
 	}
@@ -6264,7 +6264,7 @@ func (r *TeamsListPendingInvitationsInOrgReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsListPendingInvitationsInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/list-pending-invitations-in-org", opt)
 }
 
 /*
@@ -6305,7 +6305,7 @@ func TeamsListPendingInvitationsLegacy(ctx context.Context, req *TeamsListPendin
 		req = new(TeamsListPendingInvitationsLegacyReq)
 	}
 	resp := &TeamsListPendingInvitationsLegacyResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/list-pending-invitations-legacy", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -6313,7 +6313,7 @@ func TeamsListPendingInvitationsLegacy(ctx context.Context, req *TeamsListPendin
 		return resp, err
 	}
 	resp.Data = []components.OrganizationInvitation{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "teams/list-pending-invitations-legacy")
 	if err != nil {
 		return nil, err
 	}
@@ -6392,7 +6392,7 @@ func (r *TeamsListPendingInvitationsLegacyReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsListPendingInvitationsLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/list-pending-invitations-legacy", opt)
 }
 
 /*
@@ -6433,7 +6433,7 @@ func TeamsListProjectsInOrg(ctx context.Context, req *TeamsListProjectsInOrgReq,
 		req = new(TeamsListProjectsInOrgReq)
 	}
 	resp := &TeamsListProjectsInOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/list-projects-in-org", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -6441,7 +6441,7 @@ func TeamsListProjectsInOrg(ctx context.Context, req *TeamsListProjectsInOrgReq,
 		return resp, err
 	}
 	resp.Data = []components.TeamProject{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "teams/list-projects-in-org")
 	if err != nil {
 		return nil, err
 	}
@@ -6538,7 +6538,7 @@ func (r *TeamsListProjectsInOrgReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsListProjectsInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/list-projects-in-org", opt)
 }
 
 /*
@@ -6579,7 +6579,7 @@ func TeamsListProjectsLegacy(ctx context.Context, req *TeamsListProjectsLegacyRe
 		req = new(TeamsListProjectsLegacyReq)
 	}
 	resp := &TeamsListProjectsLegacyResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/list-projects-legacy", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -6587,7 +6587,7 @@ func TeamsListProjectsLegacy(ctx context.Context, req *TeamsListProjectsLegacyRe
 		return resp, err
 	}
 	resp.Data = []components.TeamProject{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "teams/list-projects-legacy")
 	if err != nil {
 		return nil, err
 	}
@@ -6681,7 +6681,7 @@ func (r *TeamsListProjectsLegacyReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsListProjectsLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/list-projects-legacy", opt)
 }
 
 /*
@@ -6722,7 +6722,7 @@ func TeamsListReposInOrg(ctx context.Context, req *TeamsListReposInOrgReq, opt .
 		req = new(TeamsListReposInOrgReq)
 	}
 	resp := &TeamsListReposInOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/list-repos-in-org", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -6730,7 +6730,7 @@ func TeamsListReposInOrg(ctx context.Context, req *TeamsListReposInOrgReq, opt .
 		return resp, err
 	}
 	resp.Data = []components.MinimalRepository{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "teams/list-repos-in-org")
 	if err != nil {
 		return nil, err
 	}
@@ -6812,7 +6812,7 @@ func (r *TeamsListReposInOrgReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsListReposInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/list-repos-in-org", opt)
 }
 
 /*
@@ -6853,7 +6853,7 @@ func TeamsListReposLegacy(ctx context.Context, req *TeamsListReposLegacyReq, opt
 		req = new(TeamsListReposLegacyReq)
 	}
 	resp := &TeamsListReposLegacyResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/list-repos-legacy", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -6861,7 +6861,7 @@ func TeamsListReposLegacy(ctx context.Context, req *TeamsListReposLegacyReq, opt
 		return resp, err
 	}
 	resp.Data = []components.MinimalRepository{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "teams/list-repos-legacy")
 	if err != nil {
 		return nil, err
 	}
@@ -6940,7 +6940,7 @@ func (r *TeamsListReposLegacyReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsListReposLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/list-repos-legacy", opt)
 }
 
 /*
@@ -6981,7 +6981,7 @@ func TeamsRemoveMemberLegacy(ctx context.Context, req *TeamsRemoveMemberLegacyRe
 		req = new(TeamsRemoveMemberLegacyReq)
 	}
 	resp := &TeamsRemoveMemberLegacyResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/remove-member-legacy", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -6992,7 +6992,7 @@ func TeamsRemoveMemberLegacy(ctx context.Context, req *TeamsRemoveMemberLegacyRe
 	if err != nil {
 		return nil, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "teams/remove-member-legacy")
 	if err != nil {
 		return nil, err
 	}
@@ -7060,7 +7060,7 @@ func (r *TeamsRemoveMemberLegacyReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsRemoveMemberLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/remove-member-legacy", opt)
 }
 
 /*
@@ -7101,14 +7101,14 @@ func TeamsRemoveMembershipForUserInOrg(ctx context.Context, req *TeamsRemoveMemb
 		req = new(TeamsRemoveMembershipForUserInOrgReq)
 	}
 	resp := &TeamsRemoveMembershipForUserInOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/remove-membership-for-user-in-org", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "teams/remove-membership-for-user-in-org")
 	if err != nil {
 		return nil, err
 	}
@@ -7179,7 +7179,7 @@ func (r *TeamsRemoveMembershipForUserInOrgReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsRemoveMembershipForUserInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/remove-membership-for-user-in-org", opt)
 }
 
 /*
@@ -7219,14 +7219,14 @@ func TeamsRemoveMembershipForUserLegacy(ctx context.Context, req *TeamsRemoveMem
 		req = new(TeamsRemoveMembershipForUserLegacyReq)
 	}
 	resp := &TeamsRemoveMembershipForUserLegacyResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/remove-membership-for-user-legacy", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "teams/remove-membership-for-user-legacy")
 	if err != nil {
 		return nil, err
 	}
@@ -7294,7 +7294,7 @@ func (r *TeamsRemoveMembershipForUserLegacyReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsRemoveMembershipForUserLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/remove-membership-for-user-legacy", opt)
 }
 
 /*
@@ -7334,14 +7334,14 @@ func TeamsRemoveProjectInOrg(ctx context.Context, req *TeamsRemoveProjectInOrgRe
 		req = new(TeamsRemoveProjectInOrgReq)
 	}
 	resp := &TeamsRemoveProjectInOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/remove-project-in-org", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "teams/remove-project-in-org")
 	if err != nil {
 		return nil, err
 	}
@@ -7412,7 +7412,7 @@ func (r *TeamsRemoveProjectInOrgReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsRemoveProjectInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/remove-project-in-org", opt)
 }
 
 /*
@@ -7452,14 +7452,14 @@ func TeamsRemoveProjectLegacy(ctx context.Context, req *TeamsRemoveProjectLegacy
 		req = new(TeamsRemoveProjectLegacyReq)
 	}
 	resp := &TeamsRemoveProjectLegacyResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/remove-project-legacy", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "teams/remove-project-legacy")
 	if err != nil {
 		return nil, err
 	}
@@ -7527,7 +7527,7 @@ func (r *TeamsRemoveProjectLegacyReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsRemoveProjectLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/remove-project-legacy", opt)
 }
 
 /*
@@ -7567,14 +7567,14 @@ func TeamsRemoveRepoInOrg(ctx context.Context, req *TeamsRemoveRepoInOrgReq, opt
 		req = new(TeamsRemoveRepoInOrgReq)
 	}
 	resp := &TeamsRemoveRepoInOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/remove-repo-in-org", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "teams/remove-repo-in-org")
 	if err != nil {
 		return nil, err
 	}
@@ -7646,7 +7646,7 @@ func (r *TeamsRemoveRepoInOrgReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsRemoveRepoInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/remove-repo-in-org", opt)
 }
 
 /*
@@ -7686,14 +7686,14 @@ func TeamsRemoveRepoLegacy(ctx context.Context, req *TeamsRemoveRepoLegacyReq, o
 		req = new(TeamsRemoveRepoLegacyReq)
 	}
 	resp := &TeamsRemoveRepoLegacyResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/remove-repo-legacy", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "teams/remove-repo-legacy")
 	if err != nil {
 		return nil, err
 	}
@@ -7762,7 +7762,7 @@ func (r *TeamsRemoveRepoLegacyReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsRemoveRepoLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/remove-repo-legacy", opt)
 }
 
 /*
@@ -7802,7 +7802,7 @@ func TeamsUpdateDiscussionCommentInOrg(ctx context.Context, req *TeamsUpdateDisc
 		req = new(TeamsUpdateDiscussionCommentInOrgReq)
 	}
 	resp := &TeamsUpdateDiscussionCommentInOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/update-discussion-comment-in-org", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -7810,7 +7810,7 @@ func TeamsUpdateDiscussionCommentInOrg(ctx context.Context, req *TeamsUpdateDisc
 		return resp, err
 	}
 	resp.Data = components.TeamDiscussionComment{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "teams/update-discussion-comment-in-org")
 	if err != nil {
 		return nil, err
 	}
@@ -7900,7 +7900,7 @@ func (r *TeamsUpdateDiscussionCommentInOrgReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsUpdateDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/update-discussion-comment-in-org", opt)
 }
 
 /*
@@ -7952,7 +7952,7 @@ func TeamsUpdateDiscussionCommentLegacy(ctx context.Context, req *TeamsUpdateDis
 		req = new(TeamsUpdateDiscussionCommentLegacyReq)
 	}
 	resp := &TeamsUpdateDiscussionCommentLegacyResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/update-discussion-comment-legacy", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -7960,7 +7960,7 @@ func TeamsUpdateDiscussionCommentLegacy(ctx context.Context, req *TeamsUpdateDis
 		return resp, err
 	}
 	resp.Data = components.TeamDiscussionComment{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "teams/update-discussion-comment-legacy")
 	if err != nil {
 		return nil, err
 	}
@@ -8047,7 +8047,7 @@ func (r *TeamsUpdateDiscussionCommentLegacyReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsUpdateDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/update-discussion-comment-legacy", opt)
 }
 
 /*
@@ -8099,7 +8099,7 @@ func TeamsUpdateDiscussionInOrg(ctx context.Context, req *TeamsUpdateDiscussionI
 		req = new(TeamsUpdateDiscussionInOrgReq)
 	}
 	resp := &TeamsUpdateDiscussionInOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/update-discussion-in-org", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -8107,7 +8107,7 @@ func TeamsUpdateDiscussionInOrg(ctx context.Context, req *TeamsUpdateDiscussionI
 		return resp, err
 	}
 	resp.Data = components.TeamDiscussion{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "teams/update-discussion-in-org")
 	if err != nil {
 		return nil, err
 	}
@@ -8196,7 +8196,7 @@ func (r *TeamsUpdateDiscussionInOrgReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsUpdateDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/update-discussion-in-org", opt)
 }
 
 /*
@@ -8251,7 +8251,7 @@ func TeamsUpdateDiscussionLegacy(ctx context.Context, req *TeamsUpdateDiscussion
 		req = new(TeamsUpdateDiscussionLegacyReq)
 	}
 	resp := &TeamsUpdateDiscussionLegacyResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/update-discussion-legacy", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -8259,7 +8259,7 @@ func TeamsUpdateDiscussionLegacy(ctx context.Context, req *TeamsUpdateDiscussion
 		return resp, err
 	}
 	resp.Data = components.TeamDiscussion{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "teams/update-discussion-legacy")
 	if err != nil {
 		return nil, err
 	}
@@ -8345,7 +8345,7 @@ func (r *TeamsUpdateDiscussionLegacyReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsUpdateDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/update-discussion-legacy", opt)
 }
 
 /*
@@ -8400,7 +8400,7 @@ func TeamsUpdateInOrg(ctx context.Context, req *TeamsUpdateInOrgReq, opt ...Requ
 		req = new(TeamsUpdateInOrgReq)
 	}
 	resp := &TeamsUpdateInOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/update-in-org", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -8408,7 +8408,7 @@ func TeamsUpdateInOrg(ctx context.Context, req *TeamsUpdateInOrgReq, opt ...Requ
 		return resp, err
 	}
 	resp.Data = components.TeamFull{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "teams/update-in-org")
 	if err != nil {
 		return nil, err
 	}
@@ -8482,7 +8482,7 @@ func (r *TeamsUpdateInOrgReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsUpdateInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/update-in-org", opt)
 }
 
 /*
@@ -8564,7 +8564,7 @@ func TeamsUpdateLegacy(ctx context.Context, req *TeamsUpdateLegacyReq, opt ...Re
 		req = new(TeamsUpdateLegacyReq)
 	}
 	resp := &TeamsUpdateLegacyResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "teams/update-legacy", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -8572,7 +8572,7 @@ func TeamsUpdateLegacy(ctx context.Context, req *TeamsUpdateLegacyReq, opt ...Re
 		return resp, err
 	}
 	resp.Data = components.TeamFull{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "teams/update-legacy")
 	if err != nil {
 		return nil, err
 	}
@@ -8643,7 +8643,7 @@ func (r *TeamsUpdateLegacyReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *TeamsUpdateLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "teams/update-legacy", opt)
 }
 
 /*

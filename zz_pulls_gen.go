@@ -25,7 +25,7 @@ func PullsCheckIfMerged(ctx context.Context, req *PullsCheckIfMergedReq, opt ...
 		req = new(PullsCheckIfMergedReq)
 	}
 	resp := &PullsCheckIfMergedResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "pulls/check-if-merged", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -36,7 +36,7 @@ func PullsCheckIfMerged(ctx context.Context, req *PullsCheckIfMergedReq, opt ...
 	if err != nil {
 		return nil, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "pulls/check-if-merged")
 	if err != nil {
 		return nil, err
 	}
@@ -105,7 +105,7 @@ func (r *PullsCheckIfMergedReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *PullsCheckIfMergedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "pulls/check-if-merged", opt)
 }
 
 /*
@@ -146,7 +146,7 @@ func PullsCreate(ctx context.Context, req *PullsCreateReq, opt ...RequestOption)
 		req = new(PullsCreateReq)
 	}
 	resp := &PullsCreateResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "pulls/create", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -154,7 +154,7 @@ func PullsCreate(ctx context.Context, req *PullsCreateReq, opt ...RequestOption)
 		return resp, err
 	}
 	resp.Data = components.PullRequest{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "pulls/create")
 	if err != nil {
 		return nil, err
 	}
@@ -239,7 +239,7 @@ func (r *PullsCreateReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *PullsCreateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "pulls/create", opt)
 }
 
 /*
@@ -323,7 +323,7 @@ func PullsCreateReplyForReviewComment(ctx context.Context, req *PullsCreateReply
 		req = new(PullsCreateReplyForReviewCommentReq)
 	}
 	resp := &PullsCreateReplyForReviewCommentResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "pulls/create-reply-for-review-comment", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -331,7 +331,7 @@ func PullsCreateReplyForReviewComment(ctx context.Context, req *PullsCreateReply
 		return resp, err
 	}
 	resp.Data = components.PullRequestReviewComment{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "pulls/create-reply-for-review-comment")
 	if err != nil {
 		return nil, err
 	}
@@ -407,7 +407,7 @@ func (r *PullsCreateReplyForReviewCommentReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *PullsCreateReplyForReviewCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "pulls/create-reply-for-review-comment", opt)
 }
 
 /*
@@ -459,7 +459,7 @@ func PullsCreateReview(ctx context.Context, req *PullsCreateReviewReq, opt ...Re
 		req = new(PullsCreateReviewReq)
 	}
 	resp := &PullsCreateReviewResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "pulls/create-review", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -467,7 +467,7 @@ func PullsCreateReview(ctx context.Context, req *PullsCreateReviewReq, opt ...Re
 		return resp, err
 	}
 	resp.Data = components.PullRequestReview{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "pulls/create-review")
 	if err != nil {
 		return nil, err
 	}
@@ -540,7 +540,7 @@ func (r *PullsCreateReviewReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *PullsCreateReviewReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "pulls/create-review", opt)
 }
 
 /*
@@ -636,7 +636,7 @@ func PullsCreateReviewComment(ctx context.Context, req *PullsCreateReviewComment
 		req = new(PullsCreateReviewCommentReq)
 	}
 	resp := &PullsCreateReviewCommentResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "pulls/create-review-comment", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -644,7 +644,7 @@ func PullsCreateReviewComment(ctx context.Context, req *PullsCreateReviewComment
 		return resp, err
 	}
 	resp.Data = components.PullRequestReviewComment{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "pulls/create-review-comment")
 	if err != nil {
 		return nil, err
 	}
@@ -727,7 +727,7 @@ func (r *PullsCreateReviewCommentReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *PullsCreateReviewCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "pulls/create-review-comment", opt)
 }
 
 /*
@@ -837,7 +837,7 @@ func PullsDeletePendingReview(ctx context.Context, req *PullsDeletePendingReview
 		req = new(PullsDeletePendingReviewReq)
 	}
 	resp := &PullsDeletePendingReviewResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "pulls/delete-pending-review", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -845,7 +845,7 @@ func PullsDeletePendingReview(ctx context.Context, req *PullsDeletePendingReview
 		return resp, err
 	}
 	resp.Data = components.PullRequestReview{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "pulls/delete-pending-review")
 	if err != nil {
 		return nil, err
 	}
@@ -917,7 +917,7 @@ func (r *PullsDeletePendingReviewReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *PullsDeletePendingReviewReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "pulls/delete-pending-review", opt)
 }
 
 /*
@@ -958,7 +958,7 @@ func PullsDeleteReviewComment(ctx context.Context, req *PullsDeleteReviewComment
 		req = new(PullsDeleteReviewCommentReq)
 	}
 	resp := &PullsDeleteReviewCommentResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "pulls/delete-review-comment", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -969,7 +969,7 @@ func PullsDeleteReviewComment(ctx context.Context, req *PullsDeleteReviewComment
 	if err != nil {
 		return nil, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "pulls/delete-review-comment")
 	if err != nil {
 		return nil, err
 	}
@@ -1040,7 +1040,7 @@ func (r *PullsDeleteReviewCommentReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *PullsDeleteReviewCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "pulls/delete-review-comment", opt)
 }
 
 /*
@@ -1081,7 +1081,7 @@ func PullsDismissReview(ctx context.Context, req *PullsDismissReviewReq, opt ...
 		req = new(PullsDismissReviewReq)
 	}
 	resp := &PullsDismissReviewResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "pulls/dismiss-review", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1089,7 +1089,7 @@ func PullsDismissReview(ctx context.Context, req *PullsDismissReviewReq, opt ...
 		return resp, err
 	}
 	resp.Data = components.PullRequestReview{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "pulls/dismiss-review")
 	if err != nil {
 		return nil, err
 	}
@@ -1165,7 +1165,7 @@ func (r *PullsDismissReviewReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *PullsDismissReviewReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "pulls/dismiss-review", opt)
 }
 
 /*
@@ -1218,7 +1218,7 @@ func PullsGet(ctx context.Context, req *PullsGetReq, opt ...RequestOption) (*Pul
 		req = new(PullsGetReq)
 	}
 	resp := &PullsGetResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "pulls/get", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1226,7 +1226,7 @@ func PullsGet(ctx context.Context, req *PullsGetReq, opt ...RequestOption) (*Pul
 		return resp, err
 	}
 	resp.Data = components.PullRequest{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "pulls/get")
 	if err != nil {
 		return nil, err
 	}
@@ -1308,7 +1308,7 @@ func (r *PullsGetReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *PullsGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "pulls/get", opt)
 }
 
 /*
@@ -1349,7 +1349,7 @@ func PullsGetReview(ctx context.Context, req *PullsGetReviewReq, opt ...RequestO
 		req = new(PullsGetReviewReq)
 	}
 	resp := &PullsGetReviewResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "pulls/get-review", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1357,7 +1357,7 @@ func PullsGetReview(ctx context.Context, req *PullsGetReviewReq, opt ...RequestO
 		return resp, err
 	}
 	resp.Data = components.PullRequestReview{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "pulls/get-review")
 	if err != nil {
 		return nil, err
 	}
@@ -1429,7 +1429,7 @@ func (r *PullsGetReviewReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *PullsGetReviewReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "pulls/get-review", opt)
 }
 
 /*
@@ -1470,7 +1470,7 @@ func PullsGetReviewComment(ctx context.Context, req *PullsGetReviewCommentReq, o
 		req = new(PullsGetReviewCommentReq)
 	}
 	resp := &PullsGetReviewCommentResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "pulls/get-review-comment", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1478,7 +1478,7 @@ func PullsGetReviewComment(ctx context.Context, req *PullsGetReviewCommentReq, o
 		return resp, err
 	}
 	resp.Data = components.PullRequestReviewComment{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "pulls/get-review-comment")
 	if err != nil {
 		return nil, err
 	}
@@ -1574,7 +1574,7 @@ func (r *PullsGetReviewCommentReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *PullsGetReviewCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "pulls/get-review-comment", opt)
 }
 
 /*
@@ -1615,7 +1615,7 @@ func PullsList(ctx context.Context, req *PullsListReq, opt ...RequestOption) (*P
 		req = new(PullsListReq)
 	}
 	resp := &PullsListResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "pulls/list", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1623,7 +1623,7 @@ func PullsList(ctx context.Context, req *PullsListReq, opt ...RequestOption) (*P
 		return resp, err
 	}
 	resp.Data = []components.PullRequestSimple{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "pulls/list")
 	if err != nil {
 		return nil, err
 	}
@@ -1757,7 +1757,7 @@ func (r *PullsListReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *PullsListReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "pulls/list", opt)
 }
 
 /*
@@ -1798,7 +1798,7 @@ func PullsListCommentsForReview(ctx context.Context, req *PullsListCommentsForRe
 		req = new(PullsListCommentsForReviewReq)
 	}
 	resp := &PullsListCommentsForReviewResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "pulls/list-comments-for-review", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1806,7 +1806,7 @@ func PullsListCommentsForReview(ctx context.Context, req *PullsListCommentsForRe
 		return resp, err
 	}
 	resp.Data = []components.ReviewComment{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "pulls/list-comments-for-review")
 	if err != nil {
 		return nil, err
 	}
@@ -1890,7 +1890,7 @@ func (r *PullsListCommentsForReviewReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *PullsListCommentsForReviewReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "pulls/list-comments-for-review", opt)
 }
 
 /*
@@ -1931,7 +1931,7 @@ func PullsListCommits(ctx context.Context, req *PullsListCommitsReq, opt ...Requ
 		req = new(PullsListCommitsReq)
 	}
 	resp := &PullsListCommitsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "pulls/list-commits", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1939,7 +1939,7 @@ func PullsListCommits(ctx context.Context, req *PullsListCommitsReq, opt ...Requ
 		return resp, err
 	}
 	resp.Data = []components.SimpleCommit{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "pulls/list-commits")
 	if err != nil {
 		return nil, err
 	}
@@ -2020,7 +2020,7 @@ func (r *PullsListCommitsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *PullsListCommitsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "pulls/list-commits", opt)
 }
 
 /*
@@ -2061,7 +2061,7 @@ func PullsListFiles(ctx context.Context, req *PullsListFilesReq, opt ...RequestO
 		req = new(PullsListFilesReq)
 	}
 	resp := &PullsListFilesResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "pulls/list-files", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2069,7 +2069,7 @@ func PullsListFiles(ctx context.Context, req *PullsListFilesReq, opt ...RequestO
 		return resp, err
 	}
 	resp.Data = []components.DiffEntry{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "pulls/list-files")
 	if err != nil {
 		return nil, err
 	}
@@ -2150,7 +2150,7 @@ func (r *PullsListFilesReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *PullsListFilesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "pulls/list-files", opt)
 }
 
 /*
@@ -2191,7 +2191,7 @@ func PullsListRequestedReviewers(ctx context.Context, req *PullsListRequestedRev
 		req = new(PullsListRequestedReviewersReq)
 	}
 	resp := &PullsListRequestedReviewersResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "pulls/list-requested-reviewers", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2199,7 +2199,7 @@ func PullsListRequestedReviewers(ctx context.Context, req *PullsListRequestedRev
 		return resp, err
 	}
 	resp.Data = components.PullRequestReviewRequest{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "pulls/list-requested-reviewers")
 	if err != nil {
 		return nil, err
 	}
@@ -2280,7 +2280,7 @@ func (r *PullsListRequestedReviewersReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *PullsListRequestedReviewersReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "pulls/list-requested-reviewers", opt)
 }
 
 /*
@@ -2321,7 +2321,7 @@ func PullsListReviewComments(ctx context.Context, req *PullsListReviewCommentsRe
 		req = new(PullsListReviewCommentsReq)
 	}
 	resp := &PullsListReviewCommentsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "pulls/list-review-comments", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2329,7 +2329,7 @@ func PullsListReviewComments(ctx context.Context, req *PullsListReviewCommentsRe
 		return resp, err
 	}
 	resp.Data = []components.PullRequestReviewComment{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "pulls/list-review-comments")
 	if err != nil {
 		return nil, err
 	}
@@ -2460,7 +2460,7 @@ func (r *PullsListReviewCommentsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *PullsListReviewCommentsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "pulls/list-review-comments", opt)
 }
 
 /*
@@ -2501,7 +2501,7 @@ func PullsListReviewCommentsForRepo(ctx context.Context, req *PullsListReviewCom
 		req = new(PullsListReviewCommentsForRepoReq)
 	}
 	resp := &PullsListReviewCommentsForRepoResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "pulls/list-review-comments-for-repo", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2509,7 +2509,7 @@ func PullsListReviewCommentsForRepo(ctx context.Context, req *PullsListReviewCom
 		return resp, err
 	}
 	resp.Data = []components.PullRequestReviewComment{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "pulls/list-review-comments-for-repo")
 	if err != nil {
 		return nil, err
 	}
@@ -2639,7 +2639,7 @@ func (r *PullsListReviewCommentsForRepoReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *PullsListReviewCommentsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "pulls/list-review-comments-for-repo", opt)
 }
 
 /*
@@ -2680,7 +2680,7 @@ func PullsListReviews(ctx context.Context, req *PullsListReviewsReq, opt ...Requ
 		req = new(PullsListReviewsReq)
 	}
 	resp := &PullsListReviewsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "pulls/list-reviews", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2688,7 +2688,7 @@ func PullsListReviews(ctx context.Context, req *PullsListReviewsReq, opt ...Requ
 		return resp, err
 	}
 	resp.Data = []components.PullRequestReview{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "pulls/list-reviews")
 	if err != nil {
 		return nil, err
 	}
@@ -2769,7 +2769,7 @@ func (r *PullsListReviewsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *PullsListReviewsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "pulls/list-reviews", opt)
 }
 
 /*
@@ -2810,7 +2810,7 @@ func PullsMerge(ctx context.Context, req *PullsMergeReq, opt ...RequestOption) (
 		req = new(PullsMergeReq)
 	}
 	resp := &PullsMergeResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "pulls/merge", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2818,7 +2818,7 @@ func PullsMerge(ctx context.Context, req *PullsMergeReq, opt ...RequestOption) (
 		return resp, err
 	}
 	resp.Data = components.PullRequestMergeResult{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "pulls/merge")
 	if err != nil {
 		return nil, err
 	}
@@ -2891,7 +2891,7 @@ func (r *PullsMergeReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *PullsMergeReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "pulls/merge", opt)
 }
 
 /*
@@ -2952,14 +2952,14 @@ func PullsRemoveRequestedReviewers(ctx context.Context, req *PullsRemoveRequeste
 		req = new(PullsRemoveRequestedReviewersReq)
 	}
 	resp := &PullsRemoveRequestedReviewersResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "pulls/remove-requested-reviewers", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "pulls/remove-requested-reviewers")
 	if err != nil {
 		return nil, err
 	}
@@ -3029,7 +3029,7 @@ func (r *PullsRemoveRequestedReviewersReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *PullsRemoveRequestedReviewersReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "pulls/remove-requested-reviewers", opt)
 }
 
 /*
@@ -3083,7 +3083,7 @@ func PullsRequestReviewers(ctx context.Context, req *PullsRequestReviewersReq, o
 		req = new(PullsRequestReviewersReq)
 	}
 	resp := &PullsRequestReviewersResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "pulls/request-reviewers", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3091,7 +3091,7 @@ func PullsRequestReviewers(ctx context.Context, req *PullsRequestReviewersReq, o
 		return resp, err
 	}
 	resp.Data = components.PullRequestSimple{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "pulls/request-reviewers")
 	if err != nil {
 		return nil, err
 	}
@@ -3164,7 +3164,7 @@ func (r *PullsRequestReviewersReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *PullsRequestReviewersReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "pulls/request-reviewers", opt)
 }
 
 /*
@@ -3219,7 +3219,7 @@ func PullsSubmitReview(ctx context.Context, req *PullsSubmitReviewReq, opt ...Re
 		req = new(PullsSubmitReviewReq)
 	}
 	resp := &PullsSubmitReviewResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "pulls/submit-review", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3227,7 +3227,7 @@ func PullsSubmitReview(ctx context.Context, req *PullsSubmitReviewReq, opt ...Re
 		return resp, err
 	}
 	resp.Data = components.PullRequestReview{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "pulls/submit-review")
 	if err != nil {
 		return nil, err
 	}
@@ -3303,7 +3303,7 @@ func (r *PullsSubmitReviewReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *PullsSubmitReviewReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "pulls/submit-review", opt)
 }
 
 /*
@@ -3364,7 +3364,7 @@ func PullsUpdate(ctx context.Context, req *PullsUpdateReq, opt ...RequestOption)
 		req = new(PullsUpdateReq)
 	}
 	resp := &PullsUpdateResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "pulls/update", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3372,7 +3372,7 @@ func PullsUpdate(ctx context.Context, req *PullsUpdateReq, opt ...RequestOption)
 		return resp, err
 	}
 	resp.Data = components.PullRequest{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "pulls/update")
 	if err != nil {
 		return nil, err
 	}
@@ -3458,7 +3458,7 @@ func (r *PullsUpdateReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *PullsUpdateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "pulls/update", opt)
 }
 
 /*
@@ -3530,7 +3530,7 @@ func PullsUpdateBranch(ctx context.Context, req *PullsUpdateBranchReq, opt ...Re
 		req = new(PullsUpdateBranchReq)
 	}
 	resp := &PullsUpdateBranchResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "pulls/update-branch", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3538,7 +3538,7 @@ func PullsUpdateBranch(ctx context.Context, req *PullsUpdateBranchReq, opt ...Re
 		return resp, err
 	}
 	resp.Data = PullsUpdateBranchResponseBody{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "pulls/update-branch")
 	if err != nil {
 		return nil, err
 	}
@@ -3624,7 +3624,7 @@ func (r *PullsUpdateBranchReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *PullsUpdateBranchReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "pulls/update-branch", opt)
 }
 
 /*
@@ -3694,7 +3694,7 @@ func PullsUpdateReview(ctx context.Context, req *PullsUpdateReviewReq, opt ...Re
 		req = new(PullsUpdateReviewReq)
 	}
 	resp := &PullsUpdateReviewResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "pulls/update-review", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3702,7 +3702,7 @@ func PullsUpdateReview(ctx context.Context, req *PullsUpdateReviewReq, opt ...Re
 		return resp, err
 	}
 	resp.Data = components.PullRequestReview{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "pulls/update-review")
 	if err != nil {
 		return nil, err
 	}
@@ -3778,7 +3778,7 @@ func (r *PullsUpdateReviewReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *PullsUpdateReviewReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "pulls/update-review", opt)
 }
 
 /*
@@ -3830,7 +3830,7 @@ func PullsUpdateReviewComment(ctx context.Context, req *PullsUpdateReviewComment
 		req = new(PullsUpdateReviewCommentReq)
 	}
 	resp := &PullsUpdateReviewCommentResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "pulls/update-review-comment", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3838,7 +3838,7 @@ func PullsUpdateReviewComment(ctx context.Context, req *PullsUpdateReviewComment
 		return resp, err
 	}
 	resp.Data = components.PullRequestReviewComment{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "pulls/update-review-comment")
 	if err != nil {
 		return nil, err
 	}
@@ -3923,7 +3923,7 @@ func (r *PullsUpdateReviewCommentReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *PullsUpdateReviewCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "pulls/update-review-comment", opt)
 }
 
 /*

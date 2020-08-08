@@ -25,14 +25,14 @@ func ActionsAddSelectedRepoToOrgSecret(ctx context.Context, req *ActionsAddSelec
 		req = new(ActionsAddSelectedRepoToOrgSecretReq)
 	}
 	resp := &ActionsAddSelectedRepoToOrgSecretResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "actions/add-selected-repo-to-org-secret", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "actions/add-selected-repo-to-org-secret")
 	if err != nil {
 		return nil, err
 	}
@@ -105,7 +105,7 @@ func (r *ActionsAddSelectedRepoToOrgSecretReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActionsAddSelectedRepoToOrgSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "actions/add-selected-repo-to-org-secret", opt)
 }
 
 /*
@@ -145,14 +145,14 @@ func ActionsCancelWorkflowRun(ctx context.Context, req *ActionsCancelWorkflowRun
 		req = new(ActionsCancelWorkflowRunReq)
 	}
 	resp := &ActionsCancelWorkflowRunResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "actions/cancel-workflow-run", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "actions/cancel-workflow-run")
 	if err != nil {
 		return nil, err
 	}
@@ -221,7 +221,7 @@ func (r *ActionsCancelWorkflowRunReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActionsCancelWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "actions/cancel-workflow-run", opt)
 }
 
 /*
@@ -261,14 +261,14 @@ func ActionsCreateOrUpdateOrgSecret(ctx context.Context, req *ActionsCreateOrUpd
 		req = new(ActionsCreateOrUpdateOrgSecretReq)
 	}
 	resp := &ActionsCreateOrUpdateOrgSecretResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "actions/create-or-update-org-secret", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "actions/create-or-update-org-secret")
 	if err != nil {
 		return nil, err
 	}
@@ -339,7 +339,7 @@ func (r *ActionsCreateOrUpdateOrgSecretReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActionsCreateOrUpdateOrgSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "actions/create-or-update-org-secret", opt)
 }
 
 /*
@@ -422,14 +422,14 @@ func ActionsCreateOrUpdateRepoSecret(ctx context.Context, req *ActionsCreateOrUp
 		req = new(ActionsCreateOrUpdateRepoSecretReq)
 	}
 	resp := &ActionsCreateOrUpdateRepoSecretResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "actions/create-or-update-repo-secret", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "actions/create-or-update-repo-secret")
 	if err != nil {
 		return nil, err
 	}
@@ -501,7 +501,7 @@ func (r *ActionsCreateOrUpdateRepoSecretReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActionsCreateOrUpdateRepoSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "actions/create-or-update-repo-secret", opt)
 }
 
 /*
@@ -561,7 +561,7 @@ func ActionsCreateRegistrationTokenForOrg(ctx context.Context, req *ActionsCreat
 		req = new(ActionsCreateRegistrationTokenForOrgReq)
 	}
 	resp := &ActionsCreateRegistrationTokenForOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "actions/create-registration-token-for-org", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -569,7 +569,7 @@ func ActionsCreateRegistrationTokenForOrg(ctx context.Context, req *ActionsCreat
 		return resp, err
 	}
 	resp.Data = components.AuthenticationToken{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "actions/create-registration-token-for-org")
 	if err != nil {
 		return nil, err
 	}
@@ -636,7 +636,7 @@ func (r *ActionsCreateRegistrationTokenForOrgReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActionsCreateRegistrationTokenForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "actions/create-registration-token-for-org", opt)
 }
 
 /*
@@ -677,7 +677,7 @@ func ActionsCreateRegistrationTokenForRepo(ctx context.Context, req *ActionsCrea
 		req = new(ActionsCreateRegistrationTokenForRepoReq)
 	}
 	resp := &ActionsCreateRegistrationTokenForRepoResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "actions/create-registration-token-for-repo", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -685,7 +685,7 @@ func ActionsCreateRegistrationTokenForRepo(ctx context.Context, req *ActionsCrea
 		return resp, err
 	}
 	resp.Data = components.AuthenticationToken{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "actions/create-registration-token-for-repo")
 	if err != nil {
 		return nil, err
 	}
@@ -753,7 +753,7 @@ func (r *ActionsCreateRegistrationTokenForRepoReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActionsCreateRegistrationTokenForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "actions/create-registration-token-for-repo", opt)
 }
 
 /*
@@ -794,7 +794,7 @@ func ActionsCreateRemoveTokenForOrg(ctx context.Context, req *ActionsCreateRemov
 		req = new(ActionsCreateRemoveTokenForOrgReq)
 	}
 	resp := &ActionsCreateRemoveTokenForOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "actions/create-remove-token-for-org", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -802,7 +802,7 @@ func ActionsCreateRemoveTokenForOrg(ctx context.Context, req *ActionsCreateRemov
 		return resp, err
 	}
 	resp.Data = components.AuthenticationToken{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "actions/create-remove-token-for-org")
 	if err != nil {
 		return nil, err
 	}
@@ -869,7 +869,7 @@ func (r *ActionsCreateRemoveTokenForOrgReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActionsCreateRemoveTokenForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "actions/create-remove-token-for-org", opt)
 }
 
 /*
@@ -910,7 +910,7 @@ func ActionsCreateRemoveTokenForRepo(ctx context.Context, req *ActionsCreateRemo
 		req = new(ActionsCreateRemoveTokenForRepoReq)
 	}
 	resp := &ActionsCreateRemoveTokenForRepoResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "actions/create-remove-token-for-repo", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -918,7 +918,7 @@ func ActionsCreateRemoveTokenForRepo(ctx context.Context, req *ActionsCreateRemo
 		return resp, err
 	}
 	resp.Data = components.AuthenticationToken{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "actions/create-remove-token-for-repo")
 	if err != nil {
 		return nil, err
 	}
@@ -986,7 +986,7 @@ func (r *ActionsCreateRemoveTokenForRepoReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActionsCreateRemoveTokenForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "actions/create-remove-token-for-repo", opt)
 }
 
 /*
@@ -1027,14 +1027,14 @@ func ActionsCreateWorkflowDispatch(ctx context.Context, req *ActionsCreateWorkfl
 		req = new(ActionsCreateWorkflowDispatchReq)
 	}
 	resp := &ActionsCreateWorkflowDispatchResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "actions/create-workflow-dispatch", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "actions/create-workflow-dispatch")
 	if err != nil {
 		return nil, err
 	}
@@ -1104,7 +1104,7 @@ func (r *ActionsCreateWorkflowDispatchReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActionsCreateWorkflowDispatchReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "actions/create-workflow-dispatch", opt)
 }
 
 /*
@@ -1162,14 +1162,14 @@ func ActionsDeleteArtifact(ctx context.Context, req *ActionsDeleteArtifactReq, o
 		req = new(ActionsDeleteArtifactReq)
 	}
 	resp := &ActionsDeleteArtifactResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "actions/delete-artifact", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "actions/delete-artifact")
 	if err != nil {
 		return nil, err
 	}
@@ -1240,7 +1240,7 @@ func (r *ActionsDeleteArtifactReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActionsDeleteArtifactReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "actions/delete-artifact", opt)
 }
 
 /*
@@ -1280,14 +1280,14 @@ func ActionsDeleteOrgSecret(ctx context.Context, req *ActionsDeleteOrgSecretReq,
 		req = new(ActionsDeleteOrgSecretReq)
 	}
 	resp := &ActionsDeleteOrgSecretResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "actions/delete-org-secret", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "actions/delete-org-secret")
 	if err != nil {
 		return nil, err
 	}
@@ -1357,7 +1357,7 @@ func (r *ActionsDeleteOrgSecretReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActionsDeleteOrgSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "actions/delete-org-secret", opt)
 }
 
 /*
@@ -1397,14 +1397,14 @@ func ActionsDeleteRepoSecret(ctx context.Context, req *ActionsDeleteRepoSecretRe
 		req = new(ActionsDeleteRepoSecretReq)
 	}
 	resp := &ActionsDeleteRepoSecretResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "actions/delete-repo-secret", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "actions/delete-repo-secret")
 	if err != nil {
 		return nil, err
 	}
@@ -1475,7 +1475,7 @@ func (r *ActionsDeleteRepoSecretReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActionsDeleteRepoSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "actions/delete-repo-secret", opt)
 }
 
 /*
@@ -1515,14 +1515,14 @@ func ActionsDeleteSelfHostedRunnerFromOrg(ctx context.Context, req *ActionsDelet
 		req = new(ActionsDeleteSelfHostedRunnerFromOrgReq)
 	}
 	resp := &ActionsDeleteSelfHostedRunnerFromOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "actions/delete-self-hosted-runner-from-org", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "actions/delete-self-hosted-runner-from-org")
 	if err != nil {
 		return nil, err
 	}
@@ -1592,7 +1592,7 @@ func (r *ActionsDeleteSelfHostedRunnerFromOrgReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActionsDeleteSelfHostedRunnerFromOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "actions/delete-self-hosted-runner-from-org", opt)
 }
 
 /*
@@ -1632,14 +1632,14 @@ func ActionsDeleteSelfHostedRunnerFromRepo(ctx context.Context, req *ActionsDele
 		req = new(ActionsDeleteSelfHostedRunnerFromRepoReq)
 	}
 	resp := &ActionsDeleteSelfHostedRunnerFromRepoResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "actions/delete-self-hosted-runner-from-repo", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "actions/delete-self-hosted-runner-from-repo")
 	if err != nil {
 		return nil, err
 	}
@@ -1710,7 +1710,7 @@ func (r *ActionsDeleteSelfHostedRunnerFromRepoReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActionsDeleteSelfHostedRunnerFromRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "actions/delete-self-hosted-runner-from-repo", opt)
 }
 
 /*
@@ -1750,14 +1750,14 @@ func ActionsDeleteWorkflowRun(ctx context.Context, req *ActionsDeleteWorkflowRun
 		req = new(ActionsDeleteWorkflowRunReq)
 	}
 	resp := &ActionsDeleteWorkflowRunResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "actions/delete-workflow-run", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "actions/delete-workflow-run")
 	if err != nil {
 		return nil, err
 	}
@@ -1826,7 +1826,7 @@ func (r *ActionsDeleteWorkflowRunReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActionsDeleteWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "actions/delete-workflow-run", opt)
 }
 
 /*
@@ -1866,14 +1866,14 @@ func ActionsDeleteWorkflowRunLogs(ctx context.Context, req *ActionsDeleteWorkflo
 		req = new(ActionsDeleteWorkflowRunLogsReq)
 	}
 	resp := &ActionsDeleteWorkflowRunLogsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "actions/delete-workflow-run-logs", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "actions/delete-workflow-run-logs")
 	if err != nil {
 		return nil, err
 	}
@@ -1942,7 +1942,7 @@ func (r *ActionsDeleteWorkflowRunLogsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActionsDeleteWorkflowRunLogsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "actions/delete-workflow-run-logs", opt)
 }
 
 /*
@@ -1982,14 +1982,14 @@ func ActionsDownloadArtifact(ctx context.Context, req *ActionsDownloadArtifactRe
 		req = new(ActionsDownloadArtifactReq)
 	}
 	resp := &ActionsDownloadArtifactResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "actions/download-artifact", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "actions/download-artifact")
 	if err != nil {
 		return nil, err
 	}
@@ -2063,7 +2063,7 @@ func (r *ActionsDownloadArtifactReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActionsDownloadArtifactReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "actions/download-artifact", opt)
 }
 
 /*
@@ -2103,14 +2103,14 @@ func ActionsDownloadJobLogsForWorkflowRun(ctx context.Context, req *ActionsDownl
 		req = new(ActionsDownloadJobLogsForWorkflowRunReq)
 	}
 	resp := &ActionsDownloadJobLogsForWorkflowRunResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "actions/download-job-logs-for-workflow-run", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "actions/download-job-logs-for-workflow-run")
 	if err != nil {
 		return nil, err
 	}
@@ -2181,7 +2181,7 @@ func (r *ActionsDownloadJobLogsForWorkflowRunReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActionsDownloadJobLogsForWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "actions/download-job-logs-for-workflow-run", opt)
 }
 
 /*
@@ -2221,14 +2221,14 @@ func ActionsDownloadWorkflowRunLogs(ctx context.Context, req *ActionsDownloadWor
 		req = new(ActionsDownloadWorkflowRunLogsReq)
 	}
 	resp := &ActionsDownloadWorkflowRunLogsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "actions/download-workflow-run-logs", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "actions/download-workflow-run-logs")
 	if err != nil {
 		return nil, err
 	}
@@ -2297,7 +2297,7 @@ func (r *ActionsDownloadWorkflowRunLogsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActionsDownloadWorkflowRunLogsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "actions/download-workflow-run-logs", opt)
 }
 
 /*
@@ -2337,7 +2337,7 @@ func ActionsGetArtifact(ctx context.Context, req *ActionsGetArtifactReq, opt ...
 		req = new(ActionsGetArtifactReq)
 	}
 	resp := &ActionsGetArtifactResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "actions/get-artifact", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2345,7 +2345,7 @@ func ActionsGetArtifact(ctx context.Context, req *ActionsGetArtifactReq, opt ...
 		return resp, err
 	}
 	resp.Data = components.Artifact{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "actions/get-artifact")
 	if err != nil {
 		return nil, err
 	}
@@ -2416,7 +2416,7 @@ func (r *ActionsGetArtifactReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActionsGetArtifactReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "actions/get-artifact", opt)
 }
 
 /*
@@ -2457,7 +2457,7 @@ func ActionsGetJobForWorkflowRun(ctx context.Context, req *ActionsGetJobForWorkf
 		req = new(ActionsGetJobForWorkflowRunReq)
 	}
 	resp := &ActionsGetJobForWorkflowRunResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "actions/get-job-for-workflow-run", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2465,7 +2465,7 @@ func ActionsGetJobForWorkflowRun(ctx context.Context, req *ActionsGetJobForWorkf
 		return resp, err
 	}
 	resp.Data = components.Job{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "actions/get-job-for-workflow-run")
 	if err != nil {
 		return nil, err
 	}
@@ -2536,7 +2536,7 @@ func (r *ActionsGetJobForWorkflowRunReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActionsGetJobForWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "actions/get-job-for-workflow-run", opt)
 }
 
 /*
@@ -2577,7 +2577,7 @@ func ActionsGetOrgPublicKey(ctx context.Context, req *ActionsGetOrgPublicKeyReq,
 		req = new(ActionsGetOrgPublicKeyReq)
 	}
 	resp := &ActionsGetOrgPublicKeyResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "actions/get-org-public-key", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2585,7 +2585,7 @@ func ActionsGetOrgPublicKey(ctx context.Context, req *ActionsGetOrgPublicKeyReq,
 		return resp, err
 	}
 	resp.Data = components.ActionsPublicKey{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "actions/get-org-public-key")
 	if err != nil {
 		return nil, err
 	}
@@ -2652,7 +2652,7 @@ func (r *ActionsGetOrgPublicKeyReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActionsGetOrgPublicKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "actions/get-org-public-key", opt)
 }
 
 /*
@@ -2693,7 +2693,7 @@ func ActionsGetOrgSecret(ctx context.Context, req *ActionsGetOrgSecretReq, opt .
 		req = new(ActionsGetOrgSecretReq)
 	}
 	resp := &ActionsGetOrgSecretResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "actions/get-org-secret", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2701,7 +2701,7 @@ func ActionsGetOrgSecret(ctx context.Context, req *ActionsGetOrgSecretReq, opt .
 		return resp, err
 	}
 	resp.Data = components.OrganizationActionsSecret{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "actions/get-org-secret")
 	if err != nil {
 		return nil, err
 	}
@@ -2771,7 +2771,7 @@ func (r *ActionsGetOrgSecretReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActionsGetOrgSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "actions/get-org-secret", opt)
 }
 
 /*
@@ -2812,7 +2812,7 @@ func ActionsGetRepoPublicKey(ctx context.Context, req *ActionsGetRepoPublicKeyRe
 		req = new(ActionsGetRepoPublicKeyReq)
 	}
 	resp := &ActionsGetRepoPublicKeyResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "actions/get-repo-public-key", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2820,7 +2820,7 @@ func ActionsGetRepoPublicKey(ctx context.Context, req *ActionsGetRepoPublicKeyRe
 		return resp, err
 	}
 	resp.Data = components.ActionsPublicKey{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "actions/get-repo-public-key")
 	if err != nil {
 		return nil, err
 	}
@@ -2888,7 +2888,7 @@ func (r *ActionsGetRepoPublicKeyReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActionsGetRepoPublicKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "actions/get-repo-public-key", opt)
 }
 
 /*
@@ -2929,7 +2929,7 @@ func ActionsGetRepoSecret(ctx context.Context, req *ActionsGetRepoSecretReq, opt
 		req = new(ActionsGetRepoSecretReq)
 	}
 	resp := &ActionsGetRepoSecretResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "actions/get-repo-secret", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2937,7 +2937,7 @@ func ActionsGetRepoSecret(ctx context.Context, req *ActionsGetRepoSecretReq, opt
 		return resp, err
 	}
 	resp.Data = components.ActionsSecret{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "actions/get-repo-secret")
 	if err != nil {
 		return nil, err
 	}
@@ -3008,7 +3008,7 @@ func (r *ActionsGetRepoSecretReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActionsGetRepoSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "actions/get-repo-secret", opt)
 }
 
 /*
@@ -3049,7 +3049,7 @@ func ActionsGetSelfHostedRunnerForOrg(ctx context.Context, req *ActionsGetSelfHo
 		req = new(ActionsGetSelfHostedRunnerForOrgReq)
 	}
 	resp := &ActionsGetSelfHostedRunnerForOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "actions/get-self-hosted-runner-for-org", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3057,7 +3057,7 @@ func ActionsGetSelfHostedRunnerForOrg(ctx context.Context, req *ActionsGetSelfHo
 		return resp, err
 	}
 	resp.Data = components.Runner{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "actions/get-self-hosted-runner-for-org")
 	if err != nil {
 		return nil, err
 	}
@@ -3127,7 +3127,7 @@ func (r *ActionsGetSelfHostedRunnerForOrgReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActionsGetSelfHostedRunnerForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "actions/get-self-hosted-runner-for-org", opt)
 }
 
 /*
@@ -3168,7 +3168,7 @@ func ActionsGetSelfHostedRunnerForRepo(ctx context.Context, req *ActionsGetSelfH
 		req = new(ActionsGetSelfHostedRunnerForRepoReq)
 	}
 	resp := &ActionsGetSelfHostedRunnerForRepoResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "actions/get-self-hosted-runner-for-repo", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3176,7 +3176,7 @@ func ActionsGetSelfHostedRunnerForRepo(ctx context.Context, req *ActionsGetSelfH
 		return resp, err
 	}
 	resp.Data = components.Runner{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "actions/get-self-hosted-runner-for-repo")
 	if err != nil {
 		return nil, err
 	}
@@ -3247,7 +3247,7 @@ func (r *ActionsGetSelfHostedRunnerForRepoReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActionsGetSelfHostedRunnerForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "actions/get-self-hosted-runner-for-repo", opt)
 }
 
 /*
@@ -3288,7 +3288,7 @@ func ActionsGetWorkflow(ctx context.Context, req *ActionsGetWorkflowReq, opt ...
 		req = new(ActionsGetWorkflowReq)
 	}
 	resp := &ActionsGetWorkflowResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "actions/get-workflow", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3296,7 +3296,7 @@ func ActionsGetWorkflow(ctx context.Context, req *ActionsGetWorkflowReq, opt ...
 		return resp, err
 	}
 	resp.Data = components.Workflow{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "actions/get-workflow")
 	if err != nil {
 		return nil, err
 	}
@@ -3365,7 +3365,7 @@ func (r *ActionsGetWorkflowReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActionsGetWorkflowReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "actions/get-workflow", opt)
 }
 
 /*
@@ -3406,7 +3406,7 @@ func ActionsGetWorkflowRun(ctx context.Context, req *ActionsGetWorkflowRunReq, o
 		req = new(ActionsGetWorkflowRunReq)
 	}
 	resp := &ActionsGetWorkflowRunResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "actions/get-workflow-run", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3414,7 +3414,7 @@ func ActionsGetWorkflowRun(ctx context.Context, req *ActionsGetWorkflowRunReq, o
 		return resp, err
 	}
 	resp.Data = components.WorkflowRun{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "actions/get-workflow-run")
 	if err != nil {
 		return nil, err
 	}
@@ -3483,7 +3483,7 @@ func (r *ActionsGetWorkflowRunReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActionsGetWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "actions/get-workflow-run", opt)
 }
 
 /*
@@ -3524,7 +3524,7 @@ func ActionsGetWorkflowRunUsage(ctx context.Context, req *ActionsGetWorkflowRunU
 		req = new(ActionsGetWorkflowRunUsageReq)
 	}
 	resp := &ActionsGetWorkflowRunUsageResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "actions/get-workflow-run-usage", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3532,7 +3532,7 @@ func ActionsGetWorkflowRunUsage(ctx context.Context, req *ActionsGetWorkflowRunU
 		return resp, err
 	}
 	resp.Data = components.WorkflowRunUsage{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "actions/get-workflow-run-usage")
 	if err != nil {
 		return nil, err
 	}
@@ -3601,7 +3601,7 @@ func (r *ActionsGetWorkflowRunUsageReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActionsGetWorkflowRunUsageReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "actions/get-workflow-run-usage", opt)
 }
 
 /*
@@ -3642,7 +3642,7 @@ func ActionsGetWorkflowUsage(ctx context.Context, req *ActionsGetWorkflowUsageRe
 		req = new(ActionsGetWorkflowUsageReq)
 	}
 	resp := &ActionsGetWorkflowUsageResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "actions/get-workflow-usage", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3650,7 +3650,7 @@ func ActionsGetWorkflowUsage(ctx context.Context, req *ActionsGetWorkflowUsageRe
 		return resp, err
 	}
 	resp.Data = components.WorkflowUsage{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "actions/get-workflow-usage")
 	if err != nil {
 		return nil, err
 	}
@@ -3719,7 +3719,7 @@ func (r *ActionsGetWorkflowUsageReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActionsGetWorkflowUsageReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "actions/get-workflow-usage", opt)
 }
 
 /*
@@ -3760,7 +3760,7 @@ func ActionsListArtifactsForRepo(ctx context.Context, req *ActionsListArtifactsF
 		req = new(ActionsListArtifactsForRepoReq)
 	}
 	resp := &ActionsListArtifactsForRepoResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "actions/list-artifacts-for-repo", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3768,7 +3768,7 @@ func ActionsListArtifactsForRepo(ctx context.Context, req *ActionsListArtifactsF
 		return resp, err
 	}
 	resp.Data = ActionsListArtifactsForRepoResponseBody{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "actions/list-artifacts-for-repo")
 	if err != nil {
 		return nil, err
 	}
@@ -3848,7 +3848,7 @@ func (r *ActionsListArtifactsForRepoReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActionsListArtifactsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "actions/list-artifacts-for-repo", opt)
 }
 
 /*
@@ -3899,7 +3899,7 @@ func ActionsListJobsForWorkflowRun(ctx context.Context, req *ActionsListJobsForW
 		req = new(ActionsListJobsForWorkflowRunReq)
 	}
 	resp := &ActionsListJobsForWorkflowRunResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "actions/list-jobs-for-workflow-run", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3907,7 +3907,7 @@ func ActionsListJobsForWorkflowRun(ctx context.Context, req *ActionsListJobsForW
 		return resp, err
 	}
 	resp.Data = ActionsListJobsForWorkflowRunResponseBody{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "actions/list-jobs-for-workflow-run")
 	if err != nil {
 		return nil, err
 	}
@@ -3999,7 +3999,7 @@ func (r *ActionsListJobsForWorkflowRunReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActionsListJobsForWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "actions/list-jobs-for-workflow-run", opt)
 }
 
 /*
@@ -4050,7 +4050,7 @@ func ActionsListOrgSecrets(ctx context.Context, req *ActionsListOrgSecretsReq, o
 		req = new(ActionsListOrgSecretsReq)
 	}
 	resp := &ActionsListOrgSecretsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "actions/list-org-secrets", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -4058,7 +4058,7 @@ func ActionsListOrgSecrets(ctx context.Context, req *ActionsListOrgSecretsReq, o
 		return resp, err
 	}
 	resp.Data = ActionsListOrgSecretsResponseBody{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "actions/list-org-secrets")
 	if err != nil {
 		return nil, err
 	}
@@ -4137,7 +4137,7 @@ func (r *ActionsListOrgSecretsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActionsListOrgSecretsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "actions/list-org-secrets", opt)
 }
 
 /*
@@ -4188,7 +4188,7 @@ func ActionsListRepoSecrets(ctx context.Context, req *ActionsListRepoSecretsReq,
 		req = new(ActionsListRepoSecretsReq)
 	}
 	resp := &ActionsListRepoSecretsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "actions/list-repo-secrets", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -4196,7 +4196,7 @@ func ActionsListRepoSecrets(ctx context.Context, req *ActionsListRepoSecretsReq,
 		return resp, err
 	}
 	resp.Data = ActionsListRepoSecretsResponseBody{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "actions/list-repo-secrets")
 	if err != nil {
 		return nil, err
 	}
@@ -4276,7 +4276,7 @@ func (r *ActionsListRepoSecretsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActionsListRepoSecretsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "actions/list-repo-secrets", opt)
 }
 
 /*
@@ -4327,7 +4327,7 @@ func ActionsListRepoWorkflows(ctx context.Context, req *ActionsListRepoWorkflows
 		req = new(ActionsListRepoWorkflowsReq)
 	}
 	resp := &ActionsListRepoWorkflowsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "actions/list-repo-workflows", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -4335,7 +4335,7 @@ func ActionsListRepoWorkflows(ctx context.Context, req *ActionsListRepoWorkflows
 		return resp, err
 	}
 	resp.Data = ActionsListRepoWorkflowsResponseBody{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "actions/list-repo-workflows")
 	if err != nil {
 		return nil, err
 	}
@@ -4415,7 +4415,7 @@ func (r *ActionsListRepoWorkflowsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActionsListRepoWorkflowsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "actions/list-repo-workflows", opt)
 }
 
 /*
@@ -4466,7 +4466,7 @@ func ActionsListRunnerApplicationsForOrg(ctx context.Context, req *ActionsListRu
 		req = new(ActionsListRunnerApplicationsForOrgReq)
 	}
 	resp := &ActionsListRunnerApplicationsForOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "actions/list-runner-applications-for-org", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -4474,7 +4474,7 @@ func ActionsListRunnerApplicationsForOrg(ctx context.Context, req *ActionsListRu
 		return resp, err
 	}
 	resp.Data = []components.RunnerApplication{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "actions/list-runner-applications-for-org")
 	if err != nil {
 		return nil, err
 	}
@@ -4541,7 +4541,7 @@ func (r *ActionsListRunnerApplicationsForOrgReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActionsListRunnerApplicationsForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "actions/list-runner-applications-for-org", opt)
 }
 
 /*
@@ -4582,7 +4582,7 @@ func ActionsListRunnerApplicationsForRepo(ctx context.Context, req *ActionsListR
 		req = new(ActionsListRunnerApplicationsForRepoReq)
 	}
 	resp := &ActionsListRunnerApplicationsForRepoResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "actions/list-runner-applications-for-repo", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -4590,7 +4590,7 @@ func ActionsListRunnerApplicationsForRepo(ctx context.Context, req *ActionsListR
 		return resp, err
 	}
 	resp.Data = []components.RunnerApplication{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "actions/list-runner-applications-for-repo")
 	if err != nil {
 		return nil, err
 	}
@@ -4658,7 +4658,7 @@ func (r *ActionsListRunnerApplicationsForRepoReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActionsListRunnerApplicationsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "actions/list-runner-applications-for-repo", opt)
 }
 
 /*
@@ -4699,7 +4699,7 @@ func ActionsListSelectedReposForOrgSecret(ctx context.Context, req *ActionsListS
 		req = new(ActionsListSelectedReposForOrgSecretReq)
 	}
 	resp := &ActionsListSelectedReposForOrgSecretResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "actions/list-selected-repos-for-org-secret", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -4707,7 +4707,7 @@ func ActionsListSelectedReposForOrgSecret(ctx context.Context, req *ActionsListS
 		return resp, err
 	}
 	resp.Data = ActionsListSelectedReposForOrgSecretResponseBody{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "actions/list-selected-repos-for-org-secret")
 	if err != nil {
 		return nil, err
 	}
@@ -4777,7 +4777,7 @@ func (r *ActionsListSelectedReposForOrgSecretReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActionsListSelectedReposForOrgSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "actions/list-selected-repos-for-org-secret", opt)
 }
 
 /*
@@ -4828,7 +4828,7 @@ func ActionsListSelfHostedRunnersForOrg(ctx context.Context, req *ActionsListSel
 		req = new(ActionsListSelfHostedRunnersForOrgReq)
 	}
 	resp := &ActionsListSelfHostedRunnersForOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "actions/list-self-hosted-runners-for-org", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -4836,7 +4836,7 @@ func ActionsListSelfHostedRunnersForOrg(ctx context.Context, req *ActionsListSel
 		return resp, err
 	}
 	resp.Data = ActionsListSelfHostedRunnersForOrgResponseBody{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "actions/list-self-hosted-runners-for-org")
 	if err != nil {
 		return nil, err
 	}
@@ -4915,7 +4915,7 @@ func (r *ActionsListSelfHostedRunnersForOrgReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActionsListSelfHostedRunnersForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "actions/list-self-hosted-runners-for-org", opt)
 }
 
 /*
@@ -4966,7 +4966,7 @@ func ActionsListSelfHostedRunnersForRepo(ctx context.Context, req *ActionsListSe
 		req = new(ActionsListSelfHostedRunnersForRepoReq)
 	}
 	resp := &ActionsListSelfHostedRunnersForRepoResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "actions/list-self-hosted-runners-for-repo", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -4974,7 +4974,7 @@ func ActionsListSelfHostedRunnersForRepo(ctx context.Context, req *ActionsListSe
 		return resp, err
 	}
 	resp.Data = ActionsListSelfHostedRunnersForRepoResponseBody{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "actions/list-self-hosted-runners-for-repo")
 	if err != nil {
 		return nil, err
 	}
@@ -5054,7 +5054,7 @@ func (r *ActionsListSelfHostedRunnersForRepoReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActionsListSelfHostedRunnersForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "actions/list-self-hosted-runners-for-repo", opt)
 }
 
 /*
@@ -5105,7 +5105,7 @@ func ActionsListWorkflowRunArtifacts(ctx context.Context, req *ActionsListWorkfl
 		req = new(ActionsListWorkflowRunArtifactsReq)
 	}
 	resp := &ActionsListWorkflowRunArtifactsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "actions/list-workflow-run-artifacts", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -5113,7 +5113,7 @@ func ActionsListWorkflowRunArtifacts(ctx context.Context, req *ActionsListWorkfl
 		return resp, err
 	}
 	resp.Data = ActionsListWorkflowRunArtifactsResponseBody{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "actions/list-workflow-run-artifacts")
 	if err != nil {
 		return nil, err
 	}
@@ -5194,7 +5194,7 @@ func (r *ActionsListWorkflowRunArtifactsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActionsListWorkflowRunArtifactsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "actions/list-workflow-run-artifacts", opt)
 }
 
 /*
@@ -5245,7 +5245,7 @@ func ActionsListWorkflowRuns(ctx context.Context, req *ActionsListWorkflowRunsRe
 		req = new(ActionsListWorkflowRunsReq)
 	}
 	resp := &ActionsListWorkflowRunsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "actions/list-workflow-runs", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -5253,7 +5253,7 @@ func ActionsListWorkflowRuns(ctx context.Context, req *ActionsListWorkflowRunsRe
 		return resp, err
 	}
 	resp.Data = ActionsListWorkflowRunsResponseBody{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "actions/list-workflow-runs")
 	if err != nil {
 		return nil, err
 	}
@@ -5374,7 +5374,7 @@ func (r *ActionsListWorkflowRunsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActionsListWorkflowRunsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "actions/list-workflow-runs", opt)
 }
 
 /*
@@ -5425,7 +5425,7 @@ func ActionsListWorkflowRunsForRepo(ctx context.Context, req *ActionsListWorkflo
 		req = new(ActionsListWorkflowRunsForRepoReq)
 	}
 	resp := &ActionsListWorkflowRunsForRepoResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "actions/list-workflow-runs-for-repo", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -5433,7 +5433,7 @@ func ActionsListWorkflowRunsForRepo(ctx context.Context, req *ActionsListWorkflo
 		return resp, err
 	}
 	resp.Data = ActionsListWorkflowRunsForRepoResponseBody{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "actions/list-workflow-runs-for-repo")
 	if err != nil {
 		return nil, err
 	}
@@ -5553,7 +5553,7 @@ func (r *ActionsListWorkflowRunsForRepoReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActionsListWorkflowRunsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "actions/list-workflow-runs-for-repo", opt)
 }
 
 /*
@@ -5604,14 +5604,14 @@ func ActionsReRunWorkflow(ctx context.Context, req *ActionsReRunWorkflowReq, opt
 		req = new(ActionsReRunWorkflowReq)
 	}
 	resp := &ActionsReRunWorkflowResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "actions/re-run-workflow", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "actions/re-run-workflow")
 	if err != nil {
 		return nil, err
 	}
@@ -5680,7 +5680,7 @@ func (r *ActionsReRunWorkflowReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActionsReRunWorkflowReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "actions/re-run-workflow", opt)
 }
 
 /*
@@ -5720,14 +5720,14 @@ func ActionsRemoveSelectedRepoFromOrgSecret(ctx context.Context, req *ActionsRem
 		req = new(ActionsRemoveSelectedRepoFromOrgSecretReq)
 	}
 	resp := &ActionsRemoveSelectedRepoFromOrgSecretResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "actions/remove-selected-repo-from-org-secret", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "actions/remove-selected-repo-from-org-secret")
 	if err != nil {
 		return nil, err
 	}
@@ -5800,7 +5800,7 @@ func (r *ActionsRemoveSelectedRepoFromOrgSecretReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActionsRemoveSelectedRepoFromOrgSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "actions/remove-selected-repo-from-org-secret", opt)
 }
 
 /*
@@ -5840,14 +5840,14 @@ func ActionsSetSelectedReposForOrgSecret(ctx context.Context, req *ActionsSetSel
 		req = new(ActionsSetSelectedReposForOrgSecretReq)
 	}
 	resp := &ActionsSetSelectedReposForOrgSecretResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "actions/set-selected-repos-for-org-secret", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "actions/set-selected-repos-for-org-secret")
 	if err != nil {
 		return nil, err
 	}
@@ -5918,7 +5918,7 @@ func (r *ActionsSetSelectedReposForOrgSecretReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActionsSetSelectedReposForOrgSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "actions/set-selected-repos-for-org-secret", opt)
 }
 
 /*

@@ -26,7 +26,7 @@ func UsersAddEmailForAuthenticated(ctx context.Context, req *UsersAddEmailForAut
 		req = new(UsersAddEmailForAuthenticatedReq)
 	}
 	resp := &UsersAddEmailForAuthenticatedResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "users/add-email-for-authenticated", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -34,7 +34,7 @@ func UsersAddEmailForAuthenticated(ctx context.Context, req *UsersAddEmailForAut
 		return resp, err
 	}
 	resp.Data = []components.Email{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "users/add-email-for-authenticated")
 	if err != nil {
 		return nil, err
 	}
@@ -104,7 +104,7 @@ func (r *UsersAddEmailForAuthenticatedReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *UsersAddEmailForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "users/add-email-for-authenticated", opt)
 }
 
 /*
@@ -161,14 +161,14 @@ func UsersBlock(ctx context.Context, req *UsersBlockReq, opt ...RequestOption) (
 		req = new(UsersBlockReq)
 	}
 	resp := &UsersBlockResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "users/block", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "users/block")
 	if err != nil {
 		return nil, err
 	}
@@ -235,7 +235,7 @@ func (r *UsersBlockReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *UsersBlockReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "users/block", opt)
 }
 
 /*
@@ -275,14 +275,14 @@ func UsersCheckBlocked(ctx context.Context, req *UsersCheckBlockedReq, opt ...Re
 		req = new(UsersCheckBlockedReq)
 	}
 	resp := &UsersCheckBlockedResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "users/check-blocked", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "users/check-blocked")
 	if err != nil {
 		return nil, err
 	}
@@ -349,7 +349,7 @@ func (r *UsersCheckBlockedReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *UsersCheckBlockedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "users/check-blocked", opt)
 }
 
 /*
@@ -389,7 +389,7 @@ func UsersCheckFollowingForUser(ctx context.Context, req *UsersCheckFollowingFor
 		req = new(UsersCheckFollowingForUserReq)
 	}
 	resp := &UsersCheckFollowingForUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "users/check-following-for-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -400,7 +400,7 @@ func UsersCheckFollowingForUser(ctx context.Context, req *UsersCheckFollowingFor
 	if err != nil {
 		return nil, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "users/check-following-for-user")
 	if err != nil {
 		return nil, err
 	}
@@ -470,7 +470,7 @@ func (r *UsersCheckFollowingForUserReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *UsersCheckFollowingForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "users/check-following-for-user", opt)
 }
 
 /*
@@ -511,14 +511,14 @@ func UsersCheckPersonIsFollowedByAuthenticated(ctx context.Context, req *UsersCh
 		req = new(UsersCheckPersonIsFollowedByAuthenticatedReq)
 	}
 	resp := &UsersCheckPersonIsFollowedByAuthenticatedResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "users/check-person-is-followed-by-authenticated", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "users/check-person-is-followed-by-authenticated")
 	if err != nil {
 		return nil, err
 	}
@@ -585,7 +585,7 @@ func (r *UsersCheckPersonIsFollowedByAuthenticatedReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *UsersCheckPersonIsFollowedByAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "users/check-person-is-followed-by-authenticated", opt)
 }
 
 /*
@@ -625,7 +625,7 @@ func UsersCreateGpgKeyForAuthenticated(ctx context.Context, req *UsersCreateGpgK
 		req = new(UsersCreateGpgKeyForAuthenticatedReq)
 	}
 	resp := &UsersCreateGpgKeyForAuthenticatedResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "users/create-gpg-key-for-authenticated", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -633,7 +633,7 @@ func UsersCreateGpgKeyForAuthenticated(ctx context.Context, req *UsersCreateGpgK
 		return resp, err
 	}
 	resp.Data = components.GpgKey{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "users/create-gpg-key-for-authenticated")
 	if err != nil {
 		return nil, err
 	}
@@ -703,7 +703,7 @@ func (r *UsersCreateGpgKeyForAuthenticatedReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *UsersCreateGpgKeyForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "users/create-gpg-key-for-authenticated", opt)
 }
 
 /*
@@ -755,7 +755,7 @@ func UsersCreatePublicSshKeyForAuthenticated(ctx context.Context, req *UsersCrea
 		req = new(UsersCreatePublicSshKeyForAuthenticatedReq)
 	}
 	resp := &UsersCreatePublicSshKeyForAuthenticatedResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "users/create-public-ssh-key-for-authenticated", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -763,7 +763,7 @@ func UsersCreatePublicSshKeyForAuthenticated(ctx context.Context, req *UsersCrea
 		return resp, err
 	}
 	resp.Data = components.Key{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "users/create-public-ssh-key-for-authenticated")
 	if err != nil {
 		return nil, err
 	}
@@ -833,7 +833,7 @@ func (r *UsersCreatePublicSshKeyForAuthenticatedReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *UsersCreatePublicSshKeyForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "users/create-public-ssh-key-for-authenticated", opt)
 }
 
 /*
@@ -888,14 +888,14 @@ func UsersDeleteEmailForAuthenticated(ctx context.Context, req *UsersDeleteEmail
 		req = new(UsersDeleteEmailForAuthenticatedReq)
 	}
 	resp := &UsersDeleteEmailForAuthenticatedResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "users/delete-email-for-authenticated", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "users/delete-email-for-authenticated")
 	if err != nil {
 		return nil, err
 	}
@@ -962,7 +962,7 @@ func (r *UsersDeleteEmailForAuthenticatedReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *UsersDeleteEmailForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "users/delete-email-for-authenticated", opt)
 }
 
 /*
@@ -1013,14 +1013,14 @@ func UsersDeleteGpgKeyForAuthenticated(ctx context.Context, req *UsersDeleteGpgK
 		req = new(UsersDeleteGpgKeyForAuthenticatedReq)
 	}
 	resp := &UsersDeleteGpgKeyForAuthenticatedResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "users/delete-gpg-key-for-authenticated", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "users/delete-gpg-key-for-authenticated")
 	if err != nil {
 		return nil, err
 	}
@@ -1089,7 +1089,7 @@ func (r *UsersDeleteGpgKeyForAuthenticatedReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *UsersDeleteGpgKeyForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "users/delete-gpg-key-for-authenticated", opt)
 }
 
 /*
@@ -1129,14 +1129,14 @@ func UsersDeletePublicSshKeyForAuthenticated(ctx context.Context, req *UsersDele
 		req = new(UsersDeletePublicSshKeyForAuthenticatedReq)
 	}
 	resp := &UsersDeletePublicSshKeyForAuthenticatedResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "users/delete-public-ssh-key-for-authenticated", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "users/delete-public-ssh-key-for-authenticated")
 	if err != nil {
 		return nil, err
 	}
@@ -1205,7 +1205,7 @@ func (r *UsersDeletePublicSshKeyForAuthenticatedReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *UsersDeletePublicSshKeyForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "users/delete-public-ssh-key-for-authenticated", opt)
 }
 
 /*
@@ -1245,14 +1245,14 @@ func UsersFollow(ctx context.Context, req *UsersFollowReq, opt ...RequestOption)
 		req = new(UsersFollowReq)
 	}
 	resp := &UsersFollowResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "users/follow", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "users/follow")
 	if err != nil {
 		return nil, err
 	}
@@ -1319,7 +1319,7 @@ func (r *UsersFollowReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *UsersFollowReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "users/follow", opt)
 }
 
 /*
@@ -1359,7 +1359,7 @@ func UsersGetAuthenticated(ctx context.Context, req *UsersGetAuthenticatedReq, o
 		req = new(UsersGetAuthenticatedReq)
 	}
 	resp := &UsersGetAuthenticatedResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "users/get-authenticated", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1367,7 +1367,7 @@ func UsersGetAuthenticated(ctx context.Context, req *UsersGetAuthenticatedReq, o
 		return resp, err
 	}
 	resp.Data = UsersGetAuthenticatedResponseBody{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "users/get-authenticated")
 	if err != nil {
 		return nil, err
 	}
@@ -1433,7 +1433,7 @@ func (r *UsersGetAuthenticatedReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *UsersGetAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "users/get-authenticated", opt)
 }
 
 /*
@@ -1537,7 +1537,7 @@ func UsersGetByUsername(ctx context.Context, req *UsersGetByUsernameReq, opt ...
 		req = new(UsersGetByUsernameReq)
 	}
 	resp := &UsersGetByUsernameResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "users/get-by-username", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1545,7 +1545,7 @@ func UsersGetByUsername(ctx context.Context, req *UsersGetByUsernameReq, opt ...
 		return resp, err
 	}
 	resp.Data = UsersGetByUsernameResponseBody{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "users/get-by-username")
 	if err != nil {
 		return nil, err
 	}
@@ -1612,7 +1612,7 @@ func (r *UsersGetByUsernameReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *UsersGetByUsernameReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "users/get-by-username", opt)
 }
 
 /*
@@ -1716,7 +1716,7 @@ func UsersGetContextForUser(ctx context.Context, req *UsersGetContextForUserReq,
 		req = new(UsersGetContextForUserReq)
 	}
 	resp := &UsersGetContextForUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "users/get-context-for-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1724,7 +1724,7 @@ func UsersGetContextForUser(ctx context.Context, req *UsersGetContextForUserReq,
 		return resp, err
 	}
 	resp.Data = components.Hovercard{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "users/get-context-for-user")
 	if err != nil {
 		return nil, err
 	}
@@ -1810,7 +1810,7 @@ func (r *UsersGetContextForUserReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *UsersGetContextForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "users/get-context-for-user", opt)
 }
 
 /*
@@ -1851,7 +1851,7 @@ func UsersGetGpgKeyForAuthenticated(ctx context.Context, req *UsersGetGpgKeyForA
 		req = new(UsersGetGpgKeyForAuthenticatedReq)
 	}
 	resp := &UsersGetGpgKeyForAuthenticatedResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "users/get-gpg-key-for-authenticated", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1859,7 +1859,7 @@ func UsersGetGpgKeyForAuthenticated(ctx context.Context, req *UsersGetGpgKeyForA
 		return resp, err
 	}
 	resp.Data = components.GpgKey{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "users/get-gpg-key-for-authenticated")
 	if err != nil {
 		return nil, err
 	}
@@ -1928,7 +1928,7 @@ func (r *UsersGetGpgKeyForAuthenticatedReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *UsersGetGpgKeyForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "users/get-gpg-key-for-authenticated", opt)
 }
 
 /*
@@ -1969,7 +1969,7 @@ func UsersGetPublicSshKeyForAuthenticated(ctx context.Context, req *UsersGetPubl
 		req = new(UsersGetPublicSshKeyForAuthenticatedReq)
 	}
 	resp := &UsersGetPublicSshKeyForAuthenticatedResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "users/get-public-ssh-key-for-authenticated", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1977,7 +1977,7 @@ func UsersGetPublicSshKeyForAuthenticated(ctx context.Context, req *UsersGetPubl
 		return resp, err
 	}
 	resp.Data = components.Key{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "users/get-public-ssh-key-for-authenticated")
 	if err != nil {
 		return nil, err
 	}
@@ -2046,7 +2046,7 @@ func (r *UsersGetPublicSshKeyForAuthenticatedReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *UsersGetPublicSshKeyForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "users/get-public-ssh-key-for-authenticated", opt)
 }
 
 /*
@@ -2087,7 +2087,7 @@ func UsersList(ctx context.Context, req *UsersListReq, opt ...RequestOption) (*U
 		req = new(UsersListReq)
 	}
 	resp := &UsersListResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "users/list", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2095,7 +2095,7 @@ func UsersList(ctx context.Context, req *UsersListReq, opt ...RequestOption) (*U
 		return resp, err
 	}
 	resp.Data = []components.SimpleUser{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "users/list")
 	if err != nil {
 		return nil, err
 	}
@@ -2177,7 +2177,7 @@ func (r *UsersListReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *UsersListReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "users/list", opt)
 }
 
 /*
@@ -2218,7 +2218,7 @@ func UsersListBlockedByAuthenticated(ctx context.Context, req *UsersListBlockedB
 		req = new(UsersListBlockedByAuthenticatedReq)
 	}
 	resp := &UsersListBlockedByAuthenticatedResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "users/list-blocked-by-authenticated", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2226,7 +2226,7 @@ func UsersListBlockedByAuthenticated(ctx context.Context, req *UsersListBlockedB
 		return resp, err
 	}
 	resp.Data = []components.SimpleUser{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "users/list-blocked-by-authenticated")
 	if err != nil {
 		return nil, err
 	}
@@ -2292,7 +2292,7 @@ func (r *UsersListBlockedByAuthenticatedReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *UsersListBlockedByAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "users/list-blocked-by-authenticated", opt)
 }
 
 /*
@@ -2333,7 +2333,7 @@ func UsersListEmailsForAuthenticated(ctx context.Context, req *UsersListEmailsFo
 		req = new(UsersListEmailsForAuthenticatedReq)
 	}
 	resp := &UsersListEmailsForAuthenticatedResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "users/list-emails-for-authenticated", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2341,7 +2341,7 @@ func UsersListEmailsForAuthenticated(ctx context.Context, req *UsersListEmailsFo
 		return resp, err
 	}
 	resp.Data = []components.Email{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "users/list-emails-for-authenticated")
 	if err != nil {
 		return nil, err
 	}
@@ -2419,7 +2419,7 @@ func (r *UsersListEmailsForAuthenticatedReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *UsersListEmailsForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "users/list-emails-for-authenticated", opt)
 }
 
 /*
@@ -2460,7 +2460,7 @@ func UsersListFollowedByAuthenticated(ctx context.Context, req *UsersListFollowe
 		req = new(UsersListFollowedByAuthenticatedReq)
 	}
 	resp := &UsersListFollowedByAuthenticatedResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "users/list-followed-by-authenticated", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2468,7 +2468,7 @@ func UsersListFollowedByAuthenticated(ctx context.Context, req *UsersListFollowe
 		return resp, err
 	}
 	resp.Data = []components.SimpleUser{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "users/list-followed-by-authenticated")
 	if err != nil {
 		return nil, err
 	}
@@ -2546,7 +2546,7 @@ func (r *UsersListFollowedByAuthenticatedReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *UsersListFollowedByAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "users/list-followed-by-authenticated", opt)
 }
 
 /*
@@ -2587,7 +2587,7 @@ func UsersListFollowersForAuthenticatedUser(ctx context.Context, req *UsersListF
 		req = new(UsersListFollowersForAuthenticatedUserReq)
 	}
 	resp := &UsersListFollowersForAuthenticatedUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "users/list-followers-for-authenticated-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2595,7 +2595,7 @@ func UsersListFollowersForAuthenticatedUser(ctx context.Context, req *UsersListF
 		return resp, err
 	}
 	resp.Data = []components.SimpleUser{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "users/list-followers-for-authenticated-user")
 	if err != nil {
 		return nil, err
 	}
@@ -2673,7 +2673,7 @@ func (r *UsersListFollowersForAuthenticatedUserReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *UsersListFollowersForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "users/list-followers-for-authenticated-user", opt)
 }
 
 /*
@@ -2714,7 +2714,7 @@ func UsersListFollowersForUser(ctx context.Context, req *UsersListFollowersForUs
 		req = new(UsersListFollowersForUserReq)
 	}
 	resp := &UsersListFollowersForUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "users/list-followers-for-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2722,7 +2722,7 @@ func UsersListFollowersForUser(ctx context.Context, req *UsersListFollowersForUs
 		return resp, err
 	}
 	resp.Data = []components.SimpleUser{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "users/list-followers-for-user")
 	if err != nil {
 		return nil, err
 	}
@@ -2801,7 +2801,7 @@ func (r *UsersListFollowersForUserReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *UsersListFollowersForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "users/list-followers-for-user", opt)
 }
 
 /*
@@ -2842,7 +2842,7 @@ func UsersListFollowingForUser(ctx context.Context, req *UsersListFollowingForUs
 		req = new(UsersListFollowingForUserReq)
 	}
 	resp := &UsersListFollowingForUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "users/list-following-for-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2850,7 +2850,7 @@ func UsersListFollowingForUser(ctx context.Context, req *UsersListFollowingForUs
 		return resp, err
 	}
 	resp.Data = []components.SimpleUser{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "users/list-following-for-user")
 	if err != nil {
 		return nil, err
 	}
@@ -2929,7 +2929,7 @@ func (r *UsersListFollowingForUserReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *UsersListFollowingForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "users/list-following-for-user", opt)
 }
 
 /*
@@ -2970,7 +2970,7 @@ func UsersListGpgKeysForAuthenticated(ctx context.Context, req *UsersListGpgKeys
 		req = new(UsersListGpgKeysForAuthenticatedReq)
 	}
 	resp := &UsersListGpgKeysForAuthenticatedResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "users/list-gpg-keys-for-authenticated", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2978,7 +2978,7 @@ func UsersListGpgKeysForAuthenticated(ctx context.Context, req *UsersListGpgKeys
 		return resp, err
 	}
 	resp.Data = []components.GpgKey{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "users/list-gpg-keys-for-authenticated")
 	if err != nil {
 		return nil, err
 	}
@@ -3056,7 +3056,7 @@ func (r *UsersListGpgKeysForAuthenticatedReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *UsersListGpgKeysForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "users/list-gpg-keys-for-authenticated", opt)
 }
 
 /*
@@ -3097,7 +3097,7 @@ func UsersListGpgKeysForUser(ctx context.Context, req *UsersListGpgKeysForUserRe
 		req = new(UsersListGpgKeysForUserReq)
 	}
 	resp := &UsersListGpgKeysForUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "users/list-gpg-keys-for-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3105,7 +3105,7 @@ func UsersListGpgKeysForUser(ctx context.Context, req *UsersListGpgKeysForUserRe
 		return resp, err
 	}
 	resp.Data = []components.GpgKey{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "users/list-gpg-keys-for-user")
 	if err != nil {
 		return nil, err
 	}
@@ -3184,7 +3184,7 @@ func (r *UsersListGpgKeysForUserReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *UsersListGpgKeysForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "users/list-gpg-keys-for-user", opt)
 }
 
 /*
@@ -3225,7 +3225,7 @@ func UsersListPublicEmailsForAuthenticated(ctx context.Context, req *UsersListPu
 		req = new(UsersListPublicEmailsForAuthenticatedReq)
 	}
 	resp := &UsersListPublicEmailsForAuthenticatedResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "users/list-public-emails-for-authenticated", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3233,7 +3233,7 @@ func UsersListPublicEmailsForAuthenticated(ctx context.Context, req *UsersListPu
 		return resp, err
 	}
 	resp.Data = []components.Email{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "users/list-public-emails-for-authenticated")
 	if err != nil {
 		return nil, err
 	}
@@ -3311,7 +3311,7 @@ func (r *UsersListPublicEmailsForAuthenticatedReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *UsersListPublicEmailsForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "users/list-public-emails-for-authenticated", opt)
 }
 
 /*
@@ -3352,7 +3352,7 @@ func UsersListPublicKeysForUser(ctx context.Context, req *UsersListPublicKeysFor
 		req = new(UsersListPublicKeysForUserReq)
 	}
 	resp := &UsersListPublicKeysForUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "users/list-public-keys-for-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3360,7 +3360,7 @@ func UsersListPublicKeysForUser(ctx context.Context, req *UsersListPublicKeysFor
 		return resp, err
 	}
 	resp.Data = []components.KeySimple{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "users/list-public-keys-for-user")
 	if err != nil {
 		return nil, err
 	}
@@ -3439,7 +3439,7 @@ func (r *UsersListPublicKeysForUserReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *UsersListPublicKeysForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "users/list-public-keys-for-user", opt)
 }
 
 /*
@@ -3480,7 +3480,7 @@ func UsersListPublicSshKeysForAuthenticated(ctx context.Context, req *UsersListP
 		req = new(UsersListPublicSshKeysForAuthenticatedReq)
 	}
 	resp := &UsersListPublicSshKeysForAuthenticatedResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "users/list-public-ssh-keys-for-authenticated", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3488,7 +3488,7 @@ func UsersListPublicSshKeysForAuthenticated(ctx context.Context, req *UsersListP
 		return resp, err
 	}
 	resp.Data = []components.Key{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "users/list-public-ssh-keys-for-authenticated")
 	if err != nil {
 		return nil, err
 	}
@@ -3566,7 +3566,7 @@ func (r *UsersListPublicSshKeysForAuthenticatedReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *UsersListPublicSshKeysForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "users/list-public-ssh-keys-for-authenticated", opt)
 }
 
 /*
@@ -3607,7 +3607,7 @@ func UsersSetPrimaryEmailVisibilityForAuthenticated(ctx context.Context, req *Us
 		req = new(UsersSetPrimaryEmailVisibilityForAuthenticatedReq)
 	}
 	resp := &UsersSetPrimaryEmailVisibilityForAuthenticatedResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "users/set-primary-email-visibility-for-authenticated", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3615,7 +3615,7 @@ func UsersSetPrimaryEmailVisibilityForAuthenticated(ctx context.Context, req *Us
 		return resp, err
 	}
 	resp.Data = []components.Email{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "users/set-primary-email-visibility-for-authenticated")
 	if err != nil {
 		return nil, err
 	}
@@ -3685,7 +3685,7 @@ func (r *UsersSetPrimaryEmailVisibilityForAuthenticatedReq) validStatuses() []in
 
 // HTTPRequest builds an *http.Request
 func (r *UsersSetPrimaryEmailVisibilityForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "users/set-primary-email-visibility-for-authenticated", opt)
 }
 
 /*
@@ -3740,14 +3740,14 @@ func UsersUnblock(ctx context.Context, req *UsersUnblockReq, opt ...RequestOptio
 		req = new(UsersUnblockReq)
 	}
 	resp := &UsersUnblockResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "users/unblock", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "users/unblock")
 	if err != nil {
 		return nil, err
 	}
@@ -3814,7 +3814,7 @@ func (r *UsersUnblockReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *UsersUnblockReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "users/unblock", opt)
 }
 
 /*
@@ -3854,14 +3854,14 @@ func UsersUnfollow(ctx context.Context, req *UsersUnfollowReq, opt ...RequestOpt
 		req = new(UsersUnfollowReq)
 	}
 	resp := &UsersUnfollowResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "users/unfollow", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "users/unfollow")
 	if err != nil {
 		return nil, err
 	}
@@ -3928,7 +3928,7 @@ func (r *UsersUnfollowReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *UsersUnfollowReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "users/unfollow", opt)
 }
 
 /*
@@ -3968,7 +3968,7 @@ func UsersUpdateAuthenticated(ctx context.Context, req *UsersUpdateAuthenticated
 		req = new(UsersUpdateAuthenticatedReq)
 	}
 	resp := &UsersUpdateAuthenticatedResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "users/update-authenticated", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3976,7 +3976,7 @@ func UsersUpdateAuthenticated(ctx context.Context, req *UsersUpdateAuthenticated
 		return resp, err
 	}
 	resp.Data = components.PrivateUser{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "users/update-authenticated")
 	if err != nil {
 		return nil, err
 	}
@@ -4046,7 +4046,7 @@ func (r *UsersUpdateAuthenticatedReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *UsersUpdateAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "users/update-authenticated", opt)
 }
 
 /*

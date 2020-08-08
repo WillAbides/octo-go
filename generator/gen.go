@@ -31,7 +31,12 @@ func addRequestFunc(file *jen.File, endpoint *model.Endpoint) {
 		group.Id("resp").Op(":=").Op("&").Id(respStructName(endpoint)).Values(jen.Dict{
 			jen.Id("request"): jen.Id("req"),
 		})
-		group.Id("r, err := doRequest(ctx, req, opt...)")
+		group.Id("r, err := doRequest").Call(
+			jen.Id("ctx"),
+			jen.Id("req"),
+			jen.Lit(endpoint.ID),
+			jen.Id("opt..."),
+		)
 		group.If(jen.Id("r != nil")).Block(
 			jen.Id("resp.response = *r"),
 		)
@@ -39,11 +44,11 @@ func addRequestFunc(file *jen.File, endpoint *model.Endpoint) {
 
 		switch {
 		case endpointHasAttribute(endpoint, attrNoResponseBody):
-			group.Id("err").Op("=").Id("r.decodeBody(nil)")
+			group.Id("err").Op("=").Id("r.decodeBody").Call(jen.Nil(), jen.Lit(endpoint.ID))
 		case endpointHasAttribute(endpoint, attrBoolean):
 			group.Id("err").Op("=").Id("r.setBoolResult(&resp.Data)")
 			group.If(jen.Id("err != nil")).Block(jen.Id("return nil, err"))
-			group.Id("err").Op("=").Id("r.decodeBody(nil)")
+			group.Id("err").Op("=").Id("r.decodeBody").Call(jen.Nil(), jen.Lit(endpoint.ID))
 		case len(responseCodesWithBodies(endpoint)) > 0:
 			bodyType := respBodyType(endpoint)
 			group.Id("resp").Dot("Data").Op("=").Do(func(stmt *jen.Statement) {
@@ -51,9 +56,9 @@ func addRequestFunc(file *jen.File, endpoint *model.Endpoint) {
 					stmt.Op("[]")
 				}
 			}).Qual(bodyType.pkg, bodyType.name).Block()
-			group.Id("err").Op("=").Id("r.decodeBody(&resp.Data)")
+			group.Id("err").Op("=").Id("r.decodeBody").Call(jen.Id("&resp.Data"), jen.Lit(endpoint.ID))
 		default:
-			group.Id("err").Op("=").Id("r.decodeBody(nil)")
+			group.Id("err").Op("=").Id("r.decodeBody").Call(jen.Nil(), jen.Lit(endpoint.ID))
 		}
 		group.If(jen.Id("err != nil")).Block(jen.Id("return nil, err"))
 		group.Return(jen.Id("resp, nil"))

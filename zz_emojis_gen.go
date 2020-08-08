@@ -23,7 +23,7 @@ func EmojisGet(ctx context.Context, req *EmojisGetReq, opt ...RequestOption) (*E
 		req = new(EmojisGetReq)
 	}
 	resp := &EmojisGetResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "emojis/get", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -31,7 +31,7 @@ func EmojisGet(ctx context.Context, req *EmojisGetReq, opt ...RequestOption) (*E
 		return resp, err
 	}
 	resp.Data = EmojisGetResponseBody{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "emojis/get")
 	if err != nil {
 		return nil, err
 	}
@@ -97,7 +97,7 @@ func (r *EmojisGetReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *EmojisGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "emojis/get", opt)
 }
 
 /*

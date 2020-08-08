@@ -25,14 +25,14 @@ func AppsAddRepoToInstallation(ctx context.Context, req *AppsAddRepoToInstallati
 		req = new(AppsAddRepoToInstallationReq)
 	}
 	resp := &AppsAddRepoToInstallationResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "apps/add-repo-to-installation", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "apps/add-repo-to-installation")
 	if err != nil {
 		return nil, err
 	}
@@ -116,7 +116,7 @@ func (r *AppsAddRepoToInstallationReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *AppsAddRepoToInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "apps/add-repo-to-installation", opt)
 }
 
 /*
@@ -156,7 +156,7 @@ func AppsCheckAuthorization(ctx context.Context, req *AppsCheckAuthorizationReq,
 		req = new(AppsCheckAuthorizationReq)
 	}
 	resp := &AppsCheckAuthorizationResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "apps/check-authorization", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -164,7 +164,7 @@ func AppsCheckAuthorization(ctx context.Context, req *AppsCheckAuthorizationReq,
 		return resp, err
 	}
 	resp.Data = AppsCheckAuthorizationResponseBody{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "apps/check-authorization")
 	if err != nil {
 		return nil, err
 	}
@@ -232,7 +232,7 @@ func (r *AppsCheckAuthorizationReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *AppsCheckAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "apps/check-authorization", opt)
 }
 
 /*
@@ -331,7 +331,7 @@ func AppsCheckToken(ctx context.Context, req *AppsCheckTokenReq, opt ...RequestO
 		req = new(AppsCheckTokenReq)
 	}
 	resp := &AppsCheckTokenResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "apps/check-token", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -339,7 +339,7 @@ func AppsCheckToken(ctx context.Context, req *AppsCheckTokenReq, opt ...RequestO
 		return resp, err
 	}
 	resp.Data = components.Authorization{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "apps/check-token")
 	if err != nil {
 		return nil, err
 	}
@@ -410,7 +410,7 @@ func (r *AppsCheckTokenReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *AppsCheckTokenReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "apps/check-token", opt)
 }
 
 /*
@@ -462,7 +462,7 @@ func AppsCreateContentAttachment(ctx context.Context, req *AppsCreateContentAtta
 		req = new(AppsCreateContentAttachmentReq)
 	}
 	resp := &AppsCreateContentAttachmentResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "apps/create-content-attachment", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -470,7 +470,7 @@ func AppsCreateContentAttachment(ctx context.Context, req *AppsCreateContentAtta
 		return resp, err
 	}
 	resp.Data = components.ContentReferenceAttachment{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "apps/create-content-attachment")
 	if err != nil {
 		return nil, err
 	}
@@ -555,7 +555,7 @@ func (r *AppsCreateContentAttachmentReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *AppsCreateContentAttachmentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "apps/create-content-attachment", opt)
 }
 
 /*
@@ -610,7 +610,7 @@ func AppsCreateFromManifest(ctx context.Context, req *AppsCreateFromManifestReq,
 		req = new(AppsCreateFromManifestReq)
 	}
 	resp := &AppsCreateFromManifestResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "apps/create-from-manifest", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -618,7 +618,7 @@ func AppsCreateFromManifest(ctx context.Context, req *AppsCreateFromManifestReq,
 		return resp, err
 	}
 	resp.Data = AppsCreateFromManifestResponseBody{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "apps/create-from-manifest")
 	if err != nil {
 		return nil, err
 	}
@@ -687,7 +687,7 @@ func (r *AppsCreateFromManifestReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *AppsCreateFromManifestReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "apps/create-from-manifest", opt)
 }
 
 /*
@@ -785,7 +785,7 @@ func AppsCreateInstallationAccessToken(ctx context.Context, req *AppsCreateInsta
 		req = new(AppsCreateInstallationAccessTokenReq)
 	}
 	resp := &AppsCreateInstallationAccessTokenResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "apps/create-installation-access-token", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -793,7 +793,7 @@ func AppsCreateInstallationAccessToken(ctx context.Context, req *AppsCreateInsta
 		return resp, err
 	}
 	resp.Data = components.InstallationToken{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "apps/create-installation-access-token")
 	if err != nil {
 		return nil, err
 	}
@@ -878,7 +878,7 @@ func (r *AppsCreateInstallationAccessTokenReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *AppsCreateInstallationAccessTokenReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "apps/create-installation-access-token", opt)
 }
 
 /*
@@ -937,14 +937,14 @@ func AppsDeleteAuthorization(ctx context.Context, req *AppsDeleteAuthorizationRe
 		req = new(AppsDeleteAuthorizationReq)
 	}
 	resp := &AppsDeleteAuthorizationResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "apps/delete-authorization", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "apps/delete-authorization")
 	if err != nil {
 		return nil, err
 	}
@@ -1012,7 +1012,7 @@ func (r *AppsDeleteAuthorizationReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *AppsDeleteAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "apps/delete-authorization", opt)
 }
 
 /*
@@ -1063,7 +1063,7 @@ func AppsDeleteInstallation(ctx context.Context, req *AppsDeleteInstallationReq,
 		req = new(AppsDeleteInstallationReq)
 	}
 	resp := &AppsDeleteInstallationResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "apps/delete-installation", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1074,7 +1074,7 @@ func AppsDeleteInstallation(ctx context.Context, req *AppsDeleteInstallationReq,
 	if err != nil {
 		return nil, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "apps/delete-installation")
 	if err != nil {
 		return nil, err
 	}
@@ -1155,7 +1155,7 @@ func (r *AppsDeleteInstallationReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *AppsDeleteInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "apps/delete-installation", opt)
 }
 
 /*
@@ -1196,14 +1196,14 @@ func AppsDeleteToken(ctx context.Context, req *AppsDeleteTokenReq, opt ...Reques
 		req = new(AppsDeleteTokenReq)
 	}
 	resp := &AppsDeleteTokenResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "apps/delete-token", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "apps/delete-token")
 	if err != nil {
 		return nil, err
 	}
@@ -1271,7 +1271,7 @@ func (r *AppsDeleteTokenReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *AppsDeleteTokenReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "apps/delete-token", opt)
 }
 
 /*
@@ -1322,7 +1322,7 @@ func AppsGetAuthenticated(ctx context.Context, req *AppsGetAuthenticatedReq, opt
 		req = new(AppsGetAuthenticatedReq)
 	}
 	resp := &AppsGetAuthenticatedResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "apps/get-authenticated", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1330,7 +1330,7 @@ func AppsGetAuthenticated(ctx context.Context, req *AppsGetAuthenticatedReq, opt
 		return resp, err
 	}
 	resp.Data = components.Integration{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "apps/get-authenticated")
 	if err != nil {
 		return nil, err
 	}
@@ -1408,7 +1408,7 @@ func (r *AppsGetAuthenticatedReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *AppsGetAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "apps/get-authenticated", opt)
 }
 
 /*
@@ -1449,7 +1449,7 @@ func AppsGetBySlug(ctx context.Context, req *AppsGetBySlugReq, opt ...RequestOpt
 		req = new(AppsGetBySlugReq)
 	}
 	resp := &AppsGetBySlugResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "apps/get-by-slug", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1457,7 +1457,7 @@ func AppsGetBySlug(ctx context.Context, req *AppsGetBySlugReq, opt ...RequestOpt
 		return resp, err
 	}
 	resp.Data = components.Integration{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "apps/get-by-slug")
 	if err != nil {
 		return nil, err
 	}
@@ -1538,7 +1538,7 @@ func (r *AppsGetBySlugReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *AppsGetBySlugReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "apps/get-by-slug", opt)
 }
 
 /*
@@ -1579,7 +1579,7 @@ func AppsGetInstallation(ctx context.Context, req *AppsGetInstallationReq, opt .
 		req = new(AppsGetInstallationReq)
 	}
 	resp := &AppsGetInstallationResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "apps/get-installation", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1587,7 +1587,7 @@ func AppsGetInstallation(ctx context.Context, req *AppsGetInstallationReq, opt .
 		return resp, err
 	}
 	resp.Data = components.Installation{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "apps/get-installation")
 	if err != nil {
 		return nil, err
 	}
@@ -1668,7 +1668,7 @@ func (r *AppsGetInstallationReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *AppsGetInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "apps/get-installation", opt)
 }
 
 /*
@@ -1709,7 +1709,7 @@ func AppsGetOrgInstallation(ctx context.Context, req *AppsGetOrgInstallationReq,
 		req = new(AppsGetOrgInstallationReq)
 	}
 	resp := &AppsGetOrgInstallationResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "apps/get-org-installation", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1717,7 +1717,7 @@ func AppsGetOrgInstallation(ctx context.Context, req *AppsGetOrgInstallationReq,
 		return resp, err
 	}
 	resp.Data = components.Installation{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "apps/get-org-installation")
 	if err != nil {
 		return nil, err
 	}
@@ -1796,7 +1796,7 @@ func (r *AppsGetOrgInstallationReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *AppsGetOrgInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "apps/get-org-installation", opt)
 }
 
 /*
@@ -1837,7 +1837,7 @@ func AppsGetRepoInstallation(ctx context.Context, req *AppsGetRepoInstallationRe
 		req = new(AppsGetRepoInstallationReq)
 	}
 	resp := &AppsGetRepoInstallationResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "apps/get-repo-installation", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1845,7 +1845,7 @@ func AppsGetRepoInstallation(ctx context.Context, req *AppsGetRepoInstallationRe
 		return resp, err
 	}
 	resp.Data = components.Installation{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "apps/get-repo-installation")
 	if err != nil {
 		return nil, err
 	}
@@ -1925,7 +1925,7 @@ func (r *AppsGetRepoInstallationReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *AppsGetRepoInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "apps/get-repo-installation", opt)
 }
 
 /*
@@ -1966,7 +1966,7 @@ func AppsGetSubscriptionPlanForAccount(ctx context.Context, req *AppsGetSubscrip
 		req = new(AppsGetSubscriptionPlanForAccountReq)
 	}
 	resp := &AppsGetSubscriptionPlanForAccountResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "apps/get-subscription-plan-for-account", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1974,7 +1974,7 @@ func AppsGetSubscriptionPlanForAccount(ctx context.Context, req *AppsGetSubscrip
 		return resp, err
 	}
 	resp.Data = components.MarketplacePurchase{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "apps/get-subscription-plan-for-account")
 	if err != nil {
 		return nil, err
 	}
@@ -2043,7 +2043,7 @@ func (r *AppsGetSubscriptionPlanForAccountReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *AppsGetSubscriptionPlanForAccountReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "apps/get-subscription-plan-for-account", opt)
 }
 
 /*
@@ -2084,7 +2084,7 @@ func AppsGetSubscriptionPlanForAccountStubbed(ctx context.Context, req *AppsGetS
 		req = new(AppsGetSubscriptionPlanForAccountStubbedReq)
 	}
 	resp := &AppsGetSubscriptionPlanForAccountStubbedResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "apps/get-subscription-plan-for-account-stubbed", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2092,7 +2092,7 @@ func AppsGetSubscriptionPlanForAccountStubbed(ctx context.Context, req *AppsGetS
 		return resp, err
 	}
 	resp.Data = components.MarketplacePurchase{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "apps/get-subscription-plan-for-account-stubbed")
 	if err != nil {
 		return nil, err
 	}
@@ -2161,7 +2161,7 @@ func (r *AppsGetSubscriptionPlanForAccountStubbedReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *AppsGetSubscriptionPlanForAccountStubbedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "apps/get-subscription-plan-for-account-stubbed", opt)
 }
 
 /*
@@ -2202,7 +2202,7 @@ func AppsGetUserInstallation(ctx context.Context, req *AppsGetUserInstallationRe
 		req = new(AppsGetUserInstallationReq)
 	}
 	resp := &AppsGetUserInstallationResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "apps/get-user-installation", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2210,7 +2210,7 @@ func AppsGetUserInstallation(ctx context.Context, req *AppsGetUserInstallationRe
 		return resp, err
 	}
 	resp.Data = components.Installation{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "apps/get-user-installation")
 	if err != nil {
 		return nil, err
 	}
@@ -2289,7 +2289,7 @@ func (r *AppsGetUserInstallationReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *AppsGetUserInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "apps/get-user-installation", opt)
 }
 
 /*
@@ -2330,7 +2330,7 @@ func AppsListAccountsForPlan(ctx context.Context, req *AppsListAccountsForPlanRe
 		req = new(AppsListAccountsForPlanReq)
 	}
 	resp := &AppsListAccountsForPlanResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "apps/list-accounts-for-plan", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2338,7 +2338,7 @@ func AppsListAccountsForPlan(ctx context.Context, req *AppsListAccountsForPlanRe
 		return resp, err
 	}
 	resp.Data = []components.MarketplacePurchase{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "apps/list-accounts-for-plan")
 	if err != nil {
 		return nil, err
 	}
@@ -2437,7 +2437,7 @@ func (r *AppsListAccountsForPlanReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *AppsListAccountsForPlanReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "apps/list-accounts-for-plan", opt)
 }
 
 /*
@@ -2478,7 +2478,7 @@ func AppsListAccountsForPlanStubbed(ctx context.Context, req *AppsListAccountsFo
 		req = new(AppsListAccountsForPlanStubbedReq)
 	}
 	resp := &AppsListAccountsForPlanStubbedResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "apps/list-accounts-for-plan-stubbed", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2486,7 +2486,7 @@ func AppsListAccountsForPlanStubbed(ctx context.Context, req *AppsListAccountsFo
 		return resp, err
 	}
 	resp.Data = []components.MarketplacePurchase{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "apps/list-accounts-for-plan-stubbed")
 	if err != nil {
 		return nil, err
 	}
@@ -2585,7 +2585,7 @@ func (r *AppsListAccountsForPlanStubbedReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *AppsListAccountsForPlanStubbedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "apps/list-accounts-for-plan-stubbed", opt)
 }
 
 /*
@@ -2626,7 +2626,7 @@ func AppsListInstallationReposForAuthenticatedUser(ctx context.Context, req *App
 		req = new(AppsListInstallationReposForAuthenticatedUserReq)
 	}
 	resp := &AppsListInstallationReposForAuthenticatedUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "apps/list-installation-repos-for-authenticated-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2634,7 +2634,7 @@ func AppsListInstallationReposForAuthenticatedUser(ctx context.Context, req *App
 		return resp, err
 	}
 	resp.Data = AppsListInstallationReposForAuthenticatedUserResponseBody{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "apps/list-installation-repos-for-authenticated-user")
 	if err != nil {
 		return nil, err
 	}
@@ -2738,7 +2738,7 @@ func (r *AppsListInstallationReposForAuthenticatedUserReq) validStatuses() []int
 
 // HTTPRequest builds an *http.Request
 func (r *AppsListInstallationReposForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "apps/list-installation-repos-for-authenticated-user", opt)
 }
 
 /*
@@ -2790,7 +2790,7 @@ func AppsListInstallations(ctx context.Context, req *AppsListInstallationsReq, o
 		req = new(AppsListInstallationsReq)
 	}
 	resp := &AppsListInstallationsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "apps/list-installations", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2798,7 +2798,7 @@ func AppsListInstallations(ctx context.Context, req *AppsListInstallationsReq, o
 		return resp, err
 	}
 	resp.Data = []components.Installation{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "apps/list-installations")
 	if err != nil {
 		return nil, err
 	}
@@ -2902,7 +2902,7 @@ func (r *AppsListInstallationsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *AppsListInstallationsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "apps/list-installations", opt)
 }
 
 /*
@@ -2943,7 +2943,7 @@ func AppsListInstallationsForAuthenticatedUser(ctx context.Context, req *AppsLis
 		req = new(AppsListInstallationsForAuthenticatedUserReq)
 	}
 	resp := &AppsListInstallationsForAuthenticatedUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "apps/list-installations-for-authenticated-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2951,7 +2951,7 @@ func AppsListInstallationsForAuthenticatedUser(ctx context.Context, req *AppsLis
 		return resp, err
 	}
 	resp.Data = AppsListInstallationsForAuthenticatedUserResponseBody{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "apps/list-installations-for-authenticated-user")
 	if err != nil {
 		return nil, err
 	}
@@ -3041,7 +3041,7 @@ func (r *AppsListInstallationsForAuthenticatedUserReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *AppsListInstallationsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "apps/list-installations-for-authenticated-user", opt)
 }
 
 /*
@@ -3092,7 +3092,7 @@ func AppsListPlans(ctx context.Context, req *AppsListPlansReq, opt ...RequestOpt
 		req = new(AppsListPlansReq)
 	}
 	resp := &AppsListPlansResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "apps/list-plans", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3100,7 +3100,7 @@ func AppsListPlans(ctx context.Context, req *AppsListPlansReq, opt ...RequestOpt
 		return resp, err
 	}
 	resp.Data = []components.MarketplaceListingPlan{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "apps/list-plans")
 	if err != nil {
 		return nil, err
 	}
@@ -3178,7 +3178,7 @@ func (r *AppsListPlansReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *AppsListPlansReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "apps/list-plans", opt)
 }
 
 /*
@@ -3219,7 +3219,7 @@ func AppsListPlansStubbed(ctx context.Context, req *AppsListPlansStubbedReq, opt
 		req = new(AppsListPlansStubbedReq)
 	}
 	resp := &AppsListPlansStubbedResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "apps/list-plans-stubbed", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3227,7 +3227,7 @@ func AppsListPlansStubbed(ctx context.Context, req *AppsListPlansStubbedReq, opt
 		return resp, err
 	}
 	resp.Data = []components.MarketplaceListingPlan{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "apps/list-plans-stubbed")
 	if err != nil {
 		return nil, err
 	}
@@ -3305,7 +3305,7 @@ func (r *AppsListPlansStubbedReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *AppsListPlansStubbedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "apps/list-plans-stubbed", opt)
 }
 
 /*
@@ -3346,7 +3346,7 @@ func AppsListReposAccessibleToInstallation(ctx context.Context, req *AppsListRep
 		req = new(AppsListReposAccessibleToInstallationReq)
 	}
 	resp := &AppsListReposAccessibleToInstallationResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "apps/list-repos-accessible-to-installation", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3354,7 +3354,7 @@ func AppsListReposAccessibleToInstallation(ctx context.Context, req *AppsListRep
 		return resp, err
 	}
 	resp.Data = AppsListReposAccessibleToInstallationResponseBody{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "apps/list-repos-accessible-to-installation")
 	if err != nil {
 		return nil, err
 	}
@@ -3455,7 +3455,7 @@ func (r *AppsListReposAccessibleToInstallationReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *AppsListReposAccessibleToInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "apps/list-repos-accessible-to-installation", opt)
 }
 
 /*
@@ -3507,7 +3507,7 @@ func AppsListSubscriptionsForAuthenticatedUser(ctx context.Context, req *AppsLis
 		req = new(AppsListSubscriptionsForAuthenticatedUserReq)
 	}
 	resp := &AppsListSubscriptionsForAuthenticatedUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "apps/list-subscriptions-for-authenticated-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3515,7 +3515,7 @@ func AppsListSubscriptionsForAuthenticatedUser(ctx context.Context, req *AppsLis
 		return resp, err
 	}
 	resp.Data = []components.UserMarketplacePurchase{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "apps/list-subscriptions-for-authenticated-user")
 	if err != nil {
 		return nil, err
 	}
@@ -3593,7 +3593,7 @@ func (r *AppsListSubscriptionsForAuthenticatedUserReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *AppsListSubscriptionsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "apps/list-subscriptions-for-authenticated-user", opt)
 }
 
 /*
@@ -3634,7 +3634,7 @@ func AppsListSubscriptionsForAuthenticatedUserStubbed(ctx context.Context, req *
 		req = new(AppsListSubscriptionsForAuthenticatedUserStubbedReq)
 	}
 	resp := &AppsListSubscriptionsForAuthenticatedUserStubbedResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "apps/list-subscriptions-for-authenticated-user-stubbed", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3642,7 +3642,7 @@ func AppsListSubscriptionsForAuthenticatedUserStubbed(ctx context.Context, req *
 		return resp, err
 	}
 	resp.Data = []components.UserMarketplacePurchase{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "apps/list-subscriptions-for-authenticated-user-stubbed")
 	if err != nil {
 		return nil, err
 	}
@@ -3720,7 +3720,7 @@ func (r *AppsListSubscriptionsForAuthenticatedUserStubbedReq) validStatuses() []
 
 // HTTPRequest builds an *http.Request
 func (r *AppsListSubscriptionsForAuthenticatedUserStubbedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "apps/list-subscriptions-for-authenticated-user-stubbed", opt)
 }
 
 /*
@@ -3761,14 +3761,14 @@ func AppsRemoveRepoFromInstallation(ctx context.Context, req *AppsRemoveRepoFrom
 		req = new(AppsRemoveRepoFromInstallationReq)
 	}
 	resp := &AppsRemoveRepoFromInstallationResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "apps/remove-repo-from-installation", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "apps/remove-repo-from-installation")
 	if err != nil {
 		return nil, err
 	}
@@ -3852,7 +3852,7 @@ func (r *AppsRemoveRepoFromInstallationReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *AppsRemoveRepoFromInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "apps/remove-repo-from-installation", opt)
 }
 
 /*
@@ -3892,7 +3892,7 @@ func AppsResetAuthorization(ctx context.Context, req *AppsResetAuthorizationReq,
 		req = new(AppsResetAuthorizationReq)
 	}
 	resp := &AppsResetAuthorizationResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "apps/reset-authorization", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3900,7 +3900,7 @@ func AppsResetAuthorization(ctx context.Context, req *AppsResetAuthorizationReq,
 		return resp, err
 	}
 	resp.Data = components.Authorization{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "apps/reset-authorization")
 	if err != nil {
 		return nil, err
 	}
@@ -3968,7 +3968,7 @@ func (r *AppsResetAuthorizationReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *AppsResetAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "apps/reset-authorization", opt)
 }
 
 /*
@@ -4009,7 +4009,7 @@ func AppsResetToken(ctx context.Context, req *AppsResetTokenReq, opt ...RequestO
 		req = new(AppsResetTokenReq)
 	}
 	resp := &AppsResetTokenResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "apps/reset-token", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -4017,7 +4017,7 @@ func AppsResetToken(ctx context.Context, req *AppsResetTokenReq, opt ...RequestO
 		return resp, err
 	}
 	resp.Data = components.Authorization{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "apps/reset-token")
 	if err != nil {
 		return nil, err
 	}
@@ -4088,7 +4088,7 @@ func (r *AppsResetTokenReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *AppsResetTokenReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "apps/reset-token", opt)
 }
 
 /*
@@ -4140,14 +4140,14 @@ func AppsRevokeAuthorizationForApplication(ctx context.Context, req *AppsRevokeA
 		req = new(AppsRevokeAuthorizationForApplicationReq)
 	}
 	resp := &AppsRevokeAuthorizationForApplicationResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "apps/revoke-authorization-for-application", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "apps/revoke-authorization-for-application")
 	if err != nil {
 		return nil, err
 	}
@@ -4215,7 +4215,7 @@ func (r *AppsRevokeAuthorizationForApplicationReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *AppsRevokeAuthorizationForApplicationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "apps/revoke-authorization-for-application", opt)
 }
 
 /*
@@ -4255,14 +4255,14 @@ func AppsRevokeGrantForApplication(ctx context.Context, req *AppsRevokeGrantForA
 		req = new(AppsRevokeGrantForApplicationReq)
 	}
 	resp := &AppsRevokeGrantForApplicationResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "apps/revoke-grant-for-application", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "apps/revoke-grant-for-application")
 	if err != nil {
 		return nil, err
 	}
@@ -4330,7 +4330,7 @@ func (r *AppsRevokeGrantForApplicationReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *AppsRevokeGrantForApplicationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "apps/revoke-grant-for-application", opt)
 }
 
 /*
@@ -4370,14 +4370,14 @@ func AppsRevokeInstallationAccessToken(ctx context.Context, req *AppsRevokeInsta
 		req = new(AppsRevokeInstallationAccessTokenReq)
 	}
 	resp := &AppsRevokeInstallationAccessTokenResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "apps/revoke-installation-access-token", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "apps/revoke-installation-access-token")
 	if err != nil {
 		return nil, err
 	}
@@ -4443,7 +4443,7 @@ func (r *AppsRevokeInstallationAccessTokenReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *AppsRevokeInstallationAccessTokenReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "apps/revoke-installation-access-token", opt)
 }
 
 /*
@@ -4483,7 +4483,7 @@ func AppsSuspendInstallation(ctx context.Context, req *AppsSuspendInstallationRe
 		req = new(AppsSuspendInstallationReq)
 	}
 	resp := &AppsSuspendInstallationResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "apps/suspend-installation", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -4494,7 +4494,7 @@ func AppsSuspendInstallation(ctx context.Context, req *AppsSuspendInstallationRe
 	if err != nil {
 		return nil, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "apps/suspend-installation")
 	if err != nil {
 		return nil, err
 	}
@@ -4563,7 +4563,7 @@ func (r *AppsSuspendInstallationReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *AppsSuspendInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "apps/suspend-installation", opt)
 }
 
 /*
@@ -4604,7 +4604,7 @@ func AppsUnsuspendInstallation(ctx context.Context, req *AppsUnsuspendInstallati
 		req = new(AppsUnsuspendInstallationReq)
 	}
 	resp := &AppsUnsuspendInstallationResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "apps/unsuspend-installation", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -4615,7 +4615,7 @@ func AppsUnsuspendInstallation(ctx context.Context, req *AppsUnsuspendInstallati
 	if err != nil {
 		return nil, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "apps/unsuspend-installation")
 	if err != nil {
 		return nil, err
 	}
@@ -4684,7 +4684,7 @@ func (r *AppsUnsuspendInstallationReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *AppsUnsuspendInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "apps/unsuspend-installation", opt)
 }
 
 /*

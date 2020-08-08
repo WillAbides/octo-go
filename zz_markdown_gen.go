@@ -24,14 +24,14 @@ func MarkdownRender(ctx context.Context, req *MarkdownRenderReq, opt ...RequestO
 		req = new(MarkdownRenderReq)
 	}
 	resp := &MarkdownRenderResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "markdown/render", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "markdown/render")
 	if err != nil {
 		return nil, err
 	}
@@ -98,7 +98,7 @@ func (r *MarkdownRenderReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *MarkdownRenderReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "markdown/render", opt)
 }
 
 /*
@@ -155,14 +155,14 @@ func MarkdownRenderRaw(ctx context.Context, req *MarkdownRenderRawReq, opt ...Re
 		req = new(MarkdownRenderRawReq)
 	}
 	resp := &MarkdownRenderRawResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "markdown/render-raw", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "markdown/render-raw")
 	if err != nil {
 		return nil, err
 	}
@@ -231,7 +231,7 @@ func (r *MarkdownRenderRawReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *MarkdownRenderRawReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "markdown/render-raw", opt)
 }
 
 /*

@@ -24,7 +24,7 @@ func BillingGetGithubActionsBillingGhe(ctx context.Context, req *BillingGetGithu
 		req = new(BillingGetGithubActionsBillingGheReq)
 	}
 	resp := &BillingGetGithubActionsBillingGheResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "billing/get-github-actions-billing-ghe", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -32,7 +32,7 @@ func BillingGetGithubActionsBillingGhe(ctx context.Context, req *BillingGetGithu
 		return resp, err
 	}
 	resp.Data = components.ActionsBillingUsage{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "billing/get-github-actions-billing-ghe")
 	if err != nil {
 		return nil, err
 	}
@@ -101,7 +101,7 @@ func (r *BillingGetGithubActionsBillingGheReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *BillingGetGithubActionsBillingGheReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "billing/get-github-actions-billing-ghe", opt)
 }
 
 /*
@@ -142,7 +142,7 @@ func BillingGetGithubActionsBillingOrg(ctx context.Context, req *BillingGetGithu
 		req = new(BillingGetGithubActionsBillingOrgReq)
 	}
 	resp := &BillingGetGithubActionsBillingOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "billing/get-github-actions-billing-org", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -150,7 +150,7 @@ func BillingGetGithubActionsBillingOrg(ctx context.Context, req *BillingGetGithu
 		return resp, err
 	}
 	resp.Data = components.ActionsBillingUsage{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "billing/get-github-actions-billing-org")
 	if err != nil {
 		return nil, err
 	}
@@ -217,7 +217,7 @@ func (r *BillingGetGithubActionsBillingOrgReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *BillingGetGithubActionsBillingOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "billing/get-github-actions-billing-org", opt)
 }
 
 /*
@@ -258,7 +258,7 @@ func BillingGetGithubActionsBillingUser(ctx context.Context, req *BillingGetGith
 		req = new(BillingGetGithubActionsBillingUserReq)
 	}
 	resp := &BillingGetGithubActionsBillingUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "billing/get-github-actions-billing-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -266,7 +266,7 @@ func BillingGetGithubActionsBillingUser(ctx context.Context, req *BillingGetGith
 		return resp, err
 	}
 	resp.Data = components.ActionsBillingUsage{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "billing/get-github-actions-billing-user")
 	if err != nil {
 		return nil, err
 	}
@@ -333,7 +333,7 @@ func (r *BillingGetGithubActionsBillingUserReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *BillingGetGithubActionsBillingUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "billing/get-github-actions-billing-user", opt)
 }
 
 /*
@@ -374,7 +374,7 @@ func BillingGetGithubPackagesBillingGhe(ctx context.Context, req *BillingGetGith
 		req = new(BillingGetGithubPackagesBillingGheReq)
 	}
 	resp := &BillingGetGithubPackagesBillingGheResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "billing/get-github-packages-billing-ghe", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -382,7 +382,7 @@ func BillingGetGithubPackagesBillingGhe(ctx context.Context, req *BillingGetGith
 		return resp, err
 	}
 	resp.Data = components.PackagesBillingUsage{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "billing/get-github-packages-billing-ghe")
 	if err != nil {
 		return nil, err
 	}
@@ -451,7 +451,7 @@ func (r *BillingGetGithubPackagesBillingGheReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *BillingGetGithubPackagesBillingGheReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "billing/get-github-packages-billing-ghe", opt)
 }
 
 /*
@@ -492,7 +492,7 @@ func BillingGetGithubPackagesBillingOrg(ctx context.Context, req *BillingGetGith
 		req = new(BillingGetGithubPackagesBillingOrgReq)
 	}
 	resp := &BillingGetGithubPackagesBillingOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "billing/get-github-packages-billing-org", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -500,7 +500,7 @@ func BillingGetGithubPackagesBillingOrg(ctx context.Context, req *BillingGetGith
 		return resp, err
 	}
 	resp.Data = components.PackagesBillingUsage{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "billing/get-github-packages-billing-org")
 	if err != nil {
 		return nil, err
 	}
@@ -567,7 +567,7 @@ func (r *BillingGetGithubPackagesBillingOrgReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *BillingGetGithubPackagesBillingOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "billing/get-github-packages-billing-org", opt)
 }
 
 /*
@@ -608,7 +608,7 @@ func BillingGetGithubPackagesBillingUser(ctx context.Context, req *BillingGetGit
 		req = new(BillingGetGithubPackagesBillingUserReq)
 	}
 	resp := &BillingGetGithubPackagesBillingUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "billing/get-github-packages-billing-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -616,7 +616,7 @@ func BillingGetGithubPackagesBillingUser(ctx context.Context, req *BillingGetGit
 		return resp, err
 	}
 	resp.Data = components.PackagesBillingUsage{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "billing/get-github-packages-billing-user")
 	if err != nil {
 		return nil, err
 	}
@@ -683,7 +683,7 @@ func (r *BillingGetGithubPackagesBillingUserReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *BillingGetGithubPackagesBillingUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "billing/get-github-packages-billing-user", opt)
 }
 
 /*
@@ -724,7 +724,7 @@ func BillingGetSharedStorageBillingGhe(ctx context.Context, req *BillingGetShare
 		req = new(BillingGetSharedStorageBillingGheReq)
 	}
 	resp := &BillingGetSharedStorageBillingGheResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "billing/get-shared-storage-billing-ghe", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -732,7 +732,7 @@ func BillingGetSharedStorageBillingGhe(ctx context.Context, req *BillingGetShare
 		return resp, err
 	}
 	resp.Data = components.CombinedBillingUsage{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "billing/get-shared-storage-billing-ghe")
 	if err != nil {
 		return nil, err
 	}
@@ -801,7 +801,7 @@ func (r *BillingGetSharedStorageBillingGheReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *BillingGetSharedStorageBillingGheReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "billing/get-shared-storage-billing-ghe", opt)
 }
 
 /*
@@ -842,7 +842,7 @@ func BillingGetSharedStorageBillingOrg(ctx context.Context, req *BillingGetShare
 		req = new(BillingGetSharedStorageBillingOrgReq)
 	}
 	resp := &BillingGetSharedStorageBillingOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "billing/get-shared-storage-billing-org", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -850,7 +850,7 @@ func BillingGetSharedStorageBillingOrg(ctx context.Context, req *BillingGetShare
 		return resp, err
 	}
 	resp.Data = components.CombinedBillingUsage{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "billing/get-shared-storage-billing-org")
 	if err != nil {
 		return nil, err
 	}
@@ -917,7 +917,7 @@ func (r *BillingGetSharedStorageBillingOrgReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *BillingGetSharedStorageBillingOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "billing/get-shared-storage-billing-org", opt)
 }
 
 /*
@@ -958,7 +958,7 @@ func BillingGetSharedStorageBillingUser(ctx context.Context, req *BillingGetShar
 		req = new(BillingGetSharedStorageBillingUserReq)
 	}
 	resp := &BillingGetSharedStorageBillingUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "billing/get-shared-storage-billing-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -966,7 +966,7 @@ func BillingGetSharedStorageBillingUser(ctx context.Context, req *BillingGetShar
 		return resp, err
 	}
 	resp.Data = components.CombinedBillingUsage{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "billing/get-shared-storage-billing-user")
 	if err != nil {
 		return nil, err
 	}
@@ -1033,7 +1033,7 @@ func (r *BillingGetSharedStorageBillingUserReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *BillingGetSharedStorageBillingUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "billing/get-shared-storage-billing-user", opt)
 }
 
 /*

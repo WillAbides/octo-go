@@ -25,7 +25,7 @@ func SearchCode(ctx context.Context, req *SearchCodeReq, opt ...RequestOption) (
 		req = new(SearchCodeReq)
 	}
 	resp := &SearchCodeResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "search/code", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -33,7 +33,7 @@ func SearchCode(ctx context.Context, req *SearchCodeReq, opt ...RequestOption) (
 		return resp, err
 	}
 	resp.Data = SearchCodeResponseBody{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "search/code")
 	if err != nil {
 		return nil, err
 	}
@@ -145,7 +145,7 @@ func (r *SearchCodeReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *SearchCodeReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "search/code", opt)
 }
 
 /*
@@ -197,7 +197,7 @@ func SearchCommits(ctx context.Context, req *SearchCommitsReq, opt ...RequestOpt
 		req = new(SearchCommitsReq)
 	}
 	resp := &SearchCommitsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "search/commits", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -205,7 +205,7 @@ func SearchCommits(ctx context.Context, req *SearchCommitsReq, opt ...RequestOpt
 		return resp, err
 	}
 	resp.Data = SearchCommitsResponseBody{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "search/commits")
 	if err != nil {
 		return nil, err
 	}
@@ -332,7 +332,7 @@ func (r *SearchCommitsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *SearchCommitsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "search/commits", opt)
 }
 
 /*
@@ -384,7 +384,7 @@ func SearchIssuesAndPullRequests(ctx context.Context, req *SearchIssuesAndPullRe
 		req = new(SearchIssuesAndPullRequestsReq)
 	}
 	resp := &SearchIssuesAndPullRequestsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "search/issues-and-pull-requests", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -392,7 +392,7 @@ func SearchIssuesAndPullRequests(ctx context.Context, req *SearchIssuesAndPullRe
 		return resp, err
 	}
 	resp.Data = SearchIssuesAndPullRequestsResponseBody{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "search/issues-and-pull-requests")
 	if err != nil {
 		return nil, err
 	}
@@ -507,7 +507,7 @@ func (r *SearchIssuesAndPullRequestsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *SearchIssuesAndPullRequestsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "search/issues-and-pull-requests", opt)
 }
 
 /*
@@ -559,7 +559,7 @@ func SearchLabels(ctx context.Context, req *SearchLabelsReq, opt ...RequestOptio
 		req = new(SearchLabelsReq)
 	}
 	resp := &SearchLabelsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "search/labels", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -567,7 +567,7 @@ func SearchLabels(ctx context.Context, req *SearchLabelsReq, opt ...RequestOptio
 		return resp, err
 	}
 	resp.Data = SearchLabelsResponseBody{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "search/labels")
 	if err != nil {
 		return nil, err
 	}
@@ -669,7 +669,7 @@ func (r *SearchLabelsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *SearchLabelsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "search/labels", opt)
 }
 
 /*
@@ -721,7 +721,7 @@ func SearchRepos(ctx context.Context, req *SearchReposReq, opt ...RequestOption)
 		req = new(SearchReposReq)
 	}
 	resp := &SearchReposResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "search/repos", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -729,7 +729,7 @@ func SearchRepos(ctx context.Context, req *SearchReposReq, opt ...RequestOption)
 		return resp, err
 	}
 	resp.Data = SearchReposResponseBody{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "search/repos")
 	if err != nil {
 		return nil, err
 	}
@@ -852,7 +852,7 @@ func (r *SearchReposReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *SearchReposReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "search/repos", opt)
 }
 
 /*
@@ -904,7 +904,7 @@ func SearchTopics(ctx context.Context, req *SearchTopicsReq, opt ...RequestOptio
 		req = new(SearchTopicsReq)
 	}
 	resp := &SearchTopicsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "search/topics", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -912,7 +912,7 @@ func SearchTopics(ctx context.Context, req *SearchTopicsReq, opt ...RequestOptio
 		return resp, err
 	}
 	resp.Data = SearchTopicsResponseBody{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "search/topics")
 	if err != nil {
 		return nil, err
 	}
@@ -1003,7 +1003,7 @@ func (r *SearchTopicsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *SearchTopicsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "search/topics", opt)
 }
 
 /*
@@ -1055,7 +1055,7 @@ func SearchUsers(ctx context.Context, req *SearchUsersReq, opt ...RequestOption)
 		req = new(SearchUsersReq)
 	}
 	resp := &SearchUsersResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "search/users", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1063,7 +1063,7 @@ func SearchUsers(ctx context.Context, req *SearchUsersReq, opt ...RequestOption)
 		return resp, err
 	}
 	resp.Data = SearchUsersResponseBody{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "search/users")
 	if err != nil {
 		return nil, err
 	}
@@ -1175,7 +1175,7 @@ func (r *SearchUsersReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *SearchUsersReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "search/users", opt)
 }
 
 /*

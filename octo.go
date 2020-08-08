@@ -37,8 +37,7 @@ type response struct {
 	httpRequester httpRequester
 }
 
-func (r *response) decodeBody(target interface{}) error {
-	opID := internal.ReqOperationID(r.httpRequester)
+func (r *response) decodeBody(target interface{}, opID string) error {
 	if internal.OperationHasAttribute(opID, internal.AttrRedirectOnly) {
 		return nil
 	}
@@ -186,9 +185,8 @@ type requestBuilder interface {
 	dataStatuses() []int
 }
 
-func httpRequestURL(builder requestBuilder, options requestOpts) (string, error) {
+func httpRequestURL(builder requestBuilder, opID string, options requestOpts) (string, error) {
 	expURL := builder.url()
-	opID := internal.ReqOperationID(builder)
 	if expURL != "" {
 		if !internal.OperationHasAttribute(opID, internal.AttrExplicitURL) {
 			return expURL, nil
@@ -223,13 +221,12 @@ func httpRequestURL(builder requestBuilder, options requestOpts) (string, error)
 	return u.String(), nil
 }
 
-func buildHTTPRequest(ctx context.Context, builder requestBuilder, opts []RequestOption) (*http.Request, error) {
+func buildHTTPRequest(ctx context.Context, builder requestBuilder, opID string, opts []RequestOption) (*http.Request, error) {
 	options, err := buildRequestOptions(opts)
 	if err != nil {
 		return nil, err
 	}
 	var bodyReader io.Reader
-	opID := internal.ReqOperationID(builder)
 	body := builder.body()
 	switch {
 	case body == nil:
@@ -243,7 +240,7 @@ func buildHTTPRequest(ctx context.Context, builder requestBuilder, opts []Reques
 	case internal.OperationHasAttribute(opID, internal.AttrBodyUploader):
 		bodyReader = body.(io.Reader)
 	}
-	urlString, err := httpRequestURL(builder, options)
+	urlString, err := httpRequestURL(builder, opID, options)
 	if err != nil {
 		return nil, err
 	}
@@ -276,7 +273,7 @@ func Int64(i int64) *int64 {
 	return &i
 }
 
-func doRequest(ctx context.Context, requester httpRequester, opt ...RequestOption) (*response, error) {
+func doRequest(ctx context.Context, requester httpRequester, opID string, opt ...RequestOption) (*response, error) {
 	req, err := requester.HTTPRequest(ctx, opt...)
 	if err != nil {
 		return nil, err
@@ -308,7 +305,7 @@ func doRequest(ctx context.Context, requester httpRequester, opt ...RequestOptio
 		opts:          ro,
 	}
 
-	err = errorCheck(resp)
+	err = errorCheck(resp, opID)
 	if err != nil {
 		return nil, err
 	}

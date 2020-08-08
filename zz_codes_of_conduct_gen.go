@@ -24,7 +24,7 @@ func CodesOfConductGetAllCodesOfConduct(ctx context.Context, req *CodesOfConduct
 		req = new(CodesOfConductGetAllCodesOfConductReq)
 	}
 	resp := &CodesOfConductGetAllCodesOfConductResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "codes-of-conduct/get-all-codes-of-conduct", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -32,7 +32,7 @@ func CodesOfConductGetAllCodesOfConduct(ctx context.Context, req *CodesOfConduct
 		return resp, err
 	}
 	resp.Data = []components.CodeOfConduct{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "codes-of-conduct/get-all-codes-of-conduct")
 	if err != nil {
 		return nil, err
 	}
@@ -111,7 +111,7 @@ func (r *CodesOfConductGetAllCodesOfConductReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *CodesOfConductGetAllCodesOfConductReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "codes-of-conduct/get-all-codes-of-conduct", opt)
 }
 
 /*
@@ -152,7 +152,7 @@ func CodesOfConductGetConductCode(ctx context.Context, req *CodesOfConductGetCon
 		req = new(CodesOfConductGetConductCodeReq)
 	}
 	resp := &CodesOfConductGetConductCodeResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "codes-of-conduct/get-conduct-code", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -160,7 +160,7 @@ func CodesOfConductGetConductCode(ctx context.Context, req *CodesOfConductGetCon
 		return resp, err
 	}
 	resp.Data = components.CodeOfConduct{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "codes-of-conduct/get-conduct-code")
 	if err != nil {
 		return nil, err
 	}
@@ -242,7 +242,7 @@ func (r *CodesOfConductGetConductCodeReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *CodesOfConductGetConductCodeReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "codes-of-conduct/get-conduct-code", opt)
 }
 
 /*
@@ -283,7 +283,7 @@ func CodesOfConductGetForRepo(ctx context.Context, req *CodesOfConductGetForRepo
 		req = new(CodesOfConductGetForRepoReq)
 	}
 	resp := &CodesOfConductGetForRepoResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "codes-of-conduct/get-for-repo", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -291,7 +291,7 @@ func CodesOfConductGetForRepo(ctx context.Context, req *CodesOfConductGetForRepo
 		return resp, err
 	}
 	resp.Data = components.CodeOfConduct{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "codes-of-conduct/get-for-repo")
 	if err != nil {
 		return nil, err
 	}
@@ -372,7 +372,7 @@ func (r *CodesOfConductGetForRepoReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *CodesOfConductGetForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "codes-of-conduct/get-for-repo", opt)
 }
 
 /*

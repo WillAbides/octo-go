@@ -25,7 +25,7 @@ func LicensesGet(ctx context.Context, req *LicensesGetReq, opt ...RequestOption)
 		req = new(LicensesGetReq)
 	}
 	resp := &LicensesGetResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "licenses/get", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -33,7 +33,7 @@ func LicensesGet(ctx context.Context, req *LicensesGetReq, opt ...RequestOption)
 		return resp, err
 	}
 	resp.Data = components.License{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "licenses/get")
 	if err != nil {
 		return nil, err
 	}
@@ -102,7 +102,7 @@ func (r *LicensesGetReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *LicensesGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "licenses/get", opt)
 }
 
 /*
@@ -143,7 +143,7 @@ func LicensesGetAllCommonlyUsed(ctx context.Context, req *LicensesGetAllCommonly
 		req = new(LicensesGetAllCommonlyUsedReq)
 	}
 	resp := &LicensesGetAllCommonlyUsedResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "licenses/get-all-commonly-used", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -151,7 +151,7 @@ func LicensesGetAllCommonlyUsed(ctx context.Context, req *LicensesGetAllCommonly
 		return resp, err
 	}
 	resp.Data = []components.LicenseSimple{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "licenses/get-all-commonly-used")
 	if err != nil {
 		return nil, err
 	}
@@ -227,7 +227,7 @@ func (r *LicensesGetAllCommonlyUsedReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *LicensesGetAllCommonlyUsedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "licenses/get-all-commonly-used", opt)
 }
 
 /*
@@ -268,7 +268,7 @@ func LicensesGetForRepo(ctx context.Context, req *LicensesGetForRepoReq, opt ...
 		req = new(LicensesGetForRepoReq)
 	}
 	resp := &LicensesGetForRepoResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "licenses/get-for-repo", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -276,7 +276,7 @@ func LicensesGetForRepo(ctx context.Context, req *LicensesGetForRepoReq, opt ...
 		return resp, err
 	}
 	resp.Data = components.LicenseContent{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "licenses/get-for-repo")
 	if err != nil {
 		return nil, err
 	}
@@ -344,7 +344,7 @@ func (r *LicensesGetForRepoReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *LicensesGetForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "licenses/get-for-repo", opt)
 }
 
 /*

@@ -24,7 +24,7 @@ func CodeScanningGetAlert(ctx context.Context, req *CodeScanningGetAlertReq, opt
 		req = new(CodeScanningGetAlertReq)
 	}
 	resp := &CodeScanningGetAlertResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "code-scanning/get-alert", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -32,7 +32,7 @@ func CodeScanningGetAlert(ctx context.Context, req *CodeScanningGetAlertReq, opt
 		return resp, err
 	}
 	resp.Data = components.CodeScanningAlert{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "code-scanning/get-alert")
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (r *CodeScanningGetAlertReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *CodeScanningGetAlertReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "code-scanning/get-alert", opt)
 }
 
 /*
@@ -144,7 +144,7 @@ func CodeScanningListAlertsForRepo(ctx context.Context, req *CodeScanningListAle
 		req = new(CodeScanningListAlertsForRepoReq)
 	}
 	resp := &CodeScanningListAlertsForRepoResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "code-scanning/list-alerts-for-repo", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -152,7 +152,7 @@ func CodeScanningListAlertsForRepo(ctx context.Context, req *CodeScanningListAle
 		return resp, err
 	}
 	resp.Data = []components.CodeScanningAlert{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "code-scanning/list-alerts-for-repo")
 	if err != nil {
 		return nil, err
 	}
@@ -235,7 +235,7 @@ func (r *CodeScanningListAlertsForRepoReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *CodeScanningListAlertsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "code-scanning/list-alerts-for-repo", opt)
 }
 
 /*

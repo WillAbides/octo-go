@@ -25,14 +25,14 @@ func OrgsBlockUser(ctx context.Context, req *OrgsBlockUserReq, opt ...RequestOpt
 		req = new(OrgsBlockUserReq)
 	}
 	resp := &OrgsBlockUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "orgs/block-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "orgs/block-user")
 	if err != nil {
 		return nil, err
 	}
@@ -100,7 +100,7 @@ func (r *OrgsBlockUserReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *OrgsBlockUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "orgs/block-user", opt)
 }
 
 /*
@@ -140,7 +140,7 @@ func OrgsCheckBlockedUser(ctx context.Context, req *OrgsCheckBlockedUserReq, opt
 		req = new(OrgsCheckBlockedUserReq)
 	}
 	resp := &OrgsCheckBlockedUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "orgs/check-blocked-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -151,7 +151,7 @@ func OrgsCheckBlockedUser(ctx context.Context, req *OrgsCheckBlockedUserReq, opt
 	if err != nil {
 		return nil, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "orgs/check-blocked-user")
 	if err != nil {
 		return nil, err
 	}
@@ -219,7 +219,7 @@ func (r *OrgsCheckBlockedUserReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *OrgsCheckBlockedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "orgs/check-blocked-user", opt)
 }
 
 /*
@@ -260,14 +260,14 @@ func OrgsCheckMembershipForUser(ctx context.Context, req *OrgsCheckMembershipFor
 		req = new(OrgsCheckMembershipForUserReq)
 	}
 	resp := &OrgsCheckMembershipForUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "orgs/check-membership-for-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "orgs/check-membership-for-user")
 	if err != nil {
 		return nil, err
 	}
@@ -335,7 +335,7 @@ func (r *OrgsCheckMembershipForUserReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *OrgsCheckMembershipForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "orgs/check-membership-for-user", opt)
 }
 
 /*
@@ -375,7 +375,7 @@ func OrgsCheckPublicMembershipForUser(ctx context.Context, req *OrgsCheckPublicM
 		req = new(OrgsCheckPublicMembershipForUserReq)
 	}
 	resp := &OrgsCheckPublicMembershipForUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "orgs/check-public-membership-for-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -386,7 +386,7 @@ func OrgsCheckPublicMembershipForUser(ctx context.Context, req *OrgsCheckPublicM
 	if err != nil {
 		return nil, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "orgs/check-public-membership-for-user")
 	if err != nil {
 		return nil, err
 	}
@@ -454,7 +454,7 @@ func (r *OrgsCheckPublicMembershipForUserReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *OrgsCheckPublicMembershipForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "orgs/check-public-membership-for-user", opt)
 }
 
 /*
@@ -495,14 +495,14 @@ func OrgsConvertMemberToOutsideCollaborator(ctx context.Context, req *OrgsConver
 		req = new(OrgsConvertMemberToOutsideCollaboratorReq)
 	}
 	resp := &OrgsConvertMemberToOutsideCollaboratorResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "orgs/convert-member-to-outside-collaborator", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "orgs/convert-member-to-outside-collaborator")
 	if err != nil {
 		return nil, err
 	}
@@ -570,7 +570,7 @@ func (r *OrgsConvertMemberToOutsideCollaboratorReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *OrgsConvertMemberToOutsideCollaboratorReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "orgs/convert-member-to-outside-collaborator", opt)
 }
 
 /*
@@ -610,7 +610,7 @@ func OrgsCreateInvitation(ctx context.Context, req *OrgsCreateInvitationReq, opt
 		req = new(OrgsCreateInvitationReq)
 	}
 	resp := &OrgsCreateInvitationResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "orgs/create-invitation", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -618,7 +618,7 @@ func OrgsCreateInvitation(ctx context.Context, req *OrgsCreateInvitationReq, opt
 		return resp, err
 	}
 	resp.Data = components.OrganizationInvitation{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "orgs/create-invitation")
 	if err != nil {
 		return nil, err
 	}
@@ -689,7 +689,7 @@ func (r *OrgsCreateInvitationReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *OrgsCreateInvitationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "orgs/create-invitation", opt)
 }
 
 /*
@@ -761,7 +761,7 @@ func OrgsCreateWebhook(ctx context.Context, req *OrgsCreateWebhookReq, opt ...Re
 		req = new(OrgsCreateWebhookReq)
 	}
 	resp := &OrgsCreateWebhookResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "orgs/create-webhook", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -769,7 +769,7 @@ func OrgsCreateWebhook(ctx context.Context, req *OrgsCreateWebhookReq, opt ...Re
 		return resp, err
 	}
 	resp.Data = components.OrgHook{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "orgs/create-webhook")
 	if err != nil {
 		return nil, err
 	}
@@ -840,7 +840,7 @@ func (r *OrgsCreateWebhookReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *OrgsCreateWebhookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "orgs/create-webhook", opt)
 }
 
 /*
@@ -933,7 +933,7 @@ func OrgsDeleteWebhook(ctx context.Context, req *OrgsDeleteWebhookReq, opt ...Re
 		req = new(OrgsDeleteWebhookReq)
 	}
 	resp := &OrgsDeleteWebhookResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "orgs/delete-webhook", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -944,7 +944,7 @@ func OrgsDeleteWebhook(ctx context.Context, req *OrgsDeleteWebhookReq, opt ...Re
 	if err != nil {
 		return nil, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "orgs/delete-webhook")
 	if err != nil {
 		return nil, err
 	}
@@ -1012,7 +1012,7 @@ func (r *OrgsDeleteWebhookReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *OrgsDeleteWebhookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "orgs/delete-webhook", opt)
 }
 
 /*
@@ -1053,7 +1053,7 @@ func OrgsGet(ctx context.Context, req *OrgsGetReq, opt ...RequestOption) (*OrgsG
 		req = new(OrgsGetReq)
 	}
 	resp := &OrgsGetResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "orgs/get", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1061,7 +1061,7 @@ func OrgsGet(ctx context.Context, req *OrgsGetReq, opt ...RequestOption) (*OrgsG
 		return resp, err
 	}
 	resp.Data = components.OrganizationFull{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "orgs/get")
 	if err != nil {
 		return nil, err
 	}
@@ -1146,7 +1146,7 @@ func (r *OrgsGetReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *OrgsGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "orgs/get", opt)
 }
 
 /*
@@ -1187,7 +1187,7 @@ func OrgsGetMembershipForAuthenticatedUser(ctx context.Context, req *OrgsGetMemb
 		req = new(OrgsGetMembershipForAuthenticatedUserReq)
 	}
 	resp := &OrgsGetMembershipForAuthenticatedUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "orgs/get-membership-for-authenticated-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1195,7 +1195,7 @@ func OrgsGetMembershipForAuthenticatedUser(ctx context.Context, req *OrgsGetMemb
 		return resp, err
 	}
 	resp.Data = components.OrgMembership{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "orgs/get-membership-for-authenticated-user")
 	if err != nil {
 		return nil, err
 	}
@@ -1262,7 +1262,7 @@ func (r *OrgsGetMembershipForAuthenticatedUserReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *OrgsGetMembershipForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "orgs/get-membership-for-authenticated-user", opt)
 }
 
 /*
@@ -1303,7 +1303,7 @@ func OrgsGetMembershipForUser(ctx context.Context, req *OrgsGetMembershipForUser
 		req = new(OrgsGetMembershipForUserReq)
 	}
 	resp := &OrgsGetMembershipForUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "orgs/get-membership-for-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1311,7 +1311,7 @@ func OrgsGetMembershipForUser(ctx context.Context, req *OrgsGetMembershipForUser
 		return resp, err
 	}
 	resp.Data = components.OrgMembership{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "orgs/get-membership-for-user")
 	if err != nil {
 		return nil, err
 	}
@@ -1379,7 +1379,7 @@ func (r *OrgsGetMembershipForUserReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *OrgsGetMembershipForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "orgs/get-membership-for-user", opt)
 }
 
 /*
@@ -1420,7 +1420,7 @@ func OrgsGetWebhook(ctx context.Context, req *OrgsGetWebhookReq, opt ...RequestO
 		req = new(OrgsGetWebhookReq)
 	}
 	resp := &OrgsGetWebhookResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "orgs/get-webhook", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1428,7 +1428,7 @@ func OrgsGetWebhook(ctx context.Context, req *OrgsGetWebhookReq, opt ...RequestO
 		return resp, err
 	}
 	resp.Data = components.OrgHook{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "orgs/get-webhook")
 	if err != nil {
 		return nil, err
 	}
@@ -1496,7 +1496,7 @@ func (r *OrgsGetWebhookReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *OrgsGetWebhookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "orgs/get-webhook", opt)
 }
 
 /*
@@ -1537,7 +1537,7 @@ func OrgsList(ctx context.Context, req *OrgsListReq, opt ...RequestOption) (*Org
 		req = new(OrgsListReq)
 	}
 	resp := &OrgsListResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "orgs/list", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1545,7 +1545,7 @@ func OrgsList(ctx context.Context, req *OrgsListReq, opt ...RequestOption) (*Org
 		return resp, err
 	}
 	resp.Data = []components.OrganizationSimple{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "orgs/list")
 	if err != nil {
 		return nil, err
 	}
@@ -1627,7 +1627,7 @@ func (r *OrgsListReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *OrgsListReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "orgs/list", opt)
 }
 
 /*
@@ -1668,7 +1668,7 @@ func OrgsListAppInstallations(ctx context.Context, req *OrgsListAppInstallations
 		req = new(OrgsListAppInstallationsReq)
 	}
 	resp := &OrgsListAppInstallationsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "orgs/list-app-installations", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1676,7 +1676,7 @@ func OrgsListAppInstallations(ctx context.Context, req *OrgsListAppInstallations
 		return resp, err
 	}
 	resp.Data = OrgsListAppInstallationsResponseBody{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "orgs/list-app-installations")
 	if err != nil {
 		return nil, err
 	}
@@ -1767,7 +1767,7 @@ func (r *OrgsListAppInstallationsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *OrgsListAppInstallationsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "orgs/list-app-installations", opt)
 }
 
 /*
@@ -1818,7 +1818,7 @@ func OrgsListBlockedUsers(ctx context.Context, req *OrgsListBlockedUsersReq, opt
 		req = new(OrgsListBlockedUsersReq)
 	}
 	resp := &OrgsListBlockedUsersResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "orgs/list-blocked-users", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1826,7 +1826,7 @@ func OrgsListBlockedUsers(ctx context.Context, req *OrgsListBlockedUsersReq, opt
 		return resp, err
 	}
 	resp.Data = []components.SimpleUser{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "orgs/list-blocked-users")
 	if err != nil {
 		return nil, err
 	}
@@ -1893,7 +1893,7 @@ func (r *OrgsListBlockedUsersReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *OrgsListBlockedUsersReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "orgs/list-blocked-users", opt)
 }
 
 /*
@@ -1934,7 +1934,7 @@ func OrgsListForAuthenticatedUser(ctx context.Context, req *OrgsListForAuthentic
 		req = new(OrgsListForAuthenticatedUserReq)
 	}
 	resp := &OrgsListForAuthenticatedUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "orgs/list-for-authenticated-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1942,7 +1942,7 @@ func OrgsListForAuthenticatedUser(ctx context.Context, req *OrgsListForAuthentic
 		return resp, err
 	}
 	resp.Data = []components.OrganizationSimple{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "orgs/list-for-authenticated-user")
 	if err != nil {
 		return nil, err
 	}
@@ -2020,7 +2020,7 @@ func (r *OrgsListForAuthenticatedUserReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *OrgsListForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "orgs/list-for-authenticated-user", opt)
 }
 
 /*
@@ -2061,7 +2061,7 @@ func OrgsListForUser(ctx context.Context, req *OrgsListForUserReq, opt ...Reques
 		req = new(OrgsListForUserReq)
 	}
 	resp := &OrgsListForUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "orgs/list-for-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2069,7 +2069,7 @@ func OrgsListForUser(ctx context.Context, req *OrgsListForUserReq, opt ...Reques
 		return resp, err
 	}
 	resp.Data = []components.OrganizationSimple{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "orgs/list-for-user")
 	if err != nil {
 		return nil, err
 	}
@@ -2148,7 +2148,7 @@ func (r *OrgsListForUserReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *OrgsListForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "orgs/list-for-user", opt)
 }
 
 /*
@@ -2189,7 +2189,7 @@ func OrgsListInvitationTeams(ctx context.Context, req *OrgsListInvitationTeamsRe
 		req = new(OrgsListInvitationTeamsReq)
 	}
 	resp := &OrgsListInvitationTeamsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "orgs/list-invitation-teams", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2197,7 +2197,7 @@ func OrgsListInvitationTeams(ctx context.Context, req *OrgsListInvitationTeamsRe
 		return resp, err
 	}
 	resp.Data = []components.Team{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "orgs/list-invitation-teams")
 	if err != nil {
 		return nil, err
 	}
@@ -2279,7 +2279,7 @@ func (r *OrgsListInvitationTeamsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *OrgsListInvitationTeamsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "orgs/list-invitation-teams", opt)
 }
 
 /*
@@ -2320,7 +2320,7 @@ func OrgsListMembers(ctx context.Context, req *OrgsListMembersReq, opt ...Reques
 		req = new(OrgsListMembersReq)
 	}
 	resp := &OrgsListMembersResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "orgs/list-members", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2328,7 +2328,7 @@ func OrgsListMembers(ctx context.Context, req *OrgsListMembersReq, opt ...Reques
 		return resp, err
 	}
 	resp.Data = []components.SimpleUser{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "orgs/list-members")
 	if err != nil {
 		return nil, err
 	}
@@ -2430,7 +2430,7 @@ func (r *OrgsListMembersReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *OrgsListMembersReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "orgs/list-members", opt)
 }
 
 /*
@@ -2471,7 +2471,7 @@ func OrgsListMembershipsForAuthenticatedUser(ctx context.Context, req *OrgsListM
 		req = new(OrgsListMembershipsForAuthenticatedUserReq)
 	}
 	resp := &OrgsListMembershipsForAuthenticatedUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "orgs/list-memberships-for-authenticated-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2479,7 +2479,7 @@ func OrgsListMembershipsForAuthenticatedUser(ctx context.Context, req *OrgsListM
 		return resp, err
 	}
 	resp.Data = []components.OrgMembership{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "orgs/list-memberships-for-authenticated-user")
 	if err != nil {
 		return nil, err
 	}
@@ -2567,7 +2567,7 @@ func (r *OrgsListMembershipsForAuthenticatedUserReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *OrgsListMembershipsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "orgs/list-memberships-for-authenticated-user", opt)
 }
 
 /*
@@ -2608,7 +2608,7 @@ func OrgsListOutsideCollaborators(ctx context.Context, req *OrgsListOutsideColla
 		req = new(OrgsListOutsideCollaboratorsReq)
 	}
 	resp := &OrgsListOutsideCollaboratorsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "orgs/list-outside-collaborators", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2616,7 +2616,7 @@ func OrgsListOutsideCollaborators(ctx context.Context, req *OrgsListOutsideColla
 		return resp, err
 	}
 	resp.Data = []components.SimpleUser{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "orgs/list-outside-collaborators")
 	if err != nil {
 		return nil, err
 	}
@@ -2706,7 +2706,7 @@ func (r *OrgsListOutsideCollaboratorsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *OrgsListOutsideCollaboratorsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "orgs/list-outside-collaborators", opt)
 }
 
 /*
@@ -2747,7 +2747,7 @@ func OrgsListPendingInvitations(ctx context.Context, req *OrgsListPendingInvitat
 		req = new(OrgsListPendingInvitationsReq)
 	}
 	resp := &OrgsListPendingInvitationsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "orgs/list-pending-invitations", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2755,7 +2755,7 @@ func OrgsListPendingInvitations(ctx context.Context, req *OrgsListPendingInvitat
 		return resp, err
 	}
 	resp.Data = []components.OrganizationInvitation{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "orgs/list-pending-invitations")
 	if err != nil {
 		return nil, err
 	}
@@ -2834,7 +2834,7 @@ func (r *OrgsListPendingInvitationsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *OrgsListPendingInvitationsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "orgs/list-pending-invitations", opt)
 }
 
 /*
@@ -2875,7 +2875,7 @@ func OrgsListPublicMembers(ctx context.Context, req *OrgsListPublicMembersReq, o
 		req = new(OrgsListPublicMembersReq)
 	}
 	resp := &OrgsListPublicMembersResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "orgs/list-public-members", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2883,7 +2883,7 @@ func OrgsListPublicMembers(ctx context.Context, req *OrgsListPublicMembersReq, o
 		return resp, err
 	}
 	resp.Data = []components.SimpleUser{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "orgs/list-public-members")
 	if err != nil {
 		return nil, err
 	}
@@ -2962,7 +2962,7 @@ func (r *OrgsListPublicMembersReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *OrgsListPublicMembersReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "orgs/list-public-members", opt)
 }
 
 /*
@@ -3003,7 +3003,7 @@ func OrgsListSamlSsoAuthorizations(ctx context.Context, req *OrgsListSamlSsoAuth
 		req = new(OrgsListSamlSsoAuthorizationsReq)
 	}
 	resp := &OrgsListSamlSsoAuthorizationsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "orgs/list-saml-sso-authorizations", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3011,7 +3011,7 @@ func OrgsListSamlSsoAuthorizations(ctx context.Context, req *OrgsListSamlSsoAuth
 		return resp, err
 	}
 	resp.Data = []components.CredentialAuthorization{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "orgs/list-saml-sso-authorizations")
 	if err != nil {
 		return nil, err
 	}
@@ -3078,7 +3078,7 @@ func (r *OrgsListSamlSsoAuthorizationsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *OrgsListSamlSsoAuthorizationsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "orgs/list-saml-sso-authorizations", opt)
 }
 
 /*
@@ -3119,7 +3119,7 @@ func OrgsListWebhooks(ctx context.Context, req *OrgsListWebhooksReq, opt ...Requ
 		req = new(OrgsListWebhooksReq)
 	}
 	resp := &OrgsListWebhooksResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "orgs/list-webhooks", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3127,7 +3127,7 @@ func OrgsListWebhooks(ctx context.Context, req *OrgsListWebhooksReq, opt ...Requ
 		return resp, err
 	}
 	resp.Data = []components.OrgHook{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "orgs/list-webhooks")
 	if err != nil {
 		return nil, err
 	}
@@ -3206,7 +3206,7 @@ func (r *OrgsListWebhooksReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *OrgsListWebhooksReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "orgs/list-webhooks", opt)
 }
 
 /*
@@ -3247,7 +3247,7 @@ func OrgsPingWebhook(ctx context.Context, req *OrgsPingWebhookReq, opt ...Reques
 		req = new(OrgsPingWebhookReq)
 	}
 	resp := &OrgsPingWebhookResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "orgs/ping-webhook", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3258,7 +3258,7 @@ func OrgsPingWebhook(ctx context.Context, req *OrgsPingWebhookReq, opt ...Reques
 	if err != nil {
 		return nil, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "orgs/ping-webhook")
 	if err != nil {
 		return nil, err
 	}
@@ -3326,7 +3326,7 @@ func (r *OrgsPingWebhookReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *OrgsPingWebhookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "orgs/ping-webhook", opt)
 }
 
 /*
@@ -3367,14 +3367,14 @@ func OrgsRemoveMember(ctx context.Context, req *OrgsRemoveMemberReq, opt ...Requ
 		req = new(OrgsRemoveMemberReq)
 	}
 	resp := &OrgsRemoveMemberResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "orgs/remove-member", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "orgs/remove-member")
 	if err != nil {
 		return nil, err
 	}
@@ -3442,7 +3442,7 @@ func (r *OrgsRemoveMemberReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *OrgsRemoveMemberReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "orgs/remove-member", opt)
 }
 
 /*
@@ -3482,14 +3482,14 @@ func OrgsRemoveMembershipForUser(ctx context.Context, req *OrgsRemoveMembershipF
 		req = new(OrgsRemoveMembershipForUserReq)
 	}
 	resp := &OrgsRemoveMembershipForUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "orgs/remove-membership-for-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "orgs/remove-membership-for-user")
 	if err != nil {
 		return nil, err
 	}
@@ -3557,7 +3557,7 @@ func (r *OrgsRemoveMembershipForUserReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *OrgsRemoveMembershipForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "orgs/remove-membership-for-user", opt)
 }
 
 /*
@@ -3597,14 +3597,14 @@ func OrgsRemoveOutsideCollaborator(ctx context.Context, req *OrgsRemoveOutsideCo
 		req = new(OrgsRemoveOutsideCollaboratorReq)
 	}
 	resp := &OrgsRemoveOutsideCollaboratorResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "orgs/remove-outside-collaborator", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "orgs/remove-outside-collaborator")
 	if err != nil {
 		return nil, err
 	}
@@ -3672,7 +3672,7 @@ func (r *OrgsRemoveOutsideCollaboratorReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *OrgsRemoveOutsideCollaboratorReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "orgs/remove-outside-collaborator", opt)
 }
 
 /*
@@ -3712,14 +3712,14 @@ func OrgsRemovePublicMembershipForAuthenticatedUser(ctx context.Context, req *Or
 		req = new(OrgsRemovePublicMembershipForAuthenticatedUserReq)
 	}
 	resp := &OrgsRemovePublicMembershipForAuthenticatedUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "orgs/remove-public-membership-for-authenticated-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "orgs/remove-public-membership-for-authenticated-user")
 	if err != nil {
 		return nil, err
 	}
@@ -3787,7 +3787,7 @@ func (r *OrgsRemovePublicMembershipForAuthenticatedUserReq) validStatuses() []in
 
 // HTTPRequest builds an *http.Request
 func (r *OrgsRemovePublicMembershipForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "orgs/remove-public-membership-for-authenticated-user", opt)
 }
 
 /*
@@ -3827,7 +3827,7 @@ func OrgsRemoveSamlSsoAuthorization(ctx context.Context, req *OrgsRemoveSamlSsoA
 		req = new(OrgsRemoveSamlSsoAuthorizationReq)
 	}
 	resp := &OrgsRemoveSamlSsoAuthorizationResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "orgs/remove-saml-sso-authorization", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3838,7 +3838,7 @@ func OrgsRemoveSamlSsoAuthorization(ctx context.Context, req *OrgsRemoveSamlSsoA
 	if err != nil {
 		return nil, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "orgs/remove-saml-sso-authorization")
 	if err != nil {
 		return nil, err
 	}
@@ -3908,7 +3908,7 @@ func (r *OrgsRemoveSamlSsoAuthorizationReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *OrgsRemoveSamlSsoAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "orgs/remove-saml-sso-authorization", opt)
 }
 
 /*
@@ -3949,7 +3949,7 @@ func OrgsSetMembershipForUser(ctx context.Context, req *OrgsSetMembershipForUser
 		req = new(OrgsSetMembershipForUserReq)
 	}
 	resp := &OrgsSetMembershipForUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "orgs/set-membership-for-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3957,7 +3957,7 @@ func OrgsSetMembershipForUser(ctx context.Context, req *OrgsSetMembershipForUser
 		return resp, err
 	}
 	resp.Data = components.OrgMembership{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "orgs/set-membership-for-user")
 	if err != nil {
 		return nil, err
 	}
@@ -4029,7 +4029,7 @@ func (r *OrgsSetMembershipForUserReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *OrgsSetMembershipForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "orgs/set-membership-for-user", opt)
 }
 
 /*
@@ -4085,14 +4085,14 @@ func OrgsSetPublicMembershipForAuthenticatedUser(ctx context.Context, req *OrgsS
 		req = new(OrgsSetPublicMembershipForAuthenticatedUserReq)
 	}
 	resp := &OrgsSetPublicMembershipForAuthenticatedUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "orgs/set-public-membership-for-authenticated-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "orgs/set-public-membership-for-authenticated-user")
 	if err != nil {
 		return nil, err
 	}
@@ -4160,7 +4160,7 @@ func (r *OrgsSetPublicMembershipForAuthenticatedUserReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *OrgsSetPublicMembershipForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "orgs/set-public-membership-for-authenticated-user", opt)
 }
 
 /*
@@ -4200,14 +4200,14 @@ func OrgsUnblockUser(ctx context.Context, req *OrgsUnblockUserReq, opt ...Reques
 		req = new(OrgsUnblockUserReq)
 	}
 	resp := &OrgsUnblockUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "orgs/unblock-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "orgs/unblock-user")
 	if err != nil {
 		return nil, err
 	}
@@ -4275,7 +4275,7 @@ func (r *OrgsUnblockUserReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *OrgsUnblockUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "orgs/unblock-user", opt)
 }
 
 /*
@@ -4315,7 +4315,7 @@ func OrgsUpdate(ctx context.Context, req *OrgsUpdateReq, opt ...RequestOption) (
 		req = new(OrgsUpdateReq)
 	}
 	resp := &OrgsUpdateResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "orgs/update", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -4323,7 +4323,7 @@ func OrgsUpdate(ctx context.Context, req *OrgsUpdateReq, opt ...RequestOption) (
 		return resp, err
 	}
 	resp.Data = components.OrganizationFull{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "orgs/update")
 	if err != nil {
 		return nil, err
 	}
@@ -4412,7 +4412,7 @@ func (r *OrgsUpdateReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *OrgsUpdateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "orgs/update", opt)
 }
 
 /*
@@ -4565,7 +4565,7 @@ func OrgsUpdateMembershipForAuthenticatedUser(ctx context.Context, req *OrgsUpda
 		req = new(OrgsUpdateMembershipForAuthenticatedUserReq)
 	}
 	resp := &OrgsUpdateMembershipForAuthenticatedUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "orgs/update-membership-for-authenticated-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -4573,7 +4573,7 @@ func OrgsUpdateMembershipForAuthenticatedUser(ctx context.Context, req *OrgsUpda
 		return resp, err
 	}
 	resp.Data = components.OrgMembership{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "orgs/update-membership-for-authenticated-user")
 	if err != nil {
 		return nil, err
 	}
@@ -4644,7 +4644,7 @@ func (r *OrgsUpdateMembershipForAuthenticatedUserReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *OrgsUpdateMembershipForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "orgs/update-membership-for-authenticated-user", opt)
 }
 
 /*
@@ -4696,7 +4696,7 @@ func OrgsUpdateWebhook(ctx context.Context, req *OrgsUpdateWebhookReq, opt ...Re
 		req = new(OrgsUpdateWebhookReq)
 	}
 	resp := &OrgsUpdateWebhookResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "orgs/update-webhook", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -4704,7 +4704,7 @@ func OrgsUpdateWebhook(ctx context.Context, req *OrgsUpdateWebhookReq, opt ...Re
 		return resp, err
 	}
 	resp.Data = components.OrgHook{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "orgs/update-webhook")
 	if err != nil {
 		return nil, err
 	}
@@ -4776,7 +4776,7 @@ func (r *OrgsUpdateWebhookReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *OrgsUpdateWebhookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "orgs/update-webhook", opt)
 }
 
 /*

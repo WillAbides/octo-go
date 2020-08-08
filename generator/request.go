@@ -185,7 +185,12 @@ func reqHTTPRequestFunc(file *jen.File, endpoint *model.Endpoint) {
 	).Params(
 		jen.Op("*").Qual("net/http", "Request"), jen.Error(),
 	).Block(
-		jen.Id("return buildHTTPRequest(ctx, r, opt)"),
+		jen.Return(jen.Id("buildHTTPRequest").Call(
+			jen.Id("ctx"),
+			jen.Id("r"),
+			jen.Lit(endpoint.ID),
+			jen.Id("opt"),
+		)),
 	)
 }
 

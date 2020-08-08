@@ -25,7 +25,7 @@ func ReactionsCreateForCommitComment(ctx context.Context, req *ReactionsCreateFo
 		req = new(ReactionsCreateForCommitCommentReq)
 	}
 	resp := &ReactionsCreateForCommitCommentResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "reactions/create-for-commit-comment", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -33,7 +33,7 @@ func ReactionsCreateForCommitComment(ctx context.Context, req *ReactionsCreateFo
 		return resp, err
 	}
 	resp.Data = components.Reaction{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "reactions/create-for-commit-comment")
 	if err != nil {
 		return nil, err
 	}
@@ -125,7 +125,7 @@ func (r *ReactionsCreateForCommitCommentReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReactionsCreateForCommitCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "reactions/create-for-commit-comment", opt)
 }
 
 /*
@@ -177,7 +177,7 @@ func ReactionsCreateForIssue(ctx context.Context, req *ReactionsCreateForIssueRe
 		req = new(ReactionsCreateForIssueReq)
 	}
 	resp := &ReactionsCreateForIssueResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "reactions/create-for-issue", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -185,7 +185,7 @@ func ReactionsCreateForIssue(ctx context.Context, req *ReactionsCreateForIssueRe
 		return resp, err
 	}
 	resp.Data = components.Reaction{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "reactions/create-for-issue")
 	if err != nil {
 		return nil, err
 	}
@@ -277,7 +277,7 @@ func (r *ReactionsCreateForIssueReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReactionsCreateForIssueReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "reactions/create-for-issue", opt)
 }
 
 /*
@@ -329,7 +329,7 @@ func ReactionsCreateForIssueComment(ctx context.Context, req *ReactionsCreateFor
 		req = new(ReactionsCreateForIssueCommentReq)
 	}
 	resp := &ReactionsCreateForIssueCommentResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "reactions/create-for-issue-comment", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -337,7 +337,7 @@ func ReactionsCreateForIssueComment(ctx context.Context, req *ReactionsCreateFor
 		return resp, err
 	}
 	resp.Data = components.Reaction{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "reactions/create-for-issue-comment")
 	if err != nil {
 		return nil, err
 	}
@@ -429,7 +429,7 @@ func (r *ReactionsCreateForIssueCommentReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReactionsCreateForIssueCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "reactions/create-for-issue-comment", opt)
 }
 
 /*
@@ -481,7 +481,7 @@ func ReactionsCreateForPullRequestReviewComment(ctx context.Context, req *Reacti
 		req = new(ReactionsCreateForPullRequestReviewCommentReq)
 	}
 	resp := &ReactionsCreateForPullRequestReviewCommentResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "reactions/create-for-pull-request-review-comment", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -489,7 +489,7 @@ func ReactionsCreateForPullRequestReviewComment(ctx context.Context, req *Reacti
 		return resp, err
 	}
 	resp.Data = components.Reaction{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "reactions/create-for-pull-request-review-comment")
 	if err != nil {
 		return nil, err
 	}
@@ -581,7 +581,7 @@ func (r *ReactionsCreateForPullRequestReviewCommentReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReactionsCreateForPullRequestReviewCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "reactions/create-for-pull-request-review-comment", opt)
 }
 
 /*
@@ -636,7 +636,7 @@ func ReactionsCreateForTeamDiscussionCommentInOrg(ctx context.Context, req *Reac
 		req = new(ReactionsCreateForTeamDiscussionCommentInOrgReq)
 	}
 	resp := &ReactionsCreateForTeamDiscussionCommentInOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "reactions/create-for-team-discussion-comment-in-org", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -644,7 +644,7 @@ func ReactionsCreateForTeamDiscussionCommentInOrg(ctx context.Context, req *Reac
 		return resp, err
 	}
 	resp.Data = components.Reaction{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "reactions/create-for-team-discussion-comment-in-org")
 	if err != nil {
 		return nil, err
 	}
@@ -737,7 +737,7 @@ func (r *ReactionsCreateForTeamDiscussionCommentInOrgReq) validStatuses() []int 
 
 // HTTPRequest builds an *http.Request
 func (r *ReactionsCreateForTeamDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "reactions/create-for-team-discussion-comment-in-org", opt)
 }
 
 /*
@@ -789,7 +789,7 @@ func ReactionsCreateForTeamDiscussionCommentLegacy(ctx context.Context, req *Rea
 		req = new(ReactionsCreateForTeamDiscussionCommentLegacyReq)
 	}
 	resp := &ReactionsCreateForTeamDiscussionCommentLegacyResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "reactions/create-for-team-discussion-comment-legacy", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -797,7 +797,7 @@ func ReactionsCreateForTeamDiscussionCommentLegacy(ctx context.Context, req *Rea
 		return resp, err
 	}
 	resp.Data = components.Reaction{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "reactions/create-for-team-discussion-comment-legacy")
 	if err != nil {
 		return nil, err
 	}
@@ -887,7 +887,7 @@ func (r *ReactionsCreateForTeamDiscussionCommentLegacyReq) validStatuses() []int
 
 // HTTPRequest builds an *http.Request
 func (r *ReactionsCreateForTeamDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "reactions/create-for-team-discussion-comment-legacy", opt)
 }
 
 /*
@@ -939,7 +939,7 @@ func ReactionsCreateForTeamDiscussionInOrg(ctx context.Context, req *ReactionsCr
 		req = new(ReactionsCreateForTeamDiscussionInOrgReq)
 	}
 	resp := &ReactionsCreateForTeamDiscussionInOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "reactions/create-for-team-discussion-in-org", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -947,7 +947,7 @@ func ReactionsCreateForTeamDiscussionInOrg(ctx context.Context, req *ReactionsCr
 		return resp, err
 	}
 	resp.Data = components.Reaction{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "reactions/create-for-team-discussion-in-org")
 	if err != nil {
 		return nil, err
 	}
@@ -1039,7 +1039,7 @@ func (r *ReactionsCreateForTeamDiscussionInOrgReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReactionsCreateForTeamDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "reactions/create-for-team-discussion-in-org", opt)
 }
 
 /*
@@ -1091,7 +1091,7 @@ func ReactionsCreateForTeamDiscussionLegacy(ctx context.Context, req *ReactionsC
 		req = new(ReactionsCreateForTeamDiscussionLegacyReq)
 	}
 	resp := &ReactionsCreateForTeamDiscussionLegacyResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "reactions/create-for-team-discussion-legacy", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1099,7 +1099,7 @@ func ReactionsCreateForTeamDiscussionLegacy(ctx context.Context, req *ReactionsC
 		return resp, err
 	}
 	resp.Data = components.Reaction{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "reactions/create-for-team-discussion-legacy")
 	if err != nil {
 		return nil, err
 	}
@@ -1188,7 +1188,7 @@ func (r *ReactionsCreateForTeamDiscussionLegacyReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReactionsCreateForTeamDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "reactions/create-for-team-discussion-legacy", opt)
 }
 
 /*
@@ -1240,14 +1240,14 @@ func ReactionsDeleteForCommitComment(ctx context.Context, req *ReactionsDeleteFo
 		req = new(ReactionsDeleteForCommitCommentReq)
 	}
 	resp := &ReactionsDeleteForCommitCommentResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "reactions/delete-for-commit-comment", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "reactions/delete-for-commit-comment")
 	if err != nil {
 		return nil, err
 	}
@@ -1336,7 +1336,7 @@ func (r *ReactionsDeleteForCommitCommentReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReactionsDeleteForCommitCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "reactions/delete-for-commit-comment", opt)
 }
 
 /*
@@ -1376,14 +1376,14 @@ func ReactionsDeleteForIssue(ctx context.Context, req *ReactionsDeleteForIssueRe
 		req = new(ReactionsDeleteForIssueReq)
 	}
 	resp := &ReactionsDeleteForIssueResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "reactions/delete-for-issue", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "reactions/delete-for-issue")
 	if err != nil {
 		return nil, err
 	}
@@ -1472,7 +1472,7 @@ func (r *ReactionsDeleteForIssueReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReactionsDeleteForIssueReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "reactions/delete-for-issue", opt)
 }
 
 /*
@@ -1512,14 +1512,14 @@ func ReactionsDeleteForIssueComment(ctx context.Context, req *ReactionsDeleteFor
 		req = new(ReactionsDeleteForIssueCommentReq)
 	}
 	resp := &ReactionsDeleteForIssueCommentResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "reactions/delete-for-issue-comment", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "reactions/delete-for-issue-comment")
 	if err != nil {
 		return nil, err
 	}
@@ -1608,7 +1608,7 @@ func (r *ReactionsDeleteForIssueCommentReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReactionsDeleteForIssueCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "reactions/delete-for-issue-comment", opt)
 }
 
 /*
@@ -1648,14 +1648,14 @@ func ReactionsDeleteForPullRequestComment(ctx context.Context, req *ReactionsDel
 		req = new(ReactionsDeleteForPullRequestCommentReq)
 	}
 	resp := &ReactionsDeleteForPullRequestCommentResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "reactions/delete-for-pull-request-comment", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "reactions/delete-for-pull-request-comment")
 	if err != nil {
 		return nil, err
 	}
@@ -1744,7 +1744,7 @@ func (r *ReactionsDeleteForPullRequestCommentReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReactionsDeleteForPullRequestCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "reactions/delete-for-pull-request-comment", opt)
 }
 
 /*
@@ -1784,14 +1784,14 @@ func ReactionsDeleteForTeamDiscussion(ctx context.Context, req *ReactionsDeleteF
 		req = new(ReactionsDeleteForTeamDiscussionReq)
 	}
 	resp := &ReactionsDeleteForTeamDiscussionResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "reactions/delete-for-team-discussion", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "reactions/delete-for-team-discussion")
 	if err != nil {
 		return nil, err
 	}
@@ -1880,7 +1880,7 @@ func (r *ReactionsDeleteForTeamDiscussionReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReactionsDeleteForTeamDiscussionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "reactions/delete-for-team-discussion", opt)
 }
 
 /*
@@ -1920,14 +1920,14 @@ func ReactionsDeleteForTeamDiscussionComment(ctx context.Context, req *Reactions
 		req = new(ReactionsDeleteForTeamDiscussionCommentReq)
 	}
 	resp := &ReactionsDeleteForTeamDiscussionCommentResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "reactions/delete-for-team-discussion-comment", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "reactions/delete-for-team-discussion-comment")
 	if err != nil {
 		return nil, err
 	}
@@ -2017,7 +2017,7 @@ func (r *ReactionsDeleteForTeamDiscussionCommentReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReactionsDeleteForTeamDiscussionCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "reactions/delete-for-team-discussion-comment", opt)
 }
 
 /*
@@ -2057,14 +2057,14 @@ func ReactionsDeleteLegacy(ctx context.Context, req *ReactionsDeleteLegacyReq, o
 		req = new(ReactionsDeleteLegacyReq)
 	}
 	resp := &ReactionsDeleteLegacyResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "reactions/delete-legacy", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "reactions/delete-legacy")
 	if err != nil {
 		return nil, err
 	}
@@ -2148,7 +2148,7 @@ func (r *ReactionsDeleteLegacyReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReactionsDeleteLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "reactions/delete-legacy", opt)
 }
 
 /*
@@ -2188,7 +2188,7 @@ func ReactionsListForCommitComment(ctx context.Context, req *ReactionsListForCom
 		req = new(ReactionsListForCommitCommentReq)
 	}
 	resp := &ReactionsListForCommitCommentResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "reactions/list-for-commit-comment", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2196,7 +2196,7 @@ func ReactionsListForCommitComment(ctx context.Context, req *ReactionsListForCom
 		return resp, err
 	}
 	resp.Data = []components.Reaction{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "reactions/list-for-commit-comment")
 	if err != nil {
 		return nil, err
 	}
@@ -2306,7 +2306,7 @@ func (r *ReactionsListForCommitCommentReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReactionsListForCommitCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "reactions/list-for-commit-comment", opt)
 }
 
 /*
@@ -2347,7 +2347,7 @@ func ReactionsListForIssue(ctx context.Context, req *ReactionsListForIssueReq, o
 		req = new(ReactionsListForIssueReq)
 	}
 	resp := &ReactionsListForIssueResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "reactions/list-for-issue", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2355,7 +2355,7 @@ func ReactionsListForIssue(ctx context.Context, req *ReactionsListForIssueReq, o
 		return resp, err
 	}
 	resp.Data = []components.Reaction{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "reactions/list-for-issue")
 	if err != nil {
 		return nil, err
 	}
@@ -2465,7 +2465,7 @@ func (r *ReactionsListForIssueReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReactionsListForIssueReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "reactions/list-for-issue", opt)
 }
 
 /*
@@ -2506,7 +2506,7 @@ func ReactionsListForIssueComment(ctx context.Context, req *ReactionsListForIssu
 		req = new(ReactionsListForIssueCommentReq)
 	}
 	resp := &ReactionsListForIssueCommentResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "reactions/list-for-issue-comment", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2514,7 +2514,7 @@ func ReactionsListForIssueComment(ctx context.Context, req *ReactionsListForIssu
 		return resp, err
 	}
 	resp.Data = []components.Reaction{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "reactions/list-for-issue-comment")
 	if err != nil {
 		return nil, err
 	}
@@ -2624,7 +2624,7 @@ func (r *ReactionsListForIssueCommentReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReactionsListForIssueCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "reactions/list-for-issue-comment", opt)
 }
 
 /*
@@ -2665,7 +2665,7 @@ func ReactionsListForPullRequestReviewComment(ctx context.Context, req *Reaction
 		req = new(ReactionsListForPullRequestReviewCommentReq)
 	}
 	resp := &ReactionsListForPullRequestReviewCommentResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "reactions/list-for-pull-request-review-comment", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2673,7 +2673,7 @@ func ReactionsListForPullRequestReviewComment(ctx context.Context, req *Reaction
 		return resp, err
 	}
 	resp.Data = []components.Reaction{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "reactions/list-for-pull-request-review-comment")
 	if err != nil {
 		return nil, err
 	}
@@ -2783,7 +2783,7 @@ func (r *ReactionsListForPullRequestReviewCommentReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReactionsListForPullRequestReviewCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "reactions/list-for-pull-request-review-comment", opt)
 }
 
 /*
@@ -2824,7 +2824,7 @@ func ReactionsListForTeamDiscussionCommentInOrg(ctx context.Context, req *Reacti
 		req = new(ReactionsListForTeamDiscussionCommentInOrgReq)
 	}
 	resp := &ReactionsListForTeamDiscussionCommentInOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "reactions/list-for-team-discussion-comment-in-org", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2832,7 +2832,7 @@ func ReactionsListForTeamDiscussionCommentInOrg(ctx context.Context, req *Reacti
 		return resp, err
 	}
 	resp.Data = []components.Reaction{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "reactions/list-for-team-discussion-comment-in-org")
 	if err != nil {
 		return nil, err
 	}
@@ -2943,7 +2943,7 @@ func (r *ReactionsListForTeamDiscussionCommentInOrgReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReactionsListForTeamDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "reactions/list-for-team-discussion-comment-in-org", opt)
 }
 
 /*
@@ -2984,7 +2984,7 @@ func ReactionsListForTeamDiscussionCommentLegacy(ctx context.Context, req *React
 		req = new(ReactionsListForTeamDiscussionCommentLegacyReq)
 	}
 	resp := &ReactionsListForTeamDiscussionCommentLegacyResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "reactions/list-for-team-discussion-comment-legacy", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2992,7 +2992,7 @@ func ReactionsListForTeamDiscussionCommentLegacy(ctx context.Context, req *React
 		return resp, err
 	}
 	resp.Data = []components.Reaction{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "reactions/list-for-team-discussion-comment-legacy")
 	if err != nil {
 		return nil, err
 	}
@@ -3100,7 +3100,7 @@ func (r *ReactionsListForTeamDiscussionCommentLegacyReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReactionsListForTeamDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "reactions/list-for-team-discussion-comment-legacy", opt)
 }
 
 /*
@@ -3141,7 +3141,7 @@ func ReactionsListForTeamDiscussionInOrg(ctx context.Context, req *ReactionsList
 		req = new(ReactionsListForTeamDiscussionInOrgReq)
 	}
 	resp := &ReactionsListForTeamDiscussionInOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "reactions/list-for-team-discussion-in-org", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3149,7 +3149,7 @@ func ReactionsListForTeamDiscussionInOrg(ctx context.Context, req *ReactionsList
 		return resp, err
 	}
 	resp.Data = []components.Reaction{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "reactions/list-for-team-discussion-in-org")
 	if err != nil {
 		return nil, err
 	}
@@ -3259,7 +3259,7 @@ func (r *ReactionsListForTeamDiscussionInOrgReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReactionsListForTeamDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "reactions/list-for-team-discussion-in-org", opt)
 }
 
 /*
@@ -3300,7 +3300,7 @@ func ReactionsListForTeamDiscussionLegacy(ctx context.Context, req *ReactionsLis
 		req = new(ReactionsListForTeamDiscussionLegacyReq)
 	}
 	resp := &ReactionsListForTeamDiscussionLegacyResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "reactions/list-for-team-discussion-legacy", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3308,7 +3308,7 @@ func ReactionsListForTeamDiscussionLegacy(ctx context.Context, req *ReactionsLis
 		return resp, err
 	}
 	resp.Data = []components.Reaction{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "reactions/list-for-team-discussion-legacy")
 	if err != nil {
 		return nil, err
 	}
@@ -3415,7 +3415,7 @@ func (r *ReactionsListForTeamDiscussionLegacyReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ReactionsListForTeamDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "reactions/list-for-team-discussion-legacy", opt)
 }
 
 /*

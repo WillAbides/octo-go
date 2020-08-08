@@ -25,14 +25,14 @@ func ActivityCheckRepoIsStarredByAuthenticatedUser(ctx context.Context, req *Act
 		req = new(ActivityCheckRepoIsStarredByAuthenticatedUserReq)
 	}
 	resp := &ActivityCheckRepoIsStarredByAuthenticatedUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "activity/check-repo-is-starred-by-authenticated-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "activity/check-repo-is-starred-by-authenticated-user")
 	if err != nil {
 		return nil, err
 	}
@@ -100,7 +100,7 @@ func (r *ActivityCheckRepoIsStarredByAuthenticatedUserReq) validStatuses() []int
 
 // HTTPRequest builds an *http.Request
 func (r *ActivityCheckRepoIsStarredByAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "activity/check-repo-is-starred-by-authenticated-user", opt)
 }
 
 /*
@@ -140,14 +140,14 @@ func ActivityDeleteRepoSubscription(ctx context.Context, req *ActivityDeleteRepo
 		req = new(ActivityDeleteRepoSubscriptionReq)
 	}
 	resp := &ActivityDeleteRepoSubscriptionResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "activity/delete-repo-subscription", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "activity/delete-repo-subscription")
 	if err != nil {
 		return nil, err
 	}
@@ -215,7 +215,7 @@ func (r *ActivityDeleteRepoSubscriptionReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActivityDeleteRepoSubscriptionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "activity/delete-repo-subscription", opt)
 }
 
 /*
@@ -255,14 +255,14 @@ func ActivityDeleteThreadSubscription(ctx context.Context, req *ActivityDeleteTh
 		req = new(ActivityDeleteThreadSubscriptionReq)
 	}
 	resp := &ActivityDeleteThreadSubscriptionResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "activity/delete-thread-subscription", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "activity/delete-thread-subscription")
 	if err != nil {
 		return nil, err
 	}
@@ -331,7 +331,7 @@ func (r *ActivityDeleteThreadSubscriptionReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActivityDeleteThreadSubscriptionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "activity/delete-thread-subscription", opt)
 }
 
 /*
@@ -371,7 +371,7 @@ func ActivityGetFeeds(ctx context.Context, req *ActivityGetFeedsReq, opt ...Requ
 		req = new(ActivityGetFeedsReq)
 	}
 	resp := &ActivityGetFeedsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "activity/get-feeds", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -379,7 +379,7 @@ func ActivityGetFeeds(ctx context.Context, req *ActivityGetFeedsReq, opt ...Requ
 		return resp, err
 	}
 	resp.Data = components.Feed{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "activity/get-feeds")
 	if err != nil {
 		return nil, err
 	}
@@ -445,7 +445,7 @@ func (r *ActivityGetFeedsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActivityGetFeedsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "activity/get-feeds", opt)
 }
 
 /*
@@ -486,7 +486,7 @@ func ActivityGetRepoSubscription(ctx context.Context, req *ActivityGetRepoSubscr
 		req = new(ActivityGetRepoSubscriptionReq)
 	}
 	resp := &ActivityGetRepoSubscriptionResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "activity/get-repo-subscription", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -494,7 +494,7 @@ func ActivityGetRepoSubscription(ctx context.Context, req *ActivityGetRepoSubscr
 		return resp, err
 	}
 	resp.Data = components.RepositorySubscription{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "activity/get-repo-subscription")
 	if err != nil {
 		return nil, err
 	}
@@ -562,7 +562,7 @@ func (r *ActivityGetRepoSubscriptionReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActivityGetRepoSubscriptionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "activity/get-repo-subscription", opt)
 }
 
 /*
@@ -603,7 +603,7 @@ func ActivityGetThread(ctx context.Context, req *ActivityGetThreadReq, opt ...Re
 		req = new(ActivityGetThreadReq)
 	}
 	resp := &ActivityGetThreadResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "activity/get-thread", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -611,7 +611,7 @@ func ActivityGetThread(ctx context.Context, req *ActivityGetThreadReq, opt ...Re
 		return resp, err
 	}
 	resp.Data = components.Thread{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "activity/get-thread")
 	if err != nil {
 		return nil, err
 	}
@@ -680,7 +680,7 @@ func (r *ActivityGetThreadReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActivityGetThreadReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "activity/get-thread", opt)
 }
 
 /*
@@ -721,7 +721,7 @@ func ActivityGetThreadSubscriptionForAuthenticatedUser(ctx context.Context, req 
 		req = new(ActivityGetThreadSubscriptionForAuthenticatedUserReq)
 	}
 	resp := &ActivityGetThreadSubscriptionForAuthenticatedUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "activity/get-thread-subscription-for-authenticated-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -729,7 +729,7 @@ func ActivityGetThreadSubscriptionForAuthenticatedUser(ctx context.Context, req 
 		return resp, err
 	}
 	resp.Data = components.ThreadSubscription{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "activity/get-thread-subscription-for-authenticated-user")
 	if err != nil {
 		return nil, err
 	}
@@ -798,7 +798,7 @@ func (r *ActivityGetThreadSubscriptionForAuthenticatedUserReq) validStatuses() [
 
 // HTTPRequest builds an *http.Request
 func (r *ActivityGetThreadSubscriptionForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "activity/get-thread-subscription-for-authenticated-user", opt)
 }
 
 /*
@@ -839,7 +839,7 @@ func ActivityListEventsForAuthenticatedUser(ctx context.Context, req *ActivityLi
 		req = new(ActivityListEventsForAuthenticatedUserReq)
 	}
 	resp := &ActivityListEventsForAuthenticatedUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "activity/list-events-for-authenticated-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -847,7 +847,7 @@ func ActivityListEventsForAuthenticatedUser(ctx context.Context, req *ActivityLi
 		return resp, err
 	}
 	resp.Data = []components.Event{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "activity/list-events-for-authenticated-user")
 	if err != nil {
 		return nil, err
 	}
@@ -926,7 +926,7 @@ func (r *ActivityListEventsForAuthenticatedUserReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActivityListEventsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "activity/list-events-for-authenticated-user", opt)
 }
 
 /*
@@ -967,7 +967,7 @@ func ActivityListNotificationsForAuthenticatedUser(ctx context.Context, req *Act
 		req = new(ActivityListNotificationsForAuthenticatedUserReq)
 	}
 	resp := &ActivityListNotificationsForAuthenticatedUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "activity/list-notifications-for-authenticated-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -975,7 +975,7 @@ func ActivityListNotificationsForAuthenticatedUser(ctx context.Context, req *Act
 		return resp, err
 	}
 	resp.Data = []components.Thread{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "activity/list-notifications-for-authenticated-user")
 	if err != nil {
 		return nil, err
 	}
@@ -1088,7 +1088,7 @@ func (r *ActivityListNotificationsForAuthenticatedUserReq) validStatuses() []int
 
 // HTTPRequest builds an *http.Request
 func (r *ActivityListNotificationsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "activity/list-notifications-for-authenticated-user", opt)
 }
 
 /*
@@ -1129,7 +1129,7 @@ func ActivityListOrgEventsForAuthenticatedUser(ctx context.Context, req *Activit
 		req = new(ActivityListOrgEventsForAuthenticatedUserReq)
 	}
 	resp := &ActivityListOrgEventsForAuthenticatedUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "activity/list-org-events-for-authenticated-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1137,7 +1137,7 @@ func ActivityListOrgEventsForAuthenticatedUser(ctx context.Context, req *Activit
 		return resp, err
 	}
 	resp.Data = []components.Event{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "activity/list-org-events-for-authenticated-user")
 	if err != nil {
 		return nil, err
 	}
@@ -1217,7 +1217,7 @@ func (r *ActivityListOrgEventsForAuthenticatedUserReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActivityListOrgEventsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "activity/list-org-events-for-authenticated-user", opt)
 }
 
 /*
@@ -1258,7 +1258,7 @@ func ActivityListPublicEvents(ctx context.Context, req *ActivityListPublicEvents
 		req = new(ActivityListPublicEventsReq)
 	}
 	resp := &ActivityListPublicEventsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "activity/list-public-events", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1266,7 +1266,7 @@ func ActivityListPublicEvents(ctx context.Context, req *ActivityListPublicEvents
 		return resp, err
 	}
 	resp.Data = []components.Event{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "activity/list-public-events")
 	if err != nil {
 		return nil, err
 	}
@@ -1344,7 +1344,7 @@ func (r *ActivityListPublicEventsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActivityListPublicEventsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "activity/list-public-events", opt)
 }
 
 /*
@@ -1385,7 +1385,7 @@ func ActivityListPublicEventsForRepoNetwork(ctx context.Context, req *ActivityLi
 		req = new(ActivityListPublicEventsForRepoNetworkReq)
 	}
 	resp := &ActivityListPublicEventsForRepoNetworkResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "activity/list-public-events-for-repo-network", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1393,7 +1393,7 @@ func ActivityListPublicEventsForRepoNetwork(ctx context.Context, req *ActivityLi
 		return resp, err
 	}
 	resp.Data = []components.Event{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "activity/list-public-events-for-repo-network")
 	if err != nil {
 		return nil, err
 	}
@@ -1473,7 +1473,7 @@ func (r *ActivityListPublicEventsForRepoNetworkReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActivityListPublicEventsForRepoNetworkReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "activity/list-public-events-for-repo-network", opt)
 }
 
 /*
@@ -1514,7 +1514,7 @@ func ActivityListPublicEventsForUser(ctx context.Context, req *ActivityListPubli
 		req = new(ActivityListPublicEventsForUserReq)
 	}
 	resp := &ActivityListPublicEventsForUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "activity/list-public-events-for-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1522,7 +1522,7 @@ func ActivityListPublicEventsForUser(ctx context.Context, req *ActivityListPubli
 		return resp, err
 	}
 	resp.Data = []components.Event{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "activity/list-public-events-for-user")
 	if err != nil {
 		return nil, err
 	}
@@ -1601,7 +1601,7 @@ func (r *ActivityListPublicEventsForUserReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActivityListPublicEventsForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "activity/list-public-events-for-user", opt)
 }
 
 /*
@@ -1642,7 +1642,7 @@ func ActivityListPublicOrgEvents(ctx context.Context, req *ActivityListPublicOrg
 		req = new(ActivityListPublicOrgEventsReq)
 	}
 	resp := &ActivityListPublicOrgEventsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "activity/list-public-org-events", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1650,7 +1650,7 @@ func ActivityListPublicOrgEvents(ctx context.Context, req *ActivityListPublicOrg
 		return resp, err
 	}
 	resp.Data = []components.Event{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "activity/list-public-org-events")
 	if err != nil {
 		return nil, err
 	}
@@ -1729,7 +1729,7 @@ func (r *ActivityListPublicOrgEventsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActivityListPublicOrgEventsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "activity/list-public-org-events", opt)
 }
 
 /*
@@ -1770,7 +1770,7 @@ func ActivityListReceivedEventsForUser(ctx context.Context, req *ActivityListRec
 		req = new(ActivityListReceivedEventsForUserReq)
 	}
 	resp := &ActivityListReceivedEventsForUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "activity/list-received-events-for-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1778,7 +1778,7 @@ func ActivityListReceivedEventsForUser(ctx context.Context, req *ActivityListRec
 		return resp, err
 	}
 	resp.Data = []components.Event{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "activity/list-received-events-for-user")
 	if err != nil {
 		return nil, err
 	}
@@ -1857,7 +1857,7 @@ func (r *ActivityListReceivedEventsForUserReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActivityListReceivedEventsForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "activity/list-received-events-for-user", opt)
 }
 
 /*
@@ -1898,7 +1898,7 @@ func ActivityListReceivedPublicEventsForUser(ctx context.Context, req *ActivityL
 		req = new(ActivityListReceivedPublicEventsForUserReq)
 	}
 	resp := &ActivityListReceivedPublicEventsForUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "activity/list-received-public-events-for-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1906,7 +1906,7 @@ func ActivityListReceivedPublicEventsForUser(ctx context.Context, req *ActivityL
 		return resp, err
 	}
 	resp.Data = []components.Event{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "activity/list-received-public-events-for-user")
 	if err != nil {
 		return nil, err
 	}
@@ -1985,7 +1985,7 @@ func (r *ActivityListReceivedPublicEventsForUserReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActivityListReceivedPublicEventsForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "activity/list-received-public-events-for-user", opt)
 }
 
 /*
@@ -2026,7 +2026,7 @@ func ActivityListRepoEvents(ctx context.Context, req *ActivityListRepoEventsReq,
 		req = new(ActivityListRepoEventsReq)
 	}
 	resp := &ActivityListRepoEventsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "activity/list-repo-events", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2034,7 +2034,7 @@ func ActivityListRepoEvents(ctx context.Context, req *ActivityListRepoEventsReq,
 		return resp, err
 	}
 	resp.Data = []components.Event{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "activity/list-repo-events")
 	if err != nil {
 		return nil, err
 	}
@@ -2114,7 +2114,7 @@ func (r *ActivityListRepoEventsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActivityListRepoEventsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "activity/list-repo-events", opt)
 }
 
 /*
@@ -2155,7 +2155,7 @@ func ActivityListRepoNotificationsForAuthenticatedUser(ctx context.Context, req 
 		req = new(ActivityListRepoNotificationsForAuthenticatedUserReq)
 	}
 	resp := &ActivityListRepoNotificationsForAuthenticatedUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "activity/list-repo-notifications-for-authenticated-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2163,7 +2163,7 @@ func ActivityListRepoNotificationsForAuthenticatedUser(ctx context.Context, req 
 		return resp, err
 	}
 	resp.Data = []components.Thread{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "activity/list-repo-notifications-for-authenticated-user")
 	if err != nil {
 		return nil, err
 	}
@@ -2278,7 +2278,7 @@ func (r *ActivityListRepoNotificationsForAuthenticatedUserReq) validStatuses() [
 
 // HTTPRequest builds an *http.Request
 func (r *ActivityListRepoNotificationsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "activity/list-repo-notifications-for-authenticated-user", opt)
 }
 
 /*
@@ -2319,7 +2319,7 @@ func ActivityListReposStarredByAuthenticatedUser(ctx context.Context, req *Activ
 		req = new(ActivityListReposStarredByAuthenticatedUserReq)
 	}
 	resp := &ActivityListReposStarredByAuthenticatedUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "activity/list-repos-starred-by-authenticated-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2327,7 +2327,7 @@ func ActivityListReposStarredByAuthenticatedUser(ctx context.Context, req *Activ
 		return resp, err
 	}
 	resp.Data = []components.StarredRepository{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "activity/list-repos-starred-by-authenticated-user")
 	if err != nil {
 		return nil, err
 	}
@@ -2420,7 +2420,7 @@ func (r *ActivityListReposStarredByAuthenticatedUserReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActivityListReposStarredByAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "activity/list-repos-starred-by-authenticated-user", opt)
 }
 
 /*
@@ -2461,7 +2461,7 @@ func ActivityListReposStarredByUser(ctx context.Context, req *ActivityListReposS
 		req = new(ActivityListReposStarredByUserReq)
 	}
 	resp := &ActivityListReposStarredByUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "activity/list-repos-starred-by-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2469,7 +2469,7 @@ func ActivityListReposStarredByUser(ctx context.Context, req *ActivityListReposS
 		return resp, err
 	}
 	resp.Data = []components.StarredRepository{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "activity/list-repos-starred-by-user")
 	if err != nil {
 		return nil, err
 	}
@@ -2563,7 +2563,7 @@ func (r *ActivityListReposStarredByUserReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActivityListReposStarredByUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "activity/list-repos-starred-by-user", opt)
 }
 
 /*
@@ -2604,7 +2604,7 @@ func ActivityListReposWatchedByUser(ctx context.Context, req *ActivityListReposW
 		req = new(ActivityListReposWatchedByUserReq)
 	}
 	resp := &ActivityListReposWatchedByUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "activity/list-repos-watched-by-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2612,7 +2612,7 @@ func ActivityListReposWatchedByUser(ctx context.Context, req *ActivityListReposW
 		return resp, err
 	}
 	resp.Data = []components.MinimalRepository{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "activity/list-repos-watched-by-user")
 	if err != nil {
 		return nil, err
 	}
@@ -2691,7 +2691,7 @@ func (r *ActivityListReposWatchedByUserReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActivityListReposWatchedByUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "activity/list-repos-watched-by-user", opt)
 }
 
 /*
@@ -2732,7 +2732,7 @@ func ActivityListStargazersForRepo(ctx context.Context, req *ActivityListStargaz
 		req = new(ActivityListStargazersForRepoReq)
 	}
 	resp := &ActivityListStargazersForRepoResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "activity/list-stargazers-for-repo", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2740,7 +2740,7 @@ func ActivityListStargazersForRepo(ctx context.Context, req *ActivityListStargaz
 		return resp, err
 	}
 	resp.Data = []components.Stargazer{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "activity/list-stargazers-for-repo")
 	if err != nil {
 		return nil, err
 	}
@@ -2820,7 +2820,7 @@ func (r *ActivityListStargazersForRepoReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActivityListStargazersForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "activity/list-stargazers-for-repo", opt)
 }
 
 /*
@@ -2861,7 +2861,7 @@ func ActivityListWatchedReposForAuthenticatedUser(ctx context.Context, req *Acti
 		req = new(ActivityListWatchedReposForAuthenticatedUserReq)
 	}
 	resp := &ActivityListWatchedReposForAuthenticatedUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "activity/list-watched-repos-for-authenticated-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2869,7 +2869,7 @@ func ActivityListWatchedReposForAuthenticatedUser(ctx context.Context, req *Acti
 		return resp, err
 	}
 	resp.Data = []components.MinimalRepository{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "activity/list-watched-repos-for-authenticated-user")
 	if err != nil {
 		return nil, err
 	}
@@ -2947,7 +2947,7 @@ func (r *ActivityListWatchedReposForAuthenticatedUserReq) validStatuses() []int 
 
 // HTTPRequest builds an *http.Request
 func (r *ActivityListWatchedReposForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "activity/list-watched-repos-for-authenticated-user", opt)
 }
 
 /*
@@ -2988,7 +2988,7 @@ func ActivityListWatchersForRepo(ctx context.Context, req *ActivityListWatchersF
 		req = new(ActivityListWatchersForRepoReq)
 	}
 	resp := &ActivityListWatchersForRepoResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "activity/list-watchers-for-repo", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2996,7 +2996,7 @@ func ActivityListWatchersForRepo(ctx context.Context, req *ActivityListWatchersF
 		return resp, err
 	}
 	resp.Data = []components.SimpleUser{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "activity/list-watchers-for-repo")
 	if err != nil {
 		return nil, err
 	}
@@ -3076,7 +3076,7 @@ func (r *ActivityListWatchersForRepoReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActivityListWatchersForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "activity/list-watchers-for-repo", opt)
 }
 
 /*
@@ -3117,7 +3117,7 @@ func ActivityMarkNotificationsAsRead(ctx context.Context, req *ActivityMarkNotif
 		req = new(ActivityMarkNotificationsAsReadReq)
 	}
 	resp := &ActivityMarkNotificationsAsReadResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "activity/mark-notifications-as-read", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3125,7 +3125,7 @@ func ActivityMarkNotificationsAsRead(ctx context.Context, req *ActivityMarkNotif
 		return resp, err
 	}
 	resp.Data = ActivityMarkNotificationsAsReadResponseBody{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "activity/mark-notifications-as-read")
 	if err != nil {
 		return nil, err
 	}
@@ -3195,7 +3195,7 @@ func (r *ActivityMarkNotificationsAsReadReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActivityMarkNotificationsAsReadReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "activity/mark-notifications-as-read", opt)
 }
 
 /*
@@ -3259,14 +3259,14 @@ func ActivityMarkRepoNotificationsAsRead(ctx context.Context, req *ActivityMarkR
 		req = new(ActivityMarkRepoNotificationsAsReadReq)
 	}
 	resp := &ActivityMarkRepoNotificationsAsReadResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "activity/mark-repo-notifications-as-read", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "activity/mark-repo-notifications-as-read")
 	if err != nil {
 		return nil, err
 	}
@@ -3335,7 +3335,7 @@ func (r *ActivityMarkRepoNotificationsAsReadReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActivityMarkRepoNotificationsAsReadReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "activity/mark-repo-notifications-as-read", opt)
 }
 
 /*
@@ -3392,14 +3392,14 @@ func ActivityMarkThreadAsRead(ctx context.Context, req *ActivityMarkThreadAsRead
 		req = new(ActivityMarkThreadAsReadReq)
 	}
 	resp := &ActivityMarkThreadAsReadResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "activity/mark-thread-as-read", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "activity/mark-thread-as-read")
 	if err != nil {
 		return nil, err
 	}
@@ -3468,7 +3468,7 @@ func (r *ActivityMarkThreadAsReadReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActivityMarkThreadAsReadReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "activity/mark-thread-as-read", opt)
 }
 
 /*
@@ -3508,7 +3508,7 @@ func ActivitySetRepoSubscription(ctx context.Context, req *ActivitySetRepoSubscr
 		req = new(ActivitySetRepoSubscriptionReq)
 	}
 	resp := &ActivitySetRepoSubscriptionResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "activity/set-repo-subscription", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3516,7 +3516,7 @@ func ActivitySetRepoSubscription(ctx context.Context, req *ActivitySetRepoSubscr
 		return resp, err
 	}
 	resp.Data = components.RepositorySubscription{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "activity/set-repo-subscription")
 	if err != nil {
 		return nil, err
 	}
@@ -3588,7 +3588,7 @@ func (r *ActivitySetRepoSubscriptionReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActivitySetRepoSubscriptionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "activity/set-repo-subscription", opt)
 }
 
 /*
@@ -3643,7 +3643,7 @@ func ActivitySetThreadSubscription(ctx context.Context, req *ActivitySetThreadSu
 		req = new(ActivitySetThreadSubscriptionReq)
 	}
 	resp := &ActivitySetThreadSubscriptionResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "activity/set-thread-subscription", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3651,7 +3651,7 @@ func ActivitySetThreadSubscription(ctx context.Context, req *ActivitySetThreadSu
 		return resp, err
 	}
 	resp.Data = components.ThreadSubscription{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "activity/set-thread-subscription")
 	if err != nil {
 		return nil, err
 	}
@@ -3724,7 +3724,7 @@ func (r *ActivitySetThreadSubscriptionReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActivitySetThreadSubscriptionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "activity/set-thread-subscription", opt)
 }
 
 /*
@@ -3776,14 +3776,14 @@ func ActivityStarRepoForAuthenticatedUser(ctx context.Context, req *ActivityStar
 		req = new(ActivityStarRepoForAuthenticatedUserReq)
 	}
 	resp := &ActivityStarRepoForAuthenticatedUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "activity/star-repo-for-authenticated-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "activity/star-repo-for-authenticated-user")
 	if err != nil {
 		return nil, err
 	}
@@ -3851,7 +3851,7 @@ func (r *ActivityStarRepoForAuthenticatedUserReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActivityStarRepoForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "activity/star-repo-for-authenticated-user", opt)
 }
 
 /*
@@ -3891,14 +3891,14 @@ func ActivityUnstarRepoForAuthenticatedUser(ctx context.Context, req *ActivityUn
 		req = new(ActivityUnstarRepoForAuthenticatedUserReq)
 	}
 	resp := &ActivityUnstarRepoForAuthenticatedUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "activity/unstar-repo-for-authenticated-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "activity/unstar-repo-for-authenticated-user")
 	if err != nil {
 		return nil, err
 	}
@@ -3966,7 +3966,7 @@ func (r *ActivityUnstarRepoForAuthenticatedUserReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ActivityUnstarRepoForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "activity/unstar-repo-for-authenticated-user", opt)
 }
 
 /*

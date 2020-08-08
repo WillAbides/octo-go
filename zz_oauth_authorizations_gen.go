@@ -25,7 +25,7 @@ func OauthAuthorizationsCreateAuthorization(ctx context.Context, req *OauthAutho
 		req = new(OauthAuthorizationsCreateAuthorizationReq)
 	}
 	resp := &OauthAuthorizationsCreateAuthorizationResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "oauth-authorizations/create-authorization", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -33,7 +33,7 @@ func OauthAuthorizationsCreateAuthorization(ctx context.Context, req *OauthAutho
 		return resp, err
 	}
 	resp.Data = components.Authorization{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "oauth-authorizations/create-authorization")
 	if err != nil {
 		return nil, err
 	}
@@ -103,7 +103,7 @@ func (r *OauthAuthorizationsCreateAuthorizationReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *OauthAuthorizationsCreateAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "oauth-authorizations/create-authorization", opt)
 }
 
 /*
@@ -170,14 +170,14 @@ func OauthAuthorizationsDeleteAuthorization(ctx context.Context, req *OauthAutho
 		req = new(OauthAuthorizationsDeleteAuthorizationReq)
 	}
 	resp := &OauthAuthorizationsDeleteAuthorizationResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "oauth-authorizations/delete-authorization", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "oauth-authorizations/delete-authorization")
 	if err != nil {
 		return nil, err
 	}
@@ -246,7 +246,7 @@ func (r *OauthAuthorizationsDeleteAuthorizationReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *OauthAuthorizationsDeleteAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "oauth-authorizations/delete-authorization", opt)
 }
 
 /*
@@ -286,14 +286,14 @@ func OauthAuthorizationsDeleteGrant(ctx context.Context, req *OauthAuthorization
 		req = new(OauthAuthorizationsDeleteGrantReq)
 	}
 	resp := &OauthAuthorizationsDeleteGrantResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "oauth-authorizations/delete-grant", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "oauth-authorizations/delete-grant")
 	if err != nil {
 		return nil, err
 	}
@@ -362,7 +362,7 @@ func (r *OauthAuthorizationsDeleteGrantReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *OauthAuthorizationsDeleteGrantReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "oauth-authorizations/delete-grant", opt)
 }
 
 /*
@@ -402,7 +402,7 @@ func OauthAuthorizationsGetAuthorization(ctx context.Context, req *OauthAuthoriz
 		req = new(OauthAuthorizationsGetAuthorizationReq)
 	}
 	resp := &OauthAuthorizationsGetAuthorizationResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "oauth-authorizations/get-authorization", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -410,7 +410,7 @@ func OauthAuthorizationsGetAuthorization(ctx context.Context, req *OauthAuthoriz
 		return resp, err
 	}
 	resp.Data = components.Authorization{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "oauth-authorizations/get-authorization")
 	if err != nil {
 		return nil, err
 	}
@@ -479,7 +479,7 @@ func (r *OauthAuthorizationsGetAuthorizationReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *OauthAuthorizationsGetAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "oauth-authorizations/get-authorization", opt)
 }
 
 /*
@@ -520,7 +520,7 @@ func OauthAuthorizationsGetGrant(ctx context.Context, req *OauthAuthorizationsGe
 		req = new(OauthAuthorizationsGetGrantReq)
 	}
 	resp := &OauthAuthorizationsGetGrantResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "oauth-authorizations/get-grant", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -528,7 +528,7 @@ func OauthAuthorizationsGetGrant(ctx context.Context, req *OauthAuthorizationsGe
 		return resp, err
 	}
 	resp.Data = components.ApplicationGrant{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "oauth-authorizations/get-grant")
 	if err != nil {
 		return nil, err
 	}
@@ -597,7 +597,7 @@ func (r *OauthAuthorizationsGetGrantReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *OauthAuthorizationsGetGrantReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "oauth-authorizations/get-grant", opt)
 }
 
 /*
@@ -638,7 +638,7 @@ func OauthAuthorizationsGetOrCreateAuthorizationForApp(ctx context.Context, req 
 		req = new(OauthAuthorizationsGetOrCreateAuthorizationForAppReq)
 	}
 	resp := &OauthAuthorizationsGetOrCreateAuthorizationForAppResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "oauth-authorizations/get-or-create-authorization-for-app", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -646,7 +646,7 @@ func OauthAuthorizationsGetOrCreateAuthorizationForApp(ctx context.Context, req 
 		return resp, err
 	}
 	resp.Data = components.Authorization{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "oauth-authorizations/get-or-create-authorization-for-app")
 	if err != nil {
 		return nil, err
 	}
@@ -717,7 +717,7 @@ func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppReq) validStatuses() [
 
 // HTTPRequest builds an *http.Request
 func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "oauth-authorizations/get-or-create-authorization-for-app", opt)
 }
 
 /*
@@ -781,7 +781,7 @@ func OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprint(ctx context
 		req = new(OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq)
 	}
 	resp := &OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "oauth-authorizations/get-or-create-authorization-for-app-and-fingerprint", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -789,7 +789,7 @@ func OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprint(ctx context
 		return resp, err
 	}
 	resp.Data = components.Authorization{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "oauth-authorizations/get-or-create-authorization-for-app-and-fingerprint")
 	if err != nil {
 		return nil, err
 	}
@@ -863,7 +863,7 @@ func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) val
 
 // HTTPRequest builds an *http.Request
 func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "oauth-authorizations/get-or-create-authorization-for-app-and-fingerprint", opt)
 }
 
 /*
@@ -924,7 +924,7 @@ func OauthAuthorizationsListAuthorizations(ctx context.Context, req *OauthAuthor
 		req = new(OauthAuthorizationsListAuthorizationsReq)
 	}
 	resp := &OauthAuthorizationsListAuthorizationsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "oauth-authorizations/list-authorizations", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -932,7 +932,7 @@ func OauthAuthorizationsListAuthorizations(ctx context.Context, req *OauthAuthor
 		return resp, err
 	}
 	resp.Data = []components.Authorization{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "oauth-authorizations/list-authorizations")
 	if err != nil {
 		return nil, err
 	}
@@ -1010,7 +1010,7 @@ func (r *OauthAuthorizationsListAuthorizationsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *OauthAuthorizationsListAuthorizationsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "oauth-authorizations/list-authorizations", opt)
 }
 
 /*
@@ -1051,7 +1051,7 @@ func OauthAuthorizationsListGrants(ctx context.Context, req *OauthAuthorizations
 		req = new(OauthAuthorizationsListGrantsReq)
 	}
 	resp := &OauthAuthorizationsListGrantsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "oauth-authorizations/list-grants", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1059,7 +1059,7 @@ func OauthAuthorizationsListGrants(ctx context.Context, req *OauthAuthorizations
 		return resp, err
 	}
 	resp.Data = []components.ApplicationGrant{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "oauth-authorizations/list-grants")
 	if err != nil {
 		return nil, err
 	}
@@ -1137,7 +1137,7 @@ func (r *OauthAuthorizationsListGrantsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *OauthAuthorizationsListGrantsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "oauth-authorizations/list-grants", opt)
 }
 
 /*
@@ -1178,7 +1178,7 @@ func OauthAuthorizationsUpdateAuthorization(ctx context.Context, req *OauthAutho
 		req = new(OauthAuthorizationsUpdateAuthorizationReq)
 	}
 	resp := &OauthAuthorizationsUpdateAuthorizationResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "oauth-authorizations/update-authorization", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1186,7 +1186,7 @@ func OauthAuthorizationsUpdateAuthorization(ctx context.Context, req *OauthAutho
 		return resp, err
 	}
 	resp.Data = components.Authorization{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "oauth-authorizations/update-authorization")
 	if err != nil {
 		return nil, err
 	}
@@ -1259,7 +1259,7 @@ func (r *OauthAuthorizationsUpdateAuthorizationReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *OauthAuthorizationsUpdateAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "oauth-authorizations/update-authorization", opt)
 }
 
 /*

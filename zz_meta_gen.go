@@ -24,7 +24,7 @@ func MetaGet(ctx context.Context, req *MetaGetReq, opt ...RequestOption) (*MetaG
 		req = new(MetaGetReq)
 	}
 	resp := &MetaGetResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "meta/get", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -32,7 +32,7 @@ func MetaGet(ctx context.Context, req *MetaGetReq, opt ...RequestOption) (*MetaG
 		return resp, err
 	}
 	resp.Data = components.ApiOverview{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "meta/get")
 	if err != nil {
 		return nil, err
 	}
@@ -98,7 +98,7 @@ func (r *MetaGetReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *MetaGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "meta/get", opt)
 }
 
 /*
@@ -138,14 +138,14 @@ func MetaGetOctocat(ctx context.Context, req *MetaGetOctocatReq, opt ...RequestO
 		req = new(MetaGetOctocatReq)
 	}
 	resp := &MetaGetOctocatResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "meta/get-octocat", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "meta/get-octocat")
 	if err != nil {
 		return nil, err
 	}
@@ -215,7 +215,7 @@ func (r *MetaGetOctocatReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *MetaGetOctocatReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "meta/get-octocat", opt)
 }
 
 /*
@@ -253,14 +253,14 @@ func MetaGetZen(ctx context.Context, req *MetaGetZenReq, opt ...RequestOption) (
 		req = new(MetaGetZenReq)
 	}
 	resp := &MetaGetZenResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "meta/get-zen", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "meta/get-zen")
 	if err != nil {
 		return nil, err
 	}
@@ -324,7 +324,7 @@ func (r *MetaGetZenReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *MetaGetZenReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "meta/get-zen", opt)
 }
 
 /*
@@ -362,7 +362,7 @@ func MetaRoot(ctx context.Context, req *MetaRootReq, opt ...RequestOption) (*Met
 		req = new(MetaRootReq)
 	}
 	resp := &MetaRootResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "meta/root", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -370,7 +370,7 @@ func MetaRoot(ctx context.Context, req *MetaRootReq, opt ...RequestOption) (*Met
 		return resp, err
 	}
 	resp.Data = MetaRootResponseBody{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "meta/root")
 	if err != nil {
 		return nil, err
 	}
@@ -434,7 +434,7 @@ func (r *MetaRootReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *MetaRootReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "meta/root", opt)
 }
 
 /*

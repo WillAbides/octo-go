@@ -25,14 +25,14 @@ func ScimDeleteUserFromOrg(ctx context.Context, req *ScimDeleteUserFromOrgReq, o
 		req = new(ScimDeleteUserFromOrgReq)
 	}
 	resp := &ScimDeleteUserFromOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "scim/delete-user-from-org", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "scim/delete-user-from-org")
 	if err != nil {
 		return nil, err
 	}
@@ -102,7 +102,7 @@ func (r *ScimDeleteUserFromOrgReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ScimDeleteUserFromOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "scim/delete-user-from-org", opt)
 }
 
 /*
@@ -142,7 +142,7 @@ func ScimGetProvisioningInformationForUser(ctx context.Context, req *ScimGetProv
 		req = new(ScimGetProvisioningInformationForUserReq)
 	}
 	resp := &ScimGetProvisioningInformationForUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "scim/get-provisioning-information-for-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -150,7 +150,7 @@ func ScimGetProvisioningInformationForUser(ctx context.Context, req *ScimGetProv
 		return resp, err
 	}
 	resp.Data = components.ScimUser{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "scim/get-provisioning-information-for-user")
 	if err != nil {
 		return nil, err
 	}
@@ -220,7 +220,7 @@ func (r *ScimGetProvisioningInformationForUserReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ScimGetProvisioningInformationForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "scim/get-provisioning-information-for-user", opt)
 }
 
 /*
@@ -261,7 +261,7 @@ func ScimListProvisionedIdentities(ctx context.Context, req *ScimListProvisioned
 		req = new(ScimListProvisionedIdentitiesReq)
 	}
 	resp := &ScimListProvisionedIdentitiesResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "scim/list-provisioned-identities", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -269,7 +269,7 @@ func ScimListProvisionedIdentities(ctx context.Context, req *ScimListProvisioned
 		return resp, err
 	}
 	resp.Data = components.ScimUserList{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "scim/list-provisioned-identities")
 	if err != nil {
 		return nil, err
 	}
@@ -366,7 +366,7 @@ func (r *ScimListProvisionedIdentitiesReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ScimListProvisionedIdentitiesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "scim/list-provisioned-identities", opt)
 }
 
 /*
@@ -407,7 +407,7 @@ func ScimProvisionAndInviteUser(ctx context.Context, req *ScimProvisionAndInvite
 		req = new(ScimProvisionAndInviteUserReq)
 	}
 	resp := &ScimProvisionAndInviteUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "scim/provision-and-invite-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -415,7 +415,7 @@ func ScimProvisionAndInviteUser(ctx context.Context, req *ScimProvisionAndInvite
 		return resp, err
 	}
 	resp.Data = components.ScimUser{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "scim/provision-and-invite-user")
 	if err != nil {
 		return nil, err
 	}
@@ -486,7 +486,7 @@ func (r *ScimProvisionAndInviteUserReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ScimProvisionAndInviteUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "scim/provision-and-invite-user", opt)
 }
 
 /*
@@ -560,7 +560,7 @@ func ScimSetInformationForProvisionedUser(ctx context.Context, req *ScimSetInfor
 		req = new(ScimSetInformationForProvisionedUserReq)
 	}
 	resp := &ScimSetInformationForProvisionedUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "scim/set-information-for-provisioned-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -568,7 +568,7 @@ func ScimSetInformationForProvisionedUser(ctx context.Context, req *ScimSetInfor
 		return resp, err
 	}
 	resp.Data = components.ScimUser{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "scim/set-information-for-provisioned-user")
 	if err != nil {
 		return nil, err
 	}
@@ -642,7 +642,7 @@ func (r *ScimSetInformationForProvisionedUserReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ScimSetInformationForProvisionedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "scim/set-information-for-provisioned-user", opt)
 }
 
 /*
@@ -716,7 +716,7 @@ func ScimUpdateAttributeForUser(ctx context.Context, req *ScimUpdateAttributeFor
 		req = new(ScimUpdateAttributeForUserReq)
 	}
 	resp := &ScimUpdateAttributeForUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "scim/update-attribute-for-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -724,7 +724,7 @@ func ScimUpdateAttributeForUser(ctx context.Context, req *ScimUpdateAttributeFor
 		return resp, err
 	}
 	resp.Data = components.ScimUser{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "scim/update-attribute-for-user")
 	if err != nil {
 		return nil, err
 	}
@@ -798,7 +798,7 @@ func (r *ScimUpdateAttributeForUserReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ScimUpdateAttributeForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "scim/update-attribute-for-user", opt)
 }
 
 /*

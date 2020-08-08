@@ -24,7 +24,7 @@ func RateLimitGet(ctx context.Context, req *RateLimitGetReq, opt ...RequestOptio
 		req = new(RateLimitGetReq)
 	}
 	resp := &RateLimitGetResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "rate-limit/get", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -32,7 +32,7 @@ func RateLimitGet(ctx context.Context, req *RateLimitGetReq, opt ...RequestOptio
 		return resp, err
 	}
 	resp.Data = components.RateLimitOverview{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "rate-limit/get")
 	if err != nil {
 		return nil, err
 	}
@@ -98,7 +98,7 @@ func (r *RateLimitGetReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *RateLimitGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "rate-limit/get", opt)
 }
 
 /*

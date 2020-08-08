@@ -24,7 +24,7 @@ func InteractionsGetRestrictionsForOrg(ctx context.Context, req *InteractionsGet
 		req = new(InteractionsGetRestrictionsForOrgReq)
 	}
 	resp := &InteractionsGetRestrictionsForOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "interactions/get-restrictions-for-org", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -32,7 +32,7 @@ func InteractionsGetRestrictionsForOrg(ctx context.Context, req *InteractionsGet
 		return resp, err
 	}
 	resp.Data = components.InteractionLimit{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "interactions/get-restrictions-for-org")
 	if err != nil {
 		return nil, err
 	}
@@ -113,7 +113,7 @@ func (r *InteractionsGetRestrictionsForOrgReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *InteractionsGetRestrictionsForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "interactions/get-restrictions-for-org", opt)
 }
 
 /*
@@ -154,7 +154,7 @@ func InteractionsGetRestrictionsForRepo(ctx context.Context, req *InteractionsGe
 		req = new(InteractionsGetRestrictionsForRepoReq)
 	}
 	resp := &InteractionsGetRestrictionsForRepoResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "interactions/get-restrictions-for-repo", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -162,7 +162,7 @@ func InteractionsGetRestrictionsForRepo(ctx context.Context, req *InteractionsGe
 		return resp, err
 	}
 	resp.Data = components.InteractionLimit{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "interactions/get-restrictions-for-repo")
 	if err != nil {
 		return nil, err
 	}
@@ -244,7 +244,7 @@ func (r *InteractionsGetRestrictionsForRepoReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *InteractionsGetRestrictionsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "interactions/get-restrictions-for-repo", opt)
 }
 
 /*
@@ -285,14 +285,14 @@ func InteractionsRemoveRestrictionsForOrg(ctx context.Context, req *Interactions
 		req = new(InteractionsRemoveRestrictionsForOrgReq)
 	}
 	resp := &InteractionsRemoveRestrictionsForOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "interactions/remove-restrictions-for-org", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "interactions/remove-restrictions-for-org")
 	if err != nil {
 		return nil, err
 	}
@@ -373,7 +373,7 @@ func (r *InteractionsRemoveRestrictionsForOrgReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *InteractionsRemoveRestrictionsForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "interactions/remove-restrictions-for-org", opt)
 }
 
 /*
@@ -413,14 +413,14 @@ func InteractionsRemoveRestrictionsForRepo(ctx context.Context, req *Interaction
 		req = new(InteractionsRemoveRestrictionsForRepoReq)
 	}
 	resp := &InteractionsRemoveRestrictionsForRepoResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "interactions/remove-restrictions-for-repo", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "interactions/remove-restrictions-for-repo")
 	if err != nil {
 		return nil, err
 	}
@@ -502,7 +502,7 @@ func (r *InteractionsRemoveRestrictionsForRepoReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *InteractionsRemoveRestrictionsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "interactions/remove-restrictions-for-repo", opt)
 }
 
 /*
@@ -542,7 +542,7 @@ func InteractionsSetRestrictionsForOrg(ctx context.Context, req *InteractionsSet
 		req = new(InteractionsSetRestrictionsForOrgReq)
 	}
 	resp := &InteractionsSetRestrictionsForOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "interactions/set-restrictions-for-org", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -550,7 +550,7 @@ func InteractionsSetRestrictionsForOrg(ctx context.Context, req *InteractionsSet
 		return resp, err
 	}
 	resp.Data = components.InteractionLimit{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "interactions/set-restrictions-for-org")
 	if err != nil {
 		return nil, err
 	}
@@ -635,7 +635,7 @@ func (r *InteractionsSetRestrictionsForOrgReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *InteractionsSetRestrictionsForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "interactions/set-restrictions-for-org", opt)
 }
 
 /*
@@ -691,7 +691,7 @@ func InteractionsSetRestrictionsForRepo(ctx context.Context, req *InteractionsSe
 		req = new(InteractionsSetRestrictionsForRepoReq)
 	}
 	resp := &InteractionsSetRestrictionsForRepoResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "interactions/set-restrictions-for-repo", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -699,7 +699,7 @@ func InteractionsSetRestrictionsForRepo(ctx context.Context, req *InteractionsSe
 		return resp, err
 	}
 	resp.Data = components.InteractionLimit{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "interactions/set-restrictions-for-repo")
 	if err != nil {
 		return nil, err
 	}
@@ -785,7 +785,7 @@ func (r *InteractionsSetRestrictionsForRepoReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *InteractionsSetRestrictionsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "interactions/set-restrictions-for-repo", opt)
 }
 
 /*

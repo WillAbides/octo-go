@@ -25,14 +25,14 @@ func MigrationsCancelImport(ctx context.Context, req *MigrationsCancelImportReq,
 		req = new(MigrationsCancelImportReq)
 	}
 	resp := &MigrationsCancelImportResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "migrations/cancel-import", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "migrations/cancel-import")
 	if err != nil {
 		return nil, err
 	}
@@ -100,7 +100,7 @@ func (r *MigrationsCancelImportReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *MigrationsCancelImportReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "migrations/cancel-import", opt)
 }
 
 /*
@@ -140,14 +140,14 @@ func MigrationsDeleteArchiveForAuthenticatedUser(ctx context.Context, req *Migra
 		req = new(MigrationsDeleteArchiveForAuthenticatedUserReq)
 	}
 	resp := &MigrationsDeleteArchiveForAuthenticatedUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "migrations/delete-archive-for-authenticated-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "migrations/delete-archive-for-authenticated-user")
 	if err != nil {
 		return nil, err
 	}
@@ -225,7 +225,7 @@ func (r *MigrationsDeleteArchiveForAuthenticatedUserReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *MigrationsDeleteArchiveForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "migrations/delete-archive-for-authenticated-user", opt)
 }
 
 /*
@@ -265,7 +265,7 @@ func MigrationsDeleteArchiveForOrg(ctx context.Context, req *MigrationsDeleteArc
 		req = new(MigrationsDeleteArchiveForOrgReq)
 	}
 	resp := &MigrationsDeleteArchiveForOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "migrations/delete-archive-for-org", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -276,7 +276,7 @@ func MigrationsDeleteArchiveForOrg(ctx context.Context, req *MigrationsDeleteArc
 	if err != nil {
 		return nil, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "migrations/delete-archive-for-org")
 	if err != nil {
 		return nil, err
 	}
@@ -355,7 +355,7 @@ func (r *MigrationsDeleteArchiveForOrgReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *MigrationsDeleteArchiveForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "migrations/delete-archive-for-org", opt)
 }
 
 /*
@@ -396,14 +396,14 @@ func MigrationsDownloadArchiveForOrg(ctx context.Context, req *MigrationsDownloa
 		req = new(MigrationsDownloadArchiveForOrgReq)
 	}
 	resp := &MigrationsDownloadArchiveForOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "migrations/download-archive-for-org", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "migrations/download-archive-for-org")
 	if err != nil {
 		return nil, err
 	}
@@ -482,7 +482,7 @@ func (r *MigrationsDownloadArchiveForOrgReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *MigrationsDownloadArchiveForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "migrations/download-archive-for-org", opt)
 }
 
 /*
@@ -522,14 +522,14 @@ func MigrationsGetArchiveForAuthenticatedUser(ctx context.Context, req *Migratio
 		req = new(MigrationsGetArchiveForAuthenticatedUserReq)
 	}
 	resp := &MigrationsGetArchiveForAuthenticatedUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "migrations/get-archive-for-authenticated-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "migrations/get-archive-for-authenticated-user")
 	if err != nil {
 		return nil, err
 	}
@@ -607,7 +607,7 @@ func (r *MigrationsGetArchiveForAuthenticatedUserReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *MigrationsGetArchiveForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "migrations/get-archive-for-authenticated-user", opt)
 }
 
 /*
@@ -647,7 +647,7 @@ func MigrationsGetCommitAuthors(ctx context.Context, req *MigrationsGetCommitAut
 		req = new(MigrationsGetCommitAuthorsReq)
 	}
 	resp := &MigrationsGetCommitAuthorsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "migrations/get-commit-authors", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -655,7 +655,7 @@ func MigrationsGetCommitAuthors(ctx context.Context, req *MigrationsGetCommitAut
 		return resp, err
 	}
 	resp.Data = []components.PorterAuthor{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "migrations/get-commit-authors")
 	if err != nil {
 		return nil, err
 	}
@@ -733,7 +733,7 @@ func (r *MigrationsGetCommitAuthorsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *MigrationsGetCommitAuthorsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "migrations/get-commit-authors", opt)
 }
 
 /*
@@ -774,7 +774,7 @@ func MigrationsGetImportStatus(ctx context.Context, req *MigrationsGetImportStat
 		req = new(MigrationsGetImportStatusReq)
 	}
 	resp := &MigrationsGetImportStatusResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "migrations/get-import-status", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -782,7 +782,7 @@ func MigrationsGetImportStatus(ctx context.Context, req *MigrationsGetImportStat
 		return resp, err
 	}
 	resp.Data = components.Import{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "migrations/get-import-status")
 	if err != nil {
 		return nil, err
 	}
@@ -850,7 +850,7 @@ func (r *MigrationsGetImportStatusReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *MigrationsGetImportStatusReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "migrations/get-import-status", opt)
 }
 
 /*
@@ -891,7 +891,7 @@ func MigrationsGetLargeFiles(ctx context.Context, req *MigrationsGetLargeFilesRe
 		req = new(MigrationsGetLargeFilesReq)
 	}
 	resp := &MigrationsGetLargeFilesResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "migrations/get-large-files", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -899,7 +899,7 @@ func MigrationsGetLargeFiles(ctx context.Context, req *MigrationsGetLargeFilesRe
 		return resp, err
 	}
 	resp.Data = []components.PorterLargeFile{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "migrations/get-large-files")
 	if err != nil {
 		return nil, err
 	}
@@ -967,7 +967,7 @@ func (r *MigrationsGetLargeFilesReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *MigrationsGetLargeFilesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "migrations/get-large-files", opt)
 }
 
 /*
@@ -1008,7 +1008,7 @@ func MigrationsGetStatusForAuthenticatedUser(ctx context.Context, req *Migration
 		req = new(MigrationsGetStatusForAuthenticatedUserReq)
 	}
 	resp := &MigrationsGetStatusForAuthenticatedUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "migrations/get-status-for-authenticated-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1016,7 +1016,7 @@ func MigrationsGetStatusForAuthenticatedUser(ctx context.Context, req *Migration
 		return resp, err
 	}
 	resp.Data = components.Migration{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "migrations/get-status-for-authenticated-user")
 	if err != nil {
 		return nil, err
 	}
@@ -1094,7 +1094,7 @@ func (r *MigrationsGetStatusForAuthenticatedUserReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *MigrationsGetStatusForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "migrations/get-status-for-authenticated-user", opt)
 }
 
 /*
@@ -1135,7 +1135,7 @@ func MigrationsGetStatusForOrg(ctx context.Context, req *MigrationsGetStatusForO
 		req = new(MigrationsGetStatusForOrgReq)
 	}
 	resp := &MigrationsGetStatusForOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "migrations/get-status-for-org", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1143,7 +1143,7 @@ func MigrationsGetStatusForOrg(ctx context.Context, req *MigrationsGetStatusForO
 		return resp, err
 	}
 	resp.Data = components.Migration{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "migrations/get-status-for-org")
 	if err != nil {
 		return nil, err
 	}
@@ -1222,7 +1222,7 @@ func (r *MigrationsGetStatusForOrgReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *MigrationsGetStatusForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "migrations/get-status-for-org", opt)
 }
 
 /*
@@ -1263,7 +1263,7 @@ func MigrationsListForAuthenticatedUser(ctx context.Context, req *MigrationsList
 		req = new(MigrationsListForAuthenticatedUserReq)
 	}
 	resp := &MigrationsListForAuthenticatedUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "migrations/list-for-authenticated-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1271,7 +1271,7 @@ func MigrationsListForAuthenticatedUser(ctx context.Context, req *MigrationsList
 		return resp, err
 	}
 	resp.Data = []components.Migration{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "migrations/list-for-authenticated-user")
 	if err != nil {
 		return nil, err
 	}
@@ -1358,7 +1358,7 @@ func (r *MigrationsListForAuthenticatedUserReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *MigrationsListForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "migrations/list-for-authenticated-user", opt)
 }
 
 /*
@@ -1399,7 +1399,7 @@ func MigrationsListForOrg(ctx context.Context, req *MigrationsListForOrgReq, opt
 		req = new(MigrationsListForOrgReq)
 	}
 	resp := &MigrationsListForOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "migrations/list-for-org", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1407,7 +1407,7 @@ func MigrationsListForOrg(ctx context.Context, req *MigrationsListForOrgReq, opt
 		return resp, err
 	}
 	resp.Data = []components.Migration{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "migrations/list-for-org")
 	if err != nil {
 		return nil, err
 	}
@@ -1495,7 +1495,7 @@ func (r *MigrationsListForOrgReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *MigrationsListForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "migrations/list-for-org", opt)
 }
 
 /*
@@ -1536,7 +1536,7 @@ func MigrationsListReposForOrg(ctx context.Context, req *MigrationsListReposForO
 		req = new(MigrationsListReposForOrgReq)
 	}
 	resp := &MigrationsListReposForOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "migrations/list-repos-for-org", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1544,7 +1544,7 @@ func MigrationsListReposForOrg(ctx context.Context, req *MigrationsListReposForO
 		return resp, err
 	}
 	resp.Data = []components.MinimalRepository{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "migrations/list-repos-for-org")
 	if err != nil {
 		return nil, err
 	}
@@ -1635,7 +1635,7 @@ func (r *MigrationsListReposForOrgReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *MigrationsListReposForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "migrations/list-repos-for-org", opt)
 }
 
 /*
@@ -1676,7 +1676,7 @@ func MigrationsListReposForUser(ctx context.Context, req *MigrationsListReposFor
 		req = new(MigrationsListReposForUserReq)
 	}
 	resp := &MigrationsListReposForUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "migrations/list-repos-for-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1684,7 +1684,7 @@ func MigrationsListReposForUser(ctx context.Context, req *MigrationsListReposFor
 		return resp, err
 	}
 	resp.Data = []components.MinimalRepository{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "migrations/list-repos-for-user")
 	if err != nil {
 		return nil, err
 	}
@@ -1774,7 +1774,7 @@ func (r *MigrationsListReposForUserReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *MigrationsListReposForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "migrations/list-repos-for-user", opt)
 }
 
 /*
@@ -1815,7 +1815,7 @@ func MigrationsMapCommitAuthor(ctx context.Context, req *MigrationsMapCommitAuth
 		req = new(MigrationsMapCommitAuthorReq)
 	}
 	resp := &MigrationsMapCommitAuthorResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "migrations/map-commit-author", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1823,7 +1823,7 @@ func MigrationsMapCommitAuthor(ctx context.Context, req *MigrationsMapCommitAuth
 		return resp, err
 	}
 	resp.Data = components.PorterAuthor{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "migrations/map-commit-author")
 	if err != nil {
 		return nil, err
 	}
@@ -1898,7 +1898,7 @@ func (r *MigrationsMapCommitAuthorReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *MigrationsMapCommitAuthorReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "migrations/map-commit-author", opt)
 }
 
 /*
@@ -1954,7 +1954,7 @@ func MigrationsSetLfsPreference(ctx context.Context, req *MigrationsSetLfsPrefer
 		req = new(MigrationsSetLfsPreferenceReq)
 	}
 	resp := &MigrationsSetLfsPreferenceResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "migrations/set-lfs-preference", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1962,7 +1962,7 @@ func MigrationsSetLfsPreference(ctx context.Context, req *MigrationsSetLfsPrefer
 		return resp, err
 	}
 	resp.Data = components.Import{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "migrations/set-lfs-preference")
 	if err != nil {
 		return nil, err
 	}
@@ -2034,7 +2034,7 @@ func (r *MigrationsSetLfsPreferenceReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *MigrationsSetLfsPreferenceReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "migrations/set-lfs-preference", opt)
 }
 
 /*
@@ -2089,7 +2089,7 @@ func MigrationsStartForAuthenticatedUser(ctx context.Context, req *MigrationsSta
 		req = new(MigrationsStartForAuthenticatedUserReq)
 	}
 	resp := &MigrationsStartForAuthenticatedUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "migrations/start-for-authenticated-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2097,7 +2097,7 @@ func MigrationsStartForAuthenticatedUser(ctx context.Context, req *MigrationsSta
 		return resp, err
 	}
 	resp.Data = components.Migration{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "migrations/start-for-authenticated-user")
 	if err != nil {
 		return nil, err
 	}
@@ -2167,7 +2167,7 @@ func (r *MigrationsStartForAuthenticatedUserReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *MigrationsStartForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "migrations/start-for-authenticated-user", opt)
 }
 
 /*
@@ -2226,7 +2226,7 @@ func MigrationsStartForOrg(ctx context.Context, req *MigrationsStartForOrgReq, o
 		req = new(MigrationsStartForOrgReq)
 	}
 	resp := &MigrationsStartForOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "migrations/start-for-org", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2234,7 +2234,7 @@ func MigrationsStartForOrg(ctx context.Context, req *MigrationsStartForOrgReq, o
 		return resp, err
 	}
 	resp.Data = components.Migration{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "migrations/start-for-org")
 	if err != nil {
 		return nil, err
 	}
@@ -2305,7 +2305,7 @@ func (r *MigrationsStartForOrgReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *MigrationsStartForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "migrations/start-for-org", opt)
 }
 
 /*
@@ -2364,7 +2364,7 @@ func MigrationsStartImport(ctx context.Context, req *MigrationsStartImportReq, o
 		req = new(MigrationsStartImportReq)
 	}
 	resp := &MigrationsStartImportResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "migrations/start-import", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2372,7 +2372,7 @@ func MigrationsStartImport(ctx context.Context, req *MigrationsStartImportReq, o
 		return resp, err
 	}
 	resp.Data = components.Import{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "migrations/start-import")
 	if err != nil {
 		return nil, err
 	}
@@ -2444,7 +2444,7 @@ func (r *MigrationsStartImportReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *MigrationsStartImportReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "migrations/start-import", opt)
 }
 
 /*
@@ -2513,14 +2513,14 @@ func MigrationsUnlockRepoForAuthenticatedUser(ctx context.Context, req *Migratio
 		req = new(MigrationsUnlockRepoForAuthenticatedUserReq)
 	}
 	resp := &MigrationsUnlockRepoForAuthenticatedUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "migrations/unlock-repo-for-authenticated-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "migrations/unlock-repo-for-authenticated-user")
 	if err != nil {
 		return nil, err
 	}
@@ -2601,7 +2601,7 @@ func (r *MigrationsUnlockRepoForAuthenticatedUserReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *MigrationsUnlockRepoForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "migrations/unlock-repo-for-authenticated-user", opt)
 }
 
 /*
@@ -2641,7 +2641,7 @@ func MigrationsUnlockRepoForOrg(ctx context.Context, req *MigrationsUnlockRepoFo
 		req = new(MigrationsUnlockRepoForOrgReq)
 	}
 	resp := &MigrationsUnlockRepoForOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "migrations/unlock-repo-for-org", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2652,7 +2652,7 @@ func MigrationsUnlockRepoForOrg(ctx context.Context, req *MigrationsUnlockRepoFo
 	if err != nil {
 		return nil, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "migrations/unlock-repo-for-org")
 	if err != nil {
 		return nil, err
 	}
@@ -2734,7 +2734,7 @@ func (r *MigrationsUnlockRepoForOrgReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *MigrationsUnlockRepoForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "migrations/unlock-repo-for-org", opt)
 }
 
 /*
@@ -2775,7 +2775,7 @@ func MigrationsUpdateImport(ctx context.Context, req *MigrationsUpdateImportReq,
 		req = new(MigrationsUpdateImportReq)
 	}
 	resp := &MigrationsUpdateImportResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "migrations/update-import", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2783,7 +2783,7 @@ func MigrationsUpdateImport(ctx context.Context, req *MigrationsUpdateImportReq,
 		return resp, err
 	}
 	resp.Data = components.Import{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "migrations/update-import")
 	if err != nil {
 		return nil, err
 	}
@@ -2855,7 +2855,7 @@ func (r *MigrationsUpdateImportReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *MigrationsUpdateImportReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "migrations/update-import", opt)
 }
 
 /*

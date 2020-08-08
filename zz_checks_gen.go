@@ -25,7 +25,7 @@ func ChecksCreate(ctx context.Context, req *ChecksCreateReq, opt ...RequestOptio
 		req = new(ChecksCreateReq)
 	}
 	resp := &ChecksCreateResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "checks/create", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -33,7 +33,7 @@ func ChecksCreate(ctx context.Context, req *ChecksCreateReq, opt ...RequestOptio
 		return resp, err
 	}
 	resp.Data = components.CheckRun{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "checks/create")
 	if err != nil {
 		return nil, err
 	}
@@ -120,7 +120,7 @@ func (r *ChecksCreateReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ChecksCreateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "checks/create", opt)
 }
 
 /*
@@ -339,7 +339,7 @@ func ChecksCreateSuite(ctx context.Context, req *ChecksCreateSuiteReq, opt ...Re
 		req = new(ChecksCreateSuiteReq)
 	}
 	resp := &ChecksCreateSuiteResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "checks/create-suite", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -347,7 +347,7 @@ func ChecksCreateSuite(ctx context.Context, req *ChecksCreateSuiteReq, opt ...Re
 		return resp, err
 	}
 	resp.Data = components.CheckSuite{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "checks/create-suite")
 	if err != nil {
 		return nil, err
 	}
@@ -434,7 +434,7 @@ func (r *ChecksCreateSuiteReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ChecksCreateSuiteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "checks/create-suite", opt)
 }
 
 /*
@@ -486,7 +486,7 @@ func ChecksGet(ctx context.Context, req *ChecksGetReq, opt ...RequestOption) (*C
 		req = new(ChecksGetReq)
 	}
 	resp := &ChecksGetResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "checks/get", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -494,7 +494,7 @@ func ChecksGet(ctx context.Context, req *ChecksGetReq, opt ...RequestOption) (*C
 		return resp, err
 	}
 	resp.Data = components.CheckRun{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "checks/get")
 	if err != nil {
 		return nil, err
 	}
@@ -580,7 +580,7 @@ func (r *ChecksGetReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ChecksGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "checks/get", opt)
 }
 
 /*
@@ -621,7 +621,7 @@ func ChecksGetSuite(ctx context.Context, req *ChecksGetSuiteReq, opt ...RequestO
 		req = new(ChecksGetSuiteReq)
 	}
 	resp := &ChecksGetSuiteResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "checks/get-suite", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -629,7 +629,7 @@ func ChecksGetSuite(ctx context.Context, req *ChecksGetSuiteReq, opt ...RequestO
 		return resp, err
 	}
 	resp.Data = components.CheckSuite{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "checks/get-suite")
 	if err != nil {
 		return nil, err
 	}
@@ -715,7 +715,7 @@ func (r *ChecksGetSuiteReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ChecksGetSuiteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "checks/get-suite", opt)
 }
 
 /*
@@ -756,7 +756,7 @@ func ChecksListAnnotations(ctx context.Context, req *ChecksListAnnotationsReq, o
 		req = new(ChecksListAnnotationsReq)
 	}
 	resp := &ChecksListAnnotationsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "checks/list-annotations", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -764,7 +764,7 @@ func ChecksListAnnotations(ctx context.Context, req *ChecksListAnnotationsReq, o
 		return resp, err
 	}
 	resp.Data = []components.CheckAnnotation{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "checks/list-annotations")
 	if err != nil {
 		return nil, err
 	}
@@ -862,7 +862,7 @@ func (r *ChecksListAnnotationsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ChecksListAnnotationsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "checks/list-annotations", opt)
 }
 
 /*
@@ -903,7 +903,7 @@ func ChecksListForRef(ctx context.Context, req *ChecksListForRefReq, opt ...Requ
 		req = new(ChecksListForRefReq)
 	}
 	resp := &ChecksListForRefResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "checks/list-for-ref", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -911,7 +911,7 @@ func ChecksListForRef(ctx context.Context, req *ChecksListForRefReq, opt ...Requ
 		return resp, err
 	}
 	resp.Data = ChecksListForRefResponseBody{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "checks/list-for-ref")
 	if err != nil {
 		return nil, err
 	}
@@ -1033,7 +1033,7 @@ func (r *ChecksListForRefReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ChecksListForRefReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "checks/list-for-ref", opt)
 }
 
 /*
@@ -1084,7 +1084,7 @@ func ChecksListForSuite(ctx context.Context, req *ChecksListForSuiteReq, opt ...
 		req = new(ChecksListForSuiteReq)
 	}
 	resp := &ChecksListForSuiteResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "checks/list-for-suite", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1092,7 +1092,7 @@ func ChecksListForSuite(ctx context.Context, req *ChecksListForSuiteReq, opt ...
 		return resp, err
 	}
 	resp.Data = ChecksListForSuiteResponseBody{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "checks/list-for-suite")
 	if err != nil {
 		return nil, err
 	}
@@ -1214,7 +1214,7 @@ func (r *ChecksListForSuiteReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ChecksListForSuiteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "checks/list-for-suite", opt)
 }
 
 /*
@@ -1265,7 +1265,7 @@ func ChecksListSuitesForRef(ctx context.Context, req *ChecksListSuitesForRefReq,
 		req = new(ChecksListSuitesForRefReq)
 	}
 	resp := &ChecksListSuitesForRefResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "checks/list-suites-for-ref", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1273,7 +1273,7 @@ func ChecksListSuitesForRef(ctx context.Context, req *ChecksListSuitesForRefReq,
 		return resp, err
 	}
 	resp.Data = ChecksListSuitesForRefResponseBody{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "checks/list-suites-for-ref")
 	if err != nil {
 		return nil, err
 	}
@@ -1383,7 +1383,7 @@ func (r *ChecksListSuitesForRefReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ChecksListSuitesForRefReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "checks/list-suites-for-ref", opt)
 }
 
 /*
@@ -1434,14 +1434,14 @@ func ChecksRerequestSuite(ctx context.Context, req *ChecksRerequestSuiteReq, opt
 		req = new(ChecksRerequestSuiteReq)
 	}
 	resp := &ChecksRerequestSuiteResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "checks/rerequest-suite", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "checks/rerequest-suite")
 	if err != nil {
 		return nil, err
 	}
@@ -1527,7 +1527,7 @@ func (r *ChecksRerequestSuiteReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ChecksRerequestSuiteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "checks/rerequest-suite", opt)
 }
 
 /*
@@ -1567,7 +1567,7 @@ func ChecksSetSuitesPreferences(ctx context.Context, req *ChecksSetSuitesPrefere
 		req = new(ChecksSetSuitesPreferencesReq)
 	}
 	resp := &ChecksSetSuitesPreferencesResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "checks/set-suites-preferences", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1575,7 +1575,7 @@ func ChecksSetSuitesPreferences(ctx context.Context, req *ChecksSetSuitesPrefere
 		return resp, err
 	}
 	resp.Data = components.CheckSuitePreference{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "checks/set-suites-preferences")
 	if err != nil {
 		return nil, err
 	}
@@ -1662,7 +1662,7 @@ func (r *ChecksSetSuitesPreferencesReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ChecksSetSuitesPreferencesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "checks/set-suites-preferences", opt)
 }
 
 /*
@@ -1732,7 +1732,7 @@ func ChecksUpdate(ctx context.Context, req *ChecksUpdateReq, opt ...RequestOptio
 		req = new(ChecksUpdateReq)
 	}
 	resp := &ChecksUpdateResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "checks/update", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1740,7 +1740,7 @@ func ChecksUpdate(ctx context.Context, req *ChecksUpdateReq, opt ...RequestOptio
 		return resp, err
 	}
 	resp.Data = components.CheckRun{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "checks/update")
 	if err != nil {
 		return nil, err
 	}
@@ -1830,7 +1830,7 @@ func (r *ChecksUpdateReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ChecksUpdateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "checks/update", opt)
 }
 
 /*

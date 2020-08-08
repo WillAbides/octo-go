@@ -25,14 +25,14 @@ func ProjectsAddCollaborator(ctx context.Context, req *ProjectsAddCollaboratorRe
 		req = new(ProjectsAddCollaboratorReq)
 	}
 	resp := &ProjectsAddCollaboratorResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "projects/add-collaborator", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "projects/add-collaborator")
 	if err != nil {
 		return nil, err
 	}
@@ -116,7 +116,7 @@ func (r *ProjectsAddCollaboratorReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ProjectsAddCollaboratorReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "projects/add-collaborator", opt)
 }
 
 /*
@@ -167,7 +167,7 @@ func ProjectsCreateCard(ctx context.Context, req *ProjectsCreateCardReq, opt ...
 		req = new(ProjectsCreateCardReq)
 	}
 	resp := &ProjectsCreateCardResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "projects/create-card", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -175,7 +175,7 @@ func ProjectsCreateCard(ctx context.Context, req *ProjectsCreateCardReq, opt ...
 		return resp, err
 	}
 	resp.Data = components.ProjectCard{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "projects/create-card")
 	if err != nil {
 		return nil, err
 	}
@@ -263,7 +263,7 @@ func (r *ProjectsCreateCardReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ProjectsCreateCardReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "projects/create-card", opt)
 }
 
 /*
@@ -318,7 +318,7 @@ func ProjectsCreateColumn(ctx context.Context, req *ProjectsCreateColumnReq, opt
 		req = new(ProjectsCreateColumnReq)
 	}
 	resp := &ProjectsCreateColumnResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "projects/create-column", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -326,7 +326,7 @@ func ProjectsCreateColumn(ctx context.Context, req *ProjectsCreateColumnReq, opt
 		return resp, err
 	}
 	resp.Data = components.ProjectColumn{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "projects/create-column")
 	if err != nil {
 		return nil, err
 	}
@@ -412,7 +412,7 @@ func (r *ProjectsCreateColumnReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ProjectsCreateColumnReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "projects/create-column", opt)
 }
 
 /*
@@ -464,7 +464,7 @@ func ProjectsCreateForAuthenticatedUser(ctx context.Context, req *ProjectsCreate
 		req = new(ProjectsCreateForAuthenticatedUserReq)
 	}
 	resp := &ProjectsCreateForAuthenticatedUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "projects/create-for-authenticated-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -472,7 +472,7 @@ func ProjectsCreateForAuthenticatedUser(ctx context.Context, req *ProjectsCreate
 		return resp, err
 	}
 	resp.Data = components.Project{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "projects/create-for-authenticated-user")
 	if err != nil {
 		return nil, err
 	}
@@ -557,7 +557,7 @@ func (r *ProjectsCreateForAuthenticatedUserReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ProjectsCreateForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "projects/create-for-authenticated-user", opt)
 }
 
 /*
@@ -612,7 +612,7 @@ func ProjectsCreateForOrg(ctx context.Context, req *ProjectsCreateForOrgReq, opt
 		req = new(ProjectsCreateForOrgReq)
 	}
 	resp := &ProjectsCreateForOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "projects/create-for-org", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -620,7 +620,7 @@ func ProjectsCreateForOrg(ctx context.Context, req *ProjectsCreateForOrgReq, opt
 		return resp, err
 	}
 	resp.Data = components.Project{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "projects/create-for-org")
 	if err != nil {
 		return nil, err
 	}
@@ -706,7 +706,7 @@ func (r *ProjectsCreateForOrgReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ProjectsCreateForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "projects/create-for-org", opt)
 }
 
 /*
@@ -761,7 +761,7 @@ func ProjectsCreateForRepo(ctx context.Context, req *ProjectsCreateForRepoReq, o
 		req = new(ProjectsCreateForRepoReq)
 	}
 	resp := &ProjectsCreateForRepoResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "projects/create-for-repo", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -769,7 +769,7 @@ func ProjectsCreateForRepo(ctx context.Context, req *ProjectsCreateForRepoReq, o
 		return resp, err
 	}
 	resp.Data = components.Project{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "projects/create-for-repo")
 	if err != nil {
 		return nil, err
 	}
@@ -856,7 +856,7 @@ func (r *ProjectsCreateForRepoReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ProjectsCreateForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "projects/create-for-repo", opt)
 }
 
 /*
@@ -911,14 +911,14 @@ func ProjectsDelete(ctx context.Context, req *ProjectsDeleteReq, opt ...RequestO
 		req = new(ProjectsDeleteReq)
 	}
 	resp := &ProjectsDeleteResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "projects/delete", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "projects/delete")
 	if err != nil {
 		return nil, err
 	}
@@ -1000,7 +1000,7 @@ func (r *ProjectsDeleteReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ProjectsDeleteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "projects/delete", opt)
 }
 
 /*
@@ -1040,14 +1040,14 @@ func ProjectsDeleteCard(ctx context.Context, req *ProjectsDeleteCardReq, opt ...
 		req = new(ProjectsDeleteCardReq)
 	}
 	resp := &ProjectsDeleteCardResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "projects/delete-card", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "projects/delete-card")
 	if err != nil {
 		return nil, err
 	}
@@ -1131,7 +1131,7 @@ func (r *ProjectsDeleteCardReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ProjectsDeleteCardReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "projects/delete-card", opt)
 }
 
 /*
@@ -1171,14 +1171,14 @@ func ProjectsDeleteColumn(ctx context.Context, req *ProjectsDeleteColumnReq, opt
 		req = new(ProjectsDeleteColumnReq)
 	}
 	resp := &ProjectsDeleteColumnResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "projects/delete-column", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "projects/delete-column")
 	if err != nil {
 		return nil, err
 	}
@@ -1262,7 +1262,7 @@ func (r *ProjectsDeleteColumnReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ProjectsDeleteColumnReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "projects/delete-column", opt)
 }
 
 /*
@@ -1302,7 +1302,7 @@ func ProjectsGet(ctx context.Context, req *ProjectsGetReq, opt ...RequestOption)
 		req = new(ProjectsGetReq)
 	}
 	resp := &ProjectsGetResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "projects/get", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1310,7 +1310,7 @@ func ProjectsGet(ctx context.Context, req *ProjectsGetReq, opt ...RequestOption)
 		return resp, err
 	}
 	resp.Data = components.Project{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "projects/get")
 	if err != nil {
 		return nil, err
 	}
@@ -1392,7 +1392,7 @@ func (r *ProjectsGetReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ProjectsGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "projects/get", opt)
 }
 
 /*
@@ -1433,7 +1433,7 @@ func ProjectsGetCard(ctx context.Context, req *ProjectsGetCardReq, opt ...Reques
 		req = new(ProjectsGetCardReq)
 	}
 	resp := &ProjectsGetCardResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "projects/get-card", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1441,7 +1441,7 @@ func ProjectsGetCard(ctx context.Context, req *ProjectsGetCardReq, opt ...Reques
 		return resp, err
 	}
 	resp.Data = components.ProjectCard{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "projects/get-card")
 	if err != nil {
 		return nil, err
 	}
@@ -1525,7 +1525,7 @@ func (r *ProjectsGetCardReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ProjectsGetCardReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "projects/get-card", opt)
 }
 
 /*
@@ -1566,7 +1566,7 @@ func ProjectsGetColumn(ctx context.Context, req *ProjectsGetColumnReq, opt ...Re
 		req = new(ProjectsGetColumnReq)
 	}
 	resp := &ProjectsGetColumnResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "projects/get-column", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1574,7 +1574,7 @@ func ProjectsGetColumn(ctx context.Context, req *ProjectsGetColumnReq, opt ...Re
 		return resp, err
 	}
 	resp.Data = components.ProjectColumn{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "projects/get-column")
 	if err != nil {
 		return nil, err
 	}
@@ -1658,7 +1658,7 @@ func (r *ProjectsGetColumnReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ProjectsGetColumnReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "projects/get-column", opt)
 }
 
 /*
@@ -1699,7 +1699,7 @@ func ProjectsGetPermissionForUser(ctx context.Context, req *ProjectsGetPermissio
 		req = new(ProjectsGetPermissionForUserReq)
 	}
 	resp := &ProjectsGetPermissionForUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "projects/get-permission-for-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1707,7 +1707,7 @@ func ProjectsGetPermissionForUser(ctx context.Context, req *ProjectsGetPermissio
 		return resp, err
 	}
 	resp.Data = components.RepositoryCollaboratorPermission{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "projects/get-permission-for-user")
 	if err != nil {
 		return nil, err
 	}
@@ -1790,7 +1790,7 @@ func (r *ProjectsGetPermissionForUserReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ProjectsGetPermissionForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "projects/get-permission-for-user", opt)
 }
 
 /*
@@ -1831,7 +1831,7 @@ func ProjectsListCards(ctx context.Context, req *ProjectsListCardsReq, opt ...Re
 		req = new(ProjectsListCardsReq)
 	}
 	resp := &ProjectsListCardsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "projects/list-cards", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1839,7 +1839,7 @@ func ProjectsListCards(ctx context.Context, req *ProjectsListCardsReq, opt ...Re
 		return resp, err
 	}
 	resp.Data = []components.ProjectCard{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "projects/list-cards")
 	if err != nil {
 		return nil, err
 	}
@@ -1944,7 +1944,7 @@ func (r *ProjectsListCardsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ProjectsListCardsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "projects/list-cards", opt)
 }
 
 /*
@@ -1985,7 +1985,7 @@ func ProjectsListCollaborators(ctx context.Context, req *ProjectsListCollaborato
 		req = new(ProjectsListCollaboratorsReq)
 	}
 	resp := &ProjectsListCollaboratorsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "projects/list-collaborators", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -1993,7 +1993,7 @@ func ProjectsListCollaborators(ctx context.Context, req *ProjectsListCollaborato
 		return resp, err
 	}
 	resp.Data = []components.SimpleUser{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "projects/list-collaborators")
 	if err != nil {
 		return nil, err
 	}
@@ -2100,7 +2100,7 @@ func (r *ProjectsListCollaboratorsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ProjectsListCollaboratorsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "projects/list-collaborators", opt)
 }
 
 /*
@@ -2141,7 +2141,7 @@ func ProjectsListColumns(ctx context.Context, req *ProjectsListColumnsReq, opt .
 		req = new(ProjectsListColumnsReq)
 	}
 	resp := &ProjectsListColumnsResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "projects/list-columns", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2149,7 +2149,7 @@ func ProjectsListColumns(ctx context.Context, req *ProjectsListColumnsReq, opt .
 		return resp, err
 	}
 	resp.Data = []components.ProjectColumn{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "projects/list-columns")
 	if err != nil {
 		return nil, err
 	}
@@ -2243,7 +2243,7 @@ func (r *ProjectsListColumnsReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ProjectsListColumnsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "projects/list-columns", opt)
 }
 
 /*
@@ -2284,7 +2284,7 @@ func ProjectsListForOrg(ctx context.Context, req *ProjectsListForOrgReq, opt ...
 		req = new(ProjectsListForOrgReq)
 	}
 	resp := &ProjectsListForOrgResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "projects/list-for-org", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2292,7 +2292,7 @@ func ProjectsListForOrg(ctx context.Context, req *ProjectsListForOrgReq, opt ...
 		return resp, err
 	}
 	resp.Data = []components.Project{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "projects/list-for-org")
 	if err != nil {
 		return nil, err
 	}
@@ -2395,7 +2395,7 @@ func (r *ProjectsListForOrgReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ProjectsListForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "projects/list-for-org", opt)
 }
 
 /*
@@ -2436,7 +2436,7 @@ func ProjectsListForRepo(ctx context.Context, req *ProjectsListForRepoReq, opt .
 		req = new(ProjectsListForRepoReq)
 	}
 	resp := &ProjectsListForRepoResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "projects/list-for-repo", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2444,7 +2444,7 @@ func ProjectsListForRepo(ctx context.Context, req *ProjectsListForRepoReq, opt .
 		return resp, err
 	}
 	resp.Data = []components.Project{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "projects/list-for-repo")
 	if err != nil {
 		return nil, err
 	}
@@ -2548,7 +2548,7 @@ func (r *ProjectsListForRepoReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ProjectsListForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "projects/list-for-repo", opt)
 }
 
 /*
@@ -2589,7 +2589,7 @@ func ProjectsListForUser(ctx context.Context, req *ProjectsListForUserReq, opt .
 		req = new(ProjectsListForUserReq)
 	}
 	resp := &ProjectsListForUserResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "projects/list-for-user", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -2597,7 +2597,7 @@ func ProjectsListForUser(ctx context.Context, req *ProjectsListForUserReq, opt .
 		return resp, err
 	}
 	resp.Data = []components.Project{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "projects/list-for-user")
 	if err != nil {
 		return nil, err
 	}
@@ -2700,7 +2700,7 @@ func (r *ProjectsListForUserReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ProjectsListForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "projects/list-for-user", opt)
 }
 
 /*
@@ -2741,14 +2741,14 @@ func ProjectsMoveCard(ctx context.Context, req *ProjectsMoveCardReq, opt ...Requ
 		req = new(ProjectsMoveCardReq)
 	}
 	resp := &ProjectsMoveCardResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "projects/move-card", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "projects/move-card")
 	if err != nil {
 		return nil, err
 	}
@@ -2836,7 +2836,7 @@ func (r *ProjectsMoveCardReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ProjectsMoveCardReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "projects/move-card", opt)
 }
 
 /*
@@ -2890,14 +2890,14 @@ func ProjectsMoveColumn(ctx context.Context, req *ProjectsMoveColumnReq, opt ...
 		req = new(ProjectsMoveColumnReq)
 	}
 	resp := &ProjectsMoveColumnResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "projects/move-column", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "projects/move-column")
 	if err != nil {
 		return nil, err
 	}
@@ -2985,7 +2985,7 @@ func (r *ProjectsMoveColumnReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ProjectsMoveColumnReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "projects/move-column", opt)
 }
 
 /*
@@ -3036,14 +3036,14 @@ func ProjectsRemoveCollaborator(ctx context.Context, req *ProjectsRemoveCollabor
 		req = new(ProjectsRemoveCollaboratorReq)
 	}
 	resp := &ProjectsRemoveCollaboratorResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "projects/remove-collaborator", opt...)
 	if r != nil {
 		resp.response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil)
+	err = r.decodeBody(nil, "projects/remove-collaborator")
 	if err != nil {
 		return nil, err
 	}
@@ -3126,7 +3126,7 @@ func (r *ProjectsRemoveCollaboratorReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ProjectsRemoveCollaboratorReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "projects/remove-collaborator", opt)
 }
 
 /*
@@ -3166,7 +3166,7 @@ func ProjectsUpdate(ctx context.Context, req *ProjectsUpdateReq, opt ...RequestO
 		req = new(ProjectsUpdateReq)
 	}
 	resp := &ProjectsUpdateResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "projects/update", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3174,7 +3174,7 @@ func ProjectsUpdate(ctx context.Context, req *ProjectsUpdateReq, opt ...RequestO
 		return resp, err
 	}
 	resp.Data = components.Project{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "projects/update")
 	if err != nil {
 		return nil, err
 	}
@@ -3260,7 +3260,7 @@ func (r *ProjectsUpdateReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ProjectsUpdateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "projects/update", opt)
 }
 
 /*
@@ -3324,7 +3324,7 @@ func ProjectsUpdateCard(ctx context.Context, req *ProjectsUpdateCardReq, opt ...
 		req = new(ProjectsUpdateCardReq)
 	}
 	resp := &ProjectsUpdateCardResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "projects/update-card", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3332,7 +3332,7 @@ func ProjectsUpdateCard(ctx context.Context, req *ProjectsUpdateCardReq, opt ...
 		return resp, err
 	}
 	resp.Data = components.ProjectCard{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "projects/update-card")
 	if err != nil {
 		return nil, err
 	}
@@ -3420,7 +3420,7 @@ func (r *ProjectsUpdateCardReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ProjectsUpdateCardReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "projects/update-card", opt)
 }
 
 /*
@@ -3475,7 +3475,7 @@ func ProjectsUpdateColumn(ctx context.Context, req *ProjectsUpdateColumnReq, opt
 		req = new(ProjectsUpdateColumnReq)
 	}
 	resp := &ProjectsUpdateColumnResponse{request: req}
-	r, err := doRequest(ctx, req, opt...)
+	r, err := doRequest(ctx, req, "projects/update-column", opt...)
 	if r != nil {
 		resp.response = *r
 	}
@@ -3483,7 +3483,7 @@ func ProjectsUpdateColumn(ctx context.Context, req *ProjectsUpdateColumnReq, opt
 		return resp, err
 	}
 	resp.Data = components.ProjectColumn{}
-	err = r.decodeBody(&resp.Data)
+	err = r.decodeBody(&resp.Data, "projects/update-column")
 	if err != nil {
 		return nil, err
 	}
@@ -3571,7 +3571,7 @@ func (r *ProjectsUpdateColumnReq) validStatuses() []int {
 
 // HTTPRequest builds an *http.Request
 func (r *ProjectsUpdateColumnReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, opt)
+	return buildHTTPRequest(ctx, r, "projects/update-column", opt)
 }
 
 /*
