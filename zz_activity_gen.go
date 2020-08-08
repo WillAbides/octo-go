@@ -98,10 +98,6 @@ func (r *ActivityCheckRepoIsStarredByAuthenticatedUserReq) validStatuses() []int
 	return []int{204, 304}
 }
 
-func (r *ActivityCheckRepoIsStarredByAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ActivityCheckRepoIsStarredByAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -215,10 +211,6 @@ func (r *ActivityDeleteRepoSubscriptionReq) dataStatuses() []int {
 
 func (r *ActivityDeleteRepoSubscriptionReq) validStatuses() []int {
 	return []int{204}
-}
-
-func (r *ActivityDeleteRepoSubscriptionReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -337,10 +329,6 @@ func (r *ActivityDeleteThreadSubscriptionReq) validStatuses() []int {
 	return []int{204, 304}
 }
 
-func (r *ActivityDeleteThreadSubscriptionReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ActivityDeleteThreadSubscriptionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -453,10 +441,6 @@ func (r *ActivityGetFeedsReq) dataStatuses() []int {
 
 func (r *ActivityGetFeedsReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ActivityGetFeedsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -574,10 +558,6 @@ func (r *ActivityGetRepoSubscriptionReq) dataStatuses() []int {
 
 func (r *ActivityGetRepoSubscriptionReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ActivityGetRepoSubscriptionReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -698,10 +678,6 @@ func (r *ActivityGetThreadReq) validStatuses() []int {
 	return []int{200, 304}
 }
 
-func (r *ActivityGetThreadReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ActivityGetThreadReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -818,10 +794,6 @@ func (r *ActivityGetThreadSubscriptionForAuthenticatedUserReq) dataStatuses() []
 
 func (r *ActivityGetThreadSubscriptionForAuthenticatedUserReq) validStatuses() []int {
 	return []int{200, 304}
-}
-
-func (r *ActivityGetThreadSubscriptionForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -950,10 +922,6 @@ func (r *ActivityListEventsForAuthenticatedUserReq) dataStatuses() []int {
 
 func (r *ActivityListEventsForAuthenticatedUserReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ActivityListEventsForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -1118,10 +1086,6 @@ func (r *ActivityListNotificationsForAuthenticatedUserReq) validStatuses() []int
 	return []int{200, 304}
 }
 
-func (r *ActivityListNotificationsForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ActivityListNotificationsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1251,10 +1215,6 @@ func (r *ActivityListOrgEventsForAuthenticatedUserReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ActivityListOrgEventsForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ActivityListOrgEventsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1380,10 +1340,6 @@ func (r *ActivityListPublicEventsReq) dataStatuses() []int {
 
 func (r *ActivityListPublicEventsReq) validStatuses() []int {
 	return []int{200, 304}
-}
-
-func (r *ActivityListPublicEventsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -1515,10 +1471,6 @@ func (r *ActivityListPublicEventsForRepoNetworkReq) validStatuses() []int {
 	return []int{200, 301, 304}
 }
 
-func (r *ActivityListPublicEventsForRepoNetworkReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ActivityListPublicEventsForRepoNetworkReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1645,10 +1597,6 @@ func (r *ActivityListPublicEventsForUserReq) dataStatuses() []int {
 
 func (r *ActivityListPublicEventsForUserReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ActivityListPublicEventsForUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -1779,10 +1727,6 @@ func (r *ActivityListPublicOrgEventsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ActivityListPublicOrgEventsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ActivityListPublicOrgEventsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1909,10 +1853,6 @@ func (r *ActivityListReceivedEventsForUserReq) dataStatuses() []int {
 
 func (r *ActivityListReceivedEventsForUserReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ActivityListReceivedEventsForUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -2043,10 +1983,6 @@ func (r *ActivityListReceivedPublicEventsForUserReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ActivityListReceivedPublicEventsForUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ActivityListReceivedPublicEventsForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -2174,10 +2110,6 @@ func (r *ActivityListRepoEventsReq) dataStatuses() []int {
 
 func (r *ActivityListRepoEventsReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ActivityListRepoEventsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -2344,10 +2276,6 @@ func (r *ActivityListRepoNotificationsForAuthenticatedUserReq) validStatuses() [
 	return []int{200}
 }
 
-func (r *ActivityListRepoNotificationsForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ActivityListRepoNotificationsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -2488,10 +2416,6 @@ func (r *ActivityListReposStarredByAuthenticatedUserReq) dataStatuses() []int {
 
 func (r *ActivityListReposStarredByAuthenticatedUserReq) validStatuses() []int {
 	return []int{200, 304}
-}
-
-func (r *ActivityListReposStarredByAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -2637,10 +2561,6 @@ func (r *ActivityListReposStarredByUserReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ActivityListReposStarredByUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ActivityListReposStarredByUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -2767,10 +2687,6 @@ func (r *ActivityListReposWatchedByUserReq) dataStatuses() []int {
 
 func (r *ActivityListReposWatchedByUserReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ActivityListReposWatchedByUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -2902,10 +2818,6 @@ func (r *ActivityListStargazersForRepoReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ActivityListStargazersForRepoReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ActivityListStargazersForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -3031,10 +2943,6 @@ func (r *ActivityListWatchedReposForAuthenticatedUserReq) dataStatuses() []int {
 
 func (r *ActivityListWatchedReposForAuthenticatedUserReq) validStatuses() []int {
 	return []int{200, 304}
-}
-
-func (r *ActivityListWatchedReposForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -3166,10 +3074,6 @@ func (r *ActivityListWatchersForRepoReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ActivityListWatchersForRepoReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ActivityListWatchersForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -3287,10 +3191,6 @@ func (r *ActivityMarkNotificationsAsReadReq) dataStatuses() []int {
 
 func (r *ActivityMarkNotificationsAsReadReq) validStatuses() []int {
 	return []int{202, 205, 304}
-}
-
-func (r *ActivityMarkNotificationsAsReadReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -3433,10 +3333,6 @@ func (r *ActivityMarkRepoNotificationsAsReadReq) validStatuses() []int {
 	return []int{202}
 }
 
-func (r *ActivityMarkRepoNotificationsAsReadReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ActivityMarkRepoNotificationsAsReadReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -3570,10 +3466,6 @@ func (r *ActivityMarkThreadAsReadReq) validStatuses() []int {
 	return []int{205, 304}
 }
 
-func (r *ActivityMarkThreadAsReadReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ActivityMarkThreadAsReadReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -3692,10 +3584,6 @@ func (r *ActivitySetRepoSubscriptionReq) dataStatuses() []int {
 
 func (r *ActivitySetRepoSubscriptionReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ActivitySetRepoSubscriptionReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -3834,10 +3722,6 @@ func (r *ActivitySetThreadSubscriptionReq) validStatuses() []int {
 	return []int{200, 304}
 }
 
-func (r *ActivitySetThreadSubscriptionReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ActivitySetThreadSubscriptionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -3965,10 +3849,6 @@ func (r *ActivityStarRepoForAuthenticatedUserReq) validStatuses() []int {
 	return []int{204, 304}
 }
 
-func (r *ActivityStarRepoForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ActivityStarRepoForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -4082,10 +3962,6 @@ func (r *ActivityUnstarRepoForAuthenticatedUserReq) dataStatuses() []int {
 
 func (r *ActivityUnstarRepoForAuthenticatedUserReq) validStatuses() []int {
 	return []int{204, 304}
-}
-
-func (r *ActivityUnstarRepoForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request

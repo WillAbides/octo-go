@@ -114,10 +114,6 @@ func (r *ProjectsAddCollaboratorReq) validStatuses() []int {
 	return []int{204, 304}
 }
 
-func (r *ProjectsAddCollaboratorReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ProjectsAddCollaboratorReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -263,10 +259,6 @@ func (r *ProjectsCreateCardReq) dataStatuses() []int {
 
 func (r *ProjectsCreateCardReq) validStatuses() []int {
 	return []int{201, 304}
-}
-
-func (r *ProjectsCreateCardReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -418,10 +410,6 @@ func (r *ProjectsCreateColumnReq) validStatuses() []int {
 	return []int{201, 304}
 }
 
-func (r *ProjectsCreateColumnReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ProjectsCreateColumnReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -565,10 +553,6 @@ func (r *ProjectsCreateForAuthenticatedUserReq) dataStatuses() []int {
 
 func (r *ProjectsCreateForAuthenticatedUserReq) validStatuses() []int {
 	return []int{201, 304}
-}
-
-func (r *ProjectsCreateForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -718,10 +702,6 @@ func (r *ProjectsCreateForOrgReq) dataStatuses() []int {
 
 func (r *ProjectsCreateForOrgReq) validStatuses() []int {
 	return []int{201}
-}
-
-func (r *ProjectsCreateForOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -874,10 +854,6 @@ func (r *ProjectsCreateForRepoReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *ProjectsCreateForRepoReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ProjectsCreateForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1022,10 +998,6 @@ func (r *ProjectsDeleteReq) validStatuses() []int {
 	return []int{204, 304}
 }
 
-func (r *ProjectsDeleteReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ProjectsDeleteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1155,10 +1127,6 @@ func (r *ProjectsDeleteCardReq) dataStatuses() []int {
 
 func (r *ProjectsDeleteCardReq) validStatuses() []int {
 	return []int{204, 304}
-}
-
-func (r *ProjectsDeleteCardReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -1292,10 +1260,6 @@ func (r *ProjectsDeleteColumnReq) validStatuses() []int {
 	return []int{204, 304}
 }
 
-func (r *ProjectsDeleteColumnReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ProjectsDeleteColumnReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1424,10 +1388,6 @@ func (r *ProjectsGetReq) dataStatuses() []int {
 
 func (r *ProjectsGetReq) validStatuses() []int {
 	return []int{200, 304}
-}
-
-func (r *ProjectsGetReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -1563,10 +1523,6 @@ func (r *ProjectsGetCardReq) validStatuses() []int {
 	return []int{200, 304}
 }
 
-func (r *ProjectsGetCardReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ProjectsGetCardReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1700,10 +1656,6 @@ func (r *ProjectsGetColumnReq) validStatuses() []int {
 	return []int{200, 304}
 }
 
-func (r *ProjectsGetColumnReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ProjectsGetColumnReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1834,10 +1786,6 @@ func (r *ProjectsGetPermissionForUserReq) dataStatuses() []int {
 
 func (r *ProjectsGetPermissionForUserReq) validStatuses() []int {
 	return []int{200, 304}
-}
-
-func (r *ProjectsGetPermissionForUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -1992,10 +1940,6 @@ func (r *ProjectsListCardsReq) dataStatuses() []int {
 
 func (r *ProjectsListCardsReq) validStatuses() []int {
 	return []int{200, 304}
-}
-
-func (r *ProjectsListCardsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -2154,10 +2098,6 @@ func (r *ProjectsListCollaboratorsReq) validStatuses() []int {
 	return []int{200, 304}
 }
 
-func (r *ProjectsListCollaboratorsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ProjectsListCollaboratorsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -2299,10 +2239,6 @@ func (r *ProjectsListColumnsReq) dataStatuses() []int {
 
 func (r *ProjectsListColumnsReq) validStatuses() []int {
 	return []int{200, 304}
-}
-
-func (r *ProjectsListColumnsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -2455,10 +2391,6 @@ func (r *ProjectsListForOrgReq) dataStatuses() []int {
 
 func (r *ProjectsListForOrgReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ProjectsListForOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -2614,10 +2546,6 @@ func (r *ProjectsListForRepoReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ProjectsListForRepoReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ProjectsListForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -2770,10 +2698,6 @@ func (r *ProjectsListForUserReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ProjectsListForUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ProjectsListForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -2908,10 +2832,6 @@ func (r *ProjectsMoveCardReq) dataStatuses() []int {
 
 func (r *ProjectsMoveCardReq) validStatuses() []int {
 	return []int{201, 304}
-}
-
-func (r *ProjectsMoveCardReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody, attrNoResponseBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -3063,10 +2983,6 @@ func (r *ProjectsMoveColumnReq) validStatuses() []int {
 	return []int{201, 304}
 }
 
-func (r *ProjectsMoveColumnReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody, attrNoResponseBody}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ProjectsMoveColumnReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -3208,10 +3124,6 @@ func (r *ProjectsRemoveCollaboratorReq) validStatuses() []int {
 	return []int{204, 304}
 }
 
-func (r *ProjectsRemoveCollaboratorReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ProjectsRemoveCollaboratorReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -3344,10 +3256,6 @@ func (r *ProjectsUpdateReq) dataStatuses() []int {
 
 func (r *ProjectsUpdateReq) validStatuses() []int {
 	return []int{200, 304}
-}
-
-func (r *ProjectsUpdateReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -3510,10 +3418,6 @@ func (r *ProjectsUpdateCardReq) validStatuses() []int {
 	return []int{200, 304}
 }
 
-func (r *ProjectsUpdateCardReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ProjectsUpdateCardReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -3663,10 +3567,6 @@ func (r *ProjectsUpdateColumnReq) dataStatuses() []int {
 
 func (r *ProjectsUpdateColumnReq) validStatuses() []int {
 	return []int{200, 304}
-}
-
-func (r *ProjectsUpdateColumnReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request

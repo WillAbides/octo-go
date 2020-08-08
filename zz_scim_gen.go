@@ -100,10 +100,6 @@ func (r *ScimDeleteUserFromOrgReq) validStatuses() []int {
 	return []int{204, 304}
 }
 
-func (r *ScimDeleteUserFromOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ScimDeleteUserFromOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -220,10 +216,6 @@ func (r *ScimGetProvisioningInformationForUserReq) dataStatuses() []int {
 
 func (r *ScimGetProvisioningInformationForUserReq) validStatuses() []int {
 	return []int{200, 304}
-}
-
-func (r *ScimGetProvisioningInformationForUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -372,10 +364,6 @@ func (r *ScimListProvisionedIdentitiesReq) validStatuses() []int {
 	return []int{200, 304}
 }
 
-func (r *ScimListProvisionedIdentitiesReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ScimListProvisionedIdentitiesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -494,10 +482,6 @@ func (r *ScimProvisionAndInviteUserReq) dataStatuses() []int {
 
 func (r *ScimProvisionAndInviteUserReq) validStatuses() []int {
 	return []int{201, 304}
-}
-
-func (r *ScimProvisionAndInviteUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -656,10 +640,6 @@ func (r *ScimSetInformationForProvisionedUserReq) validStatuses() []int {
 	return []int{200, 304}
 }
 
-func (r *ScimSetInformationForProvisionedUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ScimSetInformationForProvisionedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -814,10 +794,6 @@ func (r *ScimUpdateAttributeForUserReq) dataStatuses() []int {
 
 func (r *ScimUpdateAttributeForUserReq) validStatuses() []int {
 	return []int{200, 304}
-}
-
-func (r *ScimUpdateAttributeForUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request

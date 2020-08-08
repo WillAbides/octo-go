@@ -101,10 +101,6 @@ func (r *ReposAcceptInvitationReq) validStatuses() []int {
 	return []int{204, 304}
 }
 
-func (r *ReposAcceptInvitationReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposAcceptInvitationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -226,10 +222,6 @@ func (r *ReposAddAppAccessRestrictionsReq) dataStatuses() []int {
 
 func (r *ReposAddAppAccessRestrictionsReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ReposAddAppAccessRestrictionsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -359,10 +351,6 @@ func (r *ReposAddCollaboratorReq) dataStatuses() []int {
 
 func (r *ReposAddCollaboratorReq) validStatuses() []int {
 	return []int{201, 204}
-}
-
-func (r *ReposAddCollaboratorReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -511,10 +499,6 @@ func (r *ReposAddStatusCheckContextsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposAddStatusCheckContextsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposAddStatusCheckContextsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -653,10 +637,6 @@ func (r *ReposAddTeamAccessRestrictionsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposAddTeamAccessRestrictionsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposAddTeamAccessRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -788,10 +768,6 @@ func (r *ReposAddUserAccessRestrictionsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposAddUserAccessRestrictionsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposAddUserAccessRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -918,10 +894,6 @@ func (r *ReposCheckCollaboratorReq) dataStatuses() []int {
 
 func (r *ReposCheckCollaboratorReq) validStatuses() []int {
 	return []int{204}
-}
-
-func (r *ReposCheckCollaboratorReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrBoolean}
 }
 
 // HTTPRequest builds an *http.Request
@@ -1057,10 +1029,6 @@ func (r *ReposCheckVulnerabilityAlertsReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *ReposCheckVulnerabilityAlertsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrBoolean}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposCheckVulnerabilityAlertsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1182,10 +1150,6 @@ func (r *ReposCompareCommitsReq) dataStatuses() []int {
 
 func (r *ReposCompareCommitsReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ReposCompareCommitsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -1310,10 +1274,6 @@ func (r *ReposCreateCommitCommentReq) dataStatuses() []int {
 
 func (r *ReposCreateCommitCommentReq) validStatuses() []int {
 	return []int{201}
-}
-
-func (r *ReposCreateCommitCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -1471,10 +1431,6 @@ func (r *ReposCreateCommitSignatureProtectionReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposCreateCommitSignatureProtectionReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposCreateCommitSignatureProtectionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1597,10 +1553,6 @@ func (r *ReposCreateCommitStatusReq) dataStatuses() []int {
 
 func (r *ReposCreateCommitStatusReq) validStatuses() []int {
 	return []int{201}
-}
-
-func (r *ReposCreateCommitStatusReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -1748,10 +1700,6 @@ func (r *ReposCreateDeployKeyReq) dataStatuses() []int {
 
 func (r *ReposCreateDeployKeyReq) validStatuses() []int {
 	return []int{201}
-}
-
-func (r *ReposCreateDeployKeyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -1914,10 +1862,6 @@ func (r *ReposCreateDeploymentReq) dataStatuses() []int {
 
 func (r *ReposCreateDeploymentReq) validStatuses() []int {
 	return []int{201, 202}
-}
-
-func (r *ReposCreateDeploymentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -2129,10 +2073,6 @@ func (r *ReposCreateDeploymentStatusReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *ReposCreateDeploymentStatusReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposCreateDeploymentStatusReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -2329,10 +2269,6 @@ func (r *ReposCreateDispatchEventReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *ReposCreateDispatchEventReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposCreateDispatchEventReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -2491,10 +2427,6 @@ func (r *ReposCreateForAuthenticatedUserReq) dataStatuses() []int {
 
 func (r *ReposCreateForAuthenticatedUserReq) validStatuses() []int {
 	return []int{201, 304}
-}
-
-func (r *ReposCreateForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -2680,10 +2612,6 @@ func (r *ReposCreateForkReq) validStatuses() []int {
 	return []int{202}
 }
 
-func (r *ReposCreateForkReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposCreateForkReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -2841,10 +2769,6 @@ func (r *ReposCreateInOrgReq) dataStatuses() []int {
 
 func (r *ReposCreateInOrgReq) validStatuses() []int {
 	return []int{201}
-}
-
-func (r *ReposCreateInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -3062,10 +2986,6 @@ func (r *ReposCreateOrUpdateFileContentsReq) validStatuses() []int {
 	return []int{200, 201}
 }
 
-func (r *ReposCreateOrUpdateFileContentsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposCreateOrUpdateFileContentsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -3250,10 +3170,6 @@ func (r *ReposCreatePagesSiteReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *ReposCreatePagesSiteReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposCreatePagesSiteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -3400,10 +3316,6 @@ func (r *ReposCreateReleaseReq) dataStatuses() []int {
 
 func (r *ReposCreateReleaseReq) validStatuses() []int {
 	return []int{201}
-}
-
-func (r *ReposCreateReleaseReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -3576,10 +3488,6 @@ func (r *ReposCreateUsingTemplateReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *ReposCreateUsingTemplateReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposCreateUsingTemplateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -3723,10 +3631,6 @@ func (r *ReposCreateWebhookReq) dataStatuses() []int {
 
 func (r *ReposCreateWebhookReq) validStatuses() []int {
 	return []int{201}
-}
-
-func (r *ReposCreateWebhookReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -3898,10 +3802,6 @@ func (r *ReposDeclineInvitationReq) validStatuses() []int {
 	return []int{204, 304}
 }
 
-func (r *ReposDeclineInvitationReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposDeclineInvitationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -4015,10 +3915,6 @@ func (r *ReposDeleteReq) dataStatuses() []int {
 
 func (r *ReposDeleteReq) validStatuses() []int {
 	return []int{204}
-}
-
-func (r *ReposDeleteReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -4137,10 +4033,6 @@ func (r *ReposDeleteAccessRestrictionsReq) dataStatuses() []int {
 
 func (r *ReposDeleteAccessRestrictionsReq) validStatuses() []int {
 	return []int{204}
-}
-
-func (r *ReposDeleteAccessRestrictionsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -4265,10 +4157,6 @@ func (r *ReposDeleteAdminBranchProtectionReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *ReposDeleteAdminBranchProtectionReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrBoolean}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposDeleteAdminBranchProtectionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -4386,10 +4274,6 @@ func (r *ReposDeleteBranchProtectionReq) dataStatuses() []int {
 
 func (r *ReposDeleteBranchProtectionReq) validStatuses() []int {
 	return []int{204}
-}
-
-func (r *ReposDeleteBranchProtectionReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -4512,10 +4396,6 @@ func (r *ReposDeleteCommitCommentReq) dataStatuses() []int {
 
 func (r *ReposDeleteCommitCommentReq) validStatuses() []int {
 	return []int{204}
-}
-
-func (r *ReposDeleteCommitCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrBoolean}
 }
 
 // HTTPRequest builds an *http.Request
@@ -4656,10 +4536,6 @@ func (r *ReposDeleteCommitSignatureProtectionReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *ReposDeleteCommitSignatureProtectionReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrBoolean}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposDeleteCommitSignatureProtectionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -4779,10 +4655,6 @@ func (r *ReposDeleteDeployKeyReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *ReposDeleteDeployKeyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposDeleteDeployKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -4899,10 +4771,6 @@ func (r *ReposDeleteDeploymentReq) dataStatuses() []int {
 
 func (r *ReposDeleteDeploymentReq) validStatuses() []int {
 	return []int{204}
-}
-
-func (r *ReposDeleteDeploymentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -5026,10 +4894,6 @@ func (r *ReposDeleteFileReq) dataStatuses() []int {
 
 func (r *ReposDeleteFileReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ReposDeleteFileReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -5194,10 +5058,6 @@ func (r *ReposDeleteInvitationReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *ReposDeleteInvitationReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposDeleteInvitationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -5328,10 +5188,6 @@ func (r *ReposDeletePagesSiteReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *ReposDeletePagesSiteReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposDeletePagesSiteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -5454,10 +5310,6 @@ func (r *ReposDeletePullRequestReviewProtectionReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *ReposDeletePullRequestReviewProtectionReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrBoolean}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposDeletePullRequestReviewProtectionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -5575,10 +5427,6 @@ func (r *ReposDeleteReleaseReq) dataStatuses() []int {
 
 func (r *ReposDeleteReleaseReq) validStatuses() []int {
 	return []int{204}
-}
-
-func (r *ReposDeleteReleaseReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -5699,10 +5547,6 @@ func (r *ReposDeleteReleaseAssetReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *ReposDeleteReleaseAssetReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposDeleteReleaseAssetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -5821,10 +5665,6 @@ func (r *ReposDeleteWebhookReq) dataStatuses() []int {
 
 func (r *ReposDeleteWebhookReq) validStatuses() []int {
 	return []int{204}
-}
-
-func (r *ReposDeleteWebhookReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrBoolean}
 }
 
 // HTTPRequest builds an *http.Request
@@ -5956,10 +5796,6 @@ func (r *ReposDisableAutomatedSecurityFixesReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *ReposDisableAutomatedSecurityFixesReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposDisableAutomatedSecurityFixesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -6088,10 +5924,6 @@ func (r *ReposDisableVulnerabilityAlertsReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *ReposDisableVulnerabilityAlertsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposDisableVulnerabilityAlertsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -6210,10 +6042,6 @@ func (r *ReposDownloadTarballArchiveReq) validStatuses() []int {
 	return []int{302}
 }
 
-func (r *ReposDownloadTarballArchiveReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRedirectOnly}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposDownloadTarballArchiveReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -6330,10 +6158,6 @@ func (r *ReposDownloadZipballArchiveReq) dataStatuses() []int {
 
 func (r *ReposDownloadZipballArchiveReq) validStatuses() []int {
 	return []int{302}
-}
-
-func (r *ReposDownloadZipballArchiveReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRedirectOnly}
 }
 
 // HTTPRequest builds an *http.Request
@@ -6464,10 +6288,6 @@ func (r *ReposEnableAutomatedSecurityFixesReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *ReposEnableAutomatedSecurityFixesReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposEnableAutomatedSecurityFixesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -6594,10 +6414,6 @@ func (r *ReposEnableVulnerabilityAlertsReq) dataStatuses() []int {
 
 func (r *ReposEnableVulnerabilityAlertsReq) validStatuses() []int {
 	return []int{204}
-}
-
-func (r *ReposEnableVulnerabilityAlertsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -6742,10 +6558,6 @@ func (r *ReposGetReq) validStatuses() []int {
 	return []int{200, 301}
 }
 
-func (r *ReposGetReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -6864,10 +6676,6 @@ func (r *ReposGetAccessRestrictionsReq) dataStatuses() []int {
 
 func (r *ReposGetAccessRestrictionsReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ReposGetAccessRestrictionsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -6990,10 +6798,6 @@ func (r *ReposGetAdminBranchProtectionReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposGetAdminBranchProtectionReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposGetAdminBranchProtectionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -7112,10 +6916,6 @@ func (r *ReposGetAllStatusCheckContextsReq) dataStatuses() []int {
 
 func (r *ReposGetAllStatusCheckContextsReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ReposGetAllStatusCheckContextsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -7255,10 +7055,6 @@ func (r *ReposGetAllTopicsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposGetAllTopicsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposGetAllTopicsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -7379,10 +7175,6 @@ func (r *ReposGetAppsWithAccessToProtectedBranchReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposGetAppsWithAccessToProtectedBranchReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposGetAppsWithAccessToProtectedBranchReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -7501,10 +7293,6 @@ func (r *ReposGetBranchReq) dataStatuses() []int {
 
 func (r *ReposGetBranchReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ReposGetBranchReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -7640,10 +7428,6 @@ func (r *ReposGetBranchProtectionReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposGetBranchProtectionReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposGetBranchProtectionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -7767,10 +7551,6 @@ func (r *ReposGetClonesReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposGetClonesReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposGetClonesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -7886,10 +7666,6 @@ func (r *ReposGetCodeFrequencyStatsReq) dataStatuses() []int {
 
 func (r *ReposGetCodeFrequencyStatsReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ReposGetCodeFrequencyStatsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -8008,10 +7784,6 @@ func (r *ReposGetCollaboratorPermissionLevelReq) dataStatuses() []int {
 
 func (r *ReposGetCollaboratorPermissionLevelReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ReposGetCollaboratorPermissionLevelReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -8134,10 +7906,6 @@ func (r *ReposGetCombinedStatusForRefReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposGetCombinedStatusForRefReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposGetCombinedStatusForRefReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -8258,10 +8026,6 @@ func (r *ReposGetCommitReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposGetCommitReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposGetCommitReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -8377,10 +8141,6 @@ func (r *ReposGetCommitActivityStatsReq) dataStatuses() []int {
 
 func (r *ReposGetCommitActivityStatsReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ReposGetCommitActivityStatsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -8515,10 +8275,6 @@ func (r *ReposGetCommitCommentReq) dataStatuses() []int {
 
 func (r *ReposGetCommitCommentReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ReposGetCommitCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -8656,10 +8412,6 @@ func (r *ReposGetCommitSignatureProtectionReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposGetCommitSignatureProtectionReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposGetCommitSignatureProtectionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -8790,10 +8542,6 @@ func (r *ReposGetCommunityProfileMetricsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposGetCommunityProfileMetricsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposGetCommunityProfileMetricsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -8921,10 +8669,6 @@ func (r *ReposGetContentReq) dataStatuses() []int {
 
 func (r *ReposGetContentReq) validStatuses() []int {
 	return []int{200, 302}
-}
-
-func (r *ReposGetContentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -9135,10 +8879,6 @@ func (r *ReposGetContributorsStatsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposGetContributorsStatsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposGetContributorsStatsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -9257,10 +8997,6 @@ func (r *ReposGetDeployKeyReq) dataStatuses() []int {
 
 func (r *ReposGetDeployKeyReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ReposGetDeployKeyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -9405,10 +9141,6 @@ func (r *ReposGetDeploymentReq) dataStatuses() []int {
 
 func (r *ReposGetDeploymentReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ReposGetDeploymentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -9572,10 +9304,6 @@ func (r *ReposGetDeploymentStatusReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposGetDeploymentStatusReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposGetDeploymentStatusReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -9691,10 +9419,6 @@ func (r *ReposGetLatestPagesBuildReq) dataStatuses() []int {
 
 func (r *ReposGetLatestPagesBuildReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ReposGetLatestPagesBuildReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -9814,10 +9538,6 @@ func (r *ReposGetLatestReleaseReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposGetLatestReleaseReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposGetLatestReleaseReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -9933,10 +9653,6 @@ func (r *ReposGetPagesReq) dataStatuses() []int {
 
 func (r *ReposGetPagesReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ReposGetPagesReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -10059,10 +9775,6 @@ func (r *ReposGetPagesBuildReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposGetPagesBuildReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposGetPagesBuildReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -10178,10 +9890,6 @@ func (r *ReposGetParticipationStatsReq) dataStatuses() []int {
 
 func (r *ReposGetParticipationStatsReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ReposGetParticipationStatsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -10317,10 +10025,6 @@ func (r *ReposGetPullRequestReviewProtectionReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposGetPullRequestReviewProtectionReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposGetPullRequestReviewProtectionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -10436,10 +10140,6 @@ func (r *ReposGetPunchCardStatsReq) dataStatuses() []int {
 
 func (r *ReposGetPunchCardStatsReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ReposGetPunchCardStatsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -10568,10 +10268,6 @@ func (r *ReposGetReadmeReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposGetReadmeReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposGetReadmeReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -10690,10 +10386,6 @@ func (r *ReposGetReleaseReq) dataStatuses() []int {
 
 func (r *ReposGetReleaseReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ReposGetReleaseReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -10816,10 +10508,6 @@ func (r *ReposGetReleaseAssetReq) validStatuses() []int {
 	return []int{200, 302}
 }
 
-func (r *ReposGetReleaseAssetReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposGetReleaseAssetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -10938,10 +10626,6 @@ func (r *ReposGetReleaseByTagReq) dataStatuses() []int {
 
 func (r *ReposGetReleaseByTagReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ReposGetReleaseByTagReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -11064,10 +10748,6 @@ func (r *ReposGetStatusChecksProtectionReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposGetStatusChecksProtectionReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposGetStatusChecksProtectionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -11188,10 +10868,6 @@ func (r *ReposGetTeamsWithAccessToProtectedBranchReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposGetTeamsWithAccessToProtectedBranchReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposGetTeamsWithAccessToProtectedBranchReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -11309,10 +10985,6 @@ func (r *ReposGetTopPathsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposGetTopPathsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposGetTopPathsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -11428,10 +11100,6 @@ func (r *ReposGetTopReferrersReq) dataStatuses() []int {
 
 func (r *ReposGetTopReferrersReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ReposGetTopReferrersReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -11552,10 +11220,6 @@ func (r *ReposGetUsersWithAccessToProtectedBranchReq) dataStatuses() []int {
 
 func (r *ReposGetUsersWithAccessToProtectedBranchReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ReposGetUsersWithAccessToProtectedBranchReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -11681,10 +11345,6 @@ func (r *ReposGetViewsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposGetViewsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposGetViewsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -11801,10 +11461,6 @@ func (r *ReposGetWebhookReq) dataStatuses() []int {
 
 func (r *ReposGetWebhookReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ReposGetWebhookReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -11945,10 +11601,6 @@ func (r *ReposListBranchesReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposListBranchesReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposListBranchesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -12082,10 +11734,6 @@ func (r *ReposListBranchesForHeadCommitReq) dataStatuses() []int {
 
 func (r *ReposListBranchesForHeadCommitReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ReposListBranchesForHeadCommitReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -12227,10 +11875,6 @@ func (r *ReposListCollaboratorsReq) dataStatuses() []int {
 
 func (r *ReposListCollaboratorsReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ReposListCollaboratorsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -12379,10 +12023,6 @@ func (r *ReposListCommentsForCommitReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposListCommentsForCommitReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposListCommentsForCommitReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -12526,10 +12166,6 @@ func (r *ReposListCommitCommentsForRepoReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposListCommitCommentsForRepoReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposListCommitCommentsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -12660,10 +12296,6 @@ func (r *ReposListCommitStatusesForRefReq) dataStatuses() []int {
 
 func (r *ReposListCommitStatusesForRefReq) validStatuses() []int {
 	return []int{200, 301}
-}
-
-func (r *ReposListCommitStatusesForRefReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -12835,10 +12467,6 @@ func (r *ReposListCommitsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposListCommitsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposListCommitsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -12974,10 +12602,6 @@ func (r *ReposListContributorsReq) validStatuses() []int {
 	return []int{200, 204}
 }
 
-func (r *ReposListContributorsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposListContributorsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -13105,10 +12729,6 @@ func (r *ReposListDeployKeysReq) dataStatuses() []int {
 
 func (r *ReposListDeployKeysReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ReposListDeployKeysReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -13271,10 +12891,6 @@ func (r *ReposListDeploymentStatusesReq) dataStatuses() []int {
 
 func (r *ReposListDeploymentStatusesReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ReposListDeploymentStatusesReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -13445,10 +13061,6 @@ func (r *ReposListDeploymentsReq) dataStatuses() []int {
 
 func (r *ReposListDeploymentsReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ReposListDeploymentsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -13645,10 +13257,6 @@ func (r *ReposListForAuthenticatedUserReq) validStatuses() []int {
 	return []int{200, 304}
 }
 
-func (r *ReposListForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposListForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -13832,10 +13440,6 @@ func (r *ReposListForOrgReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposListForOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposListForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -14000,10 +13604,6 @@ func (r *ReposListForUserReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposListForUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposListForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -14139,10 +13739,6 @@ func (r *ReposListForksReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposListForksReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposListForksReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -14272,10 +13868,6 @@ func (r *ReposListInvitationsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposListInvitationsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposListInvitationsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -14403,10 +13995,6 @@ func (r *ReposListInvitationsForAuthenticatedUserReq) validStatuses() []int {
 	return []int{200, 304}
 }
 
-func (r *ReposListInvitationsForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposListInvitationsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -14522,10 +14110,6 @@ func (r *ReposListLanguagesReq) dataStatuses() []int {
 
 func (r *ReposListLanguagesReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ReposListLanguagesReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -14655,10 +14239,6 @@ func (r *ReposListPagesBuildsReq) dataStatuses() []int {
 
 func (r *ReposListPagesBuildsReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ReposListPagesBuildsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -14794,10 +14374,6 @@ func (r *ReposListPublicReq) dataStatuses() []int {
 
 func (r *ReposListPublicReq) validStatuses() []int {
 	return []int{200, 304}
-}
-
-func (r *ReposListPublicReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -14947,10 +14523,6 @@ func (r *ReposListPullRequestsAssociatedWithCommitReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposListPullRequestsAssociatedWithCommitReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposListPullRequestsAssociatedWithCommitReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -15083,10 +14655,6 @@ func (r *ReposListReleaseAssetsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposListReleaseAssetsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposListReleaseAssetsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -15214,10 +14782,6 @@ func (r *ReposListReleasesReq) dataStatuses() []int {
 
 func (r *ReposListReleasesReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ReposListReleasesReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -15349,10 +14913,6 @@ func (r *ReposListTagsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposListTagsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposListTagsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -15480,10 +15040,6 @@ func (r *ReposListTeamsReq) dataStatuses() []int {
 
 func (r *ReposListTeamsReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ReposListTeamsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -15615,10 +15171,6 @@ func (r *ReposListWebhooksReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposListWebhooksReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposListWebhooksReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -15738,10 +15290,6 @@ func (r *ReposMergeReq) dataStatuses() []int {
 
 func (r *ReposMergeReq) validStatuses() []int {
 	return []int{201}
-}
-
-func (r *ReposMergeReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -15882,10 +15430,6 @@ func (r *ReposPingWebhookReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *ReposPingWebhookReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrBoolean}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposPingWebhookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -16008,10 +15552,6 @@ func (r *ReposRemoveAppAccessRestrictionsReq) dataStatuses() []int {
 
 func (r *ReposRemoveAppAccessRestrictionsReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ReposRemoveAppAccessRestrictionsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -16138,10 +15678,6 @@ func (r *ReposRemoveCollaboratorReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *ReposRemoveCollaboratorReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposRemoveCollaboratorReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -16263,10 +15799,6 @@ func (r *ReposRemoveStatusCheckContextsReq) dataStatuses() []int {
 
 func (r *ReposRemoveStatusCheckContextsReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ReposRemoveStatusCheckContextsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -16402,10 +15934,6 @@ func (r *ReposRemoveStatusCheckProtectionReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *ReposRemoveStatusCheckProtectionReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposRemoveStatusCheckProtectionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -16527,10 +16055,6 @@ func (r *ReposRemoveTeamAccessRestrictionsReq) dataStatuses() []int {
 
 func (r *ReposRemoveTeamAccessRestrictionsReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ReposRemoveTeamAccessRestrictionsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -16662,10 +16186,6 @@ func (r *ReposRemoveUserAccessRestrictionsReq) dataStatuses() []int {
 
 func (r *ReposRemoveUserAccessRestrictionsReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ReposRemoveUserAccessRestrictionsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -16809,10 +16329,6 @@ func (r *ReposReplaceAllTopicsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposReplaceAllTopicsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposReplaceAllTopicsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -16946,10 +16462,6 @@ func (r *ReposRequestPagesBuildReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *ReposRequestPagesBuildReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposRequestPagesBuildReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -17068,10 +16580,6 @@ func (r *ReposSetAdminBranchProtectionReq) dataStatuses() []int {
 
 func (r *ReposSetAdminBranchProtectionReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ReposSetAdminBranchProtectionReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -17196,10 +16704,6 @@ func (r *ReposSetAppAccessRestrictionsReq) dataStatuses() []int {
 
 func (r *ReposSetAppAccessRestrictionsReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ReposSetAppAccessRestrictionsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -17331,10 +16835,6 @@ func (r *ReposSetStatusCheckContextsReq) dataStatuses() []int {
 
 func (r *ReposSetStatusCheckContextsReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ReposSetStatusCheckContextsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -17475,10 +16975,6 @@ func (r *ReposSetTeamAccessRestrictionsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposSetTeamAccessRestrictionsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposSetTeamAccessRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -17610,10 +17106,6 @@ func (r *ReposSetUserAccessRestrictionsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposSetUserAccessRestrictionsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposSetUserAccessRestrictionsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -17742,10 +17234,6 @@ func (r *ReposTestPushWebhookReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *ReposTestPushWebhookReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrBoolean}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposTestPushWebhookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -17865,10 +17353,6 @@ func (r *ReposTransferReq) dataStatuses() []int {
 
 func (r *ReposTransferReq) validStatuses() []int {
 	return []int{202}
-}
-
-func (r *ReposTransferReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -18032,10 +17516,6 @@ func (r *ReposUpdateReq) dataStatuses() []int {
 
 func (r *ReposUpdateReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ReposUpdateReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -18254,10 +17734,6 @@ func (r *ReposUpdateBranchProtectionReq) dataStatuses() []int {
 
 func (r *ReposUpdateBranchProtectionReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ReposUpdateBranchProtectionReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -18495,10 +17971,6 @@ func (r *ReposUpdateCommitCommentReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposUpdateCommitCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposUpdateCommitCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -18625,10 +18097,6 @@ func (r *ReposUpdateInformationAboutPagesSiteReq) dataStatuses() []int {
 
 func (r *ReposUpdateInformationAboutPagesSiteReq) validStatuses() []int {
 	return []int{204}
-}
-
-func (r *ReposUpdateInformationAboutPagesSiteReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -18769,10 +18237,6 @@ func (r *ReposUpdateInvitationReq) dataStatuses() []int {
 
 func (r *ReposUpdateInvitationReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ReposUpdateInvitationReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -18924,10 +18388,6 @@ func (r *ReposUpdatePullRequestReviewProtectionReq) dataStatuses() []int {
 
 func (r *ReposUpdatePullRequestReviewProtectionReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ReposUpdatePullRequestReviewProtectionReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -19089,10 +18549,6 @@ func (r *ReposUpdateReleaseReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposUpdateReleaseReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposUpdateReleaseReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -19247,10 +18703,6 @@ func (r *ReposUpdateReleaseAssetReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposUpdateReleaseAssetReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposUpdateReleaseAssetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -19390,10 +18842,6 @@ func (r *ReposUpdateStatusCheckProtectionReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReposUpdateStatusCheckProtectionReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReposUpdateStatusCheckProtectionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -19528,10 +18976,6 @@ func (r *ReposUpdateWebhookReq) dataStatuses() []int {
 
 func (r *ReposUpdateWebhookReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ReposUpdateWebhookReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -19732,10 +19176,6 @@ func (r *ReposUploadReleaseAssetReq) dataStatuses() []int {
 
 func (r *ReposUploadReleaseAssetReq) validStatuses() []int {
 	return []int{201}
-}
-
-func (r *ReposUploadReleaseAssetReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrBodyUploader, attrExplicitURL}
 }
 
 // HTTPRequest builds an *http.Request

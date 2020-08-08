@@ -143,10 +143,6 @@ func (r *SearchCodeReq) validStatuses() []int {
 	return []int{200, 304}
 }
 
-func (r *SearchCodeReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *SearchCodeReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -334,10 +330,6 @@ func (r *SearchCommitsReq) validStatuses() []int {
 	return []int{200, 304}
 }
 
-func (r *SearchCommitsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *SearchCommitsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -513,10 +505,6 @@ func (r *SearchIssuesAndPullRequestsReq) validStatuses() []int {
 	return []int{200, 304}
 }
 
-func (r *SearchIssuesAndPullRequestsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *SearchIssuesAndPullRequestsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -677,10 +665,6 @@ func (r *SearchLabelsReq) dataStatuses() []int {
 
 func (r *SearchLabelsReq) validStatuses() []int {
 	return []int{200, 304}
-}
-
-func (r *SearchLabelsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -866,10 +850,6 @@ func (r *SearchReposReq) validStatuses() []int {
 	return []int{200, 304}
 }
 
-func (r *SearchReposReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *SearchReposReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1019,10 +999,6 @@ func (r *SearchTopicsReq) dataStatuses() []int {
 
 func (r *SearchTopicsReq) validStatuses() []int {
 	return []int{200, 304}
-}
-
-func (r *SearchTopicsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -1195,10 +1171,6 @@ func (r *SearchUsersReq) dataStatuses() []int {
 
 func (r *SearchUsersReq) validStatuses() []int {
 	return []int{200, 304}
-}
-
-func (r *SearchUsersReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request

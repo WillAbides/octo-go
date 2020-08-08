@@ -123,10 +123,6 @@ func (r *ReactionsCreateForCommitCommentReq) validStatuses() []int {
 	return []int{200, 201}
 }
 
-func (r *ReactionsCreateForCommitCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReactionsCreateForCommitCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -277,10 +273,6 @@ func (r *ReactionsCreateForIssueReq) dataStatuses() []int {
 
 func (r *ReactionsCreateForIssueReq) validStatuses() []int {
 	return []int{201}
-}
-
-func (r *ReactionsCreateForIssueReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -435,10 +427,6 @@ func (r *ReactionsCreateForIssueCommentReq) validStatuses() []int {
 	return []int{200, 201}
 }
 
-func (r *ReactionsCreateForIssueCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReactionsCreateForIssueCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -589,10 +577,6 @@ func (r *ReactionsCreateForPullRequestReviewCommentReq) dataStatuses() []int {
 
 func (r *ReactionsCreateForPullRequestReviewCommentReq) validStatuses() []int {
 	return []int{200, 201}
-}
-
-func (r *ReactionsCreateForPullRequestReviewCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -751,10 +735,6 @@ func (r *ReactionsCreateForTeamDiscussionCommentInOrgReq) validStatuses() []int 
 	return []int{201}
 }
 
-func (r *ReactionsCreateForTeamDiscussionCommentInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReactionsCreateForTeamDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -903,10 +883,6 @@ func (r *ReactionsCreateForTeamDiscussionCommentLegacyReq) dataStatuses() []int 
 
 func (r *ReactionsCreateForTeamDiscussionCommentLegacyReq) validStatuses() []int {
 	return []int{201}
-}
-
-func (r *ReactionsCreateForTeamDiscussionCommentLegacyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -1061,10 +1037,6 @@ func (r *ReactionsCreateForTeamDiscussionInOrgReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *ReactionsCreateForTeamDiscussionInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReactionsCreateForTeamDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1212,10 +1184,6 @@ func (r *ReactionsCreateForTeamDiscussionLegacyReq) dataStatuses() []int {
 
 func (r *ReactionsCreateForTeamDiscussionLegacyReq) validStatuses() []int {
 	return []int{201}
-}
-
-func (r *ReactionsCreateForTeamDiscussionLegacyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -1366,10 +1334,6 @@ func (r *ReactionsDeleteForCommitCommentReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *ReactionsDeleteForCommitCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReactionsDeleteForCommitCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1504,10 +1468,6 @@ func (r *ReactionsDeleteForIssueReq) dataStatuses() []int {
 
 func (r *ReactionsDeleteForIssueReq) validStatuses() []int {
 	return []int{204}
-}
-
-func (r *ReactionsDeleteForIssueReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -1646,10 +1606,6 @@ func (r *ReactionsDeleteForIssueCommentReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *ReactionsDeleteForIssueCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReactionsDeleteForIssueCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1786,10 +1742,6 @@ func (r *ReactionsDeleteForPullRequestCommentReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *ReactionsDeleteForPullRequestCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReactionsDeleteForPullRequestCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1924,10 +1876,6 @@ func (r *ReactionsDeleteForTeamDiscussionReq) dataStatuses() []int {
 
 func (r *ReactionsDeleteForTeamDiscussionReq) validStatuses() []int {
 	return []int{204}
-}
-
-func (r *ReactionsDeleteForTeamDiscussionReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -2067,10 +2015,6 @@ func (r *ReactionsDeleteForTeamDiscussionCommentReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *ReactionsDeleteForTeamDiscussionCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReactionsDeleteForTeamDiscussionCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -2200,10 +2144,6 @@ func (r *ReactionsDeleteLegacyReq) dataStatuses() []int {
 
 func (r *ReactionsDeleteLegacyReq) validStatuses() []int {
 	return []int{204, 304}
-}
-
-func (r *ReactionsDeleteLegacyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -2362,10 +2302,6 @@ func (r *ReactionsListForCommitCommentReq) dataStatuses() []int {
 
 func (r *ReactionsListForCommitCommentReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ReactionsListForCommitCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -2527,10 +2463,6 @@ func (r *ReactionsListForIssueReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReactionsListForIssueReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReactionsListForIssueReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -2690,10 +2622,6 @@ func (r *ReactionsListForIssueCommentReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReactionsListForIssueCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReactionsListForIssueCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -2851,10 +2779,6 @@ func (r *ReactionsListForPullRequestReviewCommentReq) dataStatuses() []int {
 
 func (r *ReactionsListForPullRequestReviewCommentReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ReactionsListForPullRequestReviewCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -3017,10 +2941,6 @@ func (r *ReactionsListForTeamDiscussionCommentInOrgReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReactionsListForTeamDiscussionCommentInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReactionsListForTeamDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -3176,10 +3096,6 @@ func (r *ReactionsListForTeamDiscussionCommentLegacyReq) dataStatuses() []int {
 
 func (r *ReactionsListForTeamDiscussionCommentLegacyReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ReactionsListForTeamDiscussionCommentLegacyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -3341,10 +3257,6 @@ func (r *ReactionsListForTeamDiscussionInOrgReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ReactionsListForTeamDiscussionInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ReactionsListForTeamDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -3499,10 +3411,6 @@ func (r *ReactionsListForTeamDiscussionLegacyReq) dataStatuses() []int {
 
 func (r *ReactionsListForTeamDiscussionLegacyReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ReactionsListForTeamDiscussionLegacyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request

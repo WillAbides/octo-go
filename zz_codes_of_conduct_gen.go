@@ -109,10 +109,6 @@ func (r *CodesOfConductGetAllCodesOfConductReq) validStatuses() []int {
 	return []int{200, 304}
 }
 
-func (r *CodesOfConductGetAllCodesOfConductReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *CodesOfConductGetAllCodesOfConductReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -244,10 +240,6 @@ func (r *CodesOfConductGetConductCodeReq) validStatuses() []int {
 	return []int{200, 304}
 }
 
-func (r *CodesOfConductGetConductCodeReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *CodesOfConductGetConductCodeReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -376,10 +368,6 @@ func (r *CodesOfConductGetForRepoReq) dataStatuses() []int {
 
 func (r *CodesOfConductGetForRepoReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *CodesOfConductGetForRepoReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request

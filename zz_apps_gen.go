@@ -114,10 +114,6 @@ func (r *AppsAddRepoToInstallationReq) validStatuses() []int {
 	return []int{204, 304}
 }
 
-func (r *AppsAddRepoToInstallationReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *AppsAddRepoToInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -232,10 +228,6 @@ func (r *AppsCheckAuthorizationReq) dataStatuses() []int {
 
 func (r *AppsCheckAuthorizationReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *AppsCheckAuthorizationReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -416,10 +408,6 @@ func (r *AppsCheckTokenReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *AppsCheckTokenReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *AppsCheckTokenReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -565,10 +553,6 @@ func (r *AppsCreateContentAttachmentReq) validStatuses() []int {
 	return []int{200, 304}
 }
 
-func (r *AppsCreateContentAttachmentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *AppsCreateContentAttachmentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -699,10 +683,6 @@ func (r *AppsCreateFromManifestReq) dataStatuses() []int {
 
 func (r *AppsCreateFromManifestReq) validStatuses() []int {
 	return []int{201}
-}
-
-func (r *AppsCreateFromManifestReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -896,10 +876,6 @@ func (r *AppsCreateInstallationAccessTokenReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *AppsCreateInstallationAccessTokenReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *AppsCreateInstallationAccessTokenReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1032,10 +1008,6 @@ func (r *AppsDeleteAuthorizationReq) dataStatuses() []int {
 
 func (r *AppsDeleteAuthorizationReq) validStatuses() []int {
 	return []int{204}
-}
-
-func (r *AppsDeleteAuthorizationReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -1181,10 +1153,6 @@ func (r *AppsDeleteInstallationReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *AppsDeleteInstallationReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrBoolean}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *AppsDeleteInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1299,10 +1267,6 @@ func (r *AppsDeleteTokenReq) dataStatuses() []int {
 
 func (r *AppsDeleteTokenReq) validStatuses() []int {
 	return []int{204}
-}
-
-func (r *AppsDeleteTokenReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -1442,10 +1406,6 @@ func (r *AppsGetAuthenticatedReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *AppsGetAuthenticatedReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *AppsGetAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1574,10 +1534,6 @@ func (r *AppsGetBySlugReq) dataStatuses() []int {
 
 func (r *AppsGetBySlugReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *AppsGetBySlugReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -1710,10 +1666,6 @@ func (r *AppsGetInstallationReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *AppsGetInstallationReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *AppsGetInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1840,10 +1792,6 @@ func (r *AppsGetOrgInstallationReq) dataStatuses() []int {
 
 func (r *AppsGetOrgInstallationReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *AppsGetOrgInstallationReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -1975,10 +1923,6 @@ func (r *AppsGetRepoInstallationReq) validStatuses() []int {
 	return []int{200, 301}
 }
 
-func (r *AppsGetRepoInstallationReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *AppsGetRepoInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -2097,10 +2041,6 @@ func (r *AppsGetSubscriptionPlanForAccountReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *AppsGetSubscriptionPlanForAccountReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *AppsGetSubscriptionPlanForAccountReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -2217,10 +2157,6 @@ func (r *AppsGetSubscriptionPlanForAccountStubbedReq) dataStatuses() []int {
 
 func (r *AppsGetSubscriptionPlanForAccountStubbedReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *AppsGetSubscriptionPlanForAccountStubbedReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -2349,10 +2285,6 @@ func (r *AppsGetUserInstallationReq) dataStatuses() []int {
 
 func (r *AppsGetUserInstallationReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *AppsGetUserInstallationReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -2503,10 +2435,6 @@ func (r *AppsListAccountsForPlanReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *AppsListAccountsForPlanReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *AppsListAccountsForPlanReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -2653,10 +2581,6 @@ func (r *AppsListAccountsForPlanStubbedReq) dataStatuses() []int {
 
 func (r *AppsListAccountsForPlanStubbedReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *AppsListAccountsForPlanStubbedReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -2810,10 +2734,6 @@ func (r *AppsListInstallationReposForAuthenticatedUserReq) dataStatuses() []int 
 
 func (r *AppsListInstallationReposForAuthenticatedUserReq) validStatuses() []int {
 	return []int{200, 304}
-}
-
-func (r *AppsListInstallationReposForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -2980,10 +2900,6 @@ func (r *AppsListInstallationsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *AppsListInstallationsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *AppsListInstallationsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -3123,10 +3039,6 @@ func (r *AppsListInstallationsForAuthenticatedUserReq) validStatuses() []int {
 	return []int{200, 304}
 }
 
-func (r *AppsListInstallationsForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *AppsListInstallationsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -3264,10 +3176,6 @@ func (r *AppsListPlansReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *AppsListPlansReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *AppsListPlansReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -3393,10 +3301,6 @@ func (r *AppsListPlansStubbedReq) dataStatuses() []int {
 
 func (r *AppsListPlansStubbedReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *AppsListPlansStubbedReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -3549,10 +3453,6 @@ func (r *AppsListReposAccessibleToInstallationReq) validStatuses() []int {
 	return []int{200, 304}
 }
 
-func (r *AppsListReposAccessibleToInstallationReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *AppsListReposAccessibleToInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -3691,10 +3591,6 @@ func (r *AppsListSubscriptionsForAuthenticatedUserReq) validStatuses() []int {
 	return []int{200, 304}
 }
 
-func (r *AppsListSubscriptionsForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *AppsListSubscriptionsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -3820,10 +3716,6 @@ func (r *AppsListSubscriptionsForAuthenticatedUserStubbedReq) dataStatuses() []i
 
 func (r *AppsListSubscriptionsForAuthenticatedUserStubbedReq) validStatuses() []int {
 	return []int{200, 304}
-}
-
-func (r *AppsListSubscriptionsForAuthenticatedUserStubbedReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -3958,10 +3850,6 @@ func (r *AppsRemoveRepoFromInstallationReq) validStatuses() []int {
 	return []int{204, 304}
 }
 
-func (r *AppsRemoveRepoFromInstallationReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *AppsRemoveRepoFromInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -4076,10 +3964,6 @@ func (r *AppsResetAuthorizationReq) dataStatuses() []int {
 
 func (r *AppsResetAuthorizationReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *AppsResetAuthorizationReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -4200,10 +4084,6 @@ func (r *AppsResetTokenReq) dataStatuses() []int {
 
 func (r *AppsResetTokenReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *AppsResetTokenReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -4333,10 +4213,6 @@ func (r *AppsRevokeAuthorizationForApplicationReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *AppsRevokeAuthorizationForApplicationReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *AppsRevokeAuthorizationForApplicationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -4452,10 +4328,6 @@ func (r *AppsRevokeGrantForApplicationReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *AppsRevokeGrantForApplicationReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *AppsRevokeGrantForApplicationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -4567,10 +4439,6 @@ func (r *AppsRevokeInstallationAccessTokenReq) dataStatuses() []int {
 
 func (r *AppsRevokeInstallationAccessTokenReq) validStatuses() []int {
 	return []int{204}
-}
-
-func (r *AppsRevokeInstallationAccessTokenReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -4693,10 +4561,6 @@ func (r *AppsSuspendInstallationReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *AppsSuspendInstallationReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrBoolean}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *AppsSuspendInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -4816,10 +4680,6 @@ func (r *AppsUnsuspendInstallationReq) dataStatuses() []int {
 
 func (r *AppsUnsuspendInstallationReq) validStatuses() []int {
 	return []int{204}
-}
-
-func (r *AppsUnsuspendInstallationReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrBoolean}
 }
 
 // HTTPRequest builds an *http.Request

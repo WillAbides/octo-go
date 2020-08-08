@@ -82,7 +82,6 @@ func addRequestStruct(file *jen.File, endpoint *model.Endpoint) {
 		reqBodyFunc,
 		reqDataStatusesFunc,
 		reqValidStatusesFunc,
-		reqEndpointAttributesFunc,
 		reqHTTPRequestFunc,
 		reqRelReqFunc,
 	} {
@@ -138,21 +137,6 @@ func reqDataStatusesFunc(file *jen.File, endpoint *model.Endpoint) {
 			}
 		}),
 	)
-}
-
-func reqEndpointAttributesFunc(file *jen.File, endpoint *model.Endpoint) {
-	structName := reqStructName(endpoint)
-	file.Func().Params(
-		jen.Id("r").Id("*" + structName),
-	).Id("endpointAttributes()").Params(
-		jen.Id("[]endpointAttribute"),
-	).Block(
-		jen.Return(jen.Id("[]endpointAttribute").ValuesFunc(func(group *jen.Group) {
-			for _, attr := range getEndpointAttributes(endpoint) {
-				group.Id(attr.String())
-			}
-		}),
-		))
 }
 
 func reqValidStatusesFunc(file *jen.File, endpoint *model.Endpoint) {

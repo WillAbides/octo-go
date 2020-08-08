@@ -96,10 +96,6 @@ func (r *RateLimitGetReq) validStatuses() []int {
 	return []int{200, 304}
 }
 
-func (r *RateLimitGetReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *RateLimitGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)

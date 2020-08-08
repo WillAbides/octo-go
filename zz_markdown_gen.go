@@ -96,10 +96,6 @@ func (r *MarkdownRenderReq) validStatuses() []int {
 	return []int{200, 304}
 }
 
-func (r *MarkdownRenderReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *MarkdownRenderReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -231,10 +227,6 @@ func (r *MarkdownRenderRawReq) dataStatuses() []int {
 
 func (r *MarkdownRenderRawReq) validStatuses() []int {
 	return []int{200, 304}
-}
-
-func (r *MarkdownRenderRawReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrBodyUploader}
 }
 
 // HTTPRequest builds an *http.Request

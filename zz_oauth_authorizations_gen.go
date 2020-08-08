@@ -101,10 +101,6 @@ func (r *OauthAuthorizationsCreateAuthorizationReq) validStatuses() []int {
 	return []int{201, 304}
 }
 
-func (r *OauthAuthorizationsCreateAuthorizationReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *OauthAuthorizationsCreateAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -248,10 +244,6 @@ func (r *OauthAuthorizationsDeleteAuthorizationReq) validStatuses() []int {
 	return []int{204, 304}
 }
 
-func (r *OauthAuthorizationsDeleteAuthorizationReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *OauthAuthorizationsDeleteAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -366,10 +358,6 @@ func (r *OauthAuthorizationsDeleteGrantReq) dataStatuses() []int {
 
 func (r *OauthAuthorizationsDeleteGrantReq) validStatuses() []int {
 	return []int{204, 304}
-}
-
-func (r *OauthAuthorizationsDeleteGrantReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -487,10 +475,6 @@ func (r *OauthAuthorizationsGetAuthorizationReq) dataStatuses() []int {
 
 func (r *OauthAuthorizationsGetAuthorizationReq) validStatuses() []int {
 	return []int{200, 304}
-}
-
-func (r *OauthAuthorizationsGetAuthorizationReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -611,10 +595,6 @@ func (r *OauthAuthorizationsGetGrantReq) validStatuses() []int {
 	return []int{200, 304}
 }
 
-func (r *OauthAuthorizationsGetGrantReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *OauthAuthorizationsGetGrantReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -733,10 +713,6 @@ func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppReq) dataStatuses() []
 
 func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppReq) validStatuses() []int {
 	return []int{200, 201, 304}
-}
-
-func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -883,10 +859,6 @@ func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) dat
 
 func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) validStatuses() []int {
 	return []int{200, 201}
-}
-
-func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -1036,10 +1008,6 @@ func (r *OauthAuthorizationsListAuthorizationsReq) validStatuses() []int {
 	return []int{200, 304}
 }
 
-func (r *OauthAuthorizationsListAuthorizationsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *OauthAuthorizationsListAuthorizationsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1167,10 +1135,6 @@ func (r *OauthAuthorizationsListGrantsReq) validStatuses() []int {
 	return []int{200, 304}
 }
 
-func (r *OauthAuthorizationsListGrantsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *OauthAuthorizationsListGrantsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1291,10 +1255,6 @@ func (r *OauthAuthorizationsUpdateAuthorizationReq) dataStatuses() []int {
 
 func (r *OauthAuthorizationsUpdateAuthorizationReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *OauthAuthorizationsUpdateAuthorizationReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request

@@ -102,10 +102,6 @@ func (r *UsersAddEmailForAuthenticatedReq) validStatuses() []int {
 	return []int{201, 304}
 }
 
-func (r *UsersAddEmailForAuthenticatedReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *UsersAddEmailForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -237,10 +233,6 @@ func (r *UsersBlockReq) validStatuses() []int {
 	return []int{204, 304}
 }
 
-func (r *UsersBlockReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *UsersBlockReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -353,10 +345,6 @@ func (r *UsersCheckBlockedReq) dataStatuses() []int {
 
 func (r *UsersCheckBlockedReq) validStatuses() []int {
 	return []int{204, 304}
-}
-
-func (r *UsersCheckBlockedReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -480,10 +468,6 @@ func (r *UsersCheckFollowingForUserReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *UsersCheckFollowingForUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrBoolean}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *UsersCheckFollowingForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -597,10 +581,6 @@ func (r *UsersCheckPersonIsFollowedByAuthenticatedReq) dataStatuses() []int {
 
 func (r *UsersCheckPersonIsFollowedByAuthenticatedReq) validStatuses() []int {
 	return []int{204, 304}
-}
-
-func (r *UsersCheckPersonIsFollowedByAuthenticatedReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -719,10 +699,6 @@ func (r *UsersCreateGpgKeyForAuthenticatedReq) dataStatuses() []int {
 
 func (r *UsersCreateGpgKeyForAuthenticatedReq) validStatuses() []int {
 	return []int{201, 304}
-}
-
-func (r *UsersCreateGpgKeyForAuthenticatedReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -855,10 +831,6 @@ func (r *UsersCreatePublicSshKeyForAuthenticatedReq) validStatuses() []int {
 	return []int{201, 304}
 }
 
-func (r *UsersCreatePublicSshKeyForAuthenticatedReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *UsersCreatePublicSshKeyForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -988,10 +960,6 @@ func (r *UsersDeleteEmailForAuthenticatedReq) validStatuses() []int {
 	return []int{204, 304}
 }
 
-func (r *UsersDeleteEmailForAuthenticatedReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *UsersDeleteEmailForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1119,10 +1087,6 @@ func (r *UsersDeleteGpgKeyForAuthenticatedReq) validStatuses() []int {
 	return []int{204, 304}
 }
 
-func (r *UsersDeleteGpgKeyForAuthenticatedReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *UsersDeleteGpgKeyForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1239,10 +1203,6 @@ func (r *UsersDeletePublicSshKeyForAuthenticatedReq) validStatuses() []int {
 	return []int{204, 304}
 }
 
-func (r *UsersDeletePublicSshKeyForAuthenticatedReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *UsersDeletePublicSshKeyForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1357,10 +1317,6 @@ func (r *UsersFollowReq) validStatuses() []int {
 	return []int{204, 304}
 }
 
-func (r *UsersFollowReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *UsersFollowReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1473,10 +1429,6 @@ func (r *UsersGetAuthenticatedReq) dataStatuses() []int {
 
 func (r *UsersGetAuthenticatedReq) validStatuses() []int {
 	return []int{200, 304}
-}
-
-func (r *UsersGetAuthenticatedReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -1656,10 +1608,6 @@ func (r *UsersGetByUsernameReq) dataStatuses() []int {
 
 func (r *UsersGetByUsernameReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *UsersGetByUsernameReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -1860,10 +1808,6 @@ func (r *UsersGetContextForUserReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *UsersGetContextForUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *UsersGetContextForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1982,10 +1926,6 @@ func (r *UsersGetGpgKeyForAuthenticatedReq) validStatuses() []int {
 	return []int{200, 304}
 }
 
-func (r *UsersGetGpgKeyForAuthenticatedReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *UsersGetGpgKeyForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -2102,10 +2042,6 @@ func (r *UsersGetPublicSshKeyForAuthenticatedReq) dataStatuses() []int {
 
 func (r *UsersGetPublicSshKeyForAuthenticatedReq) validStatuses() []int {
 	return []int{200, 304}
-}
-
-func (r *UsersGetPublicSshKeyForAuthenticatedReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -2239,10 +2175,6 @@ func (r *UsersListReq) validStatuses() []int {
 	return []int{200, 304}
 }
 
-func (r *UsersListReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *UsersListReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -2356,10 +2288,6 @@ func (r *UsersListBlockedByAuthenticatedReq) dataStatuses() []int {
 
 func (r *UsersListBlockedByAuthenticatedReq) validStatuses() []int {
 	return []int{200, 304}
-}
-
-func (r *UsersListBlockedByAuthenticatedReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -2489,10 +2417,6 @@ func (r *UsersListEmailsForAuthenticatedReq) validStatuses() []int {
 	return []int{200, 304}
 }
 
-func (r *UsersListEmailsForAuthenticatedReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *UsersListEmailsForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -2620,10 +2544,6 @@ func (r *UsersListFollowedByAuthenticatedReq) validStatuses() []int {
 	return []int{200, 304}
 }
 
-func (r *UsersListFollowedByAuthenticatedReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *UsersListFollowedByAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -2749,10 +2669,6 @@ func (r *UsersListFollowersForAuthenticatedUserReq) dataStatuses() []int {
 
 func (r *UsersListFollowersForAuthenticatedUserReq) validStatuses() []int {
 	return []int{200, 304}
-}
-
-func (r *UsersListFollowersForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -2883,10 +2799,6 @@ func (r *UsersListFollowersForUserReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *UsersListFollowersForUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *UsersListFollowersForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -3015,10 +2927,6 @@ func (r *UsersListFollowingForUserReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *UsersListFollowingForUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *UsersListFollowingForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -3144,10 +3052,6 @@ func (r *UsersListGpgKeysForAuthenticatedReq) dataStatuses() []int {
 
 func (r *UsersListGpgKeysForAuthenticatedReq) validStatuses() []int {
 	return []int{200, 304}
-}
-
-func (r *UsersListGpgKeysForAuthenticatedReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -3278,10 +3182,6 @@ func (r *UsersListGpgKeysForUserReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *UsersListGpgKeysForUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *UsersListGpgKeysForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -3407,10 +3307,6 @@ func (r *UsersListPublicEmailsForAuthenticatedReq) dataStatuses() []int {
 
 func (r *UsersListPublicEmailsForAuthenticatedReq) validStatuses() []int {
 	return []int{200, 304}
-}
-
-func (r *UsersListPublicEmailsForAuthenticatedReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -3541,10 +3437,6 @@ func (r *UsersListPublicKeysForUserReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *UsersListPublicKeysForUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *UsersListPublicKeysForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -3672,10 +3564,6 @@ func (r *UsersListPublicSshKeysForAuthenticatedReq) validStatuses() []int {
 	return []int{200, 304}
 }
 
-func (r *UsersListPublicSshKeysForAuthenticatedReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *UsersListPublicSshKeysForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -3793,10 +3681,6 @@ func (r *UsersSetPrimaryEmailVisibilityForAuthenticatedReq) dataStatuses() []int
 
 func (r *UsersSetPrimaryEmailVisibilityForAuthenticatedReq) validStatuses() []int {
 	return []int{200, 304}
-}
-
-func (r *UsersSetPrimaryEmailVisibilityForAuthenticatedReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -3928,10 +3812,6 @@ func (r *UsersUnblockReq) validStatuses() []int {
 	return []int{204, 304}
 }
 
-func (r *UsersUnblockReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *UsersUnblockReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -4044,10 +3924,6 @@ func (r *UsersUnfollowReq) dataStatuses() []int {
 
 func (r *UsersUnfollowReq) validStatuses() []int {
 	return []int{204, 304}
-}
-
-func (r *UsersUnfollowReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -4166,10 +4042,6 @@ func (r *UsersUpdateAuthenticatedReq) dataStatuses() []int {
 
 func (r *UsersUpdateAuthenticatedReq) validStatuses() []int {
 	return []int{200, 304}
-}
-
-func (r *UsersUpdateAuthenticatedReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request

@@ -7,6 +7,8 @@ import (
 	"io"
 	"io/ioutil"
 	"net/http"
+
+	"github.com/willabides/octo-go/internal"
 )
 
 func errorCheck(resp *response) error {
@@ -37,10 +39,10 @@ func (e *UnexpectedStatusCodeError) Error() string {
 
 func unexpectedStatusCheck(resp *response) error {
 	valid := resp.httpRequester.validStatuses()
-	if hasEndpointAttribute(resp.httpRequester, attrRedirectOnly) {
+	if internal.ReqHasEndpointAttribute(resp.httpRequester, internal.AttrRedirectOnly) {
 		return nil
 	}
-	if hasEndpointAttribute(resp.httpRequester, attrBoolean) {
+	if internal.ReqHasEndpointAttribute(resp.httpRequester, internal.AttrBoolean) {
 		valid = append(valid, 404)
 	}
 	statusCode := resp.httpResponse.StatusCode
@@ -74,7 +76,7 @@ func clientErrorCheck(resp *response) error {
 	}
 
 	// 404 isn't an error for boolean endpoints ¯\_(ツ)_/¯
-	if hasEndpointAttribute(resp.httpRequester, attrBoolean) && statusCode == 404 {
+	if internal.ReqHasEndpointAttribute(resp.httpRequester, internal.AttrBoolean) && statusCode == 404 {
 		return nil
 	}
 

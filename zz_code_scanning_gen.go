@@ -101,10 +101,6 @@ func (r *CodeScanningGetAlertReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *CodeScanningGetAlertReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *CodeScanningGetAlertReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -235,10 +231,6 @@ func (r *CodeScanningListAlertsForRepoReq) dataStatuses() []int {
 
 func (r *CodeScanningListAlertsForRepoReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *CodeScanningListAlertsForRepoReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request

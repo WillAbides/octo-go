@@ -98,10 +98,6 @@ func (r *OrgsBlockUserReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *OrgsBlockUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *OrgsBlockUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -221,10 +217,6 @@ func (r *OrgsCheckBlockedUserReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *OrgsCheckBlockedUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrBoolean}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *OrgsCheckBlockedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -339,10 +331,6 @@ func (r *OrgsCheckMembershipForUserReq) dataStatuses() []int {
 
 func (r *OrgsCheckMembershipForUserReq) validStatuses() []int {
 	return []int{204, 302}
-}
-
-func (r *OrgsCheckMembershipForUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -464,10 +452,6 @@ func (r *OrgsCheckPublicMembershipForUserReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *OrgsCheckPublicMembershipForUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrBoolean}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *OrgsCheckPublicMembershipForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -582,10 +566,6 @@ func (r *OrgsConvertMemberToOutsideCollaboratorReq) dataStatuses() []int {
 
 func (r *OrgsConvertMemberToOutsideCollaboratorReq) validStatuses() []int {
 	return []int{202, 204}
-}
-
-func (r *OrgsConvertMemberToOutsideCollaboratorReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -705,10 +685,6 @@ func (r *OrgsCreateInvitationReq) dataStatuses() []int {
 
 func (r *OrgsCreateInvitationReq) validStatuses() []int {
 	return []int{201}
-}
-
-func (r *OrgsCreateInvitationReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -860,10 +836,6 @@ func (r *OrgsCreateWebhookReq) dataStatuses() []int {
 
 func (r *OrgsCreateWebhookReq) validStatuses() []int {
 	return []int{201}
-}
-
-func (r *OrgsCreateWebhookReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -1038,10 +1010,6 @@ func (r *OrgsDeleteWebhookReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *OrgsDeleteWebhookReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrBoolean}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *OrgsDeleteWebhookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1176,10 +1144,6 @@ func (r *OrgsGetReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *OrgsGetReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *OrgsGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1294,10 +1258,6 @@ func (r *OrgsGetMembershipForAuthenticatedUserReq) dataStatuses() []int {
 
 func (r *OrgsGetMembershipForAuthenticatedUserReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *OrgsGetMembershipForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -1417,10 +1377,6 @@ func (r *OrgsGetMembershipForUserReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *OrgsGetMembershipForUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *OrgsGetMembershipForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1536,10 +1492,6 @@ func (r *OrgsGetWebhookReq) dataStatuses() []int {
 
 func (r *OrgsGetWebhookReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *OrgsGetWebhookReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -1671,10 +1623,6 @@ func (r *OrgsListReq) dataStatuses() []int {
 
 func (r *OrgsListReq) validStatuses() []int {
 	return []int{200, 304}
-}
-
-func (r *OrgsListReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -1817,10 +1765,6 @@ func (r *OrgsListAppInstallationsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *OrgsListAppInstallationsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *OrgsListAppInstallationsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1945,10 +1889,6 @@ func (r *OrgsListBlockedUsersReq) dataStatuses() []int {
 
 func (r *OrgsListBlockedUsersReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *OrgsListBlockedUsersReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -2078,10 +2018,6 @@ func (r *OrgsListForAuthenticatedUserReq) validStatuses() []int {
 	return []int{200, 304}
 }
 
-func (r *OrgsListForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *OrgsListForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -2208,10 +2144,6 @@ func (r *OrgsListForUserReq) dataStatuses() []int {
 
 func (r *OrgsListForUserReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *OrgsListForUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -2343,10 +2275,6 @@ func (r *OrgsListInvitationTeamsReq) dataStatuses() []int {
 
 func (r *OrgsListInvitationTeamsReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *OrgsListInvitationTeamsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -2500,10 +2428,6 @@ func (r *OrgsListMembersReq) validStatuses() []int {
 	return []int{200, 302}
 }
 
-func (r *OrgsListMembersReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *OrgsListMembersReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -2639,10 +2563,6 @@ func (r *OrgsListMembershipsForAuthenticatedUserReq) dataStatuses() []int {
 
 func (r *OrgsListMembershipsForAuthenticatedUserReq) validStatuses() []int {
 	return []int{200, 304}
-}
-
-func (r *OrgsListMembershipsForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -2784,10 +2704,6 @@ func (r *OrgsListOutsideCollaboratorsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *OrgsListOutsideCollaboratorsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *OrgsListOutsideCollaboratorsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -2914,10 +2830,6 @@ func (r *OrgsListPendingInvitationsReq) dataStatuses() []int {
 
 func (r *OrgsListPendingInvitationsReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *OrgsListPendingInvitationsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -3048,10 +2960,6 @@ func (r *OrgsListPublicMembersReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *OrgsListPublicMembersReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *OrgsListPublicMembersReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -3166,10 +3074,6 @@ func (r *OrgsListSamlSsoAuthorizationsReq) dataStatuses() []int {
 
 func (r *OrgsListSamlSsoAuthorizationsReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *OrgsListSamlSsoAuthorizationsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -3300,10 +3204,6 @@ func (r *OrgsListWebhooksReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *OrgsListWebhooksReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *OrgsListWebhooksReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -3424,10 +3324,6 @@ func (r *OrgsPingWebhookReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *OrgsPingWebhookReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrBoolean}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *OrgsPingWebhookReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -3542,10 +3438,6 @@ func (r *OrgsRemoveMemberReq) dataStatuses() []int {
 
 func (r *OrgsRemoveMemberReq) validStatuses() []int {
 	return []int{204}
-}
-
-func (r *OrgsRemoveMemberReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -3663,10 +3555,6 @@ func (r *OrgsRemoveMembershipForUserReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *OrgsRemoveMembershipForUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *OrgsRemoveMembershipForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -3782,10 +3670,6 @@ func (r *OrgsRemoveOutsideCollaboratorReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *OrgsRemoveOutsideCollaboratorReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *OrgsRemoveOutsideCollaboratorReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -3899,10 +3783,6 @@ func (r *OrgsRemovePublicMembershipForAuthenticatedUserReq) dataStatuses() []int
 
 func (r *OrgsRemovePublicMembershipForAuthenticatedUserReq) validStatuses() []int {
 	return []int{204}
-}
-
-func (r *OrgsRemovePublicMembershipForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -4026,10 +3906,6 @@ func (r *OrgsRemoveSamlSsoAuthorizationReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *OrgsRemoveSamlSsoAuthorizationReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrBoolean}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *OrgsRemoveSamlSsoAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -4149,10 +4025,6 @@ func (r *OrgsSetMembershipForUserReq) dataStatuses() []int {
 
 func (r *OrgsSetMembershipForUserReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *OrgsSetMembershipForUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -4286,10 +4158,6 @@ func (r *OrgsSetPublicMembershipForAuthenticatedUserReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *OrgsSetPublicMembershipForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *OrgsSetPublicMembershipForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -4403,10 +4271,6 @@ func (r *OrgsUnblockUserReq) dataStatuses() []int {
 
 func (r *OrgsUnblockUserReq) validStatuses() []int {
 	return []int{204}
-}
-
-func (r *OrgsUnblockUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -4544,10 +4408,6 @@ func (r *OrgsUpdateReq) dataStatuses() []int {
 
 func (r *OrgsUpdateReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *OrgsUpdateReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -4782,10 +4642,6 @@ func (r *OrgsUpdateMembershipForAuthenticatedUserReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *OrgsUpdateMembershipForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *OrgsUpdateMembershipForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -4916,10 +4772,6 @@ func (r *OrgsUpdateWebhookReq) dataStatuses() []int {
 
 func (r *OrgsUpdateWebhookReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *OrgsUpdateWebhookReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request

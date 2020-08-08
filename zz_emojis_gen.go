@@ -95,10 +95,6 @@ func (r *EmojisGetReq) validStatuses() []int {
 	return []int{200, 304}
 }
 
-func (r *EmojisGetReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *EmojisGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)

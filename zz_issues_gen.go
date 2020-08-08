@@ -106,10 +106,6 @@ func (r *IssuesAddAssigneesReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *IssuesAddAssigneesReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *IssuesAddAssigneesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -246,10 +242,6 @@ func (r *IssuesAddLabelsReq) dataStatuses() []int {
 
 func (r *IssuesAddLabelsReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *IssuesAddLabelsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -391,10 +383,6 @@ func (r *IssuesCheckUserCanBeAssignedReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *IssuesCheckUserCanBeAssignedReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrBoolean}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *IssuesCheckUserCanBeAssignedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -514,10 +502,6 @@ func (r *IssuesCreateReq) dataStatuses() []int {
 
 func (r *IssuesCreateReq) validStatuses() []int {
 	return []int{201}
-}
-
-func (r *IssuesCreateReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -684,10 +668,6 @@ func (r *IssuesCreateCommentReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *IssuesCreateCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *IssuesCreateCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -818,10 +798,6 @@ func (r *IssuesCreateLabelReq) dataStatuses() []int {
 
 func (r *IssuesCreateLabelReq) validStatuses() []int {
 	return []int{201}
-}
-
-func (r *IssuesCreateLabelReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -969,10 +945,6 @@ func (r *IssuesCreateMilestoneReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *IssuesCreateMilestoneReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *IssuesCreateMilestoneReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1115,10 +1087,6 @@ func (r *IssuesDeleteCommentReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *IssuesDeleteCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *IssuesDeleteCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1235,10 +1203,6 @@ func (r *IssuesDeleteLabelReq) dataStatuses() []int {
 
 func (r *IssuesDeleteLabelReq) validStatuses() []int {
 	return []int{204}
-}
-
-func (r *IssuesDeleteLabelReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -1361,10 +1325,6 @@ func (r *IssuesDeleteMilestoneReq) dataStatuses() []int {
 
 func (r *IssuesDeleteMilestoneReq) validStatuses() []int {
 	return []int{204}
-}
-
-func (r *IssuesDeleteMilestoneReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrBoolean}
 }
 
 // HTTPRequest builds an *http.Request
@@ -1499,10 +1459,6 @@ func (r *IssuesGetReq) dataStatuses() []int {
 
 func (r *IssuesGetReq) validStatuses() []int {
 	return []int{200, 301, 304}
-}
-
-func (r *IssuesGetReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -1647,10 +1603,6 @@ func (r *IssuesGetCommentReq) dataStatuses() []int {
 
 func (r *IssuesGetCommentReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *IssuesGetCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -1810,10 +1762,6 @@ func (r *IssuesGetEventReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *IssuesGetEventReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *IssuesGetEventReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1934,10 +1882,6 @@ func (r *IssuesGetLabelReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *IssuesGetLabelReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *IssuesGetLabelReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -2056,10 +2000,6 @@ func (r *IssuesGetMilestoneReq) dataStatuses() []int {
 
 func (r *IssuesGetMilestoneReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *IssuesGetMilestoneReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -2280,10 +2220,6 @@ func (r *IssuesListReq) validStatuses() []int {
 	return []int{200, 304}
 }
 
-func (r *IssuesListReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *IssuesListReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -2411,10 +2347,6 @@ func (r *IssuesListAssigneesReq) dataStatuses() []int {
 
 func (r *IssuesListAssigneesReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *IssuesListAssigneesReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -2571,10 +2503,6 @@ func (r *IssuesListCommentsReq) dataStatuses() []int {
 
 func (r *IssuesListCommentsReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *IssuesListCommentsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -2745,10 +2673,6 @@ func (r *IssuesListCommentsForRepoReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *IssuesListCommentsForRepoReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *IssuesListCommentsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -2910,10 +2834,6 @@ func (r *IssuesListEventsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *IssuesListEventsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *IssuesListEventsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -3070,10 +2990,6 @@ func (r *IssuesListEventsForRepoReq) dataStatuses() []int {
 
 func (r *IssuesListEventsForRepoReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *IssuesListEventsForRepoReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -3237,10 +3153,6 @@ func (r *IssuesListEventsForTimelineReq) dataStatuses() []int {
 
 func (r *IssuesListEventsForTimelineReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *IssuesListEventsForTimelineReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -3445,10 +3357,6 @@ func (r *IssuesListForAuthenticatedUserReq) validStatuses() []int {
 	return []int{200, 304}
 }
 
-func (r *IssuesListForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *IssuesListForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -3650,10 +3558,6 @@ func (r *IssuesListForOrgReq) dataStatuses() []int {
 
 func (r *IssuesListForOrgReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *IssuesListForOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -3877,10 +3781,6 @@ func (r *IssuesListForRepoReq) validStatuses() []int {
 	return []int{200, 301}
 }
 
-func (r *IssuesListForRepoReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *IssuesListForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -4013,10 +3913,6 @@ func (r *IssuesListLabelsForMilestoneReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *IssuesListLabelsForMilestoneReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *IssuesListLabelsForMilestoneReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -4144,10 +4040,6 @@ func (r *IssuesListLabelsForRepoReq) dataStatuses() []int {
 
 func (r *IssuesListLabelsForRepoReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *IssuesListLabelsForRepoReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -4280,10 +4172,6 @@ func (r *IssuesListLabelsOnIssueReq) dataStatuses() []int {
 
 func (r *IssuesListLabelsOnIssueReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *IssuesListLabelsOnIssueReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -4433,10 +4321,6 @@ func (r *IssuesListMilestonesReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *IssuesListMilestonesReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *IssuesListMilestonesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -4568,10 +4452,6 @@ func (r *IssuesLockReq) dataStatuses() []int {
 
 func (r *IssuesLockReq) validStatuses() []int {
 	return []int{204}
-}
-
-func (r *IssuesLockReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -4710,10 +4590,6 @@ func (r *IssuesRemoveAllLabelsReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *IssuesRemoveAllLabelsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *IssuesRemoveAllLabelsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -4835,10 +4711,6 @@ func (r *IssuesRemoveAssigneesReq) dataStatuses() []int {
 
 func (r *IssuesRemoveAssigneesReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *IssuesRemoveAssigneesReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -4979,10 +4851,6 @@ func (r *IssuesRemoveLabelReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *IssuesRemoveLabelReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *IssuesRemoveLabelReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -5105,10 +4973,6 @@ func (r *IssuesSetLabelsReq) dataStatuses() []int {
 
 func (r *IssuesSetLabelsReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *IssuesSetLabelsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -5246,10 +5110,6 @@ func (r *IssuesUnlockReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *IssuesUnlockReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *IssuesUnlockReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -5371,10 +5231,6 @@ func (r *IssuesUpdateReq) dataStatuses() []int {
 
 func (r *IssuesUpdateReq) validStatuses() []int {
 	return []int{200, 301}
-}
-
-func (r *IssuesUpdateReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -5544,10 +5400,6 @@ func (r *IssuesUpdateCommentReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *IssuesUpdateCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *IssuesUpdateCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -5681,10 +5533,6 @@ func (r *IssuesUpdateLabelReq) dataStatuses() []int {
 
 func (r *IssuesUpdateLabelReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *IssuesUpdateLabelReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -5833,10 +5681,6 @@ func (r *IssuesUpdateMilestoneReq) dataStatuses() []int {
 
 func (r *IssuesUpdateMilestoneReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *IssuesUpdateMilestoneReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request

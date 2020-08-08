@@ -100,10 +100,6 @@ func (r *LicensesGetReq) validStatuses() []int {
 	return []int{200, 304}
 }
 
-func (r *LicensesGetReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *LicensesGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -229,10 +225,6 @@ func (r *LicensesGetAllCommonlyUsedReq) validStatuses() []int {
 	return []int{200, 304}
 }
 
-func (r *LicensesGetAllCommonlyUsedReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *LicensesGetAllCommonlyUsedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -348,10 +340,6 @@ func (r *LicensesGetForRepoReq) dataStatuses() []int {
 
 func (r *LicensesGetForRepoReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *LicensesGetForRepoReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request

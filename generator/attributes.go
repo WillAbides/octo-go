@@ -21,8 +21,6 @@ const (
 	attrJSONRequestBody
 	// requires a URL parameter to be set explicitly
 	attrExplicitURL
-	// endpoint that may need some coercing to return an array response
-	attrForceArrayResponse
 	// endpoint that shouldn't have any response body
 	attrNoResponseBody
 	// attrInvalid is last so we can get a list of all valid types with a for loop
@@ -30,13 +28,12 @@ const (
 )
 
 var attrNames = map[endpointAttribute]string{
-	attrRedirectOnly:       "attrRedirectOnly",
-	attrBoolean:            "attrBoolean",
-	attrBodyUploader:       "attrBodyUploader",
-	attrJSONRequestBody:    "attrJSONRequestBody",
-	attrExplicitURL:        "attrExplicitURL",
-	attrForceArrayResponse: "attrForceArrayResponse",
-	attrNoResponseBody:     "attrNoResponseBody",
+	attrRedirectOnly:    "AttrRedirectOnly",
+	attrBoolean:         "AttrBoolean",
+	attrBodyUploader:    "AttrBodyUploader",
+	attrJSONRequestBody: "AttrJSONRequestBody",
+	attrExplicitURL:     "AttrExplicitURL",
+	attrNoResponseBody:  "AttrNoResponseBody",
 }
 
 func (e endpointAttribute) pointer() *endpointAttribute {
@@ -47,17 +44,38 @@ func (e endpointAttribute) String() string {
 	return attrNames[e]
 }
 
-func addEndpointAttributes(file *jen.File) {
-	file.Type().Id("endpointAttribute").Int()
+func addEndpointAttributes(file *jen.File, endpoints []*model.Endpoint) {
 	file.Const().Parens(jen.Do(func(statement *jen.Statement) {
 		for i := endpointAttribute(0); i < attrInvalid; i++ {
-			statement.Id(attrNames[i])
+			statement.Id(toExportedName(attrNames[i]))
 			if i == 0 {
-				statement.Id("endpointAttribute").Op("=").Iota()
+				statement.Id("EndpointAttribute").Op("=").Iota()
 			}
 			statement.Line()
 		}
 	}))
+
+	file.Func().Id("init()").Block(
+		jen.Id("endpointAttributes = map[string][]EndpointAttribute").Block(
+			jen.DictFunc(func(dict jen.Dict) {
+				for _, endpoint := range endpoints {
+					attrs := getEndpointAttributes(endpoint)
+					if len(attrs) == 0 {
+						continue
+					}
+					attrNames := make([]string, len(attrs))
+					for i, attr := range attrs {
+						attrNames[i] = attr.String()
+					}
+					dict[jen.Lit(reqStructName(endpoint))] = jen.ValuesFunc(func(group *jen.Group) {
+						for _, attr := range attrs {
+							group.Id(attr.String())
+						}
+					})
+				}
+			}),
+		),
+	)
 }
 
 func endpointHasAttribute(endpoint *model.Endpoint, attribute endpointAttribute) bool {

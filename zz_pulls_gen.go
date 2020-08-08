@@ -103,10 +103,6 @@ func (r *PullsCheckIfMergedReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *PullsCheckIfMergedReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrBoolean}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *PullsCheckIfMergedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -239,10 +235,6 @@ func (r *PullsCreateReq) dataStatuses() []int {
 
 func (r *PullsCreateReq) validStatuses() []int {
 	return []int{201}
-}
-
-func (r *PullsCreateReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -413,10 +405,6 @@ func (r *PullsCreateReplyForReviewCommentReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *PullsCreateReplyForReviewCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *PullsCreateReplyForReviewCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -548,10 +536,6 @@ func (r *PullsCreateReviewReq) dataStatuses() []int {
 
 func (r *PullsCreateReviewReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *PullsCreateReviewReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -739,10 +723,6 @@ func (r *PullsCreateReviewCommentReq) dataStatuses() []int {
 
 func (r *PullsCreateReviewCommentReq) validStatuses() []int {
 	return []int{201}
-}
-
-func (r *PullsCreateReviewCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -935,10 +915,6 @@ func (r *PullsDeletePendingReviewReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *PullsDeletePendingReviewReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *PullsDeletePendingReviewReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1060,10 +1036,6 @@ func (r *PullsDeleteReviewCommentReq) dataStatuses() []int {
 
 func (r *PullsDeleteReviewCommentReq) validStatuses() []int {
 	return []int{204}
-}
-
-func (r *PullsDeleteReviewCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrBoolean}
 }
 
 // HTTPRequest builds an *http.Request
@@ -1189,10 +1161,6 @@ func (r *PullsDismissReviewReq) dataStatuses() []int {
 
 func (r *PullsDismissReviewReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *PullsDismissReviewReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -1338,10 +1306,6 @@ func (r *PullsGetReq) validStatuses() []int {
 	return []int{200, 304}
 }
 
-func (r *PullsGetReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *PullsGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1461,10 +1425,6 @@ func (r *PullsGetReviewReq) dataStatuses() []int {
 
 func (r *PullsGetReviewReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *PullsGetReviewReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -1610,10 +1570,6 @@ func (r *PullsGetReviewCommentReq) dataStatuses() []int {
 
 func (r *PullsGetReviewCommentReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *PullsGetReviewCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -1799,10 +1755,6 @@ func (r *PullsListReq) validStatuses() []int {
 	return []int{200, 304}
 }
 
-func (r *PullsListReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *PullsListReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1936,10 +1888,6 @@ func (r *PullsListCommentsForReviewReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *PullsListCommentsForReviewReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *PullsListCommentsForReviewReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -2068,10 +2016,6 @@ func (r *PullsListCommitsReq) dataStatuses() []int {
 
 func (r *PullsListCommitsReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *PullsListCommitsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -2204,10 +2148,6 @@ func (r *PullsListFilesReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *PullsListFilesReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *PullsListFilesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -2336,10 +2276,6 @@ func (r *PullsListRequestedReviewersReq) dataStatuses() []int {
 
 func (r *PullsListRequestedReviewersReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *PullsListRequestedReviewersReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -2522,10 +2458,6 @@ func (r *PullsListReviewCommentsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *PullsListReviewCommentsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *PullsListReviewCommentsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -2705,10 +2637,6 @@ func (r *PullsListReviewCommentsForRepoReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *PullsListReviewCommentsForRepoReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *PullsListReviewCommentsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -2839,10 +2767,6 @@ func (r *PullsListReviewsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *PullsListReviewsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *PullsListReviewsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -2963,10 +2887,6 @@ func (r *PullsMergeReq) dataStatuses() []int {
 
 func (r *PullsMergeReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *PullsMergeReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -3107,10 +3027,6 @@ func (r *PullsRemoveRequestedReviewersReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *PullsRemoveRequestedReviewersReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *PullsRemoveRequestedReviewersReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -3244,10 +3160,6 @@ func (r *PullsRequestReviewersReq) dataStatuses() []int {
 
 func (r *PullsRequestReviewersReq) validStatuses() []int {
 	return []int{201}
-}
-
-func (r *PullsRequestReviewersReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -3387,10 +3299,6 @@ func (r *PullsSubmitReviewReq) dataStatuses() []int {
 
 func (r *PullsSubmitReviewReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *PullsSubmitReviewReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -3546,10 +3454,6 @@ func (r *PullsUpdateReq) dataStatuses() []int {
 
 func (r *PullsUpdateReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *PullsUpdateReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -3718,10 +3622,6 @@ func (r *PullsUpdateBranchReq) validStatuses() []int {
 	return []int{202}
 }
 
-func (r *PullsUpdateBranchReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *PullsUpdateBranchReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -3876,10 +3776,6 @@ func (r *PullsUpdateReviewReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *PullsUpdateReviewReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *PullsUpdateReviewReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -4023,10 +3919,6 @@ func (r *PullsUpdateReviewCommentReq) dataStatuses() []int {
 
 func (r *PullsUpdateReviewCommentReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *PullsUpdateReviewCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request

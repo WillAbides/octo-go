@@ -98,10 +98,6 @@ func (r *TeamsAddMemberLegacyReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *TeamsAddMemberLegacyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *TeamsAddMemberLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -223,10 +219,6 @@ func (r *TeamsAddOrUpdateMembershipForUserInOrgReq) dataStatuses() []int {
 
 func (r *TeamsAddOrUpdateMembershipForUserInOrgReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *TeamsAddOrUpdateMembershipForUserInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -365,10 +357,6 @@ func (r *TeamsAddOrUpdateMembershipForUserLegacyReq) dataStatuses() []int {
 
 func (r *TeamsAddOrUpdateMembershipForUserLegacyReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *TeamsAddOrUpdateMembershipForUserLegacyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -523,10 +511,6 @@ func (r *TeamsAddOrUpdateProjectPermissionsInOrgReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *TeamsAddOrUpdateProjectPermissionsInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *TeamsAddOrUpdateProjectPermissionsInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -679,10 +663,6 @@ func (r *TeamsAddOrUpdateProjectPermissionsLegacyReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *TeamsAddOrUpdateProjectPermissionsLegacyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *TeamsAddOrUpdateProjectPermissionsLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -822,10 +802,6 @@ func (r *TeamsAddOrUpdateRepoPermissionsInOrgReq) dataStatuses() []int {
 
 func (r *TeamsAddOrUpdateRepoPermissionsInOrgReq) validStatuses() []int {
 	return []int{204}
-}
-
-func (r *TeamsAddOrUpdateRepoPermissionsInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -969,10 +945,6 @@ func (r *TeamsAddOrUpdateRepoPermissionsLegacyReq) dataStatuses() []int {
 
 func (r *TeamsAddOrUpdateRepoPermissionsLegacyReq) validStatuses() []int {
 	return []int{204}
-}
-
-func (r *TeamsAddOrUpdateRepoPermissionsLegacyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -1129,10 +1101,6 @@ func (r *TeamsCheckPermissionsForProjectInOrgReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *TeamsCheckPermissionsForProjectInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *TeamsCheckPermissionsForProjectInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1265,10 +1233,6 @@ func (r *TeamsCheckPermissionsForProjectLegacyReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *TeamsCheckPermissionsForProjectLegacyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *TeamsCheckPermissionsForProjectLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1390,10 +1354,6 @@ func (r *TeamsCheckPermissionsForRepoInOrgReq) validStatuses() []int {
 	return []int{200, 204}
 }
 
-func (r *TeamsCheckPermissionsForRepoInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *TeamsCheckPermissionsForRepoInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1510,10 +1470,6 @@ func (r *TeamsCheckPermissionsForRepoLegacyReq) dataStatuses() []int {
 
 func (r *TeamsCheckPermissionsForRepoLegacyReq) validStatuses() []int {
 	return []int{200, 204}
-}
-
-func (r *TeamsCheckPermissionsForRepoLegacyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -1634,10 +1590,6 @@ func (r *TeamsCreateReq) dataStatuses() []int {
 
 func (r *TeamsCreateReq) validStatuses() []int {
 	return []int{201}
-}
-
-func (r *TeamsCreateReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -1825,10 +1777,6 @@ func (r *TeamsCreateDiscussionCommentInOrgReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *TeamsCreateDiscussionCommentInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *TeamsCreateDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1973,10 +1921,6 @@ func (r *TeamsCreateDiscussionCommentLegacyReq) dataStatuses() []int {
 
 func (r *TeamsCreateDiscussionCommentLegacyReq) validStatuses() []int {
 	return []int{201}
-}
-
-func (r *TeamsCreateDiscussionCommentLegacyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -2125,10 +2069,6 @@ func (r *TeamsCreateDiscussionInOrgReq) dataStatuses() []int {
 
 func (r *TeamsCreateDiscussionInOrgReq) validStatuses() []int {
 	return []int{201}
-}
-
-func (r *TeamsCreateDiscussionInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -2286,10 +2226,6 @@ func (r *TeamsCreateDiscussionLegacyReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *TeamsCreateDiscussionLegacyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *TeamsCreateDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -2432,10 +2368,6 @@ func (r *TeamsCreateOrUpdateIdpGroupConnectionsInOrgReq) dataStatuses() []int {
 
 func (r *TeamsCreateOrUpdateIdpGroupConnectionsInOrgReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *TeamsCreateOrUpdateIdpGroupConnectionsInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -2584,10 +2516,6 @@ func (r *TeamsCreateOrUpdateIdpGroupConnectionsLegacyReq) dataStatuses() []int {
 
 func (r *TeamsCreateOrUpdateIdpGroupConnectionsLegacyReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *TeamsCreateOrUpdateIdpGroupConnectionsLegacyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -2742,10 +2670,6 @@ func (r *TeamsDeleteDiscussionCommentInOrgReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *TeamsDeleteDiscussionCommentInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *TeamsDeleteDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -2860,10 +2784,6 @@ func (r *TeamsDeleteDiscussionCommentLegacyReq) dataStatuses() []int {
 
 func (r *TeamsDeleteDiscussionCommentLegacyReq) validStatuses() []int {
 	return []int{204}
-}
-
-func (r *TeamsDeleteDiscussionCommentLegacyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -2984,10 +2904,6 @@ func (r *TeamsDeleteDiscussionInOrgReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *TeamsDeleteDiscussionInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *TeamsDeleteDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -3101,10 +3017,6 @@ func (r *TeamsDeleteDiscussionLegacyReq) dataStatuses() []int {
 
 func (r *TeamsDeleteDiscussionLegacyReq) validStatuses() []int {
 	return []int{204}
-}
-
-func (r *TeamsDeleteDiscussionLegacyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -3224,10 +3136,6 @@ func (r *TeamsDeleteInOrgReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *TeamsDeleteInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *TeamsDeleteInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -3340,10 +3248,6 @@ func (r *TeamsDeleteLegacyReq) dataStatuses() []int {
 
 func (r *TeamsDeleteLegacyReq) validStatuses() []int {
 	return []int{204}
-}
-
-func (r *TeamsDeleteLegacyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -3462,10 +3366,6 @@ func (r *TeamsGetByNameReq) dataStatuses() []int {
 
 func (r *TeamsGetByNameReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *TeamsGetByNameReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -3603,10 +3503,6 @@ func (r *TeamsGetDiscussionCommentInOrgReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *TeamsGetDiscussionCommentInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *TeamsGetDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -3737,10 +3633,6 @@ func (r *TeamsGetDiscussionCommentLegacyReq) dataStatuses() []int {
 
 func (r *TeamsGetDiscussionCommentLegacyReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *TeamsGetDiscussionCommentLegacyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -3877,10 +3769,6 @@ func (r *TeamsGetDiscussionInOrgReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *TeamsGetDiscussionInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *TeamsGetDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -4012,10 +3900,6 @@ func (r *TeamsGetDiscussionLegacyReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *TeamsGetDiscussionLegacyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *TeamsGetDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -4130,10 +4014,6 @@ func (r *TeamsGetLegacyReq) dataStatuses() []int {
 
 func (r *TeamsGetLegacyReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *TeamsGetLegacyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -4256,10 +4136,6 @@ func (r *TeamsGetMemberLegacyReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *TeamsGetMemberLegacyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrBoolean}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *TeamsGetMemberLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -4380,10 +4256,6 @@ func (r *TeamsGetMembershipForUserInOrgReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *TeamsGetMembershipForUserInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *TeamsGetMembershipForUserInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -4499,10 +4371,6 @@ func (r *TeamsGetMembershipForUserLegacyReq) dataStatuses() []int {
 
 func (r *TeamsGetMembershipForUserLegacyReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *TeamsGetMembershipForUserLegacyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -4631,10 +4499,6 @@ func (r *TeamsListReq) dataStatuses() []int {
 
 func (r *TeamsListReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *TeamsListReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -4768,10 +4632,6 @@ func (r *TeamsListChildInOrgReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *TeamsListChildInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *TeamsListChildInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -4898,10 +4758,6 @@ func (r *TeamsListChildLegacyReq) dataStatuses() []int {
 
 func (r *TeamsListChildLegacyReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *TeamsListChildLegacyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -5056,10 +4912,6 @@ func (r *TeamsListDiscussionCommentsInOrgReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *TeamsListDiscussionCommentsInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *TeamsListDiscussionCommentsInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -5207,10 +5059,6 @@ func (r *TeamsListDiscussionCommentsLegacyReq) dataStatuses() []int {
 
 func (r *TeamsListDiscussionCommentsLegacyReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *TeamsListDiscussionCommentsLegacyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -5364,10 +5212,6 @@ func (r *TeamsListDiscussionsInOrgReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *TeamsListDiscussionsInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *TeamsListDiscussionsInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -5516,10 +5360,6 @@ func (r *TeamsListDiscussionsLegacyReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *TeamsListDiscussionsLegacyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *TeamsListDiscussionsLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -5647,10 +5487,6 @@ func (r *TeamsListForAuthenticatedUserReq) validStatuses() []int {
 	return []int{200, 304}
 }
 
-func (r *TeamsListForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *TeamsListForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -5765,10 +5601,6 @@ func (r *TeamsListIdpGroupsForLegacyReq) dataStatuses() []int {
 
 func (r *TeamsListIdpGroupsForLegacyReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *TeamsListIdpGroupsForLegacyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -5899,10 +5731,6 @@ func (r *TeamsListIdpGroupsForOrgReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *TeamsListIdpGroupsForOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *TeamsListIdpGroupsForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -6020,10 +5848,6 @@ func (r *TeamsListIdpGroupsInOrgReq) dataStatuses() []int {
 
 func (r *TeamsListIdpGroupsInOrgReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *TeamsListIdpGroupsInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -6168,10 +5992,6 @@ func (r *TeamsListMembersInOrgReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *TeamsListMembersInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *TeamsListMembersInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -6311,10 +6131,6 @@ func (r *TeamsListMembersLegacyReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *TeamsListMembersLegacyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *TeamsListMembersLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -6446,10 +6262,6 @@ func (r *TeamsListPendingInvitationsInOrgReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *TeamsListPendingInvitationsInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *TeamsListPendingInvitationsInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -6576,10 +6388,6 @@ func (r *TeamsListPendingInvitationsLegacyReq) dataStatuses() []int {
 
 func (r *TeamsListPendingInvitationsLegacyReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *TeamsListPendingInvitationsLegacyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -6728,10 +6536,6 @@ func (r *TeamsListProjectsInOrgReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *TeamsListProjectsInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *TeamsListProjectsInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -6875,10 +6679,6 @@ func (r *TeamsListProjectsLegacyReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *TeamsListProjectsLegacyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *TeamsListProjectsLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -7010,10 +6810,6 @@ func (r *TeamsListReposInOrgReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *TeamsListReposInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *TeamsListReposInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -7142,10 +6938,6 @@ func (r *TeamsListReposLegacyReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *TeamsListReposLegacyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *TeamsListReposLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -7264,10 +7056,6 @@ func (r *TeamsRemoveMemberLegacyReq) dataStatuses() []int {
 
 func (r *TeamsRemoveMemberLegacyReq) validStatuses() []int {
 	return []int{204}
-}
-
-func (r *TeamsRemoveMemberLegacyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrBoolean}
 }
 
 // HTTPRequest builds an *http.Request
@@ -7389,10 +7177,6 @@ func (r *TeamsRemoveMembershipForUserInOrgReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *TeamsRemoveMembershipForUserInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *TeamsRemoveMembershipForUserInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -7506,10 +7290,6 @@ func (r *TeamsRemoveMembershipForUserLegacyReq) dataStatuses() []int {
 
 func (r *TeamsRemoveMembershipForUserLegacyReq) validStatuses() []int {
 	return []int{204}
-}
-
-func (r *TeamsRemoveMembershipForUserLegacyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -7630,10 +7410,6 @@ func (r *TeamsRemoveProjectInOrgReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *TeamsRemoveProjectInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *TeamsRemoveProjectInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -7747,10 +7523,6 @@ func (r *TeamsRemoveProjectLegacyReq) dataStatuses() []int {
 
 func (r *TeamsRemoveProjectLegacyReq) validStatuses() []int {
 	return []int{204}
-}
-
-func (r *TeamsRemoveProjectLegacyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -7872,10 +7644,6 @@ func (r *TeamsRemoveRepoInOrgReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *TeamsRemoveRepoInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *TeamsRemoveRepoInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -7990,10 +7758,6 @@ func (r *TeamsRemoveRepoLegacyReq) dataStatuses() []int {
 
 func (r *TeamsRemoveRepoLegacyReq) validStatuses() []int {
 	return []int{204}
-}
-
-func (r *TeamsRemoveRepoLegacyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -8132,10 +7896,6 @@ func (r *TeamsUpdateDiscussionCommentInOrgReq) dataStatuses() []int {
 
 func (r *TeamsUpdateDiscussionCommentInOrgReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *TeamsUpdateDiscussionCommentInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -8283,10 +8043,6 @@ func (r *TeamsUpdateDiscussionCommentLegacyReq) dataStatuses() []int {
 
 func (r *TeamsUpdateDiscussionCommentLegacyReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *TeamsUpdateDiscussionCommentLegacyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -8438,10 +8194,6 @@ func (r *TeamsUpdateDiscussionInOrgReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *TeamsUpdateDiscussionInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *TeamsUpdateDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -8591,10 +8343,6 @@ func (r *TeamsUpdateDiscussionLegacyReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *TeamsUpdateDiscussionLegacyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *TeamsUpdateDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -8730,10 +8478,6 @@ func (r *TeamsUpdateInOrgReq) dataStatuses() []int {
 
 func (r *TeamsUpdateInOrgReq) validStatuses() []int {
 	return []int{201}
-}
-
-func (r *TeamsUpdateInOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -8895,10 +8639,6 @@ func (r *TeamsUpdateLegacyReq) dataStatuses() []int {
 
 func (r *TeamsUpdateLegacyReq) validStatuses() []int {
 	return []int{201}
-}
-
-func (r *TeamsUpdateLegacyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request

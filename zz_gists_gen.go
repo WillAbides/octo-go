@@ -99,10 +99,6 @@ func (r *GistsCheckIsStarredReq) validStatuses() []int {
 	return []int{204, 304}
 }
 
-func (r *GistsCheckIsStarredReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *GistsCheckIsStarredReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -219,10 +215,6 @@ func (r *GistsCreateReq) dataStatuses() []int {
 
 func (r *GistsCreateReq) validStatuses() []int {
 	return []int{201, 304}
-}
-
-func (r *GistsCreateReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -371,10 +363,6 @@ func (r *GistsCreateCommentReq) validStatuses() []int {
 	return []int{201, 304}
 }
 
-func (r *GistsCreateCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *GistsCreateCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -503,10 +491,6 @@ func (r *GistsDeleteReq) validStatuses() []int {
 	return []int{204, 304}
 }
 
-func (r *GistsDeleteReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *GistsDeleteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -626,10 +610,6 @@ func (r *GistsDeleteCommentReq) validStatuses() []int {
 	return []int{204, 304}
 }
 
-func (r *GistsDeleteCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *GistsDeleteCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -745,10 +725,6 @@ func (r *GistsForkReq) dataStatuses() []int {
 
 func (r *GistsForkReq) validStatuses() []int {
 	return []int{201, 304}
-}
-
-func (r *GistsForkReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -867,10 +843,6 @@ func (r *GistsGetReq) dataStatuses() []int {
 
 func (r *GistsGetReq) validStatuses() []int {
 	return []int{200, 304}
-}
-
-func (r *GistsGetReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -994,10 +966,6 @@ func (r *GistsGetCommentReq) validStatuses() []int {
 	return []int{200, 304}
 }
 
-func (r *GistsGetCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *GistsGetCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1117,10 +1085,6 @@ func (r *GistsGetRevisionReq) dataStatuses() []int {
 
 func (r *GistsGetRevisionReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *GistsGetRevisionReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -1260,10 +1224,6 @@ func (r *GistsListReq) validStatuses() []int {
 	return []int{200, 304}
 }
 
-func (r *GistsListReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *GistsListReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1394,10 +1354,6 @@ func (r *GistsListCommentsReq) validStatuses() []int {
 	return []int{200, 304}
 }
 
-func (r *GistsListCommentsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *GistsListCommentsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1526,10 +1482,6 @@ func (r *GistsListCommitsReq) dataStatuses() []int {
 
 func (r *GistsListCommitsReq) validStatuses() []int {
 	return []int{200, 304}
-}
-
-func (r *GistsListCommitsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -1670,10 +1622,6 @@ func (r *GistsListForUserReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *GistsListForUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *GistsListForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1802,10 +1750,6 @@ func (r *GistsListForksReq) dataStatuses() []int {
 
 func (r *GistsListForksReq) validStatuses() []int {
 	return []int{200, 304}
-}
-
-func (r *GistsListForksReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -1945,10 +1889,6 @@ func (r *GistsListPublicReq) validStatuses() []int {
 	return []int{200, 304}
 }
 
-func (r *GistsListPublicReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *GistsListPublicReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -2086,10 +2026,6 @@ func (r *GistsListStarredReq) validStatuses() []int {
 	return []int{200, 304}
 }
 
-func (r *GistsListStarredReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *GistsListStarredReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -2207,10 +2143,6 @@ func (r *GistsStarReq) validStatuses() []int {
 	return []int{204, 304}
 }
 
-func (r *GistsStarReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *GistsStarReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -2325,10 +2257,6 @@ func (r *GistsUnstarReq) dataStatuses() []int {
 
 func (r *GistsUnstarReq) validStatuses() []int {
 	return []int{204, 304}
-}
-
-func (r *GistsUnstarReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -2450,10 +2378,6 @@ func (r *GistsUpdateReq) dataStatuses() []int {
 
 func (r *GistsUpdateReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *GistsUpdateReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -2603,10 +2527,6 @@ func (r *GistsUpdateCommentReq) dataStatuses() []int {
 
 func (r *GistsUpdateCommentReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *GistsUpdateCommentReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request

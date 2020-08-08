@@ -96,10 +96,6 @@ func (r *GitignoreGetAllTemplatesReq) validStatuses() []int {
 	return []int{200, 304}
 }
 
-func (r *GitignoreGetAllTemplatesReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *GitignoreGetAllTemplatesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -223,10 +219,6 @@ func (r *GitignoreGetTemplateReq) dataStatuses() []int {
 
 func (r *GitignoreGetTemplateReq) validStatuses() []int {
 	return []int{200, 304}
-}
-
-func (r *GitignoreGetTemplateReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request

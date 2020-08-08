@@ -98,10 +98,6 @@ func (r *MigrationsCancelImportReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *MigrationsCancelImportReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *MigrationsCancelImportReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -225,10 +221,6 @@ func (r *MigrationsDeleteArchiveForAuthenticatedUserReq) dataStatuses() []int {
 
 func (r *MigrationsDeleteArchiveForAuthenticatedUserReq) validStatuses() []int {
 	return []int{204, 304}
-}
-
-func (r *MigrationsDeleteArchiveForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -361,10 +353,6 @@ func (r *MigrationsDeleteArchiveForOrgReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *MigrationsDeleteArchiveForOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrBoolean}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *MigrationsDeleteArchiveForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -492,10 +480,6 @@ func (r *MigrationsDownloadArchiveForOrgReq) validStatuses() []int {
 	return []int{302}
 }
 
-func (r *MigrationsDownloadArchiveForOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *MigrationsDownloadArchiveForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -619,10 +603,6 @@ func (r *MigrationsGetArchiveForAuthenticatedUserReq) dataStatuses() []int {
 
 func (r *MigrationsGetArchiveForAuthenticatedUserReq) validStatuses() []int {
 	return []int{302, 304}
-}
-
-func (r *MigrationsGetArchiveForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -751,10 +731,6 @@ func (r *MigrationsGetCommitAuthorsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *MigrationsGetCommitAuthorsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *MigrationsGetCommitAuthorsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -872,10 +848,6 @@ func (r *MigrationsGetImportStatusReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *MigrationsGetImportStatusReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *MigrationsGetImportStatusReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -991,10 +963,6 @@ func (r *MigrationsGetLargeFilesReq) dataStatuses() []int {
 
 func (r *MigrationsGetLargeFilesReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *MigrationsGetLargeFilesReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -1124,10 +1092,6 @@ func (r *MigrationsGetStatusForAuthenticatedUserReq) validStatuses() []int {
 	return []int{200, 304}
 }
 
-func (r *MigrationsGetStatusForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *MigrationsGetStatusForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1254,10 +1218,6 @@ func (r *MigrationsGetStatusForOrgReq) dataStatuses() []int {
 
 func (r *MigrationsGetStatusForOrgReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *MigrationsGetStatusForOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -1396,10 +1356,6 @@ func (r *MigrationsListForAuthenticatedUserReq) validStatuses() []int {
 	return []int{200, 304}
 }
 
-func (r *MigrationsListForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *MigrationsListForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1535,10 +1491,6 @@ func (r *MigrationsListForOrgReq) dataStatuses() []int {
 
 func (r *MigrationsListForOrgReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *MigrationsListForOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -1681,10 +1633,6 @@ func (r *MigrationsListReposForOrgReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *MigrationsListReposForOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *MigrationsListReposForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1824,10 +1772,6 @@ func (r *MigrationsListReposForUserReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *MigrationsListReposForUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *MigrationsListReposForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1950,10 +1894,6 @@ func (r *MigrationsMapCommitAuthorReq) dataStatuses() []int {
 
 func (r *MigrationsMapCommitAuthorReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *MigrationsMapCommitAuthorReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -2092,10 +2032,6 @@ func (r *MigrationsSetLfsPreferenceReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *MigrationsSetLfsPreferenceReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *MigrationsSetLfsPreferenceReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -2227,10 +2163,6 @@ func (r *MigrationsStartForAuthenticatedUserReq) dataStatuses() []int {
 
 func (r *MigrationsStartForAuthenticatedUserReq) validStatuses() []int {
 	return []int{201, 304}
-}
-
-func (r *MigrationsStartForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -2371,10 +2303,6 @@ func (r *MigrationsStartForOrgReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *MigrationsStartForOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *MigrationsStartForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -2512,10 +2440,6 @@ func (r *MigrationsStartImportReq) dataStatuses() []int {
 
 func (r *MigrationsStartImportReq) validStatuses() []int {
 	return []int{201}
-}
-
-func (r *MigrationsStartImportReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -2675,10 +2599,6 @@ func (r *MigrationsUnlockRepoForAuthenticatedUserReq) validStatuses() []int {
 	return []int{204, 304}
 }
 
-func (r *MigrationsUnlockRepoForAuthenticatedUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *MigrationsUnlockRepoForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -2812,10 +2732,6 @@ func (r *MigrationsUnlockRepoForOrgReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *MigrationsUnlockRepoForOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrBoolean}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *MigrationsUnlockRepoForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -2935,10 +2851,6 @@ func (r *MigrationsUpdateImportReq) dataStatuses() []int {
 
 func (r *MigrationsUpdateImportReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *MigrationsUpdateImportReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request

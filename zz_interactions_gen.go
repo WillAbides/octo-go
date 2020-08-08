@@ -111,10 +111,6 @@ func (r *InteractionsGetRestrictionsForOrgReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *InteractionsGetRestrictionsForOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *InteractionsGetRestrictionsForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -246,10 +242,6 @@ func (r *InteractionsGetRestrictionsForRepoReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *InteractionsGetRestrictionsForRepoReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *InteractionsGetRestrictionsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -379,10 +371,6 @@ func (r *InteractionsRemoveRestrictionsForOrgReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *InteractionsRemoveRestrictionsForOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *InteractionsRemoveRestrictionsForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -510,10 +498,6 @@ func (r *InteractionsRemoveRestrictionsForRepoReq) dataStatuses() []int {
 
 func (r *InteractionsRemoveRestrictionsForRepoReq) validStatuses() []int {
 	return []int{204}
-}
-
-func (r *InteractionsRemoveRestrictionsForRepoReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -647,10 +631,6 @@ func (r *InteractionsSetRestrictionsForOrgReq) dataStatuses() []int {
 
 func (r *InteractionsSetRestrictionsForOrgReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *InteractionsSetRestrictionsForOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -801,10 +781,6 @@ func (r *InteractionsSetRestrictionsForRepoReq) dataStatuses() []int {
 
 func (r *InteractionsSetRestrictionsForRepoReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *InteractionsSetRestrictionsForRepoReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request

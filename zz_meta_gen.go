@@ -96,10 +96,6 @@ func (r *MetaGetReq) validStatuses() []int {
 	return []int{200, 304}
 }
 
-func (r *MetaGetReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *MetaGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -217,10 +213,6 @@ func (r *MetaGetOctocatReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *MetaGetOctocatReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *MetaGetOctocatReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -328,10 +320,6 @@ func (r *MetaGetZenReq) dataStatuses() []int {
 
 func (r *MetaGetZenReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *MetaGetZenReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -442,10 +430,6 @@ func (r *MetaRootReq) dataStatuses() []int {
 
 func (r *MetaRootReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *MetaRootReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request

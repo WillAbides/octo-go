@@ -118,10 +118,6 @@ func (r *ChecksCreateReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *ChecksCreateReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ChecksCreateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -436,10 +432,6 @@ func (r *ChecksCreateSuiteReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *ChecksCreateSuiteReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ChecksCreateSuiteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -586,10 +578,6 @@ func (r *ChecksGetReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ChecksGetReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ChecksGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -723,10 +711,6 @@ func (r *ChecksGetSuiteReq) dataStatuses() []int {
 
 func (r *ChecksGetSuiteReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ChecksGetSuiteReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -874,10 +858,6 @@ func (r *ChecksListAnnotationsReq) dataStatuses() []int {
 
 func (r *ChecksListAnnotationsReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ChecksListAnnotationsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -1049,10 +1029,6 @@ func (r *ChecksListForRefReq) dataStatuses() []int {
 
 func (r *ChecksListForRefReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ChecksListForRefReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -1236,10 +1212,6 @@ func (r *ChecksListForSuiteReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ChecksListForSuiteReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ChecksListForSuiteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1409,10 +1381,6 @@ func (r *ChecksListSuitesForRefReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ChecksListSuitesForRefReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ChecksListSuitesForRefReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1557,10 +1525,6 @@ func (r *ChecksRerequestSuiteReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *ChecksRerequestSuiteReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ChecksRerequestSuiteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1694,10 +1658,6 @@ func (r *ChecksSetSuitesPreferencesReq) dataStatuses() []int {
 
 func (r *ChecksSetSuitesPreferencesReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ChecksSetSuitesPreferencesReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -1866,10 +1826,6 @@ func (r *ChecksUpdateReq) dataStatuses() []int {
 
 func (r *ChecksUpdateReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ChecksUpdateReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request

@@ -103,10 +103,6 @@ func (r *ActionsAddSelectedRepoToOrgSecretReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *ActionsAddSelectedRepoToOrgSecretReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ActionsAddSelectedRepoToOrgSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -221,10 +217,6 @@ func (r *ActionsCancelWorkflowRunReq) dataStatuses() []int {
 
 func (r *ActionsCancelWorkflowRunReq) validStatuses() []int {
 	return []int{202}
-}
-
-func (r *ActionsCancelWorkflowRunReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -343,10 +335,6 @@ func (r *ActionsCreateOrUpdateOrgSecretReq) dataStatuses() []int {
 
 func (r *ActionsCreateOrUpdateOrgSecretReq) validStatuses() []int {
 	return []int{201, 204}
-}
-
-func (r *ActionsCreateOrUpdateOrgSecretReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -511,10 +499,6 @@ func (r *ActionsCreateOrUpdateRepoSecretReq) validStatuses() []int {
 	return []int{201, 204}
 }
 
-func (r *ActionsCreateOrUpdateRepoSecretReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ActionsCreateOrUpdateRepoSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -650,10 +634,6 @@ func (r *ActionsCreateRegistrationTokenForOrgReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *ActionsCreateRegistrationTokenForOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ActionsCreateRegistrationTokenForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -771,10 +751,6 @@ func (r *ActionsCreateRegistrationTokenForRepoReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *ActionsCreateRegistrationTokenForRepoReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ActionsCreateRegistrationTokenForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -889,10 +865,6 @@ func (r *ActionsCreateRemoveTokenForOrgReq) dataStatuses() []int {
 
 func (r *ActionsCreateRemoveTokenForOrgReq) validStatuses() []int {
 	return []int{201}
-}
-
-func (r *ActionsCreateRemoveTokenForOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -1012,10 +984,6 @@ func (r *ActionsCreateRemoveTokenForRepoReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *ActionsCreateRemoveTokenForRepoReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ActionsCreateRemoveTokenForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1132,10 +1100,6 @@ func (r *ActionsCreateWorkflowDispatchReq) dataStatuses() []int {
 
 func (r *ActionsCreateWorkflowDispatchReq) validStatuses() []int {
 	return []int{204}
-}
-
-func (r *ActionsCreateWorkflowDispatchReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -1274,10 +1238,6 @@ func (r *ActionsDeleteArtifactReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *ActionsDeleteArtifactReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ActionsDeleteArtifactReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1393,10 +1353,6 @@ func (r *ActionsDeleteOrgSecretReq) dataStatuses() []int {
 
 func (r *ActionsDeleteOrgSecretReq) validStatuses() []int {
 	return []int{204}
-}
-
-func (r *ActionsDeleteOrgSecretReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -1517,10 +1473,6 @@ func (r *ActionsDeleteRepoSecretReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *ActionsDeleteRepoSecretReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ActionsDeleteRepoSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1636,10 +1588,6 @@ func (r *ActionsDeleteSelfHostedRunnerFromOrgReq) dataStatuses() []int {
 
 func (r *ActionsDeleteSelfHostedRunnerFromOrgReq) validStatuses() []int {
 	return []int{204}
-}
-
-func (r *ActionsDeleteSelfHostedRunnerFromOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -1760,10 +1708,6 @@ func (r *ActionsDeleteSelfHostedRunnerFromRepoReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *ActionsDeleteSelfHostedRunnerFromRepoReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ActionsDeleteSelfHostedRunnerFromRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1880,10 +1824,6 @@ func (r *ActionsDeleteWorkflowRunReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *ActionsDeleteWorkflowRunReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ActionsDeleteWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1998,10 +1938,6 @@ func (r *ActionsDeleteWorkflowRunLogsReq) dataStatuses() []int {
 
 func (r *ActionsDeleteWorkflowRunLogsReq) validStatuses() []int {
 	return []int{204}
-}
-
-func (r *ActionsDeleteWorkflowRunLogsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -2125,10 +2061,6 @@ func (r *ActionsDownloadArtifactReq) validStatuses() []int {
 	return []int{302}
 }
 
-func (r *ActionsDownloadArtifactReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRedirectOnly}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ActionsDownloadArtifactReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -2247,10 +2179,6 @@ func (r *ActionsDownloadJobLogsForWorkflowRunReq) validStatuses() []int {
 	return []int{302}
 }
 
-func (r *ActionsDownloadJobLogsForWorkflowRunReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRedirectOnly}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ActionsDownloadJobLogsForWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -2365,10 +2293,6 @@ func (r *ActionsDownloadWorkflowRunLogsReq) dataStatuses() []int {
 
 func (r *ActionsDownloadWorkflowRunLogsReq) validStatuses() []int {
 	return []int{302}
-}
-
-func (r *ActionsDownloadWorkflowRunLogsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrRedirectOnly}
 }
 
 // HTTPRequest builds an *http.Request
@@ -2488,10 +2412,6 @@ func (r *ActionsGetArtifactReq) dataStatuses() []int {
 
 func (r *ActionsGetArtifactReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ActionsGetArtifactReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -2614,10 +2534,6 @@ func (r *ActionsGetJobForWorkflowRunReq) validStatuses() []int {
 	return []int{202}
 }
 
-func (r *ActionsGetJobForWorkflowRunReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ActionsGetJobForWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -2732,10 +2648,6 @@ func (r *ActionsGetOrgPublicKeyReq) dataStatuses() []int {
 
 func (r *ActionsGetOrgPublicKeyReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ActionsGetOrgPublicKeyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -2857,10 +2769,6 @@ func (r *ActionsGetOrgSecretReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ActionsGetOrgSecretReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ActionsGetOrgSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -2976,10 +2884,6 @@ func (r *ActionsGetRepoPublicKeyReq) dataStatuses() []int {
 
 func (r *ActionsGetRepoPublicKeyReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ActionsGetRepoPublicKeyReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -3102,10 +3006,6 @@ func (r *ActionsGetRepoSecretReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ActionsGetRepoSecretReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ActionsGetRepoSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -3223,10 +3123,6 @@ func (r *ActionsGetSelfHostedRunnerForOrgReq) dataStatuses() []int {
 
 func (r *ActionsGetSelfHostedRunnerForOrgReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ActionsGetSelfHostedRunnerForOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -3349,10 +3245,6 @@ func (r *ActionsGetSelfHostedRunnerForRepoReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ActionsGetSelfHostedRunnerForRepoReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ActionsGetSelfHostedRunnerForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -3469,10 +3361,6 @@ func (r *ActionsGetWorkflowReq) dataStatuses() []int {
 
 func (r *ActionsGetWorkflowReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ActionsGetWorkflowReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -3593,10 +3481,6 @@ func (r *ActionsGetWorkflowRunReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ActionsGetWorkflowRunReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ActionsGetWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -3715,10 +3599,6 @@ func (r *ActionsGetWorkflowRunUsageReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ActionsGetWorkflowRunUsageReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ActionsGetWorkflowRunUsageReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -3835,10 +3715,6 @@ func (r *ActionsGetWorkflowUsageReq) dataStatuses() []int {
 
 func (r *ActionsGetWorkflowUsageReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ActionsGetWorkflowUsageReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -3968,10 +3844,6 @@ func (r *ActionsListArtifactsForRepoReq) dataStatuses() []int {
 
 func (r *ActionsListArtifactsForRepoReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ActionsListArtifactsForRepoReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -4125,10 +3997,6 @@ func (r *ActionsListJobsForWorkflowRunReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ActionsListJobsForWorkflowRunReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ActionsListJobsForWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -4265,10 +4133,6 @@ func (r *ActionsListOrgSecretsReq) dataStatuses() []int {
 
 func (r *ActionsListOrgSecretsReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ActionsListOrgSecretsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -4410,10 +4274,6 @@ func (r *ActionsListRepoSecretsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ActionsListRepoSecretsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ActionsListRepoSecretsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -4553,10 +4413,6 @@ func (r *ActionsListRepoWorkflowsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ActionsListRepoWorkflowsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ActionsListRepoWorkflowsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -4683,10 +4539,6 @@ func (r *ActionsListRunnerApplicationsForOrgReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ActionsListRunnerApplicationsForOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ActionsListRunnerApplicationsForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -4802,10 +4654,6 @@ func (r *ActionsListRunnerApplicationsForRepoReq) dataStatuses() []int {
 
 func (r *ActionsListRunnerApplicationsForRepoReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ActionsListRunnerApplicationsForRepoReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -4925,10 +4773,6 @@ func (r *ActionsListSelectedReposForOrgSecretReq) dataStatuses() []int {
 
 func (r *ActionsListSelectedReposForOrgSecretReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ActionsListSelectedReposForOrgSecretReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -5067,10 +4911,6 @@ func (r *ActionsListSelfHostedRunnersForOrgReq) dataStatuses() []int {
 
 func (r *ActionsListSelfHostedRunnersForOrgReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ActionsListSelfHostedRunnersForOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -5212,10 +5052,6 @@ func (r *ActionsListSelfHostedRunnersForRepoReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ActionsListSelfHostedRunnersForRepoReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ActionsListSelfHostedRunnersForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -5354,10 +5190,6 @@ func (r *ActionsListWorkflowRunArtifactsReq) dataStatuses() []int {
 
 func (r *ActionsListWorkflowRunArtifactsReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *ActionsListWorkflowRunArtifactsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -5540,10 +5372,6 @@ func (r *ActionsListWorkflowRunsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ActionsListWorkflowRunsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ActionsListWorkflowRunsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -5723,10 +5551,6 @@ func (r *ActionsListWorkflowRunsForRepoReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *ActionsListWorkflowRunsForRepoReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ActionsListWorkflowRunsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -5854,10 +5678,6 @@ func (r *ActionsReRunWorkflowReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *ActionsReRunWorkflowReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ActionsReRunWorkflowReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -5978,10 +5798,6 @@ func (r *ActionsRemoveSelectedRepoFromOrgSecretReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *ActionsRemoveSelectedRepoFromOrgSecretReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *ActionsRemoveSelectedRepoFromOrgSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -6098,10 +5914,6 @@ func (r *ActionsSetSelectedReposForOrgSecretReq) dataStatuses() []int {
 
 func (r *ActionsSetSelectedReposForOrgSecretReq) validStatuses() []int {
 	return []int{204}
-}
-
-func (r *ActionsSetSelectedReposForOrgSecretReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request

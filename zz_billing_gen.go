@@ -99,10 +99,6 @@ func (r *BillingGetGithubActionsBillingGheReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *BillingGetGithubActionsBillingGheReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *BillingGetGithubActionsBillingGheReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -219,10 +215,6 @@ func (r *BillingGetGithubActionsBillingOrgReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *BillingGetGithubActionsBillingOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *BillingGetGithubActionsBillingOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -337,10 +329,6 @@ func (r *BillingGetGithubActionsBillingUserReq) dataStatuses() []int {
 
 func (r *BillingGetGithubActionsBillingUserReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *BillingGetGithubActionsBillingUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -461,10 +449,6 @@ func (r *BillingGetGithubPackagesBillingGheReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *BillingGetGithubPackagesBillingGheReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *BillingGetGithubPackagesBillingGheReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -581,10 +565,6 @@ func (r *BillingGetGithubPackagesBillingOrgReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *BillingGetGithubPackagesBillingOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *BillingGetGithubPackagesBillingOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -699,10 +679,6 @@ func (r *BillingGetGithubPackagesBillingUserReq) dataStatuses() []int {
 
 func (r *BillingGetGithubPackagesBillingUserReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *BillingGetGithubPackagesBillingUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -823,10 +799,6 @@ func (r *BillingGetSharedStorageBillingGheReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *BillingGetSharedStorageBillingGheReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *BillingGetSharedStorageBillingGheReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -943,10 +915,6 @@ func (r *BillingGetSharedStorageBillingOrgReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *BillingGetSharedStorageBillingOrgReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *BillingGetSharedStorageBillingOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1061,10 +1029,6 @@ func (r *BillingGetSharedStorageBillingUserReq) dataStatuses() []int {
 
 func (r *BillingGetSharedStorageBillingUserReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *BillingGetSharedStorageBillingUserReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request

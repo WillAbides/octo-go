@@ -103,10 +103,6 @@ func (r *GitCreateBlobReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *GitCreateBlobReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *GitCreateBlobReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -240,10 +236,6 @@ func (r *GitCreateCommitReq) dataStatuses() []int {
 
 func (r *GitCreateCommitReq) validStatuses() []int {
 	return []int{201}
-}
-
-func (r *GitCreateCommitReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -450,10 +442,6 @@ func (r *GitCreateRefReq) validStatuses() []int {
 	return []int{201}
 }
 
-func (r *GitCreateRefReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *GitCreateRefReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -591,10 +579,6 @@ func (r *GitCreateTagReq) dataStatuses() []int {
 
 func (r *GitCreateTagReq) validStatuses() []int {
 	return []int{201}
-}
-
-func (r *GitCreateTagReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -755,10 +739,6 @@ func (r *GitCreateTreeReq) dataStatuses() []int {
 
 func (r *GitCreateTreeReq) validStatuses() []int {
 	return []int{201}
-}
-
-func (r *GitCreateTreeReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
@@ -933,10 +913,6 @@ func (r *GitDeleteRefReq) validStatuses() []int {
 	return []int{204}
 }
 
-func (r *GitDeleteRefReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *GitDeleteRefReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1054,10 +1030,6 @@ func (r *GitGetBlobReq) dataStatuses() []int {
 
 func (r *GitGetBlobReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *GitGetBlobReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -1180,10 +1152,6 @@ func (r *GitGetCommitReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *GitGetCommitReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *GitGetCommitReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1304,10 +1272,6 @@ func (r *GitGetRefReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *GitGetRefReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *GitGetRefReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1426,10 +1390,6 @@ func (r *GitGetTagReq) dataStatuses() []int {
 
 func (r *GitGetTagReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *GitGetTagReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
 }
 
 // HTTPRequest builds an *http.Request
@@ -1564,10 +1524,6 @@ func (r *GitGetTreeReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *GitGetTreeReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *GitGetTreeReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1700,10 +1656,6 @@ func (r *GitListMatchingRefsReq) validStatuses() []int {
 	return []int{200}
 }
 
-func (r *GitListMatchingRefsReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{}
-}
-
 // HTTPRequest builds an *http.Request
 func (r *GitListMatchingRefsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
 	return buildHTTPRequest(ctx, r, opt)
@@ -1826,10 +1778,6 @@ func (r *GitUpdateRefReq) dataStatuses() []int {
 
 func (r *GitUpdateRefReq) validStatuses() []int {
 	return []int{200}
-}
-
-func (r *GitUpdateRefReq) endpointAttributes() []endpointAttribute {
-	return []endpointAttribute{attrJSONRequestBody}
 }
 
 // HTTPRequest builds an *http.Request
