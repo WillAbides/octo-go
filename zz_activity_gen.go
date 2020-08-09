@@ -5,6 +5,7 @@ package octo
 import (
 	"context"
 	"fmt"
+	common "github.com/willabides/octo-go/common"
 	components "github.com/willabides/octo-go/components"
 	internal "github.com/willabides/octo-go/internal"
 	options "github.com/willabides/octo-go/options"
@@ -31,7 +32,8 @@ func ActivityCheckRepoIsStarredByAuthenticatedUser(ctx context.Context, req *Act
 		req = new(ActivityCheckRepoIsStarredByAuthenticatedUserReq)
 	}
 	resp := &ActivityCheckRepoIsStarredByAuthenticatedUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -40,7 +42,7 @@ func ActivityCheckRepoIsStarredByAuthenticatedUser(ctx context.Context, req *Act
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -119,7 +121,7 @@ ActivityCheckRepoIsStarredByAuthenticatedUserResponse is a response for Activity
 https://developer.github.com/v3/activity/starring/#check-if-a-repository-is-starred-by-the-authenticated-user
 */
 type ActivityCheckRepoIsStarredByAuthenticatedUserResponse struct {
-	internal.Response
+	common.Response
 	request *ActivityCheckRepoIsStarredByAuthenticatedUserReq
 }
 
@@ -141,7 +143,8 @@ func ActivityDeleteRepoSubscription(ctx context.Context, req *ActivityDeleteRepo
 		req = new(ActivityDeleteRepoSubscriptionReq)
 	}
 	resp := &ActivityDeleteRepoSubscriptionResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -150,7 +153,7 @@ func ActivityDeleteRepoSubscription(ctx context.Context, req *ActivityDeleteRepo
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -229,7 +232,7 @@ ActivityDeleteRepoSubscriptionResponse is a response for ActivityDeleteRepoSubsc
 https://developer.github.com/v3/activity/watching/#delete-a-repository-subscription
 */
 type ActivityDeleteRepoSubscriptionResponse struct {
-	internal.Response
+	common.Response
 	request *ActivityDeleteRepoSubscriptionReq
 }
 
@@ -251,7 +254,8 @@ func ActivityDeleteThreadSubscription(ctx context.Context, req *ActivityDeleteTh
 		req = new(ActivityDeleteThreadSubscriptionReq)
 	}
 	resp := &ActivityDeleteThreadSubscriptionResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -260,7 +264,7 @@ func ActivityDeleteThreadSubscription(ctx context.Context, req *ActivityDeleteTh
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -340,7 +344,7 @@ ActivityDeleteThreadSubscriptionResponse is a response for ActivityDeleteThreadS
 https://developer.github.com/v3/activity/notifications/#delete-a-thread-subscription
 */
 type ActivityDeleteThreadSubscriptionResponse struct {
-	internal.Response
+	common.Response
 	request *ActivityDeleteThreadSubscriptionReq
 }
 
@@ -362,7 +366,8 @@ func ActivityGetFeeds(ctx context.Context, req *ActivityGetFeedsReq, opt ...opti
 		req = new(ActivityGetFeedsReq)
 	}
 	resp := &ActivityGetFeedsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -372,7 +377,7 @@ func ActivityGetFeeds(ctx context.Context, req *ActivityGetFeedsReq, opt ...opti
 	}
 
 	resp.Data = components.Feed{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -449,7 +454,7 @@ ActivityGetFeedsResponse is a response for ActivityGetFeeds
 https://developer.github.com/v3/activity/feeds/#get-feeds
 */
 type ActivityGetFeedsResponse struct {
-	internal.Response
+	common.Response
 	request *ActivityGetFeedsReq
 	Data    components.Feed
 }
@@ -472,7 +477,8 @@ func ActivityGetRepoSubscription(ctx context.Context, req *ActivityGetRepoSubscr
 		req = new(ActivityGetRepoSubscriptionReq)
 	}
 	resp := &ActivityGetRepoSubscriptionResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -482,7 +488,7 @@ func ActivityGetRepoSubscription(ctx context.Context, req *ActivityGetRepoSubscr
 	}
 
 	resp.Data = components.RepositorySubscription{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -561,7 +567,7 @@ ActivityGetRepoSubscriptionResponse is a response for ActivityGetRepoSubscriptio
 https://developer.github.com/v3/activity/watching/#get-a-repository-subscription
 */
 type ActivityGetRepoSubscriptionResponse struct {
-	internal.Response
+	common.Response
 	request *ActivityGetRepoSubscriptionReq
 	Data    components.RepositorySubscription
 }
@@ -584,7 +590,8 @@ func ActivityGetThread(ctx context.Context, req *ActivityGetThreadReq, opt ...op
 		req = new(ActivityGetThreadReq)
 	}
 	resp := &ActivityGetThreadResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -594,7 +601,7 @@ func ActivityGetThread(ctx context.Context, req *ActivityGetThreadReq, opt ...op
 	}
 
 	resp.Data = components.Thread{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -674,7 +681,7 @@ ActivityGetThreadResponse is a response for ActivityGetThread
 https://developer.github.com/v3/activity/notifications/#get-a-thread
 */
 type ActivityGetThreadResponse struct {
-	internal.Response
+	common.Response
 	request *ActivityGetThreadReq
 	Data    components.Thread
 }
@@ -697,7 +704,8 @@ func ActivityGetThreadSubscriptionForAuthenticatedUser(ctx context.Context, req 
 		req = new(ActivityGetThreadSubscriptionForAuthenticatedUserReq)
 	}
 	resp := &ActivityGetThreadSubscriptionForAuthenticatedUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -707,7 +715,7 @@ func ActivityGetThreadSubscriptionForAuthenticatedUser(ctx context.Context, req 
 	}
 
 	resp.Data = components.ThreadSubscription{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -787,7 +795,7 @@ ActivityGetThreadSubscriptionForAuthenticatedUserResponse is a response for Acti
 https://developer.github.com/v3/activity/notifications/#get-a-thread-subscription-for-the-authenticated-user
 */
 type ActivityGetThreadSubscriptionForAuthenticatedUserResponse struct {
-	internal.Response
+	common.Response
 	request *ActivityGetThreadSubscriptionForAuthenticatedUserReq
 	Data    components.ThreadSubscription
 }
@@ -810,7 +818,8 @@ func ActivityListEventsForAuthenticatedUser(ctx context.Context, req *ActivityLi
 		req = new(ActivityListEventsForAuthenticatedUserReq)
 	}
 	resp := &ActivityListEventsForAuthenticatedUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -820,7 +829,7 @@ func ActivityListEventsForAuthenticatedUser(ctx context.Context, req *ActivityLi
 	}
 
 	resp.Data = []components.Event{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -910,7 +919,7 @@ ActivityListEventsForAuthenticatedUserResponse is a response for ActivityListEve
 https://developer.github.com/v3/activity/events/#list-events-for-the-authenticated-user
 */
 type ActivityListEventsForAuthenticatedUserResponse struct {
-	internal.Response
+	common.Response
 	request *ActivityListEventsForAuthenticatedUserReq
 	Data    []components.Event
 }
@@ -933,7 +942,8 @@ func ActivityListNotificationsForAuthenticatedUser(ctx context.Context, req *Act
 		req = new(ActivityListNotificationsForAuthenticatedUserReq)
 	}
 	resp := &ActivityListNotificationsForAuthenticatedUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -943,7 +953,7 @@ func ActivityListNotificationsForAuthenticatedUser(ctx context.Context, req *Act
 	}
 
 	resp.Data = []components.Thread{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1067,7 +1077,7 @@ ActivityListNotificationsForAuthenticatedUserResponse is a response for Activity
 https://developer.github.com/v3/activity/notifications/#list-notifications-for-the-authenticated-user
 */
 type ActivityListNotificationsForAuthenticatedUserResponse struct {
-	internal.Response
+	common.Response
 	request *ActivityListNotificationsForAuthenticatedUserReq
 	Data    []components.Thread
 }
@@ -1090,7 +1100,8 @@ func ActivityListOrgEventsForAuthenticatedUser(ctx context.Context, req *Activit
 		req = new(ActivityListOrgEventsForAuthenticatedUserReq)
 	}
 	resp := &ActivityListOrgEventsForAuthenticatedUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1100,7 +1111,7 @@ func ActivityListOrgEventsForAuthenticatedUser(ctx context.Context, req *Activit
 	}
 
 	resp.Data = []components.Event{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1191,7 +1202,7 @@ ActivityListOrgEventsForAuthenticatedUserResponse is a response for ActivityList
 https://developer.github.com/v3/activity/events/#list-organization-events-for-the-authenticated-user
 */
 type ActivityListOrgEventsForAuthenticatedUserResponse struct {
-	internal.Response
+	common.Response
 	request *ActivityListOrgEventsForAuthenticatedUserReq
 	Data    []components.Event
 }
@@ -1214,7 +1225,8 @@ func ActivityListPublicEvents(ctx context.Context, req *ActivityListPublicEvents
 		req = new(ActivityListPublicEventsReq)
 	}
 	resp := &ActivityListPublicEventsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1224,7 +1236,7 @@ func ActivityListPublicEvents(ctx context.Context, req *ActivityListPublicEvents
 	}
 
 	resp.Data = []components.Event{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1313,7 +1325,7 @@ ActivityListPublicEventsResponse is a response for ActivityListPublicEvents
 https://developer.github.com/v3/activity/events/#list-public-events
 */
 type ActivityListPublicEventsResponse struct {
-	internal.Response
+	common.Response
 	request *ActivityListPublicEventsReq
 	Data    []components.Event
 }
@@ -1336,7 +1348,8 @@ func ActivityListPublicEventsForRepoNetwork(ctx context.Context, req *ActivityLi
 		req = new(ActivityListPublicEventsForRepoNetworkReq)
 	}
 	resp := &ActivityListPublicEventsForRepoNetworkResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1346,7 +1359,7 @@ func ActivityListPublicEventsForRepoNetwork(ctx context.Context, req *ActivityLi
 	}
 
 	resp.Data = []components.Event{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1437,7 +1450,7 @@ ActivityListPublicEventsForRepoNetworkResponse is a response for ActivityListPub
 https://developer.github.com/v3/activity/events/#list-public-events-for-a-network-of-repositories
 */
 type ActivityListPublicEventsForRepoNetworkResponse struct {
-	internal.Response
+	common.Response
 	request *ActivityListPublicEventsForRepoNetworkReq
 	Data    []components.Event
 }
@@ -1460,7 +1473,8 @@ func ActivityListPublicEventsForUser(ctx context.Context, req *ActivityListPubli
 		req = new(ActivityListPublicEventsForUserReq)
 	}
 	resp := &ActivityListPublicEventsForUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1470,7 +1484,7 @@ func ActivityListPublicEventsForUser(ctx context.Context, req *ActivityListPubli
 	}
 
 	resp.Data = []components.Event{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1560,7 +1574,7 @@ ActivityListPublicEventsForUserResponse is a response for ActivityListPublicEven
 https://developer.github.com/v3/activity/events/#list-public-events-for-a-user
 */
 type ActivityListPublicEventsForUserResponse struct {
-	internal.Response
+	common.Response
 	request *ActivityListPublicEventsForUserReq
 	Data    []components.Event
 }
@@ -1583,7 +1597,8 @@ func ActivityListPublicOrgEvents(ctx context.Context, req *ActivityListPublicOrg
 		req = new(ActivityListPublicOrgEventsReq)
 	}
 	resp := &ActivityListPublicOrgEventsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1593,7 +1608,7 @@ func ActivityListPublicOrgEvents(ctx context.Context, req *ActivityListPublicOrg
 	}
 
 	resp.Data = []components.Event{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1683,7 +1698,7 @@ ActivityListPublicOrgEventsResponse is a response for ActivityListPublicOrgEvent
 https://developer.github.com/v3/activity/events/#list-public-organization-events
 */
 type ActivityListPublicOrgEventsResponse struct {
-	internal.Response
+	common.Response
 	request *ActivityListPublicOrgEventsReq
 	Data    []components.Event
 }
@@ -1706,7 +1721,8 @@ func ActivityListReceivedEventsForUser(ctx context.Context, req *ActivityListRec
 		req = new(ActivityListReceivedEventsForUserReq)
 	}
 	resp := &ActivityListReceivedEventsForUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1716,7 +1732,7 @@ func ActivityListReceivedEventsForUser(ctx context.Context, req *ActivityListRec
 	}
 
 	resp.Data = []components.Event{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1806,7 +1822,7 @@ ActivityListReceivedEventsForUserResponse is a response for ActivityListReceived
 https://developer.github.com/v3/activity/events/#list-events-received-by-the-authenticated-user
 */
 type ActivityListReceivedEventsForUserResponse struct {
-	internal.Response
+	common.Response
 	request *ActivityListReceivedEventsForUserReq
 	Data    []components.Event
 }
@@ -1829,7 +1845,8 @@ func ActivityListReceivedPublicEventsForUser(ctx context.Context, req *ActivityL
 		req = new(ActivityListReceivedPublicEventsForUserReq)
 	}
 	resp := &ActivityListReceivedPublicEventsForUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1839,7 +1856,7 @@ func ActivityListReceivedPublicEventsForUser(ctx context.Context, req *ActivityL
 	}
 
 	resp.Data = []components.Event{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1929,7 +1946,7 @@ ActivityListReceivedPublicEventsForUserResponse is a response for ActivityListRe
 https://developer.github.com/v3/activity/events/#list-public-events-received-by-a-user
 */
 type ActivityListReceivedPublicEventsForUserResponse struct {
-	internal.Response
+	common.Response
 	request *ActivityListReceivedPublicEventsForUserReq
 	Data    []components.Event
 }
@@ -1952,7 +1969,8 @@ func ActivityListRepoEvents(ctx context.Context, req *ActivityListRepoEventsReq,
 		req = new(ActivityListRepoEventsReq)
 	}
 	resp := &ActivityListRepoEventsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1962,7 +1980,7 @@ func ActivityListRepoEvents(ctx context.Context, req *ActivityListRepoEventsReq,
 	}
 
 	resp.Data = []components.Event{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2053,7 +2071,7 @@ ActivityListRepoEventsResponse is a response for ActivityListRepoEvents
 https://developer.github.com/v3/activity/events/#list-repository-events
 */
 type ActivityListRepoEventsResponse struct {
-	internal.Response
+	common.Response
 	request *ActivityListRepoEventsReq
 	Data    []components.Event
 }
@@ -2076,7 +2094,8 @@ func ActivityListRepoNotificationsForAuthenticatedUser(ctx context.Context, req 
 		req = new(ActivityListRepoNotificationsForAuthenticatedUserReq)
 	}
 	resp := &ActivityListRepoNotificationsForAuthenticatedUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2086,7 +2105,7 @@ func ActivityListRepoNotificationsForAuthenticatedUser(ctx context.Context, req 
 	}
 
 	resp.Data = []components.Thread{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2212,7 +2231,7 @@ ActivityListRepoNotificationsForAuthenticatedUserResponse is a response for Acti
 https://developer.github.com/v3/activity/notifications/#list-repository-notifications-for-the-authenticated-user
 */
 type ActivityListRepoNotificationsForAuthenticatedUserResponse struct {
-	internal.Response
+	common.Response
 	request *ActivityListRepoNotificationsForAuthenticatedUserReq
 	Data    []components.Thread
 }
@@ -2235,7 +2254,8 @@ func ActivityListReposStarredByAuthenticatedUser(ctx context.Context, req *Activ
 		req = new(ActivityListReposStarredByAuthenticatedUserReq)
 	}
 	resp := &ActivityListReposStarredByAuthenticatedUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2245,7 +2265,7 @@ func ActivityListReposStarredByAuthenticatedUser(ctx context.Context, req *Activ
 	}
 
 	resp.Data = []components.StarredRepository{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2349,7 +2369,7 @@ ActivityListReposStarredByAuthenticatedUserResponse is a response for ActivityLi
 https://developer.github.com/v3/activity/starring/#list-repositories-starred-by-the-authenticated-user
 */
 type ActivityListReposStarredByAuthenticatedUserResponse struct {
-	internal.Response
+	common.Response
 	request *ActivityListReposStarredByAuthenticatedUserReq
 	Data    []components.StarredRepository
 }
@@ -2372,7 +2392,8 @@ func ActivityListReposStarredByUser(ctx context.Context, req *ActivityListReposS
 		req = new(ActivityListReposStarredByUserReq)
 	}
 	resp := &ActivityListReposStarredByUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2382,7 +2403,7 @@ func ActivityListReposStarredByUser(ctx context.Context, req *ActivityListReposS
 	}
 
 	resp.Data = []components.StarredRepository{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2487,7 +2508,7 @@ ActivityListReposStarredByUserResponse is a response for ActivityListReposStarre
 https://developer.github.com/v3/activity/starring/#list-repositories-starred-by-a-user
 */
 type ActivityListReposStarredByUserResponse struct {
-	internal.Response
+	common.Response
 	request *ActivityListReposStarredByUserReq
 	Data    []components.StarredRepository
 }
@@ -2510,7 +2531,8 @@ func ActivityListReposWatchedByUser(ctx context.Context, req *ActivityListReposW
 		req = new(ActivityListReposWatchedByUserReq)
 	}
 	resp := &ActivityListReposWatchedByUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2520,7 +2542,7 @@ func ActivityListReposWatchedByUser(ctx context.Context, req *ActivityListReposW
 	}
 
 	resp.Data = []components.MinimalRepository{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2610,7 +2632,7 @@ ActivityListReposWatchedByUserResponse is a response for ActivityListReposWatche
 https://developer.github.com/v3/activity/watching/#list-repositories-watched-by-a-user
 */
 type ActivityListReposWatchedByUserResponse struct {
-	internal.Response
+	common.Response
 	request *ActivityListReposWatchedByUserReq
 	Data    []components.MinimalRepository
 }
@@ -2633,7 +2655,8 @@ func ActivityListStargazersForRepo(ctx context.Context, req *ActivityListStargaz
 		req = new(ActivityListStargazersForRepoReq)
 	}
 	resp := &ActivityListStargazersForRepoResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2643,7 +2666,7 @@ func ActivityListStargazersForRepo(ctx context.Context, req *ActivityListStargaz
 	}
 
 	resp.Data = []components.Stargazer{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2734,7 +2757,7 @@ ActivityListStargazersForRepoResponse is a response for ActivityListStargazersFo
 https://developer.github.com/v3/activity/starring/#list-stargazers
 */
 type ActivityListStargazersForRepoResponse struct {
-	internal.Response
+	common.Response
 	request *ActivityListStargazersForRepoReq
 	Data    []components.Stargazer
 }
@@ -2757,7 +2780,8 @@ func ActivityListWatchedReposForAuthenticatedUser(ctx context.Context, req *Acti
 		req = new(ActivityListWatchedReposForAuthenticatedUserReq)
 	}
 	resp := &ActivityListWatchedReposForAuthenticatedUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2767,7 +2791,7 @@ func ActivityListWatchedReposForAuthenticatedUser(ctx context.Context, req *Acti
 	}
 
 	resp.Data = []components.MinimalRepository{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2856,7 +2880,7 @@ ActivityListWatchedReposForAuthenticatedUserResponse is a response for ActivityL
 https://developer.github.com/v3/activity/watching/#list-repositories-watched-by-the-authenticated-user
 */
 type ActivityListWatchedReposForAuthenticatedUserResponse struct {
-	internal.Response
+	common.Response
 	request *ActivityListWatchedReposForAuthenticatedUserReq
 	Data    []components.MinimalRepository
 }
@@ -2879,7 +2903,8 @@ func ActivityListWatchersForRepo(ctx context.Context, req *ActivityListWatchersF
 		req = new(ActivityListWatchersForRepoReq)
 	}
 	resp := &ActivityListWatchersForRepoResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2889,7 +2914,7 @@ func ActivityListWatchersForRepo(ctx context.Context, req *ActivityListWatchersF
 	}
 
 	resp.Data = []components.SimpleUser{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2980,7 +3005,7 @@ ActivityListWatchersForRepoResponse is a response for ActivityListWatchersForRep
 https://developer.github.com/v3/activity/watching/#list-watchers
 */
 type ActivityListWatchersForRepoResponse struct {
-	internal.Response
+	common.Response
 	request *ActivityListWatchersForRepoReq
 	Data    []components.SimpleUser
 }
@@ -3003,7 +3028,8 @@ func ActivityMarkNotificationsAsRead(ctx context.Context, req *ActivityMarkNotif
 		req = new(ActivityMarkNotificationsAsReadReq)
 	}
 	resp := &ActivityMarkNotificationsAsReadResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3013,7 +3039,7 @@ func ActivityMarkNotificationsAsRead(ctx context.Context, req *ActivityMarkNotif
 	}
 
 	resp.Data = ActivityMarkNotificationsAsReadResponseBody{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3117,7 +3143,7 @@ ActivityMarkNotificationsAsReadResponse is a response for ActivityMarkNotificati
 https://developer.github.com/v3/activity/notifications/#mark-notifications-as-read
 */
 type ActivityMarkNotificationsAsReadResponse struct {
-	internal.Response
+	common.Response
 	request *ActivityMarkNotificationsAsReadReq
 	Data    ActivityMarkNotificationsAsReadResponseBody
 }
@@ -3140,7 +3166,8 @@ func ActivityMarkRepoNotificationsAsRead(ctx context.Context, req *ActivityMarkR
 		req = new(ActivityMarkRepoNotificationsAsReadReq)
 	}
 	resp := &ActivityMarkRepoNotificationsAsReadResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3149,7 +3176,7 @@ func ActivityMarkRepoNotificationsAsRead(ctx context.Context, req *ActivityMarkR
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -3246,7 +3273,7 @@ ActivityMarkRepoNotificationsAsReadResponse is a response for ActivityMarkRepoNo
 https://developer.github.com/v3/activity/notifications/#mark-repository-notifications-as-read
 */
 type ActivityMarkRepoNotificationsAsReadResponse struct {
-	internal.Response
+	common.Response
 	request *ActivityMarkRepoNotificationsAsReadReq
 }
 
@@ -3268,7 +3295,8 @@ func ActivityMarkThreadAsRead(ctx context.Context, req *ActivityMarkThreadAsRead
 		req = new(ActivityMarkThreadAsReadReq)
 	}
 	resp := &ActivityMarkThreadAsReadResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3277,7 +3305,7 @@ func ActivityMarkThreadAsRead(ctx context.Context, req *ActivityMarkThreadAsRead
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -3357,7 +3385,7 @@ ActivityMarkThreadAsReadResponse is a response for ActivityMarkThreadAsRead
 https://developer.github.com/v3/activity/notifications/#mark-a-thread-as-read
 */
 type ActivityMarkThreadAsReadResponse struct {
-	internal.Response
+	common.Response
 	request *ActivityMarkThreadAsReadReq
 }
 
@@ -3379,7 +3407,8 @@ func ActivitySetRepoSubscription(ctx context.Context, req *ActivitySetRepoSubscr
 		req = new(ActivitySetRepoSubscriptionReq)
 	}
 	resp := &ActivitySetRepoSubscriptionResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3389,7 +3418,7 @@ func ActivitySetRepoSubscription(ctx context.Context, req *ActivitySetRepoSubscr
 	}
 
 	resp.Data = components.RepositorySubscription{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3486,7 +3515,7 @@ ActivitySetRepoSubscriptionResponse is a response for ActivitySetRepoSubscriptio
 https://developer.github.com/v3/activity/watching/#set-a-repository-subscription
 */
 type ActivitySetRepoSubscriptionResponse struct {
-	internal.Response
+	common.Response
 	request *ActivitySetRepoSubscriptionReq
 	Data    components.RepositorySubscription
 }
@@ -3509,7 +3538,8 @@ func ActivitySetThreadSubscription(ctx context.Context, req *ActivitySetThreadSu
 		req = new(ActivitySetThreadSubscriptionReq)
 	}
 	resp := &ActivitySetThreadSubscriptionResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3519,7 +3549,7 @@ func ActivitySetThreadSubscription(ctx context.Context, req *ActivitySetThreadSu
 	}
 
 	resp.Data = components.ThreadSubscription{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3614,7 +3644,7 @@ ActivitySetThreadSubscriptionResponse is a response for ActivitySetThreadSubscri
 https://developer.github.com/v3/activity/notifications/#set-a-thread-subscription
 */
 type ActivitySetThreadSubscriptionResponse struct {
-	internal.Response
+	common.Response
 	request *ActivitySetThreadSubscriptionReq
 	Data    components.ThreadSubscription
 }
@@ -3637,7 +3667,8 @@ func ActivityStarRepoForAuthenticatedUser(ctx context.Context, req *ActivityStar
 		req = new(ActivityStarRepoForAuthenticatedUserReq)
 	}
 	resp := &ActivityStarRepoForAuthenticatedUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3646,7 +3677,7 @@ func ActivityStarRepoForAuthenticatedUser(ctx context.Context, req *ActivityStar
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -3725,7 +3756,7 @@ ActivityStarRepoForAuthenticatedUserResponse is a response for ActivityStarRepoF
 https://developer.github.com/v3/activity/starring/#star-a-repository-for-the-authenticated-user
 */
 type ActivityStarRepoForAuthenticatedUserResponse struct {
-	internal.Response
+	common.Response
 	request *ActivityStarRepoForAuthenticatedUserReq
 }
 
@@ -3747,7 +3778,8 @@ func ActivityUnstarRepoForAuthenticatedUser(ctx context.Context, req *ActivityUn
 		req = new(ActivityUnstarRepoForAuthenticatedUserReq)
 	}
 	resp := &ActivityUnstarRepoForAuthenticatedUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3756,7 +3788,7 @@ func ActivityUnstarRepoForAuthenticatedUser(ctx context.Context, req *ActivityUn
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -3835,6 +3867,6 @@ ActivityUnstarRepoForAuthenticatedUserResponse is a response for ActivityUnstarR
 https://developer.github.com/v3/activity/starring/#unstar-a-repository-for-the-authenticated-user
 */
 type ActivityUnstarRepoForAuthenticatedUserResponse struct {
-	internal.Response
+	common.Response
 	request *ActivityUnstarRepoForAuthenticatedUserReq
 }

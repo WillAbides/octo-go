@@ -5,6 +5,7 @@ package octo
 import (
 	"context"
 	"fmt"
+	common "github.com/willabides/octo-go/common"
 	components "github.com/willabides/octo-go/components"
 	internal "github.com/willabides/octo-go/internal"
 	options "github.com/willabides/octo-go/options"
@@ -31,7 +32,8 @@ func SearchCode(ctx context.Context, req *SearchCodeReq, opt ...options.Option) 
 		req = new(SearchCodeReq)
 	}
 	resp := &SearchCodeResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -41,7 +43,7 @@ func SearchCode(ctx context.Context, req *SearchCodeReq, opt ...options.Option) 
 	}
 
 	resp.Data = SearchCodeResponseBody{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -175,7 +177,7 @@ SearchCodeResponse is a response for SearchCode
 https://developer.github.com/v3/search/#search-code
 */
 type SearchCodeResponse struct {
-	internal.Response
+	common.Response
 	request *SearchCodeReq
 	Data    SearchCodeResponseBody
 }
@@ -198,7 +200,8 @@ func SearchCommits(ctx context.Context, req *SearchCommitsReq, opt ...options.Op
 		req = new(SearchCommitsReq)
 	}
 	resp := &SearchCommitsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -208,7 +211,7 @@ func SearchCommits(ctx context.Context, req *SearchCommitsReq, opt ...options.Op
 	}
 
 	resp.Data = SearchCommitsResponseBody{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -351,7 +354,7 @@ SearchCommitsResponse is a response for SearchCommits
 https://developer.github.com/v3/search/#search-commits
 */
 type SearchCommitsResponse struct {
-	internal.Response
+	common.Response
 	request *SearchCommitsReq
 	Data    SearchCommitsResponseBody
 }
@@ -374,7 +377,8 @@ func SearchIssuesAndPullRequests(ctx context.Context, req *SearchIssuesAndPullRe
 		req = new(SearchIssuesAndPullRequestsReq)
 	}
 	resp := &SearchIssuesAndPullRequestsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -384,7 +388,7 @@ func SearchIssuesAndPullRequests(ctx context.Context, req *SearchIssuesAndPullRe
 	}
 
 	resp.Data = SearchIssuesAndPullRequestsResponseBody{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -521,7 +525,7 @@ SearchIssuesAndPullRequestsResponse is a response for SearchIssuesAndPullRequest
 https://developer.github.com/v3/search/#search-issues-and-pull-requests
 */
 type SearchIssuesAndPullRequestsResponse struct {
-	internal.Response
+	common.Response
 	request *SearchIssuesAndPullRequestsReq
 	Data    SearchIssuesAndPullRequestsResponseBody
 }
@@ -544,7 +548,8 @@ func SearchLabels(ctx context.Context, req *SearchLabelsReq, opt ...options.Opti
 		req = new(SearchLabelsReq)
 	}
 	resp := &SearchLabelsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -554,7 +559,7 @@ func SearchLabels(ctx context.Context, req *SearchLabelsReq, opt ...options.Opti
 	}
 
 	resp.Data = SearchLabelsResponseBody{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -678,7 +683,7 @@ SearchLabelsResponse is a response for SearchLabels
 https://developer.github.com/v3/search/#search-labels
 */
 type SearchLabelsResponse struct {
-	internal.Response
+	common.Response
 	request *SearchLabelsReq
 	Data    SearchLabelsResponseBody
 }
@@ -701,7 +706,8 @@ func SearchRepos(ctx context.Context, req *SearchReposReq, opt ...options.Option
 		req = new(SearchReposReq)
 	}
 	resp := &SearchReposResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -711,7 +717,7 @@ func SearchRepos(ctx context.Context, req *SearchReposReq, opt ...options.Option
 	}
 
 	resp.Data = SearchReposResponseBody{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -853,7 +859,7 @@ SearchReposResponse is a response for SearchRepos
 https://developer.github.com/v3/search/#search-repositories
 */
 type SearchReposResponse struct {
-	internal.Response
+	common.Response
 	request *SearchReposReq
 	Data    SearchReposResponseBody
 }
@@ -876,7 +882,8 @@ func SearchTopics(ctx context.Context, req *SearchTopicsReq, opt ...options.Opti
 		req = new(SearchTopicsReq)
 	}
 	resp := &SearchTopicsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -886,7 +893,7 @@ func SearchTopics(ctx context.Context, req *SearchTopicsReq, opt ...options.Opti
 	}
 
 	resp.Data = SearchTopicsResponseBody{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -993,7 +1000,7 @@ SearchTopicsResponse is a response for SearchTopics
 https://developer.github.com/v3/search/#search-topics
 */
 type SearchTopicsResponse struct {
-	internal.Response
+	common.Response
 	request *SearchTopicsReq
 	Data    SearchTopicsResponseBody
 }
@@ -1016,7 +1023,8 @@ func SearchUsers(ctx context.Context, req *SearchUsersReq, opt ...options.Option
 		req = new(SearchUsersReq)
 	}
 	resp := &SearchUsersResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1026,7 +1034,7 @@ func SearchUsers(ctx context.Context, req *SearchUsersReq, opt ...options.Option
 	}
 
 	resp.Data = SearchUsersResponseBody{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1160,7 +1168,7 @@ SearchUsersResponse is a response for SearchUsers
 https://developer.github.com/v3/search/#search-users
 */
 type SearchUsersResponse struct {
-	internal.Response
+	common.Response
 	request *SearchUsersReq
 	Data    SearchUsersResponseBody
 }

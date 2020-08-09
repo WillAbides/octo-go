@@ -5,6 +5,7 @@ package octo
 import (
 	"context"
 	"fmt"
+	common "github.com/willabides/octo-go/common"
 	components "github.com/willabides/octo-go/components"
 	internal "github.com/willabides/octo-go/internal"
 	options "github.com/willabides/octo-go/options"
@@ -31,7 +32,8 @@ func ProjectsAddCollaborator(ctx context.Context, req *ProjectsAddCollaboratorRe
 		req = new(ProjectsAddCollaboratorReq)
 	}
 	resp := &ProjectsAddCollaboratorResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -40,7 +42,7 @@ func ProjectsAddCollaborator(ctx context.Context, req *ProjectsAddCollaboratorRe
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -140,7 +142,7 @@ ProjectsAddCollaboratorResponse is a response for ProjectsAddCollaborator
 https://developer.github.com/v3/projects/collaborators/#add-project-collaborator
 */
 type ProjectsAddCollaboratorResponse struct {
-	internal.Response
+	common.Response
 	request *ProjectsAddCollaboratorReq
 }
 
@@ -162,7 +164,8 @@ func ProjectsCreateCard(ctx context.Context, req *ProjectsCreateCardReq, opt ...
 		req = new(ProjectsCreateCardReq)
 	}
 	resp := &ProjectsCreateCardResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -172,7 +175,7 @@ func ProjectsCreateCard(ctx context.Context, req *ProjectsCreateCardReq, opt ...
 	}
 
 	resp.Data = components.ProjectCard{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -279,7 +282,7 @@ ProjectsCreateCardResponse is a response for ProjectsCreateCard
 https://developer.github.com/v3/projects/cards/#create-a-project-card
 */
 type ProjectsCreateCardResponse struct {
-	internal.Response
+	common.Response
 	request *ProjectsCreateCardReq
 	Data    components.ProjectCard
 }
@@ -302,7 +305,8 @@ func ProjectsCreateColumn(ctx context.Context, req *ProjectsCreateColumnReq, opt
 		req = new(ProjectsCreateColumnReq)
 	}
 	resp := &ProjectsCreateColumnResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -312,7 +316,7 @@ func ProjectsCreateColumn(ctx context.Context, req *ProjectsCreateColumnReq, opt
 	}
 
 	resp.Data = components.ProjectColumn{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -414,7 +418,7 @@ ProjectsCreateColumnResponse is a response for ProjectsCreateColumn
 https://developer.github.com/v3/projects/columns/#create-a-project-column
 */
 type ProjectsCreateColumnResponse struct {
-	internal.Response
+	common.Response
 	request *ProjectsCreateColumnReq
 	Data    components.ProjectColumn
 }
@@ -437,7 +441,8 @@ func ProjectsCreateForAuthenticatedUser(ctx context.Context, req *ProjectsCreate
 		req = new(ProjectsCreateForAuthenticatedUserReq)
 	}
 	resp := &ProjectsCreateForAuthenticatedUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -447,7 +452,7 @@ func ProjectsCreateForAuthenticatedUser(ctx context.Context, req *ProjectsCreate
 	}
 
 	resp.Data = components.Project{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -551,7 +556,7 @@ ProjectsCreateForAuthenticatedUserResponse is a response for ProjectsCreateForAu
 https://developer.github.com/v3/projects/#create-a-user-project
 */
 type ProjectsCreateForAuthenticatedUserResponse struct {
-	internal.Response
+	common.Response
 	request *ProjectsCreateForAuthenticatedUserReq
 	Data    components.Project
 }
@@ -574,7 +579,8 @@ func ProjectsCreateForOrg(ctx context.Context, req *ProjectsCreateForOrgReq, opt
 		req = new(ProjectsCreateForOrgReq)
 	}
 	resp := &ProjectsCreateForOrgResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -584,7 +590,7 @@ func ProjectsCreateForOrg(ctx context.Context, req *ProjectsCreateForOrgReq, opt
 	}
 
 	resp.Data = components.Project{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -689,7 +695,7 @@ ProjectsCreateForOrgResponse is a response for ProjectsCreateForOrg
 https://developer.github.com/v3/projects/#create-an-organization-project
 */
 type ProjectsCreateForOrgResponse struct {
-	internal.Response
+	common.Response
 	request *ProjectsCreateForOrgReq
 	Data    components.Project
 }
@@ -712,7 +718,8 @@ func ProjectsCreateForRepo(ctx context.Context, req *ProjectsCreateForRepoReq, o
 		req = new(ProjectsCreateForRepoReq)
 	}
 	resp := &ProjectsCreateForRepoResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -722,7 +729,7 @@ func ProjectsCreateForRepo(ctx context.Context, req *ProjectsCreateForRepoReq, o
 	}
 
 	resp.Data = components.Project{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -828,7 +835,7 @@ ProjectsCreateForRepoResponse is a response for ProjectsCreateForRepo
 https://developer.github.com/v3/projects/#create-a-repository-project
 */
 type ProjectsCreateForRepoResponse struct {
-	internal.Response
+	common.Response
 	request *ProjectsCreateForRepoReq
 	Data    components.Project
 }
@@ -851,7 +858,8 @@ func ProjectsDelete(ctx context.Context, req *ProjectsDeleteReq, opt ...options.
 		req = new(ProjectsDeleteReq)
 	}
 	resp := &ProjectsDeleteResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -860,7 +868,7 @@ func ProjectsDelete(ctx context.Context, req *ProjectsDeleteReq, opt ...options.
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -947,7 +955,7 @@ ProjectsDeleteResponse is a response for ProjectsDelete
 https://developer.github.com/v3/projects/#delete-a-project
 */
 type ProjectsDeleteResponse struct {
-	internal.Response
+	common.Response
 	request *ProjectsDeleteReq
 }
 
@@ -969,7 +977,8 @@ func ProjectsDeleteCard(ctx context.Context, req *ProjectsDeleteCardReq, opt ...
 		req = new(ProjectsDeleteCardReq)
 	}
 	resp := &ProjectsDeleteCardResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -978,7 +987,7 @@ func ProjectsDeleteCard(ctx context.Context, req *ProjectsDeleteCardReq, opt ...
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -1067,7 +1076,7 @@ ProjectsDeleteCardResponse is a response for ProjectsDeleteCard
 https://developer.github.com/v3/projects/cards/#delete-a-project-card
 */
 type ProjectsDeleteCardResponse struct {
-	internal.Response
+	common.Response
 	request *ProjectsDeleteCardReq
 }
 
@@ -1089,7 +1098,8 @@ func ProjectsDeleteColumn(ctx context.Context, req *ProjectsDeleteColumnReq, opt
 		req = new(ProjectsDeleteColumnReq)
 	}
 	resp := &ProjectsDeleteColumnResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1098,7 +1108,7 @@ func ProjectsDeleteColumn(ctx context.Context, req *ProjectsDeleteColumnReq, opt
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -1187,7 +1197,7 @@ ProjectsDeleteColumnResponse is a response for ProjectsDeleteColumn
 https://developer.github.com/v3/projects/columns/#delete-a-project-column
 */
 type ProjectsDeleteColumnResponse struct {
-	internal.Response
+	common.Response
 	request *ProjectsDeleteColumnReq
 }
 
@@ -1209,7 +1219,8 @@ func ProjectsGet(ctx context.Context, req *ProjectsGetReq, opt ...options.Option
 		req = new(ProjectsGetReq)
 	}
 	resp := &ProjectsGetResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1219,7 +1230,7 @@ func ProjectsGet(ctx context.Context, req *ProjectsGetReq, opt ...options.Option
 	}
 
 	resp.Data = components.Project{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1306,7 +1317,7 @@ ProjectsGetResponse is a response for ProjectsGet
 https://developer.github.com/v3/projects/#get-a-project
 */
 type ProjectsGetResponse struct {
-	internal.Response
+	common.Response
 	request *ProjectsGetReq
 	Data    components.Project
 }
@@ -1329,7 +1340,8 @@ func ProjectsGetCard(ctx context.Context, req *ProjectsGetCardReq, opt ...option
 		req = new(ProjectsGetCardReq)
 	}
 	resp := &ProjectsGetCardResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1339,7 +1351,7 @@ func ProjectsGetCard(ctx context.Context, req *ProjectsGetCardReq, opt ...option
 	}
 
 	resp.Data = components.ProjectCard{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1428,7 +1440,7 @@ ProjectsGetCardResponse is a response for ProjectsGetCard
 https://developer.github.com/v3/projects/cards/#get-a-project-card
 */
 type ProjectsGetCardResponse struct {
-	internal.Response
+	common.Response
 	request *ProjectsGetCardReq
 	Data    components.ProjectCard
 }
@@ -1451,7 +1463,8 @@ func ProjectsGetColumn(ctx context.Context, req *ProjectsGetColumnReq, opt ...op
 		req = new(ProjectsGetColumnReq)
 	}
 	resp := &ProjectsGetColumnResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1461,7 +1474,7 @@ func ProjectsGetColumn(ctx context.Context, req *ProjectsGetColumnReq, opt ...op
 	}
 
 	resp.Data = components.ProjectColumn{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1550,7 +1563,7 @@ ProjectsGetColumnResponse is a response for ProjectsGetColumn
 https://developer.github.com/v3/projects/columns/#get-a-project-column
 */
 type ProjectsGetColumnResponse struct {
-	internal.Response
+	common.Response
 	request *ProjectsGetColumnReq
 	Data    components.ProjectColumn
 }
@@ -1573,7 +1586,8 @@ func ProjectsGetPermissionForUser(ctx context.Context, req *ProjectsGetPermissio
 		req = new(ProjectsGetPermissionForUserReq)
 	}
 	resp := &ProjectsGetPermissionForUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1583,7 +1597,7 @@ func ProjectsGetPermissionForUser(ctx context.Context, req *ProjectsGetPermissio
 	}
 
 	resp.Data = components.RepositoryCollaboratorPermission{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1671,7 +1685,7 @@ ProjectsGetPermissionForUserResponse is a response for ProjectsGetPermissionForU
 https://developer.github.com/v3/projects/collaborators/#get-project-permission-for-a-user
 */
 type ProjectsGetPermissionForUserResponse struct {
-	internal.Response
+	common.Response
 	request *ProjectsGetPermissionForUserReq
 	Data    components.RepositoryCollaboratorPermission
 }
@@ -1694,7 +1708,8 @@ func ProjectsListCards(ctx context.Context, req *ProjectsListCardsReq, opt ...op
 		req = new(ProjectsListCardsReq)
 	}
 	resp := &ProjectsListCardsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1704,7 +1719,7 @@ func ProjectsListCards(ctx context.Context, req *ProjectsListCardsReq, opt ...op
 	}
 
 	resp.Data = []components.ProjectCard{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1814,7 +1829,7 @@ ProjectsListCardsResponse is a response for ProjectsListCards
 https://developer.github.com/v3/projects/cards/#list-project-cards
 */
 type ProjectsListCardsResponse struct {
-	internal.Response
+	common.Response
 	request *ProjectsListCardsReq
 	Data    []components.ProjectCard
 }
@@ -1837,7 +1852,8 @@ func ProjectsListCollaborators(ctx context.Context, req *ProjectsListCollaborato
 		req = new(ProjectsListCollaboratorsReq)
 	}
 	resp := &ProjectsListCollaboratorsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1847,7 +1863,7 @@ func ProjectsListCollaborators(ctx context.Context, req *ProjectsListCollaborato
 	}
 
 	resp.Data = []components.SimpleUser{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1959,7 +1975,7 @@ ProjectsListCollaboratorsResponse is a response for ProjectsListCollaborators
 https://developer.github.com/v3/projects/collaborators/#list-project-collaborators
 */
 type ProjectsListCollaboratorsResponse struct {
-	internal.Response
+	common.Response
 	request *ProjectsListCollaboratorsReq
 	Data    []components.SimpleUser
 }
@@ -1982,7 +1998,8 @@ func ProjectsListColumns(ctx context.Context, req *ProjectsListColumnsReq, opt .
 		req = new(ProjectsListColumnsReq)
 	}
 	resp := &ProjectsListColumnsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1992,7 +2009,7 @@ func ProjectsListColumns(ctx context.Context, req *ProjectsListColumnsReq, opt .
 	}
 
 	resp.Data = []components.ProjectColumn{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2091,7 +2108,7 @@ ProjectsListColumnsResponse is a response for ProjectsListColumns
 https://developer.github.com/v3/projects/columns/#list-project-columns
 */
 type ProjectsListColumnsResponse struct {
-	internal.Response
+	common.Response
 	request *ProjectsListColumnsReq
 	Data    []components.ProjectColumn
 }
@@ -2114,7 +2131,8 @@ func ProjectsListForOrg(ctx context.Context, req *ProjectsListForOrgReq, opt ...
 		req = new(ProjectsListForOrgReq)
 	}
 	resp := &ProjectsListForOrgResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2124,7 +2142,7 @@ func ProjectsListForOrg(ctx context.Context, req *ProjectsListForOrgReq, opt ...
 	}
 
 	resp.Data = []components.Project{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2232,7 +2250,7 @@ ProjectsListForOrgResponse is a response for ProjectsListForOrg
 https://developer.github.com/v3/projects/#list-organization-projects
 */
 type ProjectsListForOrgResponse struct {
-	internal.Response
+	common.Response
 	request *ProjectsListForOrgReq
 	Data    []components.Project
 }
@@ -2255,7 +2273,8 @@ func ProjectsListForRepo(ctx context.Context, req *ProjectsListForRepoReq, opt .
 		req = new(ProjectsListForRepoReq)
 	}
 	resp := &ProjectsListForRepoResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2265,7 +2284,7 @@ func ProjectsListForRepo(ctx context.Context, req *ProjectsListForRepoReq, opt .
 	}
 
 	resp.Data = []components.Project{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2374,7 +2393,7 @@ ProjectsListForRepoResponse is a response for ProjectsListForRepo
 https://developer.github.com/v3/projects/#list-repository-projects
 */
 type ProjectsListForRepoResponse struct {
-	internal.Response
+	common.Response
 	request *ProjectsListForRepoReq
 	Data    []components.Project
 }
@@ -2397,7 +2416,8 @@ func ProjectsListForUser(ctx context.Context, req *ProjectsListForUserReq, opt .
 		req = new(ProjectsListForUserReq)
 	}
 	resp := &ProjectsListForUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2407,7 +2427,7 @@ func ProjectsListForUser(ctx context.Context, req *ProjectsListForUserReq, opt .
 	}
 
 	resp.Data = []components.Project{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2515,7 +2535,7 @@ ProjectsListForUserResponse is a response for ProjectsListForUser
 https://developer.github.com/v3/projects/#list-user-projects
 */
 type ProjectsListForUserResponse struct {
-	internal.Response
+	common.Response
 	request *ProjectsListForUserReq
 	Data    []components.Project
 }
@@ -2538,7 +2558,8 @@ func ProjectsMoveCard(ctx context.Context, req *ProjectsMoveCardReq, opt ...opti
 		req = new(ProjectsMoveCardReq)
 	}
 	resp := &ProjectsMoveCardResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2547,7 +2568,7 @@ func ProjectsMoveCard(ctx context.Context, req *ProjectsMoveCardReq, opt ...opti
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -2654,7 +2675,7 @@ ProjectsMoveCardResponse is a response for ProjectsMoveCard
 https://developer.github.com/v3/projects/cards/#move-a-project-card
 */
 type ProjectsMoveCardResponse struct {
-	internal.Response
+	common.Response
 	request *ProjectsMoveCardReq
 }
 
@@ -2676,7 +2697,8 @@ func ProjectsMoveColumn(ctx context.Context, req *ProjectsMoveColumnReq, opt ...
 		req = new(ProjectsMoveColumnReq)
 	}
 	resp := &ProjectsMoveColumnResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2685,7 +2707,7 @@ func ProjectsMoveColumn(ctx context.Context, req *ProjectsMoveColumnReq, opt ...
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -2789,7 +2811,7 @@ ProjectsMoveColumnResponse is a response for ProjectsMoveColumn
 https://developer.github.com/v3/projects/columns/#move-a-project-column
 */
 type ProjectsMoveColumnResponse struct {
-	internal.Response
+	common.Response
 	request *ProjectsMoveColumnReq
 }
 
@@ -2811,7 +2833,8 @@ func ProjectsRemoveCollaborator(ctx context.Context, req *ProjectsRemoveCollabor
 		req = new(ProjectsRemoveCollaboratorReq)
 	}
 	resp := &ProjectsRemoveCollaboratorResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2820,7 +2843,7 @@ func ProjectsRemoveCollaborator(ctx context.Context, req *ProjectsRemoveCollabor
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -2908,7 +2931,7 @@ ProjectsRemoveCollaboratorResponse is a response for ProjectsRemoveCollaborator
 https://developer.github.com/v3/projects/collaborators/#remove-project-collaborator
 */
 type ProjectsRemoveCollaboratorResponse struct {
-	internal.Response
+	common.Response
 	request *ProjectsRemoveCollaboratorReq
 }
 
@@ -2930,7 +2953,8 @@ func ProjectsUpdate(ctx context.Context, req *ProjectsUpdateReq, opt ...options.
 		req = new(ProjectsUpdateReq)
 	}
 	resp := &ProjectsUpdateResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2940,7 +2964,7 @@ func ProjectsUpdate(ctx context.Context, req *ProjectsUpdateReq, opt ...options.
 	}
 
 	resp.Data = components.Project{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3054,7 +3078,7 @@ ProjectsUpdateResponse is a response for ProjectsUpdate
 https://developer.github.com/v3/projects/#update-a-project
 */
 type ProjectsUpdateResponse struct {
-	internal.Response
+	common.Response
 	request *ProjectsUpdateReq
 	Data    components.Project
 }
@@ -3077,7 +3101,8 @@ func ProjectsUpdateCard(ctx context.Context, req *ProjectsUpdateCardReq, opt ...
 		req = new(ProjectsUpdateCardReq)
 	}
 	resp := &ProjectsUpdateCardResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3087,7 +3112,7 @@ func ProjectsUpdateCard(ctx context.Context, req *ProjectsUpdateCardReq, opt ...
 	}
 
 	resp.Data = components.ProjectCard{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3194,7 +3219,7 @@ ProjectsUpdateCardResponse is a response for ProjectsUpdateCard
 https://developer.github.com/v3/projects/cards/#update-a-project-card
 */
 type ProjectsUpdateCardResponse struct {
-	internal.Response
+	common.Response
 	request *ProjectsUpdateCardReq
 	Data    components.ProjectCard
 }
@@ -3217,7 +3242,8 @@ func ProjectsUpdateColumn(ctx context.Context, req *ProjectsUpdateColumnReq, opt
 		req = new(ProjectsUpdateColumnReq)
 	}
 	resp := &ProjectsUpdateColumnResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3227,7 +3253,7 @@ func ProjectsUpdateColumn(ctx context.Context, req *ProjectsUpdateColumnReq, opt
 	}
 
 	resp.Data = components.ProjectColumn{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3331,7 +3357,7 @@ ProjectsUpdateColumnResponse is a response for ProjectsUpdateColumn
 https://developer.github.com/v3/projects/columns/#update-a-project-column
 */
 type ProjectsUpdateColumnResponse struct {
-	internal.Response
+	common.Response
 	request *ProjectsUpdateColumnReq
 	Data    components.ProjectColumn
 }

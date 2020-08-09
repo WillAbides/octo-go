@@ -5,6 +5,7 @@ package octo
 import (
 	"context"
 	"fmt"
+	common "github.com/willabides/octo-go/common"
 	components "github.com/willabides/octo-go/components"
 	internal "github.com/willabides/octo-go/internal"
 	options "github.com/willabides/octo-go/options"
@@ -30,7 +31,8 @@ func InteractionsGetRestrictionsForOrg(ctx context.Context, req *InteractionsGet
 		req = new(InteractionsGetRestrictionsForOrgReq)
 	}
 	resp := &InteractionsGetRestrictionsForOrgResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -40,7 +42,7 @@ func InteractionsGetRestrictionsForOrg(ctx context.Context, req *InteractionsGet
 	}
 
 	resp.Data = components.InteractionLimit{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -126,7 +128,7 @@ InteractionsGetRestrictionsForOrgResponse is a response for InteractionsGetRestr
 https://developer.github.com/v3/interactions/orgs/#get-interaction-restrictions-for-an-organization
 */
 type InteractionsGetRestrictionsForOrgResponse struct {
-	internal.Response
+	common.Response
 	request *InteractionsGetRestrictionsForOrgReq
 	Data    components.InteractionLimit
 }
@@ -149,7 +151,8 @@ func InteractionsGetRestrictionsForRepo(ctx context.Context, req *InteractionsGe
 		req = new(InteractionsGetRestrictionsForRepoReq)
 	}
 	resp := &InteractionsGetRestrictionsForRepoResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -159,7 +162,7 @@ func InteractionsGetRestrictionsForRepo(ctx context.Context, req *InteractionsGe
 	}
 
 	resp.Data = components.InteractionLimit{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -246,7 +249,7 @@ InteractionsGetRestrictionsForRepoResponse is a response for InteractionsGetRest
 https://developer.github.com/v3/interactions/repos/#get-interaction-restrictions-for-a-repository
 */
 type InteractionsGetRestrictionsForRepoResponse struct {
-	internal.Response
+	common.Response
 	request *InteractionsGetRestrictionsForRepoReq
 	Data    components.InteractionLimit
 }
@@ -269,7 +272,8 @@ func InteractionsRemoveRestrictionsForOrg(ctx context.Context, req *Interactions
 		req = new(InteractionsRemoveRestrictionsForOrgReq)
 	}
 	resp := &InteractionsRemoveRestrictionsForOrgResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -278,7 +282,7 @@ func InteractionsRemoveRestrictionsForOrg(ctx context.Context, req *Interactions
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -364,7 +368,7 @@ InteractionsRemoveRestrictionsForOrgResponse is a response for InteractionsRemov
 https://developer.github.com/v3/interactions/orgs/#remove-interaction-restrictions-for-an-organization
 */
 type InteractionsRemoveRestrictionsForOrgResponse struct {
-	internal.Response
+	common.Response
 	request *InteractionsRemoveRestrictionsForOrgReq
 }
 
@@ -386,7 +390,8 @@ func InteractionsRemoveRestrictionsForRepo(ctx context.Context, req *Interaction
 		req = new(InteractionsRemoveRestrictionsForRepoReq)
 	}
 	resp := &InteractionsRemoveRestrictionsForRepoResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -395,7 +400,7 @@ func InteractionsRemoveRestrictionsForRepo(ctx context.Context, req *Interaction
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -482,7 +487,7 @@ InteractionsRemoveRestrictionsForRepoResponse is a response for InteractionsRemo
 https://developer.github.com/v3/interactions/repos/#remove-interaction-restrictions-for-a-repository
 */
 type InteractionsRemoveRestrictionsForRepoResponse struct {
-	internal.Response
+	common.Response
 	request *InteractionsRemoveRestrictionsForRepoReq
 }
 
@@ -504,7 +509,8 @@ func InteractionsSetRestrictionsForOrg(ctx context.Context, req *InteractionsSet
 		req = new(InteractionsSetRestrictionsForOrgReq)
 	}
 	resp := &InteractionsSetRestrictionsForOrgResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -514,7 +520,7 @@ func InteractionsSetRestrictionsForOrg(ctx context.Context, req *InteractionsSet
 	}
 
 	resp.Data = components.InteractionLimit{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -619,7 +625,7 @@ InteractionsSetRestrictionsForOrgResponse is a response for InteractionsSetRestr
 https://developer.github.com/v3/interactions/orgs/#set-interaction-restrictions-for-an-organization
 */
 type InteractionsSetRestrictionsForOrgResponse struct {
-	internal.Response
+	common.Response
 	request *InteractionsSetRestrictionsForOrgReq
 	Data    components.InteractionLimit
 }
@@ -642,7 +648,8 @@ func InteractionsSetRestrictionsForRepo(ctx context.Context, req *InteractionsSe
 		req = new(InteractionsSetRestrictionsForRepoReq)
 	}
 	resp := &InteractionsSetRestrictionsForRepoResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -652,7 +659,7 @@ func InteractionsSetRestrictionsForRepo(ctx context.Context, req *InteractionsSe
 	}
 
 	resp.Data = components.InteractionLimit{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -758,7 +765,7 @@ InteractionsSetRestrictionsForRepoResponse is a response for InteractionsSetRest
 https://developer.github.com/v3/interactions/repos/#set-interaction-restrictions-for-a-repository
 */
 type InteractionsSetRestrictionsForRepoResponse struct {
-	internal.Response
+	common.Response
 	request *InteractionsSetRestrictionsForRepoReq
 	Data    components.InteractionLimit
 }

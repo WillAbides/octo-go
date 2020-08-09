@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/willabides/octo-go/common"
 	"github.com/willabides/octo-go/options"
 )
 
@@ -24,7 +25,7 @@ func OperationHasAttribute(id string, attr EndpointAttribute) bool {
 }
 
 // DoRequest performs an http request and returns a Response
-func DoRequest(ctx context.Context, builder *RequestBuilder, opts *options.Options) (*Response, error) {
+func DoRequest(ctx context.Context, builder *RequestBuilder, opts *options.Options) (*common.Response, error) {
 	req, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return nil, err
@@ -44,13 +45,9 @@ func DoRequest(ctx context.Context, builder *RequestBuilder, opts *options.Optio
 	if err != nil {
 		return nil, err
 	}
-	resp := &Response{
-		opts:         opts,
-		httpResponse: httpResponse,
-		reqBuilder:   builder,
-	}
+	resp := common.NewResponse(httpResponse)
 
-	err = ErrorCheck(resp)
+	err = ErrorCheck(resp, builder)
 	if err != nil {
 		return nil, err
 	}

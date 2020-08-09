@@ -5,6 +5,7 @@ package octo
 import (
 	"context"
 	"fmt"
+	common "github.com/willabides/octo-go/common"
 	components "github.com/willabides/octo-go/components"
 	internal "github.com/willabides/octo-go/internal"
 	options "github.com/willabides/octo-go/options"
@@ -31,7 +32,8 @@ func IssuesAddAssignees(ctx context.Context, req *IssuesAddAssigneesReq, opt ...
 		req = new(IssuesAddAssigneesReq)
 	}
 	resp := &IssuesAddAssigneesResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -41,7 +43,7 @@ func IssuesAddAssignees(ctx context.Context, req *IssuesAddAssigneesReq, opt ...
 	}
 
 	resp.Data = components.IssueSimple{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -141,7 +143,7 @@ IssuesAddAssigneesResponse is a response for IssuesAddAssignees
 https://developer.github.com/v3/issues/assignees/#add-assignees-to-an-issue
 */
 type IssuesAddAssigneesResponse struct {
-	internal.Response
+	common.Response
 	request *IssuesAddAssigneesReq
 	Data    components.IssueSimple
 }
@@ -164,7 +166,8 @@ func IssuesAddLabels(ctx context.Context, req *IssuesAddLabelsReq, opt ...option
 		req = new(IssuesAddLabelsReq)
 	}
 	resp := &IssuesAddLabelsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -174,7 +177,7 @@ func IssuesAddLabels(ctx context.Context, req *IssuesAddLabelsReq, opt ...option
 	}
 
 	resp.Data = []components.Label{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -276,7 +279,7 @@ IssuesAddLabelsResponse is a response for IssuesAddLabels
 https://developer.github.com/v3/issues/labels/#add-labels-to-an-issue
 */
 type IssuesAddLabelsResponse struct {
-	internal.Response
+	common.Response
 	request *IssuesAddLabelsReq
 	Data    []components.Label
 }
@@ -299,7 +302,8 @@ func IssuesCheckUserCanBeAssigned(ctx context.Context, req *IssuesCheckUserCanBe
 		req = new(IssuesCheckUserCanBeAssignedReq)
 	}
 	resp := &IssuesCheckUserCanBeAssignedResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -312,7 +316,7 @@ func IssuesCheckUserCanBeAssigned(ctx context.Context, req *IssuesCheckUserCanBe
 	if err != nil {
 		return nil, err
 	}
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -394,7 +398,7 @@ IssuesCheckUserCanBeAssignedResponse is a response for IssuesCheckUserCanBeAssig
 https://developer.github.com/v3/issues/assignees/#check-if-a-user-can-be-assigned
 */
 type IssuesCheckUserCanBeAssignedResponse struct {
-	internal.Response
+	common.Response
 	request *IssuesCheckUserCanBeAssignedReq
 	Data    bool
 }
@@ -417,7 +421,8 @@ func IssuesCreate(ctx context.Context, req *IssuesCreateReq, opt ...options.Opti
 		req = new(IssuesCreateReq)
 	}
 	resp := &IssuesCreateResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -427,7 +432,7 @@ func IssuesCreate(ctx context.Context, req *IssuesCreateReq, opt ...options.Opti
 	}
 
 	resp.Data = components.Issue{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -550,7 +555,7 @@ IssuesCreateResponse is a response for IssuesCreate
 https://developer.github.com/v3/issues/#create-an-issue
 */
 type IssuesCreateResponse struct {
-	internal.Response
+	common.Response
 	request *IssuesCreateReq
 	Data    components.Issue
 }
@@ -573,7 +578,8 @@ func IssuesCreateComment(ctx context.Context, req *IssuesCreateCommentReq, opt .
 		req = new(IssuesCreateCommentReq)
 	}
 	resp := &IssuesCreateCommentResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -583,7 +589,7 @@ func IssuesCreateComment(ctx context.Context, req *IssuesCreateCommentReq, opt .
 	}
 
 	resp.Data = components.IssueComment{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -680,7 +686,7 @@ IssuesCreateCommentResponse is a response for IssuesCreateComment
 https://developer.github.com/v3/issues/comments/#create-an-issue-comment
 */
 type IssuesCreateCommentResponse struct {
-	internal.Response
+	common.Response
 	request *IssuesCreateCommentReq
 	Data    components.IssueComment
 }
@@ -703,7 +709,8 @@ func IssuesCreateLabel(ctx context.Context, req *IssuesCreateLabelReq, opt ...op
 		req = new(IssuesCreateLabelReq)
 	}
 	resp := &IssuesCreateLabelResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -713,7 +720,7 @@ func IssuesCreateLabel(ctx context.Context, req *IssuesCreateLabelReq, opt ...op
 	}
 
 	resp.Data = components.Label{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -820,7 +827,7 @@ IssuesCreateLabelResponse is a response for IssuesCreateLabel
 https://developer.github.com/v3/issues/labels/#create-a-label
 */
 type IssuesCreateLabelResponse struct {
-	internal.Response
+	common.Response
 	request *IssuesCreateLabelReq
 	Data    components.Label
 }
@@ -843,7 +850,8 @@ func IssuesCreateMilestone(ctx context.Context, req *IssuesCreateMilestoneReq, o
 		req = new(IssuesCreateMilestoneReq)
 	}
 	resp := &IssuesCreateMilestoneResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -853,7 +861,7 @@ func IssuesCreateMilestone(ctx context.Context, req *IssuesCreateMilestoneReq, o
 	}
 
 	resp.Data = components.Milestone{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -959,7 +967,7 @@ IssuesCreateMilestoneResponse is a response for IssuesCreateMilestone
 https://developer.github.com/v3/issues/milestones/#create-a-milestone
 */
 type IssuesCreateMilestoneResponse struct {
-	internal.Response
+	common.Response
 	request *IssuesCreateMilestoneReq
 	Data    components.Milestone
 }
@@ -982,7 +990,8 @@ func IssuesDeleteComment(ctx context.Context, req *IssuesDeleteCommentReq, opt .
 		req = new(IssuesDeleteCommentReq)
 	}
 	resp := &IssuesDeleteCommentResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -991,7 +1000,7 @@ func IssuesDeleteComment(ctx context.Context, req *IssuesDeleteCommentReq, opt .
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -1073,7 +1082,7 @@ IssuesDeleteCommentResponse is a response for IssuesDeleteComment
 https://developer.github.com/v3/issues/comments/#delete-an-issue-comment
 */
 type IssuesDeleteCommentResponse struct {
-	internal.Response
+	common.Response
 	request *IssuesDeleteCommentReq
 }
 
@@ -1095,7 +1104,8 @@ func IssuesDeleteLabel(ctx context.Context, req *IssuesDeleteLabelReq, opt ...op
 		req = new(IssuesDeleteLabelReq)
 	}
 	resp := &IssuesDeleteLabelResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1104,7 +1114,7 @@ func IssuesDeleteLabel(ctx context.Context, req *IssuesDeleteLabelReq, opt ...op
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -1186,7 +1196,7 @@ IssuesDeleteLabelResponse is a response for IssuesDeleteLabel
 https://developer.github.com/v3/issues/labels/#delete-a-label
 */
 type IssuesDeleteLabelResponse struct {
-	internal.Response
+	common.Response
 	request *IssuesDeleteLabelReq
 }
 
@@ -1208,7 +1218,8 @@ func IssuesDeleteMilestone(ctx context.Context, req *IssuesDeleteMilestoneReq, o
 		req = new(IssuesDeleteMilestoneReq)
 	}
 	resp := &IssuesDeleteMilestoneResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1221,7 +1232,7 @@ func IssuesDeleteMilestone(ctx context.Context, req *IssuesDeleteMilestoneReq, o
 	if err != nil {
 		return nil, err
 	}
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -1303,7 +1314,7 @@ IssuesDeleteMilestoneResponse is a response for IssuesDeleteMilestone
 https://developer.github.com/v3/issues/milestones/#delete-a-milestone
 */
 type IssuesDeleteMilestoneResponse struct {
-	internal.Response
+	common.Response
 	request *IssuesDeleteMilestoneReq
 	Data    bool
 }
@@ -1326,7 +1337,8 @@ func IssuesGet(ctx context.Context, req *IssuesGetReq, opt ...options.Option) (*
 		req = new(IssuesGetReq)
 	}
 	resp := &IssuesGetResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1336,7 +1348,7 @@ func IssuesGet(ctx context.Context, req *IssuesGetReq, opt ...options.Option) (*
 	}
 
 	resp.Data = components.Issue{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1429,7 +1441,7 @@ IssuesGetResponse is a response for IssuesGet
 https://developer.github.com/v3/issues/#get-an-issue
 */
 type IssuesGetResponse struct {
-	internal.Response
+	common.Response
 	request *IssuesGetReq
 	Data    components.Issue
 }
@@ -1452,7 +1464,8 @@ func IssuesGetComment(ctx context.Context, req *IssuesGetCommentReq, opt ...opti
 		req = new(IssuesGetCommentReq)
 	}
 	resp := &IssuesGetCommentResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1462,7 +1475,7 @@ func IssuesGetComment(ctx context.Context, req *IssuesGetCommentReq, opt ...opti
 	}
 
 	resp.Data = components.IssueComment{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1564,7 +1577,7 @@ IssuesGetCommentResponse is a response for IssuesGetComment
 https://developer.github.com/v3/issues/comments/#get-an-issue-comment
 */
 type IssuesGetCommentResponse struct {
-	internal.Response
+	common.Response
 	request *IssuesGetCommentReq
 	Data    components.IssueComment
 }
@@ -1587,7 +1600,8 @@ func IssuesGetEvent(ctx context.Context, req *IssuesGetEventReq, opt ...options.
 		req = new(IssuesGetEventReq)
 	}
 	resp := &IssuesGetEventResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1597,7 +1611,7 @@ func IssuesGetEvent(ctx context.Context, req *IssuesGetEventReq, opt ...options.
 	}
 
 	resp.Data = components.IssueEvent{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1711,7 +1725,7 @@ IssuesGetEventResponse is a response for IssuesGetEvent
 https://developer.github.com/v3/issues/events/#get-an-issue-event
 */
 type IssuesGetEventResponse struct {
-	internal.Response
+	common.Response
 	request *IssuesGetEventReq
 	Data    components.IssueEvent
 }
@@ -1734,7 +1748,8 @@ func IssuesGetLabel(ctx context.Context, req *IssuesGetLabelReq, opt ...options.
 		req = new(IssuesGetLabelReq)
 	}
 	resp := &IssuesGetLabelResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1744,7 +1759,7 @@ func IssuesGetLabel(ctx context.Context, req *IssuesGetLabelReq, opt ...options.
 	}
 
 	resp.Data = components.Label{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1826,7 +1841,7 @@ IssuesGetLabelResponse is a response for IssuesGetLabel
 https://developer.github.com/v3/issues/labels/#get-a-label
 */
 type IssuesGetLabelResponse struct {
-	internal.Response
+	common.Response
 	request *IssuesGetLabelReq
 	Data    components.Label
 }
@@ -1849,7 +1864,8 @@ func IssuesGetMilestone(ctx context.Context, req *IssuesGetMilestoneReq, opt ...
 		req = new(IssuesGetMilestoneReq)
 	}
 	resp := &IssuesGetMilestoneResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1859,7 +1875,7 @@ func IssuesGetMilestone(ctx context.Context, req *IssuesGetMilestoneReq, opt ...
 	}
 
 	resp.Data = components.Milestone{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1941,7 +1957,7 @@ IssuesGetMilestoneResponse is a response for IssuesGetMilestone
 https://developer.github.com/v3/issues/milestones/#get-a-milestone
 */
 type IssuesGetMilestoneResponse struct {
-	internal.Response
+	common.Response
 	request *IssuesGetMilestoneReq
 	Data    components.Milestone
 }
@@ -1964,7 +1980,8 @@ func IssuesList(ctx context.Context, req *IssuesListReq, opt ...options.Option) 
 		req = new(IssuesListReq)
 	}
 	resp := &IssuesListResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1974,7 +1991,7 @@ func IssuesList(ctx context.Context, req *IssuesListReq, opt ...options.Option) 
 	}
 
 	resp.Data = []components.Issue{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2150,7 +2167,7 @@ IssuesListResponse is a response for IssuesList
 https://developer.github.com/v3/issues/#list-issues-assigned-to-the-authenticated-user
 */
 type IssuesListResponse struct {
-	internal.Response
+	common.Response
 	request *IssuesListReq
 	Data    []components.Issue
 }
@@ -2173,7 +2190,8 @@ func IssuesListAssignees(ctx context.Context, req *IssuesListAssigneesReq, opt .
 		req = new(IssuesListAssigneesReq)
 	}
 	resp := &IssuesListAssigneesResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2183,7 +2201,7 @@ func IssuesListAssignees(ctx context.Context, req *IssuesListAssigneesReq, opt .
 	}
 
 	resp.Data = []components.SimpleUser{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2274,7 +2292,7 @@ IssuesListAssigneesResponse is a response for IssuesListAssignees
 https://developer.github.com/v3/issues/assignees/#list-assignees
 */
 type IssuesListAssigneesResponse struct {
-	internal.Response
+	common.Response
 	request *IssuesListAssigneesReq
 	Data    []components.SimpleUser
 }
@@ -2297,7 +2315,8 @@ func IssuesListComments(ctx context.Context, req *IssuesListCommentsReq, opt ...
 		req = new(IssuesListCommentsReq)
 	}
 	resp := &IssuesListCommentsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2307,7 +2326,7 @@ func IssuesListComments(ctx context.Context, req *IssuesListCommentsReq, opt ...
 	}
 
 	resp.Data = []components.IssueComment{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2422,7 +2441,7 @@ IssuesListCommentsResponse is a response for IssuesListComments
 https://developer.github.com/v3/issues/comments/#list-issue-comments
 */
 type IssuesListCommentsResponse struct {
-	internal.Response
+	common.Response
 	request *IssuesListCommentsReq
 	Data    []components.IssueComment
 }
@@ -2445,7 +2464,8 @@ func IssuesListCommentsForRepo(ctx context.Context, req *IssuesListCommentsForRe
 		req = new(IssuesListCommentsForRepoReq)
 	}
 	resp := &IssuesListCommentsForRepoResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2455,7 +2475,7 @@ func IssuesListCommentsForRepo(ctx context.Context, req *IssuesListCommentsForRe
 	}
 
 	resp.Data = []components.IssueComment{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2582,7 +2602,7 @@ IssuesListCommentsForRepoResponse is a response for IssuesListCommentsForRepo
 https://developer.github.com/v3/issues/comments/#list-issue-comments-for-a-repository
 */
 type IssuesListCommentsForRepoResponse struct {
-	internal.Response
+	common.Response
 	request *IssuesListCommentsForRepoReq
 	Data    []components.IssueComment
 }
@@ -2605,7 +2625,8 @@ func IssuesListEvents(ctx context.Context, req *IssuesListEventsReq, opt ...opti
 		req = new(IssuesListEventsReq)
 	}
 	resp := &IssuesListEventsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2615,7 +2636,7 @@ func IssuesListEvents(ctx context.Context, req *IssuesListEventsReq, opt ...opti
 	}
 
 	resp.Data = []components.IssueEventForIssue{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2734,7 +2755,7 @@ IssuesListEventsResponse is a response for IssuesListEvents
 https://developer.github.com/v3/issues/events/#list-issue-events
 */
 type IssuesListEventsResponse struct {
-	internal.Response
+	common.Response
 	request *IssuesListEventsReq
 	Data    []components.IssueEventForIssue
 }
@@ -2757,7 +2778,8 @@ func IssuesListEventsForRepo(ctx context.Context, req *IssuesListEventsForRepoRe
 		req = new(IssuesListEventsForRepoReq)
 	}
 	resp := &IssuesListEventsForRepoResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2767,7 +2789,7 @@ func IssuesListEventsForRepo(ctx context.Context, req *IssuesListEventsForRepoRe
 	}
 
 	resp.Data = []components.IssueEvent{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2883,7 +2905,7 @@ IssuesListEventsForRepoResponse is a response for IssuesListEventsForRepo
 https://developer.github.com/v3/issues/events/#list-issue-events-for-a-repository
 */
 type IssuesListEventsForRepoResponse struct {
-	internal.Response
+	common.Response
 	request *IssuesListEventsForRepoReq
 	Data    []components.IssueEvent
 }
@@ -2906,7 +2928,8 @@ func IssuesListEventsForTimeline(ctx context.Context, req *IssuesListEventsForTi
 		req = new(IssuesListEventsForTimelineReq)
 	}
 	resp := &IssuesListEventsForTimelineResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2916,7 +2939,7 @@ func IssuesListEventsForTimeline(ctx context.Context, req *IssuesListEventsForTi
 	}
 
 	resp.Data = []components.IssueEventForIssue{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3034,7 +3057,7 @@ IssuesListEventsForTimelineResponse is a response for IssuesListEventsForTimelin
 https://developer.github.com/v3/issues/timeline/#list-timeline-events-for-an-issue
 */
 type IssuesListEventsForTimelineResponse struct {
-	internal.Response
+	common.Response
 	request *IssuesListEventsForTimelineReq
 	Data    []components.IssueEventForIssue
 }
@@ -3057,7 +3080,8 @@ func IssuesListForAuthenticatedUser(ctx context.Context, req *IssuesListForAuthe
 		req = new(IssuesListForAuthenticatedUserReq)
 	}
 	resp := &IssuesListForAuthenticatedUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3067,7 +3091,7 @@ func IssuesListForAuthenticatedUser(ctx context.Context, req *IssuesListForAuthe
 	}
 
 	resp.Data = []components.Issue{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3227,7 +3251,7 @@ IssuesListForAuthenticatedUserResponse is a response for IssuesListForAuthentica
 https://developer.github.com/v3/issues/#list-user-account-issues-assigned-to-the-authenticated-user
 */
 type IssuesListForAuthenticatedUserResponse struct {
-	internal.Response
+	common.Response
 	request *IssuesListForAuthenticatedUserReq
 	Data    []components.Issue
 }
@@ -3250,7 +3274,8 @@ func IssuesListForOrg(ctx context.Context, req *IssuesListForOrgReq, opt ...opti
 		req = new(IssuesListForOrgReq)
 	}
 	resp := &IssuesListForOrgResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3260,7 +3285,7 @@ func IssuesListForOrg(ctx context.Context, req *IssuesListForOrgReq, opt ...opti
 	}
 
 	resp.Data = []components.Issue{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3421,7 +3446,7 @@ IssuesListForOrgResponse is a response for IssuesListForOrg
 https://developer.github.com/v3/issues/#list-organization-issues-assigned-to-the-authenticated-user
 */
 type IssuesListForOrgResponse struct {
-	internal.Response
+	common.Response
 	request *IssuesListForOrgReq
 	Data    []components.Issue
 }
@@ -3444,7 +3469,8 @@ func IssuesListForRepo(ctx context.Context, req *IssuesListForRepoReq, opt ...op
 		req = new(IssuesListForRepoReq)
 	}
 	resp := &IssuesListForRepoResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3454,7 +3480,7 @@ func IssuesListForRepo(ctx context.Context, req *IssuesListForRepoReq, opt ...op
 	}
 
 	resp.Data = []components.IssueSimple{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3633,7 +3659,7 @@ IssuesListForRepoResponse is a response for IssuesListForRepo
 https://developer.github.com/v3/issues/#list-repository-issues
 */
 type IssuesListForRepoResponse struct {
-	internal.Response
+	common.Response
 	request *IssuesListForRepoReq
 	Data    []components.IssueSimple
 }
@@ -3656,7 +3682,8 @@ func IssuesListLabelsForMilestone(ctx context.Context, req *IssuesListLabelsForM
 		req = new(IssuesListLabelsForMilestoneReq)
 	}
 	resp := &IssuesListLabelsForMilestoneResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3666,7 +3693,7 @@ func IssuesListLabelsForMilestone(ctx context.Context, req *IssuesListLabelsForM
 	}
 
 	resp.Data = []components.Label{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3760,7 +3787,7 @@ IssuesListLabelsForMilestoneResponse is a response for IssuesListLabelsForMilest
 https://developer.github.com/v3/issues/labels/#list-labels-for-issues-in-a-milestone
 */
 type IssuesListLabelsForMilestoneResponse struct {
-	internal.Response
+	common.Response
 	request *IssuesListLabelsForMilestoneReq
 	Data    []components.Label
 }
@@ -3783,7 +3810,8 @@ func IssuesListLabelsForRepo(ctx context.Context, req *IssuesListLabelsForRepoRe
 		req = new(IssuesListLabelsForRepoReq)
 	}
 	resp := &IssuesListLabelsForRepoResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3793,7 +3821,7 @@ func IssuesListLabelsForRepo(ctx context.Context, req *IssuesListLabelsForRepoRe
 	}
 
 	resp.Data = []components.Label{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3884,7 +3912,7 @@ IssuesListLabelsForRepoResponse is a response for IssuesListLabelsForRepo
 https://developer.github.com/v3/issues/labels/#list-labels-for-a-repository
 */
 type IssuesListLabelsForRepoResponse struct {
-	internal.Response
+	common.Response
 	request *IssuesListLabelsForRepoReq
 	Data    []components.Label
 }
@@ -3907,7 +3935,8 @@ func IssuesListLabelsOnIssue(ctx context.Context, req *IssuesListLabelsOnIssueRe
 		req = new(IssuesListLabelsOnIssueReq)
 	}
 	resp := &IssuesListLabelsOnIssueResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3917,7 +3946,7 @@ func IssuesListLabelsOnIssue(ctx context.Context, req *IssuesListLabelsOnIssueRe
 	}
 
 	resp.Data = []components.Label{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4011,7 +4040,7 @@ IssuesListLabelsOnIssueResponse is a response for IssuesListLabelsOnIssue
 https://developer.github.com/v3/issues/labels/#list-labels-for-an-issue
 */
 type IssuesListLabelsOnIssueResponse struct {
-	internal.Response
+	common.Response
 	request *IssuesListLabelsOnIssueReq
 	Data    []components.Label
 }
@@ -4034,7 +4063,8 @@ func IssuesListMilestones(ctx context.Context, req *IssuesListMilestonesReq, opt
 		req = new(IssuesListMilestonesReq)
 	}
 	resp := &IssuesListMilestonesResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -4044,7 +4074,7 @@ func IssuesListMilestones(ctx context.Context, req *IssuesListMilestonesReq, opt
 	}
 
 	resp.Data = []components.Milestone{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4153,7 +4183,7 @@ IssuesListMilestonesResponse is a response for IssuesListMilestones
 https://developer.github.com/v3/issues/milestones/#list-milestones
 */
 type IssuesListMilestonesResponse struct {
-	internal.Response
+	common.Response
 	request *IssuesListMilestonesReq
 	Data    []components.Milestone
 }
@@ -4176,7 +4206,8 @@ func IssuesLock(ctx context.Context, req *IssuesLockReq, opt ...options.Option) 
 		req = new(IssuesLockReq)
 	}
 	resp := &IssuesLockResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -4185,7 +4216,7 @@ func IssuesLock(ctx context.Context, req *IssuesLockReq, opt ...options.Option) 
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -4296,7 +4327,7 @@ IssuesLockResponse is a response for IssuesLock
 https://developer.github.com/v3/issues/#lock-an-issue
 */
 type IssuesLockResponse struct {
-	internal.Response
+	common.Response
 	request *IssuesLockReq
 }
 
@@ -4318,7 +4349,8 @@ func IssuesRemoveAllLabels(ctx context.Context, req *IssuesRemoveAllLabelsReq, o
 		req = new(IssuesRemoveAllLabelsReq)
 	}
 	resp := &IssuesRemoveAllLabelsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -4327,7 +4359,7 @@ func IssuesRemoveAllLabels(ctx context.Context, req *IssuesRemoveAllLabelsReq, o
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -4409,7 +4441,7 @@ IssuesRemoveAllLabelsResponse is a response for IssuesRemoveAllLabels
 https://developer.github.com/v3/issues/labels/#remove-all-labels-from-an-issue
 */
 type IssuesRemoveAllLabelsResponse struct {
-	internal.Response
+	common.Response
 	request *IssuesRemoveAllLabelsReq
 }
 
@@ -4431,7 +4463,8 @@ func IssuesRemoveAssignees(ctx context.Context, req *IssuesRemoveAssigneesReq, o
 		req = new(IssuesRemoveAssigneesReq)
 	}
 	resp := &IssuesRemoveAssigneesResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -4441,7 +4474,7 @@ func IssuesRemoveAssignees(ctx context.Context, req *IssuesRemoveAssigneesReq, o
 	}
 
 	resp.Data = components.IssueSimple{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4542,7 +4575,7 @@ IssuesRemoveAssigneesResponse is a response for IssuesRemoveAssignees
 https://developer.github.com/v3/issues/assignees/#remove-assignees-from-an-issue
 */
 type IssuesRemoveAssigneesResponse struct {
-	internal.Response
+	common.Response
 	request *IssuesRemoveAssigneesReq
 	Data    components.IssueSimple
 }
@@ -4565,7 +4598,8 @@ func IssuesRemoveLabel(ctx context.Context, req *IssuesRemoveLabelReq, opt ...op
 		req = new(IssuesRemoveLabelReq)
 	}
 	resp := &IssuesRemoveLabelResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -4575,7 +4609,7 @@ func IssuesRemoveLabel(ctx context.Context, req *IssuesRemoveLabelReq, opt ...op
 	}
 
 	resp.Data = []components.Label{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4660,7 +4694,7 @@ IssuesRemoveLabelResponse is a response for IssuesRemoveLabel
 https://developer.github.com/v3/issues/labels/#remove-a-label-from-an-issue
 */
 type IssuesRemoveLabelResponse struct {
-	internal.Response
+	common.Response
 	request *IssuesRemoveLabelReq
 	Data    []components.Label
 }
@@ -4683,7 +4717,8 @@ func IssuesSetLabels(ctx context.Context, req *IssuesSetLabelsReq, opt ...option
 		req = new(IssuesSetLabelsReq)
 	}
 	resp := &IssuesSetLabelsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -4693,7 +4728,7 @@ func IssuesSetLabels(ctx context.Context, req *IssuesSetLabelsReq, opt ...option
 	}
 
 	resp.Data = []components.Label{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4795,7 +4830,7 @@ IssuesSetLabelsResponse is a response for IssuesSetLabels
 https://developer.github.com/v3/issues/labels/#set-labels-for-an-issue
 */
 type IssuesSetLabelsResponse struct {
-	internal.Response
+	common.Response
 	request *IssuesSetLabelsReq
 	Data    []components.Label
 }
@@ -4818,7 +4853,8 @@ func IssuesUnlock(ctx context.Context, req *IssuesUnlockReq, opt ...options.Opti
 		req = new(IssuesUnlockReq)
 	}
 	resp := &IssuesUnlockResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -4827,7 +4863,7 @@ func IssuesUnlock(ctx context.Context, req *IssuesUnlockReq, opt ...options.Opti
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -4909,7 +4945,7 @@ IssuesUnlockResponse is a response for IssuesUnlock
 https://developer.github.com/v3/issues/#unlock-an-issue
 */
 type IssuesUnlockResponse struct {
-	internal.Response
+	common.Response
 	request *IssuesUnlockReq
 }
 
@@ -4931,7 +4967,8 @@ func IssuesUpdate(ctx context.Context, req *IssuesUpdateReq, opt ...options.Opti
 		req = new(IssuesUpdateReq)
 	}
 	resp := &IssuesUpdateResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -4941,7 +4978,7 @@ func IssuesUpdate(ctx context.Context, req *IssuesUpdateReq, opt ...options.Opti
 	}
 
 	resp.Data = components.Issue{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -5070,7 +5107,7 @@ IssuesUpdateResponse is a response for IssuesUpdate
 https://developer.github.com/v3/issues/#update-an-issue
 */
 type IssuesUpdateResponse struct {
-	internal.Response
+	common.Response
 	request *IssuesUpdateReq
 	Data    components.Issue
 }
@@ -5093,7 +5130,8 @@ func IssuesUpdateComment(ctx context.Context, req *IssuesUpdateCommentReq, opt .
 		req = new(IssuesUpdateCommentReq)
 	}
 	resp := &IssuesUpdateCommentResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -5103,7 +5141,7 @@ func IssuesUpdateComment(ctx context.Context, req *IssuesUpdateCommentReq, opt .
 	}
 
 	resp.Data = components.IssueComment{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -5200,7 +5238,7 @@ IssuesUpdateCommentResponse is a response for IssuesUpdateComment
 https://developer.github.com/v3/issues/comments/#update-an-issue-comment
 */
 type IssuesUpdateCommentResponse struct {
-	internal.Response
+	common.Response
 	request *IssuesUpdateCommentReq
 	Data    components.IssueComment
 }
@@ -5223,7 +5261,8 @@ func IssuesUpdateLabel(ctx context.Context, req *IssuesUpdateLabelReq, opt ...op
 		req = new(IssuesUpdateLabelReq)
 	}
 	resp := &IssuesUpdateLabelResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -5233,7 +5272,7 @@ func IssuesUpdateLabel(ctx context.Context, req *IssuesUpdateLabelReq, opt ...op
 	}
 
 	resp.Data = components.Label{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -5343,7 +5382,7 @@ IssuesUpdateLabelResponse is a response for IssuesUpdateLabel
 https://developer.github.com/v3/issues/labels/#update-a-label
 */
 type IssuesUpdateLabelResponse struct {
-	internal.Response
+	common.Response
 	request *IssuesUpdateLabelReq
 	Data    components.Label
 }
@@ -5366,7 +5405,8 @@ func IssuesUpdateMilestone(ctx context.Context, req *IssuesUpdateMilestoneReq, o
 		req = new(IssuesUpdateMilestoneReq)
 	}
 	resp := &IssuesUpdateMilestoneResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -5376,7 +5416,7 @@ func IssuesUpdateMilestone(ctx context.Context, req *IssuesUpdateMilestoneReq, o
 	}
 
 	resp.Data = components.Milestone{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -5485,7 +5525,7 @@ IssuesUpdateMilestoneResponse is a response for IssuesUpdateMilestone
 https://developer.github.com/v3/issues/milestones/#update-a-milestone
 */
 type IssuesUpdateMilestoneResponse struct {
-	internal.Response
+	common.Response
 	request *IssuesUpdateMilestoneReq
 	Data    components.Milestone
 }

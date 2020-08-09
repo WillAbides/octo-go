@@ -5,6 +5,7 @@ package octo
 import (
 	"context"
 	"fmt"
+	common "github.com/willabides/octo-go/common"
 	components "github.com/willabides/octo-go/components"
 	internal "github.com/willabides/octo-go/internal"
 	options "github.com/willabides/octo-go/options"
@@ -31,7 +32,8 @@ func OrgsBlockUser(ctx context.Context, req *OrgsBlockUserReq, opt ...options.Op
 		req = new(OrgsBlockUserReq)
 	}
 	resp := &OrgsBlockUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -40,7 +42,7 @@ func OrgsBlockUser(ctx context.Context, req *OrgsBlockUserReq, opt ...options.Op
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -119,7 +121,7 @@ OrgsBlockUserResponse is a response for OrgsBlockUser
 https://developer.github.com/v3/orgs/blocking/#block-a-user-from-an-organization
 */
 type OrgsBlockUserResponse struct {
-	internal.Response
+	common.Response
 	request *OrgsBlockUserReq
 }
 
@@ -141,7 +143,8 @@ func OrgsCheckBlockedUser(ctx context.Context, req *OrgsCheckBlockedUserReq, opt
 		req = new(OrgsCheckBlockedUserReq)
 	}
 	resp := &OrgsCheckBlockedUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -154,7 +157,7 @@ func OrgsCheckBlockedUser(ctx context.Context, req *OrgsCheckBlockedUserReq, opt
 	if err != nil {
 		return nil, err
 	}
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -233,7 +236,7 @@ OrgsCheckBlockedUserResponse is a response for OrgsCheckBlockedUser
 https://developer.github.com/v3/orgs/blocking/#check-if-a-user-is-blocked-by-an-organization
 */
 type OrgsCheckBlockedUserResponse struct {
-	internal.Response
+	common.Response
 	request *OrgsCheckBlockedUserReq
 	Data    bool
 }
@@ -256,7 +259,8 @@ func OrgsCheckMembershipForUser(ctx context.Context, req *OrgsCheckMembershipFor
 		req = new(OrgsCheckMembershipForUserReq)
 	}
 	resp := &OrgsCheckMembershipForUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -265,7 +269,7 @@ func OrgsCheckMembershipForUser(ctx context.Context, req *OrgsCheckMembershipFor
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -344,7 +348,7 @@ OrgsCheckMembershipForUserResponse is a response for OrgsCheckMembershipForUser
 https://developer.github.com/v3/orgs/members/#check-organization-membership-for-a-user
 */
 type OrgsCheckMembershipForUserResponse struct {
-	internal.Response
+	common.Response
 	request *OrgsCheckMembershipForUserReq
 }
 
@@ -366,7 +370,8 @@ func OrgsCheckPublicMembershipForUser(ctx context.Context, req *OrgsCheckPublicM
 		req = new(OrgsCheckPublicMembershipForUserReq)
 	}
 	resp := &OrgsCheckPublicMembershipForUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -379,7 +384,7 @@ func OrgsCheckPublicMembershipForUser(ctx context.Context, req *OrgsCheckPublicM
 	if err != nil {
 		return nil, err
 	}
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -458,7 +463,7 @@ OrgsCheckPublicMembershipForUserResponse is a response for OrgsCheckPublicMember
 https://developer.github.com/v3/orgs/members/#check-public-organization-membership-for-a-user
 */
 type OrgsCheckPublicMembershipForUserResponse struct {
-	internal.Response
+	common.Response
 	request *OrgsCheckPublicMembershipForUserReq
 	Data    bool
 }
@@ -481,7 +486,8 @@ func OrgsConvertMemberToOutsideCollaborator(ctx context.Context, req *OrgsConver
 		req = new(OrgsConvertMemberToOutsideCollaboratorReq)
 	}
 	resp := &OrgsConvertMemberToOutsideCollaboratorResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -490,7 +496,7 @@ func OrgsConvertMemberToOutsideCollaborator(ctx context.Context, req *OrgsConver
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -569,7 +575,7 @@ OrgsConvertMemberToOutsideCollaboratorResponse is a response for OrgsConvertMemb
 https://developer.github.com/v3/orgs/outside_collaborators/#convert-an-organization-member-to-outside-collaborator
 */
 type OrgsConvertMemberToOutsideCollaboratorResponse struct {
-	internal.Response
+	common.Response
 	request *OrgsConvertMemberToOutsideCollaboratorReq
 }
 
@@ -591,7 +597,8 @@ func OrgsCreateInvitation(ctx context.Context, req *OrgsCreateInvitationReq, opt
 		req = new(OrgsCreateInvitationReq)
 	}
 	resp := &OrgsCreateInvitationResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -601,7 +608,7 @@ func OrgsCreateInvitation(ctx context.Context, req *OrgsCreateInvitationReq, opt
 	}
 
 	resp.Data = components.OrganizationInvitation{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -714,7 +721,7 @@ OrgsCreateInvitationResponse is a response for OrgsCreateInvitation
 https://developer.github.com/v3/orgs/members/#create-an-organization-invitation
 */
 type OrgsCreateInvitationResponse struct {
-	internal.Response
+	common.Response
 	request *OrgsCreateInvitationReq
 	Data    components.OrganizationInvitation
 }
@@ -737,7 +744,8 @@ func OrgsCreateWebhook(ctx context.Context, req *OrgsCreateWebhookReq, opt ...op
 		req = new(OrgsCreateWebhookReq)
 	}
 	resp := &OrgsCreateWebhookResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -747,7 +755,7 @@ func OrgsCreateWebhook(ctx context.Context, req *OrgsCreateWebhookReq, opt ...op
 	}
 
 	resp.Data = components.OrgHook{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -881,7 +889,7 @@ OrgsCreateWebhookResponse is a response for OrgsCreateWebhook
 https://developer.github.com/v3/orgs/hooks/#create-an-organization-webhook
 */
 type OrgsCreateWebhookResponse struct {
-	internal.Response
+	common.Response
 	request *OrgsCreateWebhookReq
 	Data    components.OrgHook
 }
@@ -904,7 +912,8 @@ func OrgsDeleteWebhook(ctx context.Context, req *OrgsDeleteWebhookReq, opt ...op
 		req = new(OrgsDeleteWebhookReq)
 	}
 	resp := &OrgsDeleteWebhookResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -917,7 +926,7 @@ func OrgsDeleteWebhook(ctx context.Context, req *OrgsDeleteWebhookReq, opt ...op
 	if err != nil {
 		return nil, err
 	}
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -996,7 +1005,7 @@ OrgsDeleteWebhookResponse is a response for OrgsDeleteWebhook
 https://developer.github.com/v3/orgs/hooks/#delete-an-organization-webhook
 */
 type OrgsDeleteWebhookResponse struct {
-	internal.Response
+	common.Response
 	request *OrgsDeleteWebhookReq
 	Data    bool
 }
@@ -1019,7 +1028,8 @@ func OrgsGet(ctx context.Context, req *OrgsGetReq, opt ...options.Option) (*Orgs
 		req = new(OrgsGetReq)
 	}
 	resp := &OrgsGetResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1029,7 +1039,7 @@ func OrgsGet(ctx context.Context, req *OrgsGetReq, opt ...options.Option) (*Orgs
 	}
 
 	resp.Data = components.OrganizationFull{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1122,7 +1132,7 @@ OrgsGetResponse is a response for OrgsGet
 https://developer.github.com/v3/orgs/#get-an-organization
 */
 type OrgsGetResponse struct {
-	internal.Response
+	common.Response
 	request *OrgsGetReq
 	Data    components.OrganizationFull
 }
@@ -1145,7 +1155,8 @@ func OrgsGetMembershipForAuthenticatedUser(ctx context.Context, req *OrgsGetMemb
 		req = new(OrgsGetMembershipForAuthenticatedUserReq)
 	}
 	resp := &OrgsGetMembershipForAuthenticatedUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1155,7 +1166,7 @@ func OrgsGetMembershipForAuthenticatedUser(ctx context.Context, req *OrgsGetMemb
 	}
 
 	resp.Data = components.OrgMembership{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1233,7 +1244,7 @@ OrgsGetMembershipForAuthenticatedUserResponse is a response for OrgsGetMembershi
 https://developer.github.com/v3/orgs/members/#get-an-organization-membership-for-the-authenticated-user
 */
 type OrgsGetMembershipForAuthenticatedUserResponse struct {
-	internal.Response
+	common.Response
 	request *OrgsGetMembershipForAuthenticatedUserReq
 	Data    components.OrgMembership
 }
@@ -1256,7 +1267,8 @@ func OrgsGetMembershipForUser(ctx context.Context, req *OrgsGetMembershipForUser
 		req = new(OrgsGetMembershipForUserReq)
 	}
 	resp := &OrgsGetMembershipForUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1266,7 +1278,7 @@ func OrgsGetMembershipForUser(ctx context.Context, req *OrgsGetMembershipForUser
 	}
 
 	resp.Data = components.OrgMembership{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1345,7 +1357,7 @@ OrgsGetMembershipForUserResponse is a response for OrgsGetMembershipForUser
 https://developer.github.com/v3/orgs/members/#get-organization-membership-for-a-user
 */
 type OrgsGetMembershipForUserResponse struct {
-	internal.Response
+	common.Response
 	request *OrgsGetMembershipForUserReq
 	Data    components.OrgMembership
 }
@@ -1368,7 +1380,8 @@ func OrgsGetWebhook(ctx context.Context, req *OrgsGetWebhookReq, opt ...options.
 		req = new(OrgsGetWebhookReq)
 	}
 	resp := &OrgsGetWebhookResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1378,7 +1391,7 @@ func OrgsGetWebhook(ctx context.Context, req *OrgsGetWebhookReq, opt ...options.
 	}
 
 	resp.Data = components.OrgHook{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1457,7 +1470,7 @@ OrgsGetWebhookResponse is a response for OrgsGetWebhook
 https://developer.github.com/v3/orgs/hooks/#get-an-organization-webhook
 */
 type OrgsGetWebhookResponse struct {
-	internal.Response
+	common.Response
 	request *OrgsGetWebhookReq
 	Data    components.OrgHook
 }
@@ -1480,7 +1493,8 @@ func OrgsList(ctx context.Context, req *OrgsListReq, opt ...options.Option) (*Or
 		req = new(OrgsListReq)
 	}
 	resp := &OrgsListResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1490,7 +1504,7 @@ func OrgsList(ctx context.Context, req *OrgsListReq, opt ...options.Option) (*Or
 	}
 
 	resp.Data = []components.OrganizationSimple{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1583,7 +1597,7 @@ OrgsListResponse is a response for OrgsList
 https://developer.github.com/v3/orgs/#list-organizations
 */
 type OrgsListResponse struct {
-	internal.Response
+	common.Response
 	request *OrgsListReq
 	Data    []components.OrganizationSimple
 }
@@ -1606,7 +1620,8 @@ func OrgsListAppInstallations(ctx context.Context, req *OrgsListAppInstallations
 		req = new(OrgsListAppInstallationsReq)
 	}
 	resp := &OrgsListAppInstallationsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1616,7 +1631,7 @@ func OrgsListAppInstallations(ctx context.Context, req *OrgsListAppInstallations
 	}
 
 	resp.Data = OrgsListAppInstallationsResponseBody{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1722,7 +1737,7 @@ OrgsListAppInstallationsResponse is a response for OrgsListAppInstallations
 https://developer.github.com/v3/orgs/#list-app-installations-for-an-organization
 */
 type OrgsListAppInstallationsResponse struct {
-	internal.Response
+	common.Response
 	request *OrgsListAppInstallationsReq
 	Data    OrgsListAppInstallationsResponseBody
 }
@@ -1745,7 +1760,8 @@ func OrgsListBlockedUsers(ctx context.Context, req *OrgsListBlockedUsersReq, opt
 		req = new(OrgsListBlockedUsersReq)
 	}
 	resp := &OrgsListBlockedUsersResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1755,7 +1771,7 @@ func OrgsListBlockedUsers(ctx context.Context, req *OrgsListBlockedUsersReq, opt
 	}
 
 	resp.Data = []components.SimpleUser{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1833,7 +1849,7 @@ OrgsListBlockedUsersResponse is a response for OrgsListBlockedUsers
 https://developer.github.com/v3/orgs/blocking/#list-users-blocked-by-an-organization
 */
 type OrgsListBlockedUsersResponse struct {
-	internal.Response
+	common.Response
 	request *OrgsListBlockedUsersReq
 	Data    []components.SimpleUser
 }
@@ -1856,7 +1872,8 @@ func OrgsListForAuthenticatedUser(ctx context.Context, req *OrgsListForAuthentic
 		req = new(OrgsListForAuthenticatedUserReq)
 	}
 	resp := &OrgsListForAuthenticatedUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1866,7 +1883,7 @@ func OrgsListForAuthenticatedUser(ctx context.Context, req *OrgsListForAuthentic
 	}
 
 	resp.Data = []components.OrganizationSimple{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1955,7 +1972,7 @@ OrgsListForAuthenticatedUserResponse is a response for OrgsListForAuthenticatedU
 https://developer.github.com/v3/orgs/#list-organizations-for-the-authenticated-user
 */
 type OrgsListForAuthenticatedUserResponse struct {
-	internal.Response
+	common.Response
 	request *OrgsListForAuthenticatedUserReq
 	Data    []components.OrganizationSimple
 }
@@ -1978,7 +1995,8 @@ func OrgsListForUser(ctx context.Context, req *OrgsListForUserReq, opt ...option
 		req = new(OrgsListForUserReq)
 	}
 	resp := &OrgsListForUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1988,7 +2006,7 @@ func OrgsListForUser(ctx context.Context, req *OrgsListForUserReq, opt ...option
 	}
 
 	resp.Data = []components.OrganizationSimple{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2078,7 +2096,7 @@ OrgsListForUserResponse is a response for OrgsListForUser
 https://developer.github.com/v3/orgs/#list-organizations-for-a-user
 */
 type OrgsListForUserResponse struct {
-	internal.Response
+	common.Response
 	request *OrgsListForUserReq
 	Data    []components.OrganizationSimple
 }
@@ -2101,7 +2119,8 @@ func OrgsListInvitationTeams(ctx context.Context, req *OrgsListInvitationTeamsRe
 		req = new(OrgsListInvitationTeamsReq)
 	}
 	resp := &OrgsListInvitationTeamsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2111,7 +2130,7 @@ func OrgsListInvitationTeams(ctx context.Context, req *OrgsListInvitationTeamsRe
 	}
 
 	resp.Data = []components.Team{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2204,7 +2223,7 @@ OrgsListInvitationTeamsResponse is a response for OrgsListInvitationTeams
 https://developer.github.com/v3/orgs/members/#list-organization-invitation-teams
 */
 type OrgsListInvitationTeamsResponse struct {
-	internal.Response
+	common.Response
 	request *OrgsListInvitationTeamsReq
 	Data    []components.Team
 }
@@ -2227,7 +2246,8 @@ func OrgsListMembers(ctx context.Context, req *OrgsListMembersReq, opt ...option
 		req = new(OrgsListMembersReq)
 	}
 	resp := &OrgsListMembersResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2237,7 +2257,7 @@ func OrgsListMembers(ctx context.Context, req *OrgsListMembersReq, opt ...option
 	}
 
 	resp.Data = []components.SimpleUser{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2350,7 +2370,7 @@ OrgsListMembersResponse is a response for OrgsListMembers
 https://developer.github.com/v3/orgs/members/#list-organization-members
 */
 type OrgsListMembersResponse struct {
-	internal.Response
+	common.Response
 	request *OrgsListMembersReq
 	Data    []components.SimpleUser
 }
@@ -2373,7 +2393,8 @@ func OrgsListMembershipsForAuthenticatedUser(ctx context.Context, req *OrgsListM
 		req = new(OrgsListMembershipsForAuthenticatedUserReq)
 	}
 	resp := &OrgsListMembershipsForAuthenticatedUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2383,7 +2404,7 @@ func OrgsListMembershipsForAuthenticatedUser(ctx context.Context, req *OrgsListM
 	}
 
 	resp.Data = []components.OrgMembership{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2482,7 +2503,7 @@ OrgsListMembershipsForAuthenticatedUserResponse is a response for OrgsListMember
 https://developer.github.com/v3/orgs/members/#list-organization-memberships-for-the-authenticated-user
 */
 type OrgsListMembershipsForAuthenticatedUserResponse struct {
-	internal.Response
+	common.Response
 	request *OrgsListMembershipsForAuthenticatedUserReq
 	Data    []components.OrgMembership
 }
@@ -2505,7 +2526,8 @@ func OrgsListOutsideCollaborators(ctx context.Context, req *OrgsListOutsideColla
 		req = new(OrgsListOutsideCollaboratorsReq)
 	}
 	resp := &OrgsListOutsideCollaboratorsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2515,7 +2537,7 @@ func OrgsListOutsideCollaborators(ctx context.Context, req *OrgsListOutsideColla
 	}
 
 	resp.Data = []components.SimpleUser{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2616,7 +2638,7 @@ OrgsListOutsideCollaboratorsResponse is a response for OrgsListOutsideCollaborat
 https://developer.github.com/v3/orgs/outside_collaborators/#list-outside-collaborators-for-an-organization
 */
 type OrgsListOutsideCollaboratorsResponse struct {
-	internal.Response
+	common.Response
 	request *OrgsListOutsideCollaboratorsReq
 	Data    []components.SimpleUser
 }
@@ -2639,7 +2661,8 @@ func OrgsListPendingInvitations(ctx context.Context, req *OrgsListPendingInvitat
 		req = new(OrgsListPendingInvitationsReq)
 	}
 	resp := &OrgsListPendingInvitationsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2649,7 +2672,7 @@ func OrgsListPendingInvitations(ctx context.Context, req *OrgsListPendingInvitat
 	}
 
 	resp.Data = []components.OrganizationInvitation{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2739,7 +2762,7 @@ OrgsListPendingInvitationsResponse is a response for OrgsListPendingInvitations
 https://developer.github.com/v3/orgs/members/#list-pending-organization-invitations
 */
 type OrgsListPendingInvitationsResponse struct {
-	internal.Response
+	common.Response
 	request *OrgsListPendingInvitationsReq
 	Data    []components.OrganizationInvitation
 }
@@ -2762,7 +2785,8 @@ func OrgsListPublicMembers(ctx context.Context, req *OrgsListPublicMembersReq, o
 		req = new(OrgsListPublicMembersReq)
 	}
 	resp := &OrgsListPublicMembersResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2772,7 +2796,7 @@ func OrgsListPublicMembers(ctx context.Context, req *OrgsListPublicMembersReq, o
 	}
 
 	resp.Data = []components.SimpleUser{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2862,7 +2886,7 @@ OrgsListPublicMembersResponse is a response for OrgsListPublicMembers
 https://developer.github.com/v3/orgs/members/#list-public-organization-members
 */
 type OrgsListPublicMembersResponse struct {
-	internal.Response
+	common.Response
 	request *OrgsListPublicMembersReq
 	Data    []components.SimpleUser
 }
@@ -2885,7 +2909,8 @@ func OrgsListSamlSsoAuthorizations(ctx context.Context, req *OrgsListSamlSsoAuth
 		req = new(OrgsListSamlSsoAuthorizationsReq)
 	}
 	resp := &OrgsListSamlSsoAuthorizationsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2895,7 +2920,7 @@ func OrgsListSamlSsoAuthorizations(ctx context.Context, req *OrgsListSamlSsoAuth
 	}
 
 	resp.Data = []components.CredentialAuthorization{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2973,7 +2998,7 @@ OrgsListSamlSsoAuthorizationsResponse is a response for OrgsListSamlSsoAuthoriza
 https://developer.github.com/v3/orgs/#list-saml-sso-authorizations-for-an-organization
 */
 type OrgsListSamlSsoAuthorizationsResponse struct {
-	internal.Response
+	common.Response
 	request *OrgsListSamlSsoAuthorizationsReq
 	Data    []components.CredentialAuthorization
 }
@@ -2996,7 +3021,8 @@ func OrgsListWebhooks(ctx context.Context, req *OrgsListWebhooksReq, opt ...opti
 		req = new(OrgsListWebhooksReq)
 	}
 	resp := &OrgsListWebhooksResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3006,7 +3032,7 @@ func OrgsListWebhooks(ctx context.Context, req *OrgsListWebhooksReq, opt ...opti
 	}
 
 	resp.Data = []components.OrgHook{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3096,7 +3122,7 @@ OrgsListWebhooksResponse is a response for OrgsListWebhooks
 https://developer.github.com/v3/orgs/hooks/#list-organization-webhooks
 */
 type OrgsListWebhooksResponse struct {
-	internal.Response
+	common.Response
 	request *OrgsListWebhooksReq
 	Data    []components.OrgHook
 }
@@ -3119,7 +3145,8 @@ func OrgsPingWebhook(ctx context.Context, req *OrgsPingWebhookReq, opt ...option
 		req = new(OrgsPingWebhookReq)
 	}
 	resp := &OrgsPingWebhookResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3132,7 +3159,7 @@ func OrgsPingWebhook(ctx context.Context, req *OrgsPingWebhookReq, opt ...option
 	if err != nil {
 		return nil, err
 	}
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -3211,7 +3238,7 @@ OrgsPingWebhookResponse is a response for OrgsPingWebhook
 https://developer.github.com/v3/orgs/hooks/#ping-an-organization-webhook
 */
 type OrgsPingWebhookResponse struct {
-	internal.Response
+	common.Response
 	request *OrgsPingWebhookReq
 	Data    bool
 }
@@ -3234,7 +3261,8 @@ func OrgsRemoveMember(ctx context.Context, req *OrgsRemoveMemberReq, opt ...opti
 		req = new(OrgsRemoveMemberReq)
 	}
 	resp := &OrgsRemoveMemberResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3243,7 +3271,7 @@ func OrgsRemoveMember(ctx context.Context, req *OrgsRemoveMemberReq, opt ...opti
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -3322,7 +3350,7 @@ OrgsRemoveMemberResponse is a response for OrgsRemoveMember
 https://developer.github.com/v3/orgs/members/#remove-an-organization-member
 */
 type OrgsRemoveMemberResponse struct {
-	internal.Response
+	common.Response
 	request *OrgsRemoveMemberReq
 }
 
@@ -3344,7 +3372,8 @@ func OrgsRemoveMembershipForUser(ctx context.Context, req *OrgsRemoveMembershipF
 		req = new(OrgsRemoveMembershipForUserReq)
 	}
 	resp := &OrgsRemoveMembershipForUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3353,7 +3382,7 @@ func OrgsRemoveMembershipForUser(ctx context.Context, req *OrgsRemoveMembershipF
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -3432,7 +3461,7 @@ OrgsRemoveMembershipForUserResponse is a response for OrgsRemoveMembershipForUse
 https://developer.github.com/v3/orgs/members/#remove-organization-membership-for-a-user
 */
 type OrgsRemoveMembershipForUserResponse struct {
-	internal.Response
+	common.Response
 	request *OrgsRemoveMembershipForUserReq
 }
 
@@ -3454,7 +3483,8 @@ func OrgsRemoveOutsideCollaborator(ctx context.Context, req *OrgsRemoveOutsideCo
 		req = new(OrgsRemoveOutsideCollaboratorReq)
 	}
 	resp := &OrgsRemoveOutsideCollaboratorResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3463,7 +3493,7 @@ func OrgsRemoveOutsideCollaborator(ctx context.Context, req *OrgsRemoveOutsideCo
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -3542,7 +3572,7 @@ OrgsRemoveOutsideCollaboratorResponse is a response for OrgsRemoveOutsideCollabo
 https://developer.github.com/v3/orgs/outside_collaborators/#remove-outside-collaborator-from-an-organization
 */
 type OrgsRemoveOutsideCollaboratorResponse struct {
-	internal.Response
+	common.Response
 	request *OrgsRemoveOutsideCollaboratorReq
 }
 
@@ -3564,7 +3594,8 @@ func OrgsRemovePublicMembershipForAuthenticatedUser(ctx context.Context, req *Or
 		req = new(OrgsRemovePublicMembershipForAuthenticatedUserReq)
 	}
 	resp := &OrgsRemovePublicMembershipForAuthenticatedUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3573,7 +3604,7 @@ func OrgsRemovePublicMembershipForAuthenticatedUser(ctx context.Context, req *Or
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -3652,7 +3683,7 @@ OrgsRemovePublicMembershipForAuthenticatedUserResponse is a response for OrgsRem
 https://developer.github.com/v3/orgs/members/#remove-public-organization-membership-for-the-authenticated-user
 */
 type OrgsRemovePublicMembershipForAuthenticatedUserResponse struct {
-	internal.Response
+	common.Response
 	request *OrgsRemovePublicMembershipForAuthenticatedUserReq
 }
 
@@ -3674,7 +3705,8 @@ func OrgsRemoveSamlSsoAuthorization(ctx context.Context, req *OrgsRemoveSamlSsoA
 		req = new(OrgsRemoveSamlSsoAuthorizationReq)
 	}
 	resp := &OrgsRemoveSamlSsoAuthorizationResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3687,7 +3719,7 @@ func OrgsRemoveSamlSsoAuthorization(ctx context.Context, req *OrgsRemoveSamlSsoA
 	if err != nil {
 		return nil, err
 	}
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -3768,7 +3800,7 @@ OrgsRemoveSamlSsoAuthorizationResponse is a response for OrgsRemoveSamlSsoAuthor
 https://developer.github.com/v3/orgs/#remove-a-saml-sso-authorization-for-an-organization
 */
 type OrgsRemoveSamlSsoAuthorizationResponse struct {
-	internal.Response
+	common.Response
 	request *OrgsRemoveSamlSsoAuthorizationReq
 	Data    bool
 }
@@ -3791,7 +3823,8 @@ func OrgsSetMembershipForUser(ctx context.Context, req *OrgsSetMembershipForUser
 		req = new(OrgsSetMembershipForUserReq)
 	}
 	resp := &OrgsSetMembershipForUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3801,7 +3834,7 @@ func OrgsSetMembershipForUser(ctx context.Context, req *OrgsSetMembershipForUser
 	}
 
 	resp.Data = components.OrgMembership{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3899,7 +3932,7 @@ OrgsSetMembershipForUserResponse is a response for OrgsSetMembershipForUser
 https://developer.github.com/v3/orgs/members/#set-organization-membership-for-a-user
 */
 type OrgsSetMembershipForUserResponse struct {
-	internal.Response
+	common.Response
 	request *OrgsSetMembershipForUserReq
 	Data    components.OrgMembership
 }
@@ -3922,7 +3955,8 @@ func OrgsSetPublicMembershipForAuthenticatedUser(ctx context.Context, req *OrgsS
 		req = new(OrgsSetPublicMembershipForAuthenticatedUserReq)
 	}
 	resp := &OrgsSetPublicMembershipForAuthenticatedUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3931,7 +3965,7 @@ func OrgsSetPublicMembershipForAuthenticatedUser(ctx context.Context, req *OrgsS
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -4010,7 +4044,7 @@ OrgsSetPublicMembershipForAuthenticatedUserResponse is a response for OrgsSetPub
 https://developer.github.com/v3/orgs/members/#set-public-organization-membership-for-the-authenticated-user
 */
 type OrgsSetPublicMembershipForAuthenticatedUserResponse struct {
-	internal.Response
+	common.Response
 	request *OrgsSetPublicMembershipForAuthenticatedUserReq
 }
 
@@ -4032,7 +4066,8 @@ func OrgsUnblockUser(ctx context.Context, req *OrgsUnblockUserReq, opt ...option
 		req = new(OrgsUnblockUserReq)
 	}
 	resp := &OrgsUnblockUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -4041,7 +4076,7 @@ func OrgsUnblockUser(ctx context.Context, req *OrgsUnblockUserReq, opt ...option
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -4120,7 +4155,7 @@ OrgsUnblockUserResponse is a response for OrgsUnblockUser
 https://developer.github.com/v3/orgs/blocking/#unblock-a-user-from-an-organization
 */
 type OrgsUnblockUserResponse struct {
-	internal.Response
+	common.Response
 	request *OrgsUnblockUserReq
 }
 
@@ -4142,7 +4177,8 @@ func OrgsUpdate(ctx context.Context, req *OrgsUpdateReq, opt ...options.Option) 
 		req = new(OrgsUpdateReq)
 	}
 	resp := &OrgsUpdateResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -4152,7 +4188,7 @@ func OrgsUpdate(ctx context.Context, req *OrgsUpdateReq, opt ...options.Option) 
 	}
 
 	resp.Data = components.OrganizationFull{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4361,7 +4397,7 @@ OrgsUpdateResponse is a response for OrgsUpdate
 https://developer.github.com/v3/orgs/#update-an-organization
 */
 type OrgsUpdateResponse struct {
-	internal.Response
+	common.Response
 	request *OrgsUpdateReq
 	Data    components.OrganizationFull
 }
@@ -4384,7 +4420,8 @@ func OrgsUpdateMembershipForAuthenticatedUser(ctx context.Context, req *OrgsUpda
 		req = new(OrgsUpdateMembershipForAuthenticatedUserReq)
 	}
 	resp := &OrgsUpdateMembershipForAuthenticatedUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -4394,7 +4431,7 @@ func OrgsUpdateMembershipForAuthenticatedUser(ctx context.Context, req *OrgsUpda
 	}
 
 	resp.Data = components.OrgMembership{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4487,7 +4524,7 @@ OrgsUpdateMembershipForAuthenticatedUserResponse is a response for OrgsUpdateMem
 https://developer.github.com/v3/orgs/members/#update-an-organization-membership-for-the-authenticated-user
 */
 type OrgsUpdateMembershipForAuthenticatedUserResponse struct {
-	internal.Response
+	common.Response
 	request *OrgsUpdateMembershipForAuthenticatedUserReq
 	Data    components.OrgMembership
 }
@@ -4510,7 +4547,8 @@ func OrgsUpdateWebhook(ctx context.Context, req *OrgsUpdateWebhookReq, opt ...op
 		req = new(OrgsUpdateWebhookReq)
 	}
 	resp := &OrgsUpdateWebhookResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -4520,7 +4558,7 @@ func OrgsUpdateWebhook(ctx context.Context, req *OrgsUpdateWebhookReq, opt ...op
 	}
 
 	resp.Data = components.OrgHook{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4651,7 +4689,7 @@ OrgsUpdateWebhookResponse is a response for OrgsUpdateWebhook
 https://developer.github.com/v3/orgs/hooks/#update-an-organization-webhook
 */
 type OrgsUpdateWebhookResponse struct {
-	internal.Response
+	common.Response
 	request *OrgsUpdateWebhookReq
 	Data    components.OrgHook
 }

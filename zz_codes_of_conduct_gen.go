@@ -5,6 +5,7 @@ package octo
 import (
 	"context"
 	"fmt"
+	common "github.com/willabides/octo-go/common"
 	components "github.com/willabides/octo-go/components"
 	internal "github.com/willabides/octo-go/internal"
 	options "github.com/willabides/octo-go/options"
@@ -30,7 +31,8 @@ func CodesOfConductGetAllCodesOfConduct(ctx context.Context, req *CodesOfConduct
 		req = new(CodesOfConductGetAllCodesOfConductReq)
 	}
 	resp := &CodesOfConductGetAllCodesOfConductResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -40,7 +42,7 @@ func CodesOfConductGetAllCodesOfConduct(ctx context.Context, req *CodesOfConduct
 	}
 
 	resp.Data = []components.CodeOfConduct{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -124,7 +126,7 @@ CodesOfConductGetAllCodesOfConductResponse is a response for CodesOfConductGetAl
 https://developer.github.com/v3/codes_of_conduct/#get-all-codes-of-conduct
 */
 type CodesOfConductGetAllCodesOfConductResponse struct {
-	internal.Response
+	common.Response
 	request *CodesOfConductGetAllCodesOfConductReq
 	Data    []components.CodeOfConduct
 }
@@ -147,7 +149,8 @@ func CodesOfConductGetConductCode(ctx context.Context, req *CodesOfConductGetCon
 		req = new(CodesOfConductGetConductCodeReq)
 	}
 	resp := &CodesOfConductGetConductCodeResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -157,7 +160,7 @@ func CodesOfConductGetConductCode(ctx context.Context, req *CodesOfConductGetCon
 	}
 
 	resp.Data = components.CodeOfConduct{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -244,7 +247,7 @@ CodesOfConductGetConductCodeResponse is a response for CodesOfConductGetConductC
 https://developer.github.com/v3/codes_of_conduct/#get-a-code-of-conduct
 */
 type CodesOfConductGetConductCodeResponse struct {
-	internal.Response
+	common.Response
 	request *CodesOfConductGetConductCodeReq
 	Data    components.CodeOfConduct
 }
@@ -267,7 +270,8 @@ func CodesOfConductGetForRepo(ctx context.Context, req *CodesOfConductGetForRepo
 		req = new(CodesOfConductGetForRepoReq)
 	}
 	resp := &CodesOfConductGetForRepoResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -277,7 +281,7 @@ func CodesOfConductGetForRepo(ctx context.Context, req *CodesOfConductGetForRepo
 	}
 
 	resp.Data = components.CodeOfConduct{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -363,7 +367,7 @@ CodesOfConductGetForRepoResponse is a response for CodesOfConductGetForRepo
 https://developer.github.com/v3/codes_of_conduct/#get-the-code-of-conduct-for-a-repository
 */
 type CodesOfConductGetForRepoResponse struct {
-	internal.Response
+	common.Response
 	request *CodesOfConductGetForRepoReq
 	Data    components.CodeOfConduct
 }

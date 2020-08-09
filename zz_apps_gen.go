@@ -5,6 +5,7 @@ package octo
 import (
 	"context"
 	"fmt"
+	common "github.com/willabides/octo-go/common"
 	components "github.com/willabides/octo-go/components"
 	internal "github.com/willabides/octo-go/internal"
 	options "github.com/willabides/octo-go/options"
@@ -31,7 +32,8 @@ func AppsAddRepoToInstallation(ctx context.Context, req *AppsAddRepoToInstallati
 		req = new(AppsAddRepoToInstallationReq)
 	}
 	resp := &AppsAddRepoToInstallationResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -40,7 +42,7 @@ func AppsAddRepoToInstallation(ctx context.Context, req *AppsAddRepoToInstallati
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -129,7 +131,7 @@ AppsAddRepoToInstallationResponse is a response for AppsAddRepoToInstallation
 https://developer.github.com/v3/apps/installations/#add-a-repository-to-an-app-installation
 */
 type AppsAddRepoToInstallationResponse struct {
-	internal.Response
+	common.Response
 	request *AppsAddRepoToInstallationReq
 }
 
@@ -151,7 +153,8 @@ func AppsCheckAuthorization(ctx context.Context, req *AppsCheckAuthorizationReq,
 		req = new(AppsCheckAuthorizationReq)
 	}
 	resp := &AppsCheckAuthorizationResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -161,7 +164,7 @@ func AppsCheckAuthorization(ctx context.Context, req *AppsCheckAuthorizationReq,
 	}
 
 	resp.Data = AppsCheckAuthorizationResponseBody{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -298,7 +301,7 @@ AppsCheckAuthorizationResponse is a response for AppsCheckAuthorization
 https://developer.github.com/v3/apps/oauth_applications/#check-an-authorization
 */
 type AppsCheckAuthorizationResponse struct {
-	internal.Response
+	common.Response
 	request *AppsCheckAuthorizationReq
 	Data    AppsCheckAuthorizationResponseBody
 }
@@ -321,7 +324,8 @@ func AppsCheckToken(ctx context.Context, req *AppsCheckTokenReq, opt ...options.
 		req = new(AppsCheckTokenReq)
 	}
 	resp := &AppsCheckTokenResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -331,7 +335,7 @@ func AppsCheckToken(ctx context.Context, req *AppsCheckTokenReq, opt ...options.
 	}
 
 	resp.Data = components.Authorization{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -424,7 +428,7 @@ AppsCheckTokenResponse is a response for AppsCheckToken
 https://developer.github.com/v3/apps/oauth_applications/#check-a-token
 */
 type AppsCheckTokenResponse struct {
-	internal.Response
+	common.Response
 	request *AppsCheckTokenReq
 	Data    components.Authorization
 }
@@ -447,7 +451,8 @@ func AppsCreateContentAttachment(ctx context.Context, req *AppsCreateContentAtta
 		req = new(AppsCreateContentAttachmentReq)
 	}
 	resp := &AppsCreateContentAttachmentResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -457,7 +462,7 @@ func AppsCreateContentAttachment(ctx context.Context, req *AppsCreateContentAtta
 	}
 
 	resp.Data = components.ContentReferenceAttachment{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -561,7 +566,7 @@ AppsCreateContentAttachmentResponse is a response for AppsCreateContentAttachmen
 https://developer.github.com/v3/apps/installations/#create-a-content-attachment
 */
 type AppsCreateContentAttachmentResponse struct {
-	internal.Response
+	common.Response
 	request *AppsCreateContentAttachmentReq
 	Data    components.ContentReferenceAttachment
 }
@@ -584,7 +589,8 @@ func AppsCreateFromManifest(ctx context.Context, req *AppsCreateFromManifestReq,
 		req = new(AppsCreateFromManifestReq)
 	}
 	resp := &AppsCreateFromManifestResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -594,7 +600,7 @@ func AppsCreateFromManifest(ctx context.Context, req *AppsCreateFromManifestReq,
 	}
 
 	resp.Data = AppsCreateFromManifestResponseBody{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -731,7 +737,7 @@ AppsCreateFromManifestResponse is a response for AppsCreateFromManifest
 https://developer.github.com/v3/apps/#create-a-github-app-from-a-manifest
 */
 type AppsCreateFromManifestResponse struct {
-	internal.Response
+	common.Response
 	request *AppsCreateFromManifestReq
 	Data    AppsCreateFromManifestResponseBody
 }
@@ -754,7 +760,8 @@ func AppsCreateInstallationAccessToken(ctx context.Context, req *AppsCreateInsta
 		req = new(AppsCreateInstallationAccessTokenReq)
 	}
 	resp := &AppsCreateInstallationAccessTokenResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -764,7 +771,7 @@ func AppsCreateInstallationAccessToken(ctx context.Context, req *AppsCreateInsta
 	}
 
 	resp.Data = components.InstallationToken{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -872,7 +879,7 @@ AppsCreateInstallationAccessTokenResponse is a response for AppsCreateInstallati
 https://developer.github.com/v3/apps/#create-an-installation-access-token-for-an-app
 */
 type AppsCreateInstallationAccessTokenResponse struct {
-	internal.Response
+	common.Response
 	request *AppsCreateInstallationAccessTokenReq
 	Data    components.InstallationToken
 }
@@ -895,7 +902,8 @@ func AppsDeleteAuthorization(ctx context.Context, req *AppsDeleteAuthorizationRe
 		req = new(AppsDeleteAuthorizationReq)
 	}
 	resp := &AppsDeleteAuthorizationResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -904,7 +912,7 @@ func AppsDeleteAuthorization(ctx context.Context, req *AppsDeleteAuthorizationRe
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -994,7 +1002,7 @@ AppsDeleteAuthorizationResponse is a response for AppsDeleteAuthorization
 https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-authorization
 */
 type AppsDeleteAuthorizationResponse struct {
-	internal.Response
+	common.Response
 	request *AppsDeleteAuthorizationReq
 }
 
@@ -1016,7 +1024,8 @@ func AppsDeleteInstallation(ctx context.Context, req *AppsDeleteInstallationReq,
 		req = new(AppsDeleteInstallationReq)
 	}
 	resp := &AppsDeleteInstallationResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1029,7 +1038,7 @@ func AppsDeleteInstallation(ctx context.Context, req *AppsDeleteInstallationReq,
 	if err != nil {
 		return nil, err
 	}
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -1115,7 +1124,7 @@ AppsDeleteInstallationResponse is a response for AppsDeleteInstallation
 https://developer.github.com/v3/apps/#delete-an-installation-for-the-authenticated-app
 */
 type AppsDeleteInstallationResponse struct {
-	internal.Response
+	common.Response
 	request *AppsDeleteInstallationReq
 	Data    bool
 }
@@ -1138,7 +1147,8 @@ func AppsDeleteToken(ctx context.Context, req *AppsDeleteTokenReq, opt ...option
 		req = new(AppsDeleteTokenReq)
 	}
 	resp := &AppsDeleteTokenResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1147,7 +1157,7 @@ func AppsDeleteToken(ctx context.Context, req *AppsDeleteTokenReq, opt ...option
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -1237,7 +1247,7 @@ AppsDeleteTokenResponse is a response for AppsDeleteToken
 https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-token
 */
 type AppsDeleteTokenResponse struct {
-	internal.Response
+	common.Response
 	request *AppsDeleteTokenReq
 }
 
@@ -1259,7 +1269,8 @@ func AppsGetAuthenticated(ctx context.Context, req *AppsGetAuthenticatedReq, opt
 		req = new(AppsGetAuthenticatedReq)
 	}
 	resp := &AppsGetAuthenticatedResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1269,7 +1280,7 @@ func AppsGetAuthenticated(ctx context.Context, req *AppsGetAuthenticatedReq, opt
 	}
 
 	resp.Data = components.Integration{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1352,7 +1363,7 @@ AppsGetAuthenticatedResponse is a response for AppsGetAuthenticated
 https://developer.github.com/v3/apps/#get-the-authenticated-app
 */
 type AppsGetAuthenticatedResponse struct {
-	internal.Response
+	common.Response
 	request *AppsGetAuthenticatedReq
 	Data    components.Integration
 }
@@ -1375,7 +1386,8 @@ func AppsGetBySlug(ctx context.Context, req *AppsGetBySlugReq, opt ...options.Op
 		req = new(AppsGetBySlugReq)
 	}
 	resp := &AppsGetBySlugResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1385,7 +1397,7 @@ func AppsGetBySlug(ctx context.Context, req *AppsGetBySlugReq, opt ...options.Op
 	}
 
 	resp.Data = components.Integration{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1471,7 +1483,7 @@ AppsGetBySlugResponse is a response for AppsGetBySlug
 https://developer.github.com/v3/apps/#get-an-app
 */
 type AppsGetBySlugResponse struct {
-	internal.Response
+	common.Response
 	request *AppsGetBySlugReq
 	Data    components.Integration
 }
@@ -1494,7 +1506,8 @@ func AppsGetInstallation(ctx context.Context, req *AppsGetInstallationReq, opt .
 		req = new(AppsGetInstallationReq)
 	}
 	resp := &AppsGetInstallationResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1504,7 +1517,7 @@ func AppsGetInstallation(ctx context.Context, req *AppsGetInstallationReq, opt .
 	}
 
 	resp.Data = components.Installation{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1590,7 +1603,7 @@ AppsGetInstallationResponse is a response for AppsGetInstallation
 https://developer.github.com/v3/apps/#get-an-installation-for-the-authenticated-app
 */
 type AppsGetInstallationResponse struct {
-	internal.Response
+	common.Response
 	request *AppsGetInstallationReq
 	Data    components.Installation
 }
@@ -1613,7 +1626,8 @@ func AppsGetOrgInstallation(ctx context.Context, req *AppsGetOrgInstallationReq,
 		req = new(AppsGetOrgInstallationReq)
 	}
 	resp := &AppsGetOrgInstallationResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1623,7 +1637,7 @@ func AppsGetOrgInstallation(ctx context.Context, req *AppsGetOrgInstallationReq,
 	}
 
 	resp.Data = components.Installation{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1707,7 +1721,7 @@ AppsGetOrgInstallationResponse is a response for AppsGetOrgInstallation
 https://developer.github.com/v3/apps/#get-an-organization-installation-for-the-authenticated-app
 */
 type AppsGetOrgInstallationResponse struct {
-	internal.Response
+	common.Response
 	request *AppsGetOrgInstallationReq
 	Data    components.Installation
 }
@@ -1730,7 +1744,8 @@ func AppsGetRepoInstallation(ctx context.Context, req *AppsGetRepoInstallationRe
 		req = new(AppsGetRepoInstallationReq)
 	}
 	resp := &AppsGetRepoInstallationResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1740,7 +1755,7 @@ func AppsGetRepoInstallation(ctx context.Context, req *AppsGetRepoInstallationRe
 	}
 
 	resp.Data = components.Installation{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1825,7 +1840,7 @@ AppsGetRepoInstallationResponse is a response for AppsGetRepoInstallation
 https://developer.github.com/v3/apps/#get-a-repository-installation-for-the-authenticated-app
 */
 type AppsGetRepoInstallationResponse struct {
-	internal.Response
+	common.Response
 	request *AppsGetRepoInstallationReq
 	Data    components.Installation
 }
@@ -1848,7 +1863,8 @@ func AppsGetSubscriptionPlanForAccount(ctx context.Context, req *AppsGetSubscrip
 		req = new(AppsGetSubscriptionPlanForAccountReq)
 	}
 	resp := &AppsGetSubscriptionPlanForAccountResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1858,7 +1874,7 @@ func AppsGetSubscriptionPlanForAccount(ctx context.Context, req *AppsGetSubscrip
 	}
 
 	resp.Data = components.MarketplacePurchase{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1938,7 +1954,7 @@ AppsGetSubscriptionPlanForAccountResponse is a response for AppsGetSubscriptionP
 https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account
 */
 type AppsGetSubscriptionPlanForAccountResponse struct {
-	internal.Response
+	common.Response
 	request *AppsGetSubscriptionPlanForAccountReq
 	Data    components.MarketplacePurchase
 }
@@ -1961,7 +1977,8 @@ func AppsGetSubscriptionPlanForAccountStubbed(ctx context.Context, req *AppsGetS
 		req = new(AppsGetSubscriptionPlanForAccountStubbedReq)
 	}
 	resp := &AppsGetSubscriptionPlanForAccountStubbedResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1971,7 +1988,7 @@ func AppsGetSubscriptionPlanForAccountStubbed(ctx context.Context, req *AppsGetS
 	}
 
 	resp.Data = components.MarketplacePurchase{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2051,7 +2068,7 @@ AppsGetSubscriptionPlanForAccountStubbedResponse is a response for AppsGetSubscr
 https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account-stubbed
 */
 type AppsGetSubscriptionPlanForAccountStubbedResponse struct {
-	internal.Response
+	common.Response
 	request *AppsGetSubscriptionPlanForAccountStubbedReq
 	Data    components.MarketplacePurchase
 }
@@ -2074,7 +2091,8 @@ func AppsGetUserInstallation(ctx context.Context, req *AppsGetUserInstallationRe
 		req = new(AppsGetUserInstallationReq)
 	}
 	resp := &AppsGetUserInstallationResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2084,7 +2102,7 @@ func AppsGetUserInstallation(ctx context.Context, req *AppsGetUserInstallationRe
 	}
 
 	resp.Data = components.Installation{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2168,7 +2186,7 @@ AppsGetUserInstallationResponse is a response for AppsGetUserInstallation
 https://developer.github.com/v3/apps/#get-a-user-installation-for-the-authenticated-app
 */
 type AppsGetUserInstallationResponse struct {
-	internal.Response
+	common.Response
 	request *AppsGetUserInstallationReq
 	Data    components.Installation
 }
@@ -2191,7 +2209,8 @@ func AppsListAccountsForPlan(ctx context.Context, req *AppsListAccountsForPlanRe
 		req = new(AppsListAccountsForPlanReq)
 	}
 	resp := &AppsListAccountsForPlanResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2201,7 +2220,7 @@ func AppsListAccountsForPlan(ctx context.Context, req *AppsListAccountsForPlanRe
 	}
 
 	resp.Data = []components.MarketplacePurchase{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2311,7 +2330,7 @@ AppsListAccountsForPlanResponse is a response for AppsListAccountsForPlan
 https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan
 */
 type AppsListAccountsForPlanResponse struct {
-	internal.Response
+	common.Response
 	request *AppsListAccountsForPlanReq
 	Data    []components.MarketplacePurchase
 }
@@ -2334,7 +2353,8 @@ func AppsListAccountsForPlanStubbed(ctx context.Context, req *AppsListAccountsFo
 		req = new(AppsListAccountsForPlanStubbedReq)
 	}
 	resp := &AppsListAccountsForPlanStubbedResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2344,7 +2364,7 @@ func AppsListAccountsForPlanStubbed(ctx context.Context, req *AppsListAccountsFo
 	}
 
 	resp.Data = []components.MarketplacePurchase{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2454,7 +2474,7 @@ AppsListAccountsForPlanStubbedResponse is a response for AppsListAccountsForPlan
 https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan-stubbed
 */
 type AppsListAccountsForPlanStubbedResponse struct {
-	internal.Response
+	common.Response
 	request *AppsListAccountsForPlanStubbedReq
 	Data    []components.MarketplacePurchase
 }
@@ -2477,7 +2497,8 @@ func AppsListInstallationReposForAuthenticatedUser(ctx context.Context, req *App
 		req = new(AppsListInstallationReposForAuthenticatedUserReq)
 	}
 	resp := &AppsListInstallationReposForAuthenticatedUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2487,7 +2508,7 @@ func AppsListInstallationReposForAuthenticatedUser(ctx context.Context, req *App
 	}
 
 	resp.Data = AppsListInstallationReposForAuthenticatedUserResponseBody{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2606,7 +2627,7 @@ AppsListInstallationReposForAuthenticatedUserResponse is a response for AppsList
 https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-access-token
 */
 type AppsListInstallationReposForAuthenticatedUserResponse struct {
-	internal.Response
+	common.Response
 	request *AppsListInstallationReposForAuthenticatedUserReq
 	Data    AppsListInstallationReposForAuthenticatedUserResponseBody
 }
@@ -2629,7 +2650,8 @@ func AppsListInstallations(ctx context.Context, req *AppsListInstallationsReq, o
 		req = new(AppsListInstallationsReq)
 	}
 	resp := &AppsListInstallationsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2639,7 +2661,7 @@ func AppsListInstallations(ctx context.Context, req *AppsListInstallationsReq, o
 	}
 
 	resp.Data = []components.Installation{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2748,7 +2770,7 @@ AppsListInstallationsResponse is a response for AppsListInstallations
 https://developer.github.com/v3/apps/#list-installations-for-the-authenticated-app
 */
 type AppsListInstallationsResponse struct {
-	internal.Response
+	common.Response
 	request *AppsListInstallationsReq
 	Data    []components.Installation
 }
@@ -2771,7 +2793,8 @@ func AppsListInstallationsForAuthenticatedUser(ctx context.Context, req *AppsLis
 		req = new(AppsListInstallationsForAuthenticatedUserReq)
 	}
 	resp := &AppsListInstallationsForAuthenticatedUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2781,7 +2804,7 @@ func AppsListInstallationsForAuthenticatedUser(ctx context.Context, req *AppsLis
 	}
 
 	resp.Data = AppsListInstallationsForAuthenticatedUserResponseBody{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2886,7 +2909,7 @@ AppsListInstallationsForAuthenticatedUserResponse is a response for AppsListInst
 https://developer.github.com/v3/apps/installations/#list-app-installations-accessible-to-the-user-access-token
 */
 type AppsListInstallationsForAuthenticatedUserResponse struct {
-	internal.Response
+	common.Response
 	request *AppsListInstallationsForAuthenticatedUserReq
 	Data    AppsListInstallationsForAuthenticatedUserResponseBody
 }
@@ -2909,7 +2932,8 @@ func AppsListPlans(ctx context.Context, req *AppsListPlansReq, opt ...options.Op
 		req = new(AppsListPlansReq)
 	}
 	resp := &AppsListPlansResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2919,7 +2943,7 @@ func AppsListPlans(ctx context.Context, req *AppsListPlansReq, opt ...options.Op
 	}
 
 	resp.Data = []components.MarketplaceListingPlan{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3008,7 +3032,7 @@ AppsListPlansResponse is a response for AppsListPlans
 https://developer.github.com/v3/apps/marketplace/#list-plans
 */
 type AppsListPlansResponse struct {
-	internal.Response
+	common.Response
 	request *AppsListPlansReq
 	Data    []components.MarketplaceListingPlan
 }
@@ -3031,7 +3055,8 @@ func AppsListPlansStubbed(ctx context.Context, req *AppsListPlansStubbedReq, opt
 		req = new(AppsListPlansStubbedReq)
 	}
 	resp := &AppsListPlansStubbedResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3041,7 +3066,7 @@ func AppsListPlansStubbed(ctx context.Context, req *AppsListPlansStubbedReq, opt
 	}
 
 	resp.Data = []components.MarketplaceListingPlan{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3130,7 +3155,7 @@ AppsListPlansStubbedResponse is a response for AppsListPlansStubbed
 https://developer.github.com/v3/apps/marketplace/#list-plans-stubbed
 */
 type AppsListPlansStubbedResponse struct {
-	internal.Response
+	common.Response
 	request *AppsListPlansStubbedReq
 	Data    []components.MarketplaceListingPlan
 }
@@ -3153,7 +3178,8 @@ func AppsListReposAccessibleToInstallation(ctx context.Context, req *AppsListRep
 		req = new(AppsListReposAccessibleToInstallationReq)
 	}
 	resp := &AppsListReposAccessibleToInstallationResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3163,7 +3189,7 @@ func AppsListReposAccessibleToInstallation(ctx context.Context, req *AppsListRep
 	}
 
 	resp.Data = AppsListReposAccessibleToInstallationResponseBody{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3279,7 +3305,7 @@ AppsListReposAccessibleToInstallationResponse is a response for AppsListReposAcc
 https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-app-installation
 */
 type AppsListReposAccessibleToInstallationResponse struct {
-	internal.Response
+	common.Response
 	request *AppsListReposAccessibleToInstallationReq
 	Data    AppsListReposAccessibleToInstallationResponseBody
 }
@@ -3302,7 +3328,8 @@ func AppsListSubscriptionsForAuthenticatedUser(ctx context.Context, req *AppsLis
 		req = new(AppsListSubscriptionsForAuthenticatedUserReq)
 	}
 	resp := &AppsListSubscriptionsForAuthenticatedUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3312,7 +3339,7 @@ func AppsListSubscriptionsForAuthenticatedUser(ctx context.Context, req *AppsLis
 	}
 
 	resp.Data = []components.UserMarketplacePurchase{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3401,7 +3428,7 @@ AppsListSubscriptionsForAuthenticatedUserResponse is a response for AppsListSubs
 https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user
 */
 type AppsListSubscriptionsForAuthenticatedUserResponse struct {
-	internal.Response
+	common.Response
 	request *AppsListSubscriptionsForAuthenticatedUserReq
 	Data    []components.UserMarketplacePurchase
 }
@@ -3424,7 +3451,8 @@ func AppsListSubscriptionsForAuthenticatedUserStubbed(ctx context.Context, req *
 		req = new(AppsListSubscriptionsForAuthenticatedUserStubbedReq)
 	}
 	resp := &AppsListSubscriptionsForAuthenticatedUserStubbedResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3434,7 +3462,7 @@ func AppsListSubscriptionsForAuthenticatedUserStubbed(ctx context.Context, req *
 	}
 
 	resp.Data = []components.UserMarketplacePurchase{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3523,7 +3551,7 @@ AppsListSubscriptionsForAuthenticatedUserStubbedResponse is a response for AppsL
 https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user-stubbed
 */
 type AppsListSubscriptionsForAuthenticatedUserStubbedResponse struct {
-	internal.Response
+	common.Response
 	request *AppsListSubscriptionsForAuthenticatedUserStubbedReq
 	Data    []components.UserMarketplacePurchase
 }
@@ -3546,7 +3574,8 @@ func AppsRemoveRepoFromInstallation(ctx context.Context, req *AppsRemoveRepoFrom
 		req = new(AppsRemoveRepoFromInstallationReq)
 	}
 	resp := &AppsRemoveRepoFromInstallationResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3555,7 +3584,7 @@ func AppsRemoveRepoFromInstallation(ctx context.Context, req *AppsRemoveRepoFrom
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -3644,7 +3673,7 @@ AppsRemoveRepoFromInstallationResponse is a response for AppsRemoveRepoFromInsta
 https://developer.github.com/v3/apps/installations/#remove-a-repository-from-an-app-installation
 */
 type AppsRemoveRepoFromInstallationResponse struct {
-	internal.Response
+	common.Response
 	request *AppsRemoveRepoFromInstallationReq
 }
 
@@ -3666,7 +3695,8 @@ func AppsResetAuthorization(ctx context.Context, req *AppsResetAuthorizationReq,
 		req = new(AppsResetAuthorizationReq)
 	}
 	resp := &AppsResetAuthorizationResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3676,7 +3706,7 @@ func AppsResetAuthorization(ctx context.Context, req *AppsResetAuthorizationReq,
 	}
 
 	resp.Data = components.Authorization{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3755,7 +3785,7 @@ AppsResetAuthorizationResponse is a response for AppsResetAuthorization
 https://developer.github.com/v3/apps/oauth_applications/#reset-an-authorization
 */
 type AppsResetAuthorizationResponse struct {
-	internal.Response
+	common.Response
 	request *AppsResetAuthorizationReq
 	Data    components.Authorization
 }
@@ -3778,7 +3808,8 @@ func AppsResetToken(ctx context.Context, req *AppsResetTokenReq, opt ...options.
 		req = new(AppsResetTokenReq)
 	}
 	resp := &AppsResetTokenResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3788,7 +3819,7 @@ func AppsResetToken(ctx context.Context, req *AppsResetTokenReq, opt ...options.
 	}
 
 	resp.Data = components.Authorization{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3881,7 +3912,7 @@ AppsResetTokenResponse is a response for AppsResetToken
 https://developer.github.com/v3/apps/oauth_applications/#reset-a-token
 */
 type AppsResetTokenResponse struct {
-	internal.Response
+	common.Response
 	request *AppsResetTokenReq
 	Data    components.Authorization
 }
@@ -3904,7 +3935,8 @@ func AppsRevokeAuthorizationForApplication(ctx context.Context, req *AppsRevokeA
 		req = new(AppsRevokeAuthorizationForApplicationReq)
 	}
 	resp := &AppsRevokeAuthorizationForApplicationResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3913,7 +3945,7 @@ func AppsRevokeAuthorizationForApplication(ctx context.Context, req *AppsRevokeA
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -3992,7 +4024,7 @@ AppsRevokeAuthorizationForApplicationResponse is a response for AppsRevokeAuthor
 https://developer.github.com/v3/apps/oauth_applications/#revoke-an-authorization-for-an-application
 */
 type AppsRevokeAuthorizationForApplicationResponse struct {
-	internal.Response
+	common.Response
 	request *AppsRevokeAuthorizationForApplicationReq
 }
 
@@ -4014,7 +4046,8 @@ func AppsRevokeGrantForApplication(ctx context.Context, req *AppsRevokeGrantForA
 		req = new(AppsRevokeGrantForApplicationReq)
 	}
 	resp := &AppsRevokeGrantForApplicationResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -4023,7 +4056,7 @@ func AppsRevokeGrantForApplication(ctx context.Context, req *AppsRevokeGrantForA
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -4102,7 +4135,7 @@ AppsRevokeGrantForApplicationResponse is a response for AppsRevokeGrantForApplic
 https://developer.github.com/v3/apps/oauth_applications/#revoke-a-grant-for-an-application
 */
 type AppsRevokeGrantForApplicationResponse struct {
-	internal.Response
+	common.Response
 	request *AppsRevokeGrantForApplicationReq
 }
 
@@ -4124,7 +4157,8 @@ func AppsRevokeInstallationAccessToken(ctx context.Context, req *AppsRevokeInsta
 		req = new(AppsRevokeInstallationAccessTokenReq)
 	}
 	resp := &AppsRevokeInstallationAccessTokenResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -4133,7 +4167,7 @@ func AppsRevokeInstallationAccessToken(ctx context.Context, req *AppsRevokeInsta
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -4210,7 +4244,7 @@ AppsRevokeInstallationAccessTokenResponse is a response for AppsRevokeInstallati
 https://developer.github.com/v3/apps/installations/#revoke-an-installation-access-token
 */
 type AppsRevokeInstallationAccessTokenResponse struct {
-	internal.Response
+	common.Response
 	request *AppsRevokeInstallationAccessTokenReq
 }
 
@@ -4232,7 +4266,8 @@ func AppsSuspendInstallation(ctx context.Context, req *AppsSuspendInstallationRe
 		req = new(AppsSuspendInstallationReq)
 	}
 	resp := &AppsSuspendInstallationResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -4245,7 +4280,7 @@ func AppsSuspendInstallation(ctx context.Context, req *AppsSuspendInstallationRe
 	if err != nil {
 		return nil, err
 	}
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -4325,7 +4360,7 @@ AppsSuspendInstallationResponse is a response for AppsSuspendInstallation
 https://developer.github.com/v3/apps/#suspend-an-app-installation
 */
 type AppsSuspendInstallationResponse struct {
-	internal.Response
+	common.Response
 	request *AppsSuspendInstallationReq
 	Data    bool
 }
@@ -4348,7 +4383,8 @@ func AppsUnsuspendInstallation(ctx context.Context, req *AppsUnsuspendInstallati
 		req = new(AppsUnsuspendInstallationReq)
 	}
 	resp := &AppsUnsuspendInstallationResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -4361,7 +4397,7 @@ func AppsUnsuspendInstallation(ctx context.Context, req *AppsUnsuspendInstallati
 	if err != nil {
 		return nil, err
 	}
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -4441,7 +4477,7 @@ AppsUnsuspendInstallationResponse is a response for AppsUnsuspendInstallation
 https://developer.github.com/v3/apps/#unsuspend-an-app-installation
 */
 type AppsUnsuspendInstallationResponse struct {
-	internal.Response
+	common.Response
 	request *AppsUnsuspendInstallationReq
 	Data    bool
 }

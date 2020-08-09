@@ -24,6 +24,8 @@ func (p pkgQual) pkgPath(pkgName string) string {
 		return path.Join(pq, "options")
 	case "octo_test":
 		return pq + "_test"
+	case "common":
+		return path.Join(pq, "common")
 	default:
 		panic("unknown pkg " + pkgName)
 	}
@@ -54,9 +56,10 @@ func requestFunc(endpoint *model.Endpoint, pq pkgQual) jen.Code {
 		group.Id("resp").Op(":=").Op("&").Id(respStructName(endpoint)).Values(jen.Dict{
 			jen.Id("request"): jen.Id("req"),
 		})
+		group.Id("builder := req.requestBuilder()")
 		group.Id("r, err := ").Qual(pq.pkgPath("internal"), "DoRequest").Call(
 			jen.Id("ctx"),
-			jen.Id("req.requestBuilder()"),
+			jen.Id("builder"),
 			jen.Id("opts"),
 		)
 		group.Id(`
@@ -71,11 +74,11 @@ if err != nil {
 		setBoolResult := jen.Qual(pq.pkgPath("internal"), "SetBoolResult")
 		switch {
 		case endpointHasAttribute(endpoint, attrNoResponseBody):
-			group.Id("err = ").Add(decodeBody).Id("(r, nil)")
+			group.Id("err = ").Add(decodeBody).Id("(r, builder, opts, nil)")
 		case endpointHasAttribute(endpoint, attrBoolean):
 			group.Id("err = ").Add(setBoolResult).Id("(r, &resp.Data)")
 			group.Id("if err != nil {return nil, err}")
-			group.Id("err =").Add(decodeBody).Id("(r, nil)")
+			group.Id("err =").Add(decodeBody).Id("(r, builder, opts, nil)")
 		case len(responseCodesWithBodies(endpoint)) > 0:
 			bodyType := respBodyType(endpoint, pq)
 			group.Id("resp.Data = ").Do(func(statement *jen.Statement) {
@@ -83,9 +86,9 @@ if err != nil {
 					statement.Op("[]")
 				}
 			}).Qual(bodyType.pkg, bodyType.name).Block()
-			group.Id("err = ").Add(decodeBody).Id("(r, &resp.Data)")
+			group.Id("err = ").Add(decodeBody).Id("(r, builder, opts, &resp.Data)")
 		default:
-			group.Id("err = ").Add(decodeBody).Id("(r, nil)")
+			group.Id("err = ").Add(decodeBody).Id("(r, builder, opts, nil)")
 		}
 		group.Id("if err != nil {return nil, err}")
 		group.Id("return resp, nil")

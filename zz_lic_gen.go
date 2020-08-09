@@ -5,6 +5,7 @@ package octo
 import (
 	"context"
 	"fmt"
+	common "github.com/willabides/octo-go/common"
 	components "github.com/willabides/octo-go/components"
 	internal "github.com/willabides/octo-go/internal"
 	options "github.com/willabides/octo-go/options"
@@ -31,7 +32,8 @@ func LicensesGet(ctx context.Context, req *LicensesGetReq, opt ...options.Option
 		req = new(LicensesGetReq)
 	}
 	resp := &LicensesGetResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -41,7 +43,7 @@ func LicensesGet(ctx context.Context, req *LicensesGetReq, opt ...options.Option
 	}
 
 	resp.Data = components.License{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -121,7 +123,7 @@ LicensesGetResponse is a response for LicensesGet
 https://developer.github.com/v3/licenses/#get-a-license
 */
 type LicensesGetResponse struct {
-	internal.Response
+	common.Response
 	request *LicensesGetReq
 	Data    components.License
 }
@@ -144,7 +146,8 @@ func LicensesGetAllCommonlyUsed(ctx context.Context, req *LicensesGetAllCommonly
 		req = new(LicensesGetAllCommonlyUsedReq)
 	}
 	resp := &LicensesGetAllCommonlyUsedResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -154,7 +157,7 @@ func LicensesGetAllCommonlyUsed(ctx context.Context, req *LicensesGetAllCommonly
 	}
 
 	resp.Data = []components.LicenseSimple{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -241,7 +244,7 @@ LicensesGetAllCommonlyUsedResponse is a response for LicensesGetAllCommonlyUsed
 https://developer.github.com/v3/licenses/#get-all-commonly-used-licenses
 */
 type LicensesGetAllCommonlyUsedResponse struct {
-	internal.Response
+	common.Response
 	request *LicensesGetAllCommonlyUsedReq
 	Data    []components.LicenseSimple
 }
@@ -264,7 +267,8 @@ func LicensesGetForRepo(ctx context.Context, req *LicensesGetForRepoReq, opt ...
 		req = new(LicensesGetForRepoReq)
 	}
 	resp := &LicensesGetForRepoResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -274,7 +278,7 @@ func LicensesGetForRepo(ctx context.Context, req *LicensesGetForRepoReq, opt ...
 	}
 
 	resp.Data = components.LicenseContent{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -353,7 +357,7 @@ LicensesGetForRepoResponse is a response for LicensesGetForRepo
 https://developer.github.com/v3/licenses/#get-the-license-for-a-repository
 */
 type LicensesGetForRepoResponse struct {
-	internal.Response
+	common.Response
 	request *LicensesGetForRepoReq
 	Data    components.LicenseContent
 }

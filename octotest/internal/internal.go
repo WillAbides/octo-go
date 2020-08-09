@@ -75,7 +75,7 @@ func MatchAll(matcher ...RequestMatcher) RequestMatcher {
 	})
 }
 
-// ExpectedRequest is a request and response for your test
+// ExpectedRequest is a request and common for your test
 type ExpectedRequest struct {
 	Matcher RequestMatcher
 	Handler http.Handler

@@ -5,6 +5,7 @@ package octo
 import (
 	"context"
 	"fmt"
+	common "github.com/willabides/octo-go/common"
 	components "github.com/willabides/octo-go/components"
 	internal "github.com/willabides/octo-go/internal"
 	options "github.com/willabides/octo-go/options"
@@ -31,7 +32,8 @@ func ReactionsCreateForCommitComment(ctx context.Context, req *ReactionsCreateFo
 		req = new(ReactionsCreateForCommitCommentReq)
 	}
 	resp := &ReactionsCreateForCommitCommentResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -41,7 +43,7 @@ func ReactionsCreateForCommitComment(ctx context.Context, req *ReactionsCreateFo
 	}
 
 	resp.Data = components.Reaction{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -149,7 +151,7 @@ ReactionsCreateForCommitCommentResponse is a response for ReactionsCreateForComm
 https://developer.github.com/v3/reactions/#create-reaction-for-a-commit-comment
 */
 type ReactionsCreateForCommitCommentResponse struct {
-	internal.Response
+	common.Response
 	request *ReactionsCreateForCommitCommentReq
 	Data    components.Reaction
 }
@@ -172,7 +174,8 @@ func ReactionsCreateForIssue(ctx context.Context, req *ReactionsCreateForIssueRe
 		req = new(ReactionsCreateForIssueReq)
 	}
 	resp := &ReactionsCreateForIssueResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -182,7 +185,7 @@ func ReactionsCreateForIssue(ctx context.Context, req *ReactionsCreateForIssueRe
 	}
 
 	resp.Data = components.Reaction{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -290,7 +293,7 @@ ReactionsCreateForIssueResponse is a response for ReactionsCreateForIssue
 https://developer.github.com/v3/reactions/#create-reaction-for-an-issue
 */
 type ReactionsCreateForIssueResponse struct {
-	internal.Response
+	common.Response
 	request *ReactionsCreateForIssueReq
 	Data    components.Reaction
 }
@@ -313,7 +316,8 @@ func ReactionsCreateForIssueComment(ctx context.Context, req *ReactionsCreateFor
 		req = new(ReactionsCreateForIssueCommentReq)
 	}
 	resp := &ReactionsCreateForIssueCommentResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -323,7 +327,7 @@ func ReactionsCreateForIssueComment(ctx context.Context, req *ReactionsCreateFor
 	}
 
 	resp.Data = components.Reaction{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -431,7 +435,7 @@ ReactionsCreateForIssueCommentResponse is a response for ReactionsCreateForIssue
 https://developer.github.com/v3/reactions/#create-reaction-for-an-issue-comment
 */
 type ReactionsCreateForIssueCommentResponse struct {
-	internal.Response
+	common.Response
 	request *ReactionsCreateForIssueCommentReq
 	Data    components.Reaction
 }
@@ -454,7 +458,8 @@ func ReactionsCreateForPullRequestReviewComment(ctx context.Context, req *Reacti
 		req = new(ReactionsCreateForPullRequestReviewCommentReq)
 	}
 	resp := &ReactionsCreateForPullRequestReviewCommentResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -464,7 +469,7 @@ func ReactionsCreateForPullRequestReviewComment(ctx context.Context, req *Reacti
 	}
 
 	resp.Data = components.Reaction{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -575,7 +580,7 @@ ReactionsCreateForPullRequestReviewCommentResponse is a response for ReactionsCr
 https://developer.github.com/v3/reactions/#create-reaction-for-a-pull-request-review-comment
 */
 type ReactionsCreateForPullRequestReviewCommentResponse struct {
-	internal.Response
+	common.Response
 	request *ReactionsCreateForPullRequestReviewCommentReq
 	Data    components.Reaction
 }
@@ -598,7 +603,8 @@ func ReactionsCreateForTeamDiscussionCommentInOrg(ctx context.Context, req *Reac
 		req = new(ReactionsCreateForTeamDiscussionCommentInOrgReq)
 	}
 	resp := &ReactionsCreateForTeamDiscussionCommentInOrgResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -608,7 +614,7 @@ func ReactionsCreateForTeamDiscussionCommentInOrg(ctx context.Context, req *Reac
 	}
 
 	resp.Data = components.Reaction{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -717,7 +723,7 @@ ReactionsCreateForTeamDiscussionCommentInOrgResponse is a response for Reactions
 https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-comment
 */
 type ReactionsCreateForTeamDiscussionCommentInOrgResponse struct {
-	internal.Response
+	common.Response
 	request *ReactionsCreateForTeamDiscussionCommentInOrgReq
 	Data    components.Reaction
 }
@@ -740,7 +746,8 @@ func ReactionsCreateForTeamDiscussionCommentLegacy(ctx context.Context, req *Rea
 		req = new(ReactionsCreateForTeamDiscussionCommentLegacyReq)
 	}
 	resp := &ReactionsCreateForTeamDiscussionCommentLegacyResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -750,7 +757,7 @@ func ReactionsCreateForTeamDiscussionCommentLegacy(ctx context.Context, req *Rea
 	}
 
 	resp.Data = components.Reaction{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -856,7 +863,7 @@ ReactionsCreateForTeamDiscussionCommentLegacyResponse is a response for Reaction
 https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-comment-legacy
 */
 type ReactionsCreateForTeamDiscussionCommentLegacyResponse struct {
-	internal.Response
+	common.Response
 	request *ReactionsCreateForTeamDiscussionCommentLegacyReq
 	Data    components.Reaction
 }
@@ -879,7 +886,8 @@ func ReactionsCreateForTeamDiscussionInOrg(ctx context.Context, req *ReactionsCr
 		req = new(ReactionsCreateForTeamDiscussionInOrgReq)
 	}
 	resp := &ReactionsCreateForTeamDiscussionInOrgResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -889,7 +897,7 @@ func ReactionsCreateForTeamDiscussionInOrg(ctx context.Context, req *ReactionsCr
 	}
 
 	resp.Data = components.Reaction{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -997,7 +1005,7 @@ ReactionsCreateForTeamDiscussionInOrgResponse is a response for ReactionsCreateF
 https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion
 */
 type ReactionsCreateForTeamDiscussionInOrgResponse struct {
-	internal.Response
+	common.Response
 	request *ReactionsCreateForTeamDiscussionInOrgReq
 	Data    components.Reaction
 }
@@ -1020,7 +1028,8 @@ func ReactionsCreateForTeamDiscussionLegacy(ctx context.Context, req *ReactionsC
 		req = new(ReactionsCreateForTeamDiscussionLegacyReq)
 	}
 	resp := &ReactionsCreateForTeamDiscussionLegacyResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1030,7 +1039,7 @@ func ReactionsCreateForTeamDiscussionLegacy(ctx context.Context, req *ReactionsC
 	}
 
 	resp.Data = components.Reaction{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1135,7 +1144,7 @@ ReactionsCreateForTeamDiscussionLegacyResponse is a response for ReactionsCreate
 https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-legacy
 */
 type ReactionsCreateForTeamDiscussionLegacyResponse struct {
-	internal.Response
+	common.Response
 	request *ReactionsCreateForTeamDiscussionLegacyReq
 	Data    components.Reaction
 }
@@ -1158,7 +1167,8 @@ func ReactionsDeleteForCommitComment(ctx context.Context, req *ReactionsDeleteFo
 		req = new(ReactionsDeleteForCommitCommentReq)
 	}
 	resp := &ReactionsDeleteForCommitCommentResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1167,7 +1177,7 @@ func ReactionsDeleteForCommitComment(ctx context.Context, req *ReactionsDeleteFo
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -1261,7 +1271,7 @@ ReactionsDeleteForCommitCommentResponse is a response for ReactionsDeleteForComm
 https://developer.github.com/v3/reactions/#delete-a-commit-comment-reaction
 */
 type ReactionsDeleteForCommitCommentResponse struct {
-	internal.Response
+	common.Response
 	request *ReactionsDeleteForCommitCommentReq
 }
 
@@ -1283,7 +1293,8 @@ func ReactionsDeleteForIssue(ctx context.Context, req *ReactionsDeleteForIssueRe
 		req = new(ReactionsDeleteForIssueReq)
 	}
 	resp := &ReactionsDeleteForIssueResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1292,7 +1303,7 @@ func ReactionsDeleteForIssue(ctx context.Context, req *ReactionsDeleteForIssueRe
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -1386,7 +1397,7 @@ ReactionsDeleteForIssueResponse is a response for ReactionsDeleteForIssue
 https://developer.github.com/v3/reactions/#delete-an-issue-reaction
 */
 type ReactionsDeleteForIssueResponse struct {
-	internal.Response
+	common.Response
 	request *ReactionsDeleteForIssueReq
 }
 
@@ -1408,7 +1419,8 @@ func ReactionsDeleteForIssueComment(ctx context.Context, req *ReactionsDeleteFor
 		req = new(ReactionsDeleteForIssueCommentReq)
 	}
 	resp := &ReactionsDeleteForIssueCommentResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1417,7 +1429,7 @@ func ReactionsDeleteForIssueComment(ctx context.Context, req *ReactionsDeleteFor
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -1511,7 +1523,7 @@ ReactionsDeleteForIssueCommentResponse is a response for ReactionsDeleteForIssue
 https://developer.github.com/v3/reactions/#delete-an-issue-comment-reaction
 */
 type ReactionsDeleteForIssueCommentResponse struct {
-	internal.Response
+	common.Response
 	request *ReactionsDeleteForIssueCommentReq
 }
 
@@ -1533,7 +1545,8 @@ func ReactionsDeleteForPullRequestComment(ctx context.Context, req *ReactionsDel
 		req = new(ReactionsDeleteForPullRequestCommentReq)
 	}
 	resp := &ReactionsDeleteForPullRequestCommentResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1542,7 +1555,7 @@ func ReactionsDeleteForPullRequestComment(ctx context.Context, req *ReactionsDel
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -1636,7 +1649,7 @@ ReactionsDeleteForPullRequestCommentResponse is a response for ReactionsDeleteFo
 https://developer.github.com/v3/reactions/#delete-a-pull-request-comment-reaction
 */
 type ReactionsDeleteForPullRequestCommentResponse struct {
-	internal.Response
+	common.Response
 	request *ReactionsDeleteForPullRequestCommentReq
 }
 
@@ -1658,7 +1671,8 @@ func ReactionsDeleteForTeamDiscussion(ctx context.Context, req *ReactionsDeleteF
 		req = new(ReactionsDeleteForTeamDiscussionReq)
 	}
 	resp := &ReactionsDeleteForTeamDiscussionResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1667,7 +1681,7 @@ func ReactionsDeleteForTeamDiscussion(ctx context.Context, req *ReactionsDeleteF
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -1761,7 +1775,7 @@ ReactionsDeleteForTeamDiscussionResponse is a response for ReactionsDeleteForTea
 https://developer.github.com/v3/reactions/#delete-team-discussion-reaction
 */
 type ReactionsDeleteForTeamDiscussionResponse struct {
-	internal.Response
+	common.Response
 	request *ReactionsDeleteForTeamDiscussionReq
 }
 
@@ -1783,7 +1797,8 @@ func ReactionsDeleteForTeamDiscussionComment(ctx context.Context, req *Reactions
 		req = new(ReactionsDeleteForTeamDiscussionCommentReq)
 	}
 	resp := &ReactionsDeleteForTeamDiscussionCommentResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1792,7 +1807,7 @@ func ReactionsDeleteForTeamDiscussionComment(ctx context.Context, req *Reactions
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -1887,7 +1902,7 @@ ReactionsDeleteForTeamDiscussionCommentResponse is a response for ReactionsDelet
 https://developer.github.com/v3/reactions/#delete-team-discussion-comment-reaction
 */
 type ReactionsDeleteForTeamDiscussionCommentResponse struct {
-	internal.Response
+	common.Response
 	request *ReactionsDeleteForTeamDiscussionCommentReq
 }
 
@@ -1909,7 +1924,8 @@ func ReactionsDeleteLegacy(ctx context.Context, req *ReactionsDeleteLegacyReq, o
 		req = new(ReactionsDeleteLegacyReq)
 	}
 	resp := &ReactionsDeleteLegacyResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1918,7 +1934,7 @@ func ReactionsDeleteLegacy(ctx context.Context, req *ReactionsDeleteLegacyReq, o
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -2007,7 +2023,7 @@ ReactionsDeleteLegacyResponse is a response for ReactionsDeleteLegacy
 https://developer.github.com/v3/reactions/#delete-a-reaction-legacy
 */
 type ReactionsDeleteLegacyResponse struct {
-	internal.Response
+	common.Response
 	request *ReactionsDeleteLegacyReq
 }
 
@@ -2029,7 +2045,8 @@ func ReactionsListForCommitComment(ctx context.Context, req *ReactionsListForCom
 		req = new(ReactionsListForCommitCommentReq)
 	}
 	resp := &ReactionsListForCommitCommentResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2039,7 +2056,7 @@ func ReactionsListForCommitComment(ctx context.Context, req *ReactionsListForCom
 	}
 
 	resp.Data = []components.Reaction{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2154,7 +2171,7 @@ ReactionsListForCommitCommentResponse is a response for ReactionsListForCommitCo
 https://developer.github.com/v3/reactions/#list-reactions-for-a-commit-comment
 */
 type ReactionsListForCommitCommentResponse struct {
-	internal.Response
+	common.Response
 	request *ReactionsListForCommitCommentReq
 	Data    []components.Reaction
 }
@@ -2177,7 +2194,8 @@ func ReactionsListForIssue(ctx context.Context, req *ReactionsListForIssueReq, o
 		req = new(ReactionsListForIssueReq)
 	}
 	resp := &ReactionsListForIssueResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2187,7 +2205,7 @@ func ReactionsListForIssue(ctx context.Context, req *ReactionsListForIssueReq, o
 	}
 
 	resp.Data = []components.Reaction{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2302,7 +2320,7 @@ ReactionsListForIssueResponse is a response for ReactionsListForIssue
 https://developer.github.com/v3/reactions/#list-reactions-for-an-issue
 */
 type ReactionsListForIssueResponse struct {
-	internal.Response
+	common.Response
 	request *ReactionsListForIssueReq
 	Data    []components.Reaction
 }
@@ -2325,7 +2343,8 @@ func ReactionsListForIssueComment(ctx context.Context, req *ReactionsListForIssu
 		req = new(ReactionsListForIssueCommentReq)
 	}
 	resp := &ReactionsListForIssueCommentResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2335,7 +2354,7 @@ func ReactionsListForIssueComment(ctx context.Context, req *ReactionsListForIssu
 	}
 
 	resp.Data = []components.Reaction{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2450,7 +2469,7 @@ ReactionsListForIssueCommentResponse is a response for ReactionsListForIssueComm
 https://developer.github.com/v3/reactions/#list-reactions-for-an-issue-comment
 */
 type ReactionsListForIssueCommentResponse struct {
-	internal.Response
+	common.Response
 	request *ReactionsListForIssueCommentReq
 	Data    []components.Reaction
 }
@@ -2473,7 +2492,8 @@ func ReactionsListForPullRequestReviewComment(ctx context.Context, req *Reaction
 		req = new(ReactionsListForPullRequestReviewCommentReq)
 	}
 	resp := &ReactionsListForPullRequestReviewCommentResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2483,7 +2503,7 @@ func ReactionsListForPullRequestReviewComment(ctx context.Context, req *Reaction
 	}
 
 	resp.Data = []components.Reaction{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2598,7 +2618,7 @@ ReactionsListForPullRequestReviewCommentResponse is a response for ReactionsList
 https://developer.github.com/v3/reactions/#list-reactions-for-a-pull-request-review-comment
 */
 type ReactionsListForPullRequestReviewCommentResponse struct {
-	internal.Response
+	common.Response
 	request *ReactionsListForPullRequestReviewCommentReq
 	Data    []components.Reaction
 }
@@ -2621,7 +2641,8 @@ func ReactionsListForTeamDiscussionCommentInOrg(ctx context.Context, req *Reacti
 		req = new(ReactionsListForTeamDiscussionCommentInOrgReq)
 	}
 	resp := &ReactionsListForTeamDiscussionCommentInOrgResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2631,7 +2652,7 @@ func ReactionsListForTeamDiscussionCommentInOrg(ctx context.Context, req *Reacti
 	}
 
 	resp.Data = []components.Reaction{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2747,7 +2768,7 @@ ReactionsListForTeamDiscussionCommentInOrgResponse is a response for ReactionsLi
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-comment
 */
 type ReactionsListForTeamDiscussionCommentInOrgResponse struct {
-	internal.Response
+	common.Response
 	request *ReactionsListForTeamDiscussionCommentInOrgReq
 	Data    []components.Reaction
 }
@@ -2770,7 +2791,8 @@ func ReactionsListForTeamDiscussionCommentLegacy(ctx context.Context, req *React
 		req = new(ReactionsListForTeamDiscussionCommentLegacyReq)
 	}
 	resp := &ReactionsListForTeamDiscussionCommentLegacyResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2780,7 +2802,7 @@ func ReactionsListForTeamDiscussionCommentLegacy(ctx context.Context, req *React
 	}
 
 	resp.Data = []components.Reaction{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2893,7 +2915,7 @@ ReactionsListForTeamDiscussionCommentLegacyResponse is a response for ReactionsL
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-comment-legacy
 */
 type ReactionsListForTeamDiscussionCommentLegacyResponse struct {
-	internal.Response
+	common.Response
 	request *ReactionsListForTeamDiscussionCommentLegacyReq
 	Data    []components.Reaction
 }
@@ -2916,7 +2938,8 @@ func ReactionsListForTeamDiscussionInOrg(ctx context.Context, req *ReactionsList
 		req = new(ReactionsListForTeamDiscussionInOrgReq)
 	}
 	resp := &ReactionsListForTeamDiscussionInOrgResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2926,7 +2949,7 @@ func ReactionsListForTeamDiscussionInOrg(ctx context.Context, req *ReactionsList
 	}
 
 	resp.Data = []components.Reaction{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3041,7 +3064,7 @@ ReactionsListForTeamDiscussionInOrgResponse is a response for ReactionsListForTe
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion
 */
 type ReactionsListForTeamDiscussionInOrgResponse struct {
-	internal.Response
+	common.Response
 	request *ReactionsListForTeamDiscussionInOrgReq
 	Data    []components.Reaction
 }
@@ -3064,7 +3087,8 @@ func ReactionsListForTeamDiscussionLegacy(ctx context.Context, req *ReactionsLis
 		req = new(ReactionsListForTeamDiscussionLegacyReq)
 	}
 	resp := &ReactionsListForTeamDiscussionLegacyResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3074,7 +3098,7 @@ func ReactionsListForTeamDiscussionLegacy(ctx context.Context, req *ReactionsLis
 	}
 
 	resp.Data = []components.Reaction{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3186,7 +3210,7 @@ ReactionsListForTeamDiscussionLegacyResponse is a response for ReactionsListForT
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-legacy
 */
 type ReactionsListForTeamDiscussionLegacyResponse struct {
-	internal.Response
+	common.Response
 	request *ReactionsListForTeamDiscussionLegacyReq
 	Data    []components.Reaction
 }

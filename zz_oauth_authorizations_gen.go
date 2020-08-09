@@ -5,6 +5,7 @@ package octo
 import (
 	"context"
 	"fmt"
+	common "github.com/willabides/octo-go/common"
 	components "github.com/willabides/octo-go/components"
 	internal "github.com/willabides/octo-go/internal"
 	options "github.com/willabides/octo-go/options"
@@ -31,7 +32,8 @@ func OauthAuthorizationsCreateAuthorization(ctx context.Context, req *OauthAutho
 		req = new(OauthAuthorizationsCreateAuthorizationReq)
 	}
 	resp := &OauthAuthorizationsCreateAuthorizationResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -41,7 +43,7 @@ func OauthAuthorizationsCreateAuthorization(ctx context.Context, req *OauthAutho
 	}
 
 	resp.Data = components.Authorization{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -148,7 +150,7 @@ OauthAuthorizationsCreateAuthorizationResponse is a response for OauthAuthorizat
 https://developer.github.com/v3/oauth_authorizations/#create-a-new-authorization
 */
 type OauthAuthorizationsCreateAuthorizationResponse struct {
-	internal.Response
+	common.Response
 	request *OauthAuthorizationsCreateAuthorizationReq
 	Data    components.Authorization
 }
@@ -171,7 +173,8 @@ func OauthAuthorizationsDeleteAuthorization(ctx context.Context, req *OauthAutho
 		req = new(OauthAuthorizationsDeleteAuthorizationReq)
 	}
 	resp := &OauthAuthorizationsDeleteAuthorizationResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -180,7 +183,7 @@ func OauthAuthorizationsDeleteAuthorization(ctx context.Context, req *OauthAutho
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -260,7 +263,7 @@ OauthAuthorizationsDeleteAuthorizationResponse is a response for OauthAuthorizat
 https://developer.github.com/v3/oauth_authorizations/#delete-an-authorization
 */
 type OauthAuthorizationsDeleteAuthorizationResponse struct {
-	internal.Response
+	common.Response
 	request *OauthAuthorizationsDeleteAuthorizationReq
 }
 
@@ -282,7 +285,8 @@ func OauthAuthorizationsDeleteGrant(ctx context.Context, req *OauthAuthorization
 		req = new(OauthAuthorizationsDeleteGrantReq)
 	}
 	resp := &OauthAuthorizationsDeleteGrantResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -291,7 +295,7 @@ func OauthAuthorizationsDeleteGrant(ctx context.Context, req *OauthAuthorization
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -371,7 +375,7 @@ OauthAuthorizationsDeleteGrantResponse is a response for OauthAuthorizationsDele
 https://developer.github.com/v3/oauth_authorizations/#delete-a-grant
 */
 type OauthAuthorizationsDeleteGrantResponse struct {
-	internal.Response
+	common.Response
 	request *OauthAuthorizationsDeleteGrantReq
 }
 
@@ -393,7 +397,8 @@ func OauthAuthorizationsGetAuthorization(ctx context.Context, req *OauthAuthoriz
 		req = new(OauthAuthorizationsGetAuthorizationReq)
 	}
 	resp := &OauthAuthorizationsGetAuthorizationResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -403,7 +408,7 @@ func OauthAuthorizationsGetAuthorization(ctx context.Context, req *OauthAuthoriz
 	}
 
 	resp.Data = components.Authorization{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -483,7 +488,7 @@ OauthAuthorizationsGetAuthorizationResponse is a response for OauthAuthorization
 https://developer.github.com/v3/oauth_authorizations/#get-a-single-authorization
 */
 type OauthAuthorizationsGetAuthorizationResponse struct {
-	internal.Response
+	common.Response
 	request *OauthAuthorizationsGetAuthorizationReq
 	Data    components.Authorization
 }
@@ -506,7 +511,8 @@ func OauthAuthorizationsGetGrant(ctx context.Context, req *OauthAuthorizationsGe
 		req = new(OauthAuthorizationsGetGrantReq)
 	}
 	resp := &OauthAuthorizationsGetGrantResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -516,7 +522,7 @@ func OauthAuthorizationsGetGrant(ctx context.Context, req *OauthAuthorizationsGe
 	}
 
 	resp.Data = components.ApplicationGrant{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -596,7 +602,7 @@ OauthAuthorizationsGetGrantResponse is a response for OauthAuthorizationsGetGran
 https://developer.github.com/v3/oauth_authorizations/#get-a-single-grant
 */
 type OauthAuthorizationsGetGrantResponse struct {
-	internal.Response
+	common.Response
 	request *OauthAuthorizationsGetGrantReq
 	Data    components.ApplicationGrant
 }
@@ -619,7 +625,8 @@ func OauthAuthorizationsGetOrCreateAuthorizationForApp(ctx context.Context, req 
 		req = new(OauthAuthorizationsGetOrCreateAuthorizationForAppReq)
 	}
 	resp := &OauthAuthorizationsGetOrCreateAuthorizationForAppResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -629,7 +636,7 @@ func OauthAuthorizationsGetOrCreateAuthorizationForApp(ctx context.Context, req 
 	}
 
 	resp.Data = components.Authorization{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -734,7 +741,7 @@ OauthAuthorizationsGetOrCreateAuthorizationForAppResponse is a response for Oaut
 https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app
 */
 type OauthAuthorizationsGetOrCreateAuthorizationForAppResponse struct {
-	internal.Response
+	common.Response
 	request *OauthAuthorizationsGetOrCreateAuthorizationForAppReq
 	Data    components.Authorization
 }
@@ -757,7 +764,8 @@ func OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprint(ctx context
 		req = new(OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq)
 	}
 	resp := &OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -767,7 +775,7 @@ func OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprint(ctx context
 	}
 
 	resp.Data = components.Authorization{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -872,7 +880,7 @@ OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintResponse is a res
 https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app-and-fingerprint
 */
 type OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintResponse struct {
-	internal.Response
+	common.Response
 	request *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq
 	Data    components.Authorization
 }
@@ -895,7 +903,8 @@ func OauthAuthorizationsListAuthorizations(ctx context.Context, req *OauthAuthor
 		req = new(OauthAuthorizationsListAuthorizationsReq)
 	}
 	resp := &OauthAuthorizationsListAuthorizationsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -905,7 +914,7 @@ func OauthAuthorizationsListAuthorizations(ctx context.Context, req *OauthAuthor
 	}
 
 	resp.Data = []components.Authorization{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -994,7 +1003,7 @@ OauthAuthorizationsListAuthorizationsResponse is a response for OauthAuthorizati
 https://developer.github.com/v3/oauth_authorizations/#list-your-authorizations
 */
 type OauthAuthorizationsListAuthorizationsResponse struct {
-	internal.Response
+	common.Response
 	request *OauthAuthorizationsListAuthorizationsReq
 	Data    []components.Authorization
 }
@@ -1017,7 +1026,8 @@ func OauthAuthorizationsListGrants(ctx context.Context, req *OauthAuthorizations
 		req = new(OauthAuthorizationsListGrantsReq)
 	}
 	resp := &OauthAuthorizationsListGrantsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1027,7 +1037,7 @@ func OauthAuthorizationsListGrants(ctx context.Context, req *OauthAuthorizations
 	}
 
 	resp.Data = []components.ApplicationGrant{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1116,7 +1126,7 @@ OauthAuthorizationsListGrantsResponse is a response for OauthAuthorizationsListG
 https://developer.github.com/v3/oauth_authorizations/#list-your-grants
 */
 type OauthAuthorizationsListGrantsResponse struct {
-	internal.Response
+	common.Response
 	request *OauthAuthorizationsListGrantsReq
 	Data    []components.ApplicationGrant
 }
@@ -1139,7 +1149,8 @@ func OauthAuthorizationsUpdateAuthorization(ctx context.Context, req *OauthAutho
 		req = new(OauthAuthorizationsUpdateAuthorizationReq)
 	}
 	resp := &OauthAuthorizationsUpdateAuthorizationResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1149,7 +1160,7 @@ func OauthAuthorizationsUpdateAuthorization(ctx context.Context, req *OauthAutho
 	}
 
 	resp.Data = components.Authorization{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1259,7 +1270,7 @@ OauthAuthorizationsUpdateAuthorizationResponse is a response for OauthAuthorizat
 https://developer.github.com/v3/oauth_authorizations/#update-an-existing-authorization
 */
 type OauthAuthorizationsUpdateAuthorizationResponse struct {
-	internal.Response
+	common.Response
 	request *OauthAuthorizationsUpdateAuthorizationReq
 	Data    components.Authorization
 }

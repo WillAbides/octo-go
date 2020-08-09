@@ -5,6 +5,7 @@ package octo
 import (
 	"context"
 	"fmt"
+	common "github.com/willabides/octo-go/common"
 	internal "github.com/willabides/octo-go/internal"
 	options "github.com/willabides/octo-go/options"
 	"net/http"
@@ -29,7 +30,8 @@ func EmojisGet(ctx context.Context, req *EmojisGetReq, opt ...options.Option) (*
 		req = new(EmojisGetReq)
 	}
 	resp := &EmojisGetResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -39,7 +41,7 @@ func EmojisGet(ctx context.Context, req *EmojisGetReq, opt ...options.Option) (*
 	}
 
 	resp.Data = EmojisGetResponseBody{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -123,7 +125,7 @@ EmojisGetResponse is a response for EmojisGet
 https://developer.github.com/v3/emojis/#get-emojis
 */
 type EmojisGetResponse struct {
-	internal.Response
+	common.Response
 	request *EmojisGetReq
 	Data    EmojisGetResponseBody
 }

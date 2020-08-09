@@ -5,6 +5,7 @@ package octo
 import (
 	"context"
 	"fmt"
+	common "github.com/willabides/octo-go/common"
 	components "github.com/willabides/octo-go/components"
 	internal "github.com/willabides/octo-go/internal"
 	options "github.com/willabides/octo-go/options"
@@ -31,7 +32,8 @@ func TeamsAddMemberLegacy(ctx context.Context, req *TeamsAddMemberLegacyReq, opt
 		req = new(TeamsAddMemberLegacyReq)
 	}
 	resp := &TeamsAddMemberLegacyResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -40,7 +42,7 @@ func TeamsAddMemberLegacy(ctx context.Context, req *TeamsAddMemberLegacyReq, opt
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -119,7 +121,7 @@ TeamsAddMemberLegacyResponse is a response for TeamsAddMemberLegacy
 https://developer.github.com/v3/teams/members/#add-team-member-legacy
 */
 type TeamsAddMemberLegacyResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsAddMemberLegacyReq
 }
 
@@ -141,7 +143,8 @@ func TeamsAddOrUpdateMembershipForUserInOrg(ctx context.Context, req *TeamsAddOr
 		req = new(TeamsAddOrUpdateMembershipForUserInOrgReq)
 	}
 	resp := &TeamsAddOrUpdateMembershipForUserInOrgResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -151,7 +154,7 @@ func TeamsAddOrUpdateMembershipForUserInOrg(ctx context.Context, req *TeamsAddOr
 	}
 
 	resp.Data = components.TeamMembership{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -254,7 +257,7 @@ TeamsAddOrUpdateMembershipForUserInOrgResponse is a response for TeamsAddOrUpdat
 https://developer.github.com/v3/teams/members/#add-or-update-team-membership-for-a-user
 */
 type TeamsAddOrUpdateMembershipForUserInOrgResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsAddOrUpdateMembershipForUserInOrgReq
 	Data    components.TeamMembership
 }
@@ -277,7 +280,8 @@ func TeamsAddOrUpdateMembershipForUserLegacy(ctx context.Context, req *TeamsAddO
 		req = new(TeamsAddOrUpdateMembershipForUserLegacyReq)
 	}
 	resp := &TeamsAddOrUpdateMembershipForUserLegacyResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -287,7 +291,7 @@ func TeamsAddOrUpdateMembershipForUserLegacy(ctx context.Context, req *TeamsAddO
 	}
 
 	resp.Data = components.TeamMembership{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -387,7 +391,7 @@ TeamsAddOrUpdateMembershipForUserLegacyResponse is a response for TeamsAddOrUpda
 https://developer.github.com/v3/teams/members/#add-or-update-team-membership-for-a-user-legacy
 */
 type TeamsAddOrUpdateMembershipForUserLegacyResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsAddOrUpdateMembershipForUserLegacyReq
 	Data    components.TeamMembership
 }
@@ -410,7 +414,8 @@ func TeamsAddOrUpdateProjectPermissionsInOrg(ctx context.Context, req *TeamsAddO
 		req = new(TeamsAddOrUpdateProjectPermissionsInOrgReq)
 	}
 	resp := &TeamsAddOrUpdateProjectPermissionsInOrgResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -419,7 +424,7 @@ func TeamsAddOrUpdateProjectPermissionsInOrg(ctx context.Context, req *TeamsAddO
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -532,7 +537,7 @@ TeamsAddOrUpdateProjectPermissionsInOrgResponse is a response for TeamsAddOrUpda
 https://developer.github.com/v3/teams/#add-or-update-team-project-permissions
 */
 type TeamsAddOrUpdateProjectPermissionsInOrgResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsAddOrUpdateProjectPermissionsInOrgReq
 }
 
@@ -554,7 +559,8 @@ func TeamsAddOrUpdateProjectPermissionsLegacy(ctx context.Context, req *TeamsAdd
 		req = new(TeamsAddOrUpdateProjectPermissionsLegacyReq)
 	}
 	resp := &TeamsAddOrUpdateProjectPermissionsLegacyResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -563,7 +569,7 @@ func TeamsAddOrUpdateProjectPermissionsLegacy(ctx context.Context, req *TeamsAdd
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -673,7 +679,7 @@ TeamsAddOrUpdateProjectPermissionsLegacyResponse is a response for TeamsAddOrUpd
 https://developer.github.com/v3/teams/#add-or-update-team-project-permissions-legacy
 */
 type TeamsAddOrUpdateProjectPermissionsLegacyResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsAddOrUpdateProjectPermissionsLegacyReq
 }
 
@@ -695,7 +701,8 @@ func TeamsAddOrUpdateRepoPermissionsInOrg(ctx context.Context, req *TeamsAddOrUp
 		req = new(TeamsAddOrUpdateRepoPermissionsInOrgReq)
 	}
 	resp := &TeamsAddOrUpdateRepoPermissionsInOrgResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -704,7 +711,7 @@ func TeamsAddOrUpdateRepoPermissionsInOrg(ctx context.Context, req *TeamsAddOrUp
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -814,7 +821,7 @@ TeamsAddOrUpdateRepoPermissionsInOrgResponse is a response for TeamsAddOrUpdateR
 https://developer.github.com/v3/teams/#add-or-update-team-repository-permissions
 */
 type TeamsAddOrUpdateRepoPermissionsInOrgResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsAddOrUpdateRepoPermissionsInOrgReq
 }
 
@@ -836,7 +843,8 @@ func TeamsAddOrUpdateRepoPermissionsLegacy(ctx context.Context, req *TeamsAddOrU
 		req = new(TeamsAddOrUpdateRepoPermissionsLegacyReq)
 	}
 	resp := &TeamsAddOrUpdateRepoPermissionsLegacyResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -845,7 +853,7 @@ func TeamsAddOrUpdateRepoPermissionsLegacy(ctx context.Context, req *TeamsAddOrU
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -946,7 +954,7 @@ TeamsAddOrUpdateRepoPermissionsLegacyResponse is a response for TeamsAddOrUpdate
 https://developer.github.com/v3/teams/#add-or-update-team-repository-permissions-legacy
 */
 type TeamsAddOrUpdateRepoPermissionsLegacyResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsAddOrUpdateRepoPermissionsLegacyReq
 }
 
@@ -968,7 +976,8 @@ func TeamsCheckPermissionsForProjectInOrg(ctx context.Context, req *TeamsCheckPe
 		req = new(TeamsCheckPermissionsForProjectInOrgReq)
 	}
 	resp := &TeamsCheckPermissionsForProjectInOrgResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -978,7 +987,7 @@ func TeamsCheckPermissionsForProjectInOrg(ctx context.Context, req *TeamsCheckPe
 	}
 
 	resp.Data = components.TeamProject{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1069,7 +1078,7 @@ TeamsCheckPermissionsForProjectInOrgResponse is a response for TeamsCheckPermiss
 https://developer.github.com/v3/teams/#check-team-permissions-for-a-project
 */
 type TeamsCheckPermissionsForProjectInOrgResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsCheckPermissionsForProjectInOrgReq
 	Data    components.TeamProject
 }
@@ -1092,7 +1101,8 @@ func TeamsCheckPermissionsForProjectLegacy(ctx context.Context, req *TeamsCheckP
 		req = new(TeamsCheckPermissionsForProjectLegacyReq)
 	}
 	resp := &TeamsCheckPermissionsForProjectLegacyResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1102,7 +1112,7 @@ func TeamsCheckPermissionsForProjectLegacy(ctx context.Context, req *TeamsCheckP
 	}
 
 	resp.Data = components.TeamProject{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1190,7 +1200,7 @@ TeamsCheckPermissionsForProjectLegacyResponse is a response for TeamsCheckPermis
 https://developer.github.com/v3/teams/#check-team-permissions-for-a-project-legacy
 */
 type TeamsCheckPermissionsForProjectLegacyResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsCheckPermissionsForProjectLegacyReq
 	Data    components.TeamProject
 }
@@ -1213,7 +1223,8 @@ func TeamsCheckPermissionsForRepoInOrg(ctx context.Context, req *TeamsCheckPermi
 		req = new(TeamsCheckPermissionsForRepoInOrgReq)
 	}
 	resp := &TeamsCheckPermissionsForRepoInOrgResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1223,7 +1234,7 @@ func TeamsCheckPermissionsForRepoInOrg(ctx context.Context, req *TeamsCheckPermi
 	}
 
 	resp.Data = components.TeamRepository{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1306,7 +1317,7 @@ TeamsCheckPermissionsForRepoInOrgResponse is a response for TeamsCheckPermission
 https://developer.github.com/v3/teams/#check-team-permissions-for-a-repository
 */
 type TeamsCheckPermissionsForRepoInOrgResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsCheckPermissionsForRepoInOrgReq
 	Data    components.TeamRepository
 }
@@ -1329,7 +1340,8 @@ func TeamsCheckPermissionsForRepoLegacy(ctx context.Context, req *TeamsCheckPerm
 		req = new(TeamsCheckPermissionsForRepoLegacyReq)
 	}
 	resp := &TeamsCheckPermissionsForRepoLegacyResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1339,7 +1351,7 @@ func TeamsCheckPermissionsForRepoLegacy(ctx context.Context, req *TeamsCheckPerm
 	}
 
 	resp.Data = components.TeamRepository{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1419,7 +1431,7 @@ TeamsCheckPermissionsForRepoLegacyResponse is a response for TeamsCheckPermissio
 https://developer.github.com/v3/teams/#check-team-permissions-for-a-repository-legacy
 */
 type TeamsCheckPermissionsForRepoLegacyResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsCheckPermissionsForRepoLegacyReq
 	Data    components.TeamRepository
 }
@@ -1442,7 +1454,8 @@ func TeamsCreate(ctx context.Context, req *TeamsCreateReq, opt ...options.Option
 		req = new(TeamsCreateReq)
 	}
 	resp := &TeamsCreateResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1452,7 +1465,7 @@ func TeamsCreate(ctx context.Context, req *TeamsCreateReq, opt ...options.Option
 	}
 
 	resp.Data = components.TeamFull{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1581,7 +1594,7 @@ TeamsCreateResponse is a response for TeamsCreate
 https://developer.github.com/v3/teams/#create-a-team
 */
 type TeamsCreateResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsCreateReq
 	Data    components.TeamFull
 }
@@ -1604,7 +1617,8 @@ func TeamsCreateDiscussionCommentInOrg(ctx context.Context, req *TeamsCreateDisc
 		req = new(TeamsCreateDiscussionCommentInOrgReq)
 	}
 	resp := &TeamsCreateDiscussionCommentInOrgResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1614,7 +1628,7 @@ func TeamsCreateDiscussionCommentInOrg(ctx context.Context, req *TeamsCreateDisc
 	}
 
 	resp.Data = components.TeamDiscussionComment{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1722,7 +1736,7 @@ TeamsCreateDiscussionCommentInOrgResponse is a response for TeamsCreateDiscussio
 https://developer.github.com/v3/teams/discussion_comments/#create-a-discussion-comment
 */
 type TeamsCreateDiscussionCommentInOrgResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsCreateDiscussionCommentInOrgReq
 	Data    components.TeamDiscussionComment
 }
@@ -1745,7 +1759,8 @@ func TeamsCreateDiscussionCommentLegacy(ctx context.Context, req *TeamsCreateDis
 		req = new(TeamsCreateDiscussionCommentLegacyReq)
 	}
 	resp := &TeamsCreateDiscussionCommentLegacyResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1755,7 +1770,7 @@ func TeamsCreateDiscussionCommentLegacy(ctx context.Context, req *TeamsCreateDis
 	}
 
 	resp.Data = components.TeamDiscussionComment{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1860,7 +1875,7 @@ TeamsCreateDiscussionCommentLegacyResponse is a response for TeamsCreateDiscussi
 https://developer.github.com/v3/teams/discussion_comments/#create-a-discussion-comment-legacy
 */
 type TeamsCreateDiscussionCommentLegacyResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsCreateDiscussionCommentLegacyReq
 	Data    components.TeamDiscussionComment
 }
@@ -1883,7 +1898,8 @@ func TeamsCreateDiscussionInOrg(ctx context.Context, req *TeamsCreateDiscussionI
 		req = new(TeamsCreateDiscussionInOrgReq)
 	}
 	resp := &TeamsCreateDiscussionInOrgResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1893,7 +1909,7 @@ func TeamsCreateDiscussionInOrg(ctx context.Context, req *TeamsCreateDiscussionI
 	}
 
 	resp.Data = components.TeamDiscussion{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2010,7 +2026,7 @@ TeamsCreateDiscussionInOrgResponse is a response for TeamsCreateDiscussionInOrg
 https://developer.github.com/v3/teams/discussions/#create-a-discussion
 */
 type TeamsCreateDiscussionInOrgResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsCreateDiscussionInOrgReq
 	Data    components.TeamDiscussion
 }
@@ -2033,7 +2049,8 @@ func TeamsCreateDiscussionLegacy(ctx context.Context, req *TeamsCreateDiscussion
 		req = new(TeamsCreateDiscussionLegacyReq)
 	}
 	resp := &TeamsCreateDiscussionLegacyResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2043,7 +2060,7 @@ func TeamsCreateDiscussionLegacy(ctx context.Context, req *TeamsCreateDiscussion
 	}
 
 	resp.Data = components.TeamDiscussion{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2157,7 +2174,7 @@ TeamsCreateDiscussionLegacyResponse is a response for TeamsCreateDiscussionLegac
 https://developer.github.com/v3/teams/discussions/#create-a-discussion-legacy
 */
 type TeamsCreateDiscussionLegacyResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsCreateDiscussionLegacyReq
 	Data    components.TeamDiscussion
 }
@@ -2180,7 +2197,8 @@ func TeamsCreateOrUpdateIdpGroupConnectionsInOrg(ctx context.Context, req *Teams
 		req = new(TeamsCreateOrUpdateIdpGroupConnectionsInOrgReq)
 	}
 	resp := &TeamsCreateOrUpdateIdpGroupConnectionsInOrgResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2190,7 +2208,7 @@ func TeamsCreateOrUpdateIdpGroupConnectionsInOrg(ctx context.Context, req *Teams
 	}
 
 	resp.Data = components.GroupMapping{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2303,7 +2321,7 @@ TeamsCreateOrUpdateIdpGroupConnectionsInOrgResponse is a response for TeamsCreat
 https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections
 */
 type TeamsCreateOrUpdateIdpGroupConnectionsInOrgResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsCreateOrUpdateIdpGroupConnectionsInOrgReq
 	Data    components.GroupMapping
 }
@@ -2326,7 +2344,8 @@ func TeamsCreateOrUpdateIdpGroupConnectionsLegacy(ctx context.Context, req *Team
 		req = new(TeamsCreateOrUpdateIdpGroupConnectionsLegacyReq)
 	}
 	resp := &TeamsCreateOrUpdateIdpGroupConnectionsLegacyResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2336,7 +2355,7 @@ func TeamsCreateOrUpdateIdpGroupConnectionsLegacy(ctx context.Context, req *Team
 	}
 
 	resp.Data = components.GroupMapping{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2450,7 +2469,7 @@ TeamsCreateOrUpdateIdpGroupConnectionsLegacyResponse is a response for TeamsCrea
 https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections-legacy
 */
 type TeamsCreateOrUpdateIdpGroupConnectionsLegacyResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsCreateOrUpdateIdpGroupConnectionsLegacyReq
 	Data    components.GroupMapping
 }
@@ -2473,7 +2492,8 @@ func TeamsDeleteDiscussionCommentInOrg(ctx context.Context, req *TeamsDeleteDisc
 		req = new(TeamsDeleteDiscussionCommentInOrgReq)
 	}
 	resp := &TeamsDeleteDiscussionCommentInOrgResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2482,7 +2502,7 @@ func TeamsDeleteDiscussionCommentInOrg(ctx context.Context, req *TeamsDeleteDisc
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -2565,7 +2585,7 @@ TeamsDeleteDiscussionCommentInOrgResponse is a response for TeamsDeleteDiscussio
 https://developer.github.com/v3/teams/discussion_comments/#delete-a-discussion-comment
 */
 type TeamsDeleteDiscussionCommentInOrgResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsDeleteDiscussionCommentInOrgReq
 }
 
@@ -2587,7 +2607,8 @@ func TeamsDeleteDiscussionCommentLegacy(ctx context.Context, req *TeamsDeleteDis
 		req = new(TeamsDeleteDiscussionCommentLegacyReq)
 	}
 	resp := &TeamsDeleteDiscussionCommentLegacyResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2596,7 +2617,7 @@ func TeamsDeleteDiscussionCommentLegacy(ctx context.Context, req *TeamsDeleteDis
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -2676,7 +2697,7 @@ TeamsDeleteDiscussionCommentLegacyResponse is a response for TeamsDeleteDiscussi
 https://developer.github.com/v3/teams/discussion_comments/#delete-a-discussion-comment-legacy
 */
 type TeamsDeleteDiscussionCommentLegacyResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsDeleteDiscussionCommentLegacyReq
 }
 
@@ -2698,7 +2719,8 @@ func TeamsDeleteDiscussionInOrg(ctx context.Context, req *TeamsDeleteDiscussionI
 		req = new(TeamsDeleteDiscussionInOrgReq)
 	}
 	resp := &TeamsDeleteDiscussionInOrgResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2707,7 +2729,7 @@ func TeamsDeleteDiscussionInOrg(ctx context.Context, req *TeamsDeleteDiscussionI
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -2789,7 +2811,7 @@ TeamsDeleteDiscussionInOrgResponse is a response for TeamsDeleteDiscussionInOrg
 https://developer.github.com/v3/teams/discussions/#delete-a-discussion
 */
 type TeamsDeleteDiscussionInOrgResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsDeleteDiscussionInOrgReq
 }
 
@@ -2811,7 +2833,8 @@ func TeamsDeleteDiscussionLegacy(ctx context.Context, req *TeamsDeleteDiscussion
 		req = new(TeamsDeleteDiscussionLegacyReq)
 	}
 	resp := &TeamsDeleteDiscussionLegacyResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2820,7 +2843,7 @@ func TeamsDeleteDiscussionLegacy(ctx context.Context, req *TeamsDeleteDiscussion
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -2899,7 +2922,7 @@ TeamsDeleteDiscussionLegacyResponse is a response for TeamsDeleteDiscussionLegac
 https://developer.github.com/v3/teams/discussions/#delete-a-discussion-legacy
 */
 type TeamsDeleteDiscussionLegacyResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsDeleteDiscussionLegacyReq
 }
 
@@ -2921,7 +2944,8 @@ func TeamsDeleteInOrg(ctx context.Context, req *TeamsDeleteInOrgReq, opt ...opti
 		req = new(TeamsDeleteInOrgReq)
 	}
 	resp := &TeamsDeleteInOrgResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2930,7 +2954,7 @@ func TeamsDeleteInOrg(ctx context.Context, req *TeamsDeleteInOrgReq, opt ...opti
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -3011,7 +3035,7 @@ TeamsDeleteInOrgResponse is a response for TeamsDeleteInOrg
 https://developer.github.com/v3/teams/#delete-a-team
 */
 type TeamsDeleteInOrgResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsDeleteInOrgReq
 }
 
@@ -3033,7 +3057,8 @@ func TeamsDeleteLegacy(ctx context.Context, req *TeamsDeleteLegacyReq, opt ...op
 		req = new(TeamsDeleteLegacyReq)
 	}
 	resp := &TeamsDeleteLegacyResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3042,7 +3067,7 @@ func TeamsDeleteLegacy(ctx context.Context, req *TeamsDeleteLegacyReq, opt ...op
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -3120,7 +3145,7 @@ TeamsDeleteLegacyResponse is a response for TeamsDeleteLegacy
 https://developer.github.com/v3/teams/#delete-a-team-legacy
 */
 type TeamsDeleteLegacyResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsDeleteLegacyReq
 }
 
@@ -3142,7 +3167,8 @@ func TeamsGetByName(ctx context.Context, req *TeamsGetByNameReq, opt ...options.
 		req = new(TeamsGetByNameReq)
 	}
 	resp := &TeamsGetByNameResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3152,7 +3178,7 @@ func TeamsGetByName(ctx context.Context, req *TeamsGetByNameReq, opt ...options.
 	}
 
 	resp.Data = components.TeamFull{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3233,7 +3259,7 @@ TeamsGetByNameResponse is a response for TeamsGetByName
 https://developer.github.com/v3/teams/#get-a-team-by-name
 */
 type TeamsGetByNameResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsGetByNameReq
 	Data    components.TeamFull
 }
@@ -3256,7 +3282,8 @@ func TeamsGetDiscussionCommentInOrg(ctx context.Context, req *TeamsGetDiscussion
 		req = new(TeamsGetDiscussionCommentInOrgReq)
 	}
 	resp := &TeamsGetDiscussionCommentInOrgResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3266,7 +3293,7 @@ func TeamsGetDiscussionCommentInOrg(ctx context.Context, req *TeamsGetDiscussion
 	}
 
 	resp.Data = components.TeamDiscussionComment{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3360,7 +3387,7 @@ TeamsGetDiscussionCommentInOrgResponse is a response for TeamsGetDiscussionComme
 https://developer.github.com/v3/teams/discussion_comments/#get-a-discussion-comment
 */
 type TeamsGetDiscussionCommentInOrgResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsGetDiscussionCommentInOrgReq
 	Data    components.TeamDiscussionComment
 }
@@ -3383,7 +3410,8 @@ func TeamsGetDiscussionCommentLegacy(ctx context.Context, req *TeamsGetDiscussio
 		req = new(TeamsGetDiscussionCommentLegacyReq)
 	}
 	resp := &TeamsGetDiscussionCommentLegacyResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3393,7 +3421,7 @@ func TeamsGetDiscussionCommentLegacy(ctx context.Context, req *TeamsGetDiscussio
 	}
 
 	resp.Data = components.TeamDiscussionComment{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3484,7 +3512,7 @@ TeamsGetDiscussionCommentLegacyResponse is a response for TeamsGetDiscussionComm
 https://developer.github.com/v3/teams/discussion_comments/#get-a-discussion-comment-legacy
 */
 type TeamsGetDiscussionCommentLegacyResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsGetDiscussionCommentLegacyReq
 	Data    components.TeamDiscussionComment
 }
@@ -3507,7 +3535,8 @@ func TeamsGetDiscussionInOrg(ctx context.Context, req *TeamsGetDiscussionInOrgRe
 		req = new(TeamsGetDiscussionInOrgReq)
 	}
 	resp := &TeamsGetDiscussionInOrgResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3517,7 +3546,7 @@ func TeamsGetDiscussionInOrg(ctx context.Context, req *TeamsGetDiscussionInOrgRe
 	}
 
 	resp.Data = components.TeamDiscussion{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3610,7 +3639,7 @@ TeamsGetDiscussionInOrgResponse is a response for TeamsGetDiscussionInOrg
 https://developer.github.com/v3/teams/discussions/#get-a-discussion
 */
 type TeamsGetDiscussionInOrgResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsGetDiscussionInOrgReq
 	Data    components.TeamDiscussion
 }
@@ -3633,7 +3662,8 @@ func TeamsGetDiscussionLegacy(ctx context.Context, req *TeamsGetDiscussionLegacy
 		req = new(TeamsGetDiscussionLegacyReq)
 	}
 	resp := &TeamsGetDiscussionLegacyResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3643,7 +3673,7 @@ func TeamsGetDiscussionLegacy(ctx context.Context, req *TeamsGetDiscussionLegacy
 	}
 
 	resp.Data = components.TeamDiscussion{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3733,7 +3763,7 @@ TeamsGetDiscussionLegacyResponse is a response for TeamsGetDiscussionLegacy
 https://developer.github.com/v3/teams/discussions/#get-a-discussion-legacy
 */
 type TeamsGetDiscussionLegacyResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsGetDiscussionLegacyReq
 	Data    components.TeamDiscussion
 }
@@ -3756,7 +3786,8 @@ func TeamsGetLegacy(ctx context.Context, req *TeamsGetLegacyReq, opt ...options.
 		req = new(TeamsGetLegacyReq)
 	}
 	resp := &TeamsGetLegacyResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3766,7 +3797,7 @@ func TeamsGetLegacy(ctx context.Context, req *TeamsGetLegacyReq, opt ...options.
 	}
 
 	resp.Data = components.TeamFull{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3844,7 +3875,7 @@ TeamsGetLegacyResponse is a response for TeamsGetLegacy
 https://developer.github.com/v3/teams/#get-a-team-legacy
 */
 type TeamsGetLegacyResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsGetLegacyReq
 	Data    components.TeamFull
 }
@@ -3867,7 +3898,8 @@ func TeamsGetMemberLegacy(ctx context.Context, req *TeamsGetMemberLegacyReq, opt
 		req = new(TeamsGetMemberLegacyReq)
 	}
 	resp := &TeamsGetMemberLegacyResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3880,7 +3912,7 @@ func TeamsGetMemberLegacy(ctx context.Context, req *TeamsGetMemberLegacyReq, opt
 	if err != nil {
 		return nil, err
 	}
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -3959,7 +3991,7 @@ TeamsGetMemberLegacyResponse is a response for TeamsGetMemberLegacy
 https://developer.github.com/v3/teams/members/#get-team-member-legacy
 */
 type TeamsGetMemberLegacyResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsGetMemberLegacyReq
 	Data    bool
 }
@@ -3982,7 +4014,8 @@ func TeamsGetMembershipForUserInOrg(ctx context.Context, req *TeamsGetMembership
 		req = new(TeamsGetMembershipForUserInOrgReq)
 	}
 	resp := &TeamsGetMembershipForUserInOrgResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3992,7 +4025,7 @@ func TeamsGetMembershipForUserInOrg(ctx context.Context, req *TeamsGetMembership
 	}
 
 	resp.Data = components.TeamMembership{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4074,7 +4107,7 @@ TeamsGetMembershipForUserInOrgResponse is a response for TeamsGetMembershipForUs
 https://developer.github.com/v3/teams/members/#get-team-membership-for-a-user
 */
 type TeamsGetMembershipForUserInOrgResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsGetMembershipForUserInOrgReq
 	Data    components.TeamMembership
 }
@@ -4097,7 +4130,8 @@ func TeamsGetMembershipForUserLegacy(ctx context.Context, req *TeamsGetMembershi
 		req = new(TeamsGetMembershipForUserLegacyReq)
 	}
 	resp := &TeamsGetMembershipForUserLegacyResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -4107,7 +4141,7 @@ func TeamsGetMembershipForUserLegacy(ctx context.Context, req *TeamsGetMembershi
 	}
 
 	resp.Data = components.TeamMembership{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4186,7 +4220,7 @@ TeamsGetMembershipForUserLegacyResponse is a response for TeamsGetMembershipForU
 https://developer.github.com/v3/teams/members/#get-team-membership-for-a-user-legacy
 */
 type TeamsGetMembershipForUserLegacyResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsGetMembershipForUserLegacyReq
 	Data    components.TeamMembership
 }
@@ -4209,7 +4243,8 @@ func TeamsList(ctx context.Context, req *TeamsListReq, opt ...options.Option) (*
 		req = new(TeamsListReq)
 	}
 	resp := &TeamsListResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -4219,7 +4254,7 @@ func TeamsList(ctx context.Context, req *TeamsListReq, opt ...options.Option) (*
 	}
 
 	resp.Data = []components.Team{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4309,7 +4344,7 @@ TeamsListResponse is a response for TeamsList
 https://developer.github.com/v3/teams/#list-teams
 */
 type TeamsListResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsListReq
 	Data    []components.Team
 }
@@ -4332,7 +4367,8 @@ func TeamsListChildInOrg(ctx context.Context, req *TeamsListChildInOrgReq, opt .
 		req = new(TeamsListChildInOrgReq)
 	}
 	resp := &TeamsListChildInOrgResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -4342,7 +4378,7 @@ func TeamsListChildInOrg(ctx context.Context, req *TeamsListChildInOrgReq, opt .
 	}
 
 	resp.Data = []components.Team{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4435,7 +4471,7 @@ TeamsListChildInOrgResponse is a response for TeamsListChildInOrg
 https://developer.github.com/v3/teams/#list-child-teams
 */
 type TeamsListChildInOrgResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsListChildInOrgReq
 	Data    []components.Team
 }
@@ -4458,7 +4494,8 @@ func TeamsListChildLegacy(ctx context.Context, req *TeamsListChildLegacyReq, opt
 		req = new(TeamsListChildLegacyReq)
 	}
 	resp := &TeamsListChildLegacyResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -4468,7 +4505,7 @@ func TeamsListChildLegacy(ctx context.Context, req *TeamsListChildLegacyReq, opt
 	}
 
 	resp.Data = []components.Team{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4558,7 +4595,7 @@ TeamsListChildLegacyResponse is a response for TeamsListChildLegacy
 https://developer.github.com/v3/teams/#list-child-teams-legacy
 */
 type TeamsListChildLegacyResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsListChildLegacyReq
 	Data    []components.Team
 }
@@ -4581,7 +4618,8 @@ func TeamsListDiscussionCommentsInOrg(ctx context.Context, req *TeamsListDiscuss
 		req = new(TeamsListDiscussionCommentsInOrgReq)
 	}
 	resp := &TeamsListDiscussionCommentsInOrgResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -4591,7 +4629,7 @@ func TeamsListDiscussionCommentsInOrg(ctx context.Context, req *TeamsListDiscuss
 	}
 
 	resp.Data = []components.TeamDiscussionComment{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4702,7 +4740,7 @@ TeamsListDiscussionCommentsInOrgResponse is a response for TeamsListDiscussionCo
 https://developer.github.com/v3/teams/discussion_comments/#list-discussion-comments
 */
 type TeamsListDiscussionCommentsInOrgResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsListDiscussionCommentsInOrgReq
 	Data    []components.TeamDiscussionComment
 }
@@ -4725,7 +4763,8 @@ func TeamsListDiscussionCommentsLegacy(ctx context.Context, req *TeamsListDiscus
 		req = new(TeamsListDiscussionCommentsLegacyReq)
 	}
 	resp := &TeamsListDiscussionCommentsLegacyResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -4735,7 +4774,7 @@ func TeamsListDiscussionCommentsLegacy(ctx context.Context, req *TeamsListDiscus
 	}
 
 	resp.Data = []components.TeamDiscussionComment{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4843,7 +4882,7 @@ TeamsListDiscussionCommentsLegacyResponse is a response for TeamsListDiscussionC
 https://developer.github.com/v3/teams/discussion_comments/#list-discussion-comments-legacy
 */
 type TeamsListDiscussionCommentsLegacyResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsListDiscussionCommentsLegacyReq
 	Data    []components.TeamDiscussionComment
 }
@@ -4866,7 +4905,8 @@ func TeamsListDiscussionsInOrg(ctx context.Context, req *TeamsListDiscussionsInO
 		req = new(TeamsListDiscussionsInOrgReq)
 	}
 	resp := &TeamsListDiscussionsInOrgResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -4876,7 +4916,7 @@ func TeamsListDiscussionsInOrg(ctx context.Context, req *TeamsListDiscussionsInO
 	}
 
 	resp.Data = []components.TeamDiscussion{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4986,7 +5026,7 @@ TeamsListDiscussionsInOrgResponse is a response for TeamsListDiscussionsInOrg
 https://developer.github.com/v3/teams/discussions/#list-discussions
 */
 type TeamsListDiscussionsInOrgResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsListDiscussionsInOrgReq
 	Data    []components.TeamDiscussion
 }
@@ -5009,7 +5049,8 @@ func TeamsListDiscussionsLegacy(ctx context.Context, req *TeamsListDiscussionsLe
 		req = new(TeamsListDiscussionsLegacyReq)
 	}
 	resp := &TeamsListDiscussionsLegacyResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -5019,7 +5060,7 @@ func TeamsListDiscussionsLegacy(ctx context.Context, req *TeamsListDiscussionsLe
 	}
 
 	resp.Data = []components.TeamDiscussion{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -5126,7 +5167,7 @@ TeamsListDiscussionsLegacyResponse is a response for TeamsListDiscussionsLegacy
 https://developer.github.com/v3/teams/discussions/#list-discussions-legacy
 */
 type TeamsListDiscussionsLegacyResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsListDiscussionsLegacyReq
 	Data    []components.TeamDiscussion
 }
@@ -5149,7 +5190,8 @@ func TeamsListForAuthenticatedUser(ctx context.Context, req *TeamsListForAuthent
 		req = new(TeamsListForAuthenticatedUserReq)
 	}
 	resp := &TeamsListForAuthenticatedUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -5159,7 +5201,7 @@ func TeamsListForAuthenticatedUser(ctx context.Context, req *TeamsListForAuthent
 	}
 
 	resp.Data = []components.TeamFull{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -5248,7 +5290,7 @@ TeamsListForAuthenticatedUserResponse is a response for TeamsListForAuthenticate
 https://developer.github.com/v3/teams/#list-teams-for-the-authenticated-user
 */
 type TeamsListForAuthenticatedUserResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsListForAuthenticatedUserReq
 	Data    []components.TeamFull
 }
@@ -5271,7 +5313,8 @@ func TeamsListIdpGroupsForLegacy(ctx context.Context, req *TeamsListIdpGroupsFor
 		req = new(TeamsListIdpGroupsForLegacyReq)
 	}
 	resp := &TeamsListIdpGroupsForLegacyResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -5281,7 +5324,7 @@ func TeamsListIdpGroupsForLegacy(ctx context.Context, req *TeamsListIdpGroupsFor
 	}
 
 	resp.Data = components.GroupMapping{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -5359,7 +5402,7 @@ TeamsListIdpGroupsForLegacyResponse is a response for TeamsListIdpGroupsForLegac
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team-legacy
 */
 type TeamsListIdpGroupsForLegacyResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsListIdpGroupsForLegacyReq
 	Data    components.GroupMapping
 }
@@ -5382,7 +5425,8 @@ func TeamsListIdpGroupsForOrg(ctx context.Context, req *TeamsListIdpGroupsForOrg
 		req = new(TeamsListIdpGroupsForOrgReq)
 	}
 	resp := &TeamsListIdpGroupsForOrgResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -5392,7 +5436,7 @@ func TeamsListIdpGroupsForOrg(ctx context.Context, req *TeamsListIdpGroupsForOrg
 	}
 
 	resp.Data = components.GroupMapping{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -5482,7 +5526,7 @@ TeamsListIdpGroupsForOrgResponse is a response for TeamsListIdpGroupsForOrg
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-an-organization
 */
 type TeamsListIdpGroupsForOrgResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsListIdpGroupsForOrgReq
 	Data    components.GroupMapping
 }
@@ -5505,7 +5549,8 @@ func TeamsListIdpGroupsInOrg(ctx context.Context, req *TeamsListIdpGroupsInOrgRe
 		req = new(TeamsListIdpGroupsInOrgReq)
 	}
 	resp := &TeamsListIdpGroupsInOrgResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -5515,7 +5560,7 @@ func TeamsListIdpGroupsInOrg(ctx context.Context, req *TeamsListIdpGroupsInOrgRe
 	}
 
 	resp.Data = components.GroupMapping{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -5596,7 +5641,7 @@ TeamsListIdpGroupsInOrgResponse is a response for TeamsListIdpGroupsInOrg
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team
 */
 type TeamsListIdpGroupsInOrgResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsListIdpGroupsInOrgReq
 	Data    components.GroupMapping
 }
@@ -5619,7 +5664,8 @@ func TeamsListMembersInOrg(ctx context.Context, req *TeamsListMembersInOrgReq, o
 		req = new(TeamsListMembersInOrgReq)
 	}
 	resp := &TeamsListMembersInOrgResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -5629,7 +5675,7 @@ func TeamsListMembersInOrg(ctx context.Context, req *TeamsListMembersInOrgReq, o
 	}
 
 	resp.Data = []components.SimpleUser{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -5733,7 +5779,7 @@ TeamsListMembersInOrgResponse is a response for TeamsListMembersInOrg
 https://developer.github.com/v3/teams/members/#list-team-members
 */
 type TeamsListMembersInOrgResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsListMembersInOrgReq
 	Data    []components.SimpleUser
 }
@@ -5756,7 +5802,8 @@ func TeamsListMembersLegacy(ctx context.Context, req *TeamsListMembersLegacyReq,
 		req = new(TeamsListMembersLegacyReq)
 	}
 	resp := &TeamsListMembersLegacyResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -5766,7 +5813,7 @@ func TeamsListMembersLegacy(ctx context.Context, req *TeamsListMembersLegacyReq,
 	}
 
 	resp.Data = []components.SimpleUser{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -5867,7 +5914,7 @@ TeamsListMembersLegacyResponse is a response for TeamsListMembersLegacy
 https://developer.github.com/v3/teams/members/#list-team-members-legacy
 */
 type TeamsListMembersLegacyResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsListMembersLegacyReq
 	Data    []components.SimpleUser
 }
@@ -5890,7 +5937,8 @@ func TeamsListPendingInvitationsInOrg(ctx context.Context, req *TeamsListPending
 		req = new(TeamsListPendingInvitationsInOrgReq)
 	}
 	resp := &TeamsListPendingInvitationsInOrgResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -5900,7 +5948,7 @@ func TeamsListPendingInvitationsInOrg(ctx context.Context, req *TeamsListPending
 	}
 
 	resp.Data = []components.OrganizationInvitation{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -5993,7 +6041,7 @@ TeamsListPendingInvitationsInOrgResponse is a response for TeamsListPendingInvit
 https://developer.github.com/v3/teams/members/#list-pending-team-invitations
 */
 type TeamsListPendingInvitationsInOrgResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsListPendingInvitationsInOrgReq
 	Data    []components.OrganizationInvitation
 }
@@ -6016,7 +6064,8 @@ func TeamsListPendingInvitationsLegacy(ctx context.Context, req *TeamsListPendin
 		req = new(TeamsListPendingInvitationsLegacyReq)
 	}
 	resp := &TeamsListPendingInvitationsLegacyResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -6026,7 +6075,7 @@ func TeamsListPendingInvitationsLegacy(ctx context.Context, req *TeamsListPendin
 	}
 
 	resp.Data = []components.OrganizationInvitation{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -6116,7 +6165,7 @@ TeamsListPendingInvitationsLegacyResponse is a response for TeamsListPendingInvi
 https://developer.github.com/v3/teams/members/#list-pending-team-invitations-legacy
 */
 type TeamsListPendingInvitationsLegacyResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsListPendingInvitationsLegacyReq
 	Data    []components.OrganizationInvitation
 }
@@ -6139,7 +6188,8 @@ func TeamsListProjectsInOrg(ctx context.Context, req *TeamsListProjectsInOrgReq,
 		req = new(TeamsListProjectsInOrgReq)
 	}
 	resp := &TeamsListProjectsInOrgResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -6149,7 +6199,7 @@ func TeamsListProjectsInOrg(ctx context.Context, req *TeamsListProjectsInOrgReq,
 	}
 
 	resp.Data = []components.TeamProject{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -6251,7 +6301,7 @@ TeamsListProjectsInOrgResponse is a response for TeamsListProjectsInOrg
 https://developer.github.com/v3/teams/#list-team-projects
 */
 type TeamsListProjectsInOrgResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsListProjectsInOrgReq
 	Data    []components.TeamProject
 }
@@ -6274,7 +6324,8 @@ func TeamsListProjectsLegacy(ctx context.Context, req *TeamsListProjectsLegacyRe
 		req = new(TeamsListProjectsLegacyReq)
 	}
 	resp := &TeamsListProjectsLegacyResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -6284,7 +6335,7 @@ func TeamsListProjectsLegacy(ctx context.Context, req *TeamsListProjectsLegacyRe
 	}
 
 	resp.Data = []components.TeamProject{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -6383,7 +6434,7 @@ TeamsListProjectsLegacyResponse is a response for TeamsListProjectsLegacy
 https://developer.github.com/v3/teams/#list-team-projects-legacy
 */
 type TeamsListProjectsLegacyResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsListProjectsLegacyReq
 	Data    []components.TeamProject
 }
@@ -6406,7 +6457,8 @@ func TeamsListReposInOrg(ctx context.Context, req *TeamsListReposInOrgReq, opt .
 		req = new(TeamsListReposInOrgReq)
 	}
 	resp := &TeamsListReposInOrgResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -6416,7 +6468,7 @@ func TeamsListReposInOrg(ctx context.Context, req *TeamsListReposInOrgReq, opt .
 	}
 
 	resp.Data = []components.MinimalRepository{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -6509,7 +6561,7 @@ TeamsListReposInOrgResponse is a response for TeamsListReposInOrg
 https://developer.github.com/v3/teams/#list-team-repositories
 */
 type TeamsListReposInOrgResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsListReposInOrgReq
 	Data    []components.MinimalRepository
 }
@@ -6532,7 +6584,8 @@ func TeamsListReposLegacy(ctx context.Context, req *TeamsListReposLegacyReq, opt
 		req = new(TeamsListReposLegacyReq)
 	}
 	resp := &TeamsListReposLegacyResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -6542,7 +6595,7 @@ func TeamsListReposLegacy(ctx context.Context, req *TeamsListReposLegacyReq, opt
 	}
 
 	resp.Data = []components.MinimalRepository{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -6632,7 +6685,7 @@ TeamsListReposLegacyResponse is a response for TeamsListReposLegacy
 https://developer.github.com/v3/teams/#list-team-repositories-legacy
 */
 type TeamsListReposLegacyResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsListReposLegacyReq
 	Data    []components.MinimalRepository
 }
@@ -6655,7 +6708,8 @@ func TeamsRemoveMemberLegacy(ctx context.Context, req *TeamsRemoveMemberLegacyRe
 		req = new(TeamsRemoveMemberLegacyReq)
 	}
 	resp := &TeamsRemoveMemberLegacyResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -6668,7 +6722,7 @@ func TeamsRemoveMemberLegacy(ctx context.Context, req *TeamsRemoveMemberLegacyRe
 	if err != nil {
 		return nil, err
 	}
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -6747,7 +6801,7 @@ TeamsRemoveMemberLegacyResponse is a response for TeamsRemoveMemberLegacy
 https://developer.github.com/v3/teams/members/#remove-team-member-legacy
 */
 type TeamsRemoveMemberLegacyResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsRemoveMemberLegacyReq
 	Data    bool
 }
@@ -6770,7 +6824,8 @@ func TeamsRemoveMembershipForUserInOrg(ctx context.Context, req *TeamsRemoveMemb
 		req = new(TeamsRemoveMembershipForUserInOrgReq)
 	}
 	resp := &TeamsRemoveMembershipForUserInOrgResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -6779,7 +6834,7 @@ func TeamsRemoveMembershipForUserInOrg(ctx context.Context, req *TeamsRemoveMemb
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -6861,7 +6916,7 @@ TeamsRemoveMembershipForUserInOrgResponse is a response for TeamsRemoveMembershi
 https://developer.github.com/v3/teams/members/#remove-team-membership-for-a-user
 */
 type TeamsRemoveMembershipForUserInOrgResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsRemoveMembershipForUserInOrgReq
 }
 
@@ -6883,7 +6938,8 @@ func TeamsRemoveMembershipForUserLegacy(ctx context.Context, req *TeamsRemoveMem
 		req = new(TeamsRemoveMembershipForUserLegacyReq)
 	}
 	resp := &TeamsRemoveMembershipForUserLegacyResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -6892,7 +6948,7 @@ func TeamsRemoveMembershipForUserLegacy(ctx context.Context, req *TeamsRemoveMem
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -6971,7 +7027,7 @@ TeamsRemoveMembershipForUserLegacyResponse is a response for TeamsRemoveMembersh
 https://developer.github.com/v3/teams/members/#remove-team-membership-for-a-user-legacy
 */
 type TeamsRemoveMembershipForUserLegacyResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsRemoveMembershipForUserLegacyReq
 }
 
@@ -6993,7 +7049,8 @@ func TeamsRemoveProjectInOrg(ctx context.Context, req *TeamsRemoveProjectInOrgRe
 		req = new(TeamsRemoveProjectInOrgReq)
 	}
 	resp := &TeamsRemoveProjectInOrgResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -7002,7 +7059,7 @@ func TeamsRemoveProjectInOrg(ctx context.Context, req *TeamsRemoveProjectInOrgRe
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -7084,7 +7141,7 @@ TeamsRemoveProjectInOrgResponse is a response for TeamsRemoveProjectInOrg
 https://developer.github.com/v3/teams/#remove-a-project-from-a-team
 */
 type TeamsRemoveProjectInOrgResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsRemoveProjectInOrgReq
 }
 
@@ -7106,7 +7163,8 @@ func TeamsRemoveProjectLegacy(ctx context.Context, req *TeamsRemoveProjectLegacy
 		req = new(TeamsRemoveProjectLegacyReq)
 	}
 	resp := &TeamsRemoveProjectLegacyResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -7115,7 +7173,7 @@ func TeamsRemoveProjectLegacy(ctx context.Context, req *TeamsRemoveProjectLegacy
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -7194,7 +7252,7 @@ TeamsRemoveProjectLegacyResponse is a response for TeamsRemoveProjectLegacy
 https://developer.github.com/v3/teams/#remove-a-project-from-a-team-legacy
 */
 type TeamsRemoveProjectLegacyResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsRemoveProjectLegacyReq
 }
 
@@ -7216,7 +7274,8 @@ func TeamsRemoveRepoInOrg(ctx context.Context, req *TeamsRemoveRepoInOrgReq, opt
 		req = new(TeamsRemoveRepoInOrgReq)
 	}
 	resp := &TeamsRemoveRepoInOrgResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -7225,7 +7284,7 @@ func TeamsRemoveRepoInOrg(ctx context.Context, req *TeamsRemoveRepoInOrgReq, opt
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -7308,7 +7367,7 @@ TeamsRemoveRepoInOrgResponse is a response for TeamsRemoveRepoInOrg
 https://developer.github.com/v3/teams/#remove-a-repository-from-a-team
 */
 type TeamsRemoveRepoInOrgResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsRemoveRepoInOrgReq
 }
 
@@ -7330,7 +7389,8 @@ func TeamsRemoveRepoLegacy(ctx context.Context, req *TeamsRemoveRepoLegacyReq, o
 		req = new(TeamsRemoveRepoLegacyReq)
 	}
 	resp := &TeamsRemoveRepoLegacyResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -7339,7 +7399,7 @@ func TeamsRemoveRepoLegacy(ctx context.Context, req *TeamsRemoveRepoLegacyReq, o
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -7419,7 +7479,7 @@ TeamsRemoveRepoLegacyResponse is a response for TeamsRemoveRepoLegacy
 https://developer.github.com/v3/teams/#remove-a-repository-from-a-team-legacy
 */
 type TeamsRemoveRepoLegacyResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsRemoveRepoLegacyReq
 }
 
@@ -7441,7 +7501,8 @@ func TeamsUpdateDiscussionCommentInOrg(ctx context.Context, req *TeamsUpdateDisc
 		req = new(TeamsUpdateDiscussionCommentInOrgReq)
 	}
 	resp := &TeamsUpdateDiscussionCommentInOrgResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -7451,7 +7512,7 @@ func TeamsUpdateDiscussionCommentInOrg(ctx context.Context, req *TeamsUpdateDisc
 	}
 
 	resp.Data = components.TeamDiscussionComment{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -7560,7 +7621,7 @@ TeamsUpdateDiscussionCommentInOrgResponse is a response for TeamsUpdateDiscussio
 https://developer.github.com/v3/teams/discussion_comments/#update-a-discussion-comment
 */
 type TeamsUpdateDiscussionCommentInOrgResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsUpdateDiscussionCommentInOrgReq
 	Data    components.TeamDiscussionComment
 }
@@ -7583,7 +7644,8 @@ func TeamsUpdateDiscussionCommentLegacy(ctx context.Context, req *TeamsUpdateDis
 		req = new(TeamsUpdateDiscussionCommentLegacyReq)
 	}
 	resp := &TeamsUpdateDiscussionCommentLegacyResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -7593,7 +7655,7 @@ func TeamsUpdateDiscussionCommentLegacy(ctx context.Context, req *TeamsUpdateDis
 	}
 
 	resp.Data = components.TeamDiscussionComment{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -7699,7 +7761,7 @@ TeamsUpdateDiscussionCommentLegacyResponse is a response for TeamsUpdateDiscussi
 https://developer.github.com/v3/teams/discussion_comments/#update-a-discussion-comment-legacy
 */
 type TeamsUpdateDiscussionCommentLegacyResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsUpdateDiscussionCommentLegacyReq
 	Data    components.TeamDiscussionComment
 }
@@ -7722,7 +7784,8 @@ func TeamsUpdateDiscussionInOrg(ctx context.Context, req *TeamsUpdateDiscussionI
 		req = new(TeamsUpdateDiscussionInOrgReq)
 	}
 	resp := &TeamsUpdateDiscussionInOrgResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -7732,7 +7795,7 @@ func TeamsUpdateDiscussionInOrg(ctx context.Context, req *TeamsUpdateDiscussionI
 	}
 
 	resp.Data = components.TeamDiscussion{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -7843,7 +7906,7 @@ TeamsUpdateDiscussionInOrgResponse is a response for TeamsUpdateDiscussionInOrg
 https://developer.github.com/v3/teams/discussions/#update-a-discussion
 */
 type TeamsUpdateDiscussionInOrgResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsUpdateDiscussionInOrgReq
 	Data    components.TeamDiscussion
 }
@@ -7866,7 +7929,8 @@ func TeamsUpdateDiscussionLegacy(ctx context.Context, req *TeamsUpdateDiscussion
 		req = new(TeamsUpdateDiscussionLegacyReq)
 	}
 	resp := &TeamsUpdateDiscussionLegacyResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -7876,7 +7940,7 @@ func TeamsUpdateDiscussionLegacy(ctx context.Context, req *TeamsUpdateDiscussion
 	}
 
 	resp.Data = components.TeamDiscussion{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -7984,7 +8048,7 @@ TeamsUpdateDiscussionLegacyResponse is a response for TeamsUpdateDiscussionLegac
 https://developer.github.com/v3/teams/discussions/#update-a-discussion-legacy
 */
 type TeamsUpdateDiscussionLegacyResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsUpdateDiscussionLegacyReq
 	Data    components.TeamDiscussion
 }
@@ -8007,7 +8071,8 @@ func TeamsUpdateInOrg(ctx context.Context, req *TeamsUpdateInOrgReq, opt ...opti
 		req = new(TeamsUpdateInOrgReq)
 	}
 	resp := &TeamsUpdateInOrgResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -8017,7 +8082,7 @@ func TeamsUpdateInOrg(ctx context.Context, req *TeamsUpdateInOrgReq, opt ...opti
 	}
 
 	resp.Data = components.TeamFull{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -8143,7 +8208,7 @@ TeamsUpdateInOrgResponse is a response for TeamsUpdateInOrg
 https://developer.github.com/v3/teams/#update-a-team
 */
 type TeamsUpdateInOrgResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsUpdateInOrgReq
 	Data    components.TeamFull
 }
@@ -8166,7 +8231,8 @@ func TeamsUpdateLegacy(ctx context.Context, req *TeamsUpdateLegacyReq, opt ...op
 		req = new(TeamsUpdateLegacyReq)
 	}
 	resp := &TeamsUpdateLegacyResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -8176,7 +8242,7 @@ func TeamsUpdateLegacy(ctx context.Context, req *TeamsUpdateLegacyReq, opt ...op
 	}
 
 	resp.Data = components.TeamFull{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -8298,7 +8364,7 @@ TeamsUpdateLegacyResponse is a response for TeamsUpdateLegacy
 https://developer.github.com/v3/teams/#update-a-team-legacy
 */
 type TeamsUpdateLegacyResponse struct {
-	internal.Response
+	common.Response
 	request *TeamsUpdateLegacyReq
 	Data    components.TeamFull
 }

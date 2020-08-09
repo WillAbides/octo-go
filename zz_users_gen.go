@@ -6,6 +6,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	common "github.com/willabides/octo-go/common"
 	components "github.com/willabides/octo-go/components"
 	internal "github.com/willabides/octo-go/internal"
 	options "github.com/willabides/octo-go/options"
@@ -32,7 +33,8 @@ func UsersAddEmailForAuthenticated(ctx context.Context, req *UsersAddEmailForAut
 		req = new(UsersAddEmailForAuthenticatedReq)
 	}
 	resp := &UsersAddEmailForAuthenticatedResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -42,7 +44,7 @@ func UsersAddEmailForAuthenticated(ctx context.Context, req *UsersAddEmailForAut
 	}
 
 	resp.Data = []components.Email{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -139,7 +141,7 @@ UsersAddEmailForAuthenticatedResponse is a response for UsersAddEmailForAuthenti
 https://developer.github.com/v3/users/emails/#add-an-email-address-for-the-authenticated-user
 */
 type UsersAddEmailForAuthenticatedResponse struct {
-	internal.Response
+	common.Response
 	request *UsersAddEmailForAuthenticatedReq
 	Data    []components.Email
 }
@@ -162,7 +164,8 @@ func UsersBlock(ctx context.Context, req *UsersBlockReq, opt ...options.Option) 
 		req = new(UsersBlockReq)
 	}
 	resp := &UsersBlockResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -171,7 +174,7 @@ func UsersBlock(ctx context.Context, req *UsersBlockReq, opt ...options.Option) 
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -249,7 +252,7 @@ UsersBlockResponse is a response for UsersBlock
 https://developer.github.com/v3/users/blocking/#block-a-user
 */
 type UsersBlockResponse struct {
-	internal.Response
+	common.Response
 	request *UsersBlockReq
 }
 
@@ -271,7 +274,8 @@ func UsersCheckBlocked(ctx context.Context, req *UsersCheckBlockedReq, opt ...op
 		req = new(UsersCheckBlockedReq)
 	}
 	resp := &UsersCheckBlockedResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -280,7 +284,7 @@ func UsersCheckBlocked(ctx context.Context, req *UsersCheckBlockedReq, opt ...op
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -358,7 +362,7 @@ UsersCheckBlockedResponse is a response for UsersCheckBlocked
 https://developer.github.com/v3/users/blocking/#check-if-a-user-is-blocked-by-the-authenticated-user
 */
 type UsersCheckBlockedResponse struct {
-	internal.Response
+	common.Response
 	request *UsersCheckBlockedReq
 }
 
@@ -380,7 +384,8 @@ func UsersCheckFollowingForUser(ctx context.Context, req *UsersCheckFollowingFor
 		req = new(UsersCheckFollowingForUserReq)
 	}
 	resp := &UsersCheckFollowingForUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -393,7 +398,7 @@ func UsersCheckFollowingForUser(ctx context.Context, req *UsersCheckFollowingFor
 	if err != nil {
 		return nil, err
 	}
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -474,7 +479,7 @@ UsersCheckFollowingForUserResponse is a response for UsersCheckFollowingForUser
 https://developer.github.com/v3/users/followers/#check-if-a-user-follows-another-user
 */
 type UsersCheckFollowingForUserResponse struct {
-	internal.Response
+	common.Response
 	request *UsersCheckFollowingForUserReq
 	Data    bool
 }
@@ -497,7 +502,8 @@ func UsersCheckPersonIsFollowedByAuthenticated(ctx context.Context, req *UsersCh
 		req = new(UsersCheckPersonIsFollowedByAuthenticatedReq)
 	}
 	resp := &UsersCheckPersonIsFollowedByAuthenticatedResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -506,7 +512,7 @@ func UsersCheckPersonIsFollowedByAuthenticated(ctx context.Context, req *UsersCh
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -584,7 +590,7 @@ UsersCheckPersonIsFollowedByAuthenticatedResponse is a response for UsersCheckPe
 https://developer.github.com/v3/users/followers/#check-if-a-person-is-followed-by-the-authenticated-user
 */
 type UsersCheckPersonIsFollowedByAuthenticatedResponse struct {
-	internal.Response
+	common.Response
 	request *UsersCheckPersonIsFollowedByAuthenticatedReq
 }
 
@@ -606,7 +612,8 @@ func UsersCreateGpgKeyForAuthenticated(ctx context.Context, req *UsersCreateGpgK
 		req = new(UsersCreateGpgKeyForAuthenticatedReq)
 	}
 	resp := &UsersCreateGpgKeyForAuthenticatedResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -616,7 +623,7 @@ func UsersCreateGpgKeyForAuthenticated(ctx context.Context, req *UsersCreateGpgK
 	}
 
 	resp.Data = components.GpgKey{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -708,7 +715,7 @@ UsersCreateGpgKeyForAuthenticatedResponse is a response for UsersCreateGpgKeyFor
 https://developer.github.com/v3/users/gpg_keys/#create-a-gpg-key-for-the-authenticated-user
 */
 type UsersCreateGpgKeyForAuthenticatedResponse struct {
-	internal.Response
+	common.Response
 	request *UsersCreateGpgKeyForAuthenticatedReq
 	Data    components.GpgKey
 }
@@ -731,7 +738,8 @@ func UsersCreatePublicSshKeyForAuthenticated(ctx context.Context, req *UsersCrea
 		req = new(UsersCreatePublicSshKeyForAuthenticatedReq)
 	}
 	resp := &UsersCreatePublicSshKeyForAuthenticatedResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -741,7 +749,7 @@ func UsersCreatePublicSshKeyForAuthenticated(ctx context.Context, req *UsersCrea
 	}
 
 	resp.Data = components.Key{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -836,7 +844,7 @@ UsersCreatePublicSshKeyForAuthenticatedResponse is a response for UsersCreatePub
 https://developer.github.com/v3/users/keys/#create-a-public-ssh-key-for-the-authenticated-user
 */
 type UsersCreatePublicSshKeyForAuthenticatedResponse struct {
-	internal.Response
+	common.Response
 	request *UsersCreatePublicSshKeyForAuthenticatedReq
 	Data    components.Key
 }
@@ -859,7 +867,8 @@ func UsersDeleteEmailForAuthenticated(ctx context.Context, req *UsersDeleteEmail
 		req = new(UsersDeleteEmailForAuthenticatedReq)
 	}
 	resp := &UsersDeleteEmailForAuthenticatedResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -868,7 +877,7 @@ func UsersDeleteEmailForAuthenticated(ctx context.Context, req *UsersDeleteEmail
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -957,7 +966,7 @@ UsersDeleteEmailForAuthenticatedResponse is a response for UsersDeleteEmailForAu
 https://developer.github.com/v3/users/emails/#delete-an-email-address-for-the-authenticated-user
 */
 type UsersDeleteEmailForAuthenticatedResponse struct {
-	internal.Response
+	common.Response
 	request *UsersDeleteEmailForAuthenticatedReq
 }
 
@@ -979,7 +988,8 @@ func UsersDeleteGpgKeyForAuthenticated(ctx context.Context, req *UsersDeleteGpgK
 		req = new(UsersDeleteGpgKeyForAuthenticatedReq)
 	}
 	resp := &UsersDeleteGpgKeyForAuthenticatedResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -988,7 +998,7 @@ func UsersDeleteGpgKeyForAuthenticated(ctx context.Context, req *UsersDeleteGpgK
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -1068,7 +1078,7 @@ UsersDeleteGpgKeyForAuthenticatedResponse is a response for UsersDeleteGpgKeyFor
 https://developer.github.com/v3/users/gpg_keys/#delete-a-gpg-key-for-the-authenticated-user
 */
 type UsersDeleteGpgKeyForAuthenticatedResponse struct {
-	internal.Response
+	common.Response
 	request *UsersDeleteGpgKeyForAuthenticatedReq
 }
 
@@ -1090,7 +1100,8 @@ func UsersDeletePublicSshKeyForAuthenticated(ctx context.Context, req *UsersDele
 		req = new(UsersDeletePublicSshKeyForAuthenticatedReq)
 	}
 	resp := &UsersDeletePublicSshKeyForAuthenticatedResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1099,7 +1110,7 @@ func UsersDeletePublicSshKeyForAuthenticated(ctx context.Context, req *UsersDele
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -1179,7 +1190,7 @@ UsersDeletePublicSshKeyForAuthenticatedResponse is a response for UsersDeletePub
 https://developer.github.com/v3/users/keys/#delete-a-public-ssh-key-for-the-authenticated-user
 */
 type UsersDeletePublicSshKeyForAuthenticatedResponse struct {
-	internal.Response
+	common.Response
 	request *UsersDeletePublicSshKeyForAuthenticatedReq
 }
 
@@ -1201,7 +1212,8 @@ func UsersFollow(ctx context.Context, req *UsersFollowReq, opt ...options.Option
 		req = new(UsersFollowReq)
 	}
 	resp := &UsersFollowResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1210,7 +1222,7 @@ func UsersFollow(ctx context.Context, req *UsersFollowReq, opt ...options.Option
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -1288,7 +1300,7 @@ UsersFollowResponse is a response for UsersFollow
 https://developer.github.com/v3/users/followers/#follow-a-user
 */
 type UsersFollowResponse struct {
-	internal.Response
+	common.Response
 	request *UsersFollowReq
 }
 
@@ -1310,7 +1322,8 @@ func UsersGetAuthenticated(ctx context.Context, req *UsersGetAuthenticatedReq, o
 		req = new(UsersGetAuthenticatedReq)
 	}
 	resp := &UsersGetAuthenticatedResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1320,7 +1333,7 @@ func UsersGetAuthenticated(ctx context.Context, req *UsersGetAuthenticatedReq, o
 	}
 
 	resp.Data = UsersGetAuthenticatedResponseBody{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1460,7 +1473,7 @@ UsersGetAuthenticatedResponse is a response for UsersGetAuthenticated
 https://developer.github.com/v3/users/#get-the-authenticated-user
 */
 type UsersGetAuthenticatedResponse struct {
-	internal.Response
+	common.Response
 	request *UsersGetAuthenticatedReq
 	Data    UsersGetAuthenticatedResponseBody
 }
@@ -1483,7 +1496,8 @@ func UsersGetByUsername(ctx context.Context, req *UsersGetByUsernameReq, opt ...
 		req = new(UsersGetByUsernameReq)
 	}
 	resp := &UsersGetByUsernameResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1493,7 +1507,7 @@ func UsersGetByUsername(ctx context.Context, req *UsersGetByUsernameReq, opt ...
 	}
 
 	resp.Data = UsersGetByUsernameResponseBody{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1634,7 +1648,7 @@ UsersGetByUsernameResponse is a response for UsersGetByUsername
 https://developer.github.com/v3/users/#get-a-user
 */
 type UsersGetByUsernameResponse struct {
-	internal.Response
+	common.Response
 	request *UsersGetByUsernameReq
 	Data    UsersGetByUsernameResponseBody
 }
@@ -1657,7 +1671,8 @@ func UsersGetContextForUser(ctx context.Context, req *UsersGetContextForUserReq,
 		req = new(UsersGetContextForUserReq)
 	}
 	resp := &UsersGetContextForUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1667,7 +1682,7 @@ func UsersGetContextForUser(ctx context.Context, req *UsersGetContextForUserReq,
 	}
 
 	resp.Data = components.Hovercard{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1764,7 +1779,7 @@ UsersGetContextForUserResponse is a response for UsersGetContextForUser
 https://developer.github.com/v3/users/#get-contextual-information-for-a-user
 */
 type UsersGetContextForUserResponse struct {
-	internal.Response
+	common.Response
 	request *UsersGetContextForUserReq
 	Data    components.Hovercard
 }
@@ -1787,7 +1802,8 @@ func UsersGetGpgKeyForAuthenticated(ctx context.Context, req *UsersGetGpgKeyForA
 		req = new(UsersGetGpgKeyForAuthenticatedReq)
 	}
 	resp := &UsersGetGpgKeyForAuthenticatedResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1797,7 +1813,7 @@ func UsersGetGpgKeyForAuthenticated(ctx context.Context, req *UsersGetGpgKeyForA
 	}
 
 	resp.Data = components.GpgKey{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1877,7 +1893,7 @@ UsersGetGpgKeyForAuthenticatedResponse is a response for UsersGetGpgKeyForAuthen
 https://developer.github.com/v3/users/gpg_keys/#get-a-gpg-key-for-the-authenticated-user
 */
 type UsersGetGpgKeyForAuthenticatedResponse struct {
-	internal.Response
+	common.Response
 	request *UsersGetGpgKeyForAuthenticatedReq
 	Data    components.GpgKey
 }
@@ -1900,7 +1916,8 @@ func UsersGetPublicSshKeyForAuthenticated(ctx context.Context, req *UsersGetPubl
 		req = new(UsersGetPublicSshKeyForAuthenticatedReq)
 	}
 	resp := &UsersGetPublicSshKeyForAuthenticatedResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1910,7 +1927,7 @@ func UsersGetPublicSshKeyForAuthenticated(ctx context.Context, req *UsersGetPubl
 	}
 
 	resp.Data = components.Key{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1990,7 +2007,7 @@ UsersGetPublicSshKeyForAuthenticatedResponse is a response for UsersGetPublicSsh
 https://developer.github.com/v3/users/keys/#get-a-public-ssh-key-for-the-authenticated-user
 */
 type UsersGetPublicSshKeyForAuthenticatedResponse struct {
-	internal.Response
+	common.Response
 	request *UsersGetPublicSshKeyForAuthenticatedReq
 	Data    components.Key
 }
@@ -2013,7 +2030,8 @@ func UsersList(ctx context.Context, req *UsersListReq, opt ...options.Option) (*
 		req = new(UsersListReq)
 	}
 	resp := &UsersListResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2023,7 +2041,7 @@ func UsersList(ctx context.Context, req *UsersListReq, opt ...options.Option) (*
 	}
 
 	resp.Data = []components.SimpleUser{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2116,7 +2134,7 @@ UsersListResponse is a response for UsersList
 https://developer.github.com/v3/users/#list-users
 */
 type UsersListResponse struct {
-	internal.Response
+	common.Response
 	request *UsersListReq
 	Data    []components.SimpleUser
 }
@@ -2139,7 +2157,8 @@ func UsersListBlockedByAuthenticated(ctx context.Context, req *UsersListBlockedB
 		req = new(UsersListBlockedByAuthenticatedReq)
 	}
 	resp := &UsersListBlockedByAuthenticatedResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2149,7 +2168,7 @@ func UsersListBlockedByAuthenticated(ctx context.Context, req *UsersListBlockedB
 	}
 
 	resp.Data = []components.SimpleUser{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2226,7 +2245,7 @@ UsersListBlockedByAuthenticatedResponse is a response for UsersListBlockedByAuth
 https://developer.github.com/v3/users/blocking/#list-users-blocked-by-the-authenticated-user
 */
 type UsersListBlockedByAuthenticatedResponse struct {
-	internal.Response
+	common.Response
 	request *UsersListBlockedByAuthenticatedReq
 	Data    []components.SimpleUser
 }
@@ -2249,7 +2268,8 @@ func UsersListEmailsForAuthenticated(ctx context.Context, req *UsersListEmailsFo
 		req = new(UsersListEmailsForAuthenticatedReq)
 	}
 	resp := &UsersListEmailsForAuthenticatedResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2259,7 +2279,7 @@ func UsersListEmailsForAuthenticated(ctx context.Context, req *UsersListEmailsFo
 	}
 
 	resp.Data = []components.Email{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2348,7 +2368,7 @@ UsersListEmailsForAuthenticatedResponse is a response for UsersListEmailsForAuth
 https://developer.github.com/v3/users/emails/#list-email-addresses-for-the-authenticated-user
 */
 type UsersListEmailsForAuthenticatedResponse struct {
-	internal.Response
+	common.Response
 	request *UsersListEmailsForAuthenticatedReq
 	Data    []components.Email
 }
@@ -2371,7 +2391,8 @@ func UsersListFollowedByAuthenticated(ctx context.Context, req *UsersListFollowe
 		req = new(UsersListFollowedByAuthenticatedReq)
 	}
 	resp := &UsersListFollowedByAuthenticatedResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2381,7 +2402,7 @@ func UsersListFollowedByAuthenticated(ctx context.Context, req *UsersListFollowe
 	}
 
 	resp.Data = []components.SimpleUser{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2470,7 +2491,7 @@ UsersListFollowedByAuthenticatedResponse is a response for UsersListFollowedByAu
 https://developer.github.com/v3/users/followers/#list-the-people-the-authenticated-user-follows
 */
 type UsersListFollowedByAuthenticatedResponse struct {
-	internal.Response
+	common.Response
 	request *UsersListFollowedByAuthenticatedReq
 	Data    []components.SimpleUser
 }
@@ -2493,7 +2514,8 @@ func UsersListFollowersForAuthenticatedUser(ctx context.Context, req *UsersListF
 		req = new(UsersListFollowersForAuthenticatedUserReq)
 	}
 	resp := &UsersListFollowersForAuthenticatedUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2503,7 +2525,7 @@ func UsersListFollowersForAuthenticatedUser(ctx context.Context, req *UsersListF
 	}
 
 	resp.Data = []components.SimpleUser{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2592,7 +2614,7 @@ UsersListFollowersForAuthenticatedUserResponse is a response for UsersListFollow
 https://developer.github.com/v3/users/followers/#list-followers-of-the-authenticated-user
 */
 type UsersListFollowersForAuthenticatedUserResponse struct {
-	internal.Response
+	common.Response
 	request *UsersListFollowersForAuthenticatedUserReq
 	Data    []components.SimpleUser
 }
@@ -2615,7 +2637,8 @@ func UsersListFollowersForUser(ctx context.Context, req *UsersListFollowersForUs
 		req = new(UsersListFollowersForUserReq)
 	}
 	resp := &UsersListFollowersForUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2625,7 +2648,7 @@ func UsersListFollowersForUser(ctx context.Context, req *UsersListFollowersForUs
 	}
 
 	resp.Data = []components.SimpleUser{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2715,7 +2738,7 @@ UsersListFollowersForUserResponse is a response for UsersListFollowersForUser
 https://developer.github.com/v3/users/followers/#list-followers-of-a-user
 */
 type UsersListFollowersForUserResponse struct {
-	internal.Response
+	common.Response
 	request *UsersListFollowersForUserReq
 	Data    []components.SimpleUser
 }
@@ -2738,7 +2761,8 @@ func UsersListFollowingForUser(ctx context.Context, req *UsersListFollowingForUs
 		req = new(UsersListFollowingForUserReq)
 	}
 	resp := &UsersListFollowingForUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2748,7 +2772,7 @@ func UsersListFollowingForUser(ctx context.Context, req *UsersListFollowingForUs
 	}
 
 	resp.Data = []components.SimpleUser{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2838,7 +2862,7 @@ UsersListFollowingForUserResponse is a response for UsersListFollowingForUser
 https://developer.github.com/v3/users/followers/#list-the-people-a-user-follows
 */
 type UsersListFollowingForUserResponse struct {
-	internal.Response
+	common.Response
 	request *UsersListFollowingForUserReq
 	Data    []components.SimpleUser
 }
@@ -2861,7 +2885,8 @@ func UsersListGpgKeysForAuthenticated(ctx context.Context, req *UsersListGpgKeys
 		req = new(UsersListGpgKeysForAuthenticatedReq)
 	}
 	resp := &UsersListGpgKeysForAuthenticatedResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2871,7 +2896,7 @@ func UsersListGpgKeysForAuthenticated(ctx context.Context, req *UsersListGpgKeys
 	}
 
 	resp.Data = []components.GpgKey{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2960,7 +2985,7 @@ UsersListGpgKeysForAuthenticatedResponse is a response for UsersListGpgKeysForAu
 https://developer.github.com/v3/users/gpg_keys/#list-gpg-keys-for-the-authenticated-user
 */
 type UsersListGpgKeysForAuthenticatedResponse struct {
-	internal.Response
+	common.Response
 	request *UsersListGpgKeysForAuthenticatedReq
 	Data    []components.GpgKey
 }
@@ -2983,7 +3008,8 @@ func UsersListGpgKeysForUser(ctx context.Context, req *UsersListGpgKeysForUserRe
 		req = new(UsersListGpgKeysForUserReq)
 	}
 	resp := &UsersListGpgKeysForUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2993,7 +3019,7 @@ func UsersListGpgKeysForUser(ctx context.Context, req *UsersListGpgKeysForUserRe
 	}
 
 	resp.Data = []components.GpgKey{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3083,7 +3109,7 @@ UsersListGpgKeysForUserResponse is a response for UsersListGpgKeysForUser
 https://developer.github.com/v3/users/gpg_keys/#list-gpg-keys-for-a-user
 */
 type UsersListGpgKeysForUserResponse struct {
-	internal.Response
+	common.Response
 	request *UsersListGpgKeysForUserReq
 	Data    []components.GpgKey
 }
@@ -3106,7 +3132,8 @@ func UsersListPublicEmailsForAuthenticated(ctx context.Context, req *UsersListPu
 		req = new(UsersListPublicEmailsForAuthenticatedReq)
 	}
 	resp := &UsersListPublicEmailsForAuthenticatedResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3116,7 +3143,7 @@ func UsersListPublicEmailsForAuthenticated(ctx context.Context, req *UsersListPu
 	}
 
 	resp.Data = []components.Email{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3205,7 +3232,7 @@ UsersListPublicEmailsForAuthenticatedResponse is a response for UsersListPublicE
 https://developer.github.com/v3/users/emails/#list-public-email-addresses-for-the-authenticated-user
 */
 type UsersListPublicEmailsForAuthenticatedResponse struct {
-	internal.Response
+	common.Response
 	request *UsersListPublicEmailsForAuthenticatedReq
 	Data    []components.Email
 }
@@ -3228,7 +3255,8 @@ func UsersListPublicKeysForUser(ctx context.Context, req *UsersListPublicKeysFor
 		req = new(UsersListPublicKeysForUserReq)
 	}
 	resp := &UsersListPublicKeysForUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3238,7 +3266,7 @@ func UsersListPublicKeysForUser(ctx context.Context, req *UsersListPublicKeysFor
 	}
 
 	resp.Data = []components.KeySimple{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3328,7 +3356,7 @@ UsersListPublicKeysForUserResponse is a response for UsersListPublicKeysForUser
 https://developer.github.com/v3/users/keys/#list-public-keys-for-a-user
 */
 type UsersListPublicKeysForUserResponse struct {
-	internal.Response
+	common.Response
 	request *UsersListPublicKeysForUserReq
 	Data    []components.KeySimple
 }
@@ -3351,7 +3379,8 @@ func UsersListPublicSshKeysForAuthenticated(ctx context.Context, req *UsersListP
 		req = new(UsersListPublicSshKeysForAuthenticatedReq)
 	}
 	resp := &UsersListPublicSshKeysForAuthenticatedResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3361,7 +3390,7 @@ func UsersListPublicSshKeysForAuthenticated(ctx context.Context, req *UsersListP
 	}
 
 	resp.Data = []components.Key{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3450,7 +3479,7 @@ UsersListPublicSshKeysForAuthenticatedResponse is a response for UsersListPublic
 https://developer.github.com/v3/users/keys/#list-public-ssh-keys-for-the-authenticated-user
 */
 type UsersListPublicSshKeysForAuthenticatedResponse struct {
-	internal.Response
+	common.Response
 	request *UsersListPublicSshKeysForAuthenticatedReq
 	Data    []components.Key
 }
@@ -3473,7 +3502,8 @@ func UsersSetPrimaryEmailVisibilityForAuthenticated(ctx context.Context, req *Us
 		req = new(UsersSetPrimaryEmailVisibilityForAuthenticatedReq)
 	}
 	resp := &UsersSetPrimaryEmailVisibilityForAuthenticatedResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3483,7 +3513,7 @@ func UsersSetPrimaryEmailVisibilityForAuthenticated(ctx context.Context, req *Us
 	}
 
 	resp.Data = []components.Email{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3578,7 +3608,7 @@ UsersSetPrimaryEmailVisibilityForAuthenticatedResponse is a response for UsersSe
 https://developer.github.com/v3/users/emails/#set-primary-email-visibility-for-the-authenticated-user
 */
 type UsersSetPrimaryEmailVisibilityForAuthenticatedResponse struct {
-	internal.Response
+	common.Response
 	request *UsersSetPrimaryEmailVisibilityForAuthenticatedReq
 	Data    []components.Email
 }
@@ -3601,7 +3631,8 @@ func UsersUnblock(ctx context.Context, req *UsersUnblockReq, opt ...options.Opti
 		req = new(UsersUnblockReq)
 	}
 	resp := &UsersUnblockResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3610,7 +3641,7 @@ func UsersUnblock(ctx context.Context, req *UsersUnblockReq, opt ...options.Opti
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -3688,7 +3719,7 @@ UsersUnblockResponse is a response for UsersUnblock
 https://developer.github.com/v3/users/blocking/#unblock-a-user
 */
 type UsersUnblockResponse struct {
-	internal.Response
+	common.Response
 	request *UsersUnblockReq
 }
 
@@ -3710,7 +3741,8 @@ func UsersUnfollow(ctx context.Context, req *UsersUnfollowReq, opt ...options.Op
 		req = new(UsersUnfollowReq)
 	}
 	resp := &UsersUnfollowResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3719,7 +3751,7 @@ func UsersUnfollow(ctx context.Context, req *UsersUnfollowReq, opt ...options.Op
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -3797,7 +3829,7 @@ UsersUnfollowResponse is a response for UsersUnfollow
 https://developer.github.com/v3/users/followers/#unfollow-a-user
 */
 type UsersUnfollowResponse struct {
-	internal.Response
+	common.Response
 	request *UsersUnfollowReq
 }
 
@@ -3819,7 +3851,8 @@ func UsersUpdateAuthenticated(ctx context.Context, req *UsersUpdateAuthenticated
 		req = new(UsersUpdateAuthenticatedReq)
 	}
 	resp := &UsersUpdateAuthenticatedResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3829,7 +3862,7 @@ func UsersUpdateAuthenticated(ctx context.Context, req *UsersUpdateAuthenticated
 	}
 
 	resp.Data = components.PrivateUser{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3942,7 +3975,7 @@ UsersUpdateAuthenticatedResponse is a response for UsersUpdateAuthenticated
 https://developer.github.com/v3/users/#update-the-authenticated-user
 */
 type UsersUpdateAuthenticatedResponse struct {
-	internal.Response
+	common.Response
 	request *UsersUpdateAuthenticatedReq
 	Data    components.PrivateUser
 }

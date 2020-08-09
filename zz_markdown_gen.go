@@ -5,6 +5,7 @@ package octo
 import (
 	"context"
 	"fmt"
+	common "github.com/willabides/octo-go/common"
 	internal "github.com/willabides/octo-go/internal"
 	options "github.com/willabides/octo-go/options"
 	"io"
@@ -30,7 +31,8 @@ func MarkdownRender(ctx context.Context, req *MarkdownRenderReq, opt ...options.
 		req = new(MarkdownRenderReq)
 	}
 	resp := &MarkdownRenderResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -39,7 +41,7 @@ func MarkdownRender(ctx context.Context, req *MarkdownRenderReq, opt ...options.
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -134,7 +136,7 @@ MarkdownRenderResponse is a response for MarkdownRender
 https://developer.github.com/v3/markdown/#render-a-markdown-document
 */
 type MarkdownRenderResponse struct {
-	internal.Response
+	common.Response
 	request *MarkdownRenderReq
 }
 
@@ -156,7 +158,8 @@ func MarkdownRenderRaw(ctx context.Context, req *MarkdownRenderRawReq, opt ...op
 		req = new(MarkdownRenderRawReq)
 	}
 	resp := &MarkdownRenderRawResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -165,7 +168,7 @@ func MarkdownRenderRaw(ctx context.Context, req *MarkdownRenderRawReq, opt ...op
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -245,6 +248,6 @@ MarkdownRenderRawResponse is a response for MarkdownRenderRaw
 https://developer.github.com/v3/markdown/#render-a-markdown-document-in-raw-mode
 */
 type MarkdownRenderRawResponse struct {
-	internal.Response
+	common.Response
 	request *MarkdownRenderRawReq
 }

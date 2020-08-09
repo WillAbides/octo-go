@@ -5,6 +5,7 @@ package octo
 import (
 	"context"
 	"fmt"
+	common "github.com/willabides/octo-go/common"
 	components "github.com/willabides/octo-go/components"
 	internal "github.com/willabides/octo-go/internal"
 	options "github.com/willabides/octo-go/options"
@@ -30,7 +31,8 @@ func RateLimitGet(ctx context.Context, req *RateLimitGetReq, opt ...options.Opti
 		req = new(RateLimitGetReq)
 	}
 	resp := &RateLimitGetResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -40,7 +42,7 @@ func RateLimitGet(ctx context.Context, req *RateLimitGetReq, opt ...options.Opti
 	}
 
 	resp.Data = components.RateLimitOverview{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -117,7 +119,7 @@ RateLimitGetResponse is a response for RateLimitGet
 https://developer.github.com/v3/rate_limit/#get-rate-limit-status-for-the-authenticated-user
 */
 type RateLimitGetResponse struct {
-	internal.Response
+	common.Response
 	request *RateLimitGetReq
 	Data    components.RateLimitOverview
 }

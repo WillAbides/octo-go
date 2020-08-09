@@ -5,6 +5,7 @@ package octo
 import (
 	"context"
 	"fmt"
+	common "github.com/willabides/octo-go/common"
 	components "github.com/willabides/octo-go/components"
 	internal "github.com/willabides/octo-go/internal"
 	options "github.com/willabides/octo-go/options"
@@ -31,7 +32,8 @@ func ScimDeleteUserFromOrg(ctx context.Context, req *ScimDeleteUserFromOrgReq, o
 		req = new(ScimDeleteUserFromOrgReq)
 	}
 	resp := &ScimDeleteUserFromOrgResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -40,7 +42,7 @@ func ScimDeleteUserFromOrg(ctx context.Context, req *ScimDeleteUserFromOrgReq, o
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -121,7 +123,7 @@ ScimDeleteUserFromOrgResponse is a response for ScimDeleteUserFromOrg
 https://developer.github.com/v3/scim/#delete-a-scim-user-from-an-organization
 */
 type ScimDeleteUserFromOrgResponse struct {
-	internal.Response
+	common.Response
 	request *ScimDeleteUserFromOrgReq
 }
 
@@ -143,7 +145,8 @@ func ScimGetProvisioningInformationForUser(ctx context.Context, req *ScimGetProv
 		req = new(ScimGetProvisioningInformationForUserReq)
 	}
 	resp := &ScimGetProvisioningInformationForUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -153,7 +156,7 @@ func ScimGetProvisioningInformationForUser(ctx context.Context, req *ScimGetProv
 	}
 
 	resp.Data = components.ScimUser{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -234,7 +237,7 @@ ScimGetProvisioningInformationForUserResponse is a response for ScimGetProvision
 https://developer.github.com/v3/scim/#get-scim-provisioning-information-for-a-user
 */
 type ScimGetProvisioningInformationForUserResponse struct {
-	internal.Response
+	common.Response
 	request *ScimGetProvisioningInformationForUserReq
 	Data    components.ScimUser
 }
@@ -257,7 +260,8 @@ func ScimListProvisionedIdentities(ctx context.Context, req *ScimListProvisioned
 		req = new(ScimListProvisionedIdentitiesReq)
 	}
 	resp := &ScimListProvisionedIdentitiesResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -267,7 +271,7 @@ func ScimListProvisionedIdentities(ctx context.Context, req *ScimListProvisioned
 	}
 
 	resp.Data = components.ScimUserList{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -375,7 +379,7 @@ ScimListProvisionedIdentitiesResponse is a response for ScimListProvisionedIdent
 https://developer.github.com/v3/scim/#list-scim-provisioned-identities
 */
 type ScimListProvisionedIdentitiesResponse struct {
-	internal.Response
+	common.Response
 	request *ScimListProvisionedIdentitiesReq
 	Data    components.ScimUserList
 }
@@ -398,7 +402,8 @@ func ScimProvisionAndInviteUser(ctx context.Context, req *ScimProvisionAndInvite
 		req = new(ScimProvisionAndInviteUserReq)
 	}
 	resp := &ScimProvisionAndInviteUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -408,7 +413,7 @@ func ScimProvisionAndInviteUser(ctx context.Context, req *ScimProvisionAndInvite
 	}
 
 	resp.Data = components.ScimUser{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -523,7 +528,7 @@ ScimProvisionAndInviteUserResponse is a response for ScimProvisionAndInviteUser
 https://developer.github.com/v3/scim/#provision-and-invite-a-scim-user
 */
 type ScimProvisionAndInviteUserResponse struct {
-	internal.Response
+	common.Response
 	request *ScimProvisionAndInviteUserReq
 	Data    components.ScimUser
 }
@@ -546,7 +551,8 @@ func ScimSetInformationForProvisionedUser(ctx context.Context, req *ScimSetInfor
 		req = new(ScimSetInformationForProvisionedUserReq)
 	}
 	resp := &ScimSetInformationForProvisionedUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -556,7 +562,7 @@ func ScimSetInformationForProvisionedUser(ctx context.Context, req *ScimSetInfor
 	}
 
 	resp.Data = components.ScimUser{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -674,7 +680,7 @@ ScimSetInformationForProvisionedUserResponse is a response for ScimSetInformatio
 https://developer.github.com/v3/scim/#set-scim-information-for-a-provisioned-user
 */
 type ScimSetInformationForProvisionedUserResponse struct {
-	internal.Response
+	common.Response
 	request *ScimSetInformationForProvisionedUserReq
 	Data    components.ScimUser
 }
@@ -697,7 +703,8 @@ func ScimUpdateAttributeForUser(ctx context.Context, req *ScimUpdateAttributeFor
 		req = new(ScimUpdateAttributeForUserReq)
 	}
 	resp := &ScimUpdateAttributeForUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -707,7 +714,7 @@ func ScimUpdateAttributeForUser(ctx context.Context, req *ScimUpdateAttributeFor
 	}
 
 	resp.Data = components.ScimUser{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -820,7 +827,7 @@ ScimUpdateAttributeForUserResponse is a response for ScimUpdateAttributeForUser
 https://developer.github.com/v3/scim/#update-an-attribute-for-a-scim-user
 */
 type ScimUpdateAttributeForUserResponse struct {
-	internal.Response
+	common.Response
 	request *ScimUpdateAttributeForUserReq
 	Data    components.ScimUser
 }

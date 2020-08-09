@@ -5,6 +5,7 @@ package octo
 import (
 	"context"
 	"fmt"
+	common "github.com/willabides/octo-go/common"
 	components "github.com/willabides/octo-go/components"
 	internal "github.com/willabides/octo-go/internal"
 	options "github.com/willabides/octo-go/options"
@@ -31,7 +32,8 @@ func ActionsAddSelectedRepoToOrgSecret(ctx context.Context, req *ActionsAddSelec
 		req = new(ActionsAddSelectedRepoToOrgSecretReq)
 	}
 	resp := &ActionsAddSelectedRepoToOrgSecretResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -40,7 +42,7 @@ func ActionsAddSelectedRepoToOrgSecret(ctx context.Context, req *ActionsAddSelec
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -124,7 +126,7 @@ ActionsAddSelectedRepoToOrgSecretResponse is a response for ActionsAddSelectedRe
 https://developer.github.com/v3/actions/secrets/#add-selected-repository-to-an-organization-secret
 */
 type ActionsAddSelectedRepoToOrgSecretResponse struct {
-	internal.Response
+	common.Response
 	request *ActionsAddSelectedRepoToOrgSecretReq
 }
 
@@ -146,7 +148,8 @@ func ActionsCancelWorkflowRun(ctx context.Context, req *ActionsCancelWorkflowRun
 		req = new(ActionsCancelWorkflowRunReq)
 	}
 	resp := &ActionsCancelWorkflowRunResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -155,7 +158,7 @@ func ActionsCancelWorkflowRun(ctx context.Context, req *ActionsCancelWorkflowRun
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -235,7 +238,7 @@ ActionsCancelWorkflowRunResponse is a response for ActionsCancelWorkflowRun
 https://developer.github.com/v3/actions/workflow-runs/#cancel-a-workflow-run
 */
 type ActionsCancelWorkflowRunResponse struct {
-	internal.Response
+	common.Response
 	request *ActionsCancelWorkflowRunReq
 }
 
@@ -257,7 +260,8 @@ func ActionsCreateOrUpdateOrgSecret(ctx context.Context, req *ActionsCreateOrUpd
 		req = new(ActionsCreateOrUpdateOrgSecretReq)
 	}
 	resp := &ActionsCreateOrUpdateOrgSecretResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -266,7 +270,7 @@ func ActionsCreateOrUpdateOrgSecret(ctx context.Context, req *ActionsCreateOrUpd
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -391,7 +395,7 @@ ActionsCreateOrUpdateOrgSecretResponse is a response for ActionsCreateOrUpdateOr
 https://developer.github.com/v3/actions/secrets/#create-or-update-an-organization-secret
 */
 type ActionsCreateOrUpdateOrgSecretResponse struct {
-	internal.Response
+	common.Response
 	request *ActionsCreateOrUpdateOrgSecretReq
 }
 
@@ -413,7 +417,8 @@ func ActionsCreateOrUpdateRepoSecret(ctx context.Context, req *ActionsCreateOrUp
 		req = new(ActionsCreateOrUpdateRepoSecretReq)
 	}
 	resp := &ActionsCreateOrUpdateRepoSecretResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -422,7 +427,7 @@ func ActionsCreateOrUpdateRepoSecret(ctx context.Context, req *ActionsCreateOrUp
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -525,7 +530,7 @@ ActionsCreateOrUpdateRepoSecretResponse is a response for ActionsCreateOrUpdateR
 https://developer.github.com/v3/actions/secrets/#create-or-update-a-repository-secret
 */
 type ActionsCreateOrUpdateRepoSecretResponse struct {
-	internal.Response
+	common.Response
 	request *ActionsCreateOrUpdateRepoSecretReq
 }
 
@@ -547,7 +552,8 @@ func ActionsCreateRegistrationTokenForOrg(ctx context.Context, req *ActionsCreat
 		req = new(ActionsCreateRegistrationTokenForOrgReq)
 	}
 	resp := &ActionsCreateRegistrationTokenForOrgResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -557,7 +563,7 @@ func ActionsCreateRegistrationTokenForOrg(ctx context.Context, req *ActionsCreat
 	}
 
 	resp.Data = components.AuthenticationToken{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -635,7 +641,7 @@ ActionsCreateRegistrationTokenForOrgResponse is a response for ActionsCreateRegi
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-registration-token-for-an-organization
 */
 type ActionsCreateRegistrationTokenForOrgResponse struct {
-	internal.Response
+	common.Response
 	request *ActionsCreateRegistrationTokenForOrgReq
 	Data    components.AuthenticationToken
 }
@@ -658,7 +664,8 @@ func ActionsCreateRegistrationTokenForRepo(ctx context.Context, req *ActionsCrea
 		req = new(ActionsCreateRegistrationTokenForRepoReq)
 	}
 	resp := &ActionsCreateRegistrationTokenForRepoResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -668,7 +675,7 @@ func ActionsCreateRegistrationTokenForRepo(ctx context.Context, req *ActionsCrea
 	}
 
 	resp.Data = components.AuthenticationToken{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -747,7 +754,7 @@ ActionsCreateRegistrationTokenForRepoResponse is a response for ActionsCreateReg
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-registration-token-for-a-repository
 */
 type ActionsCreateRegistrationTokenForRepoResponse struct {
-	internal.Response
+	common.Response
 	request *ActionsCreateRegistrationTokenForRepoReq
 	Data    components.AuthenticationToken
 }
@@ -770,7 +777,8 @@ func ActionsCreateRemoveTokenForOrg(ctx context.Context, req *ActionsCreateRemov
 		req = new(ActionsCreateRemoveTokenForOrgReq)
 	}
 	resp := &ActionsCreateRemoveTokenForOrgResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -780,7 +788,7 @@ func ActionsCreateRemoveTokenForOrg(ctx context.Context, req *ActionsCreateRemov
 	}
 
 	resp.Data = components.AuthenticationToken{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -858,7 +866,7 @@ ActionsCreateRemoveTokenForOrgResponse is a response for ActionsCreateRemoveToke
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-remove-token-for-an-organization
 */
 type ActionsCreateRemoveTokenForOrgResponse struct {
-	internal.Response
+	common.Response
 	request *ActionsCreateRemoveTokenForOrgReq
 	Data    components.AuthenticationToken
 }
@@ -881,7 +889,8 @@ func ActionsCreateRemoveTokenForRepo(ctx context.Context, req *ActionsCreateRemo
 		req = new(ActionsCreateRemoveTokenForRepoReq)
 	}
 	resp := &ActionsCreateRemoveTokenForRepoResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -891,7 +900,7 @@ func ActionsCreateRemoveTokenForRepo(ctx context.Context, req *ActionsCreateRemo
 	}
 
 	resp.Data = components.AuthenticationToken{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -970,7 +979,7 @@ ActionsCreateRemoveTokenForRepoResponse is a response for ActionsCreateRemoveTok
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-remove-token-for-a-repository
 */
 type ActionsCreateRemoveTokenForRepoResponse struct {
-	internal.Response
+	common.Response
 	request *ActionsCreateRemoveTokenForRepoReq
 	Data    components.AuthenticationToken
 }
@@ -993,7 +1002,8 @@ func ActionsCreateWorkflowDispatch(ctx context.Context, req *ActionsCreateWorkfl
 		req = new(ActionsCreateWorkflowDispatchReq)
 	}
 	resp := &ActionsCreateWorkflowDispatchResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1002,7 +1012,7 @@ func ActionsCreateWorkflowDispatch(ctx context.Context, req *ActionsCreateWorkfl
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -1101,7 +1111,7 @@ ActionsCreateWorkflowDispatchResponse is a response for ActionsCreateWorkflowDis
 https://developer.github.com/v3/actions/workflows/#create-a-workflow-dispatch-event
 */
 type ActionsCreateWorkflowDispatchResponse struct {
-	internal.Response
+	common.Response
 	request *ActionsCreateWorkflowDispatchReq
 }
 
@@ -1123,7 +1133,8 @@ func ActionsDeleteArtifact(ctx context.Context, req *ActionsDeleteArtifactReq, o
 		req = new(ActionsDeleteArtifactReq)
 	}
 	resp := &ActionsDeleteArtifactResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1132,7 +1143,7 @@ func ActionsDeleteArtifact(ctx context.Context, req *ActionsDeleteArtifactReq, o
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -1214,7 +1225,7 @@ ActionsDeleteArtifactResponse is a response for ActionsDeleteArtifact
 https://developer.github.com/v3/actions/artifacts/#delete-an-artifact
 */
 type ActionsDeleteArtifactResponse struct {
-	internal.Response
+	common.Response
 	request *ActionsDeleteArtifactReq
 }
 
@@ -1236,7 +1247,8 @@ func ActionsDeleteOrgSecret(ctx context.Context, req *ActionsDeleteOrgSecretReq,
 		req = new(ActionsDeleteOrgSecretReq)
 	}
 	resp := &ActionsDeleteOrgSecretResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1245,7 +1257,7 @@ func ActionsDeleteOrgSecret(ctx context.Context, req *ActionsDeleteOrgSecretReq,
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -1326,7 +1338,7 @@ ActionsDeleteOrgSecretResponse is a response for ActionsDeleteOrgSecret
 https://developer.github.com/v3/actions/secrets/#delete-an-organization-secret
 */
 type ActionsDeleteOrgSecretResponse struct {
-	internal.Response
+	common.Response
 	request *ActionsDeleteOrgSecretReq
 }
 
@@ -1348,7 +1360,8 @@ func ActionsDeleteRepoSecret(ctx context.Context, req *ActionsDeleteRepoSecretRe
 		req = new(ActionsDeleteRepoSecretReq)
 	}
 	resp := &ActionsDeleteRepoSecretResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1357,7 +1370,7 @@ func ActionsDeleteRepoSecret(ctx context.Context, req *ActionsDeleteRepoSecretRe
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -1439,7 +1452,7 @@ ActionsDeleteRepoSecretResponse is a response for ActionsDeleteRepoSecret
 https://developer.github.com/v3/actions/secrets/#delete-a-repository-secret
 */
 type ActionsDeleteRepoSecretResponse struct {
-	internal.Response
+	common.Response
 	request *ActionsDeleteRepoSecretReq
 }
 
@@ -1461,7 +1474,8 @@ func ActionsDeleteSelfHostedRunnerFromOrg(ctx context.Context, req *ActionsDelet
 		req = new(ActionsDeleteSelfHostedRunnerFromOrgReq)
 	}
 	resp := &ActionsDeleteSelfHostedRunnerFromOrgResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1470,7 +1484,7 @@ func ActionsDeleteSelfHostedRunnerFromOrg(ctx context.Context, req *ActionsDelet
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -1551,7 +1565,7 @@ ActionsDeleteSelfHostedRunnerFromOrgResponse is a response for ActionsDeleteSelf
 https://developer.github.com/v3/actions/self-hosted-runners/#delete-a-self-hosted-runner-from-an-organization
 */
 type ActionsDeleteSelfHostedRunnerFromOrgResponse struct {
-	internal.Response
+	common.Response
 	request *ActionsDeleteSelfHostedRunnerFromOrgReq
 }
 
@@ -1573,7 +1587,8 @@ func ActionsDeleteSelfHostedRunnerFromRepo(ctx context.Context, req *ActionsDele
 		req = new(ActionsDeleteSelfHostedRunnerFromRepoReq)
 	}
 	resp := &ActionsDeleteSelfHostedRunnerFromRepoResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1582,7 +1597,7 @@ func ActionsDeleteSelfHostedRunnerFromRepo(ctx context.Context, req *ActionsDele
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -1664,7 +1679,7 @@ ActionsDeleteSelfHostedRunnerFromRepoResponse is a response for ActionsDeleteSel
 https://developer.github.com/v3/actions/self-hosted-runners/#delete-a-self-hosted-runner-from-a-repository
 */
 type ActionsDeleteSelfHostedRunnerFromRepoResponse struct {
-	internal.Response
+	common.Response
 	request *ActionsDeleteSelfHostedRunnerFromRepoReq
 }
 
@@ -1686,7 +1701,8 @@ func ActionsDeleteWorkflowRun(ctx context.Context, req *ActionsDeleteWorkflowRun
 		req = new(ActionsDeleteWorkflowRunReq)
 	}
 	resp := &ActionsDeleteWorkflowRunResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1695,7 +1711,7 @@ func ActionsDeleteWorkflowRun(ctx context.Context, req *ActionsDeleteWorkflowRun
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -1775,7 +1791,7 @@ ActionsDeleteWorkflowRunResponse is a response for ActionsDeleteWorkflowRun
 https://developer.github.com/v3/actions/workflow-runs/#delete-a-workflow-run
 */
 type ActionsDeleteWorkflowRunResponse struct {
-	internal.Response
+	common.Response
 	request *ActionsDeleteWorkflowRunReq
 }
 
@@ -1797,7 +1813,8 @@ func ActionsDeleteWorkflowRunLogs(ctx context.Context, req *ActionsDeleteWorkflo
 		req = new(ActionsDeleteWorkflowRunLogsReq)
 	}
 	resp := &ActionsDeleteWorkflowRunLogsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1806,7 +1823,7 @@ func ActionsDeleteWorkflowRunLogs(ctx context.Context, req *ActionsDeleteWorkflo
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -1886,7 +1903,7 @@ ActionsDeleteWorkflowRunLogsResponse is a response for ActionsDeleteWorkflowRunL
 https://developer.github.com/v3/actions/workflow-runs/#delete-workflow-run-logs
 */
 type ActionsDeleteWorkflowRunLogsResponse struct {
-	internal.Response
+	common.Response
 	request *ActionsDeleteWorkflowRunLogsReq
 }
 
@@ -1908,7 +1925,8 @@ func ActionsDownloadArtifact(ctx context.Context, req *ActionsDownloadArtifactRe
 		req = new(ActionsDownloadArtifactReq)
 	}
 	resp := &ActionsDownloadArtifactResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1917,7 +1935,7 @@ func ActionsDownloadArtifact(ctx context.Context, req *ActionsDownloadArtifactRe
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -2002,7 +2020,7 @@ ActionsDownloadArtifactResponse is a response for ActionsDownloadArtifact
 https://developer.github.com/v3/actions/artifacts/#download-an-artifact
 */
 type ActionsDownloadArtifactResponse struct {
-	internal.Response
+	common.Response
 	request *ActionsDownloadArtifactReq
 }
 
@@ -2024,7 +2042,8 @@ func ActionsDownloadJobLogsForWorkflowRun(ctx context.Context, req *ActionsDownl
 		req = new(ActionsDownloadJobLogsForWorkflowRunReq)
 	}
 	resp := &ActionsDownloadJobLogsForWorkflowRunResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2033,7 +2052,7 @@ func ActionsDownloadJobLogsForWorkflowRun(ctx context.Context, req *ActionsDownl
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -2115,7 +2134,7 @@ ActionsDownloadJobLogsForWorkflowRunResponse is a response for ActionsDownloadJo
 https://developer.github.com/v3/actions/workflow-jobs/#download-job-logs-for-a-workflow-run
 */
 type ActionsDownloadJobLogsForWorkflowRunResponse struct {
-	internal.Response
+	common.Response
 	request *ActionsDownloadJobLogsForWorkflowRunReq
 }
 
@@ -2137,7 +2156,8 @@ func ActionsDownloadWorkflowRunLogs(ctx context.Context, req *ActionsDownloadWor
 		req = new(ActionsDownloadWorkflowRunLogsReq)
 	}
 	resp := &ActionsDownloadWorkflowRunLogsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2146,7 +2166,7 @@ func ActionsDownloadWorkflowRunLogs(ctx context.Context, req *ActionsDownloadWor
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -2226,7 +2246,7 @@ ActionsDownloadWorkflowRunLogsResponse is a response for ActionsDownloadWorkflow
 https://developer.github.com/v3/actions/workflow-runs/#download-workflow-run-logs
 */
 type ActionsDownloadWorkflowRunLogsResponse struct {
-	internal.Response
+	common.Response
 	request *ActionsDownloadWorkflowRunLogsReq
 }
 
@@ -2248,7 +2268,8 @@ func ActionsGetArtifact(ctx context.Context, req *ActionsGetArtifactReq, opt ...
 		req = new(ActionsGetArtifactReq)
 	}
 	resp := &ActionsGetArtifactResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2258,7 +2279,7 @@ func ActionsGetArtifact(ctx context.Context, req *ActionsGetArtifactReq, opt ...
 	}
 
 	resp.Data = components.Artifact{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2340,7 +2361,7 @@ ActionsGetArtifactResponse is a response for ActionsGetArtifact
 https://developer.github.com/v3/actions/artifacts/#get-an-artifact
 */
 type ActionsGetArtifactResponse struct {
-	internal.Response
+	common.Response
 	request *ActionsGetArtifactReq
 	Data    components.Artifact
 }
@@ -2363,7 +2384,8 @@ func ActionsGetJobForWorkflowRun(ctx context.Context, req *ActionsGetJobForWorkf
 		req = new(ActionsGetJobForWorkflowRunReq)
 	}
 	resp := &ActionsGetJobForWorkflowRunResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2373,7 +2395,7 @@ func ActionsGetJobForWorkflowRun(ctx context.Context, req *ActionsGetJobForWorkf
 	}
 
 	resp.Data = components.Job{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2455,7 +2477,7 @@ ActionsGetJobForWorkflowRunResponse is a response for ActionsGetJobForWorkflowRu
 https://developer.github.com/v3/actions/workflow-jobs/#get-a-job-for-a-workflow-run
 */
 type ActionsGetJobForWorkflowRunResponse struct {
-	internal.Response
+	common.Response
 	request *ActionsGetJobForWorkflowRunReq
 	Data    components.Job
 }
@@ -2478,7 +2500,8 @@ func ActionsGetOrgPublicKey(ctx context.Context, req *ActionsGetOrgPublicKeyReq,
 		req = new(ActionsGetOrgPublicKeyReq)
 	}
 	resp := &ActionsGetOrgPublicKeyResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2488,7 +2511,7 @@ func ActionsGetOrgPublicKey(ctx context.Context, req *ActionsGetOrgPublicKeyReq,
 	}
 
 	resp.Data = components.ActionsPublicKey{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2566,7 +2589,7 @@ ActionsGetOrgPublicKeyResponse is a response for ActionsGetOrgPublicKey
 https://developer.github.com/v3/actions/secrets/#get-an-organization-public-key
 */
 type ActionsGetOrgPublicKeyResponse struct {
-	internal.Response
+	common.Response
 	request *ActionsGetOrgPublicKeyReq
 	Data    components.ActionsPublicKey
 }
@@ -2589,7 +2612,8 @@ func ActionsGetOrgSecret(ctx context.Context, req *ActionsGetOrgSecretReq, opt .
 		req = new(ActionsGetOrgSecretReq)
 	}
 	resp := &ActionsGetOrgSecretResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2599,7 +2623,7 @@ func ActionsGetOrgSecret(ctx context.Context, req *ActionsGetOrgSecretReq, opt .
 	}
 
 	resp.Data = components.OrganizationActionsSecret{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2680,7 +2704,7 @@ ActionsGetOrgSecretResponse is a response for ActionsGetOrgSecret
 https://developer.github.com/v3/actions/secrets/#get-an-organization-secret
 */
 type ActionsGetOrgSecretResponse struct {
-	internal.Response
+	common.Response
 	request *ActionsGetOrgSecretReq
 	Data    components.OrganizationActionsSecret
 }
@@ -2703,7 +2727,8 @@ func ActionsGetRepoPublicKey(ctx context.Context, req *ActionsGetRepoPublicKeyRe
 		req = new(ActionsGetRepoPublicKeyReq)
 	}
 	resp := &ActionsGetRepoPublicKeyResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2713,7 +2738,7 @@ func ActionsGetRepoPublicKey(ctx context.Context, req *ActionsGetRepoPublicKeyRe
 	}
 
 	resp.Data = components.ActionsPublicKey{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2792,7 +2817,7 @@ ActionsGetRepoPublicKeyResponse is a response for ActionsGetRepoPublicKey
 https://developer.github.com/v3/actions/secrets/#get-a-repository-public-key
 */
 type ActionsGetRepoPublicKeyResponse struct {
-	internal.Response
+	common.Response
 	request *ActionsGetRepoPublicKeyReq
 	Data    components.ActionsPublicKey
 }
@@ -2815,7 +2840,8 @@ func ActionsGetRepoSecret(ctx context.Context, req *ActionsGetRepoSecretReq, opt
 		req = new(ActionsGetRepoSecretReq)
 	}
 	resp := &ActionsGetRepoSecretResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2825,7 +2851,7 @@ func ActionsGetRepoSecret(ctx context.Context, req *ActionsGetRepoSecretReq, opt
 	}
 
 	resp.Data = components.ActionsSecret{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2907,7 +2933,7 @@ ActionsGetRepoSecretResponse is a response for ActionsGetRepoSecret
 https://developer.github.com/v3/actions/secrets/#get-a-repository-secret
 */
 type ActionsGetRepoSecretResponse struct {
-	internal.Response
+	common.Response
 	request *ActionsGetRepoSecretReq
 	Data    components.ActionsSecret
 }
@@ -2930,7 +2956,8 @@ func ActionsGetSelfHostedRunnerForOrg(ctx context.Context, req *ActionsGetSelfHo
 		req = new(ActionsGetSelfHostedRunnerForOrgReq)
 	}
 	resp := &ActionsGetSelfHostedRunnerForOrgResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2940,7 +2967,7 @@ func ActionsGetSelfHostedRunnerForOrg(ctx context.Context, req *ActionsGetSelfHo
 	}
 
 	resp.Data = components.Runner{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3021,7 +3048,7 @@ ActionsGetSelfHostedRunnerForOrgResponse is a response for ActionsGetSelfHostedR
 https://developer.github.com/v3/actions/self-hosted-runners/#get-a-self-hosted-runner-for-an-organization
 */
 type ActionsGetSelfHostedRunnerForOrgResponse struct {
-	internal.Response
+	common.Response
 	request *ActionsGetSelfHostedRunnerForOrgReq
 	Data    components.Runner
 }
@@ -3044,7 +3071,8 @@ func ActionsGetSelfHostedRunnerForRepo(ctx context.Context, req *ActionsGetSelfH
 		req = new(ActionsGetSelfHostedRunnerForRepoReq)
 	}
 	resp := &ActionsGetSelfHostedRunnerForRepoResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3054,7 +3082,7 @@ func ActionsGetSelfHostedRunnerForRepo(ctx context.Context, req *ActionsGetSelfH
 	}
 
 	resp.Data = components.Runner{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3136,7 +3164,7 @@ ActionsGetSelfHostedRunnerForRepoResponse is a response for ActionsGetSelfHosted
 https://developer.github.com/v3/actions/self-hosted-runners/#get-a-self-hosted-runner-for-a-repository
 */
 type ActionsGetSelfHostedRunnerForRepoResponse struct {
-	internal.Response
+	common.Response
 	request *ActionsGetSelfHostedRunnerForRepoReq
 	Data    components.Runner
 }
@@ -3159,7 +3187,8 @@ func ActionsGetWorkflow(ctx context.Context, req *ActionsGetWorkflowReq, opt ...
 		req = new(ActionsGetWorkflowReq)
 	}
 	resp := &ActionsGetWorkflowResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3169,7 +3198,7 @@ func ActionsGetWorkflow(ctx context.Context, req *ActionsGetWorkflowReq, opt ...
 	}
 
 	resp.Data = components.Workflow{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3249,7 +3278,7 @@ ActionsGetWorkflowResponse is a response for ActionsGetWorkflow
 https://developer.github.com/v3/actions/workflows/#get-a-workflow
 */
 type ActionsGetWorkflowResponse struct {
-	internal.Response
+	common.Response
 	request *ActionsGetWorkflowReq
 	Data    components.Workflow
 }
@@ -3272,7 +3301,8 @@ func ActionsGetWorkflowRun(ctx context.Context, req *ActionsGetWorkflowRunReq, o
 		req = new(ActionsGetWorkflowRunReq)
 	}
 	resp := &ActionsGetWorkflowRunResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3282,7 +3312,7 @@ func ActionsGetWorkflowRun(ctx context.Context, req *ActionsGetWorkflowRunReq, o
 	}
 
 	resp.Data = components.WorkflowRun{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3362,7 +3392,7 @@ ActionsGetWorkflowRunResponse is a response for ActionsGetWorkflowRun
 https://developer.github.com/v3/actions/workflow-runs/#get-a-workflow-run
 */
 type ActionsGetWorkflowRunResponse struct {
-	internal.Response
+	common.Response
 	request *ActionsGetWorkflowRunReq
 	Data    components.WorkflowRun
 }
@@ -3385,7 +3415,8 @@ func ActionsGetWorkflowRunUsage(ctx context.Context, req *ActionsGetWorkflowRunU
 		req = new(ActionsGetWorkflowRunUsageReq)
 	}
 	resp := &ActionsGetWorkflowRunUsageResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3395,7 +3426,7 @@ func ActionsGetWorkflowRunUsage(ctx context.Context, req *ActionsGetWorkflowRunU
 	}
 
 	resp.Data = components.WorkflowRunUsage{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3475,7 +3506,7 @@ ActionsGetWorkflowRunUsageResponse is a response for ActionsGetWorkflowRunUsage
 https://developer.github.com/v3/actions/workflow-runs/#get-workflow-run-usage
 */
 type ActionsGetWorkflowRunUsageResponse struct {
-	internal.Response
+	common.Response
 	request *ActionsGetWorkflowRunUsageReq
 	Data    components.WorkflowRunUsage
 }
@@ -3498,7 +3529,8 @@ func ActionsGetWorkflowUsage(ctx context.Context, req *ActionsGetWorkflowUsageRe
 		req = new(ActionsGetWorkflowUsageReq)
 	}
 	resp := &ActionsGetWorkflowUsageResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3508,7 +3540,7 @@ func ActionsGetWorkflowUsage(ctx context.Context, req *ActionsGetWorkflowUsageRe
 	}
 
 	resp.Data = components.WorkflowUsage{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3588,7 +3620,7 @@ ActionsGetWorkflowUsageResponse is a response for ActionsGetWorkflowUsage
 https://developer.github.com/v3/actions/workflows/#get-workflow-usage
 */
 type ActionsGetWorkflowUsageResponse struct {
-	internal.Response
+	common.Response
 	request *ActionsGetWorkflowUsageReq
 	Data    components.WorkflowUsage
 }
@@ -3611,7 +3643,8 @@ func ActionsListArtifactsForRepo(ctx context.Context, req *ActionsListArtifactsF
 		req = new(ActionsListArtifactsForRepoReq)
 	}
 	resp := &ActionsListArtifactsForRepoResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3621,7 +3654,7 @@ func ActionsListArtifactsForRepo(ctx context.Context, req *ActionsListArtifactsF
 	}
 
 	resp.Data = ActionsListArtifactsForRepoResponseBody{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3722,7 +3755,7 @@ ActionsListArtifactsForRepoResponse is a response for ActionsListArtifactsForRep
 https://developer.github.com/v3/actions/artifacts/#list-artifacts-for-a-repository
 */
 type ActionsListArtifactsForRepoResponse struct {
-	internal.Response
+	common.Response
 	request *ActionsListArtifactsForRepoReq
 	Data    ActionsListArtifactsForRepoResponseBody
 }
@@ -3745,7 +3778,8 @@ func ActionsListJobsForWorkflowRun(ctx context.Context, req *ActionsListJobsForW
 		req = new(ActionsListJobsForWorkflowRunReq)
 	}
 	resp := &ActionsListJobsForWorkflowRunResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3755,7 +3789,7 @@ func ActionsListJobsForWorkflowRun(ctx context.Context, req *ActionsListJobsForW
 	}
 
 	resp.Data = ActionsListJobsForWorkflowRunResponseBody{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3868,7 +3902,7 @@ ActionsListJobsForWorkflowRunResponse is a response for ActionsListJobsForWorkfl
 https://developer.github.com/v3/actions/workflow-jobs/#list-jobs-for-a-workflow-run
 */
 type ActionsListJobsForWorkflowRunResponse struct {
-	internal.Response
+	common.Response
 	request *ActionsListJobsForWorkflowRunReq
 	Data    ActionsListJobsForWorkflowRunResponseBody
 }
@@ -3891,7 +3925,8 @@ func ActionsListOrgSecrets(ctx context.Context, req *ActionsListOrgSecretsReq, o
 		req = new(ActionsListOrgSecretsReq)
 	}
 	resp := &ActionsListOrgSecretsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3901,7 +3936,7 @@ func ActionsListOrgSecrets(ctx context.Context, req *ActionsListOrgSecretsReq, o
 	}
 
 	resp.Data = ActionsListOrgSecretsResponseBody{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4001,7 +4036,7 @@ ActionsListOrgSecretsResponse is a response for ActionsListOrgSecrets
 https://developer.github.com/v3/actions/secrets/#list-organization-secrets
 */
 type ActionsListOrgSecretsResponse struct {
-	internal.Response
+	common.Response
 	request *ActionsListOrgSecretsReq
 	Data    ActionsListOrgSecretsResponseBody
 }
@@ -4024,7 +4059,8 @@ func ActionsListRepoSecrets(ctx context.Context, req *ActionsListRepoSecretsReq,
 		req = new(ActionsListRepoSecretsReq)
 	}
 	resp := &ActionsListRepoSecretsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -4034,7 +4070,7 @@ func ActionsListRepoSecrets(ctx context.Context, req *ActionsListRepoSecretsReq,
 	}
 
 	resp.Data = ActionsListRepoSecretsResponseBody{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4135,7 +4171,7 @@ ActionsListRepoSecretsResponse is a response for ActionsListRepoSecrets
 https://developer.github.com/v3/actions/secrets/#list-repository-secrets
 */
 type ActionsListRepoSecretsResponse struct {
-	internal.Response
+	common.Response
 	request *ActionsListRepoSecretsReq
 	Data    ActionsListRepoSecretsResponseBody
 }
@@ -4158,7 +4194,8 @@ func ActionsListRepoWorkflows(ctx context.Context, req *ActionsListRepoWorkflows
 		req = new(ActionsListRepoWorkflowsReq)
 	}
 	resp := &ActionsListRepoWorkflowsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -4168,7 +4205,7 @@ func ActionsListRepoWorkflows(ctx context.Context, req *ActionsListRepoWorkflows
 	}
 
 	resp.Data = ActionsListRepoWorkflowsResponseBody{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4269,7 +4306,7 @@ ActionsListRepoWorkflowsResponse is a response for ActionsListRepoWorkflows
 https://developer.github.com/v3/actions/workflows/#list-repository-workflows
 */
 type ActionsListRepoWorkflowsResponse struct {
-	internal.Response
+	common.Response
 	request *ActionsListRepoWorkflowsReq
 	Data    ActionsListRepoWorkflowsResponseBody
 }
@@ -4292,7 +4329,8 @@ func ActionsListRunnerApplicationsForOrg(ctx context.Context, req *ActionsListRu
 		req = new(ActionsListRunnerApplicationsForOrgReq)
 	}
 	resp := &ActionsListRunnerApplicationsForOrgResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -4302,7 +4340,7 @@ func ActionsListRunnerApplicationsForOrg(ctx context.Context, req *ActionsListRu
 	}
 
 	resp.Data = []components.RunnerApplication{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4380,7 +4418,7 @@ ActionsListRunnerApplicationsForOrgResponse is a response for ActionsListRunnerA
 https://developer.github.com/v3/actions/self-hosted-runners/#list-runner-applications-for-an-organization
 */
 type ActionsListRunnerApplicationsForOrgResponse struct {
-	internal.Response
+	common.Response
 	request *ActionsListRunnerApplicationsForOrgReq
 	Data    []components.RunnerApplication
 }
@@ -4403,7 +4441,8 @@ func ActionsListRunnerApplicationsForRepo(ctx context.Context, req *ActionsListR
 		req = new(ActionsListRunnerApplicationsForRepoReq)
 	}
 	resp := &ActionsListRunnerApplicationsForRepoResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -4413,7 +4452,7 @@ func ActionsListRunnerApplicationsForRepo(ctx context.Context, req *ActionsListR
 	}
 
 	resp.Data = []components.RunnerApplication{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4492,7 +4531,7 @@ ActionsListRunnerApplicationsForRepoResponse is a response for ActionsListRunner
 https://developer.github.com/v3/actions/self-hosted-runners/#list-runner-applications-for-a-repository
 */
 type ActionsListRunnerApplicationsForRepoResponse struct {
-	internal.Response
+	common.Response
 	request *ActionsListRunnerApplicationsForRepoReq
 	Data    []components.RunnerApplication
 }
@@ -4515,7 +4554,8 @@ func ActionsListSelectedReposForOrgSecret(ctx context.Context, req *ActionsListS
 		req = new(ActionsListSelectedReposForOrgSecretReq)
 	}
 	resp := &ActionsListSelectedReposForOrgSecretResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -4525,7 +4565,7 @@ func ActionsListSelectedReposForOrgSecret(ctx context.Context, req *ActionsListS
 	}
 
 	resp.Data = ActionsListSelectedReposForOrgSecretResponseBody{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4616,7 +4656,7 @@ ActionsListSelectedReposForOrgSecretResponse is a response for ActionsListSelect
 https://developer.github.com/v3/actions/secrets/#list-selected-repositories-for-an-organization-secret
 */
 type ActionsListSelectedReposForOrgSecretResponse struct {
-	internal.Response
+	common.Response
 	request *ActionsListSelectedReposForOrgSecretReq
 	Data    ActionsListSelectedReposForOrgSecretResponseBody
 }
@@ -4639,7 +4679,8 @@ func ActionsListSelfHostedRunnersForOrg(ctx context.Context, req *ActionsListSel
 		req = new(ActionsListSelfHostedRunnersForOrgReq)
 	}
 	resp := &ActionsListSelfHostedRunnersForOrgResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -4649,7 +4690,7 @@ func ActionsListSelfHostedRunnersForOrg(ctx context.Context, req *ActionsListSel
 	}
 
 	resp.Data = ActionsListSelfHostedRunnersForOrgResponseBody{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4749,7 +4790,7 @@ ActionsListSelfHostedRunnersForOrgResponse is a response for ActionsListSelfHost
 https://developer.github.com/v3/actions/self-hosted-runners/#list-self-hosted-runners-for-an-organization
 */
 type ActionsListSelfHostedRunnersForOrgResponse struct {
-	internal.Response
+	common.Response
 	request *ActionsListSelfHostedRunnersForOrgReq
 	Data    ActionsListSelfHostedRunnersForOrgResponseBody
 }
@@ -4772,7 +4813,8 @@ func ActionsListSelfHostedRunnersForRepo(ctx context.Context, req *ActionsListSe
 		req = new(ActionsListSelfHostedRunnersForRepoReq)
 	}
 	resp := &ActionsListSelfHostedRunnersForRepoResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -4782,7 +4824,7 @@ func ActionsListSelfHostedRunnersForRepo(ctx context.Context, req *ActionsListSe
 	}
 
 	resp.Data = ActionsListSelfHostedRunnersForRepoResponseBody{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4883,7 +4925,7 @@ ActionsListSelfHostedRunnersForRepoResponse is a response for ActionsListSelfHos
 https://developer.github.com/v3/actions/self-hosted-runners/#list-self-hosted-runners-for-a-repository
 */
 type ActionsListSelfHostedRunnersForRepoResponse struct {
-	internal.Response
+	common.Response
 	request *ActionsListSelfHostedRunnersForRepoReq
 	Data    ActionsListSelfHostedRunnersForRepoResponseBody
 }
@@ -4906,7 +4948,8 @@ func ActionsListWorkflowRunArtifacts(ctx context.Context, req *ActionsListWorkfl
 		req = new(ActionsListWorkflowRunArtifactsReq)
 	}
 	resp := &ActionsListWorkflowRunArtifactsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -4916,7 +4959,7 @@ func ActionsListWorkflowRunArtifacts(ctx context.Context, req *ActionsListWorkfl
 	}
 
 	resp.Data = ActionsListWorkflowRunArtifactsResponseBody{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -5018,7 +5061,7 @@ ActionsListWorkflowRunArtifactsResponse is a response for ActionsListWorkflowRun
 https://developer.github.com/v3/actions/artifacts/#list-workflow-run-artifacts
 */
 type ActionsListWorkflowRunArtifactsResponse struct {
-	internal.Response
+	common.Response
 	request *ActionsListWorkflowRunArtifactsReq
 	Data    ActionsListWorkflowRunArtifactsResponseBody
 }
@@ -5041,7 +5084,8 @@ func ActionsListWorkflowRuns(ctx context.Context, req *ActionsListWorkflowRunsRe
 		req = new(ActionsListWorkflowRunsReq)
 	}
 	resp := &ActionsListWorkflowRunsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -5051,7 +5095,7 @@ func ActionsListWorkflowRuns(ctx context.Context, req *ActionsListWorkflowRunsRe
 	}
 
 	resp.Data = ActionsListWorkflowRunsResponseBody{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -5193,7 +5237,7 @@ ActionsListWorkflowRunsResponse is a response for ActionsListWorkflowRuns
 https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs
 */
 type ActionsListWorkflowRunsResponse struct {
-	internal.Response
+	common.Response
 	request *ActionsListWorkflowRunsReq
 	Data    ActionsListWorkflowRunsResponseBody
 }
@@ -5216,7 +5260,8 @@ func ActionsListWorkflowRunsForRepo(ctx context.Context, req *ActionsListWorkflo
 		req = new(ActionsListWorkflowRunsForRepoReq)
 	}
 	resp := &ActionsListWorkflowRunsForRepoResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -5226,7 +5271,7 @@ func ActionsListWorkflowRunsForRepo(ctx context.Context, req *ActionsListWorkflo
 	}
 
 	resp.Data = ActionsListWorkflowRunsForRepoResponseBody{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -5367,7 +5412,7 @@ ActionsListWorkflowRunsForRepoResponse is a response for ActionsListWorkflowRuns
 https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs-for-a-repository
 */
 type ActionsListWorkflowRunsForRepoResponse struct {
-	internal.Response
+	common.Response
 	request *ActionsListWorkflowRunsForRepoReq
 	Data    ActionsListWorkflowRunsForRepoResponseBody
 }
@@ -5390,7 +5435,8 @@ func ActionsReRunWorkflow(ctx context.Context, req *ActionsReRunWorkflowReq, opt
 		req = new(ActionsReRunWorkflowReq)
 	}
 	resp := &ActionsReRunWorkflowResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -5399,7 +5445,7 @@ func ActionsReRunWorkflow(ctx context.Context, req *ActionsReRunWorkflowReq, opt
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -5479,7 +5525,7 @@ ActionsReRunWorkflowResponse is a response for ActionsReRunWorkflow
 https://developer.github.com/v3/actions/workflow-runs/#re-run-a-workflow
 */
 type ActionsReRunWorkflowResponse struct {
-	internal.Response
+	common.Response
 	request *ActionsReRunWorkflowReq
 }
 
@@ -5501,7 +5547,8 @@ func ActionsRemoveSelectedRepoFromOrgSecret(ctx context.Context, req *ActionsRem
 		req = new(ActionsRemoveSelectedRepoFromOrgSecretReq)
 	}
 	resp := &ActionsRemoveSelectedRepoFromOrgSecretResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -5510,7 +5557,7 @@ func ActionsRemoveSelectedRepoFromOrgSecret(ctx context.Context, req *ActionsRem
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -5594,7 +5641,7 @@ ActionsRemoveSelectedRepoFromOrgSecretResponse is a response for ActionsRemoveSe
 https://developer.github.com/v3/actions/secrets/#remove-selected-repository-from-an-organization-secret
 */
 type ActionsRemoveSelectedRepoFromOrgSecretResponse struct {
-	internal.Response
+	common.Response
 	request *ActionsRemoveSelectedRepoFromOrgSecretReq
 }
 
@@ -5616,7 +5663,8 @@ func ActionsSetSelectedReposForOrgSecret(ctx context.Context, req *ActionsSetSel
 		req = new(ActionsSetSelectedReposForOrgSecretReq)
 	}
 	resp := &ActionsSetSelectedReposForOrgSecretResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -5625,7 +5673,7 @@ func ActionsSetSelectedReposForOrgSecret(ctx context.Context, req *ActionsSetSel
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -5727,6 +5775,6 @@ ActionsSetSelectedReposForOrgSecretResponse is a response for ActionsSetSelected
 https://developer.github.com/v3/actions/secrets/#set-selected-repositories-for-an-organization-secret
 */
 type ActionsSetSelectedReposForOrgSecretResponse struct {
-	internal.Response
+	common.Response
 	request *ActionsSetSelectedReposForOrgSecretReq
 }

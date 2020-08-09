@@ -6,6 +6,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	common "github.com/willabides/octo-go/common"
 	components "github.com/willabides/octo-go/components"
 	internal "github.com/willabides/octo-go/internal"
 	options "github.com/willabides/octo-go/options"
@@ -33,7 +34,8 @@ func ReposAcceptInvitation(ctx context.Context, req *ReposAcceptInvitationReq, o
 		req = new(ReposAcceptInvitationReq)
 	}
 	resp := &ReposAcceptInvitationResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -42,7 +44,7 @@ func ReposAcceptInvitation(ctx context.Context, req *ReposAcceptInvitationReq, o
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -122,7 +124,7 @@ ReposAcceptInvitationResponse is a response for ReposAcceptInvitation
 https://developer.github.com/v3/repos/invitations/#accept-a-repository-invitation
 */
 type ReposAcceptInvitationResponse struct {
-	internal.Response
+	common.Response
 	request *ReposAcceptInvitationReq
 }
 
@@ -144,7 +146,8 @@ func ReposAddAppAccessRestrictions(ctx context.Context, req *ReposAddAppAccessRe
 		req = new(ReposAddAppAccessRestrictionsReq)
 	}
 	resp := &ReposAddAppAccessRestrictionsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -154,7 +157,7 @@ func ReposAddAppAccessRestrictions(ctx context.Context, req *ReposAddAppAccessRe
 	}
 
 	resp.Data = []components.Integration{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -247,7 +250,7 @@ ReposAddAppAccessRestrictionsResponse is a response for ReposAddAppAccessRestric
 https://developer.github.com/v3/repos/branches/#add-app-access-restrictions
 */
 type ReposAddAppAccessRestrictionsResponse struct {
-	internal.Response
+	common.Response
 	request *ReposAddAppAccessRestrictionsReq
 	Data    []components.Integration
 }
@@ -270,7 +273,8 @@ func ReposAddCollaborator(ctx context.Context, req *ReposAddCollaboratorReq, opt
 		req = new(ReposAddCollaboratorReq)
 	}
 	resp := &ReposAddCollaboratorResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -280,7 +284,7 @@ func ReposAddCollaborator(ctx context.Context, req *ReposAddCollaboratorReq, opt
 	}
 
 	resp.Data = components.RepositoryInvitation{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -386,7 +390,7 @@ ReposAddCollaboratorResponse is a response for ReposAddCollaborator
 https://developer.github.com/v3/repos/collaborators/#add-a-repository-collaborator
 */
 type ReposAddCollaboratorResponse struct {
-	internal.Response
+	common.Response
 	request *ReposAddCollaboratorReq
 	Data    components.RepositoryInvitation
 }
@@ -409,7 +413,8 @@ func ReposAddStatusCheckContexts(ctx context.Context, req *ReposAddStatusCheckCo
 		req = new(ReposAddStatusCheckContextsReq)
 	}
 	resp := &ReposAddStatusCheckContextsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -419,7 +424,7 @@ func ReposAddStatusCheckContexts(ctx context.Context, req *ReposAddStatusCheckCo
 	}
 
 	resp.Data = ReposAddStatusCheckContextsResponseBody{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -519,7 +524,7 @@ ReposAddStatusCheckContextsResponse is a response for ReposAddStatusCheckContext
 https://developer.github.com/v3/repos/branches/#add-status-check-contexts
 */
 type ReposAddStatusCheckContextsResponse struct {
-	internal.Response
+	common.Response
 	request *ReposAddStatusCheckContextsReq
 	Data    ReposAddStatusCheckContextsResponseBody
 }
@@ -542,7 +547,8 @@ func ReposAddTeamAccessRestrictions(ctx context.Context, req *ReposAddTeamAccess
 		req = new(ReposAddTeamAccessRestrictionsReq)
 	}
 	resp := &ReposAddTeamAccessRestrictionsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -552,7 +558,7 @@ func ReposAddTeamAccessRestrictions(ctx context.Context, req *ReposAddTeamAccess
 	}
 
 	resp.Data = []components.Team{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -645,7 +651,7 @@ ReposAddTeamAccessRestrictionsResponse is a response for ReposAddTeamAccessRestr
 https://developer.github.com/v3/repos/branches/#add-team-access-restrictions
 */
 type ReposAddTeamAccessRestrictionsResponse struct {
-	internal.Response
+	common.Response
 	request *ReposAddTeamAccessRestrictionsReq
 	Data    []components.Team
 }
@@ -668,7 +674,8 @@ func ReposAddUserAccessRestrictions(ctx context.Context, req *ReposAddUserAccess
 		req = new(ReposAddUserAccessRestrictionsReq)
 	}
 	resp := &ReposAddUserAccessRestrictionsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -678,7 +685,7 @@ func ReposAddUserAccessRestrictions(ctx context.Context, req *ReposAddUserAccess
 	}
 
 	resp.Data = []components.SimpleUser{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -771,7 +778,7 @@ ReposAddUserAccessRestrictionsResponse is a response for ReposAddUserAccessRestr
 https://developer.github.com/v3/repos/branches/#add-user-access-restrictions
 */
 type ReposAddUserAccessRestrictionsResponse struct {
-	internal.Response
+	common.Response
 	request *ReposAddUserAccessRestrictionsReq
 	Data    []components.SimpleUser
 }
@@ -794,7 +801,8 @@ func ReposCheckCollaborator(ctx context.Context, req *ReposCheckCollaboratorReq,
 		req = new(ReposCheckCollaboratorReq)
 	}
 	resp := &ReposCheckCollaboratorResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -807,7 +815,7 @@ func ReposCheckCollaborator(ctx context.Context, req *ReposCheckCollaboratorReq,
 	if err != nil {
 		return nil, err
 	}
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -887,7 +895,7 @@ ReposCheckCollaboratorResponse is a response for ReposCheckCollaborator
 https://developer.github.com/v3/repos/collaborators/#check-if-a-user-is-a-repository-collaborator
 */
 type ReposCheckCollaboratorResponse struct {
-	internal.Response
+	common.Response
 	request *ReposCheckCollaboratorReq
 	Data    bool
 }
@@ -910,7 +918,8 @@ func ReposCheckVulnerabilityAlerts(ctx context.Context, req *ReposCheckVulnerabi
 		req = new(ReposCheckVulnerabilityAlertsReq)
 	}
 	resp := &ReposCheckVulnerabilityAlertsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -923,7 +932,7 @@ func ReposCheckVulnerabilityAlerts(ctx context.Context, req *ReposCheckVulnerabi
 	if err != nil {
 		return nil, err
 	}
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -1009,7 +1018,7 @@ ReposCheckVulnerabilityAlertsResponse is a response for ReposCheckVulnerabilityA
 https://developer.github.com/v3/repos/#check-if-vulnerability-alerts-are-enabled-for-a-repository
 */
 type ReposCheckVulnerabilityAlertsResponse struct {
-	internal.Response
+	common.Response
 	request *ReposCheckVulnerabilityAlertsReq
 	Data    bool
 }
@@ -1032,7 +1041,8 @@ func ReposCompareCommits(ctx context.Context, req *ReposCompareCommitsReq, opt .
 		req = new(ReposCompareCommitsReq)
 	}
 	resp := &ReposCompareCommitsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1042,7 +1052,7 @@ func ReposCompareCommits(ctx context.Context, req *ReposCompareCommitsReq, opt .
 	}
 
 	resp.Data = components.CommitComparison{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1127,7 +1137,7 @@ ReposCompareCommitsResponse is a response for ReposCompareCommits
 https://developer.github.com/v3/repos/commits/#compare-two-commits
 */
 type ReposCompareCommitsResponse struct {
-	internal.Response
+	common.Response
 	request *ReposCompareCommitsReq
 	Data    components.CommitComparison
 }
@@ -1150,7 +1160,8 @@ func ReposCreateCommitComment(ctx context.Context, req *ReposCreateCommitComment
 		req = new(ReposCreateCommitCommentReq)
 	}
 	resp := &ReposCreateCommitCommentResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1160,7 +1171,7 @@ func ReposCreateCommitComment(ctx context.Context, req *ReposCreateCommitComment
 	}
 
 	resp.Data = components.CommitComment{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1266,7 +1277,7 @@ ReposCreateCommitCommentResponse is a response for ReposCreateCommitComment
 https://developer.github.com/v3/repos/comments/#create-a-commit-comment
 */
 type ReposCreateCommitCommentResponse struct {
-	internal.Response
+	common.Response
 	request *ReposCreateCommitCommentReq
 	Data    components.CommitComment
 }
@@ -1289,7 +1300,8 @@ func ReposCreateCommitSignatureProtection(ctx context.Context, req *ReposCreateC
 		req = new(ReposCreateCommitSignatureProtectionReq)
 	}
 	resp := &ReposCreateCommitSignatureProtectionResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1299,7 +1311,7 @@ func ReposCreateCommitSignatureProtection(ctx context.Context, req *ReposCreateC
 	}
 
 	resp.Data = components.ProtectedBranchAdminEnforced{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1390,7 +1402,7 @@ ReposCreateCommitSignatureProtectionResponse is a response for ReposCreateCommit
 https://developer.github.com/v3/repos/branches/#create-commit-signature-protection
 */
 type ReposCreateCommitSignatureProtectionResponse struct {
-	internal.Response
+	common.Response
 	request *ReposCreateCommitSignatureProtectionReq
 	Data    components.ProtectedBranchAdminEnforced
 }
@@ -1413,7 +1425,8 @@ func ReposCreateCommitStatus(ctx context.Context, req *ReposCreateCommitStatusRe
 		req = new(ReposCreateCommitStatusReq)
 	}
 	resp := &ReposCreateCommitStatusResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1423,7 +1436,7 @@ func ReposCreateCommitStatus(ctx context.Context, req *ReposCreateCommitStatusRe
 	}
 
 	resp.Data = components.Status{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1535,7 +1548,7 @@ ReposCreateCommitStatusResponse is a response for ReposCreateCommitStatus
 https://developer.github.com/v3/repos/statuses/#create-a-commit-status
 */
 type ReposCreateCommitStatusResponse struct {
-	internal.Response
+	common.Response
 	request *ReposCreateCommitStatusReq
 	Data    components.Status
 }
@@ -1558,7 +1571,8 @@ func ReposCreateDeployKey(ctx context.Context, req *ReposCreateDeployKeyReq, opt
 		req = new(ReposCreateDeployKeyReq)
 	}
 	resp := &ReposCreateDeployKeyResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1568,7 +1582,7 @@ func ReposCreateDeployKey(ctx context.Context, req *ReposCreateDeployKeyReq, opt
 	}
 
 	resp.Data = components.DeployKey{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1678,7 +1692,7 @@ ReposCreateDeployKeyResponse is a response for ReposCreateDeployKey
 https://developer.github.com/v3/repos/keys/#create-a-deploy-key
 */
 type ReposCreateDeployKeyResponse struct {
-	internal.Response
+	common.Response
 	request *ReposCreateDeployKeyReq
 	Data    components.DeployKey
 }
@@ -1701,7 +1715,8 @@ func ReposCreateDeployment(ctx context.Context, req *ReposCreateDeploymentReq, o
 		req = new(ReposCreateDeploymentReq)
 	}
 	resp := &ReposCreateDeploymentResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1711,7 +1726,7 @@ func ReposCreateDeployment(ctx context.Context, req *ReposCreateDeploymentReq, o
 	}
 
 	resp.Data = components.Deployment{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1860,7 +1875,7 @@ ReposCreateDeploymentResponse is a response for ReposCreateDeployment
 https://developer.github.com/v3/repos/deployments/#create-a-deployment
 */
 type ReposCreateDeploymentResponse struct {
-	internal.Response
+	common.Response
 	request *ReposCreateDeploymentReq
 	Data    components.Deployment
 }
@@ -1883,7 +1898,8 @@ func ReposCreateDeploymentStatus(ctx context.Context, req *ReposCreateDeployment
 		req = new(ReposCreateDeploymentStatusReq)
 	}
 	resp := &ReposCreateDeploymentStatusResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1893,7 +1909,7 @@ func ReposCreateDeploymentStatus(ctx context.Context, req *ReposCreateDeployment
 	}
 
 	resp.Data = components.DeploymentStatus{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2084,7 +2100,7 @@ ReposCreateDeploymentStatusResponse is a response for ReposCreateDeploymentStatu
 https://developer.github.com/v3/repos/deployments/#create-a-deployment-status
 */
 type ReposCreateDeploymentStatusResponse struct {
-	internal.Response
+	common.Response
 	request *ReposCreateDeploymentStatusReq
 	Data    components.DeploymentStatus
 }
@@ -2107,7 +2123,8 @@ func ReposCreateDispatchEvent(ctx context.Context, req *ReposCreateDispatchEvent
 		req = new(ReposCreateDispatchEventReq)
 	}
 	resp := &ReposCreateDispatchEventResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2116,7 +2133,7 @@ func ReposCreateDispatchEvent(ctx context.Context, req *ReposCreateDispatchEvent
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -2210,7 +2227,7 @@ ReposCreateDispatchEventResponse is a response for ReposCreateDispatchEvent
 https://developer.github.com/v3/repos/#create-a-repository-dispatch-event
 */
 type ReposCreateDispatchEventResponse struct {
-	internal.Response
+	common.Response
 	request *ReposCreateDispatchEventReq
 }
 
@@ -2232,7 +2249,8 @@ func ReposCreateForAuthenticatedUser(ctx context.Context, req *ReposCreateForAut
 		req = new(ReposCreateForAuthenticatedUserReq)
 	}
 	resp := &ReposCreateForAuthenticatedUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2242,7 +2260,7 @@ func ReposCreateForAuthenticatedUser(ctx context.Context, req *ReposCreateForAut
 	}
 
 	resp.Data = components.Repository{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2409,7 +2427,7 @@ ReposCreateForAuthenticatedUserResponse is a response for ReposCreateForAuthenti
 https://developer.github.com/v3/repos/#create-a-repository-for-the-authenticated-user
 */
 type ReposCreateForAuthenticatedUserResponse struct {
-	internal.Response
+	common.Response
 	request *ReposCreateForAuthenticatedUserReq
 	Data    components.Repository
 }
@@ -2432,7 +2450,8 @@ func ReposCreateFork(ctx context.Context, req *ReposCreateForkReq, opt ...option
 		req = new(ReposCreateForkReq)
 	}
 	resp := &ReposCreateForkResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2442,7 +2461,7 @@ func ReposCreateFork(ctx context.Context, req *ReposCreateForkReq, opt ...option
 	}
 
 	resp.Data = components.Repository{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2536,7 +2555,7 @@ ReposCreateForkResponse is a response for ReposCreateFork
 https://developer.github.com/v3/repos/forks/#create-a-fork
 */
 type ReposCreateForkResponse struct {
-	internal.Response
+	common.Response
 	request *ReposCreateForkReq
 	Data    components.Repository
 }
@@ -2559,7 +2578,8 @@ func ReposCreateInOrg(ctx context.Context, req *ReposCreateInOrgReq, opt ...opti
 		req = new(ReposCreateInOrgReq)
 	}
 	resp := &ReposCreateInOrgResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2569,7 +2589,7 @@ func ReposCreateInOrg(ctx context.Context, req *ReposCreateInOrgReq, opt ...opti
 	}
 
 	resp.Data = components.Repository{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2766,7 +2786,7 @@ ReposCreateInOrgResponse is a response for ReposCreateInOrg
 https://developer.github.com/v3/repos/#create-an-organization-repository
 */
 type ReposCreateInOrgResponse struct {
-	internal.Response
+	common.Response
 	request *ReposCreateInOrgReq
 	Data    components.Repository
 }
@@ -2789,7 +2809,8 @@ func ReposCreateOrUpdateFileContents(ctx context.Context, req *ReposCreateOrUpda
 		req = new(ReposCreateOrUpdateFileContentsReq)
 	}
 	resp := &ReposCreateOrUpdateFileContentsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2799,7 +2820,7 @@ func ReposCreateOrUpdateFileContents(ctx context.Context, req *ReposCreateOrUpda
 	}
 
 	resp.Data = components.FileCommit{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2933,7 +2954,7 @@ ReposCreateOrUpdateFileContentsResponse is a response for ReposCreateOrUpdateFil
 https://developer.github.com/v3/repos/contents/#create-or-update-file-contents
 */
 type ReposCreateOrUpdateFileContentsResponse struct {
-	internal.Response
+	common.Response
 	request *ReposCreateOrUpdateFileContentsReq
 	Data    components.FileCommit
 }
@@ -2956,7 +2977,8 @@ func ReposCreatePagesSite(ctx context.Context, req *ReposCreatePagesSiteReq, opt
 		req = new(ReposCreatePagesSiteReq)
 	}
 	resp := &ReposCreatePagesSiteResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2966,7 +2988,7 @@ func ReposCreatePagesSite(ctx context.Context, req *ReposCreatePagesSiteReq, opt
 	}
 
 	resp.Data = components.Page{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3085,7 +3107,7 @@ ReposCreatePagesSiteResponse is a response for ReposCreatePagesSite
 https://developer.github.com/v3/repos/pages/#create-a-github-pages-site
 */
 type ReposCreatePagesSiteResponse struct {
-	internal.Response
+	common.Response
 	request *ReposCreatePagesSiteReq
 	Data    components.Page
 }
@@ -3108,7 +3130,8 @@ func ReposCreateRelease(ctx context.Context, req *ReposCreateReleaseReq, opt ...
 		req = new(ReposCreateReleaseReq)
 	}
 	resp := &ReposCreateReleaseResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3118,7 +3141,7 @@ func ReposCreateRelease(ctx context.Context, req *ReposCreateReleaseReq, opt ...
 	}
 
 	resp.Data = components.Release{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3231,7 +3254,7 @@ ReposCreateReleaseResponse is a response for ReposCreateRelease
 https://developer.github.com/v3/repos/releases/#create-a-release
 */
 type ReposCreateReleaseResponse struct {
-	internal.Response
+	common.Response
 	request *ReposCreateReleaseReq
 	Data    components.Release
 }
@@ -3254,7 +3277,8 @@ func ReposCreateUsingTemplate(ctx context.Context, req *ReposCreateUsingTemplate
 		req = new(ReposCreateUsingTemplateReq)
 	}
 	resp := &ReposCreateUsingTemplateResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3264,7 +3288,7 @@ func ReposCreateUsingTemplate(ctx context.Context, req *ReposCreateUsingTemplate
 	}
 
 	resp.Data = components.Repository{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3384,7 +3408,7 @@ ReposCreateUsingTemplateResponse is a response for ReposCreateUsingTemplate
 https://developer.github.com/v3/repos/#create-a-repository-using-a-template
 */
 type ReposCreateUsingTemplateResponse struct {
-	internal.Response
+	common.Response
 	request *ReposCreateUsingTemplateReq
 	Data    components.Repository
 }
@@ -3407,7 +3431,8 @@ func ReposCreateWebhook(ctx context.Context, req *ReposCreateWebhookReq, opt ...
 		req = new(ReposCreateWebhookReq)
 	}
 	resp := &ReposCreateWebhookResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3417,7 +3442,7 @@ func ReposCreateWebhook(ctx context.Context, req *ReposCreateWebhookReq, opt ...
 	}
 
 	resp.Data = components.Hook{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3552,7 +3577,7 @@ ReposCreateWebhookResponse is a response for ReposCreateWebhook
 https://developer.github.com/v3/repos/hooks/#create-a-repository-webhook
 */
 type ReposCreateWebhookResponse struct {
-	internal.Response
+	common.Response
 	request *ReposCreateWebhookReq
 	Data    components.Hook
 }
@@ -3575,7 +3600,8 @@ func ReposDeclineInvitation(ctx context.Context, req *ReposDeclineInvitationReq,
 		req = new(ReposDeclineInvitationReq)
 	}
 	resp := &ReposDeclineInvitationResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3584,7 +3610,7 @@ func ReposDeclineInvitation(ctx context.Context, req *ReposDeclineInvitationReq,
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -3664,7 +3690,7 @@ ReposDeclineInvitationResponse is a response for ReposDeclineInvitation
 https://developer.github.com/v3/repos/invitations/#decline-a-repository-invitation
 */
 type ReposDeclineInvitationResponse struct {
-	internal.Response
+	common.Response
 	request *ReposDeclineInvitationReq
 }
 
@@ -3686,7 +3712,8 @@ func ReposDelete(ctx context.Context, req *ReposDeleteReq, opt ...options.Option
 		req = new(ReposDeleteReq)
 	}
 	resp := &ReposDeleteResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3695,7 +3722,7 @@ func ReposDelete(ctx context.Context, req *ReposDeleteReq, opt ...options.Option
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -3774,7 +3801,7 @@ ReposDeleteResponse is a response for ReposDelete
 https://developer.github.com/v3/repos/#delete-a-repository
 */
 type ReposDeleteResponse struct {
-	internal.Response
+	common.Response
 	request *ReposDeleteReq
 }
 
@@ -3796,7 +3823,8 @@ func ReposDeleteAccessRestrictions(ctx context.Context, req *ReposDeleteAccessRe
 		req = new(ReposDeleteAccessRestrictionsReq)
 	}
 	resp := &ReposDeleteAccessRestrictionsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3805,7 +3833,7 @@ func ReposDeleteAccessRestrictions(ctx context.Context, req *ReposDeleteAccessRe
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -3887,7 +3915,7 @@ ReposDeleteAccessRestrictionsResponse is a response for ReposDeleteAccessRestric
 https://developer.github.com/v3/repos/branches/#delete-access-restrictions
 */
 type ReposDeleteAccessRestrictionsResponse struct {
-	internal.Response
+	common.Response
 	request *ReposDeleteAccessRestrictionsReq
 }
 
@@ -3909,7 +3937,8 @@ func ReposDeleteAdminBranchProtection(ctx context.Context, req *ReposDeleteAdmin
 		req = new(ReposDeleteAdminBranchProtectionReq)
 	}
 	resp := &ReposDeleteAdminBranchProtectionResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3922,7 +3951,7 @@ func ReposDeleteAdminBranchProtection(ctx context.Context, req *ReposDeleteAdmin
 	if err != nil {
 		return nil, err
 	}
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -4004,7 +4033,7 @@ ReposDeleteAdminBranchProtectionResponse is a response for ReposDeleteAdminBranc
 https://developer.github.com/v3/repos/branches/#delete-admin-branch-protection
 */
 type ReposDeleteAdminBranchProtectionResponse struct {
-	internal.Response
+	common.Response
 	request *ReposDeleteAdminBranchProtectionReq
 	Data    bool
 }
@@ -4027,7 +4056,8 @@ func ReposDeleteBranchProtection(ctx context.Context, req *ReposDeleteBranchProt
 		req = new(ReposDeleteBranchProtectionReq)
 	}
 	resp := &ReposDeleteBranchProtectionResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -4036,7 +4066,7 @@ func ReposDeleteBranchProtection(ctx context.Context, req *ReposDeleteBranchProt
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -4118,7 +4148,7 @@ ReposDeleteBranchProtectionResponse is a response for ReposDeleteBranchProtectio
 https://developer.github.com/v3/repos/branches/#delete-branch-protection
 */
 type ReposDeleteBranchProtectionResponse struct {
-	internal.Response
+	common.Response
 	request *ReposDeleteBranchProtectionReq
 }
 
@@ -4140,7 +4170,8 @@ func ReposDeleteCommitComment(ctx context.Context, req *ReposDeleteCommitComment
 		req = new(ReposDeleteCommitCommentReq)
 	}
 	resp := &ReposDeleteCommitCommentResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -4153,7 +4184,7 @@ func ReposDeleteCommitComment(ctx context.Context, req *ReposDeleteCommitComment
 	if err != nil {
 		return nil, err
 	}
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -4235,7 +4266,7 @@ ReposDeleteCommitCommentResponse is a response for ReposDeleteCommitComment
 https://developer.github.com/v3/repos/comments/#delete-a-commit-comment
 */
 type ReposDeleteCommitCommentResponse struct {
-	internal.Response
+	common.Response
 	request *ReposDeleteCommitCommentReq
 	Data    bool
 }
@@ -4258,7 +4289,8 @@ func ReposDeleteCommitSignatureProtection(ctx context.Context, req *ReposDeleteC
 		req = new(ReposDeleteCommitSignatureProtectionReq)
 	}
 	resp := &ReposDeleteCommitSignatureProtectionResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -4271,7 +4303,7 @@ func ReposDeleteCommitSignatureProtection(ctx context.Context, req *ReposDeleteC
 	if err != nil {
 		return nil, err
 	}
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -4362,7 +4394,7 @@ ReposDeleteCommitSignatureProtectionResponse is a response for ReposDeleteCommit
 https://developer.github.com/v3/repos/branches/#delete-commit-signature-protection
 */
 type ReposDeleteCommitSignatureProtectionResponse struct {
-	internal.Response
+	common.Response
 	request *ReposDeleteCommitSignatureProtectionReq
 	Data    bool
 }
@@ -4385,7 +4417,8 @@ func ReposDeleteDeployKey(ctx context.Context, req *ReposDeleteDeployKeyReq, opt
 		req = new(ReposDeleteDeployKeyReq)
 	}
 	resp := &ReposDeleteDeployKeyResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -4394,7 +4427,7 @@ func ReposDeleteDeployKey(ctx context.Context, req *ReposDeleteDeployKeyReq, opt
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -4476,7 +4509,7 @@ ReposDeleteDeployKeyResponse is a response for ReposDeleteDeployKey
 https://developer.github.com/v3/repos/keys/#delete-a-deploy-key
 */
 type ReposDeleteDeployKeyResponse struct {
-	internal.Response
+	common.Response
 	request *ReposDeleteDeployKeyReq
 }
 
@@ -4498,7 +4531,8 @@ func ReposDeleteDeployment(ctx context.Context, req *ReposDeleteDeploymentReq, o
 		req = new(ReposDeleteDeploymentReq)
 	}
 	resp := &ReposDeleteDeploymentResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -4507,7 +4541,7 @@ func ReposDeleteDeployment(ctx context.Context, req *ReposDeleteDeploymentReq, o
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -4589,7 +4623,7 @@ ReposDeleteDeploymentResponse is a response for ReposDeleteDeployment
 https://developer.github.com/v3/repos/deployments/#delete-a-deployment
 */
 type ReposDeleteDeploymentResponse struct {
-	internal.Response
+	common.Response
 	request *ReposDeleteDeploymentReq
 }
 
@@ -4611,7 +4645,8 @@ func ReposDeleteFile(ctx context.Context, req *ReposDeleteFileReq, opt ...option
 		req = new(ReposDeleteFileReq)
 	}
 	resp := &ReposDeleteFileResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -4621,7 +4656,7 @@ func ReposDeleteFile(ctx context.Context, req *ReposDeleteFileReq, opt ...option
 	}
 
 	resp.Data = components.FileCommit{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4750,7 +4785,7 @@ ReposDeleteFileResponse is a response for ReposDeleteFile
 https://developer.github.com/v3/repos/contents/#delete-a-file
 */
 type ReposDeleteFileResponse struct {
-	internal.Response
+	common.Response
 	request *ReposDeleteFileReq
 	Data    components.FileCommit
 }
@@ -4773,7 +4808,8 @@ func ReposDeleteInvitation(ctx context.Context, req *ReposDeleteInvitationReq, o
 		req = new(ReposDeleteInvitationReq)
 	}
 	resp := &ReposDeleteInvitationResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -4782,7 +4818,7 @@ func ReposDeleteInvitation(ctx context.Context, req *ReposDeleteInvitationReq, o
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -4864,7 +4900,7 @@ ReposDeleteInvitationResponse is a response for ReposDeleteInvitation
 https://developer.github.com/v3/repos/invitations/#delete-a-repository-invitation
 */
 type ReposDeleteInvitationResponse struct {
-	internal.Response
+	common.Response
 	request *ReposDeleteInvitationReq
 }
 
@@ -4886,7 +4922,8 @@ func ReposDeletePagesSite(ctx context.Context, req *ReposDeletePagesSiteReq, opt
 		req = new(ReposDeletePagesSiteReq)
 	}
 	resp := &ReposDeletePagesSiteResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -4895,7 +4932,7 @@ func ReposDeletePagesSite(ctx context.Context, req *ReposDeletePagesSiteReq, opt
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -4983,7 +5020,7 @@ ReposDeletePagesSiteResponse is a response for ReposDeletePagesSite
 https://developer.github.com/v3/repos/pages/#delete-a-github-pages-site
 */
 type ReposDeletePagesSiteResponse struct {
-	internal.Response
+	common.Response
 	request *ReposDeletePagesSiteReq
 }
 
@@ -5005,7 +5042,8 @@ func ReposDeletePullRequestReviewProtection(ctx context.Context, req *ReposDelet
 		req = new(ReposDeletePullRequestReviewProtectionReq)
 	}
 	resp := &ReposDeletePullRequestReviewProtectionResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -5018,7 +5056,7 @@ func ReposDeletePullRequestReviewProtection(ctx context.Context, req *ReposDelet
 	if err != nil {
 		return nil, err
 	}
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -5100,7 +5138,7 @@ ReposDeletePullRequestReviewProtectionResponse is a response for ReposDeletePull
 https://developer.github.com/v3/repos/branches/#delete-pull-request-review-protection
 */
 type ReposDeletePullRequestReviewProtectionResponse struct {
-	internal.Response
+	common.Response
 	request *ReposDeletePullRequestReviewProtectionReq
 	Data    bool
 }
@@ -5123,7 +5161,8 @@ func ReposDeleteRelease(ctx context.Context, req *ReposDeleteReleaseReq, opt ...
 		req = new(ReposDeleteReleaseReq)
 	}
 	resp := &ReposDeleteReleaseResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -5132,7 +5171,7 @@ func ReposDeleteRelease(ctx context.Context, req *ReposDeleteReleaseReq, opt ...
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -5214,7 +5253,7 @@ ReposDeleteReleaseResponse is a response for ReposDeleteRelease
 https://developer.github.com/v3/repos/releases/#delete-a-release
 */
 type ReposDeleteReleaseResponse struct {
-	internal.Response
+	common.Response
 	request *ReposDeleteReleaseReq
 }
 
@@ -5236,7 +5275,8 @@ func ReposDeleteReleaseAsset(ctx context.Context, req *ReposDeleteReleaseAssetRe
 		req = new(ReposDeleteReleaseAssetReq)
 	}
 	resp := &ReposDeleteReleaseAssetResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -5245,7 +5285,7 @@ func ReposDeleteReleaseAsset(ctx context.Context, req *ReposDeleteReleaseAssetRe
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -5327,7 +5367,7 @@ ReposDeleteReleaseAssetResponse is a response for ReposDeleteReleaseAsset
 https://developer.github.com/v3/repos/releases/#delete-a-release-asset
 */
 type ReposDeleteReleaseAssetResponse struct {
-	internal.Response
+	common.Response
 	request *ReposDeleteReleaseAssetReq
 }
 
@@ -5349,7 +5389,8 @@ func ReposDeleteWebhook(ctx context.Context, req *ReposDeleteWebhookReq, opt ...
 		req = new(ReposDeleteWebhookReq)
 	}
 	resp := &ReposDeleteWebhookResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -5362,7 +5403,7 @@ func ReposDeleteWebhook(ctx context.Context, req *ReposDeleteWebhookReq, opt ...
 	if err != nil {
 		return nil, err
 	}
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -5442,7 +5483,7 @@ ReposDeleteWebhookResponse is a response for ReposDeleteWebhook
 https://developer.github.com/v3/repos/hooks/#delete-a-repository-webhook
 */
 type ReposDeleteWebhookResponse struct {
-	internal.Response
+	common.Response
 	request *ReposDeleteWebhookReq
 	Data    bool
 }
@@ -5465,7 +5506,8 @@ func ReposDisableAutomatedSecurityFixes(ctx context.Context, req *ReposDisableAu
 		req = new(ReposDisableAutomatedSecurityFixesReq)
 	}
 	resp := &ReposDisableAutomatedSecurityFixesResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -5474,7 +5516,7 @@ func ReposDisableAutomatedSecurityFixes(ctx context.Context, req *ReposDisableAu
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -5560,7 +5602,7 @@ ReposDisableAutomatedSecurityFixesResponse is a response for ReposDisableAutomat
 https://developer.github.com/v3/repos/#disable-automated-security-fixes
 */
 type ReposDisableAutomatedSecurityFixesResponse struct {
-	internal.Response
+	common.Response
 	request *ReposDisableAutomatedSecurityFixesReq
 }
 
@@ -5582,7 +5624,8 @@ func ReposDisableVulnerabilityAlerts(ctx context.Context, req *ReposDisableVulne
 		req = new(ReposDisableVulnerabilityAlertsReq)
 	}
 	resp := &ReposDisableVulnerabilityAlertsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -5591,7 +5634,7 @@ func ReposDisableVulnerabilityAlerts(ctx context.Context, req *ReposDisableVulne
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -5677,7 +5720,7 @@ ReposDisableVulnerabilityAlertsResponse is a response for ReposDisableVulnerabil
 https://developer.github.com/v3/repos/#disable-vulnerability-alerts
 */
 type ReposDisableVulnerabilityAlertsResponse struct {
-	internal.Response
+	common.Response
 	request *ReposDisableVulnerabilityAlertsReq
 }
 
@@ -5699,7 +5742,8 @@ func ReposDownloadTarballArchive(ctx context.Context, req *ReposDownloadTarballA
 		req = new(ReposDownloadTarballArchiveReq)
 	}
 	resp := &ReposDownloadTarballArchiveResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -5708,7 +5752,7 @@ func ReposDownloadTarballArchive(ctx context.Context, req *ReposDownloadTarballA
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -5790,7 +5834,7 @@ ReposDownloadTarballArchiveResponse is a response for ReposDownloadTarballArchiv
 https://developer.github.com/v3/repos/contents/#download-a-repository-archive
 */
 type ReposDownloadTarballArchiveResponse struct {
-	internal.Response
+	common.Response
 	request *ReposDownloadTarballArchiveReq
 }
 
@@ -5812,7 +5856,8 @@ func ReposDownloadZipballArchive(ctx context.Context, req *ReposDownloadZipballA
 		req = new(ReposDownloadZipballArchiveReq)
 	}
 	resp := &ReposDownloadZipballArchiveResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -5821,7 +5866,7 @@ func ReposDownloadZipballArchive(ctx context.Context, req *ReposDownloadZipballA
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -5903,7 +5948,7 @@ ReposDownloadZipballArchiveResponse is a response for ReposDownloadZipballArchiv
 https://developer.github.com/v3/repos/contents/#download-a-repository-archive
 */
 type ReposDownloadZipballArchiveResponse struct {
-	internal.Response
+	common.Response
 	request *ReposDownloadZipballArchiveReq
 }
 
@@ -5925,7 +5970,8 @@ func ReposEnableAutomatedSecurityFixes(ctx context.Context, req *ReposEnableAuto
 		req = new(ReposEnableAutomatedSecurityFixesReq)
 	}
 	resp := &ReposEnableAutomatedSecurityFixesResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -5934,7 +5980,7 @@ func ReposEnableAutomatedSecurityFixes(ctx context.Context, req *ReposEnableAuto
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -6020,7 +6066,7 @@ ReposEnableAutomatedSecurityFixesResponse is a response for ReposEnableAutomated
 https://developer.github.com/v3/repos/#enable-automated-security-fixes
 */
 type ReposEnableAutomatedSecurityFixesResponse struct {
-	internal.Response
+	common.Response
 	request *ReposEnableAutomatedSecurityFixesReq
 }
 
@@ -6042,7 +6088,8 @@ func ReposEnableVulnerabilityAlerts(ctx context.Context, req *ReposEnableVulnera
 		req = new(ReposEnableVulnerabilityAlertsReq)
 	}
 	resp := &ReposEnableVulnerabilityAlertsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -6051,7 +6098,7 @@ func ReposEnableVulnerabilityAlerts(ctx context.Context, req *ReposEnableVulnera
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -6137,7 +6184,7 @@ ReposEnableVulnerabilityAlertsResponse is a response for ReposEnableVulnerabilit
 https://developer.github.com/v3/repos/#enable-vulnerability-alerts
 */
 type ReposEnableVulnerabilityAlertsResponse struct {
-	internal.Response
+	common.Response
 	request *ReposEnableVulnerabilityAlertsReq
 }
 
@@ -6159,7 +6206,8 @@ func ReposGet(ctx context.Context, req *ReposGetReq, opt ...options.Option) (*Re
 		req = new(ReposGetReq)
 	}
 	resp := &ReposGetResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -6169,7 +6217,7 @@ func ReposGet(ctx context.Context, req *ReposGetReq, opt ...options.Option) (*Re
 	}
 
 	resp.Data = components.FullRepository{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -6270,7 +6318,7 @@ ReposGetResponse is a response for ReposGet
 https://developer.github.com/v3/repos/#get-a-repository
 */
 type ReposGetResponse struct {
-	internal.Response
+	common.Response
 	request *ReposGetReq
 	Data    components.FullRepository
 }
@@ -6293,7 +6341,8 @@ func ReposGetAccessRestrictions(ctx context.Context, req *ReposGetAccessRestrict
 		req = new(ReposGetAccessRestrictionsReq)
 	}
 	resp := &ReposGetAccessRestrictionsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -6303,7 +6352,7 @@ func ReposGetAccessRestrictions(ctx context.Context, req *ReposGetAccessRestrict
 	}
 
 	resp.Data = components.BranchRestrictionPolicy{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -6385,7 +6434,7 @@ ReposGetAccessRestrictionsResponse is a response for ReposGetAccessRestrictions
 https://developer.github.com/v3/repos/branches/#get-access-restrictions
 */
 type ReposGetAccessRestrictionsResponse struct {
-	internal.Response
+	common.Response
 	request *ReposGetAccessRestrictionsReq
 	Data    components.BranchRestrictionPolicy
 }
@@ -6408,7 +6457,8 @@ func ReposGetAdminBranchProtection(ctx context.Context, req *ReposGetAdminBranch
 		req = new(ReposGetAdminBranchProtectionReq)
 	}
 	resp := &ReposGetAdminBranchProtectionResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -6418,7 +6468,7 @@ func ReposGetAdminBranchProtection(ctx context.Context, req *ReposGetAdminBranch
 	}
 
 	resp.Data = components.ProtectedBranchAdminEnforced{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -6500,7 +6550,7 @@ ReposGetAdminBranchProtectionResponse is a response for ReposGetAdminBranchProte
 https://developer.github.com/v3/repos/branches/#get-admin-branch-protection
 */
 type ReposGetAdminBranchProtectionResponse struct {
-	internal.Response
+	common.Response
 	request *ReposGetAdminBranchProtectionReq
 	Data    components.ProtectedBranchAdminEnforced
 }
@@ -6523,7 +6573,8 @@ func ReposGetAllStatusCheckContexts(ctx context.Context, req *ReposGetAllStatusC
 		req = new(ReposGetAllStatusCheckContextsReq)
 	}
 	resp := &ReposGetAllStatusCheckContextsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -6533,7 +6584,7 @@ func ReposGetAllStatusCheckContexts(ctx context.Context, req *ReposGetAllStatusC
 	}
 
 	resp.Data = ReposGetAllStatusCheckContextsResponseBody{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -6622,7 +6673,7 @@ ReposGetAllStatusCheckContextsResponse is a response for ReposGetAllStatusCheckC
 https://developer.github.com/v3/repos/branches/#get-all-status-check-contexts
 */
 type ReposGetAllStatusCheckContextsResponse struct {
-	internal.Response
+	common.Response
 	request *ReposGetAllStatusCheckContextsReq
 	Data    ReposGetAllStatusCheckContextsResponseBody
 }
@@ -6645,7 +6696,8 @@ func ReposGetAllTopics(ctx context.Context, req *ReposGetAllTopicsReq, opt ...op
 		req = new(ReposGetAllTopicsReq)
 	}
 	resp := &ReposGetAllTopicsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -6655,7 +6707,7 @@ func ReposGetAllTopics(ctx context.Context, req *ReposGetAllTopicsReq, opt ...op
 	}
 
 	resp.Data = components.Topic{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -6741,7 +6793,7 @@ ReposGetAllTopicsResponse is a response for ReposGetAllTopics
 https://developer.github.com/v3/repos/#get-all-repository-topics
 */
 type ReposGetAllTopicsResponse struct {
-	internal.Response
+	common.Response
 	request *ReposGetAllTopicsReq
 	Data    components.Topic
 }
@@ -6764,7 +6816,8 @@ func ReposGetAppsWithAccessToProtectedBranch(ctx context.Context, req *ReposGetA
 		req = new(ReposGetAppsWithAccessToProtectedBranchReq)
 	}
 	resp := &ReposGetAppsWithAccessToProtectedBranchResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -6774,7 +6827,7 @@ func ReposGetAppsWithAccessToProtectedBranch(ctx context.Context, req *ReposGetA
 	}
 
 	resp.Data = []components.Integration{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -6856,7 +6909,7 @@ ReposGetAppsWithAccessToProtectedBranchResponse is a response for ReposGetAppsWi
 https://developer.github.com/v3/repos/branches/#list-apps-with-access-to-the-protected-branch
 */
 type ReposGetAppsWithAccessToProtectedBranchResponse struct {
-	internal.Response
+	common.Response
 	request *ReposGetAppsWithAccessToProtectedBranchReq
 	Data    []components.Integration
 }
@@ -6879,7 +6932,8 @@ func ReposGetBranch(ctx context.Context, req *ReposGetBranchReq, opt ...options.
 		req = new(ReposGetBranchReq)
 	}
 	resp := &ReposGetBranchResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -6889,7 +6943,7 @@ func ReposGetBranch(ctx context.Context, req *ReposGetBranchReq, opt ...options.
 	}
 
 	resp.Data = components.BranchWithProtection{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -6971,7 +7025,7 @@ ReposGetBranchResponse is a response for ReposGetBranch
 https://developer.github.com/v3/repos/branches/#get-a-branch
 */
 type ReposGetBranchResponse struct {
-	internal.Response
+	common.Response
 	request *ReposGetBranchReq
 	Data    components.BranchWithProtection
 }
@@ -6994,7 +7048,8 @@ func ReposGetBranchProtection(ctx context.Context, req *ReposGetBranchProtection
 		req = new(ReposGetBranchProtectionReq)
 	}
 	resp := &ReposGetBranchProtectionResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -7004,7 +7059,7 @@ func ReposGetBranchProtection(ctx context.Context, req *ReposGetBranchProtection
 	}
 
 	resp.Data = components.BranchProtection{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -7096,7 +7151,7 @@ ReposGetBranchProtectionResponse is a response for ReposGetBranchProtection
 https://developer.github.com/v3/repos/branches/#get-branch-protection
 */
 type ReposGetBranchProtectionResponse struct {
-	internal.Response
+	common.Response
 	request *ReposGetBranchProtectionReq
 	Data    components.BranchProtection
 }
@@ -7119,7 +7174,8 @@ func ReposGetClones(ctx context.Context, req *ReposGetClonesReq, opt ...options.
 		req = new(ReposGetClonesReq)
 	}
 	resp := &ReposGetClonesResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -7129,7 +7185,7 @@ func ReposGetClones(ctx context.Context, req *ReposGetClonesReq, opt ...options.
 	}
 
 	resp.Data = components.CloneTraffic{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -7214,7 +7270,7 @@ ReposGetClonesResponse is a response for ReposGetClones
 https://developer.github.com/v3/repos/traffic/#get-repository-clones
 */
 type ReposGetClonesResponse struct {
-	internal.Response
+	common.Response
 	request *ReposGetClonesReq
 	Data    components.CloneTraffic
 }
@@ -7237,7 +7293,8 @@ func ReposGetCodeFrequencyStats(ctx context.Context, req *ReposGetCodeFrequencyS
 		req = new(ReposGetCodeFrequencyStatsReq)
 	}
 	resp := &ReposGetCodeFrequencyStatsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -7247,7 +7304,7 @@ func ReposGetCodeFrequencyStats(ctx context.Context, req *ReposGetCodeFrequencyS
 	}
 
 	resp.Data = []components.CodeFrequencyStat{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -7326,7 +7383,7 @@ ReposGetCodeFrequencyStatsResponse is a response for ReposGetCodeFrequencyStats
 https://developer.github.com/v3/repos/statistics/#get-the-weekly-commit-activity
 */
 type ReposGetCodeFrequencyStatsResponse struct {
-	internal.Response
+	common.Response
 	request *ReposGetCodeFrequencyStatsReq
 	Data    []components.CodeFrequencyStat
 }
@@ -7349,7 +7406,8 @@ func ReposGetCollaboratorPermissionLevel(ctx context.Context, req *ReposGetColla
 		req = new(ReposGetCollaboratorPermissionLevelReq)
 	}
 	resp := &ReposGetCollaboratorPermissionLevelResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -7359,7 +7417,7 @@ func ReposGetCollaboratorPermissionLevel(ctx context.Context, req *ReposGetColla
 	}
 
 	resp.Data = components.RepositoryCollaboratorPermission{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -7439,7 +7497,7 @@ ReposGetCollaboratorPermissionLevelResponse is a response for ReposGetCollaborat
 https://developer.github.com/v3/repos/collaborators/#get-repository-permissions-for-a-user
 */
 type ReposGetCollaboratorPermissionLevelResponse struct {
-	internal.Response
+	common.Response
 	request *ReposGetCollaboratorPermissionLevelReq
 	Data    components.RepositoryCollaboratorPermission
 }
@@ -7462,7 +7520,8 @@ func ReposGetCombinedStatusForRef(ctx context.Context, req *ReposGetCombinedStat
 		req = new(ReposGetCombinedStatusForRefReq)
 	}
 	resp := &ReposGetCombinedStatusForRefResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -7472,7 +7531,7 @@ func ReposGetCombinedStatusForRef(ctx context.Context, req *ReposGetCombinedStat
 	}
 
 	resp.Data = components.CombinedCommitStatus{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -7554,7 +7613,7 @@ ReposGetCombinedStatusForRefResponse is a response for ReposGetCombinedStatusFor
 https://developer.github.com/v3/repos/statuses/#get-the-combined-status-for-a-specific-reference
 */
 type ReposGetCombinedStatusForRefResponse struct {
-	internal.Response
+	common.Response
 	request *ReposGetCombinedStatusForRefReq
 	Data    components.CombinedCommitStatus
 }
@@ -7577,7 +7636,8 @@ func ReposGetCommit(ctx context.Context, req *ReposGetCommitReq, opt ...options.
 		req = new(ReposGetCommitReq)
 	}
 	resp := &ReposGetCommitResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -7587,7 +7647,7 @@ func ReposGetCommit(ctx context.Context, req *ReposGetCommitReq, opt ...options.
 	}
 
 	resp.Data = components.Commit{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -7669,7 +7729,7 @@ ReposGetCommitResponse is a response for ReposGetCommit
 https://developer.github.com/v3/repos/commits/#get-a-commit
 */
 type ReposGetCommitResponse struct {
-	internal.Response
+	common.Response
 	request *ReposGetCommitReq
 	Data    components.Commit
 }
@@ -7692,7 +7752,8 @@ func ReposGetCommitActivityStats(ctx context.Context, req *ReposGetCommitActivit
 		req = new(ReposGetCommitActivityStatsReq)
 	}
 	resp := &ReposGetCommitActivityStatsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -7702,7 +7763,7 @@ func ReposGetCommitActivityStats(ctx context.Context, req *ReposGetCommitActivit
 	}
 
 	resp.Data = []components.CommitActivity{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -7781,7 +7842,7 @@ ReposGetCommitActivityStatsResponse is a response for ReposGetCommitActivityStat
 https://developer.github.com/v3/repos/statistics/#get-the-last-year-of-commit-activity
 */
 type ReposGetCommitActivityStatsResponse struct {
-	internal.Response
+	common.Response
 	request *ReposGetCommitActivityStatsReq
 	Data    []components.CommitActivity
 }
@@ -7804,7 +7865,8 @@ func ReposGetCommitComment(ctx context.Context, req *ReposGetCommitCommentReq, o
 		req = new(ReposGetCommitCommentReq)
 	}
 	resp := &ReposGetCommitCommentResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -7814,7 +7876,7 @@ func ReposGetCommitComment(ctx context.Context, req *ReposGetCommitCommentReq, o
 	}
 
 	resp.Data = components.CommitComment{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -7907,7 +7969,7 @@ ReposGetCommitCommentResponse is a response for ReposGetCommitComment
 https://developer.github.com/v3/repos/comments/#get-a-commit-comment
 */
 type ReposGetCommitCommentResponse struct {
-	internal.Response
+	common.Response
 	request *ReposGetCommitCommentReq
 	Data    components.CommitComment
 }
@@ -7930,7 +7992,8 @@ func ReposGetCommitSignatureProtection(ctx context.Context, req *ReposGetCommitS
 		req = new(ReposGetCommitSignatureProtectionReq)
 	}
 	resp := &ReposGetCommitSignatureProtectionResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -7940,7 +8003,7 @@ func ReposGetCommitSignatureProtection(ctx context.Context, req *ReposGetCommitS
 	}
 
 	resp.Data = components.ProtectedBranchAdminEnforced{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -8031,7 +8094,7 @@ ReposGetCommitSignatureProtectionResponse is a response for ReposGetCommitSignat
 https://developer.github.com/v3/repos/branches/#get-commit-signature-protection
 */
 type ReposGetCommitSignatureProtectionResponse struct {
-	internal.Response
+	common.Response
 	request *ReposGetCommitSignatureProtectionReq
 	Data    components.ProtectedBranchAdminEnforced
 }
@@ -8054,7 +8117,8 @@ func ReposGetCommunityProfileMetrics(ctx context.Context, req *ReposGetCommunity
 		req = new(ReposGetCommunityProfileMetricsReq)
 	}
 	resp := &ReposGetCommunityProfileMetricsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -8064,7 +8128,7 @@ func ReposGetCommunityProfileMetrics(ctx context.Context, req *ReposGetCommunity
 	}
 
 	resp.Data = components.CommunityProfile{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -8150,7 +8214,7 @@ ReposGetCommunityProfileMetricsResponse is a response for ReposGetCommunityProfi
 https://developer.github.com/v3/repos/community/#get-community-profile-metrics
 */
 type ReposGetCommunityProfileMetricsResponse struct {
-	internal.Response
+	common.Response
 	request *ReposGetCommunityProfileMetricsReq
 	Data    components.CommunityProfile
 }
@@ -8173,7 +8237,8 @@ func ReposGetContent(ctx context.Context, req *ReposGetContentReq, opt ...option
 		req = new(ReposGetContentReq)
 	}
 	resp := &ReposGetContentResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -8183,7 +8248,7 @@ func ReposGetContent(ctx context.Context, req *ReposGetContentReq, opt ...option
 	}
 
 	resp.Data = ReposGetContentResponseBody{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -8365,7 +8430,7 @@ ReposGetContentResponse is a response for ReposGetContent
 https://developer.github.com/v3/repos/contents/#get-repository-content
 */
 type ReposGetContentResponse struct {
-	internal.Response
+	common.Response
 	request *ReposGetContentReq
 	Data    ReposGetContentResponseBody
 }
@@ -8388,7 +8453,8 @@ func ReposGetContributorsStats(ctx context.Context, req *ReposGetContributorsSta
 		req = new(ReposGetContributorsStatsReq)
 	}
 	resp := &ReposGetContributorsStatsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -8398,7 +8464,7 @@ func ReposGetContributorsStats(ctx context.Context, req *ReposGetContributorsSta
 	}
 
 	resp.Data = []components.ContributorActivity{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -8477,7 +8543,7 @@ ReposGetContributorsStatsResponse is a response for ReposGetContributorsStats
 https://developer.github.com/v3/repos/statistics/#get-all-contributor-commit-activity
 */
 type ReposGetContributorsStatsResponse struct {
-	internal.Response
+	common.Response
 	request *ReposGetContributorsStatsReq
 	Data    []components.ContributorActivity
 }
@@ -8500,7 +8566,8 @@ func ReposGetDeployKey(ctx context.Context, req *ReposGetDeployKeyReq, opt ...op
 		req = new(ReposGetDeployKeyReq)
 	}
 	resp := &ReposGetDeployKeyResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -8510,7 +8577,7 @@ func ReposGetDeployKey(ctx context.Context, req *ReposGetDeployKeyReq, opt ...op
 	}
 
 	resp.Data = components.DeployKey{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -8592,7 +8659,7 @@ ReposGetDeployKeyResponse is a response for ReposGetDeployKey
 https://developer.github.com/v3/repos/keys/#get-a-deploy-key
 */
 type ReposGetDeployKeyResponse struct {
-	internal.Response
+	common.Response
 	request *ReposGetDeployKeyReq
 	Data    components.DeployKey
 }
@@ -8615,7 +8682,8 @@ func ReposGetDeployment(ctx context.Context, req *ReposGetDeploymentReq, opt ...
 		req = new(ReposGetDeploymentReq)
 	}
 	resp := &ReposGetDeploymentResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -8625,7 +8693,7 @@ func ReposGetDeployment(ctx context.Context, req *ReposGetDeploymentReq, opt ...
 	}
 
 	resp.Data = components.Deployment{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -8727,7 +8795,7 @@ ReposGetDeploymentResponse is a response for ReposGetDeployment
 https://developer.github.com/v3/repos/deployments/#get-a-deployment
 */
 type ReposGetDeploymentResponse struct {
-	internal.Response
+	common.Response
 	request *ReposGetDeploymentReq
 	Data    components.Deployment
 }
@@ -8750,7 +8818,8 @@ func ReposGetDeploymentStatus(ctx context.Context, req *ReposGetDeploymentStatus
 		req = new(ReposGetDeploymentStatusReq)
 	}
 	resp := &ReposGetDeploymentStatusResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -8760,7 +8829,7 @@ func ReposGetDeploymentStatus(ctx context.Context, req *ReposGetDeploymentStatus
 	}
 
 	resp.Data = components.DeploymentStatus{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -8878,7 +8947,7 @@ ReposGetDeploymentStatusResponse is a response for ReposGetDeploymentStatus
 https://developer.github.com/v3/repos/deployments/#get-a-deployment-status
 */
 type ReposGetDeploymentStatusResponse struct {
-	internal.Response
+	common.Response
 	request *ReposGetDeploymentStatusReq
 	Data    components.DeploymentStatus
 }
@@ -8901,7 +8970,8 @@ func ReposGetLatestPagesBuild(ctx context.Context, req *ReposGetLatestPagesBuild
 		req = new(ReposGetLatestPagesBuildReq)
 	}
 	resp := &ReposGetLatestPagesBuildResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -8911,7 +8981,7 @@ func ReposGetLatestPagesBuild(ctx context.Context, req *ReposGetLatestPagesBuild
 	}
 
 	resp.Data = components.PageBuild{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -8990,7 +9060,7 @@ ReposGetLatestPagesBuildResponse is a response for ReposGetLatestPagesBuild
 https://developer.github.com/v3/repos/pages/#get-latest-pages-build
 */
 type ReposGetLatestPagesBuildResponse struct {
-	internal.Response
+	common.Response
 	request *ReposGetLatestPagesBuildReq
 	Data    components.PageBuild
 }
@@ -9013,7 +9083,8 @@ func ReposGetLatestRelease(ctx context.Context, req *ReposGetLatestReleaseReq, o
 		req = new(ReposGetLatestReleaseReq)
 	}
 	resp := &ReposGetLatestReleaseResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -9023,7 +9094,7 @@ func ReposGetLatestRelease(ctx context.Context, req *ReposGetLatestReleaseReq, o
 	}
 
 	resp.Data = components.Release{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -9102,7 +9173,7 @@ ReposGetLatestReleaseResponse is a response for ReposGetLatestRelease
 https://developer.github.com/v3/repos/releases/#get-the-latest-release
 */
 type ReposGetLatestReleaseResponse struct {
-	internal.Response
+	common.Response
 	request *ReposGetLatestReleaseReq
 	Data    components.Release
 }
@@ -9125,7 +9196,8 @@ func ReposGetPages(ctx context.Context, req *ReposGetPagesReq, opt ...options.Op
 		req = new(ReposGetPagesReq)
 	}
 	resp := &ReposGetPagesResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -9135,7 +9207,7 @@ func ReposGetPages(ctx context.Context, req *ReposGetPagesReq, opt ...options.Op
 	}
 
 	resp.Data = components.Page{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -9214,7 +9286,7 @@ ReposGetPagesResponse is a response for ReposGetPages
 https://developer.github.com/v3/repos/pages/#get-a-github-pages-site
 */
 type ReposGetPagesResponse struct {
-	internal.Response
+	common.Response
 	request *ReposGetPagesReq
 	Data    components.Page
 }
@@ -9237,7 +9309,8 @@ func ReposGetPagesBuild(ctx context.Context, req *ReposGetPagesBuildReq, opt ...
 		req = new(ReposGetPagesBuildReq)
 	}
 	resp := &ReposGetPagesBuildResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -9247,7 +9320,7 @@ func ReposGetPagesBuild(ctx context.Context, req *ReposGetPagesBuildReq, opt ...
 	}
 
 	resp.Data = components.PageBuild{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -9329,7 +9402,7 @@ ReposGetPagesBuildResponse is a response for ReposGetPagesBuild
 https://developer.github.com/v3/repos/pages/#get-github-pages-build
 */
 type ReposGetPagesBuildResponse struct {
-	internal.Response
+	common.Response
 	request *ReposGetPagesBuildReq
 	Data    components.PageBuild
 }
@@ -9352,7 +9425,8 @@ func ReposGetParticipationStats(ctx context.Context, req *ReposGetParticipationS
 		req = new(ReposGetParticipationStatsReq)
 	}
 	resp := &ReposGetParticipationStatsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -9362,7 +9436,7 @@ func ReposGetParticipationStats(ctx context.Context, req *ReposGetParticipationS
 	}
 
 	resp.Data = components.ParticipationStats{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -9441,7 +9515,7 @@ ReposGetParticipationStatsResponse is a response for ReposGetParticipationStats
 https://developer.github.com/v3/repos/statistics/#get-the-weekly-commit-count
 */
 type ReposGetParticipationStatsResponse struct {
-	internal.Response
+	common.Response
 	request *ReposGetParticipationStatsReq
 	Data    components.ParticipationStats
 }
@@ -9464,7 +9538,8 @@ func ReposGetPullRequestReviewProtection(ctx context.Context, req *ReposGetPullR
 		req = new(ReposGetPullRequestReviewProtectionReq)
 	}
 	resp := &ReposGetPullRequestReviewProtectionResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -9474,7 +9549,7 @@ func ReposGetPullRequestReviewProtection(ctx context.Context, req *ReposGetPullR
 	}
 
 	resp.Data = components.ProtectedBranchPullRequestReview{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -9566,7 +9641,7 @@ ReposGetPullRequestReviewProtectionResponse is a response for ReposGetPullReques
 https://developer.github.com/v3/repos/branches/#get-pull-request-review-protection
 */
 type ReposGetPullRequestReviewProtectionResponse struct {
-	internal.Response
+	common.Response
 	request *ReposGetPullRequestReviewProtectionReq
 	Data    components.ProtectedBranchPullRequestReview
 }
@@ -9589,7 +9664,8 @@ func ReposGetPunchCardStats(ctx context.Context, req *ReposGetPunchCardStatsReq,
 		req = new(ReposGetPunchCardStatsReq)
 	}
 	resp := &ReposGetPunchCardStatsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -9599,7 +9675,7 @@ func ReposGetPunchCardStats(ctx context.Context, req *ReposGetPunchCardStatsReq,
 	}
 
 	resp.Data = []components.CodeFrequencyStat{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -9678,7 +9754,7 @@ ReposGetPunchCardStatsResponse is a response for ReposGetPunchCardStats
 https://developer.github.com/v3/repos/statistics/#get-the-hourly-commit-count-for-each-day
 */
 type ReposGetPunchCardStatsResponse struct {
-	internal.Response
+	common.Response
 	request *ReposGetPunchCardStatsReq
 	Data    []components.CodeFrequencyStat
 }
@@ -9701,7 +9777,8 @@ func ReposGetReadme(ctx context.Context, req *ReposGetReadmeReq, opt ...options.
 		req = new(ReposGetReadmeReq)
 	}
 	resp := &ReposGetReadmeResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -9711,7 +9788,7 @@ func ReposGetReadme(ctx context.Context, req *ReposGetReadmeReq, opt ...options.
 	}
 
 	resp.Data = components.ContentFile{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -9799,7 +9876,7 @@ ReposGetReadmeResponse is a response for ReposGetReadme
 https://developer.github.com/v3/repos/contents/#get-a-repository-readme
 */
 type ReposGetReadmeResponse struct {
-	internal.Response
+	common.Response
 	request *ReposGetReadmeReq
 	Data    components.ContentFile
 }
@@ -9822,7 +9899,8 @@ func ReposGetRelease(ctx context.Context, req *ReposGetReleaseReq, opt ...option
 		req = new(ReposGetReleaseReq)
 	}
 	resp := &ReposGetReleaseResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -9832,7 +9910,7 @@ func ReposGetRelease(ctx context.Context, req *ReposGetReleaseReq, opt ...option
 	}
 
 	resp.Data = components.Release{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -9914,7 +9992,7 @@ ReposGetReleaseResponse is a response for ReposGetRelease
 https://developer.github.com/v3/repos/releases/#get-a-release
 */
 type ReposGetReleaseResponse struct {
-	internal.Response
+	common.Response
 	request *ReposGetReleaseReq
 	Data    components.Release
 }
@@ -9937,7 +10015,8 @@ func ReposGetReleaseAsset(ctx context.Context, req *ReposGetReleaseAssetReq, opt
 		req = new(ReposGetReleaseAssetReq)
 	}
 	resp := &ReposGetReleaseAssetResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -9947,7 +10026,7 @@ func ReposGetReleaseAsset(ctx context.Context, req *ReposGetReleaseAssetReq, opt
 	}
 
 	resp.Data = components.ReleaseAsset{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -10029,7 +10108,7 @@ ReposGetReleaseAssetResponse is a response for ReposGetReleaseAsset
 https://developer.github.com/v3/repos/releases/#get-a-release-asset
 */
 type ReposGetReleaseAssetResponse struct {
-	internal.Response
+	common.Response
 	request *ReposGetReleaseAssetReq
 	Data    components.ReleaseAsset
 }
@@ -10052,7 +10131,8 @@ func ReposGetReleaseByTag(ctx context.Context, req *ReposGetReleaseByTagReq, opt
 		req = new(ReposGetReleaseByTagReq)
 	}
 	resp := &ReposGetReleaseByTagResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -10062,7 +10142,7 @@ func ReposGetReleaseByTag(ctx context.Context, req *ReposGetReleaseByTagReq, opt
 	}
 
 	resp.Data = components.Release{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -10144,7 +10224,7 @@ ReposGetReleaseByTagResponse is a response for ReposGetReleaseByTag
 https://developer.github.com/v3/repos/releases/#get-a-release-by-tag-name
 */
 type ReposGetReleaseByTagResponse struct {
-	internal.Response
+	common.Response
 	request *ReposGetReleaseByTagReq
 	Data    components.Release
 }
@@ -10167,7 +10247,8 @@ func ReposGetStatusChecksProtection(ctx context.Context, req *ReposGetStatusChec
 		req = new(ReposGetStatusChecksProtectionReq)
 	}
 	resp := &ReposGetStatusChecksProtectionResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -10177,7 +10258,7 @@ func ReposGetStatusChecksProtection(ctx context.Context, req *ReposGetStatusChec
 	}
 
 	resp.Data = components.StatusCheckPolicy{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -10259,7 +10340,7 @@ ReposGetStatusChecksProtectionResponse is a response for ReposGetStatusChecksPro
 https://developer.github.com/v3/repos/branches/#get-status-checks-protection
 */
 type ReposGetStatusChecksProtectionResponse struct {
-	internal.Response
+	common.Response
 	request *ReposGetStatusChecksProtectionReq
 	Data    components.StatusCheckPolicy
 }
@@ -10282,7 +10363,8 @@ func ReposGetTeamsWithAccessToProtectedBranch(ctx context.Context, req *ReposGet
 		req = new(ReposGetTeamsWithAccessToProtectedBranchReq)
 	}
 	resp := &ReposGetTeamsWithAccessToProtectedBranchResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -10292,7 +10374,7 @@ func ReposGetTeamsWithAccessToProtectedBranch(ctx context.Context, req *ReposGet
 	}
 
 	resp.Data = []components.Team{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -10374,7 +10456,7 @@ ReposGetTeamsWithAccessToProtectedBranchResponse is a response for ReposGetTeams
 https://developer.github.com/v3/repos/branches/#list-teams-with-access-to-the-protected-branch
 */
 type ReposGetTeamsWithAccessToProtectedBranchResponse struct {
-	internal.Response
+	common.Response
 	request *ReposGetTeamsWithAccessToProtectedBranchReq
 	Data    []components.Team
 }
@@ -10397,7 +10479,8 @@ func ReposGetTopPaths(ctx context.Context, req *ReposGetTopPathsReq, opt ...opti
 		req = new(ReposGetTopPathsReq)
 	}
 	resp := &ReposGetTopPathsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -10407,7 +10490,7 @@ func ReposGetTopPaths(ctx context.Context, req *ReposGetTopPathsReq, opt ...opti
 	}
 
 	resp.Data = []components.ContentTraffic{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -10486,7 +10569,7 @@ ReposGetTopPathsResponse is a response for ReposGetTopPaths
 https://developer.github.com/v3/repos/traffic/#get-top-referral-paths
 */
 type ReposGetTopPathsResponse struct {
-	internal.Response
+	common.Response
 	request *ReposGetTopPathsReq
 	Data    []components.ContentTraffic
 }
@@ -10509,7 +10592,8 @@ func ReposGetTopReferrers(ctx context.Context, req *ReposGetTopReferrersReq, opt
 		req = new(ReposGetTopReferrersReq)
 	}
 	resp := &ReposGetTopReferrersResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -10519,7 +10603,7 @@ func ReposGetTopReferrers(ctx context.Context, req *ReposGetTopReferrersReq, opt
 	}
 
 	resp.Data = []components.ReferrerTraffic{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -10598,7 +10682,7 @@ ReposGetTopReferrersResponse is a response for ReposGetTopReferrers
 https://developer.github.com/v3/repos/traffic/#get-top-referral-sources
 */
 type ReposGetTopReferrersResponse struct {
-	internal.Response
+	common.Response
 	request *ReposGetTopReferrersReq
 	Data    []components.ReferrerTraffic
 }
@@ -10621,7 +10705,8 @@ func ReposGetUsersWithAccessToProtectedBranch(ctx context.Context, req *ReposGet
 		req = new(ReposGetUsersWithAccessToProtectedBranchReq)
 	}
 	resp := &ReposGetUsersWithAccessToProtectedBranchResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -10631,7 +10716,7 @@ func ReposGetUsersWithAccessToProtectedBranch(ctx context.Context, req *ReposGet
 	}
 
 	resp.Data = []components.SimpleUser{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -10713,7 +10798,7 @@ ReposGetUsersWithAccessToProtectedBranchResponse is a response for ReposGetUsers
 https://developer.github.com/v3/repos/branches/#list-users-with-access-to-the-protected-branch
 */
 type ReposGetUsersWithAccessToProtectedBranchResponse struct {
-	internal.Response
+	common.Response
 	request *ReposGetUsersWithAccessToProtectedBranchReq
 	Data    []components.SimpleUser
 }
@@ -10736,7 +10821,8 @@ func ReposGetViews(ctx context.Context, req *ReposGetViewsReq, opt ...options.Op
 		req = new(ReposGetViewsReq)
 	}
 	resp := &ReposGetViewsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -10746,7 +10832,7 @@ func ReposGetViews(ctx context.Context, req *ReposGetViewsReq, opt ...options.Op
 	}
 
 	resp.Data = components.ViewTraffic{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -10831,7 +10917,7 @@ ReposGetViewsResponse is a response for ReposGetViews
 https://developer.github.com/v3/repos/traffic/#get-page-views
 */
 type ReposGetViewsResponse struct {
-	internal.Response
+	common.Response
 	request *ReposGetViewsReq
 	Data    components.ViewTraffic
 }
@@ -10854,7 +10940,8 @@ func ReposGetWebhook(ctx context.Context, req *ReposGetWebhookReq, opt ...option
 		req = new(ReposGetWebhookReq)
 	}
 	resp := &ReposGetWebhookResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -10864,7 +10951,7 @@ func ReposGetWebhook(ctx context.Context, req *ReposGetWebhookReq, opt ...option
 	}
 
 	resp.Data = components.Hook{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -10944,7 +11031,7 @@ ReposGetWebhookResponse is a response for ReposGetWebhook
 https://developer.github.com/v3/repos/hooks/#get-a-repository-webhook
 */
 type ReposGetWebhookResponse struct {
-	internal.Response
+	common.Response
 	request *ReposGetWebhookReq
 	Data    components.Hook
 }
@@ -10967,7 +11054,8 @@ func ReposListBranches(ctx context.Context, req *ReposListBranchesReq, opt ...op
 		req = new(ReposListBranchesReq)
 	}
 	resp := &ReposListBranchesResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -10977,7 +11065,7 @@ func ReposListBranches(ctx context.Context, req *ReposListBranchesReq, opt ...op
 	}
 
 	resp.Data = []components.ShortBranch{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -11077,7 +11165,7 @@ ReposListBranchesResponse is a response for ReposListBranches
 https://developer.github.com/v3/repos/branches/#list-branches
 */
 type ReposListBranchesResponse struct {
-	internal.Response
+	common.Response
 	request *ReposListBranchesReq
 	Data    []components.ShortBranch
 }
@@ -11100,7 +11188,8 @@ func ReposListBranchesForHeadCommit(ctx context.Context, req *ReposListBranchesF
 		req = new(ReposListBranchesForHeadCommitReq)
 	}
 	resp := &ReposListBranchesForHeadCommitResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -11110,7 +11199,7 @@ func ReposListBranchesForHeadCommit(ctx context.Context, req *ReposListBranchesF
 	}
 
 	resp.Data = []components.BranchShort{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -11201,7 +11290,7 @@ ReposListBranchesForHeadCommitResponse is a response for ReposListBranchesForHea
 https://developer.github.com/v3/repos/commits/#list-branches-for-head-commit
 */
 type ReposListBranchesForHeadCommitResponse struct {
-	internal.Response
+	common.Response
 	request *ReposListBranchesForHeadCommitReq
 	Data    []components.BranchShort
 }
@@ -11224,7 +11313,8 @@ func ReposListCollaborators(ctx context.Context, req *ReposListCollaboratorsReq,
 		req = new(ReposListCollaboratorsReq)
 	}
 	resp := &ReposListCollaboratorsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -11234,7 +11324,7 @@ func ReposListCollaborators(ctx context.Context, req *ReposListCollaboratorsReq,
 	}
 
 	resp.Data = []components.Collaborator{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -11337,7 +11427,7 @@ ReposListCollaboratorsResponse is a response for ReposListCollaborators
 https://developer.github.com/v3/repos/collaborators/#list-repository-collaborators
 */
 type ReposListCollaboratorsResponse struct {
-	internal.Response
+	common.Response
 	request *ReposListCollaboratorsReq
 	Data    []components.Collaborator
 }
@@ -11360,7 +11450,8 @@ func ReposListCommentsForCommit(ctx context.Context, req *ReposListCommentsForCo
 		req = new(ReposListCommentsForCommitReq)
 	}
 	resp := &ReposListCommentsForCommitResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -11370,7 +11461,7 @@ func ReposListCommentsForCommit(ctx context.Context, req *ReposListCommentsForCo
 	}
 
 	resp.Data = []components.CommitComment{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -11475,7 +11566,7 @@ ReposListCommentsForCommitResponse is a response for ReposListCommentsForCommit
 https://developer.github.com/v3/repos/comments/#list-commit-comments
 */
 type ReposListCommentsForCommitResponse struct {
-	internal.Response
+	common.Response
 	request *ReposListCommentsForCommitReq
 	Data    []components.CommitComment
 }
@@ -11498,7 +11589,8 @@ func ReposListCommitCommentsForRepo(ctx context.Context, req *ReposListCommitCom
 		req = new(ReposListCommitCommentsForRepoReq)
 	}
 	resp := &ReposListCommitCommentsForRepoResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -11508,7 +11600,7 @@ func ReposListCommitCommentsForRepo(ctx context.Context, req *ReposListCommitCom
 	}
 
 	resp.Data = []components.CommitComment{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -11610,7 +11702,7 @@ ReposListCommitCommentsForRepoResponse is a response for ReposListCommitComments
 https://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repository
 */
 type ReposListCommitCommentsForRepoResponse struct {
-	internal.Response
+	common.Response
 	request *ReposListCommitCommentsForRepoReq
 	Data    []components.CommitComment
 }
@@ -11633,7 +11725,8 @@ func ReposListCommitStatusesForRef(ctx context.Context, req *ReposListCommitStat
 		req = new(ReposListCommitStatusesForRefReq)
 	}
 	resp := &ReposListCommitStatusesForRefResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -11643,7 +11736,7 @@ func ReposListCommitStatusesForRef(ctx context.Context, req *ReposListCommitStat
 	}
 
 	resp.Data = []components.Status{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -11737,7 +11830,7 @@ ReposListCommitStatusesForRefResponse is a response for ReposListCommitStatusesF
 https://developer.github.com/v3/repos/statuses/#list-commit-statuses-for-a-reference
 */
 type ReposListCommitStatusesForRefResponse struct {
-	internal.Response
+	common.Response
 	request *ReposListCommitStatusesForRefReq
 	Data    []components.Status
 }
@@ -11760,7 +11853,8 @@ func ReposListCommits(ctx context.Context, req *ReposListCommitsReq, opt ...opti
 		req = new(ReposListCommitsReq)
 	}
 	resp := &ReposListCommitsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -11770,7 +11864,7 @@ func ReposListCommits(ctx context.Context, req *ReposListCommitsReq, opt ...opti
 	}
 
 	resp.Data = []components.SimpleCommit{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -11901,7 +11995,7 @@ ReposListCommitsResponse is a response for ReposListCommits
 https://developer.github.com/v3/repos/commits/#list-commits
 */
 type ReposListCommitsResponse struct {
-	internal.Response
+	common.Response
 	request *ReposListCommitsReq
 	Data    []components.SimpleCommit
 }
@@ -11924,7 +12018,8 @@ func ReposListContributors(ctx context.Context, req *ReposListContributorsReq, o
 		req = new(ReposListContributorsReq)
 	}
 	resp := &ReposListContributorsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -11934,7 +12029,7 @@ func ReposListContributors(ctx context.Context, req *ReposListContributorsReq, o
 	}
 
 	resp.Data = []components.Contributor{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -12031,7 +12126,7 @@ ReposListContributorsResponse is a response for ReposListContributors
 https://developer.github.com/v3/repos/#list-repository-contributors
 */
 type ReposListContributorsResponse struct {
-	internal.Response
+	common.Response
 	request *ReposListContributorsReq
 	Data    []components.Contributor
 }
@@ -12054,7 +12149,8 @@ func ReposListDeployKeys(ctx context.Context, req *ReposListDeployKeysReq, opt .
 		req = new(ReposListDeployKeysReq)
 	}
 	resp := &ReposListDeployKeysResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -12064,7 +12160,7 @@ func ReposListDeployKeys(ctx context.Context, req *ReposListDeployKeysReq, opt .
 	}
 
 	resp.Data = []components.DeployKey{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -12155,7 +12251,7 @@ ReposListDeployKeysResponse is a response for ReposListDeployKeys
 https://developer.github.com/v3/repos/keys/#list-deploy-keys
 */
 type ReposListDeployKeysResponse struct {
-	internal.Response
+	common.Response
 	request *ReposListDeployKeysReq
 	Data    []components.DeployKey
 }
@@ -12178,7 +12274,8 @@ func ReposListDeploymentStatuses(ctx context.Context, req *ReposListDeploymentSt
 		req = new(ReposListDeploymentStatusesReq)
 	}
 	resp := &ReposListDeploymentStatusesResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -12188,7 +12285,7 @@ func ReposListDeploymentStatuses(ctx context.Context, req *ReposListDeploymentSt
 	}
 
 	resp.Data = []components.DeploymentStatus{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -12308,7 +12405,7 @@ ReposListDeploymentStatusesResponse is a response for ReposListDeploymentStatuse
 https://developer.github.com/v3/repos/deployments/#list-deployment-statuses
 */
 type ReposListDeploymentStatusesResponse struct {
-	internal.Response
+	common.Response
 	request *ReposListDeploymentStatusesReq
 	Data    []components.DeploymentStatus
 }
@@ -12331,7 +12428,8 @@ func ReposListDeployments(ctx context.Context, req *ReposListDeploymentsReq, opt
 		req = new(ReposListDeploymentsReq)
 	}
 	resp := &ReposListDeploymentsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -12341,7 +12439,7 @@ func ReposListDeployments(ctx context.Context, req *ReposListDeploymentsReq, opt
 	}
 
 	resp.Data = []components.Deployment{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -12470,7 +12568,7 @@ ReposListDeploymentsResponse is a response for ReposListDeployments
 https://developer.github.com/v3/repos/deployments/#list-deployments
 */
 type ReposListDeploymentsResponse struct {
-	internal.Response
+	common.Response
 	request *ReposListDeploymentsReq
 	Data    []components.Deployment
 }
@@ -12493,7 +12591,8 @@ func ReposListForAuthenticatedUser(ctx context.Context, req *ReposListForAuthent
 		req = new(ReposListForAuthenticatedUserReq)
 	}
 	resp := &ReposListForAuthenticatedUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -12503,7 +12602,7 @@ func ReposListForAuthenticatedUser(ctx context.Context, req *ReposListForAuthent
 	}
 
 	resp.Data = []components.Repository{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -12659,7 +12758,7 @@ ReposListForAuthenticatedUserResponse is a response for ReposListForAuthenticate
 https://developer.github.com/v3/repos/#list-repositories-for-the-authenticated-user
 */
 type ReposListForAuthenticatedUserResponse struct {
-	internal.Response
+	common.Response
 	request *ReposListForAuthenticatedUserReq
 	Data    []components.Repository
 }
@@ -12682,7 +12781,8 @@ func ReposListForOrg(ctx context.Context, req *ReposListForOrgReq, opt ...option
 		req = new(ReposListForOrgReq)
 	}
 	resp := &ReposListForOrgResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -12692,7 +12792,7 @@ func ReposListForOrg(ctx context.Context, req *ReposListForOrgReq, opt ...option
 	}
 
 	resp.Data = []components.MinimalRepository{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -12833,7 +12933,7 @@ ReposListForOrgResponse is a response for ReposListForOrg
 https://developer.github.com/v3/repos/#list-organization-repositories
 */
 type ReposListForOrgResponse struct {
-	internal.Response
+	common.Response
 	request *ReposListForOrgReq
 	Data    []components.MinimalRepository
 }
@@ -12856,7 +12956,8 @@ func ReposListForUser(ctx context.Context, req *ReposListForUserReq, opt ...opti
 		req = new(ReposListForUserReq)
 	}
 	resp := &ReposListForUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -12866,7 +12967,7 @@ func ReposListForUser(ctx context.Context, req *ReposListForUserReq, opt ...opti
 	}
 
 	resp.Data = []components.MinimalRepository{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -12989,7 +13090,7 @@ ReposListForUserResponse is a response for ReposListForUser
 https://developer.github.com/v3/repos/#list-repositories-for-a-user
 */
 type ReposListForUserResponse struct {
-	internal.Response
+	common.Response
 	request *ReposListForUserReq
 	Data    []components.MinimalRepository
 }
@@ -13012,7 +13113,8 @@ func ReposListForks(ctx context.Context, req *ReposListForksReq, opt ...options.
 		req = new(ReposListForksReq)
 	}
 	resp := &ReposListForksResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -13022,7 +13124,7 @@ func ReposListForks(ctx context.Context, req *ReposListForksReq, opt ...options.
 	}
 
 	resp.Data = []components.MinimalRepository{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -13119,7 +13221,7 @@ ReposListForksResponse is a response for ReposListForks
 https://developer.github.com/v3/repos/forks/#list-forks
 */
 type ReposListForksResponse struct {
-	internal.Response
+	common.Response
 	request *ReposListForksReq
 	Data    []components.MinimalRepository
 }
@@ -13142,7 +13244,8 @@ func ReposListInvitations(ctx context.Context, req *ReposListInvitationsReq, opt
 		req = new(ReposListInvitationsReq)
 	}
 	resp := &ReposListInvitationsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -13152,7 +13255,7 @@ func ReposListInvitations(ctx context.Context, req *ReposListInvitationsReq, opt
 	}
 
 	resp.Data = []components.RepositoryInvitation{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -13243,7 +13346,7 @@ ReposListInvitationsResponse is a response for ReposListInvitations
 https://developer.github.com/v3/repos/invitations/#list-repository-invitations
 */
 type ReposListInvitationsResponse struct {
-	internal.Response
+	common.Response
 	request *ReposListInvitationsReq
 	Data    []components.RepositoryInvitation
 }
@@ -13266,7 +13369,8 @@ func ReposListInvitationsForAuthenticatedUser(ctx context.Context, req *ReposLis
 		req = new(ReposListInvitationsForAuthenticatedUserReq)
 	}
 	resp := &ReposListInvitationsForAuthenticatedUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -13276,7 +13380,7 @@ func ReposListInvitationsForAuthenticatedUser(ctx context.Context, req *ReposLis
 	}
 
 	resp.Data = []components.RepositoryInvitation{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -13365,7 +13469,7 @@ ReposListInvitationsForAuthenticatedUserResponse is a response for ReposListInvi
 https://developer.github.com/v3/repos/invitations/#list-repository-invitations-for-the-authenticated-user
 */
 type ReposListInvitationsForAuthenticatedUserResponse struct {
-	internal.Response
+	common.Response
 	request *ReposListInvitationsForAuthenticatedUserReq
 	Data    []components.RepositoryInvitation
 }
@@ -13388,7 +13492,8 @@ func ReposListLanguages(ctx context.Context, req *ReposListLanguagesReq, opt ...
 		req = new(ReposListLanguagesReq)
 	}
 	resp := &ReposListLanguagesResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -13398,7 +13503,7 @@ func ReposListLanguages(ctx context.Context, req *ReposListLanguagesReq, opt ...
 	}
 
 	resp.Data = components.Language{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -13477,7 +13582,7 @@ ReposListLanguagesResponse is a response for ReposListLanguages
 https://developer.github.com/v3/repos/#list-repository-languages
 */
 type ReposListLanguagesResponse struct {
-	internal.Response
+	common.Response
 	request *ReposListLanguagesReq
 	Data    components.Language
 }
@@ -13500,7 +13605,8 @@ func ReposListPagesBuilds(ctx context.Context, req *ReposListPagesBuildsReq, opt
 		req = new(ReposListPagesBuildsReq)
 	}
 	resp := &ReposListPagesBuildsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -13510,7 +13616,7 @@ func ReposListPagesBuilds(ctx context.Context, req *ReposListPagesBuildsReq, opt
 	}
 
 	resp.Data = []components.PageBuild{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -13601,7 +13707,7 @@ ReposListPagesBuildsResponse is a response for ReposListPagesBuilds
 https://developer.github.com/v3/repos/pages/#list-github-pages-builds
 */
 type ReposListPagesBuildsResponse struct {
-	internal.Response
+	common.Response
 	request *ReposListPagesBuildsReq
 	Data    []components.PageBuild
 }
@@ -13624,7 +13730,8 @@ func ReposListPublic(ctx context.Context, req *ReposListPublicReq, opt ...option
 		req = new(ReposListPublicReq)
 	}
 	resp := &ReposListPublicResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -13634,7 +13741,7 @@ func ReposListPublic(ctx context.Context, req *ReposListPublicReq, opt ...option
 	}
 
 	resp.Data = []components.MinimalRepository{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -13731,7 +13838,7 @@ ReposListPublicResponse is a response for ReposListPublic
 https://developer.github.com/v3/repos/#list-public-repositories
 */
 type ReposListPublicResponse struct {
-	internal.Response
+	common.Response
 	request *ReposListPublicReq
 	Data    []components.MinimalRepository
 }
@@ -13754,7 +13861,8 @@ func ReposListPullRequestsAssociatedWithCommit(ctx context.Context, req *ReposLi
 		req = new(ReposListPullRequestsAssociatedWithCommitReq)
 	}
 	resp := &ReposListPullRequestsAssociatedWithCommitResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -13764,7 +13872,7 @@ func ReposListPullRequestsAssociatedWithCommit(ctx context.Context, req *ReposLi
 	}
 
 	resp.Data = []components.PullRequestSimple{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -13867,7 +13975,7 @@ ReposListPullRequestsAssociatedWithCommitResponse is a response for ReposListPul
 https://developer.github.com/v3/repos/commits/#list-pull-requests-associated-with-a-commit
 */
 type ReposListPullRequestsAssociatedWithCommitResponse struct {
-	internal.Response
+	common.Response
 	request *ReposListPullRequestsAssociatedWithCommitReq
 	Data    []components.PullRequestSimple
 }
@@ -13890,7 +13998,8 @@ func ReposListReleaseAssets(ctx context.Context, req *ReposListReleaseAssetsReq,
 		req = new(ReposListReleaseAssetsReq)
 	}
 	resp := &ReposListReleaseAssetsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -13900,7 +14009,7 @@ func ReposListReleaseAssets(ctx context.Context, req *ReposListReleaseAssetsReq,
 	}
 
 	resp.Data = []components.ReleaseAsset{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -13994,7 +14103,7 @@ ReposListReleaseAssetsResponse is a response for ReposListReleaseAssets
 https://developer.github.com/v3/repos/releases/#list-release-assets
 */
 type ReposListReleaseAssetsResponse struct {
-	internal.Response
+	common.Response
 	request *ReposListReleaseAssetsReq
 	Data    []components.ReleaseAsset
 }
@@ -14017,7 +14126,8 @@ func ReposListReleases(ctx context.Context, req *ReposListReleasesReq, opt ...op
 		req = new(ReposListReleasesReq)
 	}
 	resp := &ReposListReleasesResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -14027,7 +14137,7 @@ func ReposListReleases(ctx context.Context, req *ReposListReleasesReq, opt ...op
 	}
 
 	resp.Data = []components.Release{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -14118,7 +14228,7 @@ ReposListReleasesResponse is a response for ReposListReleases
 https://developer.github.com/v3/repos/releases/#list-releases
 */
 type ReposListReleasesResponse struct {
-	internal.Response
+	common.Response
 	request *ReposListReleasesReq
 	Data    []components.Release
 }
@@ -14141,7 +14251,8 @@ func ReposListTags(ctx context.Context, req *ReposListTagsReq, opt ...options.Op
 		req = new(ReposListTagsReq)
 	}
 	resp := &ReposListTagsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -14151,7 +14262,7 @@ func ReposListTags(ctx context.Context, req *ReposListTagsReq, opt ...options.Op
 	}
 
 	resp.Data = []components.Tag{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -14242,7 +14353,7 @@ ReposListTagsResponse is a response for ReposListTags
 https://developer.github.com/v3/repos/#list-repository-tags
 */
 type ReposListTagsResponse struct {
-	internal.Response
+	common.Response
 	request *ReposListTagsReq
 	Data    []components.Tag
 }
@@ -14265,7 +14376,8 @@ func ReposListTeams(ctx context.Context, req *ReposListTeamsReq, opt ...options.
 		req = new(ReposListTeamsReq)
 	}
 	resp := &ReposListTeamsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -14275,7 +14387,7 @@ func ReposListTeams(ctx context.Context, req *ReposListTeamsReq, opt ...options.
 	}
 
 	resp.Data = []components.Team{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -14366,7 +14478,7 @@ ReposListTeamsResponse is a response for ReposListTeams
 https://developer.github.com/v3/repos/#list-repository-teams
 */
 type ReposListTeamsResponse struct {
-	internal.Response
+	common.Response
 	request *ReposListTeamsReq
 	Data    []components.Team
 }
@@ -14389,7 +14501,8 @@ func ReposListWebhooks(ctx context.Context, req *ReposListWebhooksReq, opt ...op
 		req = new(ReposListWebhooksReq)
 	}
 	resp := &ReposListWebhooksResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -14399,7 +14512,7 @@ func ReposListWebhooks(ctx context.Context, req *ReposListWebhooksReq, opt ...op
 	}
 
 	resp.Data = []components.Hook{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -14490,7 +14603,7 @@ ReposListWebhooksResponse is a response for ReposListWebhooks
 https://developer.github.com/v3/repos/hooks/#list-repository-webhooks
 */
 type ReposListWebhooksResponse struct {
-	internal.Response
+	common.Response
 	request *ReposListWebhooksReq
 	Data    []components.Hook
 }
@@ -14513,7 +14626,8 @@ func ReposMerge(ctx context.Context, req *ReposMergeReq, opt ...options.Option) 
 		req = new(ReposMergeReq)
 	}
 	resp := &ReposMergeResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -14523,7 +14637,7 @@ func ReposMerge(ctx context.Context, req *ReposMergeReq, opt ...options.Option) 
 	}
 
 	resp.Data = components.Commit{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -14623,7 +14737,7 @@ ReposMergeResponse is a response for ReposMerge
 https://developer.github.com/v3/repos/merging/#merge-a-branch
 */
 type ReposMergeResponse struct {
-	internal.Response
+	common.Response
 	request *ReposMergeReq
 	Data    components.Commit
 }
@@ -14646,7 +14760,8 @@ func ReposPingWebhook(ctx context.Context, req *ReposPingWebhookReq, opt ...opti
 		req = new(ReposPingWebhookReq)
 	}
 	resp := &ReposPingWebhookResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -14659,7 +14774,7 @@ func ReposPingWebhook(ctx context.Context, req *ReposPingWebhookReq, opt ...opti
 	if err != nil {
 		return nil, err
 	}
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -14739,7 +14854,7 @@ ReposPingWebhookResponse is a response for ReposPingWebhook
 https://developer.github.com/v3/repos/hooks/#ping-a-repository-webhook
 */
 type ReposPingWebhookResponse struct {
-	internal.Response
+	common.Response
 	request *ReposPingWebhookReq
 	Data    bool
 }
@@ -14762,7 +14877,8 @@ func ReposRemoveAppAccessRestrictions(ctx context.Context, req *ReposRemoveAppAc
 		req = new(ReposRemoveAppAccessRestrictionsReq)
 	}
 	resp := &ReposRemoveAppAccessRestrictionsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -14772,7 +14888,7 @@ func ReposRemoveAppAccessRestrictions(ctx context.Context, req *ReposRemoveAppAc
 	}
 
 	resp.Data = []components.Integration{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -14865,7 +14981,7 @@ ReposRemoveAppAccessRestrictionsResponse is a response for ReposRemoveAppAccessR
 https://developer.github.com/v3/repos/branches/#remove-app-access-restrictions
 */
 type ReposRemoveAppAccessRestrictionsResponse struct {
-	internal.Response
+	common.Response
 	request *ReposRemoveAppAccessRestrictionsReq
 	Data    []components.Integration
 }
@@ -14888,7 +15004,8 @@ func ReposRemoveCollaborator(ctx context.Context, req *ReposRemoveCollaboratorRe
 		req = new(ReposRemoveCollaboratorReq)
 	}
 	resp := &ReposRemoveCollaboratorResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -14897,7 +15014,7 @@ func ReposRemoveCollaborator(ctx context.Context, req *ReposRemoveCollaboratorRe
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -14977,7 +15094,7 @@ ReposRemoveCollaboratorResponse is a response for ReposRemoveCollaborator
 https://developer.github.com/v3/repos/collaborators/#remove-a-repository-collaborator
 */
 type ReposRemoveCollaboratorResponse struct {
-	internal.Response
+	common.Response
 	request *ReposRemoveCollaboratorReq
 }
 
@@ -14999,7 +15116,8 @@ func ReposRemoveStatusCheckContexts(ctx context.Context, req *ReposRemoveStatusC
 		req = new(ReposRemoveStatusCheckContextsReq)
 	}
 	resp := &ReposRemoveStatusCheckContextsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -15009,7 +15127,7 @@ func ReposRemoveStatusCheckContexts(ctx context.Context, req *ReposRemoveStatusC
 	}
 
 	resp.Data = ReposRemoveStatusCheckContextsResponseBody{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -15109,7 +15227,7 @@ ReposRemoveStatusCheckContextsResponse is a response for ReposRemoveStatusCheckC
 https://developer.github.com/v3/repos/branches/#remove-status-check-contexts
 */
 type ReposRemoveStatusCheckContextsResponse struct {
-	internal.Response
+	common.Response
 	request *ReposRemoveStatusCheckContextsReq
 	Data    ReposRemoveStatusCheckContextsResponseBody
 }
@@ -15132,7 +15250,8 @@ func ReposRemoveStatusCheckProtection(ctx context.Context, req *ReposRemoveStatu
 		req = new(ReposRemoveStatusCheckProtectionReq)
 	}
 	resp := &ReposRemoveStatusCheckProtectionResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -15141,7 +15260,7 @@ func ReposRemoveStatusCheckProtection(ctx context.Context, req *ReposRemoveStatu
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -15223,7 +15342,7 @@ ReposRemoveStatusCheckProtectionResponse is a response for ReposRemoveStatusChec
 https://developer.github.com/v3/repos/branches/#remove-status-check-protection
 */
 type ReposRemoveStatusCheckProtectionResponse struct {
-	internal.Response
+	common.Response
 	request *ReposRemoveStatusCheckProtectionReq
 }
 
@@ -15245,7 +15364,8 @@ func ReposRemoveTeamAccessRestrictions(ctx context.Context, req *ReposRemoveTeam
 		req = new(ReposRemoveTeamAccessRestrictionsReq)
 	}
 	resp := &ReposRemoveTeamAccessRestrictionsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -15255,7 +15375,7 @@ func ReposRemoveTeamAccessRestrictions(ctx context.Context, req *ReposRemoveTeam
 	}
 
 	resp.Data = []components.Team{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -15348,7 +15468,7 @@ ReposRemoveTeamAccessRestrictionsResponse is a response for ReposRemoveTeamAcces
 https://developer.github.com/v3/repos/branches/#remove-team-access-restrictions
 */
 type ReposRemoveTeamAccessRestrictionsResponse struct {
-	internal.Response
+	common.Response
 	request *ReposRemoveTeamAccessRestrictionsReq
 	Data    []components.Team
 }
@@ -15371,7 +15491,8 @@ func ReposRemoveUserAccessRestrictions(ctx context.Context, req *ReposRemoveUser
 		req = new(ReposRemoveUserAccessRestrictionsReq)
 	}
 	resp := &ReposRemoveUserAccessRestrictionsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -15381,7 +15502,7 @@ func ReposRemoveUserAccessRestrictions(ctx context.Context, req *ReposRemoveUser
 	}
 
 	resp.Data = []components.SimpleUser{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -15474,7 +15595,7 @@ ReposRemoveUserAccessRestrictionsResponse is a response for ReposRemoveUserAcces
 https://developer.github.com/v3/repos/branches/#remove-user-access-restrictions
 */
 type ReposRemoveUserAccessRestrictionsResponse struct {
-	internal.Response
+	common.Response
 	request *ReposRemoveUserAccessRestrictionsReq
 	Data    []components.SimpleUser
 }
@@ -15497,7 +15618,8 @@ func ReposReplaceAllTopics(ctx context.Context, req *ReposReplaceAllTopicsReq, o
 		req = new(ReposReplaceAllTopicsReq)
 	}
 	resp := &ReposReplaceAllTopicsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -15507,7 +15629,7 @@ func ReposReplaceAllTopics(ctx context.Context, req *ReposReplaceAllTopicsReq, o
 	}
 
 	resp.Data = components.Topic{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -15613,7 +15735,7 @@ ReposReplaceAllTopicsResponse is a response for ReposReplaceAllTopics
 https://developer.github.com/v3/repos/#replace-all-repository-topics
 */
 type ReposReplaceAllTopicsResponse struct {
-	internal.Response
+	common.Response
 	request *ReposReplaceAllTopicsReq
 	Data    components.Topic
 }
@@ -15636,7 +15758,8 @@ func ReposRequestPagesBuild(ctx context.Context, req *ReposRequestPagesBuildReq,
 		req = new(ReposRequestPagesBuildReq)
 	}
 	resp := &ReposRequestPagesBuildResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -15646,7 +15769,7 @@ func ReposRequestPagesBuild(ctx context.Context, req *ReposRequestPagesBuildReq,
 	}
 
 	resp.Data = components.PageBuildStatus{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -15725,7 +15848,7 @@ ReposRequestPagesBuildResponse is a response for ReposRequestPagesBuild
 https://developer.github.com/v3/repos/pages/#request-a-github-pages-build
 */
 type ReposRequestPagesBuildResponse struct {
-	internal.Response
+	common.Response
 	request *ReposRequestPagesBuildReq
 	Data    components.PageBuildStatus
 }
@@ -15748,7 +15871,8 @@ func ReposSetAdminBranchProtection(ctx context.Context, req *ReposSetAdminBranch
 		req = new(ReposSetAdminBranchProtectionReq)
 	}
 	resp := &ReposSetAdminBranchProtectionResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -15758,7 +15882,7 @@ func ReposSetAdminBranchProtection(ctx context.Context, req *ReposSetAdminBranch
 	}
 
 	resp.Data = components.ProtectedBranchAdminEnforced{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -15840,7 +15964,7 @@ ReposSetAdminBranchProtectionResponse is a response for ReposSetAdminBranchProte
 https://developer.github.com/v3/repos/branches/#set-admin-branch-protection
 */
 type ReposSetAdminBranchProtectionResponse struct {
-	internal.Response
+	common.Response
 	request *ReposSetAdminBranchProtectionReq
 	Data    components.ProtectedBranchAdminEnforced
 }
@@ -15863,7 +15987,8 @@ func ReposSetAppAccessRestrictions(ctx context.Context, req *ReposSetAppAccessRe
 		req = new(ReposSetAppAccessRestrictionsReq)
 	}
 	resp := &ReposSetAppAccessRestrictionsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -15873,7 +15998,7 @@ func ReposSetAppAccessRestrictions(ctx context.Context, req *ReposSetAppAccessRe
 	}
 
 	resp.Data = []components.Integration{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -15966,7 +16091,7 @@ ReposSetAppAccessRestrictionsResponse is a response for ReposSetAppAccessRestric
 https://developer.github.com/v3/repos/branches/#set-app-access-restrictions
 */
 type ReposSetAppAccessRestrictionsResponse struct {
-	internal.Response
+	common.Response
 	request *ReposSetAppAccessRestrictionsReq
 	Data    []components.Integration
 }
@@ -15989,7 +16114,8 @@ func ReposSetStatusCheckContexts(ctx context.Context, req *ReposSetStatusCheckCo
 		req = new(ReposSetStatusCheckContextsReq)
 	}
 	resp := &ReposSetStatusCheckContextsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -15999,7 +16125,7 @@ func ReposSetStatusCheckContexts(ctx context.Context, req *ReposSetStatusCheckCo
 	}
 
 	resp.Data = ReposSetStatusCheckContextsResponseBody{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -16099,7 +16225,7 @@ ReposSetStatusCheckContextsResponse is a response for ReposSetStatusCheckContext
 https://developer.github.com/v3/repos/branches/#set-status-check-contexts
 */
 type ReposSetStatusCheckContextsResponse struct {
-	internal.Response
+	common.Response
 	request *ReposSetStatusCheckContextsReq
 	Data    ReposSetStatusCheckContextsResponseBody
 }
@@ -16122,7 +16248,8 @@ func ReposSetTeamAccessRestrictions(ctx context.Context, req *ReposSetTeamAccess
 		req = new(ReposSetTeamAccessRestrictionsReq)
 	}
 	resp := &ReposSetTeamAccessRestrictionsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -16132,7 +16259,7 @@ func ReposSetTeamAccessRestrictions(ctx context.Context, req *ReposSetTeamAccess
 	}
 
 	resp.Data = []components.Team{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -16225,7 +16352,7 @@ ReposSetTeamAccessRestrictionsResponse is a response for ReposSetTeamAccessRestr
 https://developer.github.com/v3/repos/branches/#set-team-access-restrictions
 */
 type ReposSetTeamAccessRestrictionsResponse struct {
-	internal.Response
+	common.Response
 	request *ReposSetTeamAccessRestrictionsReq
 	Data    []components.Team
 }
@@ -16248,7 +16375,8 @@ func ReposSetUserAccessRestrictions(ctx context.Context, req *ReposSetUserAccess
 		req = new(ReposSetUserAccessRestrictionsReq)
 	}
 	resp := &ReposSetUserAccessRestrictionsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -16258,7 +16386,7 @@ func ReposSetUserAccessRestrictions(ctx context.Context, req *ReposSetUserAccess
 	}
 
 	resp.Data = []components.SimpleUser{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -16351,7 +16479,7 @@ ReposSetUserAccessRestrictionsResponse is a response for ReposSetUserAccessRestr
 https://developer.github.com/v3/repos/branches/#set-user-access-restrictions
 */
 type ReposSetUserAccessRestrictionsResponse struct {
-	internal.Response
+	common.Response
 	request *ReposSetUserAccessRestrictionsReq
 	Data    []components.SimpleUser
 }
@@ -16374,7 +16502,8 @@ func ReposTestPushWebhook(ctx context.Context, req *ReposTestPushWebhookReq, opt
 		req = new(ReposTestPushWebhookReq)
 	}
 	resp := &ReposTestPushWebhookResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -16387,7 +16516,7 @@ func ReposTestPushWebhook(ctx context.Context, req *ReposTestPushWebhookReq, opt
 	if err != nil {
 		return nil, err
 	}
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -16467,7 +16596,7 @@ ReposTestPushWebhookResponse is a response for ReposTestPushWebhook
 https://developer.github.com/v3/repos/hooks/#test-the-push-repository-webhook
 */
 type ReposTestPushWebhookResponse struct {
-	internal.Response
+	common.Response
 	request *ReposTestPushWebhookReq
 	Data    bool
 }
@@ -16490,7 +16619,8 @@ func ReposTransfer(ctx context.Context, req *ReposTransferReq, opt ...options.Op
 		req = new(ReposTransferReq)
 	}
 	resp := &ReposTransferResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -16500,7 +16630,7 @@ func ReposTransfer(ctx context.Context, req *ReposTransferReq, opt ...options.Op
 	}
 
 	resp.Data = components.Repository{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -16597,7 +16727,7 @@ ReposTransferResponse is a response for ReposTransfer
 https://developer.github.com/v3/repos/#transfer-a-repository
 */
 type ReposTransferResponse struct {
-	internal.Response
+	common.Response
 	request *ReposTransferReq
 	Data    components.Repository
 }
@@ -16620,7 +16750,8 @@ func ReposUpdate(ctx context.Context, req *ReposUpdateReq, opt ...options.Option
 		req = new(ReposUpdateReq)
 	}
 	resp := &ReposUpdateResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -16630,7 +16761,7 @@ func ReposUpdate(ctx context.Context, req *ReposUpdateReq, opt ...options.Option
 	}
 
 	resp.Data = components.FullRepository{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -16818,7 +16949,7 @@ ReposUpdateResponse is a response for ReposUpdate
 https://developer.github.com/v3/repos/#update-a-repository
 */
 type ReposUpdateResponse struct {
-	internal.Response
+	common.Response
 	request *ReposUpdateReq
 	Data    components.FullRepository
 }
@@ -16841,7 +16972,8 @@ func ReposUpdateBranchProtection(ctx context.Context, req *ReposUpdateBranchProt
 		req = new(ReposUpdateBranchProtectionReq)
 	}
 	resp := &ReposUpdateBranchProtectionResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -16851,7 +16983,7 @@ func ReposUpdateBranchProtection(ctx context.Context, req *ReposUpdateBranchProt
 	}
 
 	resp.Data = components.ProtectedBranch{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -17058,7 +17190,7 @@ ReposUpdateBranchProtectionResponse is a response for ReposUpdateBranchProtectio
 https://developer.github.com/v3/repos/branches/#update-branch-protection
 */
 type ReposUpdateBranchProtectionResponse struct {
-	internal.Response
+	common.Response
 	request *ReposUpdateBranchProtectionReq
 	Data    components.ProtectedBranch
 }
@@ -17081,7 +17213,8 @@ func ReposUpdateCommitComment(ctx context.Context, req *ReposUpdateCommitComment
 		req = new(ReposUpdateCommitCommentReq)
 	}
 	resp := &ReposUpdateCommitCommentResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -17091,7 +17224,7 @@ func ReposUpdateCommitComment(ctx context.Context, req *ReposUpdateCommitComment
 	}
 
 	resp.Data = components.CommitComment{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -17188,7 +17321,7 @@ ReposUpdateCommitCommentResponse is a response for ReposUpdateCommitComment
 https://developer.github.com/v3/repos/comments/#update-a-commit-comment
 */
 type ReposUpdateCommitCommentResponse struct {
-	internal.Response
+	common.Response
 	request *ReposUpdateCommitCommentReq
 	Data    components.CommitComment
 }
@@ -17211,7 +17344,8 @@ func ReposUpdateInformationAboutPagesSite(ctx context.Context, req *ReposUpdateI
 		req = new(ReposUpdateInformationAboutPagesSiteReq)
 	}
 	resp := &ReposUpdateInformationAboutPagesSiteResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -17220,7 +17354,7 @@ func ReposUpdateInformationAboutPagesSite(ctx context.Context, req *ReposUpdateI
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -17317,7 +17451,7 @@ ReposUpdateInformationAboutPagesSiteResponse is a response for ReposUpdateInform
 https://developer.github.com/v3/repos/pages/#update-information-about-a-github-pages-site
 */
 type ReposUpdateInformationAboutPagesSiteResponse struct {
-	internal.Response
+	common.Response
 	request *ReposUpdateInformationAboutPagesSiteReq
 }
 
@@ -17339,7 +17473,8 @@ func ReposUpdateInvitation(ctx context.Context, req *ReposUpdateInvitationReq, o
 		req = new(ReposUpdateInvitationReq)
 	}
 	resp := &ReposUpdateInvitationResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -17349,7 +17484,7 @@ func ReposUpdateInvitation(ctx context.Context, req *ReposUpdateInvitationReq, o
 	}
 
 	resp.Data = components.RepositoryInvitation{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -17449,7 +17584,7 @@ ReposUpdateInvitationResponse is a response for ReposUpdateInvitation
 https://developer.github.com/v3/repos/invitations/#update-a-repository-invitation
 */
 type ReposUpdateInvitationResponse struct {
-	internal.Response
+	common.Response
 	request *ReposUpdateInvitationReq
 	Data    components.RepositoryInvitation
 }
@@ -17472,7 +17607,8 @@ func ReposUpdatePullRequestReviewProtection(ctx context.Context, req *ReposUpdat
 		req = new(ReposUpdatePullRequestReviewProtectionReq)
 	}
 	resp := &ReposUpdatePullRequestReviewProtectionResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -17482,7 +17618,7 @@ func ReposUpdatePullRequestReviewProtection(ctx context.Context, req *ReposUpdat
 	}
 
 	resp.Data = components.ProtectedBranchPullRequestReview{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -17613,7 +17749,7 @@ ReposUpdatePullRequestReviewProtectionResponse is a response for ReposUpdatePull
 https://developer.github.com/v3/repos/branches/#update-pull-request-review-protection
 */
 type ReposUpdatePullRequestReviewProtectionResponse struct {
-	internal.Response
+	common.Response
 	request *ReposUpdatePullRequestReviewProtectionReq
 	Data    components.ProtectedBranchPullRequestReview
 }
@@ -17636,7 +17772,8 @@ func ReposUpdateRelease(ctx context.Context, req *ReposUpdateReleaseReq, opt ...
 		req = new(ReposUpdateReleaseReq)
 	}
 	resp := &ReposUpdateReleaseResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -17646,7 +17783,7 @@ func ReposUpdateRelease(ctx context.Context, req *ReposUpdateReleaseReq, opt ...
 	}
 
 	resp.Data = components.Release{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -17762,7 +17899,7 @@ ReposUpdateReleaseResponse is a response for ReposUpdateRelease
 https://developer.github.com/v3/repos/releases/#update-a-release
 */
 type ReposUpdateReleaseResponse struct {
-	internal.Response
+	common.Response
 	request *ReposUpdateReleaseReq
 	Data    components.Release
 }
@@ -17785,7 +17922,8 @@ func ReposUpdateReleaseAsset(ctx context.Context, req *ReposUpdateReleaseAssetRe
 		req = new(ReposUpdateReleaseAssetReq)
 	}
 	resp := &ReposUpdateReleaseAssetResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -17795,7 +17933,7 @@ func ReposUpdateReleaseAsset(ctx context.Context, req *ReposUpdateReleaseAssetRe
 	}
 
 	resp.Data = components.ReleaseAsset{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -17896,7 +18034,7 @@ ReposUpdateReleaseAssetResponse is a response for ReposUpdateReleaseAsset
 https://developer.github.com/v3/repos/releases/#update-a-release-asset
 */
 type ReposUpdateReleaseAssetResponse struct {
-	internal.Response
+	common.Response
 	request *ReposUpdateReleaseAssetReq
 	Data    components.ReleaseAsset
 }
@@ -17919,7 +18057,8 @@ func ReposUpdateStatusCheckProtection(ctx context.Context, req *ReposUpdateStatu
 		req = new(ReposUpdateStatusCheckProtectionReq)
 	}
 	resp := &ReposUpdateStatusCheckProtectionResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -17929,7 +18068,7 @@ func ReposUpdateStatusCheckProtection(ctx context.Context, req *ReposUpdateStatu
 	}
 
 	resp.Data = components.StatusCheckPolicy{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -18029,7 +18168,7 @@ ReposUpdateStatusCheckProtectionResponse is a response for ReposUpdateStatusChec
 https://developer.github.com/v3/repos/branches/#update-status-check-potection
 */
 type ReposUpdateStatusCheckProtectionResponse struct {
-	internal.Response
+	common.Response
 	request *ReposUpdateStatusCheckProtectionReq
 	Data    components.StatusCheckPolicy
 }
@@ -18052,7 +18191,8 @@ func ReposUpdateWebhook(ctx context.Context, req *ReposUpdateWebhookReq, opt ...
 		req = new(ReposUpdateWebhookReq)
 	}
 	resp := &ReposUpdateWebhookResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -18062,7 +18202,7 @@ func ReposUpdateWebhook(ctx context.Context, req *ReposUpdateWebhookReq, opt ...
 	}
 
 	resp.Data = components.Hook{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -18204,7 +18344,7 @@ ReposUpdateWebhookResponse is a response for ReposUpdateWebhook
 https://developer.github.com/v3/repos/hooks/#update-a-repository-webhook
 */
 type ReposUpdateWebhookResponse struct {
-	internal.Response
+	common.Response
 	request *ReposUpdateWebhookReq
 	Data    components.Hook
 }
@@ -18227,7 +18367,8 @@ func ReposUploadReleaseAsset(ctx context.Context, req *ReposUploadReleaseAssetRe
 		req = new(ReposUploadReleaseAssetReq)
 	}
 	resp := &ReposUploadReleaseAssetResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -18237,7 +18378,7 @@ func ReposUploadReleaseAsset(ctx context.Context, req *ReposUploadReleaseAssetRe
 	}
 
 	resp.Data = components.ReleaseAsset{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -18338,7 +18479,7 @@ ReposUploadReleaseAssetResponse is a response for ReposUploadReleaseAsset
 https://developer.github.com/v3/repos/releases/#upload-a-release-asset
 */
 type ReposUploadReleaseAssetResponse struct {
-	internal.Response
+	common.Response
 	request *ReposUploadReleaseAssetReq
 	Data    components.ReleaseAsset
 }

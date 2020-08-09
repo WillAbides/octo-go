@@ -5,6 +5,7 @@ package octo
 import (
 	"context"
 	"fmt"
+	common "github.com/willabides/octo-go/common"
 	components "github.com/willabides/octo-go/components"
 	internal "github.com/willabides/octo-go/internal"
 	options "github.com/willabides/octo-go/options"
@@ -31,7 +32,8 @@ func ChecksCreate(ctx context.Context, req *ChecksCreateReq, opt ...options.Opti
 		req = new(ChecksCreateReq)
 	}
 	resp := &ChecksCreateResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -41,7 +43,7 @@ func ChecksCreate(ctx context.Context, req *ChecksCreateReq, opt ...options.Opti
 	}
 
 	resp.Data = components.CheckRun{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -311,7 +313,7 @@ ChecksCreateResponse is a response for ChecksCreate
 https://developer.github.com/v3/checks/runs/#create-a-check-run
 */
 type ChecksCreateResponse struct {
-	internal.Response
+	common.Response
 	request *ChecksCreateReq
 	Data    components.CheckRun
 }
@@ -334,7 +336,8 @@ func ChecksCreateSuite(ctx context.Context, req *ChecksCreateSuiteReq, opt ...op
 		req = new(ChecksCreateSuiteReq)
 	}
 	resp := &ChecksCreateSuiteResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -344,7 +347,7 @@ func ChecksCreateSuite(ctx context.Context, req *ChecksCreateSuiteReq, opt ...op
 	}
 
 	resp.Data = components.CheckSuite{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -447,7 +450,7 @@ ChecksCreateSuiteResponse is a response for ChecksCreateSuite
 https://developer.github.com/v3/checks/suites/#create-a-check-suite
 */
 type ChecksCreateSuiteResponse struct {
-	internal.Response
+	common.Response
 	request *ChecksCreateSuiteReq
 	Data    components.CheckSuite
 }
@@ -470,7 +473,8 @@ func ChecksGet(ctx context.Context, req *ChecksGetReq, opt ...options.Option) (*
 		req = new(ChecksGetReq)
 	}
 	resp := &ChecksGetResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -480,7 +484,7 @@ func ChecksGet(ctx context.Context, req *ChecksGetReq, opt ...options.Option) (*
 	}
 
 	resp.Data = components.CheckRun{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -571,7 +575,7 @@ ChecksGetResponse is a response for ChecksGet
 https://developer.github.com/v3/checks/runs/#get-a-check-run
 */
 type ChecksGetResponse struct {
-	internal.Response
+	common.Response
 	request *ChecksGetReq
 	Data    components.CheckRun
 }
@@ -594,7 +598,8 @@ func ChecksGetSuite(ctx context.Context, req *ChecksGetSuiteReq, opt ...options.
 		req = new(ChecksGetSuiteReq)
 	}
 	resp := &ChecksGetSuiteResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -604,7 +609,7 @@ func ChecksGetSuite(ctx context.Context, req *ChecksGetSuiteReq, opt ...options.
 	}
 
 	resp.Data = components.CheckSuite{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -695,7 +700,7 @@ ChecksGetSuiteResponse is a response for ChecksGetSuite
 https://developer.github.com/v3/checks/suites/#get-a-check-suite
 */
 type ChecksGetSuiteResponse struct {
-	internal.Response
+	common.Response
 	request *ChecksGetSuiteReq
 	Data    components.CheckSuite
 }
@@ -718,7 +723,8 @@ func ChecksListAnnotations(ctx context.Context, req *ChecksListAnnotationsReq, o
 		req = new(ChecksListAnnotationsReq)
 	}
 	resp := &ChecksListAnnotationsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -728,7 +734,7 @@ func ChecksListAnnotations(ctx context.Context, req *ChecksListAnnotationsReq, o
 	}
 
 	resp.Data = []components.CheckAnnotation{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -831,7 +837,7 @@ ChecksListAnnotationsResponse is a response for ChecksListAnnotations
 https://developer.github.com/v3/checks/runs/#list-check-run-annotations
 */
 type ChecksListAnnotationsResponse struct {
-	internal.Response
+	common.Response
 	request *ChecksListAnnotationsReq
 	Data    []components.CheckAnnotation
 }
@@ -854,7 +860,8 @@ func ChecksListForRef(ctx context.Context, req *ChecksListForRefReq, opt ...opti
 		req = new(ChecksListForRefReq)
 	}
 	resp := &ChecksListForRefResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -864,7 +871,7 @@ func ChecksListForRef(ctx context.Context, req *ChecksListForRefReq, opt ...opti
 	}
 
 	resp.Data = ChecksListForRefResponseBody{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1001,7 +1008,7 @@ ChecksListForRefResponse is a response for ChecksListForRef
 https://developer.github.com/v3/checks/runs/#list-check-runs-for-a-git-reference
 */
 type ChecksListForRefResponse struct {
-	internal.Response
+	common.Response
 	request *ChecksListForRefReq
 	Data    ChecksListForRefResponseBody
 }
@@ -1024,7 +1031,8 @@ func ChecksListForSuite(ctx context.Context, req *ChecksListForSuiteReq, opt ...
 		req = new(ChecksListForSuiteReq)
 	}
 	resp := &ChecksListForSuiteResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1034,7 +1042,7 @@ func ChecksListForSuite(ctx context.Context, req *ChecksListForSuiteReq, opt ...
 	}
 
 	resp.Data = ChecksListForSuiteResponseBody{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1171,7 +1179,7 @@ ChecksListForSuiteResponse is a response for ChecksListForSuite
 https://developer.github.com/v3/checks/runs/#list-check-runs-in-a-check-suite
 */
 type ChecksListForSuiteResponse struct {
-	internal.Response
+	common.Response
 	request *ChecksListForSuiteReq
 	Data    ChecksListForSuiteResponseBody
 }
@@ -1194,7 +1202,8 @@ func ChecksListSuitesForRef(ctx context.Context, req *ChecksListSuitesForRefReq,
 		req = new(ChecksListSuitesForRefReq)
 	}
 	resp := &ChecksListSuitesForRefResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1204,7 +1213,7 @@ func ChecksListSuitesForRef(ctx context.Context, req *ChecksListSuitesForRefReq,
 	}
 
 	resp.Data = ChecksListSuitesForRefResponseBody{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1329,7 +1338,7 @@ ChecksListSuitesForRefResponse is a response for ChecksListSuitesForRef
 https://developer.github.com/v3/checks/suites/#list-check-suites-for-a-git-reference
 */
 type ChecksListSuitesForRefResponse struct {
-	internal.Response
+	common.Response
 	request *ChecksListSuitesForRefReq
 	Data    ChecksListSuitesForRefResponseBody
 }
@@ -1352,7 +1361,8 @@ func ChecksRerequestSuite(ctx context.Context, req *ChecksRerequestSuiteReq, opt
 		req = new(ChecksRerequestSuiteReq)
 	}
 	resp := &ChecksRerequestSuiteResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1361,7 +1371,7 @@ func ChecksRerequestSuite(ctx context.Context, req *ChecksRerequestSuiteReq, opt
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -1452,7 +1462,7 @@ ChecksRerequestSuiteResponse is a response for ChecksRerequestSuite
 https://developer.github.com/v3/checks/suites/#rerequest-a-check-suite
 */
 type ChecksRerequestSuiteResponse struct {
-	internal.Response
+	common.Response
 	request *ChecksRerequestSuiteReq
 }
 
@@ -1474,7 +1484,8 @@ func ChecksSetSuitesPreferences(ctx context.Context, req *ChecksSetSuitesPrefere
 		req = new(ChecksSetSuitesPreferencesReq)
 	}
 	resp := &ChecksSetSuitesPreferencesResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1484,7 +1495,7 @@ func ChecksSetSuitesPreferences(ctx context.Context, req *ChecksSetSuitesPrefere
 	}
 
 	resp.Data = components.CheckSuitePreference{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1605,7 +1616,7 @@ ChecksSetSuitesPreferencesResponse is a response for ChecksSetSuitesPreferences
 https://developer.github.com/v3/checks/suites/#update-repository-preferences-for-check-suites
 */
 type ChecksSetSuitesPreferencesResponse struct {
-	internal.Response
+	common.Response
 	request *ChecksSetSuitesPreferencesReq
 	Data    components.CheckSuitePreference
 }
@@ -1628,7 +1639,8 @@ func ChecksUpdate(ctx context.Context, req *ChecksUpdateReq, opt ...options.Opti
 		req = new(ChecksUpdateReq)
 	}
 	resp := &ChecksUpdateResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1638,7 +1650,7 @@ func ChecksUpdate(ctx context.Context, req *ChecksUpdateReq, opt ...options.Opti
 	}
 
 	resp.Data = components.CheckRun{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1894,7 +1906,7 @@ ChecksUpdateResponse is a response for ChecksUpdate
 https://developer.github.com/v3/checks/runs/#update-a-check-run
 */
 type ChecksUpdateResponse struct {
-	internal.Response
+	common.Response
 	request *ChecksUpdateReq
 	Data    components.CheckRun
 }

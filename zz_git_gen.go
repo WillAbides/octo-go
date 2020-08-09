@@ -5,6 +5,7 @@ package octo
 import (
 	"context"
 	"fmt"
+	common "github.com/willabides/octo-go/common"
 	components "github.com/willabides/octo-go/components"
 	internal "github.com/willabides/octo-go/internal"
 	options "github.com/willabides/octo-go/options"
@@ -31,7 +32,8 @@ func GitCreateBlob(ctx context.Context, req *GitCreateBlobReq, opt ...options.Op
 		req = new(GitCreateBlobReq)
 	}
 	resp := &GitCreateBlobResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -41,7 +43,7 @@ func GitCreateBlob(ctx context.Context, req *GitCreateBlobReq, opt ...options.Op
 	}
 
 	resp.Data = components.ShortBlob{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -138,7 +140,7 @@ GitCreateBlobResponse is a response for GitCreateBlob
 https://developer.github.com/v3/git/blobs/#create-a-blob
 */
 type GitCreateBlobResponse struct {
-	internal.Response
+	common.Response
 	request *GitCreateBlobReq
 	Data    components.ShortBlob
 }
@@ -161,7 +163,8 @@ func GitCreateCommit(ctx context.Context, req *GitCreateCommitReq, opt ...option
 		req = new(GitCreateCommitReq)
 	}
 	resp := &GitCreateCommitResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -171,7 +174,7 @@ func GitCreateCommit(ctx context.Context, req *GitCreateCommitReq, opt ...option
 	}
 
 	resp.Data = components.GitCommit{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -337,7 +340,7 @@ GitCreateCommitResponse is a response for GitCreateCommit
 https://developer.github.com/v3/git/commits/#create-a-commit
 */
 type GitCreateCommitResponse struct {
-	internal.Response
+	common.Response
 	request *GitCreateCommitReq
 	Data    components.GitCommit
 }
@@ -360,7 +363,8 @@ func GitCreateRef(ctx context.Context, req *GitCreateRefReq, opt ...options.Opti
 		req = new(GitCreateRefReq)
 	}
 	resp := &GitCreateRefResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -370,7 +374,7 @@ func GitCreateRef(ctx context.Context, req *GitCreateRefReq, opt ...options.Opti
 	}
 
 	resp.Data = components.GitRef{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -471,7 +475,7 @@ GitCreateRefResponse is a response for GitCreateRef
 https://developer.github.com/v3/git/refs/#create-a-reference
 */
 type GitCreateRefResponse struct {
-	internal.Response
+	common.Response
 	request *GitCreateRefReq
 	Data    components.GitRef
 }
@@ -494,7 +498,8 @@ func GitCreateTag(ctx context.Context, req *GitCreateTagReq, opt ...options.Opti
 		req = new(GitCreateTagReq)
 	}
 	resp := &GitCreateTagResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -504,7 +509,7 @@ func GitCreateTag(ctx context.Context, req *GitCreateTagReq, opt ...options.Opti
 	}
 
 	resp.Data = components.GitTag{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -626,7 +631,7 @@ GitCreateTagResponse is a response for GitCreateTag
 https://developer.github.com/v3/git/tags/#create-a-tag-object
 */
 type GitCreateTagResponse struct {
-	internal.Response
+	common.Response
 	request *GitCreateTagReq
 	Data    components.GitTag
 }
@@ -649,7 +654,8 @@ func GitCreateTree(ctx context.Context, req *GitCreateTreeReq, opt ...options.Op
 		req = new(GitCreateTreeReq)
 	}
 	resp := &GitCreateTreeResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -659,7 +665,7 @@ func GitCreateTree(ctx context.Context, req *GitCreateTreeReq, opt ...options.Op
 	}
 
 	resp.Data = components.GitTree{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -795,7 +801,7 @@ GitCreateTreeResponse is a response for GitCreateTree
 https://developer.github.com/v3/git/trees/#create-a-tree
 */
 type GitCreateTreeResponse struct {
-	internal.Response
+	common.Response
 	request *GitCreateTreeReq
 	Data    components.GitTree
 }
@@ -818,7 +824,8 @@ func GitDeleteRef(ctx context.Context, req *GitDeleteRefReq, opt ...options.Opti
 		req = new(GitDeleteRefReq)
 	}
 	resp := &GitDeleteRefResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -827,7 +834,7 @@ func GitDeleteRef(ctx context.Context, req *GitDeleteRefReq, opt ...options.Opti
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -909,7 +916,7 @@ GitDeleteRefResponse is a response for GitDeleteRef
 https://developer.github.com/v3/git/refs/#delete-a-reference
 */
 type GitDeleteRefResponse struct {
-	internal.Response
+	common.Response
 	request *GitDeleteRefReq
 }
 
@@ -931,7 +938,8 @@ func GitGetBlob(ctx context.Context, req *GitGetBlobReq, opt ...options.Option) 
 		req = new(GitGetBlobReq)
 	}
 	resp := &GitGetBlobResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -941,7 +949,7 @@ func GitGetBlob(ctx context.Context, req *GitGetBlobReq, opt ...options.Option) 
 	}
 
 	resp.Data = components.Blob{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1023,7 +1031,7 @@ GitGetBlobResponse is a response for GitGetBlob
 https://developer.github.com/v3/git/blobs/#get-a-blob
 */
 type GitGetBlobResponse struct {
-	internal.Response
+	common.Response
 	request *GitGetBlobReq
 	Data    components.Blob
 }
@@ -1046,7 +1054,8 @@ func GitGetCommit(ctx context.Context, req *GitGetCommitReq, opt ...options.Opti
 		req = new(GitGetCommitReq)
 	}
 	resp := &GitGetCommitResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1056,7 +1065,7 @@ func GitGetCommit(ctx context.Context, req *GitGetCommitReq, opt ...options.Opti
 	}
 
 	resp.Data = components.GitCommit{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1138,7 +1147,7 @@ GitGetCommitResponse is a response for GitGetCommit
 https://developer.github.com/v3/git/commits/#get-a-commit
 */
 type GitGetCommitResponse struct {
-	internal.Response
+	common.Response
 	request *GitGetCommitReq
 	Data    components.GitCommit
 }
@@ -1161,7 +1170,8 @@ func GitGetRef(ctx context.Context, req *GitGetRefReq, opt ...options.Option) (*
 		req = new(GitGetRefReq)
 	}
 	resp := &GitGetRefResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1171,7 +1181,7 @@ func GitGetRef(ctx context.Context, req *GitGetRefReq, opt ...options.Option) (*
 	}
 
 	resp.Data = components.GitRef{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1253,7 +1263,7 @@ GitGetRefResponse is a response for GitGetRef
 https://developer.github.com/v3/git/refs/#get-a-reference
 */
 type GitGetRefResponse struct {
-	internal.Response
+	common.Response
 	request *GitGetRefReq
 	Data    components.GitRef
 }
@@ -1276,7 +1286,8 @@ func GitGetTag(ctx context.Context, req *GitGetTagReq, opt ...options.Option) (*
 		req = new(GitGetTagReq)
 	}
 	resp := &GitGetTagResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1286,7 +1297,7 @@ func GitGetTag(ctx context.Context, req *GitGetTagReq, opt ...options.Option) (*
 	}
 
 	resp.Data = components.GitTag{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1368,7 +1379,7 @@ GitGetTagResponse is a response for GitGetTag
 https://developer.github.com/v3/git/tags/#get-a-tag
 */
 type GitGetTagResponse struct {
-	internal.Response
+	common.Response
 	request *GitGetTagReq
 	Data    components.GitTag
 }
@@ -1391,7 +1402,8 @@ func GitGetTree(ctx context.Context, req *GitGetTreeReq, opt ...options.Option) 
 		req = new(GitGetTreeReq)
 	}
 	resp := &GitGetTreeResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1401,7 +1413,7 @@ func GitGetTree(ctx context.Context, req *GitGetTreeReq, opt ...options.Option) 
 	}
 
 	resp.Data = components.GitTree{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1495,7 +1507,7 @@ GitGetTreeResponse is a response for GitGetTree
 https://developer.github.com/v3/git/trees/#get-a-tree
 */
 type GitGetTreeResponse struct {
-	internal.Response
+	common.Response
 	request *GitGetTreeReq
 	Data    components.GitTree
 }
@@ -1518,7 +1530,8 @@ func GitListMatchingRefs(ctx context.Context, req *GitListMatchingRefsReq, opt .
 		req = new(GitListMatchingRefsReq)
 	}
 	resp := &GitListMatchingRefsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1528,7 +1541,7 @@ func GitListMatchingRefs(ctx context.Context, req *GitListMatchingRefsReq, opt .
 	}
 
 	resp.Data = []components.GitRef{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1622,7 +1635,7 @@ GitListMatchingRefsResponse is a response for GitListMatchingRefs
 https://developer.github.com/v3/git/refs/#list-matching-references
 */
 type GitListMatchingRefsResponse struct {
-	internal.Response
+	common.Response
 	request *GitListMatchingRefsReq
 	Data    []components.GitRef
 }
@@ -1645,7 +1658,8 @@ func GitUpdateRef(ctx context.Context, req *GitUpdateRefReq, opt ...options.Opti
 		req = new(GitUpdateRefReq)
 	}
 	resp := &GitUpdateRefResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1655,7 +1669,7 @@ func GitUpdateRef(ctx context.Context, req *GitUpdateRefReq, opt ...options.Opti
 	}
 
 	resp.Data = components.GitRef{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1759,7 +1773,7 @@ GitUpdateRefResponse is a response for GitUpdateRef
 https://developer.github.com/v3/git/refs/#update-a-reference
 */
 type GitUpdateRefResponse struct {
-	internal.Response
+	common.Response
 	request *GitUpdateRefReq
 	Data    components.GitRef
 }

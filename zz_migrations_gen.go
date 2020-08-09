@@ -5,6 +5,7 @@ package octo
 import (
 	"context"
 	"fmt"
+	common "github.com/willabides/octo-go/common"
 	components "github.com/willabides/octo-go/components"
 	internal "github.com/willabides/octo-go/internal"
 	options "github.com/willabides/octo-go/options"
@@ -31,7 +32,8 @@ func MigrationsCancelImport(ctx context.Context, req *MigrationsCancelImportReq,
 		req = new(MigrationsCancelImportReq)
 	}
 	resp := &MigrationsCancelImportResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -40,7 +42,7 @@ func MigrationsCancelImport(ctx context.Context, req *MigrationsCancelImportReq,
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -119,7 +121,7 @@ MigrationsCancelImportResponse is a response for MigrationsCancelImport
 https://developer.github.com/v3/migrations/source_imports/#cancel-an-import
 */
 type MigrationsCancelImportResponse struct {
-	internal.Response
+	common.Response
 	request *MigrationsCancelImportReq
 }
 
@@ -141,7 +143,8 @@ func MigrationsDeleteArchiveForAuthenticatedUser(ctx context.Context, req *Migra
 		req = new(MigrationsDeleteArchiveForAuthenticatedUserReq)
 	}
 	resp := &MigrationsDeleteArchiveForAuthenticatedUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -150,7 +153,7 @@ func MigrationsDeleteArchiveForAuthenticatedUser(ctx context.Context, req *Migra
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -233,7 +236,7 @@ MigrationsDeleteArchiveForAuthenticatedUserResponse is a response for Migrations
 https://developer.github.com/v3/migrations/users/#delete-a-user-migration-archive
 */
 type MigrationsDeleteArchiveForAuthenticatedUserResponse struct {
-	internal.Response
+	common.Response
 	request *MigrationsDeleteArchiveForAuthenticatedUserReq
 }
 
@@ -255,7 +258,8 @@ func MigrationsDeleteArchiveForOrg(ctx context.Context, req *MigrationsDeleteArc
 		req = new(MigrationsDeleteArchiveForOrgReq)
 	}
 	resp := &MigrationsDeleteArchiveForOrgResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -268,7 +272,7 @@ func MigrationsDeleteArchiveForOrg(ctx context.Context, req *MigrationsDeleteArc
 	if err != nil {
 		return nil, err
 	}
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -352,7 +356,7 @@ MigrationsDeleteArchiveForOrgResponse is a response for MigrationsDeleteArchiveF
 https://developer.github.com/v3/migrations/orgs/#delete-an-organization-migration-archive
 */
 type MigrationsDeleteArchiveForOrgResponse struct {
-	internal.Response
+	common.Response
 	request *MigrationsDeleteArchiveForOrgReq
 	Data    bool
 }
@@ -375,7 +379,8 @@ func MigrationsDownloadArchiveForOrg(ctx context.Context, req *MigrationsDownloa
 		req = new(MigrationsDownloadArchiveForOrgReq)
 	}
 	resp := &MigrationsDownloadArchiveForOrgResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -384,7 +389,7 @@ func MigrationsDownloadArchiveForOrg(ctx context.Context, req *MigrationsDownloa
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -468,7 +473,7 @@ MigrationsDownloadArchiveForOrgResponse is a response for MigrationsDownloadArch
 https://developer.github.com/v3/migrations/orgs/#download-an-organization-migration-archive
 */
 type MigrationsDownloadArchiveForOrgResponse struct {
-	internal.Response
+	common.Response
 	request *MigrationsDownloadArchiveForOrgReq
 }
 
@@ -490,7 +495,8 @@ func MigrationsGetArchiveForAuthenticatedUser(ctx context.Context, req *Migratio
 		req = new(MigrationsGetArchiveForAuthenticatedUserReq)
 	}
 	resp := &MigrationsGetArchiveForAuthenticatedUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -499,7 +505,7 @@ func MigrationsGetArchiveForAuthenticatedUser(ctx context.Context, req *Migratio
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -582,7 +588,7 @@ MigrationsGetArchiveForAuthenticatedUserResponse is a response for MigrationsGet
 https://developer.github.com/v3/migrations/users/#download-a-user-migration-archive
 */
 type MigrationsGetArchiveForAuthenticatedUserResponse struct {
-	internal.Response
+	common.Response
 	request *MigrationsGetArchiveForAuthenticatedUserReq
 }
 
@@ -604,7 +610,8 @@ func MigrationsGetCommitAuthors(ctx context.Context, req *MigrationsGetCommitAut
 		req = new(MigrationsGetCommitAuthorsReq)
 	}
 	resp := &MigrationsGetCommitAuthorsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -614,7 +621,7 @@ func MigrationsGetCommitAuthors(ctx context.Context, req *MigrationsGetCommitAut
 	}
 
 	resp.Data = []components.PorterAuthor{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -703,7 +710,7 @@ MigrationsGetCommitAuthorsResponse is a response for MigrationsGetCommitAuthors
 https://developer.github.com/v3/migrations/source_imports/#get-commit-authors
 */
 type MigrationsGetCommitAuthorsResponse struct {
-	internal.Response
+	common.Response
 	request *MigrationsGetCommitAuthorsReq
 	Data    []components.PorterAuthor
 }
@@ -726,7 +733,8 @@ func MigrationsGetImportStatus(ctx context.Context, req *MigrationsGetImportStat
 		req = new(MigrationsGetImportStatusReq)
 	}
 	resp := &MigrationsGetImportStatusResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -736,7 +744,7 @@ func MigrationsGetImportStatus(ctx context.Context, req *MigrationsGetImportStat
 	}
 
 	resp.Data = components.Import{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -815,7 +823,7 @@ MigrationsGetImportStatusResponse is a response for MigrationsGetImportStatus
 https://developer.github.com/v3/migrations/source_imports/#get-an-import-status
 */
 type MigrationsGetImportStatusResponse struct {
-	internal.Response
+	common.Response
 	request *MigrationsGetImportStatusReq
 	Data    components.Import
 }
@@ -838,7 +846,8 @@ func MigrationsGetLargeFiles(ctx context.Context, req *MigrationsGetLargeFilesRe
 		req = new(MigrationsGetLargeFilesReq)
 	}
 	resp := &MigrationsGetLargeFilesResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -848,7 +857,7 @@ func MigrationsGetLargeFiles(ctx context.Context, req *MigrationsGetLargeFilesRe
 	}
 
 	resp.Data = []components.PorterLargeFile{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -927,7 +936,7 @@ MigrationsGetLargeFilesResponse is a response for MigrationsGetLargeFiles
 https://developer.github.com/v3/migrations/source_imports/#get-large-files
 */
 type MigrationsGetLargeFilesResponse struct {
-	internal.Response
+	common.Response
 	request *MigrationsGetLargeFilesReq
 	Data    []components.PorterLargeFile
 }
@@ -950,7 +959,8 @@ func MigrationsGetStatusForAuthenticatedUser(ctx context.Context, req *Migration
 		req = new(MigrationsGetStatusForAuthenticatedUserReq)
 	}
 	resp := &MigrationsGetStatusForAuthenticatedUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -960,7 +970,7 @@ func MigrationsGetStatusForAuthenticatedUser(ctx context.Context, req *Migration
 	}
 
 	resp.Data = components.Migration{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1043,7 +1053,7 @@ MigrationsGetStatusForAuthenticatedUserResponse is a response for MigrationsGetS
 https://developer.github.com/v3/migrations/users/#get-a-user-migration-status
 */
 type MigrationsGetStatusForAuthenticatedUserResponse struct {
-	internal.Response
+	common.Response
 	request *MigrationsGetStatusForAuthenticatedUserReq
 	Data    components.Migration
 }
@@ -1066,7 +1076,8 @@ func MigrationsGetStatusForOrg(ctx context.Context, req *MigrationsGetStatusForO
 		req = new(MigrationsGetStatusForOrgReq)
 	}
 	resp := &MigrationsGetStatusForOrgResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1076,7 +1087,7 @@ func MigrationsGetStatusForOrg(ctx context.Context, req *MigrationsGetStatusForO
 	}
 
 	resp.Data = components.Migration{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1160,7 +1171,7 @@ MigrationsGetStatusForOrgResponse is a response for MigrationsGetStatusForOrg
 https://developer.github.com/v3/migrations/orgs/#get-an-organization-migration-status
 */
 type MigrationsGetStatusForOrgResponse struct {
-	internal.Response
+	common.Response
 	request *MigrationsGetStatusForOrgReq
 	Data    components.Migration
 }
@@ -1183,7 +1194,8 @@ func MigrationsListForAuthenticatedUser(ctx context.Context, req *MigrationsList
 		req = new(MigrationsListForAuthenticatedUserReq)
 	}
 	resp := &MigrationsListForAuthenticatedUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1193,7 +1205,7 @@ func MigrationsListForAuthenticatedUser(ctx context.Context, req *MigrationsList
 	}
 
 	resp.Data = []components.Migration{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1285,7 +1297,7 @@ MigrationsListForAuthenticatedUserResponse is a response for MigrationsListForAu
 https://developer.github.com/v3/migrations/users/#list-user-migrations
 */
 type MigrationsListForAuthenticatedUserResponse struct {
-	internal.Response
+	common.Response
 	request *MigrationsListForAuthenticatedUserReq
 	Data    []components.Migration
 }
@@ -1308,7 +1320,8 @@ func MigrationsListForOrg(ctx context.Context, req *MigrationsListForOrgReq, opt
 		req = new(MigrationsListForOrgReq)
 	}
 	resp := &MigrationsListForOrgResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1318,7 +1331,7 @@ func MigrationsListForOrg(ctx context.Context, req *MigrationsListForOrgReq, opt
 	}
 
 	resp.Data = []components.Migration{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1411,7 +1424,7 @@ MigrationsListForOrgResponse is a response for MigrationsListForOrg
 https://developer.github.com/v3/migrations/orgs/#list-organization-migrations
 */
 type MigrationsListForOrgResponse struct {
-	internal.Response
+	common.Response
 	request *MigrationsListForOrgReq
 	Data    []components.Migration
 }
@@ -1434,7 +1447,8 @@ func MigrationsListReposForOrg(ctx context.Context, req *MigrationsListReposForO
 		req = new(MigrationsListReposForOrgReq)
 	}
 	resp := &MigrationsListReposForOrgResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1444,7 +1458,7 @@ func MigrationsListReposForOrg(ctx context.Context, req *MigrationsListReposForO
 	}
 
 	resp.Data = []components.MinimalRepository{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1540,7 +1554,7 @@ MigrationsListReposForOrgResponse is a response for MigrationsListReposForOrg
 https://developer.github.com/v3/migrations/orgs/#list-repositories-in-an-organization-migration
 */
 type MigrationsListReposForOrgResponse struct {
-	internal.Response
+	common.Response
 	request *MigrationsListReposForOrgReq
 	Data    []components.MinimalRepository
 }
@@ -1563,7 +1577,8 @@ func MigrationsListReposForUser(ctx context.Context, req *MigrationsListReposFor
 		req = new(MigrationsListReposForUserReq)
 	}
 	resp := &MigrationsListReposForUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1573,7 +1588,7 @@ func MigrationsListReposForUser(ctx context.Context, req *MigrationsListReposFor
 	}
 
 	resp.Data = []components.MinimalRepository{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1668,7 +1683,7 @@ MigrationsListReposForUserResponse is a response for MigrationsListReposForUser
 https://developer.github.com/v3/migrations/users/#list-repositories-for-a-user-migration
 */
 type MigrationsListReposForUserResponse struct {
-	internal.Response
+	common.Response
 	request *MigrationsListReposForUserReq
 	Data    []components.MinimalRepository
 }
@@ -1691,7 +1706,8 @@ func MigrationsMapCommitAuthor(ctx context.Context, req *MigrationsMapCommitAuth
 		req = new(MigrationsMapCommitAuthorReq)
 	}
 	resp := &MigrationsMapCommitAuthorResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1701,7 +1717,7 @@ func MigrationsMapCommitAuthor(ctx context.Context, req *MigrationsMapCommitAuth
 	}
 
 	resp.Data = components.PorterAuthor{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1802,7 +1818,7 @@ MigrationsMapCommitAuthorResponse is a response for MigrationsMapCommitAuthor
 https://developer.github.com/v3/migrations/source_imports/#map-a-commit-author
 */
 type MigrationsMapCommitAuthorResponse struct {
-	internal.Response
+	common.Response
 	request *MigrationsMapCommitAuthorReq
 	Data    components.PorterAuthor
 }
@@ -1825,7 +1841,8 @@ func MigrationsSetLfsPreference(ctx context.Context, req *MigrationsSetLfsPrefer
 		req = new(MigrationsSetLfsPreferenceReq)
 	}
 	resp := &MigrationsSetLfsPreferenceResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1835,7 +1852,7 @@ func MigrationsSetLfsPreference(ctx context.Context, req *MigrationsSetLfsPrefer
 	}
 
 	resp.Data = components.Import{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1932,7 +1949,7 @@ MigrationsSetLfsPreferenceResponse is a response for MigrationsSetLfsPreference
 https://developer.github.com/v3/migrations/source_imports/#update-git-lfs-preference
 */
 type MigrationsSetLfsPreferenceResponse struct {
-	internal.Response
+	common.Response
 	request *MigrationsSetLfsPreferenceReq
 	Data    components.Import
 }
@@ -1955,7 +1972,8 @@ func MigrationsStartForAuthenticatedUser(ctx context.Context, req *MigrationsSta
 		req = new(MigrationsStartForAuthenticatedUserReq)
 	}
 	resp := &MigrationsStartForAuthenticatedUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1965,7 +1983,7 @@ func MigrationsStartForAuthenticatedUser(ctx context.Context, req *MigrationsSta
 	}
 
 	resp.Data = components.Migration{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2064,7 +2082,7 @@ MigrationsStartForAuthenticatedUserResponse is a response for MigrationsStartFor
 https://developer.github.com/v3/migrations/users/#start-a-user-migration
 */
 type MigrationsStartForAuthenticatedUserResponse struct {
-	internal.Response
+	common.Response
 	request *MigrationsStartForAuthenticatedUserReq
 	Data    components.Migration
 }
@@ -2087,7 +2105,8 @@ func MigrationsStartForOrg(ctx context.Context, req *MigrationsStartForOrgReq, o
 		req = new(MigrationsStartForOrgReq)
 	}
 	resp := &MigrationsStartForOrgResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2097,7 +2116,7 @@ func MigrationsStartForOrg(ctx context.Context, req *MigrationsStartForOrgReq, o
 	}
 
 	resp.Data = components.Migration{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2197,7 +2216,7 @@ MigrationsStartForOrgResponse is a response for MigrationsStartForOrg
 https://developer.github.com/v3/migrations/orgs/#start-an-organization-migration
 */
 type MigrationsStartForOrgResponse struct {
-	internal.Response
+	common.Response
 	request *MigrationsStartForOrgReq
 	Data    components.Migration
 }
@@ -2220,7 +2239,8 @@ func MigrationsStartImport(ctx context.Context, req *MigrationsStartImportReq, o
 		req = new(MigrationsStartImportReq)
 	}
 	resp := &MigrationsStartImportResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2230,7 +2250,7 @@ func MigrationsStartImport(ctx context.Context, req *MigrationsStartImportReq, o
 	}
 
 	resp.Data = components.Import{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2341,7 +2361,7 @@ MigrationsStartImportResponse is a response for MigrationsStartImport
 https://developer.github.com/v3/migrations/source_imports/#start-an-import
 */
 type MigrationsStartImportResponse struct {
-	internal.Response
+	common.Response
 	request *MigrationsStartImportReq
 	Data    components.Import
 }
@@ -2364,7 +2384,8 @@ func MigrationsUnlockRepoForAuthenticatedUser(ctx context.Context, req *Migratio
 		req = new(MigrationsUnlockRepoForAuthenticatedUserReq)
 	}
 	resp := &MigrationsUnlockRepoForAuthenticatedUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2373,7 +2394,7 @@ func MigrationsUnlockRepoForAuthenticatedUser(ctx context.Context, req *Migratio
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -2459,7 +2480,7 @@ MigrationsUnlockRepoForAuthenticatedUserResponse is a response for MigrationsUnl
 https://developer.github.com/v3/migrations/users/#unlock-a-user-repository
 */
 type MigrationsUnlockRepoForAuthenticatedUserResponse struct {
-	internal.Response
+	common.Response
 	request *MigrationsUnlockRepoForAuthenticatedUserReq
 }
 
@@ -2481,7 +2502,8 @@ func MigrationsUnlockRepoForOrg(ctx context.Context, req *MigrationsUnlockRepoFo
 		req = new(MigrationsUnlockRepoForOrgReq)
 	}
 	resp := &MigrationsUnlockRepoForOrgResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2494,7 +2516,7 @@ func MigrationsUnlockRepoForOrg(ctx context.Context, req *MigrationsUnlockRepoFo
 	if err != nil {
 		return nil, err
 	}
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -2581,7 +2603,7 @@ MigrationsUnlockRepoForOrgResponse is a response for MigrationsUnlockRepoForOrg
 https://developer.github.com/v3/migrations/orgs/#unlock-an-organization-repository
 */
 type MigrationsUnlockRepoForOrgResponse struct {
-	internal.Response
+	common.Response
 	request *MigrationsUnlockRepoForOrgReq
 	Data    bool
 }
@@ -2604,7 +2626,8 @@ func MigrationsUpdateImport(ctx context.Context, req *MigrationsUpdateImportReq,
 		req = new(MigrationsUpdateImportReq)
 	}
 	resp := &MigrationsUpdateImportResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2614,7 +2637,7 @@ func MigrationsUpdateImport(ctx context.Context, req *MigrationsUpdateImportReq,
 	}
 
 	resp.Data = components.Import{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2713,7 +2736,7 @@ MigrationsUpdateImportResponse is a response for MigrationsUpdateImport
 https://developer.github.com/v3/migrations/source_imports/#update-an-import
 */
 type MigrationsUpdateImportResponse struct {
-	internal.Response
+	common.Response
 	request *MigrationsUpdateImportReq
 	Data    components.Import
 }

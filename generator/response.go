@@ -37,7 +37,7 @@ func addResponse(file *jen.File, pq pkgQual, endpoint *model.Endpoint) {
 		endpoint.DocsURL,
 	)
 	file.Type().Id(structName).StructFunc(func(group *jen.Group) {
-		group.Qual(pq.pkgPath("internal"), "Response")
+		group.Qual(pq.pkgPath("common"), "Response")
 		group.Id("request").Op("*").Id(reqStructName(endpoint))
 		if endpointHasAttribute(endpoint, attrNoResponseBody) {
 			return

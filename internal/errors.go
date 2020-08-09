@@ -7,11 +7,13 @@ import (
 	"io"
 	"io/ioutil"
 	"net/http"
+
+	"github.com/willabides/octo-go/common"
 )
 
-// ErrorCheck checks for errors in the response
-func ErrorCheck(resp *Response) error {
-	err := clientErrorCheck(resp)
+// ErrorCheck checks for errors in the common
+func ErrorCheck(resp *common.Response, builder *RequestBuilder) error {
+	err := clientErrorCheck(resp, builder)
 	if err != nil {
 		return err
 	}
@@ -19,7 +21,7 @@ func ErrorCheck(resp *Response) error {
 	if err != nil {
 		return err
 	}
-	err = unexpectedStatusCheck(resp)
+	err = unexpectedStatusCheck(resp, builder)
 	if err != nil {
 		return err
 	}
@@ -31,15 +33,14 @@ func ErrorCheck(resp *Response) error {
 type UnexpectedStatusCodeError struct {
 	wantedCodes []int
 	gotCode     int
-	Response
+	common.Response
 }
 
 func (e *UnexpectedStatusCodeError) Error() string {
 	return fmt.Sprintf("received unexpected http status code %d, expected codes are %v", e.gotCode, e.wantedCodes)
 }
 
-func unexpectedStatusCheck(resp *Response) error {
-	builder := resp.reqBuilder
+func unexpectedStatusCheck(resp *common.Response, builder *RequestBuilder) error {
 	valid := make([]int, len(builder.ValidStatuses))
 	copy(valid, builder.ValidStatuses)
 	if builder.HasAttribute(AttrBoolean) {
@@ -48,8 +49,8 @@ func unexpectedStatusCheck(resp *Response) error {
 	if builder.HasAttribute(AttrRedirectOnly) {
 		return nil
 	}
-	statusCode := resp.httpResponse.StatusCode
-	if resp.statusCodeInList(valid) {
+	statusCode := resp.HTTPResponse().StatusCode
+	if statusCodeInList(resp, valid) {
 		return nil
 	}
 	return &UnexpectedStatusCodeError{
@@ -61,20 +62,19 @@ func unexpectedStatusCheck(resp *Response) error {
 
 // ClientError is returned when the http status is in the 4xx range
 type ClientError struct {
-	Response
+	common.Response
 	ErrorData *ErrorData
 }
 
 func (e *ClientError) Error() string {
 	if e.ErrorData == nil || e.ErrorData.Message == "" {
-		return fmt.Sprintf("client error %d", e.Response.httpResponse.StatusCode)
+		return fmt.Sprintf("client error %d", e.Response.HTTPResponse().StatusCode)
 	}
-	return fmt.Sprintf("client error %d: %s", e.Response.httpResponse.StatusCode, e.ErrorData.Message)
+	return fmt.Sprintf("client error %d: %s", e.Response.HTTPResponse().StatusCode, e.ErrorData.Message)
 }
 
-func clientErrorCheck(resp *Response) error {
-	builder := resp.reqBuilder
-	statusCode := resp.httpResponse.StatusCode
+func clientErrorCheck(resp *common.Response, builder *RequestBuilder) error {
+	statusCode := resp.HTTPResponse().StatusCode
 	if statusCode < 400 || statusCode > 499 {
 		return nil
 	}
@@ -88,7 +88,7 @@ func clientErrorCheck(resp *Response) error {
 		Response:  *resp,
 		ErrorData: new(ErrorData),
 	}
-	err := clientErr.ErrorData.decode(resp.httpResponse)
+	err := clientErr.ErrorData.decode(resp.HTTPResponse())
 	if err != nil {
 		clientErr.ErrorData = nil
 	}
@@ -97,19 +97,19 @@ func clientErrorCheck(resp *Response) error {
 
 // ServerError is returned when the http status is in the 5xx range
 type ServerError struct {
-	Response
+	common.Response
 	ErrorData *ErrorData
 }
 
 func (e *ServerError) Error() string {
 	if e.ErrorData == nil || e.ErrorData.Message == "" {
-		return fmt.Sprintf("client error %d", e.Response.httpResponse.StatusCode)
+		return fmt.Sprintf("client error %d", e.Response.HTTPResponse().StatusCode)
 	}
-	return fmt.Sprintf("client error %d: %s", e.Response.httpResponse.StatusCode, e.ErrorData.Message)
+	return fmt.Sprintf("client error %d: %s", e.Response.HTTPResponse().StatusCode, e.ErrorData.Message)
 }
 
-func serverErrorCheck(resp *Response) error {
-	statusCode := resp.httpResponse.StatusCode
+func serverErrorCheck(resp *common.Response) error {
+	statusCode := resp.HTTPResponse().StatusCode
 	if statusCode < 500 || statusCode > 599 {
 		return nil
 	}
@@ -117,14 +117,14 @@ func serverErrorCheck(resp *Response) error {
 		Response:  *resp,
 		ErrorData: new(ErrorData),
 	}
-	err := serverErr.ErrorData.decode(resp.httpResponse)
+	err := serverErr.ErrorData.decode(resp.HTTPResponse())
 	if err != nil {
 		serverErr.ErrorData = nil
 	}
 	return serverErr
 }
 
-// ErrorData all 4xx response bodies and maybe some 5xx should unmarshal to this
+// ErrorData all 4xx common bodies and maybe some 5xx should unmarshal to this
 type ErrorData struct {
 	DocumentationUrl string           `json:"documentation_url,omitempty"`
 	Message          string           `json:"message,omitempty"`
@@ -137,7 +137,7 @@ func (e *ErrorData) decode(resp *http.Response) error {
 	}
 	var nextBody bytes.Buffer
 	bodyReader := io.TeeReader(resp.Body, &nextBody)
-	//nolint:errcheck // If there's an error draining the response body, there was probably already an error reported.
+	//nolint:errcheck // If there's an error draining the common body, there was probably already an error reported.
 	defer func() {
 		_, _ = ioutil.ReadAll(bodyReader)
 		_ = resp.Body.Close()

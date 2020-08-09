@@ -31,7 +31,7 @@ func WithAllPreviews() options.Option {
 	})
 }
 
-// PreserveResponseBody rewrite the body back to the http response for later inspection
+// PreserveResponseBody rewrite the body back to the http common for later inspection
 func PreserveResponseBody() options.Option {
 	return optionFunc(func(opts *options.Options) error {
 		opts.SetPreserveResponseBody(true)
@@ -59,7 +59,7 @@ func WithUserAgent(userAgent string) options.Option {
 //
 // This is for custom providers. You will typically want to use auth.WithPATAuth, auth.WithAppAuth or auth.WithAppInstallationAuth
 // instead.
-func WithAuthProvider(authProvider AuthProvider) options.Option {
+func WithAuthProvider(authProvider options.AuthProvider) options.Option {
 	return optionFunc(func(opts *options.Options) error {
 		opts.SetAuthProvider(authProvider)
 		return nil

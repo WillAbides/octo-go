@@ -125,7 +125,7 @@ var attrChecks = []attrCheck{
 		*attrs = append(*attrs, attrBoolean)
 	},
 
-	// attrRedirectOnly if the endpoint has onlly one response: 302
+	// attrRedirectOnly if the endpoint has only one response: 302
 	func(endpoint *model.Endpoint, attrs *[]endpointAttribute) {
 		if len(endpoint.Responses) != 1 {
 			return

@@ -5,6 +5,7 @@ package octo
 import (
 	"context"
 	"fmt"
+	common "github.com/willabides/octo-go/common"
 	components "github.com/willabides/octo-go/components"
 	internal "github.com/willabides/octo-go/internal"
 	options "github.com/willabides/octo-go/options"
@@ -31,7 +32,8 @@ func PullsCheckIfMerged(ctx context.Context, req *PullsCheckIfMergedReq, opt ...
 		req = new(PullsCheckIfMergedReq)
 	}
 	resp := &PullsCheckIfMergedResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -44,7 +46,7 @@ func PullsCheckIfMerged(ctx context.Context, req *PullsCheckIfMergedReq, opt ...
 	if err != nil {
 		return nil, err
 	}
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -124,7 +126,7 @@ PullsCheckIfMergedResponse is a response for PullsCheckIfMerged
 https://developer.github.com/v3/pulls/#check-if-a-pull-request-has-been-merged
 */
 type PullsCheckIfMergedResponse struct {
-	internal.Response
+	common.Response
 	request *PullsCheckIfMergedReq
 	Data    bool
 }
@@ -147,7 +149,8 @@ func PullsCreate(ctx context.Context, req *PullsCreateReq, opt ...options.Option
 		req = new(PullsCreateReq)
 	}
 	resp := &PullsCreateResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -157,7 +160,7 @@ func PullsCreate(ctx context.Context, req *PullsCreateReq, opt ...options.Option
 	}
 
 	resp.Data = components.PullRequest{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -293,7 +296,7 @@ PullsCreateResponse is a response for PullsCreate
 https://developer.github.com/v3/pulls/#create-a-pull-request
 */
 type PullsCreateResponse struct {
-	internal.Response
+	common.Response
 	request *PullsCreateReq
 	Data    components.PullRequest
 }
@@ -316,7 +319,8 @@ func PullsCreateReplyForReviewComment(ctx context.Context, req *PullsCreateReply
 		req = new(PullsCreateReplyForReviewCommentReq)
 	}
 	resp := &PullsCreateReplyForReviewCommentResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -326,7 +330,7 @@ func PullsCreateReplyForReviewComment(ctx context.Context, req *PullsCreateReply
 	}
 
 	resp.Data = components.PullRequestReviewComment{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -424,7 +428,7 @@ PullsCreateReplyForReviewCommentResponse is a response for PullsCreateReplyForRe
 https://developer.github.com/v3/pulls/comments/#create-a-reply-for-a-review-comment
 */
 type PullsCreateReplyForReviewCommentResponse struct {
-	internal.Response
+	common.Response
 	request *PullsCreateReplyForReviewCommentReq
 	Data    components.PullRequestReviewComment
 }
@@ -447,7 +451,8 @@ func PullsCreateReview(ctx context.Context, req *PullsCreateReviewReq, opt ...op
 		req = new(PullsCreateReviewReq)
 	}
 	resp := &PullsCreateReviewResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -457,7 +462,7 @@ func PullsCreateReview(ctx context.Context, req *PullsCreateReviewReq, opt ...op
 	}
 
 	resp.Data = components.PullRequestReview{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -596,7 +601,7 @@ PullsCreateReviewResponse is a response for PullsCreateReview
 https://developer.github.com/v3/pulls/reviews/#create-a-review-for-a-pull-request
 */
 type PullsCreateReviewResponse struct {
-	internal.Response
+	common.Response
 	request *PullsCreateReviewReq
 	Data    components.PullRequestReview
 }
@@ -619,7 +624,8 @@ func PullsCreateReviewComment(ctx context.Context, req *PullsCreateReviewComment
 		req = new(PullsCreateReviewCommentReq)
 	}
 	resp := &PullsCreateReviewCommentResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -629,7 +635,7 @@ func PullsCreateReviewComment(ctx context.Context, req *PullsCreateReviewComment
 	}
 
 	resp.Data = components.PullRequestReviewComment{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -789,7 +795,7 @@ PullsCreateReviewCommentResponse is a response for PullsCreateReviewComment
 https://developer.github.com/v3/pulls/comments/#create-a-review-comment-for-a-pull-request
 */
 type PullsCreateReviewCommentResponse struct {
-	internal.Response
+	common.Response
 	request *PullsCreateReviewCommentReq
 	Data    components.PullRequestReviewComment
 }
@@ -812,7 +818,8 @@ func PullsDeletePendingReview(ctx context.Context, req *PullsDeletePendingReview
 		req = new(PullsDeletePendingReviewReq)
 	}
 	resp := &PullsDeletePendingReviewResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -822,7 +829,7 @@ func PullsDeletePendingReview(ctx context.Context, req *PullsDeletePendingReview
 	}
 
 	resp.Data = components.PullRequestReview{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -905,7 +912,7 @@ PullsDeletePendingReviewResponse is a response for PullsDeletePendingReview
 https://developer.github.com/v3/pulls/reviews/#delete-a-pending-review-for-a-pull-request
 */
 type PullsDeletePendingReviewResponse struct {
-	internal.Response
+	common.Response
 	request *PullsDeletePendingReviewReq
 	Data    components.PullRequestReview
 }
@@ -928,7 +935,8 @@ func PullsDeleteReviewComment(ctx context.Context, req *PullsDeleteReviewComment
 		req = new(PullsDeleteReviewCommentReq)
 	}
 	resp := &PullsDeleteReviewCommentResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -941,7 +949,7 @@ func PullsDeleteReviewComment(ctx context.Context, req *PullsDeleteReviewComment
 	if err != nil {
 		return nil, err
 	}
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -1023,7 +1031,7 @@ PullsDeleteReviewCommentResponse is a response for PullsDeleteReviewComment
 https://developer.github.com/v3/pulls/comments/#delete-a-review-comment-for-a-pull-request
 */
 type PullsDeleteReviewCommentResponse struct {
-	internal.Response
+	common.Response
 	request *PullsDeleteReviewCommentReq
 	Data    bool
 }
@@ -1046,7 +1054,8 @@ func PullsDismissReview(ctx context.Context, req *PullsDismissReviewReq, opt ...
 		req = new(PullsDismissReviewReq)
 	}
 	resp := &PullsDismissReviewResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1056,7 +1065,7 @@ func PullsDismissReview(ctx context.Context, req *PullsDismissReviewReq, opt ...
 	}
 
 	resp.Data = components.PullRequestReview{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1155,7 +1164,7 @@ PullsDismissReviewResponse is a response for PullsDismissReview
 https://developer.github.com/v3/pulls/reviews/#dismiss-a-review-for-a-pull-request
 */
 type PullsDismissReviewResponse struct {
-	internal.Response
+	common.Response
 	request *PullsDismissReviewReq
 	Data    components.PullRequestReview
 }
@@ -1178,7 +1187,8 @@ func PullsGet(ctx context.Context, req *PullsGetReq, opt ...options.Option) (*Pu
 		req = new(PullsGetReq)
 	}
 	resp := &PullsGetResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1188,7 +1198,7 @@ func PullsGet(ctx context.Context, req *PullsGetReq, opt ...options.Option) (*Pu
 	}
 
 	resp.Data = components.PullRequest{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1278,7 +1288,7 @@ PullsGetResponse is a response for PullsGet
 https://developer.github.com/v3/pulls/#get-a-pull-request
 */
 type PullsGetResponse struct {
-	internal.Response
+	common.Response
 	request *PullsGetReq
 	Data    components.PullRequest
 }
@@ -1301,7 +1311,8 @@ func PullsGetReview(ctx context.Context, req *PullsGetReviewReq, opt ...options.
 		req = new(PullsGetReviewReq)
 	}
 	resp := &PullsGetReviewResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1311,7 +1322,7 @@ func PullsGetReview(ctx context.Context, req *PullsGetReviewReq, opt ...options.
 	}
 
 	resp.Data = components.PullRequestReview{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1394,7 +1405,7 @@ PullsGetReviewResponse is a response for PullsGetReview
 https://developer.github.com/v3/pulls/reviews/#get-a-review-for-a-pull-request
 */
 type PullsGetReviewResponse struct {
-	internal.Response
+	common.Response
 	request *PullsGetReviewReq
 	Data    components.PullRequestReview
 }
@@ -1417,7 +1428,8 @@ func PullsGetReviewComment(ctx context.Context, req *PullsGetReviewCommentReq, o
 		req = new(PullsGetReviewCommentReq)
 	}
 	resp := &PullsGetReviewCommentResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1427,7 +1439,7 @@ func PullsGetReviewComment(ctx context.Context, req *PullsGetReviewCommentReq, o
 	}
 
 	resp.Data = components.PullRequestReviewComment{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1530,7 +1542,7 @@ PullsGetReviewCommentResponse is a response for PullsGetReviewComment
 https://developer.github.com/v3/pulls/comments/#get-a-review-comment-for-a-pull-request
 */
 type PullsGetReviewCommentResponse struct {
-	internal.Response
+	common.Response
 	request *PullsGetReviewCommentReq
 	Data    components.PullRequestReviewComment
 }
@@ -1553,7 +1565,8 @@ func PullsList(ctx context.Context, req *PullsListReq, opt ...options.Option) (*
 		req = new(PullsListReq)
 	}
 	resp := &PullsListResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1563,7 +1576,7 @@ func PullsList(ctx context.Context, req *PullsListReq, opt ...options.Option) (*
 	}
 
 	resp.Data = []components.PullRequestSimple{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1705,7 +1718,7 @@ PullsListResponse is a response for PullsList
 https://developer.github.com/v3/pulls/#list-pull-requests
 */
 type PullsListResponse struct {
-	internal.Response
+	common.Response
 	request *PullsListReq
 	Data    []components.PullRequestSimple
 }
@@ -1728,7 +1741,8 @@ func PullsListCommentsForReview(ctx context.Context, req *PullsListCommentsForRe
 		req = new(PullsListCommentsForReviewReq)
 	}
 	resp := &PullsListCommentsForReviewResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1738,7 +1752,7 @@ func PullsListCommentsForReview(ctx context.Context, req *PullsListCommentsForRe
 	}
 
 	resp.Data = []components.ReviewComment{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1833,7 +1847,7 @@ PullsListCommentsForReviewResponse is a response for PullsListCommentsForReview
 https://developer.github.com/v3/pulls/reviews/#list-comments-for-a-pull-request-review
 */
 type PullsListCommentsForReviewResponse struct {
-	internal.Response
+	common.Response
 	request *PullsListCommentsForReviewReq
 	Data    []components.ReviewComment
 }
@@ -1856,7 +1870,8 @@ func PullsListCommits(ctx context.Context, req *PullsListCommitsReq, opt ...opti
 		req = new(PullsListCommitsReq)
 	}
 	resp := &PullsListCommitsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1866,7 +1881,7 @@ func PullsListCommits(ctx context.Context, req *PullsListCommitsReq, opt ...opti
 	}
 
 	resp.Data = []components.SimpleCommit{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1958,7 +1973,7 @@ PullsListCommitsResponse is a response for PullsListCommits
 https://developer.github.com/v3/pulls/#list-commits-on-a-pull-request
 */
 type PullsListCommitsResponse struct {
-	internal.Response
+	common.Response
 	request *PullsListCommitsReq
 	Data    []components.SimpleCommit
 }
@@ -1981,7 +1996,8 @@ func PullsListFiles(ctx context.Context, req *PullsListFilesReq, opt ...options.
 		req = new(PullsListFilesReq)
 	}
 	resp := &PullsListFilesResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1991,7 +2007,7 @@ func PullsListFiles(ctx context.Context, req *PullsListFilesReq, opt ...options.
 	}
 
 	resp.Data = []components.DiffEntry{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2083,7 +2099,7 @@ PullsListFilesResponse is a response for PullsListFiles
 https://developer.github.com/v3/pulls/#list-pull-requests-files
 */
 type PullsListFilesResponse struct {
-	internal.Response
+	common.Response
 	request *PullsListFilesReq
 	Data    []components.DiffEntry
 }
@@ -2106,7 +2122,8 @@ func PullsListRequestedReviewers(ctx context.Context, req *PullsListRequestedRev
 		req = new(PullsListRequestedReviewersReq)
 	}
 	resp := &PullsListRequestedReviewersResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2116,7 +2133,7 @@ func PullsListRequestedReviewers(ctx context.Context, req *PullsListRequestedRev
 	}
 
 	resp.Data = components.PullRequestReviewRequest{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2208,7 +2225,7 @@ PullsListRequestedReviewersResponse is a response for PullsListRequestedReviewer
 https://developer.github.com/v3/pulls/review_requests/#list-requested-reviewers-for-a-pull-request
 */
 type PullsListRequestedReviewersResponse struct {
-	internal.Response
+	common.Response
 	request *PullsListRequestedReviewersReq
 	Data    components.PullRequestReviewRequest
 }
@@ -2231,7 +2248,8 @@ func PullsListReviewComments(ctx context.Context, req *PullsListReviewCommentsRe
 		req = new(PullsListReviewCommentsReq)
 	}
 	resp := &PullsListReviewCommentsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2241,7 +2259,7 @@ func PullsListReviewComments(ctx context.Context, req *PullsListReviewCommentsRe
 	}
 
 	resp.Data = []components.PullRequestReviewComment{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2379,7 +2397,7 @@ PullsListReviewCommentsResponse is a response for PullsListReviewComments
 https://developer.github.com/v3/pulls/comments/#list-review-comments-on-a-pull-request
 */
 type PullsListReviewCommentsResponse struct {
-	internal.Response
+	common.Response
 	request *PullsListReviewCommentsReq
 	Data    []components.PullRequestReviewComment
 }
@@ -2402,7 +2420,8 @@ func PullsListReviewCommentsForRepo(ctx context.Context, req *PullsListReviewCom
 		req = new(PullsListReviewCommentsForRepoReq)
 	}
 	resp := &PullsListReviewCommentsForRepoResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2412,7 +2431,7 @@ func PullsListReviewCommentsForRepo(ctx context.Context, req *PullsListReviewCom
 	}
 
 	resp.Data = []components.PullRequestReviewComment{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2549,7 +2568,7 @@ PullsListReviewCommentsForRepoResponse is a response for PullsListReviewComments
 https://developer.github.com/v3/pulls/comments/#list-review-comments-in-a-repository
 */
 type PullsListReviewCommentsForRepoResponse struct {
-	internal.Response
+	common.Response
 	request *PullsListReviewCommentsForRepoReq
 	Data    []components.PullRequestReviewComment
 }
@@ -2572,7 +2591,8 @@ func PullsListReviews(ctx context.Context, req *PullsListReviewsReq, opt ...opti
 		req = new(PullsListReviewsReq)
 	}
 	resp := &PullsListReviewsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2582,7 +2602,7 @@ func PullsListReviews(ctx context.Context, req *PullsListReviewsReq, opt ...opti
 	}
 
 	resp.Data = []components.PullRequestReview{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2674,7 +2694,7 @@ PullsListReviewsResponse is a response for PullsListReviews
 https://developer.github.com/v3/pulls/reviews/#list-reviews-for-a-pull-request
 */
 type PullsListReviewsResponse struct {
-	internal.Response
+	common.Response
 	request *PullsListReviewsReq
 	Data    []components.PullRequestReview
 }
@@ -2697,7 +2717,8 @@ func PullsMerge(ctx context.Context, req *PullsMergeReq, opt ...options.Option) 
 		req = new(PullsMergeReq)
 	}
 	resp := &PullsMergeResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2707,7 +2728,7 @@ func PullsMerge(ctx context.Context, req *PullsMergeReq, opt ...options.Option) 
 	}
 
 	resp.Data = components.PullRequestMergeResult{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2811,7 +2832,7 @@ PullsMergeResponse is a response for PullsMerge
 https://developer.github.com/v3/pulls/#merge-a-pull-request
 */
 type PullsMergeResponse struct {
-	internal.Response
+	common.Response
 	request *PullsMergeReq
 	Data    components.PullRequestMergeResult
 }
@@ -2834,7 +2855,8 @@ func PullsRemoveRequestedReviewers(ctx context.Context, req *PullsRemoveRequeste
 		req = new(PullsRemoveRequestedReviewersReq)
 	}
 	resp := &PullsRemoveRequestedReviewersResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2843,7 +2865,7 @@ func PullsRemoveRequestedReviewers(ctx context.Context, req *PullsRemoveRequeste
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -2938,7 +2960,7 @@ PullsRemoveRequestedReviewersResponse is a response for PullsRemoveRequestedRevi
 https://developer.github.com/v3/pulls/review_requests/#remove-requested-reviewers-from-a-pull-request
 */
 type PullsRemoveRequestedReviewersResponse struct {
-	internal.Response
+	common.Response
 	request *PullsRemoveRequestedReviewersReq
 }
 
@@ -2960,7 +2982,8 @@ func PullsRequestReviewers(ctx context.Context, req *PullsRequestReviewersReq, o
 		req = new(PullsRequestReviewersReq)
 	}
 	resp := &PullsRequestReviewersResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2970,7 +2993,7 @@ func PullsRequestReviewers(ctx context.Context, req *PullsRequestReviewersReq, o
 	}
 
 	resp.Data = components.PullRequestSimple{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3068,7 +3091,7 @@ PullsRequestReviewersResponse is a response for PullsRequestReviewers
 https://developer.github.com/v3/pulls/review_requests/#request-reviewers-for-a-pull-request
 */
 type PullsRequestReviewersResponse struct {
-	internal.Response
+	common.Response
 	request *PullsRequestReviewersReq
 	Data    components.PullRequestSimple
 }
@@ -3091,7 +3114,8 @@ func PullsSubmitReview(ctx context.Context, req *PullsSubmitReviewReq, opt ...op
 		req = new(PullsSubmitReviewReq)
 	}
 	resp := &PullsSubmitReviewResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3101,7 +3125,7 @@ func PullsSubmitReview(ctx context.Context, req *PullsSubmitReviewReq, opt ...op
 	}
 
 	resp.Data = components.PullRequestReview{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3208,7 +3232,7 @@ PullsSubmitReviewResponse is a response for PullsSubmitReview
 https://developer.github.com/v3/pulls/reviews/#submit-a-review-for-a-pull-request
 */
 type PullsSubmitReviewResponse struct {
-	internal.Response
+	common.Response
 	request *PullsSubmitReviewReq
 	Data    components.PullRequestReview
 }
@@ -3231,7 +3255,8 @@ func PullsUpdate(ctx context.Context, req *PullsUpdateReq, opt ...options.Option
 		req = new(PullsUpdateReq)
 	}
 	resp := &PullsUpdateResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3241,7 +3266,7 @@ func PullsUpdate(ctx context.Context, req *PullsUpdateReq, opt ...options.Option
 	}
 
 	resp.Data = components.PullRequest{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3366,7 +3391,7 @@ PullsUpdateResponse is a response for PullsUpdate
 https://developer.github.com/v3/pulls/#update-a-pull-request
 */
 type PullsUpdateResponse struct {
-	internal.Response
+	common.Response
 	request *PullsUpdateReq
 	Data    components.PullRequest
 }
@@ -3389,7 +3414,8 @@ func PullsUpdateBranch(ctx context.Context, req *PullsUpdateBranchReq, opt ...op
 		req = new(PullsUpdateBranchReq)
 	}
 	resp := &PullsUpdateBranchResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3399,7 +3425,7 @@ func PullsUpdateBranch(ctx context.Context, req *PullsUpdateBranchReq, opt ...op
 	}
 
 	resp.Data = PullsUpdateBranchResponseBody{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3519,7 +3545,7 @@ PullsUpdateBranchResponse is a response for PullsUpdateBranch
 https://developer.github.com/v3/pulls/#update-a-pull-request-branch
 */
 type PullsUpdateBranchResponse struct {
-	internal.Response
+	common.Response
 	request *PullsUpdateBranchReq
 	Data    PullsUpdateBranchResponseBody
 }
@@ -3542,7 +3568,8 @@ func PullsUpdateReview(ctx context.Context, req *PullsUpdateReviewReq, opt ...op
 		req = new(PullsUpdateReviewReq)
 	}
 	resp := &PullsUpdateReviewResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3552,7 +3579,7 @@ func PullsUpdateReview(ctx context.Context, req *PullsUpdateReviewReq, opt ...op
 	}
 
 	resp.Data = components.PullRequestReview{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3650,7 +3677,7 @@ PullsUpdateReviewResponse is a response for PullsUpdateReview
 https://developer.github.com/v3/pulls/reviews/#update-a-review-for-a-pull-request
 */
 type PullsUpdateReviewResponse struct {
-	internal.Response
+	common.Response
 	request *PullsUpdateReviewReq
 	Data    components.PullRequestReview
 }
@@ -3673,7 +3700,8 @@ func PullsUpdateReviewComment(ctx context.Context, req *PullsUpdateReviewComment
 		req = new(PullsUpdateReviewCommentReq)
 	}
 	resp := &PullsUpdateReviewCommentResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -3683,7 +3711,7 @@ func PullsUpdateReviewComment(ctx context.Context, req *PullsUpdateReviewComment
 	}
 
 	resp.Data = components.PullRequestReviewComment{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3787,7 +3815,7 @@ PullsUpdateReviewCommentResponse is a response for PullsUpdateReviewComment
 https://developer.github.com/v3/pulls/comments/#update-a-review-comment-for-a-pull-request
 */
 type PullsUpdateReviewCommentResponse struct {
-	internal.Response
+	common.Response
 	request *PullsUpdateReviewCommentReq
 	Data    components.PullRequestReviewComment
 }

@@ -5,6 +5,7 @@ package octo
 import (
 	"context"
 	"fmt"
+	common "github.com/willabides/octo-go/common"
 	components "github.com/willabides/octo-go/components"
 	internal "github.com/willabides/octo-go/internal"
 	options "github.com/willabides/octo-go/options"
@@ -30,7 +31,8 @@ func GitignoreGetAllTemplates(ctx context.Context, req *GitignoreGetAllTemplates
 		req = new(GitignoreGetAllTemplatesReq)
 	}
 	resp := &GitignoreGetAllTemplatesResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -40,7 +42,7 @@ func GitignoreGetAllTemplates(ctx context.Context, req *GitignoreGetAllTemplates
 	}
 
 	resp.Data = GitignoreGetAllTemplatesResponseBody{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -124,7 +126,7 @@ GitignoreGetAllTemplatesResponse is a response for GitignoreGetAllTemplates
 https://developer.github.com/v3/gitignore/#get-all-gitignore-templates
 */
 type GitignoreGetAllTemplatesResponse struct {
-	internal.Response
+	common.Response
 	request *GitignoreGetAllTemplatesReq
 	Data    GitignoreGetAllTemplatesResponseBody
 }
@@ -147,7 +149,8 @@ func GitignoreGetTemplate(ctx context.Context, req *GitignoreGetTemplateReq, opt
 		req = new(GitignoreGetTemplateReq)
 	}
 	resp := &GitignoreGetTemplateResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -157,7 +160,7 @@ func GitignoreGetTemplate(ctx context.Context, req *GitignoreGetTemplateReq, opt
 	}
 
 	resp.Data = components.GitignoreTemplate{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -237,7 +240,7 @@ GitignoreGetTemplateResponse is a response for GitignoreGetTemplate
 https://developer.github.com/v3/gitignore/#get-a-gitignore-template
 */
 type GitignoreGetTemplateResponse struct {
-	internal.Response
+	common.Response
 	request *GitignoreGetTemplateReq
 	Data    components.GitignoreTemplate
 }

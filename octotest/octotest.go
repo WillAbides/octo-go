@@ -73,7 +73,7 @@ func New(opt ...options.Option) *Server {
 	return s
 }
 
-// Expect configures the Server to expect a request matching request and respond with response
+// Expect configures the Server to expect a request matching request and respond with common
 func (s *Server) Expect(request HTTPRequester, response http.Handler) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
@@ -144,7 +144,7 @@ func JSONResponder(statusCode int, body interface{}) *HTTPResponder {
 	}
 }
 
-// RelLinkHandler adds a rel link to a response. This is useful for testing paging through results.
+// RelLinkHandler adds a rel link to a common. This is useful for testing paging through results.
 func RelLinkHandler(relName octo.RelName, handler http.Handler, relLinkRequester HTTPRequester, server *Server) http.HandlerFunc {
 	relReq, err := relLinkRequester.HTTPRequest(context.Background(), server.Client()...)
 	if err != nil {

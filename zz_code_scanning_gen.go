@@ -5,6 +5,7 @@ package octo
 import (
 	"context"
 	"fmt"
+	common "github.com/willabides/octo-go/common"
 	components "github.com/willabides/octo-go/components"
 	internal "github.com/willabides/octo-go/internal"
 	options "github.com/willabides/octo-go/options"
@@ -30,7 +31,8 @@ func CodeScanningGetAlert(ctx context.Context, req *CodeScanningGetAlertReq, opt
 		req = new(CodeScanningGetAlertReq)
 	}
 	resp := &CodeScanningGetAlertResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -40,7 +42,7 @@ func CodeScanningGetAlert(ctx context.Context, req *CodeScanningGetAlertReq, opt
 	}
 
 	resp.Data = components.CodeScanningAlert{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -122,7 +124,7 @@ CodeScanningGetAlertResponse is a response for CodeScanningGetAlert
 https://developer.github.com/v3/code-scanning/#get-a-code-scanning-alert
 */
 type CodeScanningGetAlertResponse struct {
-	internal.Response
+	common.Response
 	request *CodeScanningGetAlertReq
 	Data    components.CodeScanningAlert
 }
@@ -145,7 +147,8 @@ func CodeScanningListAlertsForRepo(ctx context.Context, req *CodeScanningListAle
 		req = new(CodeScanningListAlertsForRepoReq)
 	}
 	resp := &CodeScanningListAlertsForRepoResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -155,7 +158,7 @@ func CodeScanningListAlertsForRepo(ctx context.Context, req *CodeScanningListAle
 	}
 
 	resp.Data = []components.CodeScanningAlert{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -249,7 +252,7 @@ CodeScanningListAlertsForRepoResponse is a response for CodeScanningListAlertsFo
 https://developer.github.com/v3/code-scanning/#list-code-scanning-alerts-for-a-repository
 */
 type CodeScanningListAlertsForRepoResponse struct {
-	internal.Response
+	common.Response
 	request *CodeScanningListAlertsForRepoReq
 	Data    []components.CodeScanningAlert
 }

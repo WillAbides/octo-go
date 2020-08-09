@@ -5,6 +5,7 @@ package octo
 import (
 	"context"
 	"fmt"
+	common "github.com/willabides/octo-go/common"
 	components "github.com/willabides/octo-go/components"
 	internal "github.com/willabides/octo-go/internal"
 	options "github.com/willabides/octo-go/options"
@@ -30,7 +31,8 @@ func MetaGet(ctx context.Context, req *MetaGetReq, opt ...options.Option) (*Meta
 		req = new(MetaGetReq)
 	}
 	resp := &MetaGetResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -40,7 +42,7 @@ func MetaGet(ctx context.Context, req *MetaGetReq, opt ...options.Option) (*Meta
 	}
 
 	resp.Data = components.ApiOverview{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -117,7 +119,7 @@ MetaGetResponse is a response for MetaGet
 https://developer.github.com/v3/meta/#get-github-meta-information
 */
 type MetaGetResponse struct {
-	internal.Response
+	common.Response
 	request *MetaGetReq
 	Data    components.ApiOverview
 }
@@ -139,7 +141,8 @@ func MetaGetOctocat(ctx context.Context, req *MetaGetOctocatReq, opt ...options.
 		req = new(MetaGetOctocatReq)
 	}
 	resp := &MetaGetOctocatResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -148,7 +151,7 @@ func MetaGetOctocat(ctx context.Context, req *MetaGetOctocatReq, opt ...options.
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -228,7 +231,7 @@ MetaGetOctocatResponse is a response for MetaGetOctocat
 
 */
 type MetaGetOctocatResponse struct {
-	internal.Response
+	common.Response
 	request *MetaGetOctocatReq
 }
 
@@ -249,7 +252,8 @@ func MetaGetZen(ctx context.Context, req *MetaGetZenReq, opt ...options.Option) 
 		req = new(MetaGetZenReq)
 	}
 	resp := &MetaGetZenResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -258,7 +262,7 @@ func MetaGetZen(ctx context.Context, req *MetaGetZenReq, opt ...options.Option) 
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -332,7 +336,7 @@ MetaGetZenResponse is a response for MetaGetZen
 
 */
 type MetaGetZenResponse struct {
-	internal.Response
+	common.Response
 	request *MetaGetZenReq
 }
 
@@ -353,7 +357,8 @@ func MetaRoot(ctx context.Context, req *MetaRootReq, opt ...options.Option) (*Me
 		req = new(MetaRootReq)
 	}
 	resp := &MetaRootResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -363,7 +368,7 @@ func MetaRoot(ctx context.Context, req *MetaRootReq, opt ...options.Option) (*Me
 	}
 
 	resp.Data = MetaRootResponseBody{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -477,7 +482,7 @@ MetaRootResponse is a response for MetaRoot
 
 */
 type MetaRootResponse struct {
-	internal.Response
+	common.Response
 	request *MetaRootReq
 	Data    MetaRootResponseBody
 }

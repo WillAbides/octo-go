@@ -5,6 +5,7 @@ package octo
 import (
 	"context"
 	"fmt"
+	common "github.com/willabides/octo-go/common"
 	components "github.com/willabides/octo-go/components"
 	internal "github.com/willabides/octo-go/internal"
 	options "github.com/willabides/octo-go/options"
@@ -31,7 +32,8 @@ func GistsCheckIsStarred(ctx context.Context, req *GistsCheckIsStarredReq, opt .
 		req = new(GistsCheckIsStarredReq)
 	}
 	resp := &GistsCheckIsStarredResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -40,7 +42,7 @@ func GistsCheckIsStarred(ctx context.Context, req *GistsCheckIsStarredReq, opt .
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -120,7 +122,7 @@ GistsCheckIsStarredResponse is a response for GistsCheckIsStarred
 https://developer.github.com/v3/gists/#check-if-a-gist-is-starred
 */
 type GistsCheckIsStarredResponse struct {
-	internal.Response
+	common.Response
 	request *GistsCheckIsStarredReq
 }
 
@@ -142,7 +144,8 @@ func GistsCreate(ctx context.Context, req *GistsCreateReq, opt ...options.Option
 		req = new(GistsCreateReq)
 	}
 	resp := &GistsCreateResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -152,7 +155,7 @@ func GistsCreate(ctx context.Context, req *GistsCreateReq, opt ...options.Option
 	}
 
 	resp.Data = components.GistFull{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -257,7 +260,7 @@ GistsCreateResponse is a response for GistsCreate
 https://developer.github.com/v3/gists/#create-a-gist
 */
 type GistsCreateResponse struct {
-	internal.Response
+	common.Response
 	request *GistsCreateReq
 	Data    components.GistFull
 }
@@ -280,7 +283,8 @@ func GistsCreateComment(ctx context.Context, req *GistsCreateCommentReq, opt ...
 		req = new(GistsCreateCommentReq)
 	}
 	resp := &GistsCreateCommentResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -290,7 +294,7 @@ func GistsCreateComment(ctx context.Context, req *GistsCreateCommentReq, opt ...
 	}
 
 	resp.Data = components.GistComment{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -385,7 +389,7 @@ GistsCreateCommentResponse is a response for GistsCreateComment
 https://developer.github.com/v3/gists/comments/#create-a-gist-comment
 */
 type GistsCreateCommentResponse struct {
-	internal.Response
+	common.Response
 	request *GistsCreateCommentReq
 	Data    components.GistComment
 }
@@ -408,7 +412,8 @@ func GistsDelete(ctx context.Context, req *GistsDeleteReq, opt ...options.Option
 		req = new(GistsDeleteReq)
 	}
 	resp := &GistsDeleteResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -417,7 +422,7 @@ func GistsDelete(ctx context.Context, req *GistsDeleteReq, opt ...options.Option
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -497,7 +502,7 @@ GistsDeleteResponse is a response for GistsDelete
 https://developer.github.com/v3/gists/#delete-a-gist
 */
 type GistsDeleteResponse struct {
-	internal.Response
+	common.Response
 	request *GistsDeleteReq
 }
 
@@ -519,7 +524,8 @@ func GistsDeleteComment(ctx context.Context, req *GistsDeleteCommentReq, opt ...
 		req = new(GistsDeleteCommentReq)
 	}
 	resp := &GistsDeleteCommentResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -528,7 +534,7 @@ func GistsDeleteComment(ctx context.Context, req *GistsDeleteCommentReq, opt ...
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -611,7 +617,7 @@ GistsDeleteCommentResponse is a response for GistsDeleteComment
 https://developer.github.com/v3/gists/comments/#delete-a-gist-comment
 */
 type GistsDeleteCommentResponse struct {
-	internal.Response
+	common.Response
 	request *GistsDeleteCommentReq
 }
 
@@ -633,7 +639,8 @@ func GistsFork(ctx context.Context, req *GistsForkReq, opt ...options.Option) (*
 		req = new(GistsForkReq)
 	}
 	resp := &GistsForkResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -643,7 +650,7 @@ func GistsFork(ctx context.Context, req *GistsForkReq, opt ...options.Option) (*
 	}
 
 	resp.Data = components.BaseGist{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -723,7 +730,7 @@ GistsForkResponse is a response for GistsFork
 https://developer.github.com/v3/gists/#fork-a-gist
 */
 type GistsForkResponse struct {
-	internal.Response
+	common.Response
 	request *GistsForkReq
 	Data    components.BaseGist
 }
@@ -746,7 +753,8 @@ func GistsGet(ctx context.Context, req *GistsGetReq, opt ...options.Option) (*Gi
 		req = new(GistsGetReq)
 	}
 	resp := &GistsGetResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -756,7 +764,7 @@ func GistsGet(ctx context.Context, req *GistsGetReq, opt ...options.Option) (*Gi
 	}
 
 	resp.Data = components.GistFull{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -836,7 +844,7 @@ GistsGetResponse is a response for GistsGet
 https://developer.github.com/v3/gists/#get-a-gist
 */
 type GistsGetResponse struct {
-	internal.Response
+	common.Response
 	request *GistsGetReq
 	Data    components.GistFull
 }
@@ -859,7 +867,8 @@ func GistsGetComment(ctx context.Context, req *GistsGetCommentReq, opt ...option
 		req = new(GistsGetCommentReq)
 	}
 	resp := &GistsGetCommentResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -869,7 +878,7 @@ func GistsGetComment(ctx context.Context, req *GistsGetCommentReq, opt ...option
 	}
 
 	resp.Data = components.GistComment{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -952,7 +961,7 @@ GistsGetCommentResponse is a response for GistsGetComment
 https://developer.github.com/v3/gists/comments/#get-a-gist-comment
 */
 type GistsGetCommentResponse struct {
-	internal.Response
+	common.Response
 	request *GistsGetCommentReq
 	Data    components.GistComment
 }
@@ -975,7 +984,8 @@ func GistsGetRevision(ctx context.Context, req *GistsGetRevisionReq, opt ...opti
 		req = new(GistsGetRevisionReq)
 	}
 	resp := &GistsGetRevisionResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -985,7 +995,7 @@ func GistsGetRevision(ctx context.Context, req *GistsGetRevisionReq, opt ...opti
 	}
 
 	resp.Data = components.GistFull{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1068,7 +1078,7 @@ GistsGetRevisionResponse is a response for GistsGetRevision
 https://developer.github.com/v3/gists/#get-a-gist-revision
 */
 type GistsGetRevisionResponse struct {
-	internal.Response
+	common.Response
 	request *GistsGetRevisionReq
 	Data    components.GistFull
 }
@@ -1091,7 +1101,8 @@ func GistsList(ctx context.Context, req *GistsListReq, opt ...options.Option) (*
 		req = new(GistsListReq)
 	}
 	resp := &GistsListResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1101,7 +1112,7 @@ func GistsList(ctx context.Context, req *GistsListReq, opt ...options.Option) (*
 	}
 
 	resp.Data = []components.BaseGist{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1200,7 +1211,7 @@ GistsListResponse is a response for GistsList
 https://developer.github.com/v3/gists/#list-gists-for-the-authenticated-user
 */
 type GistsListResponse struct {
-	internal.Response
+	common.Response
 	request *GistsListReq
 	Data    []components.BaseGist
 }
@@ -1223,7 +1234,8 @@ func GistsListComments(ctx context.Context, req *GistsListCommentsReq, opt ...op
 		req = new(GistsListCommentsReq)
 	}
 	resp := &GistsListCommentsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1233,7 +1245,7 @@ func GistsListComments(ctx context.Context, req *GistsListCommentsReq, opt ...op
 	}
 
 	resp.Data = []components.GistComment{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1325,7 +1337,7 @@ GistsListCommentsResponse is a response for GistsListComments
 https://developer.github.com/v3/gists/comments/#list-gist-comments
 */
 type GistsListCommentsResponse struct {
-	internal.Response
+	common.Response
 	request *GistsListCommentsReq
 	Data    []components.GistComment
 }
@@ -1348,7 +1360,8 @@ func GistsListCommits(ctx context.Context, req *GistsListCommitsReq, opt ...opti
 		req = new(GistsListCommitsReq)
 	}
 	resp := &GistsListCommitsResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1358,7 +1371,7 @@ func GistsListCommits(ctx context.Context, req *GistsListCommitsReq, opt ...opti
 	}
 
 	resp.Data = []components.GistCommit{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1450,7 +1463,7 @@ GistsListCommitsResponse is a response for GistsListCommits
 https://developer.github.com/v3/gists/#list-gist-commits
 */
 type GistsListCommitsResponse struct {
-	internal.Response
+	common.Response
 	request *GistsListCommitsReq
 	Data    []components.GistCommit
 }
@@ -1473,7 +1486,8 @@ func GistsListForUser(ctx context.Context, req *GistsListForUserReq, opt ...opti
 		req = new(GistsListForUserReq)
 	}
 	resp := &GistsListForUserResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1483,7 +1497,7 @@ func GistsListForUser(ctx context.Context, req *GistsListForUserReq, opt ...opti
 	}
 
 	resp.Data = []components.BaseGist{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1583,7 +1597,7 @@ GistsListForUserResponse is a response for GistsListForUser
 https://developer.github.com/v3/gists/#list-gists-for-a-user
 */
 type GistsListForUserResponse struct {
-	internal.Response
+	common.Response
 	request *GistsListForUserReq
 	Data    []components.BaseGist
 }
@@ -1606,7 +1620,8 @@ func GistsListForks(ctx context.Context, req *GistsListForksReq, opt ...options.
 		req = new(GistsListForksReq)
 	}
 	resp := &GistsListForksResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1616,7 +1631,7 @@ func GistsListForks(ctx context.Context, req *GistsListForksReq, opt ...options.
 	}
 
 	resp.Data = []components.GistFull{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1708,7 +1723,7 @@ GistsListForksResponse is a response for GistsListForks
 https://developer.github.com/v3/gists/#list-gist-forks
 */
 type GistsListForksResponse struct {
-	internal.Response
+	common.Response
 	request *GistsListForksReq
 	Data    []components.GistFull
 }
@@ -1731,7 +1746,8 @@ func GistsListPublic(ctx context.Context, req *GistsListPublicReq, opt ...option
 		req = new(GistsListPublicReq)
 	}
 	resp := &GistsListPublicResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1741,7 +1757,7 @@ func GistsListPublic(ctx context.Context, req *GistsListPublicReq, opt ...option
 	}
 
 	resp.Data = []components.BaseGist{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1840,7 +1856,7 @@ GistsListPublicResponse is a response for GistsListPublic
 https://developer.github.com/v3/gists/#list-public-gists
 */
 type GistsListPublicResponse struct {
-	internal.Response
+	common.Response
 	request *GistsListPublicReq
 	Data    []components.BaseGist
 }
@@ -1863,7 +1879,8 @@ func GistsListStarred(ctx context.Context, req *GistsListStarredReq, opt ...opti
 		req = new(GistsListStarredReq)
 	}
 	resp := &GistsListStarredResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -1873,7 +1890,7 @@ func GistsListStarred(ctx context.Context, req *GistsListStarredReq, opt ...opti
 	}
 
 	resp.Data = []components.BaseGist{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1972,7 +1989,7 @@ GistsListStarredResponse is a response for GistsListStarred
 https://developer.github.com/v3/gists/#list-starred-gists
 */
 type GistsListStarredResponse struct {
-	internal.Response
+	common.Response
 	request *GistsListStarredReq
 	Data    []components.BaseGist
 }
@@ -1995,7 +2012,8 @@ func GistsStar(ctx context.Context, req *GistsStarReq, opt ...options.Option) (*
 		req = new(GistsStarReq)
 	}
 	resp := &GistsStarResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2004,7 +2022,7 @@ func GistsStar(ctx context.Context, req *GistsStarReq, opt ...options.Option) (*
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -2084,7 +2102,7 @@ GistsStarResponse is a response for GistsStar
 https://developer.github.com/v3/gists/#star-a-gist
 */
 type GistsStarResponse struct {
-	internal.Response
+	common.Response
 	request *GistsStarReq
 }
 
@@ -2106,7 +2124,8 @@ func GistsUnstar(ctx context.Context, req *GistsUnstarReq, opt ...options.Option
 		req = new(GistsUnstarReq)
 	}
 	resp := &GistsUnstarResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2115,7 +2134,7 @@ func GistsUnstar(ctx context.Context, req *GistsUnstarReq, opt ...options.Option
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, nil)
+	err = internal.DecodeResponseBody(r, builder, opts, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -2195,7 +2214,7 @@ GistsUnstarResponse is a response for GistsUnstar
 https://developer.github.com/v3/gists/#unstar-a-gist
 */
 type GistsUnstarResponse struct {
-	internal.Response
+	common.Response
 	request *GistsUnstarReq
 }
 
@@ -2217,7 +2236,8 @@ func GistsUpdate(ctx context.Context, req *GistsUpdateReq, opt ...options.Option
 		req = new(GistsUpdateReq)
 	}
 	resp := &GistsUpdateResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2227,7 +2247,7 @@ func GistsUpdate(ctx context.Context, req *GistsUpdateReq, opt ...options.Option
 	}
 
 	resp.Data = components.GistFull{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2335,7 +2355,7 @@ GistsUpdateResponse is a response for GistsUpdate
 https://developer.github.com/v3/gists/#update-a-gist
 */
 type GistsUpdateResponse struct {
-	internal.Response
+	common.Response
 	request *GistsUpdateReq
 	Data    components.GistFull
 }
@@ -2358,7 +2378,8 @@ func GistsUpdateComment(ctx context.Context, req *GistsUpdateCommentReq, opt ...
 		req = new(GistsUpdateCommentReq)
 	}
 	resp := &GistsUpdateCommentResponse{request: req}
-	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+	builder := req.requestBuilder()
+	r, err := internal.DoRequest(ctx, builder, opts)
 
 	if r != nil {
 		resp.Response = *r
@@ -2368,7 +2389,7 @@ func GistsUpdateComment(ctx context.Context, req *GistsUpdateCommentReq, opt ...
 	}
 
 	resp.Data = components.GistComment{}
-	err = internal.DecodeResponseBody(r, &resp.Data)
+	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2466,7 +2487,7 @@ GistsUpdateCommentResponse is a response for GistsUpdateComment
 https://developer.github.com/v3/gists/comments/#update-a-gist-comment
 */
 type GistsUpdateCommentResponse struct {
-	internal.Response
+	common.Response
 	request *GistsUpdateCommentReq
 	Data    components.GistComment
 }
