@@ -6,6 +6,8 @@ import (
 	"context"
 	"fmt"
 	components "github.com/willabides/octo-go/components"
+	internal "github.com/willabides/octo-go/internal"
+	options "github.com/willabides/octo-go/options"
 	"net/http"
 	"net/url"
 )
@@ -19,20 +21,26 @@ Get all gitignore templates.
 
 https://developer.github.com/v3/gitignore/#get-all-gitignore-templates
 */
-func GitignoreGetAllTemplates(ctx context.Context, req *GitignoreGetAllTemplatesReq, opt ...RequestOption) (*GitignoreGetAllTemplatesResponse, error) {
+func GitignoreGetAllTemplates(ctx context.Context, req *GitignoreGetAllTemplatesReq, opt ...options.Option) (*GitignoreGetAllTemplatesResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(GitignoreGetAllTemplatesReq)
 	}
 	resp := &GitignoreGetAllTemplatesResponse{request: req}
-	r, err := doRequest(ctx, req, "gitignore/get-all-templates", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = GitignoreGetAllTemplatesResponseBody{}
-	err = r.decodeBody(&resp.Data, "gitignore/get-all-templates")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -48,7 +56,7 @@ Get all gitignore templates.
 
 https://developer.github.com/v3/gitignore/#get-all-gitignore-templates
 */
-func (c Client) GitignoreGetAllTemplates(ctx context.Context, req *GitignoreGetAllTemplatesReq, opt ...RequestOption) (*GitignoreGetAllTemplatesResponse, error) {
+func (c Client) GitignoreGetAllTemplates(ctx context.Context, req *GitignoreGetAllTemplatesReq, opt ...options.Option) (*GitignoreGetAllTemplatesResponse, error) {
 	return GitignoreGetAllTemplates(ctx, req, append(c, opt...)...)
 }
 
@@ -61,44 +69,33 @@ type GitignoreGetAllTemplatesReq struct {
 	_url string
 }
 
-func (r *GitignoreGetAllTemplatesReq) url() string {
-	return r._url
-}
-
-func (r *GitignoreGetAllTemplatesReq) urlPath() string {
-	return fmt.Sprintf("/gitignore/templates")
-}
-
-func (r *GitignoreGetAllTemplatesReq) method() string {
-	return "GET"
-}
-
-func (r *GitignoreGetAllTemplatesReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *GitignoreGetAllTemplatesReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *GitignoreGetAllTemplatesReq) body() interface{} {
-	return nil
-}
-
-func (r *GitignoreGetAllTemplatesReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *GitignoreGetAllTemplatesReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *GitignoreGetAllTemplatesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "gitignore/get-all-templates", opt)
+func (r *GitignoreGetAllTemplatesReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *GitignoreGetAllTemplatesReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "gitignore/get-all-templates",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/gitignore/templates"),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
+	}
+	return builder
 }
 
 /*
@@ -106,7 +103,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GitignoreGetAllTemplatesReq) Rel(link RelName, resp *GitignoreGetAllTemplatesResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -127,7 +124,7 @@ GitignoreGetAllTemplatesResponse is a response for GitignoreGetAllTemplates
 https://developer.github.com/v3/gitignore/#get-all-gitignore-templates
 */
 type GitignoreGetAllTemplatesResponse struct {
-	response
+	internal.Response
 	request *GitignoreGetAllTemplatesReq
 	Data    GitignoreGetAllTemplatesResponseBody
 }
@@ -141,20 +138,26 @@ Get a gitignore template.
 
 https://developer.github.com/v3/gitignore/#get-a-gitignore-template
 */
-func GitignoreGetTemplate(ctx context.Context, req *GitignoreGetTemplateReq, opt ...RequestOption) (*GitignoreGetTemplateResponse, error) {
+func GitignoreGetTemplate(ctx context.Context, req *GitignoreGetTemplateReq, opt ...options.Option) (*GitignoreGetTemplateResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(GitignoreGetTemplateReq)
 	}
 	resp := &GitignoreGetTemplateResponse{request: req}
-	r, err := doRequest(ctx, req, "gitignore/get-template", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.GitignoreTemplate{}
-	err = r.decodeBody(&resp.Data, "gitignore/get-template")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -170,7 +173,7 @@ Get a gitignore template.
 
 https://developer.github.com/v3/gitignore/#get-a-gitignore-template
 */
-func (c Client) GitignoreGetTemplate(ctx context.Context, req *GitignoreGetTemplateReq, opt ...RequestOption) (*GitignoreGetTemplateResponse, error) {
+func (c Client) GitignoreGetTemplate(ctx context.Context, req *GitignoreGetTemplateReq, opt ...options.Option) (*GitignoreGetTemplateResponse, error) {
 	return GitignoreGetTemplate(ctx, req, append(c, opt...)...)
 }
 
@@ -186,44 +189,33 @@ type GitignoreGetTemplateReq struct {
 	Name string
 }
 
-func (r *GitignoreGetTemplateReq) url() string {
-	return r._url
-}
-
-func (r *GitignoreGetTemplateReq) urlPath() string {
-	return fmt.Sprintf("/gitignore/templates/%v", r.Name)
-}
-
-func (r *GitignoreGetTemplateReq) method() string {
-	return "GET"
-}
-
-func (r *GitignoreGetTemplateReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *GitignoreGetTemplateReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *GitignoreGetTemplateReq) body() interface{} {
-	return nil
-}
-
-func (r *GitignoreGetTemplateReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *GitignoreGetTemplateReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *GitignoreGetTemplateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "gitignore/get-template", opt)
+func (r *GitignoreGetTemplateReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *GitignoreGetTemplateReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "gitignore/get-template",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/gitignore/templates/%v", r.Name),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
+	}
+	return builder
 }
 
 /*
@@ -231,7 +223,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GitignoreGetTemplateReq) Rel(link RelName, resp *GitignoreGetTemplateResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -245,7 +237,7 @@ GitignoreGetTemplateResponse is a response for GitignoreGetTemplate
 https://developer.github.com/v3/gitignore/#get-a-gitignore-template
 */
 type GitignoreGetTemplateResponse struct {
-	response
+	internal.Response
 	request *GitignoreGetTemplateReq
 	Data    components.GitignoreTemplate
 }

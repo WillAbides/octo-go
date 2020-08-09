@@ -6,6 +6,8 @@ import (
 	"context"
 	"fmt"
 	components "github.com/willabides/octo-go/components"
+	internal "github.com/willabides/octo-go/internal"
+	options "github.com/willabides/octo-go/options"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -20,19 +22,25 @@ Check if a repository is starred by the authenticated user.
 
 https://developer.github.com/v3/activity/starring/#check-if-a-repository-is-starred-by-the-authenticated-user
 */
-func ActivityCheckRepoIsStarredByAuthenticatedUser(ctx context.Context, req *ActivityCheckRepoIsStarredByAuthenticatedUserReq, opt ...RequestOption) (*ActivityCheckRepoIsStarredByAuthenticatedUserResponse, error) {
+func ActivityCheckRepoIsStarredByAuthenticatedUser(ctx context.Context, req *ActivityCheckRepoIsStarredByAuthenticatedUserReq, opt ...options.Option) (*ActivityCheckRepoIsStarredByAuthenticatedUserResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActivityCheckRepoIsStarredByAuthenticatedUserReq)
 	}
 	resp := &ActivityCheckRepoIsStarredByAuthenticatedUserResponse{request: req}
-	r, err := doRequest(ctx, req, "activity/check-repo-is-starred-by-authenticated-user", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "activity/check-repo-is-starred-by-authenticated-user")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -48,7 +56,7 @@ Check if a repository is starred by the authenticated user.
 
 https://developer.github.com/v3/activity/starring/#check-if-a-repository-is-starred-by-the-authenticated-user
 */
-func (c Client) ActivityCheckRepoIsStarredByAuthenticatedUser(ctx context.Context, req *ActivityCheckRepoIsStarredByAuthenticatedUserReq, opt ...RequestOption) (*ActivityCheckRepoIsStarredByAuthenticatedUserResponse, error) {
+func (c Client) ActivityCheckRepoIsStarredByAuthenticatedUser(ctx context.Context, req *ActivityCheckRepoIsStarredByAuthenticatedUserReq, opt ...options.Option) (*ActivityCheckRepoIsStarredByAuthenticatedUserResponse, error) {
 	return ActivityCheckRepoIsStarredByAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
@@ -63,44 +71,33 @@ type ActivityCheckRepoIsStarredByAuthenticatedUserReq struct {
 	Repo  string
 }
 
-func (r *ActivityCheckRepoIsStarredByAuthenticatedUserReq) url() string {
-	return r._url
-}
-
-func (r *ActivityCheckRepoIsStarredByAuthenticatedUserReq) urlPath() string {
-	return fmt.Sprintf("/user/starred/%v/%v", r.Owner, r.Repo)
-}
-
-func (r *ActivityCheckRepoIsStarredByAuthenticatedUserReq) method() string {
-	return "GET"
-}
-
-func (r *ActivityCheckRepoIsStarredByAuthenticatedUserReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ActivityCheckRepoIsStarredByAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActivityCheckRepoIsStarredByAuthenticatedUserReq) body() interface{} {
-	return nil
-}
-
-func (r *ActivityCheckRepoIsStarredByAuthenticatedUserReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *ActivityCheckRepoIsStarredByAuthenticatedUserReq) validStatuses() []int {
-	return []int{204, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ActivityCheckRepoIsStarredByAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "activity/check-repo-is-starred-by-authenticated-user", opt)
+func (r *ActivityCheckRepoIsStarredByAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ActivityCheckRepoIsStarredByAuthenticatedUserReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "GET",
+		OperationID:      "activity/check-repo-is-starred-by-authenticated-user",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/user/starred/%v/%v", r.Owner, r.Repo),
+		URLQuery:         query,
+		ValidStatuses:    []int{204, 304},
+	}
+	return builder
 }
 
 /*
@@ -108,7 +105,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActivityCheckRepoIsStarredByAuthenticatedUserReq) Rel(link RelName, resp *ActivityCheckRepoIsStarredByAuthenticatedUserResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -122,7 +119,7 @@ ActivityCheckRepoIsStarredByAuthenticatedUserResponse is a response for Activity
 https://developer.github.com/v3/activity/starring/#check-if-a-repository-is-starred-by-the-authenticated-user
 */
 type ActivityCheckRepoIsStarredByAuthenticatedUserResponse struct {
-	response
+	internal.Response
 	request *ActivityCheckRepoIsStarredByAuthenticatedUserReq
 }
 
@@ -135,19 +132,25 @@ Delete a repository subscription.
 
 https://developer.github.com/v3/activity/watching/#delete-a-repository-subscription
 */
-func ActivityDeleteRepoSubscription(ctx context.Context, req *ActivityDeleteRepoSubscriptionReq, opt ...RequestOption) (*ActivityDeleteRepoSubscriptionResponse, error) {
+func ActivityDeleteRepoSubscription(ctx context.Context, req *ActivityDeleteRepoSubscriptionReq, opt ...options.Option) (*ActivityDeleteRepoSubscriptionResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActivityDeleteRepoSubscriptionReq)
 	}
 	resp := &ActivityDeleteRepoSubscriptionResponse{request: req}
-	r, err := doRequest(ctx, req, "activity/delete-repo-subscription", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "activity/delete-repo-subscription")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -163,7 +166,7 @@ Delete a repository subscription.
 
 https://developer.github.com/v3/activity/watching/#delete-a-repository-subscription
 */
-func (c Client) ActivityDeleteRepoSubscription(ctx context.Context, req *ActivityDeleteRepoSubscriptionReq, opt ...RequestOption) (*ActivityDeleteRepoSubscriptionResponse, error) {
+func (c Client) ActivityDeleteRepoSubscription(ctx context.Context, req *ActivityDeleteRepoSubscriptionReq, opt ...options.Option) (*ActivityDeleteRepoSubscriptionResponse, error) {
 	return ActivityDeleteRepoSubscription(ctx, req, append(c, opt...)...)
 }
 
@@ -178,44 +181,33 @@ type ActivityDeleteRepoSubscriptionReq struct {
 	Repo  string
 }
 
-func (r *ActivityDeleteRepoSubscriptionReq) url() string {
-	return r._url
-}
-
-func (r *ActivityDeleteRepoSubscriptionReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/subscription", r.Owner, r.Repo)
-}
-
-func (r *ActivityDeleteRepoSubscriptionReq) method() string {
-	return "DELETE"
-}
-
-func (r *ActivityDeleteRepoSubscriptionReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ActivityDeleteRepoSubscriptionReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActivityDeleteRepoSubscriptionReq) body() interface{} {
-	return nil
-}
-
-func (r *ActivityDeleteRepoSubscriptionReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *ActivityDeleteRepoSubscriptionReq) validStatuses() []int {
-	return []int{204}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ActivityDeleteRepoSubscriptionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "activity/delete-repo-subscription", opt)
+func (r *ActivityDeleteRepoSubscriptionReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ActivityDeleteRepoSubscriptionReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		OperationID:      "activity/delete-repo-subscription",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/subscription", r.Owner, r.Repo),
+		URLQuery:         query,
+		ValidStatuses:    []int{204},
+	}
+	return builder
 }
 
 /*
@@ -223,7 +215,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActivityDeleteRepoSubscriptionReq) Rel(link RelName, resp *ActivityDeleteRepoSubscriptionResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -237,7 +229,7 @@ ActivityDeleteRepoSubscriptionResponse is a response for ActivityDeleteRepoSubsc
 https://developer.github.com/v3/activity/watching/#delete-a-repository-subscription
 */
 type ActivityDeleteRepoSubscriptionResponse struct {
-	response
+	internal.Response
 	request *ActivityDeleteRepoSubscriptionReq
 }
 
@@ -250,19 +242,25 @@ Delete a thread subscription.
 
 https://developer.github.com/v3/activity/notifications/#delete-a-thread-subscription
 */
-func ActivityDeleteThreadSubscription(ctx context.Context, req *ActivityDeleteThreadSubscriptionReq, opt ...RequestOption) (*ActivityDeleteThreadSubscriptionResponse, error) {
+func ActivityDeleteThreadSubscription(ctx context.Context, req *ActivityDeleteThreadSubscriptionReq, opt ...options.Option) (*ActivityDeleteThreadSubscriptionResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActivityDeleteThreadSubscriptionReq)
 	}
 	resp := &ActivityDeleteThreadSubscriptionResponse{request: req}
-	r, err := doRequest(ctx, req, "activity/delete-thread-subscription", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "activity/delete-thread-subscription")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -278,7 +276,7 @@ Delete a thread subscription.
 
 https://developer.github.com/v3/activity/notifications/#delete-a-thread-subscription
 */
-func (c Client) ActivityDeleteThreadSubscription(ctx context.Context, req *ActivityDeleteThreadSubscriptionReq, opt ...RequestOption) (*ActivityDeleteThreadSubscriptionResponse, error) {
+func (c Client) ActivityDeleteThreadSubscription(ctx context.Context, req *ActivityDeleteThreadSubscriptionReq, opt ...options.Option) (*ActivityDeleteThreadSubscriptionResponse, error) {
 	return ActivityDeleteThreadSubscription(ctx, req, append(c, opt...)...)
 }
 
@@ -294,44 +292,33 @@ type ActivityDeleteThreadSubscriptionReq struct {
 	ThreadId int64
 }
 
-func (r *ActivityDeleteThreadSubscriptionReq) url() string {
-	return r._url
-}
-
-func (r *ActivityDeleteThreadSubscriptionReq) urlPath() string {
-	return fmt.Sprintf("/notifications/threads/%v/subscription", r.ThreadId)
-}
-
-func (r *ActivityDeleteThreadSubscriptionReq) method() string {
-	return "DELETE"
-}
-
-func (r *ActivityDeleteThreadSubscriptionReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ActivityDeleteThreadSubscriptionReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActivityDeleteThreadSubscriptionReq) body() interface{} {
-	return nil
-}
-
-func (r *ActivityDeleteThreadSubscriptionReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *ActivityDeleteThreadSubscriptionReq) validStatuses() []int {
-	return []int{204, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ActivityDeleteThreadSubscriptionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "activity/delete-thread-subscription", opt)
+func (r *ActivityDeleteThreadSubscriptionReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ActivityDeleteThreadSubscriptionReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		OperationID:      "activity/delete-thread-subscription",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/notifications/threads/%v/subscription", r.ThreadId),
+		URLQuery:         query,
+		ValidStatuses:    []int{204, 304},
+	}
+	return builder
 }
 
 /*
@@ -339,7 +326,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActivityDeleteThreadSubscriptionReq) Rel(link RelName, resp *ActivityDeleteThreadSubscriptionResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -353,7 +340,7 @@ ActivityDeleteThreadSubscriptionResponse is a response for ActivityDeleteThreadS
 https://developer.github.com/v3/activity/notifications/#delete-a-thread-subscription
 */
 type ActivityDeleteThreadSubscriptionResponse struct {
-	response
+	internal.Response
 	request *ActivityDeleteThreadSubscriptionReq
 }
 
@@ -366,20 +353,26 @@ Get feeds.
 
 https://developer.github.com/v3/activity/feeds/#get-feeds
 */
-func ActivityGetFeeds(ctx context.Context, req *ActivityGetFeedsReq, opt ...RequestOption) (*ActivityGetFeedsResponse, error) {
+func ActivityGetFeeds(ctx context.Context, req *ActivityGetFeedsReq, opt ...options.Option) (*ActivityGetFeedsResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActivityGetFeedsReq)
 	}
 	resp := &ActivityGetFeedsResponse{request: req}
-	r, err := doRequest(ctx, req, "activity/get-feeds", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.Feed{}
-	err = r.decodeBody(&resp.Data, "activity/get-feeds")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -395,7 +388,7 @@ Get feeds.
 
 https://developer.github.com/v3/activity/feeds/#get-feeds
 */
-func (c Client) ActivityGetFeeds(ctx context.Context, req *ActivityGetFeedsReq, opt ...RequestOption) (*ActivityGetFeedsResponse, error) {
+func (c Client) ActivityGetFeeds(ctx context.Context, req *ActivityGetFeedsReq, opt ...options.Option) (*ActivityGetFeedsResponse, error) {
 	return ActivityGetFeeds(ctx, req, append(c, opt...)...)
 }
 
@@ -408,44 +401,33 @@ type ActivityGetFeedsReq struct {
 	_url string
 }
 
-func (r *ActivityGetFeedsReq) url() string {
-	return r._url
-}
-
-func (r *ActivityGetFeedsReq) urlPath() string {
-	return fmt.Sprintf("/feeds")
-}
-
-func (r *ActivityGetFeedsReq) method() string {
-	return "GET"
-}
-
-func (r *ActivityGetFeedsReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ActivityGetFeedsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActivityGetFeedsReq) body() interface{} {
-	return nil
-}
-
-func (r *ActivityGetFeedsReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ActivityGetFeedsReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ActivityGetFeedsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "activity/get-feeds", opt)
+func (r *ActivityGetFeedsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ActivityGetFeedsReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "activity/get-feeds",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/feeds"),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -453,7 +435,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActivityGetFeedsReq) Rel(link RelName, resp *ActivityGetFeedsResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -467,7 +449,7 @@ ActivityGetFeedsResponse is a response for ActivityGetFeeds
 https://developer.github.com/v3/activity/feeds/#get-feeds
 */
 type ActivityGetFeedsResponse struct {
-	response
+	internal.Response
 	request *ActivityGetFeedsReq
 	Data    components.Feed
 }
@@ -481,20 +463,26 @@ Get a repository subscription.
 
 https://developer.github.com/v3/activity/watching/#get-a-repository-subscription
 */
-func ActivityGetRepoSubscription(ctx context.Context, req *ActivityGetRepoSubscriptionReq, opt ...RequestOption) (*ActivityGetRepoSubscriptionResponse, error) {
+func ActivityGetRepoSubscription(ctx context.Context, req *ActivityGetRepoSubscriptionReq, opt ...options.Option) (*ActivityGetRepoSubscriptionResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActivityGetRepoSubscriptionReq)
 	}
 	resp := &ActivityGetRepoSubscriptionResponse{request: req}
-	r, err := doRequest(ctx, req, "activity/get-repo-subscription", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.RepositorySubscription{}
-	err = r.decodeBody(&resp.Data, "activity/get-repo-subscription")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -510,7 +498,7 @@ Get a repository subscription.
 
 https://developer.github.com/v3/activity/watching/#get-a-repository-subscription
 */
-func (c Client) ActivityGetRepoSubscription(ctx context.Context, req *ActivityGetRepoSubscriptionReq, opt ...RequestOption) (*ActivityGetRepoSubscriptionResponse, error) {
+func (c Client) ActivityGetRepoSubscription(ctx context.Context, req *ActivityGetRepoSubscriptionReq, opt ...options.Option) (*ActivityGetRepoSubscriptionResponse, error) {
 	return ActivityGetRepoSubscription(ctx, req, append(c, opt...)...)
 }
 
@@ -525,44 +513,33 @@ type ActivityGetRepoSubscriptionReq struct {
 	Repo  string
 }
 
-func (r *ActivityGetRepoSubscriptionReq) url() string {
-	return r._url
-}
-
-func (r *ActivityGetRepoSubscriptionReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/subscription", r.Owner, r.Repo)
-}
-
-func (r *ActivityGetRepoSubscriptionReq) method() string {
-	return "GET"
-}
-
-func (r *ActivityGetRepoSubscriptionReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ActivityGetRepoSubscriptionReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActivityGetRepoSubscriptionReq) body() interface{} {
-	return nil
-}
-
-func (r *ActivityGetRepoSubscriptionReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ActivityGetRepoSubscriptionReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ActivityGetRepoSubscriptionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "activity/get-repo-subscription", opt)
+func (r *ActivityGetRepoSubscriptionReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ActivityGetRepoSubscriptionReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "activity/get-repo-subscription",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/subscription", r.Owner, r.Repo),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -570,7 +547,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActivityGetRepoSubscriptionReq) Rel(link RelName, resp *ActivityGetRepoSubscriptionResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -584,7 +561,7 @@ ActivityGetRepoSubscriptionResponse is a response for ActivityGetRepoSubscriptio
 https://developer.github.com/v3/activity/watching/#get-a-repository-subscription
 */
 type ActivityGetRepoSubscriptionResponse struct {
-	response
+	internal.Response
 	request *ActivityGetRepoSubscriptionReq
 	Data    components.RepositorySubscription
 }
@@ -598,20 +575,26 @@ Get a thread.
 
 https://developer.github.com/v3/activity/notifications/#get-a-thread
 */
-func ActivityGetThread(ctx context.Context, req *ActivityGetThreadReq, opt ...RequestOption) (*ActivityGetThreadResponse, error) {
+func ActivityGetThread(ctx context.Context, req *ActivityGetThreadReq, opt ...options.Option) (*ActivityGetThreadResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActivityGetThreadReq)
 	}
 	resp := &ActivityGetThreadResponse{request: req}
-	r, err := doRequest(ctx, req, "activity/get-thread", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.Thread{}
-	err = r.decodeBody(&resp.Data, "activity/get-thread")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -627,7 +610,7 @@ Get a thread.
 
 https://developer.github.com/v3/activity/notifications/#get-a-thread
 */
-func (c Client) ActivityGetThread(ctx context.Context, req *ActivityGetThreadReq, opt ...RequestOption) (*ActivityGetThreadResponse, error) {
+func (c Client) ActivityGetThread(ctx context.Context, req *ActivityGetThreadReq, opt ...options.Option) (*ActivityGetThreadResponse, error) {
 	return ActivityGetThread(ctx, req, append(c, opt...)...)
 }
 
@@ -643,44 +626,33 @@ type ActivityGetThreadReq struct {
 	ThreadId int64
 }
 
-func (r *ActivityGetThreadReq) url() string {
-	return r._url
-}
-
-func (r *ActivityGetThreadReq) urlPath() string {
-	return fmt.Sprintf("/notifications/threads/%v", r.ThreadId)
-}
-
-func (r *ActivityGetThreadReq) method() string {
-	return "GET"
-}
-
-func (r *ActivityGetThreadReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ActivityGetThreadReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActivityGetThreadReq) body() interface{} {
-	return nil
-}
-
-func (r *ActivityGetThreadReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ActivityGetThreadReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ActivityGetThreadReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "activity/get-thread", opt)
+func (r *ActivityGetThreadReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ActivityGetThreadReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "activity/get-thread",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/notifications/threads/%v", r.ThreadId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
+	}
+	return builder
 }
 
 /*
@@ -688,7 +660,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActivityGetThreadReq) Rel(link RelName, resp *ActivityGetThreadResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -702,7 +674,7 @@ ActivityGetThreadResponse is a response for ActivityGetThread
 https://developer.github.com/v3/activity/notifications/#get-a-thread
 */
 type ActivityGetThreadResponse struct {
-	response
+	internal.Response
 	request *ActivityGetThreadReq
 	Data    components.Thread
 }
@@ -716,20 +688,26 @@ Get a thread subscription for the authenticated user.
 
 https://developer.github.com/v3/activity/notifications/#get-a-thread-subscription-for-the-authenticated-user
 */
-func ActivityGetThreadSubscriptionForAuthenticatedUser(ctx context.Context, req *ActivityGetThreadSubscriptionForAuthenticatedUserReq, opt ...RequestOption) (*ActivityGetThreadSubscriptionForAuthenticatedUserResponse, error) {
+func ActivityGetThreadSubscriptionForAuthenticatedUser(ctx context.Context, req *ActivityGetThreadSubscriptionForAuthenticatedUserReq, opt ...options.Option) (*ActivityGetThreadSubscriptionForAuthenticatedUserResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActivityGetThreadSubscriptionForAuthenticatedUserReq)
 	}
 	resp := &ActivityGetThreadSubscriptionForAuthenticatedUserResponse{request: req}
-	r, err := doRequest(ctx, req, "activity/get-thread-subscription-for-authenticated-user", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.ThreadSubscription{}
-	err = r.decodeBody(&resp.Data, "activity/get-thread-subscription-for-authenticated-user")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -745,7 +723,7 @@ Get a thread subscription for the authenticated user.
 
 https://developer.github.com/v3/activity/notifications/#get-a-thread-subscription-for-the-authenticated-user
 */
-func (c Client) ActivityGetThreadSubscriptionForAuthenticatedUser(ctx context.Context, req *ActivityGetThreadSubscriptionForAuthenticatedUserReq, opt ...RequestOption) (*ActivityGetThreadSubscriptionForAuthenticatedUserResponse, error) {
+func (c Client) ActivityGetThreadSubscriptionForAuthenticatedUser(ctx context.Context, req *ActivityGetThreadSubscriptionForAuthenticatedUserReq, opt ...options.Option) (*ActivityGetThreadSubscriptionForAuthenticatedUserResponse, error) {
 	return ActivityGetThreadSubscriptionForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
@@ -761,44 +739,33 @@ type ActivityGetThreadSubscriptionForAuthenticatedUserReq struct {
 	ThreadId int64
 }
 
-func (r *ActivityGetThreadSubscriptionForAuthenticatedUserReq) url() string {
-	return r._url
-}
-
-func (r *ActivityGetThreadSubscriptionForAuthenticatedUserReq) urlPath() string {
-	return fmt.Sprintf("/notifications/threads/%v/subscription", r.ThreadId)
-}
-
-func (r *ActivityGetThreadSubscriptionForAuthenticatedUserReq) method() string {
-	return "GET"
-}
-
-func (r *ActivityGetThreadSubscriptionForAuthenticatedUserReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ActivityGetThreadSubscriptionForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActivityGetThreadSubscriptionForAuthenticatedUserReq) body() interface{} {
-	return nil
-}
-
-func (r *ActivityGetThreadSubscriptionForAuthenticatedUserReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ActivityGetThreadSubscriptionForAuthenticatedUserReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ActivityGetThreadSubscriptionForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "activity/get-thread-subscription-for-authenticated-user", opt)
+func (r *ActivityGetThreadSubscriptionForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ActivityGetThreadSubscriptionForAuthenticatedUserReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "activity/get-thread-subscription-for-authenticated-user",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/notifications/threads/%v/subscription", r.ThreadId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
+	}
+	return builder
 }
 
 /*
@@ -806,7 +773,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActivityGetThreadSubscriptionForAuthenticatedUserReq) Rel(link RelName, resp *ActivityGetThreadSubscriptionForAuthenticatedUserResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -820,7 +787,7 @@ ActivityGetThreadSubscriptionForAuthenticatedUserResponse is a response for Acti
 https://developer.github.com/v3/activity/notifications/#get-a-thread-subscription-for-the-authenticated-user
 */
 type ActivityGetThreadSubscriptionForAuthenticatedUserResponse struct {
-	response
+	internal.Response
 	request *ActivityGetThreadSubscriptionForAuthenticatedUserReq
 	Data    components.ThreadSubscription
 }
@@ -834,20 +801,26 @@ List events for the authenticated user.
 
 https://developer.github.com/v3/activity/events/#list-events-for-the-authenticated-user
 */
-func ActivityListEventsForAuthenticatedUser(ctx context.Context, req *ActivityListEventsForAuthenticatedUserReq, opt ...RequestOption) (*ActivityListEventsForAuthenticatedUserResponse, error) {
+func ActivityListEventsForAuthenticatedUser(ctx context.Context, req *ActivityListEventsForAuthenticatedUserReq, opt ...options.Option) (*ActivityListEventsForAuthenticatedUserResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActivityListEventsForAuthenticatedUserReq)
 	}
 	resp := &ActivityListEventsForAuthenticatedUserResponse{request: req}
-	r, err := doRequest(ctx, req, "activity/list-events-for-authenticated-user", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.Event{}
-	err = r.decodeBody(&resp.Data, "activity/list-events-for-authenticated-user")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -863,7 +836,7 @@ List events for the authenticated user.
 
 https://developer.github.com/v3/activity/events/#list-events-for-the-authenticated-user
 */
-func (c Client) ActivityListEventsForAuthenticatedUser(ctx context.Context, req *ActivityListEventsForAuthenticatedUserReq, opt ...RequestOption) (*ActivityListEventsForAuthenticatedUserResponse, error) {
+func (c Client) ActivityListEventsForAuthenticatedUser(ctx context.Context, req *ActivityListEventsForAuthenticatedUserReq, opt ...options.Option) (*ActivityListEventsForAuthenticatedUserResponse, error) {
 	return ActivityListEventsForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
@@ -883,19 +856,16 @@ type ActivityListEventsForAuthenticatedUserReq struct {
 	Page *int64
 }
 
-func (r *ActivityListEventsForAuthenticatedUserReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *ActivityListEventsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *ActivityListEventsForAuthenticatedUserReq) urlPath() string {
-	return fmt.Sprintf("/users/%v/events", r.Username)
-}
-
-func (r *ActivityListEventsForAuthenticatedUserReq) method() string {
-	return "GET"
-}
-
-func (r *ActivityListEventsForAuthenticatedUserReq) urlQuery() url.Values {
+func (r *ActivityListEventsForAuthenticatedUserReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -903,30 +873,22 @@ func (r *ActivityListEventsForAuthenticatedUserReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *ActivityListEventsForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActivityListEventsForAuthenticatedUserReq) body() interface{} {
-	return nil
-}
-
-func (r *ActivityListEventsForAuthenticatedUserReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ActivityListEventsForAuthenticatedUserReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ActivityListEventsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "activity/list-events-for-authenticated-user", opt)
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "activity/list-events-for-authenticated-user",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/users/%v/events", r.Username),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -934,7 +896,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActivityListEventsForAuthenticatedUserReq) Rel(link RelName, resp *ActivityListEventsForAuthenticatedUserResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -948,7 +910,7 @@ ActivityListEventsForAuthenticatedUserResponse is a response for ActivityListEve
 https://developer.github.com/v3/activity/events/#list-events-for-the-authenticated-user
 */
 type ActivityListEventsForAuthenticatedUserResponse struct {
-	response
+	internal.Response
 	request *ActivityListEventsForAuthenticatedUserReq
 	Data    []components.Event
 }
@@ -962,20 +924,26 @@ List notifications for the authenticated user.
 
 https://developer.github.com/v3/activity/notifications/#list-notifications-for-the-authenticated-user
 */
-func ActivityListNotificationsForAuthenticatedUser(ctx context.Context, req *ActivityListNotificationsForAuthenticatedUserReq, opt ...RequestOption) (*ActivityListNotificationsForAuthenticatedUserResponse, error) {
+func ActivityListNotificationsForAuthenticatedUser(ctx context.Context, req *ActivityListNotificationsForAuthenticatedUserReq, opt ...options.Option) (*ActivityListNotificationsForAuthenticatedUserResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActivityListNotificationsForAuthenticatedUserReq)
 	}
 	resp := &ActivityListNotificationsForAuthenticatedUserResponse{request: req}
-	r, err := doRequest(ctx, req, "activity/list-notifications-for-authenticated-user", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.Thread{}
-	err = r.decodeBody(&resp.Data, "activity/list-notifications-for-authenticated-user")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -991,7 +959,7 @@ List notifications for the authenticated user.
 
 https://developer.github.com/v3/activity/notifications/#list-notifications-for-the-authenticated-user
 */
-func (c Client) ActivityListNotificationsForAuthenticatedUser(ctx context.Context, req *ActivityListNotificationsForAuthenticatedUserReq, opt ...RequestOption) (*ActivityListNotificationsForAuthenticatedUserResponse, error) {
+func (c Client) ActivityListNotificationsForAuthenticatedUser(ctx context.Context, req *ActivityListNotificationsForAuthenticatedUserReq, opt ...options.Option) (*ActivityListNotificationsForAuthenticatedUserResponse, error) {
 	return ActivityListNotificationsForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
@@ -1033,19 +1001,16 @@ type ActivityListNotificationsForAuthenticatedUserReq struct {
 	Page *int64
 }
 
-func (r *ActivityListNotificationsForAuthenticatedUserReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *ActivityListNotificationsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *ActivityListNotificationsForAuthenticatedUserReq) urlPath() string {
-	return fmt.Sprintf("/notifications")
-}
-
-func (r *ActivityListNotificationsForAuthenticatedUserReq) method() string {
-	return "GET"
-}
-
-func (r *ActivityListNotificationsForAuthenticatedUserReq) urlQuery() url.Values {
+func (r *ActivityListNotificationsForAuthenticatedUserReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.All != nil {
 		query.Set("all", strconv.FormatBool(*r.All))
@@ -1065,30 +1030,22 @@ func (r *ActivityListNotificationsForAuthenticatedUserReq) urlQuery() url.Values
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *ActivityListNotificationsForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActivityListNotificationsForAuthenticatedUserReq) body() interface{} {
-	return nil
-}
-
-func (r *ActivityListNotificationsForAuthenticatedUserReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ActivityListNotificationsForAuthenticatedUserReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ActivityListNotificationsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "activity/list-notifications-for-authenticated-user", opt)
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "activity/list-notifications-for-authenticated-user",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/notifications"),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
+	}
+	return builder
 }
 
 /*
@@ -1096,7 +1053,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActivityListNotificationsForAuthenticatedUserReq) Rel(link RelName, resp *ActivityListNotificationsForAuthenticatedUserResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1110,7 +1067,7 @@ ActivityListNotificationsForAuthenticatedUserResponse is a response for Activity
 https://developer.github.com/v3/activity/notifications/#list-notifications-for-the-authenticated-user
 */
 type ActivityListNotificationsForAuthenticatedUserResponse struct {
-	response
+	internal.Response
 	request *ActivityListNotificationsForAuthenticatedUserReq
 	Data    []components.Thread
 }
@@ -1124,20 +1081,26 @@ List organization events for the authenticated user.
 
 https://developer.github.com/v3/activity/events/#list-organization-events-for-the-authenticated-user
 */
-func ActivityListOrgEventsForAuthenticatedUser(ctx context.Context, req *ActivityListOrgEventsForAuthenticatedUserReq, opt ...RequestOption) (*ActivityListOrgEventsForAuthenticatedUserResponse, error) {
+func ActivityListOrgEventsForAuthenticatedUser(ctx context.Context, req *ActivityListOrgEventsForAuthenticatedUserReq, opt ...options.Option) (*ActivityListOrgEventsForAuthenticatedUserResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActivityListOrgEventsForAuthenticatedUserReq)
 	}
 	resp := &ActivityListOrgEventsForAuthenticatedUserResponse{request: req}
-	r, err := doRequest(ctx, req, "activity/list-org-events-for-authenticated-user", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.Event{}
-	err = r.decodeBody(&resp.Data, "activity/list-org-events-for-authenticated-user")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1153,7 +1116,7 @@ List organization events for the authenticated user.
 
 https://developer.github.com/v3/activity/events/#list-organization-events-for-the-authenticated-user
 */
-func (c Client) ActivityListOrgEventsForAuthenticatedUser(ctx context.Context, req *ActivityListOrgEventsForAuthenticatedUserReq, opt ...RequestOption) (*ActivityListOrgEventsForAuthenticatedUserResponse, error) {
+func (c Client) ActivityListOrgEventsForAuthenticatedUser(ctx context.Context, req *ActivityListOrgEventsForAuthenticatedUserReq, opt ...options.Option) (*ActivityListOrgEventsForAuthenticatedUserResponse, error) {
 	return ActivityListOrgEventsForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
@@ -1174,19 +1137,16 @@ type ActivityListOrgEventsForAuthenticatedUserReq struct {
 	Page *int64
 }
 
-func (r *ActivityListOrgEventsForAuthenticatedUserReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *ActivityListOrgEventsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *ActivityListOrgEventsForAuthenticatedUserReq) urlPath() string {
-	return fmt.Sprintf("/users/%v/events/orgs/%v", r.Username, r.Org)
-}
-
-func (r *ActivityListOrgEventsForAuthenticatedUserReq) method() string {
-	return "GET"
-}
-
-func (r *ActivityListOrgEventsForAuthenticatedUserReq) urlQuery() url.Values {
+func (r *ActivityListOrgEventsForAuthenticatedUserReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -1194,30 +1154,22 @@ func (r *ActivityListOrgEventsForAuthenticatedUserReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *ActivityListOrgEventsForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActivityListOrgEventsForAuthenticatedUserReq) body() interface{} {
-	return nil
-}
-
-func (r *ActivityListOrgEventsForAuthenticatedUserReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ActivityListOrgEventsForAuthenticatedUserReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ActivityListOrgEventsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "activity/list-org-events-for-authenticated-user", opt)
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "activity/list-org-events-for-authenticated-user",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/users/%v/events/orgs/%v", r.Username, r.Org),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -1225,7 +1177,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActivityListOrgEventsForAuthenticatedUserReq) Rel(link RelName, resp *ActivityListOrgEventsForAuthenticatedUserResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1239,7 +1191,7 @@ ActivityListOrgEventsForAuthenticatedUserResponse is a response for ActivityList
 https://developer.github.com/v3/activity/events/#list-organization-events-for-the-authenticated-user
 */
 type ActivityListOrgEventsForAuthenticatedUserResponse struct {
-	response
+	internal.Response
 	request *ActivityListOrgEventsForAuthenticatedUserReq
 	Data    []components.Event
 }
@@ -1253,20 +1205,26 @@ List public events.
 
 https://developer.github.com/v3/activity/events/#list-public-events
 */
-func ActivityListPublicEvents(ctx context.Context, req *ActivityListPublicEventsReq, opt ...RequestOption) (*ActivityListPublicEventsResponse, error) {
+func ActivityListPublicEvents(ctx context.Context, req *ActivityListPublicEventsReq, opt ...options.Option) (*ActivityListPublicEventsResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActivityListPublicEventsReq)
 	}
 	resp := &ActivityListPublicEventsResponse{request: req}
-	r, err := doRequest(ctx, req, "activity/list-public-events", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.Event{}
-	err = r.decodeBody(&resp.Data, "activity/list-public-events")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1282,7 +1240,7 @@ List public events.
 
 https://developer.github.com/v3/activity/events/#list-public-events
 */
-func (c Client) ActivityListPublicEvents(ctx context.Context, req *ActivityListPublicEventsReq, opt ...RequestOption) (*ActivityListPublicEventsResponse, error) {
+func (c Client) ActivityListPublicEvents(ctx context.Context, req *ActivityListPublicEventsReq, opt ...options.Option) (*ActivityListPublicEventsResponse, error) {
 	return ActivityListPublicEvents(ctx, req, append(c, opt...)...)
 }
 
@@ -1301,19 +1259,16 @@ type ActivityListPublicEventsReq struct {
 	Page *int64
 }
 
-func (r *ActivityListPublicEventsReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *ActivityListPublicEventsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *ActivityListPublicEventsReq) urlPath() string {
-	return fmt.Sprintf("/events")
-}
-
-func (r *ActivityListPublicEventsReq) method() string {
-	return "GET"
-}
-
-func (r *ActivityListPublicEventsReq) urlQuery() url.Values {
+func (r *ActivityListPublicEventsReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -1321,30 +1276,22 @@ func (r *ActivityListPublicEventsReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *ActivityListPublicEventsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActivityListPublicEventsReq) body() interface{} {
-	return nil
-}
-
-func (r *ActivityListPublicEventsReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ActivityListPublicEventsReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ActivityListPublicEventsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "activity/list-public-events", opt)
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "activity/list-public-events",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/events"),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
+	}
+	return builder
 }
 
 /*
@@ -1352,7 +1299,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActivityListPublicEventsReq) Rel(link RelName, resp *ActivityListPublicEventsResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1366,7 +1313,7 @@ ActivityListPublicEventsResponse is a response for ActivityListPublicEvents
 https://developer.github.com/v3/activity/events/#list-public-events
 */
 type ActivityListPublicEventsResponse struct {
-	response
+	internal.Response
 	request *ActivityListPublicEventsReq
 	Data    []components.Event
 }
@@ -1380,20 +1327,26 @@ List public events for a network of repositories.
 
 https://developer.github.com/v3/activity/events/#list-public-events-for-a-network-of-repositories
 */
-func ActivityListPublicEventsForRepoNetwork(ctx context.Context, req *ActivityListPublicEventsForRepoNetworkReq, opt ...RequestOption) (*ActivityListPublicEventsForRepoNetworkResponse, error) {
+func ActivityListPublicEventsForRepoNetwork(ctx context.Context, req *ActivityListPublicEventsForRepoNetworkReq, opt ...options.Option) (*ActivityListPublicEventsForRepoNetworkResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActivityListPublicEventsForRepoNetworkReq)
 	}
 	resp := &ActivityListPublicEventsForRepoNetworkResponse{request: req}
-	r, err := doRequest(ctx, req, "activity/list-public-events-for-repo-network", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.Event{}
-	err = r.decodeBody(&resp.Data, "activity/list-public-events-for-repo-network")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1409,7 +1362,7 @@ List public events for a network of repositories.
 
 https://developer.github.com/v3/activity/events/#list-public-events-for-a-network-of-repositories
 */
-func (c Client) ActivityListPublicEventsForRepoNetwork(ctx context.Context, req *ActivityListPublicEventsForRepoNetworkReq, opt ...RequestOption) (*ActivityListPublicEventsForRepoNetworkResponse, error) {
+func (c Client) ActivityListPublicEventsForRepoNetwork(ctx context.Context, req *ActivityListPublicEventsForRepoNetworkReq, opt ...options.Option) (*ActivityListPublicEventsForRepoNetworkResponse, error) {
 	return ActivityListPublicEventsForRepoNetwork(ctx, req, append(c, opt...)...)
 }
 
@@ -1430,19 +1383,16 @@ type ActivityListPublicEventsForRepoNetworkReq struct {
 	Page *int64
 }
 
-func (r *ActivityListPublicEventsForRepoNetworkReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *ActivityListPublicEventsForRepoNetworkReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *ActivityListPublicEventsForRepoNetworkReq) urlPath() string {
-	return fmt.Sprintf("/networks/%v/%v/events", r.Owner, r.Repo)
-}
-
-func (r *ActivityListPublicEventsForRepoNetworkReq) method() string {
-	return "GET"
-}
-
-func (r *ActivityListPublicEventsForRepoNetworkReq) urlQuery() url.Values {
+func (r *ActivityListPublicEventsForRepoNetworkReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -1450,30 +1400,22 @@ func (r *ActivityListPublicEventsForRepoNetworkReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *ActivityListPublicEventsForRepoNetworkReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActivityListPublicEventsForRepoNetworkReq) body() interface{} {
-	return nil
-}
-
-func (r *ActivityListPublicEventsForRepoNetworkReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ActivityListPublicEventsForRepoNetworkReq) validStatuses() []int {
-	return []int{200, 301, 304}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ActivityListPublicEventsForRepoNetworkReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "activity/list-public-events-for-repo-network", opt)
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "activity/list-public-events-for-repo-network",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/networks/%v/%v/events", r.Owner, r.Repo),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 301, 304},
+	}
+	return builder
 }
 
 /*
@@ -1481,7 +1423,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActivityListPublicEventsForRepoNetworkReq) Rel(link RelName, resp *ActivityListPublicEventsForRepoNetworkResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1495,7 +1437,7 @@ ActivityListPublicEventsForRepoNetworkResponse is a response for ActivityListPub
 https://developer.github.com/v3/activity/events/#list-public-events-for-a-network-of-repositories
 */
 type ActivityListPublicEventsForRepoNetworkResponse struct {
-	response
+	internal.Response
 	request *ActivityListPublicEventsForRepoNetworkReq
 	Data    []components.Event
 }
@@ -1509,20 +1451,26 @@ List public events for a user.
 
 https://developer.github.com/v3/activity/events/#list-public-events-for-a-user
 */
-func ActivityListPublicEventsForUser(ctx context.Context, req *ActivityListPublicEventsForUserReq, opt ...RequestOption) (*ActivityListPublicEventsForUserResponse, error) {
+func ActivityListPublicEventsForUser(ctx context.Context, req *ActivityListPublicEventsForUserReq, opt ...options.Option) (*ActivityListPublicEventsForUserResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActivityListPublicEventsForUserReq)
 	}
 	resp := &ActivityListPublicEventsForUserResponse{request: req}
-	r, err := doRequest(ctx, req, "activity/list-public-events-for-user", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.Event{}
-	err = r.decodeBody(&resp.Data, "activity/list-public-events-for-user")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1538,7 +1486,7 @@ List public events for a user.
 
 https://developer.github.com/v3/activity/events/#list-public-events-for-a-user
 */
-func (c Client) ActivityListPublicEventsForUser(ctx context.Context, req *ActivityListPublicEventsForUserReq, opt ...RequestOption) (*ActivityListPublicEventsForUserResponse, error) {
+func (c Client) ActivityListPublicEventsForUser(ctx context.Context, req *ActivityListPublicEventsForUserReq, opt ...options.Option) (*ActivityListPublicEventsForUserResponse, error) {
 	return ActivityListPublicEventsForUser(ctx, req, append(c, opt...)...)
 }
 
@@ -1558,19 +1506,16 @@ type ActivityListPublicEventsForUserReq struct {
 	Page *int64
 }
 
-func (r *ActivityListPublicEventsForUserReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *ActivityListPublicEventsForUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *ActivityListPublicEventsForUserReq) urlPath() string {
-	return fmt.Sprintf("/users/%v/events/public", r.Username)
-}
-
-func (r *ActivityListPublicEventsForUserReq) method() string {
-	return "GET"
-}
-
-func (r *ActivityListPublicEventsForUserReq) urlQuery() url.Values {
+func (r *ActivityListPublicEventsForUserReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -1578,30 +1523,22 @@ func (r *ActivityListPublicEventsForUserReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *ActivityListPublicEventsForUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActivityListPublicEventsForUserReq) body() interface{} {
-	return nil
-}
-
-func (r *ActivityListPublicEventsForUserReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ActivityListPublicEventsForUserReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ActivityListPublicEventsForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "activity/list-public-events-for-user", opt)
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "activity/list-public-events-for-user",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/users/%v/events/public", r.Username),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -1609,7 +1546,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActivityListPublicEventsForUserReq) Rel(link RelName, resp *ActivityListPublicEventsForUserResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1623,7 +1560,7 @@ ActivityListPublicEventsForUserResponse is a response for ActivityListPublicEven
 https://developer.github.com/v3/activity/events/#list-public-events-for-a-user
 */
 type ActivityListPublicEventsForUserResponse struct {
-	response
+	internal.Response
 	request *ActivityListPublicEventsForUserReq
 	Data    []components.Event
 }
@@ -1637,20 +1574,26 @@ List public organization events.
 
 https://developer.github.com/v3/activity/events/#list-public-organization-events
 */
-func ActivityListPublicOrgEvents(ctx context.Context, req *ActivityListPublicOrgEventsReq, opt ...RequestOption) (*ActivityListPublicOrgEventsResponse, error) {
+func ActivityListPublicOrgEvents(ctx context.Context, req *ActivityListPublicOrgEventsReq, opt ...options.Option) (*ActivityListPublicOrgEventsResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActivityListPublicOrgEventsReq)
 	}
 	resp := &ActivityListPublicOrgEventsResponse{request: req}
-	r, err := doRequest(ctx, req, "activity/list-public-org-events", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.Event{}
-	err = r.decodeBody(&resp.Data, "activity/list-public-org-events")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1666,7 +1609,7 @@ List public organization events.
 
 https://developer.github.com/v3/activity/events/#list-public-organization-events
 */
-func (c Client) ActivityListPublicOrgEvents(ctx context.Context, req *ActivityListPublicOrgEventsReq, opt ...RequestOption) (*ActivityListPublicOrgEventsResponse, error) {
+func (c Client) ActivityListPublicOrgEvents(ctx context.Context, req *ActivityListPublicOrgEventsReq, opt ...options.Option) (*ActivityListPublicOrgEventsResponse, error) {
 	return ActivityListPublicOrgEvents(ctx, req, append(c, opt...)...)
 }
 
@@ -1686,19 +1629,16 @@ type ActivityListPublicOrgEventsReq struct {
 	Page *int64
 }
 
-func (r *ActivityListPublicOrgEventsReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *ActivityListPublicOrgEventsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *ActivityListPublicOrgEventsReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/events", r.Org)
-}
-
-func (r *ActivityListPublicOrgEventsReq) method() string {
-	return "GET"
-}
-
-func (r *ActivityListPublicOrgEventsReq) urlQuery() url.Values {
+func (r *ActivityListPublicOrgEventsReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -1706,30 +1646,22 @@ func (r *ActivityListPublicOrgEventsReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *ActivityListPublicOrgEventsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActivityListPublicOrgEventsReq) body() interface{} {
-	return nil
-}
-
-func (r *ActivityListPublicOrgEventsReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ActivityListPublicOrgEventsReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ActivityListPublicOrgEventsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "activity/list-public-org-events", opt)
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "activity/list-public-org-events",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/orgs/%v/events", r.Org),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -1737,7 +1669,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActivityListPublicOrgEventsReq) Rel(link RelName, resp *ActivityListPublicOrgEventsResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1751,7 +1683,7 @@ ActivityListPublicOrgEventsResponse is a response for ActivityListPublicOrgEvent
 https://developer.github.com/v3/activity/events/#list-public-organization-events
 */
 type ActivityListPublicOrgEventsResponse struct {
-	response
+	internal.Response
 	request *ActivityListPublicOrgEventsReq
 	Data    []components.Event
 }
@@ -1765,20 +1697,26 @@ List events received by the authenticated user.
 
 https://developer.github.com/v3/activity/events/#list-events-received-by-the-authenticated-user
 */
-func ActivityListReceivedEventsForUser(ctx context.Context, req *ActivityListReceivedEventsForUserReq, opt ...RequestOption) (*ActivityListReceivedEventsForUserResponse, error) {
+func ActivityListReceivedEventsForUser(ctx context.Context, req *ActivityListReceivedEventsForUserReq, opt ...options.Option) (*ActivityListReceivedEventsForUserResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActivityListReceivedEventsForUserReq)
 	}
 	resp := &ActivityListReceivedEventsForUserResponse{request: req}
-	r, err := doRequest(ctx, req, "activity/list-received-events-for-user", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.Event{}
-	err = r.decodeBody(&resp.Data, "activity/list-received-events-for-user")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1794,7 +1732,7 @@ List events received by the authenticated user.
 
 https://developer.github.com/v3/activity/events/#list-events-received-by-the-authenticated-user
 */
-func (c Client) ActivityListReceivedEventsForUser(ctx context.Context, req *ActivityListReceivedEventsForUserReq, opt ...RequestOption) (*ActivityListReceivedEventsForUserResponse, error) {
+func (c Client) ActivityListReceivedEventsForUser(ctx context.Context, req *ActivityListReceivedEventsForUserReq, opt ...options.Option) (*ActivityListReceivedEventsForUserResponse, error) {
 	return ActivityListReceivedEventsForUser(ctx, req, append(c, opt...)...)
 }
 
@@ -1814,19 +1752,16 @@ type ActivityListReceivedEventsForUserReq struct {
 	Page *int64
 }
 
-func (r *ActivityListReceivedEventsForUserReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *ActivityListReceivedEventsForUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *ActivityListReceivedEventsForUserReq) urlPath() string {
-	return fmt.Sprintf("/users/%v/received_events", r.Username)
-}
-
-func (r *ActivityListReceivedEventsForUserReq) method() string {
-	return "GET"
-}
-
-func (r *ActivityListReceivedEventsForUserReq) urlQuery() url.Values {
+func (r *ActivityListReceivedEventsForUserReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -1834,30 +1769,22 @@ func (r *ActivityListReceivedEventsForUserReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *ActivityListReceivedEventsForUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActivityListReceivedEventsForUserReq) body() interface{} {
-	return nil
-}
-
-func (r *ActivityListReceivedEventsForUserReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ActivityListReceivedEventsForUserReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ActivityListReceivedEventsForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "activity/list-received-events-for-user", opt)
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "activity/list-received-events-for-user",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/users/%v/received_events", r.Username),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -1865,7 +1792,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActivityListReceivedEventsForUserReq) Rel(link RelName, resp *ActivityListReceivedEventsForUserResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1879,7 +1806,7 @@ ActivityListReceivedEventsForUserResponse is a response for ActivityListReceived
 https://developer.github.com/v3/activity/events/#list-events-received-by-the-authenticated-user
 */
 type ActivityListReceivedEventsForUserResponse struct {
-	response
+	internal.Response
 	request *ActivityListReceivedEventsForUserReq
 	Data    []components.Event
 }
@@ -1893,20 +1820,26 @@ List public events received by a user.
 
 https://developer.github.com/v3/activity/events/#list-public-events-received-by-a-user
 */
-func ActivityListReceivedPublicEventsForUser(ctx context.Context, req *ActivityListReceivedPublicEventsForUserReq, opt ...RequestOption) (*ActivityListReceivedPublicEventsForUserResponse, error) {
+func ActivityListReceivedPublicEventsForUser(ctx context.Context, req *ActivityListReceivedPublicEventsForUserReq, opt ...options.Option) (*ActivityListReceivedPublicEventsForUserResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActivityListReceivedPublicEventsForUserReq)
 	}
 	resp := &ActivityListReceivedPublicEventsForUserResponse{request: req}
-	r, err := doRequest(ctx, req, "activity/list-received-public-events-for-user", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.Event{}
-	err = r.decodeBody(&resp.Data, "activity/list-received-public-events-for-user")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1922,7 +1855,7 @@ List public events received by a user.
 
 https://developer.github.com/v3/activity/events/#list-public-events-received-by-a-user
 */
-func (c Client) ActivityListReceivedPublicEventsForUser(ctx context.Context, req *ActivityListReceivedPublicEventsForUserReq, opt ...RequestOption) (*ActivityListReceivedPublicEventsForUserResponse, error) {
+func (c Client) ActivityListReceivedPublicEventsForUser(ctx context.Context, req *ActivityListReceivedPublicEventsForUserReq, opt ...options.Option) (*ActivityListReceivedPublicEventsForUserResponse, error) {
 	return ActivityListReceivedPublicEventsForUser(ctx, req, append(c, opt...)...)
 }
 
@@ -1942,19 +1875,16 @@ type ActivityListReceivedPublicEventsForUserReq struct {
 	Page *int64
 }
 
-func (r *ActivityListReceivedPublicEventsForUserReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *ActivityListReceivedPublicEventsForUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *ActivityListReceivedPublicEventsForUserReq) urlPath() string {
-	return fmt.Sprintf("/users/%v/received_events/public", r.Username)
-}
-
-func (r *ActivityListReceivedPublicEventsForUserReq) method() string {
-	return "GET"
-}
-
-func (r *ActivityListReceivedPublicEventsForUserReq) urlQuery() url.Values {
+func (r *ActivityListReceivedPublicEventsForUserReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -1962,30 +1892,22 @@ func (r *ActivityListReceivedPublicEventsForUserReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *ActivityListReceivedPublicEventsForUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActivityListReceivedPublicEventsForUserReq) body() interface{} {
-	return nil
-}
-
-func (r *ActivityListReceivedPublicEventsForUserReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ActivityListReceivedPublicEventsForUserReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ActivityListReceivedPublicEventsForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "activity/list-received-public-events-for-user", opt)
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "activity/list-received-public-events-for-user",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/users/%v/received_events/public", r.Username),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -1993,7 +1915,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActivityListReceivedPublicEventsForUserReq) Rel(link RelName, resp *ActivityListReceivedPublicEventsForUserResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -2007,7 +1929,7 @@ ActivityListReceivedPublicEventsForUserResponse is a response for ActivityListRe
 https://developer.github.com/v3/activity/events/#list-public-events-received-by-a-user
 */
 type ActivityListReceivedPublicEventsForUserResponse struct {
-	response
+	internal.Response
 	request *ActivityListReceivedPublicEventsForUserReq
 	Data    []components.Event
 }
@@ -2021,20 +1943,26 @@ List repository events.
 
 https://developer.github.com/v3/activity/events/#list-repository-events
 */
-func ActivityListRepoEvents(ctx context.Context, req *ActivityListRepoEventsReq, opt ...RequestOption) (*ActivityListRepoEventsResponse, error) {
+func ActivityListRepoEvents(ctx context.Context, req *ActivityListRepoEventsReq, opt ...options.Option) (*ActivityListRepoEventsResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActivityListRepoEventsReq)
 	}
 	resp := &ActivityListRepoEventsResponse{request: req}
-	r, err := doRequest(ctx, req, "activity/list-repo-events", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.Event{}
-	err = r.decodeBody(&resp.Data, "activity/list-repo-events")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2050,7 +1978,7 @@ List repository events.
 
 https://developer.github.com/v3/activity/events/#list-repository-events
 */
-func (c Client) ActivityListRepoEvents(ctx context.Context, req *ActivityListRepoEventsReq, opt ...RequestOption) (*ActivityListRepoEventsResponse, error) {
+func (c Client) ActivityListRepoEvents(ctx context.Context, req *ActivityListRepoEventsReq, opt ...options.Option) (*ActivityListRepoEventsResponse, error) {
 	return ActivityListRepoEvents(ctx, req, append(c, opt...)...)
 }
 
@@ -2071,19 +1999,16 @@ type ActivityListRepoEventsReq struct {
 	Page *int64
 }
 
-func (r *ActivityListRepoEventsReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *ActivityListRepoEventsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *ActivityListRepoEventsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/events", r.Owner, r.Repo)
-}
-
-func (r *ActivityListRepoEventsReq) method() string {
-	return "GET"
-}
-
-func (r *ActivityListRepoEventsReq) urlQuery() url.Values {
+func (r *ActivityListRepoEventsReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -2091,30 +2016,22 @@ func (r *ActivityListRepoEventsReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *ActivityListRepoEventsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActivityListRepoEventsReq) body() interface{} {
-	return nil
-}
-
-func (r *ActivityListRepoEventsReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ActivityListRepoEventsReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ActivityListRepoEventsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "activity/list-repo-events", opt)
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "activity/list-repo-events",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/events", r.Owner, r.Repo),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -2122,7 +2039,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActivityListRepoEventsReq) Rel(link RelName, resp *ActivityListRepoEventsResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -2136,7 +2053,7 @@ ActivityListRepoEventsResponse is a response for ActivityListRepoEvents
 https://developer.github.com/v3/activity/events/#list-repository-events
 */
 type ActivityListRepoEventsResponse struct {
-	response
+	internal.Response
 	request *ActivityListRepoEventsReq
 	Data    []components.Event
 }
@@ -2150,20 +2067,26 @@ List repository notifications for the authenticated user.
 
 https://developer.github.com/v3/activity/notifications/#list-repository-notifications-for-the-authenticated-user
 */
-func ActivityListRepoNotificationsForAuthenticatedUser(ctx context.Context, req *ActivityListRepoNotificationsForAuthenticatedUserReq, opt ...RequestOption) (*ActivityListRepoNotificationsForAuthenticatedUserResponse, error) {
+func ActivityListRepoNotificationsForAuthenticatedUser(ctx context.Context, req *ActivityListRepoNotificationsForAuthenticatedUserReq, opt ...options.Option) (*ActivityListRepoNotificationsForAuthenticatedUserResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActivityListRepoNotificationsForAuthenticatedUserReq)
 	}
 	resp := &ActivityListRepoNotificationsForAuthenticatedUserResponse{request: req}
-	r, err := doRequest(ctx, req, "activity/list-repo-notifications-for-authenticated-user", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.Thread{}
-	err = r.decodeBody(&resp.Data, "activity/list-repo-notifications-for-authenticated-user")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2179,7 +2102,7 @@ List repository notifications for the authenticated user.
 
 https://developer.github.com/v3/activity/notifications/#list-repository-notifications-for-the-authenticated-user
 */
-func (c Client) ActivityListRepoNotificationsForAuthenticatedUser(ctx context.Context, req *ActivityListRepoNotificationsForAuthenticatedUserReq, opt ...RequestOption) (*ActivityListRepoNotificationsForAuthenticatedUserResponse, error) {
+func (c Client) ActivityListRepoNotificationsForAuthenticatedUser(ctx context.Context, req *ActivityListRepoNotificationsForAuthenticatedUserReq, opt ...options.Option) (*ActivityListRepoNotificationsForAuthenticatedUserResponse, error) {
 	return ActivityListRepoNotificationsForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
@@ -2223,19 +2146,16 @@ type ActivityListRepoNotificationsForAuthenticatedUserReq struct {
 	Page *int64
 }
 
-func (r *ActivityListRepoNotificationsForAuthenticatedUserReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *ActivityListRepoNotificationsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *ActivityListRepoNotificationsForAuthenticatedUserReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/notifications", r.Owner, r.Repo)
-}
-
-func (r *ActivityListRepoNotificationsForAuthenticatedUserReq) method() string {
-	return "GET"
-}
-
-func (r *ActivityListRepoNotificationsForAuthenticatedUserReq) urlQuery() url.Values {
+func (r *ActivityListRepoNotificationsForAuthenticatedUserReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.All != nil {
 		query.Set("all", strconv.FormatBool(*r.All))
@@ -2255,30 +2175,22 @@ func (r *ActivityListRepoNotificationsForAuthenticatedUserReq) urlQuery() url.Va
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *ActivityListRepoNotificationsForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActivityListRepoNotificationsForAuthenticatedUserReq) body() interface{} {
-	return nil
-}
-
-func (r *ActivityListRepoNotificationsForAuthenticatedUserReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ActivityListRepoNotificationsForAuthenticatedUserReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ActivityListRepoNotificationsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "activity/list-repo-notifications-for-authenticated-user", opt)
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "activity/list-repo-notifications-for-authenticated-user",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/notifications", r.Owner, r.Repo),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -2286,7 +2198,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActivityListRepoNotificationsForAuthenticatedUserReq) Rel(link RelName, resp *ActivityListRepoNotificationsForAuthenticatedUserResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -2300,7 +2212,7 @@ ActivityListRepoNotificationsForAuthenticatedUserResponse is a response for Acti
 https://developer.github.com/v3/activity/notifications/#list-repository-notifications-for-the-authenticated-user
 */
 type ActivityListRepoNotificationsForAuthenticatedUserResponse struct {
-	response
+	internal.Response
 	request *ActivityListRepoNotificationsForAuthenticatedUserReq
 	Data    []components.Thread
 }
@@ -2314,20 +2226,26 @@ List repositories starred by the authenticated user.
 
 https://developer.github.com/v3/activity/starring/#list-repositories-starred-by-the-authenticated-user
 */
-func ActivityListReposStarredByAuthenticatedUser(ctx context.Context, req *ActivityListReposStarredByAuthenticatedUserReq, opt ...RequestOption) (*ActivityListReposStarredByAuthenticatedUserResponse, error) {
+func ActivityListReposStarredByAuthenticatedUser(ctx context.Context, req *ActivityListReposStarredByAuthenticatedUserReq, opt ...options.Option) (*ActivityListReposStarredByAuthenticatedUserResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActivityListReposStarredByAuthenticatedUserReq)
 	}
 	resp := &ActivityListReposStarredByAuthenticatedUserResponse{request: req}
-	r, err := doRequest(ctx, req, "activity/list-repos-starred-by-authenticated-user", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.StarredRepository{}
-	err = r.decodeBody(&resp.Data, "activity/list-repos-starred-by-authenticated-user")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2343,7 +2261,7 @@ List repositories starred by the authenticated user.
 
 https://developer.github.com/v3/activity/starring/#list-repositories-starred-by-the-authenticated-user
 */
-func (c Client) ActivityListReposStarredByAuthenticatedUser(ctx context.Context, req *ActivityListReposStarredByAuthenticatedUserReq, opt ...RequestOption) (*ActivityListReposStarredByAuthenticatedUserResponse, error) {
+func (c Client) ActivityListReposStarredByAuthenticatedUser(ctx context.Context, req *ActivityListReposStarredByAuthenticatedUserReq, opt ...options.Option) (*ActivityListReposStarredByAuthenticatedUserResponse, error) {
 	return ActivityListReposStarredByAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
@@ -2371,19 +2289,16 @@ type ActivityListReposStarredByAuthenticatedUserReq struct {
 	Page *int64
 }
 
-func (r *ActivityListReposStarredByAuthenticatedUserReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *ActivityListReposStarredByAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *ActivityListReposStarredByAuthenticatedUserReq) urlPath() string {
-	return fmt.Sprintf("/user/starred")
-}
-
-func (r *ActivityListReposStarredByAuthenticatedUserReq) method() string {
-	return "GET"
-}
-
-func (r *ActivityListReposStarredByAuthenticatedUserReq) urlQuery() url.Values {
+func (r *ActivityListReposStarredByAuthenticatedUserReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Sort != nil {
 		query.Set("sort", *r.Sort)
@@ -2397,30 +2312,22 @@ func (r *ActivityListReposStarredByAuthenticatedUserReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *ActivityListReposStarredByAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/vnd.github.v3.star+json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActivityListReposStarredByAuthenticatedUserReq) body() interface{} {
-	return nil
-}
-
-func (r *ActivityListReposStarredByAuthenticatedUserReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ActivityListReposStarredByAuthenticatedUserReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ActivityListReposStarredByAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "activity/list-repos-starred-by-authenticated-user", opt)
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/vnd.github.v3.star+json")},
+		Method:           "GET",
+		OperationID:      "activity/list-repos-starred-by-authenticated-user",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/user/starred"),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
+	}
+	return builder
 }
 
 /*
@@ -2428,7 +2335,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActivityListReposStarredByAuthenticatedUserReq) Rel(link RelName, resp *ActivityListReposStarredByAuthenticatedUserResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -2442,7 +2349,7 @@ ActivityListReposStarredByAuthenticatedUserResponse is a response for ActivityLi
 https://developer.github.com/v3/activity/starring/#list-repositories-starred-by-the-authenticated-user
 */
 type ActivityListReposStarredByAuthenticatedUserResponse struct {
-	response
+	internal.Response
 	request *ActivityListReposStarredByAuthenticatedUserReq
 	Data    []components.StarredRepository
 }
@@ -2456,20 +2363,26 @@ List repositories starred by a user.
 
 https://developer.github.com/v3/activity/starring/#list-repositories-starred-by-a-user
 */
-func ActivityListReposStarredByUser(ctx context.Context, req *ActivityListReposStarredByUserReq, opt ...RequestOption) (*ActivityListReposStarredByUserResponse, error) {
+func ActivityListReposStarredByUser(ctx context.Context, req *ActivityListReposStarredByUserReq, opt ...options.Option) (*ActivityListReposStarredByUserResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActivityListReposStarredByUserReq)
 	}
 	resp := &ActivityListReposStarredByUserResponse{request: req}
-	r, err := doRequest(ctx, req, "activity/list-repos-starred-by-user", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.StarredRepository{}
-	err = r.decodeBody(&resp.Data, "activity/list-repos-starred-by-user")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2485,7 +2398,7 @@ List repositories starred by a user.
 
 https://developer.github.com/v3/activity/starring/#list-repositories-starred-by-a-user
 */
-func (c Client) ActivityListReposStarredByUser(ctx context.Context, req *ActivityListReposStarredByUserReq, opt ...RequestOption) (*ActivityListReposStarredByUserResponse, error) {
+func (c Client) ActivityListReposStarredByUser(ctx context.Context, req *ActivityListReposStarredByUserReq, opt ...options.Option) (*ActivityListReposStarredByUserResponse, error) {
 	return ActivityListReposStarredByUser(ctx, req, append(c, opt...)...)
 }
 
@@ -2514,19 +2427,16 @@ type ActivityListReposStarredByUserReq struct {
 	Page *int64
 }
 
-func (r *ActivityListReposStarredByUserReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *ActivityListReposStarredByUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *ActivityListReposStarredByUserReq) urlPath() string {
-	return fmt.Sprintf("/users/%v/starred", r.Username)
-}
-
-func (r *ActivityListReposStarredByUserReq) method() string {
-	return "GET"
-}
-
-func (r *ActivityListReposStarredByUserReq) urlQuery() url.Values {
+func (r *ActivityListReposStarredByUserReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Sort != nil {
 		query.Set("sort", *r.Sort)
@@ -2540,30 +2450,22 @@ func (r *ActivityListReposStarredByUserReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *ActivityListReposStarredByUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/vnd.github.v3.star+json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActivityListReposStarredByUserReq) body() interface{} {
-	return nil
-}
-
-func (r *ActivityListReposStarredByUserReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ActivityListReposStarredByUserReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ActivityListReposStarredByUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "activity/list-repos-starred-by-user", opt)
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/vnd.github.v3.star+json")},
+		Method:           "GET",
+		OperationID:      "activity/list-repos-starred-by-user",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/users/%v/starred", r.Username),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -2571,7 +2473,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActivityListReposStarredByUserReq) Rel(link RelName, resp *ActivityListReposStarredByUserResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -2585,7 +2487,7 @@ ActivityListReposStarredByUserResponse is a response for ActivityListReposStarre
 https://developer.github.com/v3/activity/starring/#list-repositories-starred-by-a-user
 */
 type ActivityListReposStarredByUserResponse struct {
-	response
+	internal.Response
 	request *ActivityListReposStarredByUserReq
 	Data    []components.StarredRepository
 }
@@ -2599,20 +2501,26 @@ List repositories watched by a user.
 
 https://developer.github.com/v3/activity/watching/#list-repositories-watched-by-a-user
 */
-func ActivityListReposWatchedByUser(ctx context.Context, req *ActivityListReposWatchedByUserReq, opt ...RequestOption) (*ActivityListReposWatchedByUserResponse, error) {
+func ActivityListReposWatchedByUser(ctx context.Context, req *ActivityListReposWatchedByUserReq, opt ...options.Option) (*ActivityListReposWatchedByUserResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActivityListReposWatchedByUserReq)
 	}
 	resp := &ActivityListReposWatchedByUserResponse{request: req}
-	r, err := doRequest(ctx, req, "activity/list-repos-watched-by-user", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.MinimalRepository{}
-	err = r.decodeBody(&resp.Data, "activity/list-repos-watched-by-user")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2628,7 +2536,7 @@ List repositories watched by a user.
 
 https://developer.github.com/v3/activity/watching/#list-repositories-watched-by-a-user
 */
-func (c Client) ActivityListReposWatchedByUser(ctx context.Context, req *ActivityListReposWatchedByUserReq, opt ...RequestOption) (*ActivityListReposWatchedByUserResponse, error) {
+func (c Client) ActivityListReposWatchedByUser(ctx context.Context, req *ActivityListReposWatchedByUserReq, opt ...options.Option) (*ActivityListReposWatchedByUserResponse, error) {
 	return ActivityListReposWatchedByUser(ctx, req, append(c, opt...)...)
 }
 
@@ -2648,19 +2556,16 @@ type ActivityListReposWatchedByUserReq struct {
 	Page *int64
 }
 
-func (r *ActivityListReposWatchedByUserReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *ActivityListReposWatchedByUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *ActivityListReposWatchedByUserReq) urlPath() string {
-	return fmt.Sprintf("/users/%v/subscriptions", r.Username)
-}
-
-func (r *ActivityListReposWatchedByUserReq) method() string {
-	return "GET"
-}
-
-func (r *ActivityListReposWatchedByUserReq) urlQuery() url.Values {
+func (r *ActivityListReposWatchedByUserReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -2668,30 +2573,22 @@ func (r *ActivityListReposWatchedByUserReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *ActivityListReposWatchedByUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActivityListReposWatchedByUserReq) body() interface{} {
-	return nil
-}
-
-func (r *ActivityListReposWatchedByUserReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ActivityListReposWatchedByUserReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ActivityListReposWatchedByUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "activity/list-repos-watched-by-user", opt)
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "activity/list-repos-watched-by-user",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/users/%v/subscriptions", r.Username),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -2699,7 +2596,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActivityListReposWatchedByUserReq) Rel(link RelName, resp *ActivityListReposWatchedByUserResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -2713,7 +2610,7 @@ ActivityListReposWatchedByUserResponse is a response for ActivityListReposWatche
 https://developer.github.com/v3/activity/watching/#list-repositories-watched-by-a-user
 */
 type ActivityListReposWatchedByUserResponse struct {
-	response
+	internal.Response
 	request *ActivityListReposWatchedByUserReq
 	Data    []components.MinimalRepository
 }
@@ -2727,20 +2624,26 @@ List stargazers.
 
 https://developer.github.com/v3/activity/starring/#list-stargazers
 */
-func ActivityListStargazersForRepo(ctx context.Context, req *ActivityListStargazersForRepoReq, opt ...RequestOption) (*ActivityListStargazersForRepoResponse, error) {
+func ActivityListStargazersForRepo(ctx context.Context, req *ActivityListStargazersForRepoReq, opt ...options.Option) (*ActivityListStargazersForRepoResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActivityListStargazersForRepoReq)
 	}
 	resp := &ActivityListStargazersForRepoResponse{request: req}
-	r, err := doRequest(ctx, req, "activity/list-stargazers-for-repo", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.Stargazer{}
-	err = r.decodeBody(&resp.Data, "activity/list-stargazers-for-repo")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2756,7 +2659,7 @@ List stargazers.
 
 https://developer.github.com/v3/activity/starring/#list-stargazers
 */
-func (c Client) ActivityListStargazersForRepo(ctx context.Context, req *ActivityListStargazersForRepoReq, opt ...RequestOption) (*ActivityListStargazersForRepoResponse, error) {
+func (c Client) ActivityListStargazersForRepo(ctx context.Context, req *ActivityListStargazersForRepoReq, opt ...options.Option) (*ActivityListStargazersForRepoResponse, error) {
 	return ActivityListStargazersForRepo(ctx, req, append(c, opt...)...)
 }
 
@@ -2777,19 +2680,16 @@ type ActivityListStargazersForRepoReq struct {
 	Page *int64
 }
 
-func (r *ActivityListStargazersForRepoReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *ActivityListStargazersForRepoReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *ActivityListStargazersForRepoReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/stargazers", r.Owner, r.Repo)
-}
-
-func (r *ActivityListStargazersForRepoReq) method() string {
-	return "GET"
-}
-
-func (r *ActivityListStargazersForRepoReq) urlQuery() url.Values {
+func (r *ActivityListStargazersForRepoReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -2797,30 +2697,22 @@ func (r *ActivityListStargazersForRepoReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *ActivityListStargazersForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/vnd.github.v3.star+json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActivityListStargazersForRepoReq) body() interface{} {
-	return nil
-}
-
-func (r *ActivityListStargazersForRepoReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ActivityListStargazersForRepoReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ActivityListStargazersForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "activity/list-stargazers-for-repo", opt)
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/vnd.github.v3.star+json")},
+		Method:           "GET",
+		OperationID:      "activity/list-stargazers-for-repo",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/stargazers", r.Owner, r.Repo),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -2828,7 +2720,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActivityListStargazersForRepoReq) Rel(link RelName, resp *ActivityListStargazersForRepoResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -2842,7 +2734,7 @@ ActivityListStargazersForRepoResponse is a response for ActivityListStargazersFo
 https://developer.github.com/v3/activity/starring/#list-stargazers
 */
 type ActivityListStargazersForRepoResponse struct {
-	response
+	internal.Response
 	request *ActivityListStargazersForRepoReq
 	Data    []components.Stargazer
 }
@@ -2856,20 +2748,26 @@ List repositories watched by the authenticated user.
 
 https://developer.github.com/v3/activity/watching/#list-repositories-watched-by-the-authenticated-user
 */
-func ActivityListWatchedReposForAuthenticatedUser(ctx context.Context, req *ActivityListWatchedReposForAuthenticatedUserReq, opt ...RequestOption) (*ActivityListWatchedReposForAuthenticatedUserResponse, error) {
+func ActivityListWatchedReposForAuthenticatedUser(ctx context.Context, req *ActivityListWatchedReposForAuthenticatedUserReq, opt ...options.Option) (*ActivityListWatchedReposForAuthenticatedUserResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActivityListWatchedReposForAuthenticatedUserReq)
 	}
 	resp := &ActivityListWatchedReposForAuthenticatedUserResponse{request: req}
-	r, err := doRequest(ctx, req, "activity/list-watched-repos-for-authenticated-user", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.MinimalRepository{}
-	err = r.decodeBody(&resp.Data, "activity/list-watched-repos-for-authenticated-user")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2885,7 +2783,7 @@ List repositories watched by the authenticated user.
 
 https://developer.github.com/v3/activity/watching/#list-repositories-watched-by-the-authenticated-user
 */
-func (c Client) ActivityListWatchedReposForAuthenticatedUser(ctx context.Context, req *ActivityListWatchedReposForAuthenticatedUserReq, opt ...RequestOption) (*ActivityListWatchedReposForAuthenticatedUserResponse, error) {
+func (c Client) ActivityListWatchedReposForAuthenticatedUser(ctx context.Context, req *ActivityListWatchedReposForAuthenticatedUserReq, opt ...options.Option) (*ActivityListWatchedReposForAuthenticatedUserResponse, error) {
 	return ActivityListWatchedReposForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
@@ -2904,19 +2802,16 @@ type ActivityListWatchedReposForAuthenticatedUserReq struct {
 	Page *int64
 }
 
-func (r *ActivityListWatchedReposForAuthenticatedUserReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *ActivityListWatchedReposForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *ActivityListWatchedReposForAuthenticatedUserReq) urlPath() string {
-	return fmt.Sprintf("/user/subscriptions")
-}
-
-func (r *ActivityListWatchedReposForAuthenticatedUserReq) method() string {
-	return "GET"
-}
-
-func (r *ActivityListWatchedReposForAuthenticatedUserReq) urlQuery() url.Values {
+func (r *ActivityListWatchedReposForAuthenticatedUserReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -2924,30 +2819,22 @@ func (r *ActivityListWatchedReposForAuthenticatedUserReq) urlQuery() url.Values 
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *ActivityListWatchedReposForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActivityListWatchedReposForAuthenticatedUserReq) body() interface{} {
-	return nil
-}
-
-func (r *ActivityListWatchedReposForAuthenticatedUserReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ActivityListWatchedReposForAuthenticatedUserReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ActivityListWatchedReposForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "activity/list-watched-repos-for-authenticated-user", opt)
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "activity/list-watched-repos-for-authenticated-user",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/user/subscriptions"),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
+	}
+	return builder
 }
 
 /*
@@ -2955,7 +2842,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActivityListWatchedReposForAuthenticatedUserReq) Rel(link RelName, resp *ActivityListWatchedReposForAuthenticatedUserResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -2969,7 +2856,7 @@ ActivityListWatchedReposForAuthenticatedUserResponse is a response for ActivityL
 https://developer.github.com/v3/activity/watching/#list-repositories-watched-by-the-authenticated-user
 */
 type ActivityListWatchedReposForAuthenticatedUserResponse struct {
-	response
+	internal.Response
 	request *ActivityListWatchedReposForAuthenticatedUserReq
 	Data    []components.MinimalRepository
 }
@@ -2983,20 +2870,26 @@ List watchers.
 
 https://developer.github.com/v3/activity/watching/#list-watchers
 */
-func ActivityListWatchersForRepo(ctx context.Context, req *ActivityListWatchersForRepoReq, opt ...RequestOption) (*ActivityListWatchersForRepoResponse, error) {
+func ActivityListWatchersForRepo(ctx context.Context, req *ActivityListWatchersForRepoReq, opt ...options.Option) (*ActivityListWatchersForRepoResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActivityListWatchersForRepoReq)
 	}
 	resp := &ActivityListWatchersForRepoResponse{request: req}
-	r, err := doRequest(ctx, req, "activity/list-watchers-for-repo", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.SimpleUser{}
-	err = r.decodeBody(&resp.Data, "activity/list-watchers-for-repo")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3012,7 +2905,7 @@ List watchers.
 
 https://developer.github.com/v3/activity/watching/#list-watchers
 */
-func (c Client) ActivityListWatchersForRepo(ctx context.Context, req *ActivityListWatchersForRepoReq, opt ...RequestOption) (*ActivityListWatchersForRepoResponse, error) {
+func (c Client) ActivityListWatchersForRepo(ctx context.Context, req *ActivityListWatchersForRepoReq, opt ...options.Option) (*ActivityListWatchersForRepoResponse, error) {
 	return ActivityListWatchersForRepo(ctx, req, append(c, opt...)...)
 }
 
@@ -3033,19 +2926,16 @@ type ActivityListWatchersForRepoReq struct {
 	Page *int64
 }
 
-func (r *ActivityListWatchersForRepoReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *ActivityListWatchersForRepoReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *ActivityListWatchersForRepoReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/subscribers", r.Owner, r.Repo)
-}
-
-func (r *ActivityListWatchersForRepoReq) method() string {
-	return "GET"
-}
-
-func (r *ActivityListWatchersForRepoReq) urlQuery() url.Values {
+func (r *ActivityListWatchersForRepoReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -3053,30 +2943,22 @@ func (r *ActivityListWatchersForRepoReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *ActivityListWatchersForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActivityListWatchersForRepoReq) body() interface{} {
-	return nil
-}
-
-func (r *ActivityListWatchersForRepoReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ActivityListWatchersForRepoReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ActivityListWatchersForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "activity/list-watchers-for-repo", opt)
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "activity/list-watchers-for-repo",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/subscribers", r.Owner, r.Repo),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -3084,7 +2966,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActivityListWatchersForRepoReq) Rel(link RelName, resp *ActivityListWatchersForRepoResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -3098,7 +2980,7 @@ ActivityListWatchersForRepoResponse is a response for ActivityListWatchersForRep
 https://developer.github.com/v3/activity/watching/#list-watchers
 */
 type ActivityListWatchersForRepoResponse struct {
-	response
+	internal.Response
 	request *ActivityListWatchersForRepoReq
 	Data    []components.SimpleUser
 }
@@ -3112,20 +2994,26 @@ Mark notifications as read.
 
 https://developer.github.com/v3/activity/notifications/#mark-notifications-as-read
 */
-func ActivityMarkNotificationsAsRead(ctx context.Context, req *ActivityMarkNotificationsAsReadReq, opt ...RequestOption) (*ActivityMarkNotificationsAsReadResponse, error) {
+func ActivityMarkNotificationsAsRead(ctx context.Context, req *ActivityMarkNotificationsAsReadReq, opt ...options.Option) (*ActivityMarkNotificationsAsReadResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActivityMarkNotificationsAsReadReq)
 	}
 	resp := &ActivityMarkNotificationsAsReadResponse{request: req}
-	r, err := doRequest(ctx, req, "activity/mark-notifications-as-read", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = ActivityMarkNotificationsAsReadResponseBody{}
-	err = r.decodeBody(&resp.Data, "activity/mark-notifications-as-read")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3141,7 +3029,7 @@ Mark notifications as read.
 
 https://developer.github.com/v3/activity/notifications/#mark-notifications-as-read
 */
-func (c Client) ActivityMarkNotificationsAsRead(ctx context.Context, req *ActivityMarkNotificationsAsReadReq, opt ...RequestOption) (*ActivityMarkNotificationsAsReadResponse, error) {
+func (c Client) ActivityMarkNotificationsAsRead(ctx context.Context, req *ActivityMarkNotificationsAsReadReq, opt ...options.Option) (*ActivityMarkNotificationsAsReadResponse, error) {
 	return ActivityMarkNotificationsAsRead(ctx, req, append(c, opt...)...)
 }
 
@@ -3155,47 +3043,36 @@ type ActivityMarkNotificationsAsReadReq struct {
 	RequestBody ActivityMarkNotificationsAsReadReqBody
 }
 
-func (r *ActivityMarkNotificationsAsReadReq) url() string {
-	return r._url
-}
-
-func (r *ActivityMarkNotificationsAsReadReq) urlPath() string {
-	return fmt.Sprintf("/notifications")
-}
-
-func (r *ActivityMarkNotificationsAsReadReq) method() string {
-	return "PUT"
-}
-
-func (r *ActivityMarkNotificationsAsReadReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ActivityMarkNotificationsAsReadReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActivityMarkNotificationsAsReadReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *ActivityMarkNotificationsAsReadReq) dataStatuses() []int {
-	return []int{202}
-}
-
-func (r *ActivityMarkNotificationsAsReadReq) validStatuses() []int {
-	return []int{202, 205, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ActivityMarkNotificationsAsReadReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "activity/mark-notifications-as-read", opt)
+func (r *ActivityMarkNotificationsAsReadReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ActivityMarkNotificationsAsReadReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{},
+		Body:         r.RequestBody,
+		DataStatuses: []int{202},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "PUT",
+		OperationID:      "activity/mark-notifications-as-read",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/notifications"),
+		URLQuery:         query,
+		ValidStatuses:    []int{202, 205, 304},
+	}
+	return builder
 }
 
 /*
@@ -3203,7 +3080,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActivityMarkNotificationsAsReadReq) Rel(link RelName, resp *ActivityMarkNotificationsAsReadResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -3240,7 +3117,7 @@ ActivityMarkNotificationsAsReadResponse is a response for ActivityMarkNotificati
 https://developer.github.com/v3/activity/notifications/#mark-notifications-as-read
 */
 type ActivityMarkNotificationsAsReadResponse struct {
-	response
+	internal.Response
 	request *ActivityMarkNotificationsAsReadReq
 	Data    ActivityMarkNotificationsAsReadResponseBody
 }
@@ -3254,19 +3131,25 @@ Mark repository notifications as read.
 
 https://developer.github.com/v3/activity/notifications/#mark-repository-notifications-as-read
 */
-func ActivityMarkRepoNotificationsAsRead(ctx context.Context, req *ActivityMarkRepoNotificationsAsReadReq, opt ...RequestOption) (*ActivityMarkRepoNotificationsAsReadResponse, error) {
+func ActivityMarkRepoNotificationsAsRead(ctx context.Context, req *ActivityMarkRepoNotificationsAsReadReq, opt ...options.Option) (*ActivityMarkRepoNotificationsAsReadResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActivityMarkRepoNotificationsAsReadReq)
 	}
 	resp := &ActivityMarkRepoNotificationsAsReadResponse{request: req}
-	r, err := doRequest(ctx, req, "activity/mark-repo-notifications-as-read", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "activity/mark-repo-notifications-as-read")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -3282,7 +3165,7 @@ Mark repository notifications as read.
 
 https://developer.github.com/v3/activity/notifications/#mark-repository-notifications-as-read
 */
-func (c Client) ActivityMarkRepoNotificationsAsRead(ctx context.Context, req *ActivityMarkRepoNotificationsAsReadReq, opt ...RequestOption) (*ActivityMarkRepoNotificationsAsReadResponse, error) {
+func (c Client) ActivityMarkRepoNotificationsAsRead(ctx context.Context, req *ActivityMarkRepoNotificationsAsReadReq, opt ...options.Option) (*ActivityMarkRepoNotificationsAsReadResponse, error) {
 	return ActivityMarkRepoNotificationsAsRead(ctx, req, append(c, opt...)...)
 }
 
@@ -3298,44 +3181,33 @@ type ActivityMarkRepoNotificationsAsReadReq struct {
 	RequestBody ActivityMarkRepoNotificationsAsReadReqBody
 }
 
-func (r *ActivityMarkRepoNotificationsAsReadReq) url() string {
-	return r._url
-}
-
-func (r *ActivityMarkRepoNotificationsAsReadReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/notifications", r.Owner, r.Repo)
-}
-
-func (r *ActivityMarkRepoNotificationsAsReadReq) method() string {
-	return "PUT"
-}
-
-func (r *ActivityMarkRepoNotificationsAsReadReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ActivityMarkRepoNotificationsAsReadReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"content-type": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActivityMarkRepoNotificationsAsReadReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *ActivityMarkRepoNotificationsAsReadReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *ActivityMarkRepoNotificationsAsReadReq) validStatuses() []int {
-	return []int{202}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ActivityMarkRepoNotificationsAsReadReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "activity/mark-repo-notifications-as-read", opt)
+func (r *ActivityMarkRepoNotificationsAsReadReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ActivityMarkRepoNotificationsAsReadReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             r.RequestBody,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"content-type": String("application/json")},
+		Method:           "PUT",
+		OperationID:      "activity/mark-repo-notifications-as-read",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/notifications", r.Owner, r.Repo),
+		URLQuery:         query,
+		ValidStatuses:    []int{202},
+	}
+	return builder
 }
 
 /*
@@ -3343,7 +3215,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActivityMarkRepoNotificationsAsReadReq) Rel(link RelName, resp *ActivityMarkRepoNotificationsAsReadResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -3374,7 +3246,7 @@ ActivityMarkRepoNotificationsAsReadResponse is a response for ActivityMarkRepoNo
 https://developer.github.com/v3/activity/notifications/#mark-repository-notifications-as-read
 */
 type ActivityMarkRepoNotificationsAsReadResponse struct {
-	response
+	internal.Response
 	request *ActivityMarkRepoNotificationsAsReadReq
 }
 
@@ -3387,19 +3259,25 @@ Mark a thread as read.
 
 https://developer.github.com/v3/activity/notifications/#mark-a-thread-as-read
 */
-func ActivityMarkThreadAsRead(ctx context.Context, req *ActivityMarkThreadAsReadReq, opt ...RequestOption) (*ActivityMarkThreadAsReadResponse, error) {
+func ActivityMarkThreadAsRead(ctx context.Context, req *ActivityMarkThreadAsReadReq, opt ...options.Option) (*ActivityMarkThreadAsReadResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActivityMarkThreadAsReadReq)
 	}
 	resp := &ActivityMarkThreadAsReadResponse{request: req}
-	r, err := doRequest(ctx, req, "activity/mark-thread-as-read", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "activity/mark-thread-as-read")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -3415,7 +3293,7 @@ Mark a thread as read.
 
 https://developer.github.com/v3/activity/notifications/#mark-a-thread-as-read
 */
-func (c Client) ActivityMarkThreadAsRead(ctx context.Context, req *ActivityMarkThreadAsReadReq, opt ...RequestOption) (*ActivityMarkThreadAsReadResponse, error) {
+func (c Client) ActivityMarkThreadAsRead(ctx context.Context, req *ActivityMarkThreadAsReadReq, opt ...options.Option) (*ActivityMarkThreadAsReadResponse, error) {
 	return ActivityMarkThreadAsRead(ctx, req, append(c, opt...)...)
 }
 
@@ -3431,44 +3309,33 @@ type ActivityMarkThreadAsReadReq struct {
 	ThreadId int64
 }
 
-func (r *ActivityMarkThreadAsReadReq) url() string {
-	return r._url
-}
-
-func (r *ActivityMarkThreadAsReadReq) urlPath() string {
-	return fmt.Sprintf("/notifications/threads/%v", r.ThreadId)
-}
-
-func (r *ActivityMarkThreadAsReadReq) method() string {
-	return "PATCH"
-}
-
-func (r *ActivityMarkThreadAsReadReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ActivityMarkThreadAsReadReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActivityMarkThreadAsReadReq) body() interface{} {
-	return nil
-}
-
-func (r *ActivityMarkThreadAsReadReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *ActivityMarkThreadAsReadReq) validStatuses() []int {
-	return []int{205, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ActivityMarkThreadAsReadReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "activity/mark-thread-as-read", opt)
+func (r *ActivityMarkThreadAsReadReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ActivityMarkThreadAsReadReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "PATCH",
+		OperationID:      "activity/mark-thread-as-read",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/notifications/threads/%v", r.ThreadId),
+		URLQuery:         query,
+		ValidStatuses:    []int{205, 304},
+	}
+	return builder
 }
 
 /*
@@ -3476,7 +3343,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActivityMarkThreadAsReadReq) Rel(link RelName, resp *ActivityMarkThreadAsReadResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -3490,7 +3357,7 @@ ActivityMarkThreadAsReadResponse is a response for ActivityMarkThreadAsRead
 https://developer.github.com/v3/activity/notifications/#mark-a-thread-as-read
 */
 type ActivityMarkThreadAsReadResponse struct {
-	response
+	internal.Response
 	request *ActivityMarkThreadAsReadReq
 }
 
@@ -3503,20 +3370,26 @@ Set a repository subscription.
 
 https://developer.github.com/v3/activity/watching/#set-a-repository-subscription
 */
-func ActivitySetRepoSubscription(ctx context.Context, req *ActivitySetRepoSubscriptionReq, opt ...RequestOption) (*ActivitySetRepoSubscriptionResponse, error) {
+func ActivitySetRepoSubscription(ctx context.Context, req *ActivitySetRepoSubscriptionReq, opt ...options.Option) (*ActivitySetRepoSubscriptionResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActivitySetRepoSubscriptionReq)
 	}
 	resp := &ActivitySetRepoSubscriptionResponse{request: req}
-	r, err := doRequest(ctx, req, "activity/set-repo-subscription", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.RepositorySubscription{}
-	err = r.decodeBody(&resp.Data, "activity/set-repo-subscription")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3532,7 +3405,7 @@ Set a repository subscription.
 
 https://developer.github.com/v3/activity/watching/#set-a-repository-subscription
 */
-func (c Client) ActivitySetRepoSubscription(ctx context.Context, req *ActivitySetRepoSubscriptionReq, opt ...RequestOption) (*ActivitySetRepoSubscriptionResponse, error) {
+func (c Client) ActivitySetRepoSubscription(ctx context.Context, req *ActivitySetRepoSubscriptionReq, opt ...options.Option) (*ActivitySetRepoSubscriptionResponse, error) {
 	return ActivitySetRepoSubscription(ctx, req, append(c, opt...)...)
 }
 
@@ -3548,47 +3421,36 @@ type ActivitySetRepoSubscriptionReq struct {
 	RequestBody ActivitySetRepoSubscriptionReqBody
 }
 
-func (r *ActivitySetRepoSubscriptionReq) url() string {
-	return r._url
-}
-
-func (r *ActivitySetRepoSubscriptionReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/subscription", r.Owner, r.Repo)
-}
-
-func (r *ActivitySetRepoSubscriptionReq) method() string {
-	return "PUT"
-}
-
-func (r *ActivitySetRepoSubscriptionReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ActivitySetRepoSubscriptionReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActivitySetRepoSubscriptionReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *ActivitySetRepoSubscriptionReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ActivitySetRepoSubscriptionReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ActivitySetRepoSubscriptionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "activity/set-repo-subscription", opt)
+func (r *ActivitySetRepoSubscriptionReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ActivitySetRepoSubscriptionReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{},
+		Body:         r.RequestBody,
+		DataStatuses: []int{200},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "PUT",
+		OperationID:      "activity/set-repo-subscription",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/subscription", r.Owner, r.Repo),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -3596,7 +3458,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActivitySetRepoSubscriptionReq) Rel(link RelName, resp *ActivitySetRepoSubscriptionResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -3624,7 +3486,7 @@ ActivitySetRepoSubscriptionResponse is a response for ActivitySetRepoSubscriptio
 https://developer.github.com/v3/activity/watching/#set-a-repository-subscription
 */
 type ActivitySetRepoSubscriptionResponse struct {
-	response
+	internal.Response
 	request *ActivitySetRepoSubscriptionReq
 	Data    components.RepositorySubscription
 }
@@ -3638,20 +3500,26 @@ Set a thread subscription.
 
 https://developer.github.com/v3/activity/notifications/#set-a-thread-subscription
 */
-func ActivitySetThreadSubscription(ctx context.Context, req *ActivitySetThreadSubscriptionReq, opt ...RequestOption) (*ActivitySetThreadSubscriptionResponse, error) {
+func ActivitySetThreadSubscription(ctx context.Context, req *ActivitySetThreadSubscriptionReq, opt ...options.Option) (*ActivitySetThreadSubscriptionResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActivitySetThreadSubscriptionReq)
 	}
 	resp := &ActivitySetThreadSubscriptionResponse{request: req}
-	r, err := doRequest(ctx, req, "activity/set-thread-subscription", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.ThreadSubscription{}
-	err = r.decodeBody(&resp.Data, "activity/set-thread-subscription")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3667,7 +3535,7 @@ Set a thread subscription.
 
 https://developer.github.com/v3/activity/notifications/#set-a-thread-subscription
 */
-func (c Client) ActivitySetThreadSubscription(ctx context.Context, req *ActivitySetThreadSubscriptionReq, opt ...RequestOption) (*ActivitySetThreadSubscriptionResponse, error) {
+func (c Client) ActivitySetThreadSubscription(ctx context.Context, req *ActivitySetThreadSubscriptionReq, opt ...options.Option) (*ActivitySetThreadSubscriptionResponse, error) {
 	return ActivitySetThreadSubscription(ctx, req, append(c, opt...)...)
 }
 
@@ -3684,47 +3552,36 @@ type ActivitySetThreadSubscriptionReq struct {
 	RequestBody ActivitySetThreadSubscriptionReqBody
 }
 
-func (r *ActivitySetThreadSubscriptionReq) url() string {
-	return r._url
-}
-
-func (r *ActivitySetThreadSubscriptionReq) urlPath() string {
-	return fmt.Sprintf("/notifications/threads/%v/subscription", r.ThreadId)
-}
-
-func (r *ActivitySetThreadSubscriptionReq) method() string {
-	return "PUT"
-}
-
-func (r *ActivitySetThreadSubscriptionReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ActivitySetThreadSubscriptionReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActivitySetThreadSubscriptionReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *ActivitySetThreadSubscriptionReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ActivitySetThreadSubscriptionReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ActivitySetThreadSubscriptionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "activity/set-thread-subscription", opt)
+func (r *ActivitySetThreadSubscriptionReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ActivitySetThreadSubscriptionReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{},
+		Body:         r.RequestBody,
+		DataStatuses: []int{200},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "PUT",
+		OperationID:      "activity/set-thread-subscription",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/notifications/threads/%v/subscription", r.ThreadId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
+	}
+	return builder
 }
 
 /*
@@ -3732,7 +3589,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActivitySetThreadSubscriptionReq) Rel(link RelName, resp *ActivitySetThreadSubscriptionResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -3757,7 +3614,7 @@ ActivitySetThreadSubscriptionResponse is a response for ActivitySetThreadSubscri
 https://developer.github.com/v3/activity/notifications/#set-a-thread-subscription
 */
 type ActivitySetThreadSubscriptionResponse struct {
-	response
+	internal.Response
 	request *ActivitySetThreadSubscriptionReq
 	Data    components.ThreadSubscription
 }
@@ -3771,19 +3628,25 @@ Star a repository for the authenticated user.
 
 https://developer.github.com/v3/activity/starring/#star-a-repository-for-the-authenticated-user
 */
-func ActivityStarRepoForAuthenticatedUser(ctx context.Context, req *ActivityStarRepoForAuthenticatedUserReq, opt ...RequestOption) (*ActivityStarRepoForAuthenticatedUserResponse, error) {
+func ActivityStarRepoForAuthenticatedUser(ctx context.Context, req *ActivityStarRepoForAuthenticatedUserReq, opt ...options.Option) (*ActivityStarRepoForAuthenticatedUserResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActivityStarRepoForAuthenticatedUserReq)
 	}
 	resp := &ActivityStarRepoForAuthenticatedUserResponse{request: req}
-	r, err := doRequest(ctx, req, "activity/star-repo-for-authenticated-user", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "activity/star-repo-for-authenticated-user")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -3799,7 +3662,7 @@ Star a repository for the authenticated user.
 
 https://developer.github.com/v3/activity/starring/#star-a-repository-for-the-authenticated-user
 */
-func (c Client) ActivityStarRepoForAuthenticatedUser(ctx context.Context, req *ActivityStarRepoForAuthenticatedUserReq, opt ...RequestOption) (*ActivityStarRepoForAuthenticatedUserResponse, error) {
+func (c Client) ActivityStarRepoForAuthenticatedUser(ctx context.Context, req *ActivityStarRepoForAuthenticatedUserReq, opt ...options.Option) (*ActivityStarRepoForAuthenticatedUserResponse, error) {
 	return ActivityStarRepoForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
@@ -3814,44 +3677,33 @@ type ActivityStarRepoForAuthenticatedUserReq struct {
 	Repo  string
 }
 
-func (r *ActivityStarRepoForAuthenticatedUserReq) url() string {
-	return r._url
-}
-
-func (r *ActivityStarRepoForAuthenticatedUserReq) urlPath() string {
-	return fmt.Sprintf("/user/starred/%v/%v", r.Owner, r.Repo)
-}
-
-func (r *ActivityStarRepoForAuthenticatedUserReq) method() string {
-	return "PUT"
-}
-
-func (r *ActivityStarRepoForAuthenticatedUserReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ActivityStarRepoForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActivityStarRepoForAuthenticatedUserReq) body() interface{} {
-	return nil
-}
-
-func (r *ActivityStarRepoForAuthenticatedUserReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *ActivityStarRepoForAuthenticatedUserReq) validStatuses() []int {
-	return []int{204, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ActivityStarRepoForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "activity/star-repo-for-authenticated-user", opt)
+func (r *ActivityStarRepoForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ActivityStarRepoForAuthenticatedUserReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "PUT",
+		OperationID:      "activity/star-repo-for-authenticated-user",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/user/starred/%v/%v", r.Owner, r.Repo),
+		URLQuery:         query,
+		ValidStatuses:    []int{204, 304},
+	}
+	return builder
 }
 
 /*
@@ -3859,7 +3711,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActivityStarRepoForAuthenticatedUserReq) Rel(link RelName, resp *ActivityStarRepoForAuthenticatedUserResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -3873,7 +3725,7 @@ ActivityStarRepoForAuthenticatedUserResponse is a response for ActivityStarRepoF
 https://developer.github.com/v3/activity/starring/#star-a-repository-for-the-authenticated-user
 */
 type ActivityStarRepoForAuthenticatedUserResponse struct {
-	response
+	internal.Response
 	request *ActivityStarRepoForAuthenticatedUserReq
 }
 
@@ -3886,19 +3738,25 @@ Unstar a repository for the authenticated user.
 
 https://developer.github.com/v3/activity/starring/#unstar-a-repository-for-the-authenticated-user
 */
-func ActivityUnstarRepoForAuthenticatedUser(ctx context.Context, req *ActivityUnstarRepoForAuthenticatedUserReq, opt ...RequestOption) (*ActivityUnstarRepoForAuthenticatedUserResponse, error) {
+func ActivityUnstarRepoForAuthenticatedUser(ctx context.Context, req *ActivityUnstarRepoForAuthenticatedUserReq, opt ...options.Option) (*ActivityUnstarRepoForAuthenticatedUserResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActivityUnstarRepoForAuthenticatedUserReq)
 	}
 	resp := &ActivityUnstarRepoForAuthenticatedUserResponse{request: req}
-	r, err := doRequest(ctx, req, "activity/unstar-repo-for-authenticated-user", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "activity/unstar-repo-for-authenticated-user")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -3914,7 +3772,7 @@ Unstar a repository for the authenticated user.
 
 https://developer.github.com/v3/activity/starring/#unstar-a-repository-for-the-authenticated-user
 */
-func (c Client) ActivityUnstarRepoForAuthenticatedUser(ctx context.Context, req *ActivityUnstarRepoForAuthenticatedUserReq, opt ...RequestOption) (*ActivityUnstarRepoForAuthenticatedUserResponse, error) {
+func (c Client) ActivityUnstarRepoForAuthenticatedUser(ctx context.Context, req *ActivityUnstarRepoForAuthenticatedUserReq, opt ...options.Option) (*ActivityUnstarRepoForAuthenticatedUserResponse, error) {
 	return ActivityUnstarRepoForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
@@ -3929,44 +3787,33 @@ type ActivityUnstarRepoForAuthenticatedUserReq struct {
 	Repo  string
 }
 
-func (r *ActivityUnstarRepoForAuthenticatedUserReq) url() string {
-	return r._url
-}
-
-func (r *ActivityUnstarRepoForAuthenticatedUserReq) urlPath() string {
-	return fmt.Sprintf("/user/starred/%v/%v", r.Owner, r.Repo)
-}
-
-func (r *ActivityUnstarRepoForAuthenticatedUserReq) method() string {
-	return "DELETE"
-}
-
-func (r *ActivityUnstarRepoForAuthenticatedUserReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ActivityUnstarRepoForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActivityUnstarRepoForAuthenticatedUserReq) body() interface{} {
-	return nil
-}
-
-func (r *ActivityUnstarRepoForAuthenticatedUserReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *ActivityUnstarRepoForAuthenticatedUserReq) validStatuses() []int {
-	return []int{204, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ActivityUnstarRepoForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "activity/unstar-repo-for-authenticated-user", opt)
+func (r *ActivityUnstarRepoForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ActivityUnstarRepoForAuthenticatedUserReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		OperationID:      "activity/unstar-repo-for-authenticated-user",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/user/starred/%v/%v", r.Owner, r.Repo),
+		URLQuery:         query,
+		ValidStatuses:    []int{204, 304},
+	}
+	return builder
 }
 
 /*
@@ -3974,7 +3821,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActivityUnstarRepoForAuthenticatedUserReq) Rel(link RelName, resp *ActivityUnstarRepoForAuthenticatedUserResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -3988,6 +3835,6 @@ ActivityUnstarRepoForAuthenticatedUserResponse is a response for ActivityUnstarR
 https://developer.github.com/v3/activity/starring/#unstar-a-repository-for-the-authenticated-user
 */
 type ActivityUnstarRepoForAuthenticatedUserResponse struct {
-	response
+	internal.Response
 	request *ActivityUnstarRepoForAuthenticatedUserReq
 }

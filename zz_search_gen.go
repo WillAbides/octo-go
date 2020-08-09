@@ -6,6 +6,8 @@ import (
 	"context"
 	"fmt"
 	components "github.com/willabides/octo-go/components"
+	internal "github.com/willabides/octo-go/internal"
+	options "github.com/willabides/octo-go/options"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -20,20 +22,26 @@ Search code.
 
 https://developer.github.com/v3/search/#search-code
 */
-func SearchCode(ctx context.Context, req *SearchCodeReq, opt ...RequestOption) (*SearchCodeResponse, error) {
+func SearchCode(ctx context.Context, req *SearchCodeReq, opt ...options.Option) (*SearchCodeResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(SearchCodeReq)
 	}
 	resp := &SearchCodeResponse{request: req}
-	r, err := doRequest(ctx, req, "search/code", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = SearchCodeResponseBody{}
-	err = r.decodeBody(&resp.Data, "search/code")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -49,7 +57,7 @@ Search code.
 
 https://developer.github.com/v3/search/#search-code
 */
-func (c Client) SearchCode(ctx context.Context, req *SearchCodeReq, opt ...RequestOption) (*SearchCodeResponse, error) {
+func (c Client) SearchCode(ctx context.Context, req *SearchCodeReq, opt ...options.Option) (*SearchCodeResponse, error) {
 	return SearchCode(ctx, req, append(c, opt...)...)
 }
 
@@ -93,19 +101,16 @@ type SearchCodeReq struct {
 	Page *int64
 }
 
-func (r *SearchCodeReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *SearchCodeReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *SearchCodeReq) urlPath() string {
-	return fmt.Sprintf("/search/code")
-}
-
-func (r *SearchCodeReq) method() string {
-	return "GET"
-}
-
-func (r *SearchCodeReq) urlQuery() url.Values {
+func (r *SearchCodeReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Q != nil {
 		query.Set("q", *r.Q)
@@ -122,30 +127,22 @@ func (r *SearchCodeReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *SearchCodeReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *SearchCodeReq) body() interface{} {
-	return nil
-}
-
-func (r *SearchCodeReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *SearchCodeReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *SearchCodeReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "search/code", opt)
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "search/code",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/search/code"),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
+	}
+	return builder
 }
 
 /*
@@ -153,7 +150,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *SearchCodeReq) Rel(link RelName, resp *SearchCodeResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -178,7 +175,7 @@ SearchCodeResponse is a response for SearchCode
 https://developer.github.com/v3/search/#search-code
 */
 type SearchCodeResponse struct {
-	response
+	internal.Response
 	request *SearchCodeReq
 	Data    SearchCodeResponseBody
 }
@@ -192,20 +189,26 @@ Search commits.
 
 https://developer.github.com/v3/search/#search-commits
 */
-func SearchCommits(ctx context.Context, req *SearchCommitsReq, opt ...RequestOption) (*SearchCommitsResponse, error) {
+func SearchCommits(ctx context.Context, req *SearchCommitsReq, opt ...options.Option) (*SearchCommitsResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(SearchCommitsReq)
 	}
 	resp := &SearchCommitsResponse{request: req}
-	r, err := doRequest(ctx, req, "search/commits", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = SearchCommitsResponseBody{}
-	err = r.decodeBody(&resp.Data, "search/commits")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -221,7 +224,7 @@ Search commits.
 
 https://developer.github.com/v3/search/#search-commits
 */
-func (c Client) SearchCommits(ctx context.Context, req *SearchCommitsReq, opt ...RequestOption) (*SearchCommitsResponse, error) {
+func (c Client) SearchCommits(ctx context.Context, req *SearchCommitsReq, opt ...options.Option) (*SearchCommitsResponse, error) {
 	return SearchCommits(ctx, req, append(c, opt...)...)
 }
 
@@ -274,19 +277,16 @@ type SearchCommitsReq struct {
 	CloakPreview bool
 }
 
-func (r *SearchCommitsReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *SearchCommitsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *SearchCommitsReq) urlPath() string {
-	return fmt.Sprintf("/search/commits")
-}
-
-func (r *SearchCommitsReq) method() string {
-	return "GET"
-}
-
-func (r *SearchCommitsReq) urlQuery() url.Values {
+func (r *SearchCommitsReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Q != nil {
 		query.Set("q", *r.Q)
@@ -303,36 +303,22 @@ func (r *SearchCommitsReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *SearchCommitsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{"cloak": r.CloakPreview}
-	if requiredPreviews {
-		previewVals["cloak"] = true
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"cloak"},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "search/commits",
+		Previews:         map[string]bool{"cloak": r.CloakPreview},
+		RequiredPreviews: []string{"cloak"},
+		URLPath:          fmt.Sprintf("/search/commits"),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
 	}
-	if allPreviews {
-		previewVals["cloak"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *SearchCommitsReq) body() interface{} {
-	return nil
-}
-
-func (r *SearchCommitsReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *SearchCommitsReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *SearchCommitsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "search/commits", opt)
+	return builder
 }
 
 /*
@@ -340,7 +326,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *SearchCommitsReq) Rel(link RelName, resp *SearchCommitsResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -365,7 +351,7 @@ SearchCommitsResponse is a response for SearchCommits
 https://developer.github.com/v3/search/#search-commits
 */
 type SearchCommitsResponse struct {
-	response
+	internal.Response
 	request *SearchCommitsReq
 	Data    SearchCommitsResponseBody
 }
@@ -379,20 +365,26 @@ Search issues and pull requests.
 
 https://developer.github.com/v3/search/#search-issues-and-pull-requests
 */
-func SearchIssuesAndPullRequests(ctx context.Context, req *SearchIssuesAndPullRequestsReq, opt ...RequestOption) (*SearchIssuesAndPullRequestsResponse, error) {
+func SearchIssuesAndPullRequests(ctx context.Context, req *SearchIssuesAndPullRequestsReq, opt ...options.Option) (*SearchIssuesAndPullRequestsResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(SearchIssuesAndPullRequestsReq)
 	}
 	resp := &SearchIssuesAndPullRequestsResponse{request: req}
-	r, err := doRequest(ctx, req, "search/issues-and-pull-requests", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = SearchIssuesAndPullRequestsResponseBody{}
-	err = r.decodeBody(&resp.Data, "search/issues-and-pull-requests")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -408,7 +400,7 @@ Search issues and pull requests.
 
 https://developer.github.com/v3/search/#search-issues-and-pull-requests
 */
-func (c Client) SearchIssuesAndPullRequests(ctx context.Context, req *SearchIssuesAndPullRequestsReq, opt ...RequestOption) (*SearchIssuesAndPullRequestsResponse, error) {
+func (c Client) SearchIssuesAndPullRequests(ctx context.Context, req *SearchIssuesAndPullRequestsReq, opt ...options.Option) (*SearchIssuesAndPullRequestsResponse, error) {
 	return SearchIssuesAndPullRequests(ctx, req, append(c, opt...)...)
 }
 
@@ -455,19 +447,16 @@ type SearchIssuesAndPullRequestsReq struct {
 	Page *int64
 }
 
-func (r *SearchIssuesAndPullRequestsReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *SearchIssuesAndPullRequestsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *SearchIssuesAndPullRequestsReq) urlPath() string {
-	return fmt.Sprintf("/search/issues")
-}
-
-func (r *SearchIssuesAndPullRequestsReq) method() string {
-	return "GET"
-}
-
-func (r *SearchIssuesAndPullRequestsReq) urlQuery() url.Values {
+func (r *SearchIssuesAndPullRequestsReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Q != nil {
 		query.Set("q", *r.Q)
@@ -484,30 +473,22 @@ func (r *SearchIssuesAndPullRequestsReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *SearchIssuesAndPullRequestsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *SearchIssuesAndPullRequestsReq) body() interface{} {
-	return nil
-}
-
-func (r *SearchIssuesAndPullRequestsReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *SearchIssuesAndPullRequestsReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *SearchIssuesAndPullRequestsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "search/issues-and-pull-requests", opt)
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "search/issues-and-pull-requests",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/search/issues"),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
+	}
+	return builder
 }
 
 /*
@@ -515,7 +496,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *SearchIssuesAndPullRequestsReq) Rel(link RelName, resp *SearchIssuesAndPullRequestsResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -540,7 +521,7 @@ SearchIssuesAndPullRequestsResponse is a response for SearchIssuesAndPullRequest
 https://developer.github.com/v3/search/#search-issues-and-pull-requests
 */
 type SearchIssuesAndPullRequestsResponse struct {
-	response
+	internal.Response
 	request *SearchIssuesAndPullRequestsReq
 	Data    SearchIssuesAndPullRequestsResponseBody
 }
@@ -554,20 +535,26 @@ Search labels.
 
 https://developer.github.com/v3/search/#search-labels
 */
-func SearchLabels(ctx context.Context, req *SearchLabelsReq, opt ...RequestOption) (*SearchLabelsResponse, error) {
+func SearchLabels(ctx context.Context, req *SearchLabelsReq, opt ...options.Option) (*SearchLabelsResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(SearchLabelsReq)
 	}
 	resp := &SearchLabelsResponse{request: req}
-	r, err := doRequest(ctx, req, "search/labels", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = SearchLabelsResponseBody{}
-	err = r.decodeBody(&resp.Data, "search/labels")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -583,7 +570,7 @@ Search labels.
 
 https://developer.github.com/v3/search/#search-labels
 */
-func (c Client) SearchLabels(ctx context.Context, req *SearchLabelsReq, opt ...RequestOption) (*SearchLabelsResponse, error) {
+func (c Client) SearchLabels(ctx context.Context, req *SearchLabelsReq, opt ...options.Option) (*SearchLabelsResponse, error) {
 	return SearchLabels(ctx, req, append(c, opt...)...)
 }
 
@@ -620,19 +607,16 @@ type SearchLabelsReq struct {
 	Order *string
 }
 
-func (r *SearchLabelsReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *SearchLabelsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *SearchLabelsReq) urlPath() string {
-	return fmt.Sprintf("/search/labels")
-}
-
-func (r *SearchLabelsReq) method() string {
-	return "GET"
-}
-
-func (r *SearchLabelsReq) urlQuery() url.Values {
+func (r *SearchLabelsReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.RepositoryId != nil {
 		query.Set("repository_id", strconv.FormatInt(*r.RepositoryId, 10))
@@ -646,30 +630,22 @@ func (r *SearchLabelsReq) urlQuery() url.Values {
 	if r.Order != nil {
 		query.Set("order", *r.Order)
 	}
-	return query
-}
 
-func (r *SearchLabelsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *SearchLabelsReq) body() interface{} {
-	return nil
-}
-
-func (r *SearchLabelsReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *SearchLabelsReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *SearchLabelsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "search/labels", opt)
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "search/labels",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/search/labels"),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
+	}
+	return builder
 }
 
 /*
@@ -677,7 +653,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *SearchLabelsReq) Rel(link RelName, resp *SearchLabelsResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -702,7 +678,7 @@ SearchLabelsResponse is a response for SearchLabels
 https://developer.github.com/v3/search/#search-labels
 */
 type SearchLabelsResponse struct {
-	response
+	internal.Response
 	request *SearchLabelsReq
 	Data    SearchLabelsResponseBody
 }
@@ -716,20 +692,26 @@ Search repositories.
 
 https://developer.github.com/v3/search/#search-repositories
 */
-func SearchRepos(ctx context.Context, req *SearchReposReq, opt ...RequestOption) (*SearchReposResponse, error) {
+func SearchRepos(ctx context.Context, req *SearchReposReq, opt ...options.Option) (*SearchReposResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(SearchReposReq)
 	}
 	resp := &SearchReposResponse{request: req}
-	r, err := doRequest(ctx, req, "search/repos", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = SearchReposResponseBody{}
-	err = r.decodeBody(&resp.Data, "search/repos")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -745,7 +727,7 @@ Search repositories.
 
 https://developer.github.com/v3/search/#search-repositories
 */
-func (c Client) SearchRepos(ctx context.Context, req *SearchReposReq, opt ...RequestOption) (*SearchReposResponse, error) {
+func (c Client) SearchRepos(ctx context.Context, req *SearchReposReq, opt ...options.Option) (*SearchReposResponse, error) {
 	return SearchRepos(ctx, req, append(c, opt...)...)
 }
 
@@ -797,19 +779,16 @@ type SearchReposReq struct {
 	MercyPreview bool
 }
 
-func (r *SearchReposReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *SearchReposReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *SearchReposReq) urlPath() string {
-	return fmt.Sprintf("/search/repositories")
-}
-
-func (r *SearchReposReq) method() string {
-	return "GET"
-}
-
-func (r *SearchReposReq) urlQuery() url.Values {
+func (r *SearchReposReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Q != nil {
 		query.Set("q", *r.Q)
@@ -826,33 +805,22 @@ func (r *SearchReposReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *SearchReposReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{"mercy": r.MercyPreview}
-	if allPreviews {
-		previewVals["mercy"] = true
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"mercy"},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "search/repos",
+		Previews:         map[string]bool{"mercy": r.MercyPreview},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/search/repositories"),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
 	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *SearchReposReq) body() interface{} {
-	return nil
-}
-
-func (r *SearchReposReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *SearchReposReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *SearchReposReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "search/repos", opt)
+	return builder
 }
 
 /*
@@ -860,7 +828,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *SearchReposReq) Rel(link RelName, resp *SearchReposResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -885,7 +853,7 @@ SearchReposResponse is a response for SearchRepos
 https://developer.github.com/v3/search/#search-repositories
 */
 type SearchReposResponse struct {
-	response
+	internal.Response
 	request *SearchReposReq
 	Data    SearchReposResponseBody
 }
@@ -899,20 +867,26 @@ Search topics.
 
 https://developer.github.com/v3/search/#search-topics
 */
-func SearchTopics(ctx context.Context, req *SearchTopicsReq, opt ...RequestOption) (*SearchTopicsResponse, error) {
+func SearchTopics(ctx context.Context, req *SearchTopicsReq, opt ...options.Option) (*SearchTopicsResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(SearchTopicsReq)
 	}
 	resp := &SearchTopicsResponse{request: req}
-	r, err := doRequest(ctx, req, "search/topics", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = SearchTopicsResponseBody{}
-	err = r.decodeBody(&resp.Data, "search/topics")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -928,7 +902,7 @@ Search topics.
 
 https://developer.github.com/v3/search/#search-topics
 */
-func (c Client) SearchTopics(ctx context.Context, req *SearchTopicsReq, opt ...RequestOption) (*SearchTopicsResponse, error) {
+func (c Client) SearchTopics(ctx context.Context, req *SearchTopicsReq, opt ...options.Option) (*SearchTopicsResponse, error) {
 	return SearchTopics(ctx, req, append(c, opt...)...)
 }
 
@@ -957,53 +931,36 @@ type SearchTopicsReq struct {
 	MercyPreview bool
 }
 
-func (r *SearchTopicsReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *SearchTopicsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *SearchTopicsReq) urlPath() string {
-	return fmt.Sprintf("/search/topics")
-}
-
-func (r *SearchTopicsReq) method() string {
-	return "GET"
-}
-
-func (r *SearchTopicsReq) urlQuery() url.Values {
+func (r *SearchTopicsReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Q != nil {
 		query.Set("q", *r.Q)
 	}
-	return query
-}
 
-func (r *SearchTopicsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{"mercy": r.MercyPreview}
-	if requiredPreviews {
-		previewVals["mercy"] = true
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"mercy"},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "search/topics",
+		Previews:         map[string]bool{"mercy": r.MercyPreview},
+		RequiredPreviews: []string{"mercy"},
+		URLPath:          fmt.Sprintf("/search/topics"),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
 	}
-	if allPreviews {
-		previewVals["mercy"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *SearchTopicsReq) body() interface{} {
-	return nil
-}
-
-func (r *SearchTopicsReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *SearchTopicsReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *SearchTopicsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "search/topics", opt)
+	return builder
 }
 
 /*
@@ -1011,7 +968,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *SearchTopicsReq) Rel(link RelName, resp *SearchTopicsResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1036,7 +993,7 @@ SearchTopicsResponse is a response for SearchTopics
 https://developer.github.com/v3/search/#search-topics
 */
 type SearchTopicsResponse struct {
-	response
+	internal.Response
 	request *SearchTopicsReq
 	Data    SearchTopicsResponseBody
 }
@@ -1050,20 +1007,26 @@ Search users.
 
 https://developer.github.com/v3/search/#search-users
 */
-func SearchUsers(ctx context.Context, req *SearchUsersReq, opt ...RequestOption) (*SearchUsersResponse, error) {
+func SearchUsers(ctx context.Context, req *SearchUsersReq, opt ...options.Option) (*SearchUsersResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(SearchUsersReq)
 	}
 	resp := &SearchUsersResponse{request: req}
-	r, err := doRequest(ctx, req, "search/users", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = SearchUsersResponseBody{}
-	err = r.decodeBody(&resp.Data, "search/users")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1079,7 +1042,7 @@ Search users.
 
 https://developer.github.com/v3/search/#search-users
 */
-func (c Client) SearchUsers(ctx context.Context, req *SearchUsersReq, opt ...RequestOption) (*SearchUsersResponse, error) {
+func (c Client) SearchUsers(ctx context.Context, req *SearchUsersReq, opt ...options.Option) (*SearchUsersResponse, error) {
 	return SearchUsers(ctx, req, append(c, opt...)...)
 }
 
@@ -1123,19 +1086,16 @@ type SearchUsersReq struct {
 	Page *int64
 }
 
-func (r *SearchUsersReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *SearchUsersReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *SearchUsersReq) urlPath() string {
-	return fmt.Sprintf("/search/users")
-}
-
-func (r *SearchUsersReq) method() string {
-	return "GET"
-}
-
-func (r *SearchUsersReq) urlQuery() url.Values {
+func (r *SearchUsersReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Q != nil {
 		query.Set("q", *r.Q)
@@ -1152,30 +1112,22 @@ func (r *SearchUsersReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *SearchUsersReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *SearchUsersReq) body() interface{} {
-	return nil
-}
-
-func (r *SearchUsersReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *SearchUsersReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *SearchUsersReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "search/users", opt)
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "search/users",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/search/users"),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
+	}
+	return builder
 }
 
 /*
@@ -1183,7 +1135,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *SearchUsersReq) Rel(link RelName, resp *SearchUsersResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1208,7 +1160,7 @@ SearchUsersResponse is a response for SearchUsers
 https://developer.github.com/v3/search/#search-users
 */
 type SearchUsersResponse struct {
-	response
+	internal.Response
 	request *SearchUsersReq
 	Data    SearchUsersResponseBody
 }

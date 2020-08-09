@@ -5,6 +5,8 @@ package octo
 import (
 	"context"
 	"fmt"
+	internal "github.com/willabides/octo-go/internal"
+	options "github.com/willabides/octo-go/options"
 	"net/http"
 	"net/url"
 )
@@ -18,20 +20,26 @@ Get emojis.
 
 https://developer.github.com/v3/emojis/#get-emojis
 */
-func EmojisGet(ctx context.Context, req *EmojisGetReq, opt ...RequestOption) (*EmojisGetResponse, error) {
+func EmojisGet(ctx context.Context, req *EmojisGetReq, opt ...options.Option) (*EmojisGetResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(EmojisGetReq)
 	}
 	resp := &EmojisGetResponse{request: req}
-	r, err := doRequest(ctx, req, "emojis/get", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = EmojisGetResponseBody{}
-	err = r.decodeBody(&resp.Data, "emojis/get")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -47,7 +55,7 @@ Get emojis.
 
 https://developer.github.com/v3/emojis/#get-emojis
 */
-func (c Client) EmojisGet(ctx context.Context, req *EmojisGetReq, opt ...RequestOption) (*EmojisGetResponse, error) {
+func (c Client) EmojisGet(ctx context.Context, req *EmojisGetReq, opt ...options.Option) (*EmojisGetResponse, error) {
 	return EmojisGet(ctx, req, append(c, opt...)...)
 }
 
@@ -60,44 +68,33 @@ type EmojisGetReq struct {
 	_url string
 }
 
-func (r *EmojisGetReq) url() string {
-	return r._url
-}
-
-func (r *EmojisGetReq) urlPath() string {
-	return fmt.Sprintf("/emojis")
-}
-
-func (r *EmojisGetReq) method() string {
-	return "GET"
-}
-
-func (r *EmojisGetReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *EmojisGetReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *EmojisGetReq) body() interface{} {
-	return nil
-}
-
-func (r *EmojisGetReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *EmojisGetReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *EmojisGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "emojis/get", opt)
+func (r *EmojisGetReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *EmojisGetReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "emojis/get",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/emojis"),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
+	}
+	return builder
 }
 
 /*
@@ -105,7 +102,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *EmojisGetReq) Rel(link RelName, resp *EmojisGetResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -126,7 +123,7 @@ EmojisGetResponse is a response for EmojisGet
 https://developer.github.com/v3/emojis/#get-emojis
 */
 type EmojisGetResponse struct {
-	response
+	internal.Response
 	request *EmojisGetReq
 	Data    EmojisGetResponseBody
 }

@@ -6,6 +6,8 @@ import (
 	"context"
 	"fmt"
 	components "github.com/willabides/octo-go/components"
+	internal "github.com/willabides/octo-go/internal"
+	options "github.com/willabides/octo-go/options"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -20,20 +22,26 @@ Create reaction for a commit comment.
 
 https://developer.github.com/v3/reactions/#create-reaction-for-a-commit-comment
 */
-func ReactionsCreateForCommitComment(ctx context.Context, req *ReactionsCreateForCommitCommentReq, opt ...RequestOption) (*ReactionsCreateForCommitCommentResponse, error) {
+func ReactionsCreateForCommitComment(ctx context.Context, req *ReactionsCreateForCommitCommentReq, opt ...options.Option) (*ReactionsCreateForCommitCommentResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ReactionsCreateForCommitCommentReq)
 	}
 	resp := &ReactionsCreateForCommitCommentResponse{request: req}
-	r, err := doRequest(ctx, req, "reactions/create-for-commit-comment", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.Reaction{}
-	err = r.decodeBody(&resp.Data, "reactions/create-for-commit-comment")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -49,7 +57,7 @@ Create reaction for a commit comment.
 
 https://developer.github.com/v3/reactions/#create-reaction-for-a-commit-comment
 */
-func (c Client) ReactionsCreateForCommitComment(ctx context.Context, req *ReactionsCreateForCommitCommentReq, opt ...RequestOption) (*ReactionsCreateForCommitCommentResponse, error) {
+func (c Client) ReactionsCreateForCommitComment(ctx context.Context, req *ReactionsCreateForCommitCommentReq, opt ...options.Option) (*ReactionsCreateForCommitCommentResponse, error) {
 	return ReactionsCreateForCommitComment(ctx, req, append(c, opt...)...)
 }
 
@@ -79,53 +87,36 @@ type ReactionsCreateForCommitCommentReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *ReactionsCreateForCommitCommentReq) url() string {
-	return r._url
-}
-
-func (r *ReactionsCreateForCommitCommentReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/comments/%v/reactions", r.Owner, r.Repo, r.CommentId)
-}
-
-func (r *ReactionsCreateForCommitCommentReq) method() string {
-	return "POST"
-}
-
-func (r *ReactionsCreateForCommitCommentReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ReactionsCreateForCommitCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	if requiredPreviews {
-		previewVals["squirrel-girl"] = true
-	}
-	if allPreviews {
-		previewVals["squirrel-girl"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReactionsCreateForCommitCommentReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *ReactionsCreateForCommitCommentReq) dataStatuses() []int {
-	return []int{200, 201}
-}
-
-func (r *ReactionsCreateForCommitCommentReq) validStatuses() []int {
-	return []int{200, 201}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ReactionsCreateForCommitCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "reactions/create-for-commit-comment", opt)
+func (r *ReactionsCreateForCommitCommentReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ReactionsCreateForCommitCommentReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{"squirrel-girl"},
+		Body:         r.RequestBody,
+		DataStatuses: []int{200, 201},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "POST",
+		OperationID:      "reactions/create-for-commit-comment",
+		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		RequiredPreviews: []string{"squirrel-girl"},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/comments/%v/reactions", r.Owner, r.Repo, r.CommentId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 201},
+	}
+	return builder
 }
 
 /*
@@ -133,7 +124,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ReactionsCreateForCommitCommentReq) Rel(link RelName, resp *ReactionsCreateForCommitCommentResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -158,7 +149,7 @@ ReactionsCreateForCommitCommentResponse is a response for ReactionsCreateForComm
 https://developer.github.com/v3/reactions/#create-reaction-for-a-commit-comment
 */
 type ReactionsCreateForCommitCommentResponse struct {
-	response
+	internal.Response
 	request *ReactionsCreateForCommitCommentReq
 	Data    components.Reaction
 }
@@ -172,20 +163,26 @@ Create reaction for an issue.
 
 https://developer.github.com/v3/reactions/#create-reaction-for-an-issue
 */
-func ReactionsCreateForIssue(ctx context.Context, req *ReactionsCreateForIssueReq, opt ...RequestOption) (*ReactionsCreateForIssueResponse, error) {
+func ReactionsCreateForIssue(ctx context.Context, req *ReactionsCreateForIssueReq, opt ...options.Option) (*ReactionsCreateForIssueResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ReactionsCreateForIssueReq)
 	}
 	resp := &ReactionsCreateForIssueResponse{request: req}
-	r, err := doRequest(ctx, req, "reactions/create-for-issue", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.Reaction{}
-	err = r.decodeBody(&resp.Data, "reactions/create-for-issue")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -201,7 +198,7 @@ Create reaction for an issue.
 
 https://developer.github.com/v3/reactions/#create-reaction-for-an-issue
 */
-func (c Client) ReactionsCreateForIssue(ctx context.Context, req *ReactionsCreateForIssueReq, opt ...RequestOption) (*ReactionsCreateForIssueResponse, error) {
+func (c Client) ReactionsCreateForIssue(ctx context.Context, req *ReactionsCreateForIssueReq, opt ...options.Option) (*ReactionsCreateForIssueResponse, error) {
 	return ReactionsCreateForIssue(ctx, req, append(c, opt...)...)
 }
 
@@ -231,53 +228,36 @@ type ReactionsCreateForIssueReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *ReactionsCreateForIssueReq) url() string {
-	return r._url
-}
-
-func (r *ReactionsCreateForIssueReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/issues/%v/reactions", r.Owner, r.Repo, r.IssueNumber)
-}
-
-func (r *ReactionsCreateForIssueReq) method() string {
-	return "POST"
-}
-
-func (r *ReactionsCreateForIssueReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ReactionsCreateForIssueReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	if requiredPreviews {
-		previewVals["squirrel-girl"] = true
-	}
-	if allPreviews {
-		previewVals["squirrel-girl"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReactionsCreateForIssueReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *ReactionsCreateForIssueReq) dataStatuses() []int {
-	return []int{201}
-}
-
-func (r *ReactionsCreateForIssueReq) validStatuses() []int {
-	return []int{201}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ReactionsCreateForIssueReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "reactions/create-for-issue", opt)
+func (r *ReactionsCreateForIssueReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ReactionsCreateForIssueReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{"squirrel-girl"},
+		Body:         r.RequestBody,
+		DataStatuses: []int{201},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "POST",
+		OperationID:      "reactions/create-for-issue",
+		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		RequiredPreviews: []string{"squirrel-girl"},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/%v/reactions", r.Owner, r.Repo, r.IssueNumber),
+		URLQuery:         query,
+		ValidStatuses:    []int{201},
+	}
+	return builder
 }
 
 /*
@@ -285,7 +265,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ReactionsCreateForIssueReq) Rel(link RelName, resp *ReactionsCreateForIssueResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -310,7 +290,7 @@ ReactionsCreateForIssueResponse is a response for ReactionsCreateForIssue
 https://developer.github.com/v3/reactions/#create-reaction-for-an-issue
 */
 type ReactionsCreateForIssueResponse struct {
-	response
+	internal.Response
 	request *ReactionsCreateForIssueReq
 	Data    components.Reaction
 }
@@ -324,20 +304,26 @@ Create reaction for an issue comment.
 
 https://developer.github.com/v3/reactions/#create-reaction-for-an-issue-comment
 */
-func ReactionsCreateForIssueComment(ctx context.Context, req *ReactionsCreateForIssueCommentReq, opt ...RequestOption) (*ReactionsCreateForIssueCommentResponse, error) {
+func ReactionsCreateForIssueComment(ctx context.Context, req *ReactionsCreateForIssueCommentReq, opt ...options.Option) (*ReactionsCreateForIssueCommentResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ReactionsCreateForIssueCommentReq)
 	}
 	resp := &ReactionsCreateForIssueCommentResponse{request: req}
-	r, err := doRequest(ctx, req, "reactions/create-for-issue-comment", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.Reaction{}
-	err = r.decodeBody(&resp.Data, "reactions/create-for-issue-comment")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -353,7 +339,7 @@ Create reaction for an issue comment.
 
 https://developer.github.com/v3/reactions/#create-reaction-for-an-issue-comment
 */
-func (c Client) ReactionsCreateForIssueComment(ctx context.Context, req *ReactionsCreateForIssueCommentReq, opt ...RequestOption) (*ReactionsCreateForIssueCommentResponse, error) {
+func (c Client) ReactionsCreateForIssueComment(ctx context.Context, req *ReactionsCreateForIssueCommentReq, opt ...options.Option) (*ReactionsCreateForIssueCommentResponse, error) {
 	return ReactionsCreateForIssueComment(ctx, req, append(c, opt...)...)
 }
 
@@ -383,53 +369,36 @@ type ReactionsCreateForIssueCommentReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *ReactionsCreateForIssueCommentReq) url() string {
-	return r._url
-}
-
-func (r *ReactionsCreateForIssueCommentReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/issues/comments/%v/reactions", r.Owner, r.Repo, r.CommentId)
-}
-
-func (r *ReactionsCreateForIssueCommentReq) method() string {
-	return "POST"
-}
-
-func (r *ReactionsCreateForIssueCommentReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ReactionsCreateForIssueCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	if requiredPreviews {
-		previewVals["squirrel-girl"] = true
-	}
-	if allPreviews {
-		previewVals["squirrel-girl"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReactionsCreateForIssueCommentReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *ReactionsCreateForIssueCommentReq) dataStatuses() []int {
-	return []int{200, 201}
-}
-
-func (r *ReactionsCreateForIssueCommentReq) validStatuses() []int {
-	return []int{200, 201}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ReactionsCreateForIssueCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "reactions/create-for-issue-comment", opt)
+func (r *ReactionsCreateForIssueCommentReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ReactionsCreateForIssueCommentReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{"squirrel-girl"},
+		Body:         r.RequestBody,
+		DataStatuses: []int{200, 201},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "POST",
+		OperationID:      "reactions/create-for-issue-comment",
+		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		RequiredPreviews: []string{"squirrel-girl"},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/comments/%v/reactions", r.Owner, r.Repo, r.CommentId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 201},
+	}
+	return builder
 }
 
 /*
@@ -437,7 +406,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ReactionsCreateForIssueCommentReq) Rel(link RelName, resp *ReactionsCreateForIssueCommentResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -462,7 +431,7 @@ ReactionsCreateForIssueCommentResponse is a response for ReactionsCreateForIssue
 https://developer.github.com/v3/reactions/#create-reaction-for-an-issue-comment
 */
 type ReactionsCreateForIssueCommentResponse struct {
-	response
+	internal.Response
 	request *ReactionsCreateForIssueCommentReq
 	Data    components.Reaction
 }
@@ -476,20 +445,26 @@ Create reaction for a pull request review comment.
 
 https://developer.github.com/v3/reactions/#create-reaction-for-a-pull-request-review-comment
 */
-func ReactionsCreateForPullRequestReviewComment(ctx context.Context, req *ReactionsCreateForPullRequestReviewCommentReq, opt ...RequestOption) (*ReactionsCreateForPullRequestReviewCommentResponse, error) {
+func ReactionsCreateForPullRequestReviewComment(ctx context.Context, req *ReactionsCreateForPullRequestReviewCommentReq, opt ...options.Option) (*ReactionsCreateForPullRequestReviewCommentResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ReactionsCreateForPullRequestReviewCommentReq)
 	}
 	resp := &ReactionsCreateForPullRequestReviewCommentResponse{request: req}
-	r, err := doRequest(ctx, req, "reactions/create-for-pull-request-review-comment", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.Reaction{}
-	err = r.decodeBody(&resp.Data, "reactions/create-for-pull-request-review-comment")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -505,7 +480,7 @@ Create reaction for a pull request review comment.
 
 https://developer.github.com/v3/reactions/#create-reaction-for-a-pull-request-review-comment
 */
-func (c Client) ReactionsCreateForPullRequestReviewComment(ctx context.Context, req *ReactionsCreateForPullRequestReviewCommentReq, opt ...RequestOption) (*ReactionsCreateForPullRequestReviewCommentResponse, error) {
+func (c Client) ReactionsCreateForPullRequestReviewComment(ctx context.Context, req *ReactionsCreateForPullRequestReviewCommentReq, opt ...options.Option) (*ReactionsCreateForPullRequestReviewCommentResponse, error) {
 	return ReactionsCreateForPullRequestReviewComment(ctx, req, append(c, opt...)...)
 }
 
@@ -535,53 +510,36 @@ type ReactionsCreateForPullRequestReviewCommentReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *ReactionsCreateForPullRequestReviewCommentReq) url() string {
-	return r._url
-}
-
-func (r *ReactionsCreateForPullRequestReviewCommentReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/pulls/comments/%v/reactions", r.Owner, r.Repo, r.CommentId)
-}
-
-func (r *ReactionsCreateForPullRequestReviewCommentReq) method() string {
-	return "POST"
-}
-
-func (r *ReactionsCreateForPullRequestReviewCommentReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ReactionsCreateForPullRequestReviewCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	if requiredPreviews {
-		previewVals["squirrel-girl"] = true
-	}
-	if allPreviews {
-		previewVals["squirrel-girl"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReactionsCreateForPullRequestReviewCommentReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *ReactionsCreateForPullRequestReviewCommentReq) dataStatuses() []int {
-	return []int{200, 201}
-}
-
-func (r *ReactionsCreateForPullRequestReviewCommentReq) validStatuses() []int {
-	return []int{200, 201}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ReactionsCreateForPullRequestReviewCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "reactions/create-for-pull-request-review-comment", opt)
+func (r *ReactionsCreateForPullRequestReviewCommentReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ReactionsCreateForPullRequestReviewCommentReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{"squirrel-girl"},
+		Body:         r.RequestBody,
+		DataStatuses: []int{200, 201},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "POST",
+		OperationID:      "reactions/create-for-pull-request-review-comment",
+		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		RequiredPreviews: []string{"squirrel-girl"},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/pulls/comments/%v/reactions", r.Owner, r.Repo, r.CommentId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 201},
+	}
+	return builder
 }
 
 /*
@@ -589,7 +547,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ReactionsCreateForPullRequestReviewCommentReq) Rel(link RelName, resp *ReactionsCreateForPullRequestReviewCommentResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -617,7 +575,7 @@ ReactionsCreateForPullRequestReviewCommentResponse is a response for ReactionsCr
 https://developer.github.com/v3/reactions/#create-reaction-for-a-pull-request-review-comment
 */
 type ReactionsCreateForPullRequestReviewCommentResponse struct {
-	response
+	internal.Response
 	request *ReactionsCreateForPullRequestReviewCommentReq
 	Data    components.Reaction
 }
@@ -631,20 +589,26 @@ Create reaction for a team discussion comment.
 
 https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-comment
 */
-func ReactionsCreateForTeamDiscussionCommentInOrg(ctx context.Context, req *ReactionsCreateForTeamDiscussionCommentInOrgReq, opt ...RequestOption) (*ReactionsCreateForTeamDiscussionCommentInOrgResponse, error) {
+func ReactionsCreateForTeamDiscussionCommentInOrg(ctx context.Context, req *ReactionsCreateForTeamDiscussionCommentInOrgReq, opt ...options.Option) (*ReactionsCreateForTeamDiscussionCommentInOrgResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ReactionsCreateForTeamDiscussionCommentInOrgReq)
 	}
 	resp := &ReactionsCreateForTeamDiscussionCommentInOrgResponse{request: req}
-	r, err := doRequest(ctx, req, "reactions/create-for-team-discussion-comment-in-org", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.Reaction{}
-	err = r.decodeBody(&resp.Data, "reactions/create-for-team-discussion-comment-in-org")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -660,7 +624,7 @@ Create reaction for a team discussion comment.
 
 https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-comment
 */
-func (c Client) ReactionsCreateForTeamDiscussionCommentInOrg(ctx context.Context, req *ReactionsCreateForTeamDiscussionCommentInOrgReq, opt ...RequestOption) (*ReactionsCreateForTeamDiscussionCommentInOrgResponse, error) {
+func (c Client) ReactionsCreateForTeamDiscussionCommentInOrg(ctx context.Context, req *ReactionsCreateForTeamDiscussionCommentInOrgReq, opt ...options.Option) (*ReactionsCreateForTeamDiscussionCommentInOrgResponse, error) {
 	return ReactionsCreateForTeamDiscussionCommentInOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -691,53 +655,36 @@ type ReactionsCreateForTeamDiscussionCommentInOrgReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *ReactionsCreateForTeamDiscussionCommentInOrgReq) url() string {
-	return r._url
-}
-
-func (r *ReactionsCreateForTeamDiscussionCommentInOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/comments/%v/reactions", r.Org, r.TeamSlug, r.DiscussionNumber, r.CommentNumber)
-}
-
-func (r *ReactionsCreateForTeamDiscussionCommentInOrgReq) method() string {
-	return "POST"
-}
-
-func (r *ReactionsCreateForTeamDiscussionCommentInOrgReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ReactionsCreateForTeamDiscussionCommentInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	if requiredPreviews {
-		previewVals["squirrel-girl"] = true
-	}
-	if allPreviews {
-		previewVals["squirrel-girl"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReactionsCreateForTeamDiscussionCommentInOrgReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *ReactionsCreateForTeamDiscussionCommentInOrgReq) dataStatuses() []int {
-	return []int{201}
-}
-
-func (r *ReactionsCreateForTeamDiscussionCommentInOrgReq) validStatuses() []int {
-	return []int{201}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ReactionsCreateForTeamDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "reactions/create-for-team-discussion-comment-in-org", opt)
+func (r *ReactionsCreateForTeamDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ReactionsCreateForTeamDiscussionCommentInOrgReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{"squirrel-girl"},
+		Body:         r.RequestBody,
+		DataStatuses: []int{201},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "POST",
+		OperationID:      "reactions/create-for-team-discussion-comment-in-org",
+		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		RequiredPreviews: []string{"squirrel-girl"},
+		URLPath:          fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/comments/%v/reactions", r.Org, r.TeamSlug, r.DiscussionNumber, r.CommentNumber),
+		URLQuery:         query,
+		ValidStatuses:    []int{201},
+	}
+	return builder
 }
 
 /*
@@ -745,7 +692,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ReactionsCreateForTeamDiscussionCommentInOrgReq) Rel(link RelName, resp *ReactionsCreateForTeamDiscussionCommentInOrgResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -770,7 +717,7 @@ ReactionsCreateForTeamDiscussionCommentInOrgResponse is a response for Reactions
 https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-comment
 */
 type ReactionsCreateForTeamDiscussionCommentInOrgResponse struct {
-	response
+	internal.Response
 	request *ReactionsCreateForTeamDiscussionCommentInOrgReq
 	Data    components.Reaction
 }
@@ -784,20 +731,26 @@ Create reaction for a team discussion comment (Legacy).
 
 https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-comment-legacy
 */
-func ReactionsCreateForTeamDiscussionCommentLegacy(ctx context.Context, req *ReactionsCreateForTeamDiscussionCommentLegacyReq, opt ...RequestOption) (*ReactionsCreateForTeamDiscussionCommentLegacyResponse, error) {
+func ReactionsCreateForTeamDiscussionCommentLegacy(ctx context.Context, req *ReactionsCreateForTeamDiscussionCommentLegacyReq, opt ...options.Option) (*ReactionsCreateForTeamDiscussionCommentLegacyResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ReactionsCreateForTeamDiscussionCommentLegacyReq)
 	}
 	resp := &ReactionsCreateForTeamDiscussionCommentLegacyResponse{request: req}
-	r, err := doRequest(ctx, req, "reactions/create-for-team-discussion-comment-legacy", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.Reaction{}
-	err = r.decodeBody(&resp.Data, "reactions/create-for-team-discussion-comment-legacy")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -813,7 +766,7 @@ Create reaction for a team discussion comment (Legacy).
 
 https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-comment-legacy
 */
-func (c Client) ReactionsCreateForTeamDiscussionCommentLegacy(ctx context.Context, req *ReactionsCreateForTeamDiscussionCommentLegacyReq, opt ...RequestOption) (*ReactionsCreateForTeamDiscussionCommentLegacyResponse, error) {
+func (c Client) ReactionsCreateForTeamDiscussionCommentLegacy(ctx context.Context, req *ReactionsCreateForTeamDiscussionCommentLegacyReq, opt ...options.Option) (*ReactionsCreateForTeamDiscussionCommentLegacyResponse, error) {
 	return ReactionsCreateForTeamDiscussionCommentLegacy(ctx, req, append(c, opt...)...)
 }
 
@@ -841,53 +794,36 @@ type ReactionsCreateForTeamDiscussionCommentLegacyReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *ReactionsCreateForTeamDiscussionCommentLegacyReq) url() string {
-	return r._url
-}
-
-func (r *ReactionsCreateForTeamDiscussionCommentLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/discussions/%v/comments/%v/reactions", r.TeamId, r.DiscussionNumber, r.CommentNumber)
-}
-
-func (r *ReactionsCreateForTeamDiscussionCommentLegacyReq) method() string {
-	return "POST"
-}
-
-func (r *ReactionsCreateForTeamDiscussionCommentLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ReactionsCreateForTeamDiscussionCommentLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	if requiredPreviews {
-		previewVals["squirrel-girl"] = true
-	}
-	if allPreviews {
-		previewVals["squirrel-girl"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReactionsCreateForTeamDiscussionCommentLegacyReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *ReactionsCreateForTeamDiscussionCommentLegacyReq) dataStatuses() []int {
-	return []int{201}
-}
-
-func (r *ReactionsCreateForTeamDiscussionCommentLegacyReq) validStatuses() []int {
-	return []int{201}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ReactionsCreateForTeamDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "reactions/create-for-team-discussion-comment-legacy", opt)
+func (r *ReactionsCreateForTeamDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ReactionsCreateForTeamDiscussionCommentLegacyReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{"squirrel-girl"},
+		Body:         r.RequestBody,
+		DataStatuses: []int{201},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "POST",
+		OperationID:      "reactions/create-for-team-discussion-comment-legacy",
+		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		RequiredPreviews: []string{"squirrel-girl"},
+		URLPath:          fmt.Sprintf("/teams/%v/discussions/%v/comments/%v/reactions", r.TeamId, r.DiscussionNumber, r.CommentNumber),
+		URLQuery:         query,
+		ValidStatuses:    []int{201},
+	}
+	return builder
 }
 
 /*
@@ -895,7 +831,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ReactionsCreateForTeamDiscussionCommentLegacyReq) Rel(link RelName, resp *ReactionsCreateForTeamDiscussionCommentLegacyResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -920,7 +856,7 @@ ReactionsCreateForTeamDiscussionCommentLegacyResponse is a response for Reaction
 https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-comment-legacy
 */
 type ReactionsCreateForTeamDiscussionCommentLegacyResponse struct {
-	response
+	internal.Response
 	request *ReactionsCreateForTeamDiscussionCommentLegacyReq
 	Data    components.Reaction
 }
@@ -934,20 +870,26 @@ Create reaction for a team discussion.
 
 https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion
 */
-func ReactionsCreateForTeamDiscussionInOrg(ctx context.Context, req *ReactionsCreateForTeamDiscussionInOrgReq, opt ...RequestOption) (*ReactionsCreateForTeamDiscussionInOrgResponse, error) {
+func ReactionsCreateForTeamDiscussionInOrg(ctx context.Context, req *ReactionsCreateForTeamDiscussionInOrgReq, opt ...options.Option) (*ReactionsCreateForTeamDiscussionInOrgResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ReactionsCreateForTeamDiscussionInOrgReq)
 	}
 	resp := &ReactionsCreateForTeamDiscussionInOrgResponse{request: req}
-	r, err := doRequest(ctx, req, "reactions/create-for-team-discussion-in-org", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.Reaction{}
-	err = r.decodeBody(&resp.Data, "reactions/create-for-team-discussion-in-org")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -963,7 +905,7 @@ Create reaction for a team discussion.
 
 https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion
 */
-func (c Client) ReactionsCreateForTeamDiscussionInOrg(ctx context.Context, req *ReactionsCreateForTeamDiscussionInOrgReq, opt ...RequestOption) (*ReactionsCreateForTeamDiscussionInOrgResponse, error) {
+func (c Client) ReactionsCreateForTeamDiscussionInOrg(ctx context.Context, req *ReactionsCreateForTeamDiscussionInOrgReq, opt ...options.Option) (*ReactionsCreateForTeamDiscussionInOrgResponse, error) {
 	return ReactionsCreateForTeamDiscussionInOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -993,53 +935,36 @@ type ReactionsCreateForTeamDiscussionInOrgReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *ReactionsCreateForTeamDiscussionInOrgReq) url() string {
-	return r._url
-}
-
-func (r *ReactionsCreateForTeamDiscussionInOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/reactions", r.Org, r.TeamSlug, r.DiscussionNumber)
-}
-
-func (r *ReactionsCreateForTeamDiscussionInOrgReq) method() string {
-	return "POST"
-}
-
-func (r *ReactionsCreateForTeamDiscussionInOrgReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ReactionsCreateForTeamDiscussionInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	if requiredPreviews {
-		previewVals["squirrel-girl"] = true
-	}
-	if allPreviews {
-		previewVals["squirrel-girl"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReactionsCreateForTeamDiscussionInOrgReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *ReactionsCreateForTeamDiscussionInOrgReq) dataStatuses() []int {
-	return []int{201}
-}
-
-func (r *ReactionsCreateForTeamDiscussionInOrgReq) validStatuses() []int {
-	return []int{201}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ReactionsCreateForTeamDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "reactions/create-for-team-discussion-in-org", opt)
+func (r *ReactionsCreateForTeamDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ReactionsCreateForTeamDiscussionInOrgReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{"squirrel-girl"},
+		Body:         r.RequestBody,
+		DataStatuses: []int{201},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "POST",
+		OperationID:      "reactions/create-for-team-discussion-in-org",
+		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		RequiredPreviews: []string{"squirrel-girl"},
+		URLPath:          fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/reactions", r.Org, r.TeamSlug, r.DiscussionNumber),
+		URLQuery:         query,
+		ValidStatuses:    []int{201},
+	}
+	return builder
 }
 
 /*
@@ -1047,7 +972,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ReactionsCreateForTeamDiscussionInOrgReq) Rel(link RelName, resp *ReactionsCreateForTeamDiscussionInOrgResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1072,7 +997,7 @@ ReactionsCreateForTeamDiscussionInOrgResponse is a response for ReactionsCreateF
 https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion
 */
 type ReactionsCreateForTeamDiscussionInOrgResponse struct {
-	response
+	internal.Response
 	request *ReactionsCreateForTeamDiscussionInOrgReq
 	Data    components.Reaction
 }
@@ -1086,20 +1011,26 @@ Create reaction for a team discussion (Legacy).
 
 https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-legacy
 */
-func ReactionsCreateForTeamDiscussionLegacy(ctx context.Context, req *ReactionsCreateForTeamDiscussionLegacyReq, opt ...RequestOption) (*ReactionsCreateForTeamDiscussionLegacyResponse, error) {
+func ReactionsCreateForTeamDiscussionLegacy(ctx context.Context, req *ReactionsCreateForTeamDiscussionLegacyReq, opt ...options.Option) (*ReactionsCreateForTeamDiscussionLegacyResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ReactionsCreateForTeamDiscussionLegacyReq)
 	}
 	resp := &ReactionsCreateForTeamDiscussionLegacyResponse{request: req}
-	r, err := doRequest(ctx, req, "reactions/create-for-team-discussion-legacy", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.Reaction{}
-	err = r.decodeBody(&resp.Data, "reactions/create-for-team-discussion-legacy")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1115,7 +1046,7 @@ Create reaction for a team discussion (Legacy).
 
 https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-legacy
 */
-func (c Client) ReactionsCreateForTeamDiscussionLegacy(ctx context.Context, req *ReactionsCreateForTeamDiscussionLegacyReq, opt ...RequestOption) (*ReactionsCreateForTeamDiscussionLegacyResponse, error) {
+func (c Client) ReactionsCreateForTeamDiscussionLegacy(ctx context.Context, req *ReactionsCreateForTeamDiscussionLegacyReq, opt ...options.Option) (*ReactionsCreateForTeamDiscussionLegacyResponse, error) {
 	return ReactionsCreateForTeamDiscussionLegacy(ctx, req, append(c, opt...)...)
 }
 
@@ -1142,53 +1073,36 @@ type ReactionsCreateForTeamDiscussionLegacyReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *ReactionsCreateForTeamDiscussionLegacyReq) url() string {
-	return r._url
-}
-
-func (r *ReactionsCreateForTeamDiscussionLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/discussions/%v/reactions", r.TeamId, r.DiscussionNumber)
-}
-
-func (r *ReactionsCreateForTeamDiscussionLegacyReq) method() string {
-	return "POST"
-}
-
-func (r *ReactionsCreateForTeamDiscussionLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ReactionsCreateForTeamDiscussionLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	if requiredPreviews {
-		previewVals["squirrel-girl"] = true
-	}
-	if allPreviews {
-		previewVals["squirrel-girl"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReactionsCreateForTeamDiscussionLegacyReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *ReactionsCreateForTeamDiscussionLegacyReq) dataStatuses() []int {
-	return []int{201}
-}
-
-func (r *ReactionsCreateForTeamDiscussionLegacyReq) validStatuses() []int {
-	return []int{201}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ReactionsCreateForTeamDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "reactions/create-for-team-discussion-legacy", opt)
+func (r *ReactionsCreateForTeamDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ReactionsCreateForTeamDiscussionLegacyReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{"squirrel-girl"},
+		Body:         r.RequestBody,
+		DataStatuses: []int{201},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "POST",
+		OperationID:      "reactions/create-for-team-discussion-legacy",
+		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		RequiredPreviews: []string{"squirrel-girl"},
+		URLPath:          fmt.Sprintf("/teams/%v/discussions/%v/reactions", r.TeamId, r.DiscussionNumber),
+		URLQuery:         query,
+		ValidStatuses:    []int{201},
+	}
+	return builder
 }
 
 /*
@@ -1196,7 +1110,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ReactionsCreateForTeamDiscussionLegacyReq) Rel(link RelName, resp *ReactionsCreateForTeamDiscussionLegacyResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1221,7 +1135,7 @@ ReactionsCreateForTeamDiscussionLegacyResponse is a response for ReactionsCreate
 https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-legacy
 */
 type ReactionsCreateForTeamDiscussionLegacyResponse struct {
-	response
+	internal.Response
 	request *ReactionsCreateForTeamDiscussionLegacyReq
 	Data    components.Reaction
 }
@@ -1235,19 +1149,25 @@ Delete a commit comment reaction.
 
 https://developer.github.com/v3/reactions/#delete-a-commit-comment-reaction
 */
-func ReactionsDeleteForCommitComment(ctx context.Context, req *ReactionsDeleteForCommitCommentReq, opt ...RequestOption) (*ReactionsDeleteForCommitCommentResponse, error) {
+func ReactionsDeleteForCommitComment(ctx context.Context, req *ReactionsDeleteForCommitCommentReq, opt ...options.Option) (*ReactionsDeleteForCommitCommentResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ReactionsDeleteForCommitCommentReq)
 	}
 	resp := &ReactionsDeleteForCommitCommentResponse{request: req}
-	r, err := doRequest(ctx, req, "reactions/delete-for-commit-comment", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "reactions/delete-for-commit-comment")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -1263,7 +1183,7 @@ Delete a commit comment reaction.
 
 https://developer.github.com/v3/reactions/#delete-a-commit-comment-reaction
 */
-func (c Client) ReactionsDeleteForCommitComment(ctx context.Context, req *ReactionsDeleteForCommitCommentReq, opt ...RequestOption) (*ReactionsDeleteForCommitCommentResponse, error) {
+func (c Client) ReactionsDeleteForCommitComment(ctx context.Context, req *ReactionsDeleteForCommitCommentReq, opt ...options.Option) (*ReactionsDeleteForCommitCommentResponse, error) {
 	return ReactionsDeleteForCommitComment(ctx, req, append(c, opt...)...)
 }
 
@@ -1293,50 +1213,33 @@ type ReactionsDeleteForCommitCommentReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *ReactionsDeleteForCommitCommentReq) url() string {
-	return r._url
-}
-
-func (r *ReactionsDeleteForCommitCommentReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/comments/%v/reactions/%v", r.Owner, r.Repo, r.CommentId, r.ReactionId)
-}
-
-func (r *ReactionsDeleteForCommitCommentReq) method() string {
-	return "DELETE"
-}
-
-func (r *ReactionsDeleteForCommitCommentReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ReactionsDeleteForCommitCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	if requiredPreviews {
-		previewVals["squirrel-girl"] = true
-	}
-	if allPreviews {
-		previewVals["squirrel-girl"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReactionsDeleteForCommitCommentReq) body() interface{} {
-	return nil
-}
-
-func (r *ReactionsDeleteForCommitCommentReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *ReactionsDeleteForCommitCommentReq) validStatuses() []int {
-	return []int{204}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ReactionsDeleteForCommitCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "reactions/delete-for-commit-comment", opt)
+func (r *ReactionsDeleteForCommitCommentReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ReactionsDeleteForCommitCommentReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"squirrel-girl"},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		OperationID:      "reactions/delete-for-commit-comment",
+		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		RequiredPreviews: []string{"squirrel-girl"},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/comments/%v/reactions/%v", r.Owner, r.Repo, r.CommentId, r.ReactionId),
+		URLQuery:         query,
+		ValidStatuses:    []int{204},
+	}
+	return builder
 }
 
 /*
@@ -1344,7 +1247,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ReactionsDeleteForCommitCommentReq) Rel(link RelName, resp *ReactionsDeleteForCommitCommentResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1358,7 +1261,7 @@ ReactionsDeleteForCommitCommentResponse is a response for ReactionsDeleteForComm
 https://developer.github.com/v3/reactions/#delete-a-commit-comment-reaction
 */
 type ReactionsDeleteForCommitCommentResponse struct {
-	response
+	internal.Response
 	request *ReactionsDeleteForCommitCommentReq
 }
 
@@ -1371,19 +1274,25 @@ Delete an issue reaction.
 
 https://developer.github.com/v3/reactions/#delete-an-issue-reaction
 */
-func ReactionsDeleteForIssue(ctx context.Context, req *ReactionsDeleteForIssueReq, opt ...RequestOption) (*ReactionsDeleteForIssueResponse, error) {
+func ReactionsDeleteForIssue(ctx context.Context, req *ReactionsDeleteForIssueReq, opt ...options.Option) (*ReactionsDeleteForIssueResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ReactionsDeleteForIssueReq)
 	}
 	resp := &ReactionsDeleteForIssueResponse{request: req}
-	r, err := doRequest(ctx, req, "reactions/delete-for-issue", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "reactions/delete-for-issue")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -1399,7 +1308,7 @@ Delete an issue reaction.
 
 https://developer.github.com/v3/reactions/#delete-an-issue-reaction
 */
-func (c Client) ReactionsDeleteForIssue(ctx context.Context, req *ReactionsDeleteForIssueReq, opt ...RequestOption) (*ReactionsDeleteForIssueResponse, error) {
+func (c Client) ReactionsDeleteForIssue(ctx context.Context, req *ReactionsDeleteForIssueReq, opt ...options.Option) (*ReactionsDeleteForIssueResponse, error) {
 	return ReactionsDeleteForIssue(ctx, req, append(c, opt...)...)
 }
 
@@ -1429,50 +1338,33 @@ type ReactionsDeleteForIssueReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *ReactionsDeleteForIssueReq) url() string {
-	return r._url
-}
-
-func (r *ReactionsDeleteForIssueReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/issues/%v/reactions/%v", r.Owner, r.Repo, r.IssueNumber, r.ReactionId)
-}
-
-func (r *ReactionsDeleteForIssueReq) method() string {
-	return "DELETE"
-}
-
-func (r *ReactionsDeleteForIssueReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ReactionsDeleteForIssueReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	if requiredPreviews {
-		previewVals["squirrel-girl"] = true
-	}
-	if allPreviews {
-		previewVals["squirrel-girl"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReactionsDeleteForIssueReq) body() interface{} {
-	return nil
-}
-
-func (r *ReactionsDeleteForIssueReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *ReactionsDeleteForIssueReq) validStatuses() []int {
-	return []int{204}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ReactionsDeleteForIssueReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "reactions/delete-for-issue", opt)
+func (r *ReactionsDeleteForIssueReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ReactionsDeleteForIssueReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"squirrel-girl"},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		OperationID:      "reactions/delete-for-issue",
+		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		RequiredPreviews: []string{"squirrel-girl"},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/%v/reactions/%v", r.Owner, r.Repo, r.IssueNumber, r.ReactionId),
+		URLQuery:         query,
+		ValidStatuses:    []int{204},
+	}
+	return builder
 }
 
 /*
@@ -1480,7 +1372,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ReactionsDeleteForIssueReq) Rel(link RelName, resp *ReactionsDeleteForIssueResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1494,7 +1386,7 @@ ReactionsDeleteForIssueResponse is a response for ReactionsDeleteForIssue
 https://developer.github.com/v3/reactions/#delete-an-issue-reaction
 */
 type ReactionsDeleteForIssueResponse struct {
-	response
+	internal.Response
 	request *ReactionsDeleteForIssueReq
 }
 
@@ -1507,19 +1399,25 @@ Delete an issue comment reaction.
 
 https://developer.github.com/v3/reactions/#delete-an-issue-comment-reaction
 */
-func ReactionsDeleteForIssueComment(ctx context.Context, req *ReactionsDeleteForIssueCommentReq, opt ...RequestOption) (*ReactionsDeleteForIssueCommentResponse, error) {
+func ReactionsDeleteForIssueComment(ctx context.Context, req *ReactionsDeleteForIssueCommentReq, opt ...options.Option) (*ReactionsDeleteForIssueCommentResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ReactionsDeleteForIssueCommentReq)
 	}
 	resp := &ReactionsDeleteForIssueCommentResponse{request: req}
-	r, err := doRequest(ctx, req, "reactions/delete-for-issue-comment", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "reactions/delete-for-issue-comment")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -1535,7 +1433,7 @@ Delete an issue comment reaction.
 
 https://developer.github.com/v3/reactions/#delete-an-issue-comment-reaction
 */
-func (c Client) ReactionsDeleteForIssueComment(ctx context.Context, req *ReactionsDeleteForIssueCommentReq, opt ...RequestOption) (*ReactionsDeleteForIssueCommentResponse, error) {
+func (c Client) ReactionsDeleteForIssueComment(ctx context.Context, req *ReactionsDeleteForIssueCommentReq, opt ...options.Option) (*ReactionsDeleteForIssueCommentResponse, error) {
 	return ReactionsDeleteForIssueComment(ctx, req, append(c, opt...)...)
 }
 
@@ -1565,50 +1463,33 @@ type ReactionsDeleteForIssueCommentReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *ReactionsDeleteForIssueCommentReq) url() string {
-	return r._url
-}
-
-func (r *ReactionsDeleteForIssueCommentReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/issues/comments/%v/reactions/%v", r.Owner, r.Repo, r.CommentId, r.ReactionId)
-}
-
-func (r *ReactionsDeleteForIssueCommentReq) method() string {
-	return "DELETE"
-}
-
-func (r *ReactionsDeleteForIssueCommentReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ReactionsDeleteForIssueCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	if requiredPreviews {
-		previewVals["squirrel-girl"] = true
-	}
-	if allPreviews {
-		previewVals["squirrel-girl"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReactionsDeleteForIssueCommentReq) body() interface{} {
-	return nil
-}
-
-func (r *ReactionsDeleteForIssueCommentReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *ReactionsDeleteForIssueCommentReq) validStatuses() []int {
-	return []int{204}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ReactionsDeleteForIssueCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "reactions/delete-for-issue-comment", opt)
+func (r *ReactionsDeleteForIssueCommentReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ReactionsDeleteForIssueCommentReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"squirrel-girl"},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		OperationID:      "reactions/delete-for-issue-comment",
+		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		RequiredPreviews: []string{"squirrel-girl"},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/comments/%v/reactions/%v", r.Owner, r.Repo, r.CommentId, r.ReactionId),
+		URLQuery:         query,
+		ValidStatuses:    []int{204},
+	}
+	return builder
 }
 
 /*
@@ -1616,7 +1497,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ReactionsDeleteForIssueCommentReq) Rel(link RelName, resp *ReactionsDeleteForIssueCommentResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1630,7 +1511,7 @@ ReactionsDeleteForIssueCommentResponse is a response for ReactionsDeleteForIssue
 https://developer.github.com/v3/reactions/#delete-an-issue-comment-reaction
 */
 type ReactionsDeleteForIssueCommentResponse struct {
-	response
+	internal.Response
 	request *ReactionsDeleteForIssueCommentReq
 }
 
@@ -1643,19 +1524,25 @@ Delete a pull request comment reaction.
 
 https://developer.github.com/v3/reactions/#delete-a-pull-request-comment-reaction
 */
-func ReactionsDeleteForPullRequestComment(ctx context.Context, req *ReactionsDeleteForPullRequestCommentReq, opt ...RequestOption) (*ReactionsDeleteForPullRequestCommentResponse, error) {
+func ReactionsDeleteForPullRequestComment(ctx context.Context, req *ReactionsDeleteForPullRequestCommentReq, opt ...options.Option) (*ReactionsDeleteForPullRequestCommentResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ReactionsDeleteForPullRequestCommentReq)
 	}
 	resp := &ReactionsDeleteForPullRequestCommentResponse{request: req}
-	r, err := doRequest(ctx, req, "reactions/delete-for-pull-request-comment", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "reactions/delete-for-pull-request-comment")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -1671,7 +1558,7 @@ Delete a pull request comment reaction.
 
 https://developer.github.com/v3/reactions/#delete-a-pull-request-comment-reaction
 */
-func (c Client) ReactionsDeleteForPullRequestComment(ctx context.Context, req *ReactionsDeleteForPullRequestCommentReq, opt ...RequestOption) (*ReactionsDeleteForPullRequestCommentResponse, error) {
+func (c Client) ReactionsDeleteForPullRequestComment(ctx context.Context, req *ReactionsDeleteForPullRequestCommentReq, opt ...options.Option) (*ReactionsDeleteForPullRequestCommentResponse, error) {
 	return ReactionsDeleteForPullRequestComment(ctx, req, append(c, opt...)...)
 }
 
@@ -1701,50 +1588,33 @@ type ReactionsDeleteForPullRequestCommentReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *ReactionsDeleteForPullRequestCommentReq) url() string {
-	return r._url
-}
-
-func (r *ReactionsDeleteForPullRequestCommentReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/pulls/comments/%v/reactions/%v", r.Owner, r.Repo, r.CommentId, r.ReactionId)
-}
-
-func (r *ReactionsDeleteForPullRequestCommentReq) method() string {
-	return "DELETE"
-}
-
-func (r *ReactionsDeleteForPullRequestCommentReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ReactionsDeleteForPullRequestCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	if requiredPreviews {
-		previewVals["squirrel-girl"] = true
-	}
-	if allPreviews {
-		previewVals["squirrel-girl"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReactionsDeleteForPullRequestCommentReq) body() interface{} {
-	return nil
-}
-
-func (r *ReactionsDeleteForPullRequestCommentReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *ReactionsDeleteForPullRequestCommentReq) validStatuses() []int {
-	return []int{204}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ReactionsDeleteForPullRequestCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "reactions/delete-for-pull-request-comment", opt)
+func (r *ReactionsDeleteForPullRequestCommentReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ReactionsDeleteForPullRequestCommentReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"squirrel-girl"},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		OperationID:      "reactions/delete-for-pull-request-comment",
+		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		RequiredPreviews: []string{"squirrel-girl"},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/pulls/comments/%v/reactions/%v", r.Owner, r.Repo, r.CommentId, r.ReactionId),
+		URLQuery:         query,
+		ValidStatuses:    []int{204},
+	}
+	return builder
 }
 
 /*
@@ -1752,7 +1622,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ReactionsDeleteForPullRequestCommentReq) Rel(link RelName, resp *ReactionsDeleteForPullRequestCommentResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1766,7 +1636,7 @@ ReactionsDeleteForPullRequestCommentResponse is a response for ReactionsDeleteFo
 https://developer.github.com/v3/reactions/#delete-a-pull-request-comment-reaction
 */
 type ReactionsDeleteForPullRequestCommentResponse struct {
-	response
+	internal.Response
 	request *ReactionsDeleteForPullRequestCommentReq
 }
 
@@ -1779,19 +1649,25 @@ Delete team discussion reaction.
 
 https://developer.github.com/v3/reactions/#delete-team-discussion-reaction
 */
-func ReactionsDeleteForTeamDiscussion(ctx context.Context, req *ReactionsDeleteForTeamDiscussionReq, opt ...RequestOption) (*ReactionsDeleteForTeamDiscussionResponse, error) {
+func ReactionsDeleteForTeamDiscussion(ctx context.Context, req *ReactionsDeleteForTeamDiscussionReq, opt ...options.Option) (*ReactionsDeleteForTeamDiscussionResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ReactionsDeleteForTeamDiscussionReq)
 	}
 	resp := &ReactionsDeleteForTeamDiscussionResponse{request: req}
-	r, err := doRequest(ctx, req, "reactions/delete-for-team-discussion", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "reactions/delete-for-team-discussion")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -1807,7 +1683,7 @@ Delete team discussion reaction.
 
 https://developer.github.com/v3/reactions/#delete-team-discussion-reaction
 */
-func (c Client) ReactionsDeleteForTeamDiscussion(ctx context.Context, req *ReactionsDeleteForTeamDiscussionReq, opt ...RequestOption) (*ReactionsDeleteForTeamDiscussionResponse, error) {
+func (c Client) ReactionsDeleteForTeamDiscussion(ctx context.Context, req *ReactionsDeleteForTeamDiscussionReq, opt ...options.Option) (*ReactionsDeleteForTeamDiscussionResponse, error) {
 	return ReactionsDeleteForTeamDiscussion(ctx, req, append(c, opt...)...)
 }
 
@@ -1837,50 +1713,33 @@ type ReactionsDeleteForTeamDiscussionReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *ReactionsDeleteForTeamDiscussionReq) url() string {
-	return r._url
-}
-
-func (r *ReactionsDeleteForTeamDiscussionReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/reactions/%v", r.Org, r.TeamSlug, r.DiscussionNumber, r.ReactionId)
-}
-
-func (r *ReactionsDeleteForTeamDiscussionReq) method() string {
-	return "DELETE"
-}
-
-func (r *ReactionsDeleteForTeamDiscussionReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ReactionsDeleteForTeamDiscussionReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	if requiredPreviews {
-		previewVals["squirrel-girl"] = true
-	}
-	if allPreviews {
-		previewVals["squirrel-girl"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReactionsDeleteForTeamDiscussionReq) body() interface{} {
-	return nil
-}
-
-func (r *ReactionsDeleteForTeamDiscussionReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *ReactionsDeleteForTeamDiscussionReq) validStatuses() []int {
-	return []int{204}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ReactionsDeleteForTeamDiscussionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "reactions/delete-for-team-discussion", opt)
+func (r *ReactionsDeleteForTeamDiscussionReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ReactionsDeleteForTeamDiscussionReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"squirrel-girl"},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		OperationID:      "reactions/delete-for-team-discussion",
+		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		RequiredPreviews: []string{"squirrel-girl"},
+		URLPath:          fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/reactions/%v", r.Org, r.TeamSlug, r.DiscussionNumber, r.ReactionId),
+		URLQuery:         query,
+		ValidStatuses:    []int{204},
+	}
+	return builder
 }
 
 /*
@@ -1888,7 +1747,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ReactionsDeleteForTeamDiscussionReq) Rel(link RelName, resp *ReactionsDeleteForTeamDiscussionResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1902,7 +1761,7 @@ ReactionsDeleteForTeamDiscussionResponse is a response for ReactionsDeleteForTea
 https://developer.github.com/v3/reactions/#delete-team-discussion-reaction
 */
 type ReactionsDeleteForTeamDiscussionResponse struct {
-	response
+	internal.Response
 	request *ReactionsDeleteForTeamDiscussionReq
 }
 
@@ -1915,19 +1774,25 @@ Delete team discussion comment reaction.
 
 https://developer.github.com/v3/reactions/#delete-team-discussion-comment-reaction
 */
-func ReactionsDeleteForTeamDiscussionComment(ctx context.Context, req *ReactionsDeleteForTeamDiscussionCommentReq, opt ...RequestOption) (*ReactionsDeleteForTeamDiscussionCommentResponse, error) {
+func ReactionsDeleteForTeamDiscussionComment(ctx context.Context, req *ReactionsDeleteForTeamDiscussionCommentReq, opt ...options.Option) (*ReactionsDeleteForTeamDiscussionCommentResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ReactionsDeleteForTeamDiscussionCommentReq)
 	}
 	resp := &ReactionsDeleteForTeamDiscussionCommentResponse{request: req}
-	r, err := doRequest(ctx, req, "reactions/delete-for-team-discussion-comment", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "reactions/delete-for-team-discussion-comment")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -1943,7 +1808,7 @@ Delete team discussion comment reaction.
 
 https://developer.github.com/v3/reactions/#delete-team-discussion-comment-reaction
 */
-func (c Client) ReactionsDeleteForTeamDiscussionComment(ctx context.Context, req *ReactionsDeleteForTeamDiscussionCommentReq, opt ...RequestOption) (*ReactionsDeleteForTeamDiscussionCommentResponse, error) {
+func (c Client) ReactionsDeleteForTeamDiscussionComment(ctx context.Context, req *ReactionsDeleteForTeamDiscussionCommentReq, opt ...options.Option) (*ReactionsDeleteForTeamDiscussionCommentResponse, error) {
 	return ReactionsDeleteForTeamDiscussionComment(ctx, req, append(c, opt...)...)
 }
 
@@ -1974,50 +1839,33 @@ type ReactionsDeleteForTeamDiscussionCommentReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *ReactionsDeleteForTeamDiscussionCommentReq) url() string {
-	return r._url
-}
-
-func (r *ReactionsDeleteForTeamDiscussionCommentReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/comments/%v/reactions/%v", r.Org, r.TeamSlug, r.DiscussionNumber, r.CommentNumber, r.ReactionId)
-}
-
-func (r *ReactionsDeleteForTeamDiscussionCommentReq) method() string {
-	return "DELETE"
-}
-
-func (r *ReactionsDeleteForTeamDiscussionCommentReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ReactionsDeleteForTeamDiscussionCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	if requiredPreviews {
-		previewVals["squirrel-girl"] = true
-	}
-	if allPreviews {
-		previewVals["squirrel-girl"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReactionsDeleteForTeamDiscussionCommentReq) body() interface{} {
-	return nil
-}
-
-func (r *ReactionsDeleteForTeamDiscussionCommentReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *ReactionsDeleteForTeamDiscussionCommentReq) validStatuses() []int {
-	return []int{204}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ReactionsDeleteForTeamDiscussionCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "reactions/delete-for-team-discussion-comment", opt)
+func (r *ReactionsDeleteForTeamDiscussionCommentReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ReactionsDeleteForTeamDiscussionCommentReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"squirrel-girl"},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		OperationID:      "reactions/delete-for-team-discussion-comment",
+		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		RequiredPreviews: []string{"squirrel-girl"},
+		URLPath:          fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/comments/%v/reactions/%v", r.Org, r.TeamSlug, r.DiscussionNumber, r.CommentNumber, r.ReactionId),
+		URLQuery:         query,
+		ValidStatuses:    []int{204},
+	}
+	return builder
 }
 
 /*
@@ -2025,7 +1873,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ReactionsDeleteForTeamDiscussionCommentReq) Rel(link RelName, resp *ReactionsDeleteForTeamDiscussionCommentResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -2039,7 +1887,7 @@ ReactionsDeleteForTeamDiscussionCommentResponse is a response for ReactionsDelet
 https://developer.github.com/v3/reactions/#delete-team-discussion-comment-reaction
 */
 type ReactionsDeleteForTeamDiscussionCommentResponse struct {
-	response
+	internal.Response
 	request *ReactionsDeleteForTeamDiscussionCommentReq
 }
 
@@ -2052,19 +1900,25 @@ Delete a reaction (Legacy).
 
 https://developer.github.com/v3/reactions/#delete-a-reaction-legacy
 */
-func ReactionsDeleteLegacy(ctx context.Context, req *ReactionsDeleteLegacyReq, opt ...RequestOption) (*ReactionsDeleteLegacyResponse, error) {
+func ReactionsDeleteLegacy(ctx context.Context, req *ReactionsDeleteLegacyReq, opt ...options.Option) (*ReactionsDeleteLegacyResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ReactionsDeleteLegacyReq)
 	}
 	resp := &ReactionsDeleteLegacyResponse{request: req}
-	r, err := doRequest(ctx, req, "reactions/delete-legacy", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "reactions/delete-legacy")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -2080,7 +1934,7 @@ Delete a reaction (Legacy).
 
 https://developer.github.com/v3/reactions/#delete-a-reaction-legacy
 */
-func (c Client) ReactionsDeleteLegacy(ctx context.Context, req *ReactionsDeleteLegacyReq, opt ...RequestOption) (*ReactionsDeleteLegacyResponse, error) {
+func (c Client) ReactionsDeleteLegacy(ctx context.Context, req *ReactionsDeleteLegacyReq, opt ...options.Option) (*ReactionsDeleteLegacyResponse, error) {
 	return ReactionsDeleteLegacy(ctx, req, append(c, opt...)...)
 }
 
@@ -2105,50 +1959,33 @@ type ReactionsDeleteLegacyReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *ReactionsDeleteLegacyReq) url() string {
-	return r._url
-}
-
-func (r *ReactionsDeleteLegacyReq) urlPath() string {
-	return fmt.Sprintf("/reactions/%v", r.ReactionId)
-}
-
-func (r *ReactionsDeleteLegacyReq) method() string {
-	return "DELETE"
-}
-
-func (r *ReactionsDeleteLegacyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ReactionsDeleteLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	if requiredPreviews {
-		previewVals["squirrel-girl"] = true
-	}
-	if allPreviews {
-		previewVals["squirrel-girl"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReactionsDeleteLegacyReq) body() interface{} {
-	return nil
-}
-
-func (r *ReactionsDeleteLegacyReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *ReactionsDeleteLegacyReq) validStatuses() []int {
-	return []int{204, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ReactionsDeleteLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "reactions/delete-legacy", opt)
+func (r *ReactionsDeleteLegacyReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ReactionsDeleteLegacyReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"squirrel-girl"},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		OperationID:      "reactions/delete-legacy",
+		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		RequiredPreviews: []string{"squirrel-girl"},
+		URLPath:          fmt.Sprintf("/reactions/%v", r.ReactionId),
+		URLQuery:         query,
+		ValidStatuses:    []int{204, 304},
+	}
+	return builder
 }
 
 /*
@@ -2156,7 +1993,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ReactionsDeleteLegacyReq) Rel(link RelName, resp *ReactionsDeleteLegacyResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -2170,7 +2007,7 @@ ReactionsDeleteLegacyResponse is a response for ReactionsDeleteLegacy
 https://developer.github.com/v3/reactions/#delete-a-reaction-legacy
 */
 type ReactionsDeleteLegacyResponse struct {
-	response
+	internal.Response
 	request *ReactionsDeleteLegacyReq
 }
 
@@ -2183,20 +2020,26 @@ List reactions for a commit comment.
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-commit-comment
 */
-func ReactionsListForCommitComment(ctx context.Context, req *ReactionsListForCommitCommentReq, opt ...RequestOption) (*ReactionsListForCommitCommentResponse, error) {
+func ReactionsListForCommitComment(ctx context.Context, req *ReactionsListForCommitCommentReq, opt ...options.Option) (*ReactionsListForCommitCommentResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ReactionsListForCommitCommentReq)
 	}
 	resp := &ReactionsListForCommitCommentResponse{request: req}
-	r, err := doRequest(ctx, req, "reactions/list-for-commit-comment", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.Reaction{}
-	err = r.decodeBody(&resp.Data, "reactions/list-for-commit-comment")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2212,7 +2055,7 @@ List reactions for a commit comment.
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-commit-comment
 */
-func (c Client) ReactionsListForCommitComment(ctx context.Context, req *ReactionsListForCommitCommentReq, opt ...RequestOption) (*ReactionsListForCommitCommentResponse, error) {
+func (c Client) ReactionsListForCommitComment(ctx context.Context, req *ReactionsListForCommitCommentReq, opt ...options.Option) (*ReactionsListForCommitCommentResponse, error) {
 	return ReactionsListForCommitComment(ctx, req, append(c, opt...)...)
 }
 
@@ -2254,19 +2097,16 @@ type ReactionsListForCommitCommentReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *ReactionsListForCommitCommentReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *ReactionsListForCommitCommentReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *ReactionsListForCommitCommentReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/comments/%v/reactions", r.Owner, r.Repo, r.CommentId)
-}
-
-func (r *ReactionsListForCommitCommentReq) method() string {
-	return "GET"
-}
-
-func (r *ReactionsListForCommitCommentReq) urlQuery() url.Values {
+func (r *ReactionsListForCommitCommentReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Content != nil {
 		query.Set("content", *r.Content)
@@ -2277,36 +2117,22 @@ func (r *ReactionsListForCommitCommentReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *ReactionsListForCommitCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	if requiredPreviews {
-		previewVals["squirrel-girl"] = true
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"squirrel-girl"},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "reactions/list-for-commit-comment",
+		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		RequiredPreviews: []string{"squirrel-girl"},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/comments/%v/reactions", r.Owner, r.Repo, r.CommentId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
 	}
-	if allPreviews {
-		previewVals["squirrel-girl"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReactionsListForCommitCommentReq) body() interface{} {
-	return nil
-}
-
-func (r *ReactionsListForCommitCommentReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ReactionsListForCommitCommentReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ReactionsListForCommitCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "reactions/list-for-commit-comment", opt)
+	return builder
 }
 
 /*
@@ -2314,7 +2140,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ReactionsListForCommitCommentReq) Rel(link RelName, resp *ReactionsListForCommitCommentResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -2328,7 +2154,7 @@ ReactionsListForCommitCommentResponse is a response for ReactionsListForCommitCo
 https://developer.github.com/v3/reactions/#list-reactions-for-a-commit-comment
 */
 type ReactionsListForCommitCommentResponse struct {
-	response
+	internal.Response
 	request *ReactionsListForCommitCommentReq
 	Data    []components.Reaction
 }
@@ -2342,20 +2168,26 @@ List reactions for an issue.
 
 https://developer.github.com/v3/reactions/#list-reactions-for-an-issue
 */
-func ReactionsListForIssue(ctx context.Context, req *ReactionsListForIssueReq, opt ...RequestOption) (*ReactionsListForIssueResponse, error) {
+func ReactionsListForIssue(ctx context.Context, req *ReactionsListForIssueReq, opt ...options.Option) (*ReactionsListForIssueResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ReactionsListForIssueReq)
 	}
 	resp := &ReactionsListForIssueResponse{request: req}
-	r, err := doRequest(ctx, req, "reactions/list-for-issue", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.Reaction{}
-	err = r.decodeBody(&resp.Data, "reactions/list-for-issue")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2371,7 +2203,7 @@ List reactions for an issue.
 
 https://developer.github.com/v3/reactions/#list-reactions-for-an-issue
 */
-func (c Client) ReactionsListForIssue(ctx context.Context, req *ReactionsListForIssueReq, opt ...RequestOption) (*ReactionsListForIssueResponse, error) {
+func (c Client) ReactionsListForIssue(ctx context.Context, req *ReactionsListForIssueReq, opt ...options.Option) (*ReactionsListForIssueResponse, error) {
 	return ReactionsListForIssue(ctx, req, append(c, opt...)...)
 }
 
@@ -2413,19 +2245,16 @@ type ReactionsListForIssueReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *ReactionsListForIssueReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *ReactionsListForIssueReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *ReactionsListForIssueReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/issues/%v/reactions", r.Owner, r.Repo, r.IssueNumber)
-}
-
-func (r *ReactionsListForIssueReq) method() string {
-	return "GET"
-}
-
-func (r *ReactionsListForIssueReq) urlQuery() url.Values {
+func (r *ReactionsListForIssueReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Content != nil {
 		query.Set("content", *r.Content)
@@ -2436,36 +2265,22 @@ func (r *ReactionsListForIssueReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *ReactionsListForIssueReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	if requiredPreviews {
-		previewVals["squirrel-girl"] = true
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"squirrel-girl"},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "reactions/list-for-issue",
+		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		RequiredPreviews: []string{"squirrel-girl"},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/%v/reactions", r.Owner, r.Repo, r.IssueNumber),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
 	}
-	if allPreviews {
-		previewVals["squirrel-girl"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReactionsListForIssueReq) body() interface{} {
-	return nil
-}
-
-func (r *ReactionsListForIssueReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ReactionsListForIssueReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ReactionsListForIssueReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "reactions/list-for-issue", opt)
+	return builder
 }
 
 /*
@@ -2473,7 +2288,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ReactionsListForIssueReq) Rel(link RelName, resp *ReactionsListForIssueResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -2487,7 +2302,7 @@ ReactionsListForIssueResponse is a response for ReactionsListForIssue
 https://developer.github.com/v3/reactions/#list-reactions-for-an-issue
 */
 type ReactionsListForIssueResponse struct {
-	response
+	internal.Response
 	request *ReactionsListForIssueReq
 	Data    []components.Reaction
 }
@@ -2501,20 +2316,26 @@ List reactions for an issue comment.
 
 https://developer.github.com/v3/reactions/#list-reactions-for-an-issue-comment
 */
-func ReactionsListForIssueComment(ctx context.Context, req *ReactionsListForIssueCommentReq, opt ...RequestOption) (*ReactionsListForIssueCommentResponse, error) {
+func ReactionsListForIssueComment(ctx context.Context, req *ReactionsListForIssueCommentReq, opt ...options.Option) (*ReactionsListForIssueCommentResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ReactionsListForIssueCommentReq)
 	}
 	resp := &ReactionsListForIssueCommentResponse{request: req}
-	r, err := doRequest(ctx, req, "reactions/list-for-issue-comment", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.Reaction{}
-	err = r.decodeBody(&resp.Data, "reactions/list-for-issue-comment")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2530,7 +2351,7 @@ List reactions for an issue comment.
 
 https://developer.github.com/v3/reactions/#list-reactions-for-an-issue-comment
 */
-func (c Client) ReactionsListForIssueComment(ctx context.Context, req *ReactionsListForIssueCommentReq, opt ...RequestOption) (*ReactionsListForIssueCommentResponse, error) {
+func (c Client) ReactionsListForIssueComment(ctx context.Context, req *ReactionsListForIssueCommentReq, opt ...options.Option) (*ReactionsListForIssueCommentResponse, error) {
 	return ReactionsListForIssueComment(ctx, req, append(c, opt...)...)
 }
 
@@ -2572,19 +2393,16 @@ type ReactionsListForIssueCommentReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *ReactionsListForIssueCommentReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *ReactionsListForIssueCommentReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *ReactionsListForIssueCommentReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/issues/comments/%v/reactions", r.Owner, r.Repo, r.CommentId)
-}
-
-func (r *ReactionsListForIssueCommentReq) method() string {
-	return "GET"
-}
-
-func (r *ReactionsListForIssueCommentReq) urlQuery() url.Values {
+func (r *ReactionsListForIssueCommentReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Content != nil {
 		query.Set("content", *r.Content)
@@ -2595,36 +2413,22 @@ func (r *ReactionsListForIssueCommentReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *ReactionsListForIssueCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	if requiredPreviews {
-		previewVals["squirrel-girl"] = true
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"squirrel-girl"},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "reactions/list-for-issue-comment",
+		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		RequiredPreviews: []string{"squirrel-girl"},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/comments/%v/reactions", r.Owner, r.Repo, r.CommentId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
 	}
-	if allPreviews {
-		previewVals["squirrel-girl"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReactionsListForIssueCommentReq) body() interface{} {
-	return nil
-}
-
-func (r *ReactionsListForIssueCommentReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ReactionsListForIssueCommentReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ReactionsListForIssueCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "reactions/list-for-issue-comment", opt)
+	return builder
 }
 
 /*
@@ -2632,7 +2436,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ReactionsListForIssueCommentReq) Rel(link RelName, resp *ReactionsListForIssueCommentResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -2646,7 +2450,7 @@ ReactionsListForIssueCommentResponse is a response for ReactionsListForIssueComm
 https://developer.github.com/v3/reactions/#list-reactions-for-an-issue-comment
 */
 type ReactionsListForIssueCommentResponse struct {
-	response
+	internal.Response
 	request *ReactionsListForIssueCommentReq
 	Data    []components.Reaction
 }
@@ -2660,20 +2464,26 @@ List reactions for a pull request review comment.
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-pull-request-review-comment
 */
-func ReactionsListForPullRequestReviewComment(ctx context.Context, req *ReactionsListForPullRequestReviewCommentReq, opt ...RequestOption) (*ReactionsListForPullRequestReviewCommentResponse, error) {
+func ReactionsListForPullRequestReviewComment(ctx context.Context, req *ReactionsListForPullRequestReviewCommentReq, opt ...options.Option) (*ReactionsListForPullRequestReviewCommentResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ReactionsListForPullRequestReviewCommentReq)
 	}
 	resp := &ReactionsListForPullRequestReviewCommentResponse{request: req}
-	r, err := doRequest(ctx, req, "reactions/list-for-pull-request-review-comment", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.Reaction{}
-	err = r.decodeBody(&resp.Data, "reactions/list-for-pull-request-review-comment")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2689,7 +2499,7 @@ List reactions for a pull request review comment.
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-pull-request-review-comment
 */
-func (c Client) ReactionsListForPullRequestReviewComment(ctx context.Context, req *ReactionsListForPullRequestReviewCommentReq, opt ...RequestOption) (*ReactionsListForPullRequestReviewCommentResponse, error) {
+func (c Client) ReactionsListForPullRequestReviewComment(ctx context.Context, req *ReactionsListForPullRequestReviewCommentReq, opt ...options.Option) (*ReactionsListForPullRequestReviewCommentResponse, error) {
 	return ReactionsListForPullRequestReviewComment(ctx, req, append(c, opt...)...)
 }
 
@@ -2731,19 +2541,16 @@ type ReactionsListForPullRequestReviewCommentReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *ReactionsListForPullRequestReviewCommentReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *ReactionsListForPullRequestReviewCommentReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *ReactionsListForPullRequestReviewCommentReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/pulls/comments/%v/reactions", r.Owner, r.Repo, r.CommentId)
-}
-
-func (r *ReactionsListForPullRequestReviewCommentReq) method() string {
-	return "GET"
-}
-
-func (r *ReactionsListForPullRequestReviewCommentReq) urlQuery() url.Values {
+func (r *ReactionsListForPullRequestReviewCommentReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Content != nil {
 		query.Set("content", *r.Content)
@@ -2754,36 +2561,22 @@ func (r *ReactionsListForPullRequestReviewCommentReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *ReactionsListForPullRequestReviewCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	if requiredPreviews {
-		previewVals["squirrel-girl"] = true
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"squirrel-girl"},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "reactions/list-for-pull-request-review-comment",
+		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		RequiredPreviews: []string{"squirrel-girl"},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/pulls/comments/%v/reactions", r.Owner, r.Repo, r.CommentId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
 	}
-	if allPreviews {
-		previewVals["squirrel-girl"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReactionsListForPullRequestReviewCommentReq) body() interface{} {
-	return nil
-}
-
-func (r *ReactionsListForPullRequestReviewCommentReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ReactionsListForPullRequestReviewCommentReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ReactionsListForPullRequestReviewCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "reactions/list-for-pull-request-review-comment", opt)
+	return builder
 }
 
 /*
@@ -2791,7 +2584,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ReactionsListForPullRequestReviewCommentReq) Rel(link RelName, resp *ReactionsListForPullRequestReviewCommentResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -2805,7 +2598,7 @@ ReactionsListForPullRequestReviewCommentResponse is a response for ReactionsList
 https://developer.github.com/v3/reactions/#list-reactions-for-a-pull-request-review-comment
 */
 type ReactionsListForPullRequestReviewCommentResponse struct {
-	response
+	internal.Response
 	request *ReactionsListForPullRequestReviewCommentReq
 	Data    []components.Reaction
 }
@@ -2819,20 +2612,26 @@ List reactions for a team discussion comment.
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-comment
 */
-func ReactionsListForTeamDiscussionCommentInOrg(ctx context.Context, req *ReactionsListForTeamDiscussionCommentInOrgReq, opt ...RequestOption) (*ReactionsListForTeamDiscussionCommentInOrgResponse, error) {
+func ReactionsListForTeamDiscussionCommentInOrg(ctx context.Context, req *ReactionsListForTeamDiscussionCommentInOrgReq, opt ...options.Option) (*ReactionsListForTeamDiscussionCommentInOrgResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ReactionsListForTeamDiscussionCommentInOrgReq)
 	}
 	resp := &ReactionsListForTeamDiscussionCommentInOrgResponse{request: req}
-	r, err := doRequest(ctx, req, "reactions/list-for-team-discussion-comment-in-org", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.Reaction{}
-	err = r.decodeBody(&resp.Data, "reactions/list-for-team-discussion-comment-in-org")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2848,7 +2647,7 @@ List reactions for a team discussion comment.
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-comment
 */
-func (c Client) ReactionsListForTeamDiscussionCommentInOrg(ctx context.Context, req *ReactionsListForTeamDiscussionCommentInOrgReq, opt ...RequestOption) (*ReactionsListForTeamDiscussionCommentInOrgResponse, error) {
+func (c Client) ReactionsListForTeamDiscussionCommentInOrg(ctx context.Context, req *ReactionsListForTeamDiscussionCommentInOrgReq, opt ...options.Option) (*ReactionsListForTeamDiscussionCommentInOrgResponse, error) {
 	return ReactionsListForTeamDiscussionCommentInOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -2891,19 +2690,16 @@ type ReactionsListForTeamDiscussionCommentInOrgReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *ReactionsListForTeamDiscussionCommentInOrgReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *ReactionsListForTeamDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *ReactionsListForTeamDiscussionCommentInOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/comments/%v/reactions", r.Org, r.TeamSlug, r.DiscussionNumber, r.CommentNumber)
-}
-
-func (r *ReactionsListForTeamDiscussionCommentInOrgReq) method() string {
-	return "GET"
-}
-
-func (r *ReactionsListForTeamDiscussionCommentInOrgReq) urlQuery() url.Values {
+func (r *ReactionsListForTeamDiscussionCommentInOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Content != nil {
 		query.Set("content", *r.Content)
@@ -2914,36 +2710,22 @@ func (r *ReactionsListForTeamDiscussionCommentInOrgReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *ReactionsListForTeamDiscussionCommentInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	if requiredPreviews {
-		previewVals["squirrel-girl"] = true
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"squirrel-girl"},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "reactions/list-for-team-discussion-comment-in-org",
+		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		RequiredPreviews: []string{"squirrel-girl"},
+		URLPath:          fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/comments/%v/reactions", r.Org, r.TeamSlug, r.DiscussionNumber, r.CommentNumber),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
 	}
-	if allPreviews {
-		previewVals["squirrel-girl"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReactionsListForTeamDiscussionCommentInOrgReq) body() interface{} {
-	return nil
-}
-
-func (r *ReactionsListForTeamDiscussionCommentInOrgReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ReactionsListForTeamDiscussionCommentInOrgReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ReactionsListForTeamDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "reactions/list-for-team-discussion-comment-in-org", opt)
+	return builder
 }
 
 /*
@@ -2951,7 +2733,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ReactionsListForTeamDiscussionCommentInOrgReq) Rel(link RelName, resp *ReactionsListForTeamDiscussionCommentInOrgResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -2965,7 +2747,7 @@ ReactionsListForTeamDiscussionCommentInOrgResponse is a response for ReactionsLi
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-comment
 */
 type ReactionsListForTeamDiscussionCommentInOrgResponse struct {
-	response
+	internal.Response
 	request *ReactionsListForTeamDiscussionCommentInOrgReq
 	Data    []components.Reaction
 }
@@ -2979,20 +2761,26 @@ List reactions for a team discussion comment (Legacy).
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-comment-legacy
 */
-func ReactionsListForTeamDiscussionCommentLegacy(ctx context.Context, req *ReactionsListForTeamDiscussionCommentLegacyReq, opt ...RequestOption) (*ReactionsListForTeamDiscussionCommentLegacyResponse, error) {
+func ReactionsListForTeamDiscussionCommentLegacy(ctx context.Context, req *ReactionsListForTeamDiscussionCommentLegacyReq, opt ...options.Option) (*ReactionsListForTeamDiscussionCommentLegacyResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ReactionsListForTeamDiscussionCommentLegacyReq)
 	}
 	resp := &ReactionsListForTeamDiscussionCommentLegacyResponse{request: req}
-	r, err := doRequest(ctx, req, "reactions/list-for-team-discussion-comment-legacy", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.Reaction{}
-	err = r.decodeBody(&resp.Data, "reactions/list-for-team-discussion-comment-legacy")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3008,7 +2796,7 @@ List reactions for a team discussion comment (Legacy).
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-comment-legacy
 */
-func (c Client) ReactionsListForTeamDiscussionCommentLegacy(ctx context.Context, req *ReactionsListForTeamDiscussionCommentLegacyReq, opt ...RequestOption) (*ReactionsListForTeamDiscussionCommentLegacyResponse, error) {
+func (c Client) ReactionsListForTeamDiscussionCommentLegacy(ctx context.Context, req *ReactionsListForTeamDiscussionCommentLegacyReq, opt ...options.Option) (*ReactionsListForTeamDiscussionCommentLegacyResponse, error) {
 	return ReactionsListForTeamDiscussionCommentLegacy(ctx, req, append(c, opt...)...)
 }
 
@@ -3048,19 +2836,16 @@ type ReactionsListForTeamDiscussionCommentLegacyReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *ReactionsListForTeamDiscussionCommentLegacyReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *ReactionsListForTeamDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *ReactionsListForTeamDiscussionCommentLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/discussions/%v/comments/%v/reactions", r.TeamId, r.DiscussionNumber, r.CommentNumber)
-}
-
-func (r *ReactionsListForTeamDiscussionCommentLegacyReq) method() string {
-	return "GET"
-}
-
-func (r *ReactionsListForTeamDiscussionCommentLegacyReq) urlQuery() url.Values {
+func (r *ReactionsListForTeamDiscussionCommentLegacyReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Content != nil {
 		query.Set("content", *r.Content)
@@ -3071,36 +2856,22 @@ func (r *ReactionsListForTeamDiscussionCommentLegacyReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *ReactionsListForTeamDiscussionCommentLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	if requiredPreviews {
-		previewVals["squirrel-girl"] = true
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"squirrel-girl"},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "reactions/list-for-team-discussion-comment-legacy",
+		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		RequiredPreviews: []string{"squirrel-girl"},
+		URLPath:          fmt.Sprintf("/teams/%v/discussions/%v/comments/%v/reactions", r.TeamId, r.DiscussionNumber, r.CommentNumber),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
 	}
-	if allPreviews {
-		previewVals["squirrel-girl"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReactionsListForTeamDiscussionCommentLegacyReq) body() interface{} {
-	return nil
-}
-
-func (r *ReactionsListForTeamDiscussionCommentLegacyReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ReactionsListForTeamDiscussionCommentLegacyReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ReactionsListForTeamDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "reactions/list-for-team-discussion-comment-legacy", opt)
+	return builder
 }
 
 /*
@@ -3108,7 +2879,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ReactionsListForTeamDiscussionCommentLegacyReq) Rel(link RelName, resp *ReactionsListForTeamDiscussionCommentLegacyResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -3122,7 +2893,7 @@ ReactionsListForTeamDiscussionCommentLegacyResponse is a response for ReactionsL
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-comment-legacy
 */
 type ReactionsListForTeamDiscussionCommentLegacyResponse struct {
-	response
+	internal.Response
 	request *ReactionsListForTeamDiscussionCommentLegacyReq
 	Data    []components.Reaction
 }
@@ -3136,20 +2907,26 @@ List reactions for a team discussion.
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion
 */
-func ReactionsListForTeamDiscussionInOrg(ctx context.Context, req *ReactionsListForTeamDiscussionInOrgReq, opt ...RequestOption) (*ReactionsListForTeamDiscussionInOrgResponse, error) {
+func ReactionsListForTeamDiscussionInOrg(ctx context.Context, req *ReactionsListForTeamDiscussionInOrgReq, opt ...options.Option) (*ReactionsListForTeamDiscussionInOrgResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ReactionsListForTeamDiscussionInOrgReq)
 	}
 	resp := &ReactionsListForTeamDiscussionInOrgResponse{request: req}
-	r, err := doRequest(ctx, req, "reactions/list-for-team-discussion-in-org", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.Reaction{}
-	err = r.decodeBody(&resp.Data, "reactions/list-for-team-discussion-in-org")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3165,7 +2942,7 @@ List reactions for a team discussion.
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion
 */
-func (c Client) ReactionsListForTeamDiscussionInOrg(ctx context.Context, req *ReactionsListForTeamDiscussionInOrgReq, opt ...RequestOption) (*ReactionsListForTeamDiscussionInOrgResponse, error) {
+func (c Client) ReactionsListForTeamDiscussionInOrg(ctx context.Context, req *ReactionsListForTeamDiscussionInOrgReq, opt ...options.Option) (*ReactionsListForTeamDiscussionInOrgResponse, error) {
 	return ReactionsListForTeamDiscussionInOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -3207,19 +2984,16 @@ type ReactionsListForTeamDiscussionInOrgReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *ReactionsListForTeamDiscussionInOrgReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *ReactionsListForTeamDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *ReactionsListForTeamDiscussionInOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/reactions", r.Org, r.TeamSlug, r.DiscussionNumber)
-}
-
-func (r *ReactionsListForTeamDiscussionInOrgReq) method() string {
-	return "GET"
-}
-
-func (r *ReactionsListForTeamDiscussionInOrgReq) urlQuery() url.Values {
+func (r *ReactionsListForTeamDiscussionInOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Content != nil {
 		query.Set("content", *r.Content)
@@ -3230,36 +3004,22 @@ func (r *ReactionsListForTeamDiscussionInOrgReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *ReactionsListForTeamDiscussionInOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	if requiredPreviews {
-		previewVals["squirrel-girl"] = true
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"squirrel-girl"},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "reactions/list-for-team-discussion-in-org",
+		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		RequiredPreviews: []string{"squirrel-girl"},
+		URLPath:          fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/reactions", r.Org, r.TeamSlug, r.DiscussionNumber),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
 	}
-	if allPreviews {
-		previewVals["squirrel-girl"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReactionsListForTeamDiscussionInOrgReq) body() interface{} {
-	return nil
-}
-
-func (r *ReactionsListForTeamDiscussionInOrgReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ReactionsListForTeamDiscussionInOrgReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ReactionsListForTeamDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "reactions/list-for-team-discussion-in-org", opt)
+	return builder
 }
 
 /*
@@ -3267,7 +3027,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ReactionsListForTeamDiscussionInOrgReq) Rel(link RelName, resp *ReactionsListForTeamDiscussionInOrgResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -3281,7 +3041,7 @@ ReactionsListForTeamDiscussionInOrgResponse is a response for ReactionsListForTe
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion
 */
 type ReactionsListForTeamDiscussionInOrgResponse struct {
-	response
+	internal.Response
 	request *ReactionsListForTeamDiscussionInOrgReq
 	Data    []components.Reaction
 }
@@ -3295,20 +3055,26 @@ List reactions for a team discussion (Legacy).
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-legacy
 */
-func ReactionsListForTeamDiscussionLegacy(ctx context.Context, req *ReactionsListForTeamDiscussionLegacyReq, opt ...RequestOption) (*ReactionsListForTeamDiscussionLegacyResponse, error) {
+func ReactionsListForTeamDiscussionLegacy(ctx context.Context, req *ReactionsListForTeamDiscussionLegacyReq, opt ...options.Option) (*ReactionsListForTeamDiscussionLegacyResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ReactionsListForTeamDiscussionLegacyReq)
 	}
 	resp := &ReactionsListForTeamDiscussionLegacyResponse{request: req}
-	r, err := doRequest(ctx, req, "reactions/list-for-team-discussion-legacy", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.Reaction{}
-	err = r.decodeBody(&resp.Data, "reactions/list-for-team-discussion-legacy")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3324,7 +3090,7 @@ List reactions for a team discussion (Legacy).
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-legacy
 */
-func (c Client) ReactionsListForTeamDiscussionLegacy(ctx context.Context, req *ReactionsListForTeamDiscussionLegacyReq, opt ...RequestOption) (*ReactionsListForTeamDiscussionLegacyResponse, error) {
+func (c Client) ReactionsListForTeamDiscussionLegacy(ctx context.Context, req *ReactionsListForTeamDiscussionLegacyReq, opt ...options.Option) (*ReactionsListForTeamDiscussionLegacyResponse, error) {
 	return ReactionsListForTeamDiscussionLegacy(ctx, req, append(c, opt...)...)
 }
 
@@ -3363,19 +3129,16 @@ type ReactionsListForTeamDiscussionLegacyReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *ReactionsListForTeamDiscussionLegacyReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *ReactionsListForTeamDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *ReactionsListForTeamDiscussionLegacyReq) urlPath() string {
-	return fmt.Sprintf("/teams/%v/discussions/%v/reactions", r.TeamId, r.DiscussionNumber)
-}
-
-func (r *ReactionsListForTeamDiscussionLegacyReq) method() string {
-	return "GET"
-}
-
-func (r *ReactionsListForTeamDiscussionLegacyReq) urlQuery() url.Values {
+func (r *ReactionsListForTeamDiscussionLegacyReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Content != nil {
 		query.Set("content", *r.Content)
@@ -3386,36 +3149,22 @@ func (r *ReactionsListForTeamDiscussionLegacyReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *ReactionsListForTeamDiscussionLegacyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	if requiredPreviews {
-		previewVals["squirrel-girl"] = true
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"squirrel-girl"},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "reactions/list-for-team-discussion-legacy",
+		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		RequiredPreviews: []string{"squirrel-girl"},
+		URLPath:          fmt.Sprintf("/teams/%v/discussions/%v/reactions", r.TeamId, r.DiscussionNumber),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
 	}
-	if allPreviews {
-		previewVals["squirrel-girl"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ReactionsListForTeamDiscussionLegacyReq) body() interface{} {
-	return nil
-}
-
-func (r *ReactionsListForTeamDiscussionLegacyReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ReactionsListForTeamDiscussionLegacyReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ReactionsListForTeamDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "reactions/list-for-team-discussion-legacy", opt)
+	return builder
 }
 
 /*
@@ -3423,7 +3172,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ReactionsListForTeamDiscussionLegacyReq) Rel(link RelName, resp *ReactionsListForTeamDiscussionLegacyResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -3437,7 +3186,7 @@ ReactionsListForTeamDiscussionLegacyResponse is a response for ReactionsListForT
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-legacy
 */
 type ReactionsListForTeamDiscussionLegacyResponse struct {
-	response
+	internal.Response
 	request *ReactionsListForTeamDiscussionLegacyReq
 	Data    []components.Reaction
 }

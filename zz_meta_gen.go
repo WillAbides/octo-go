@@ -6,6 +6,8 @@ import (
 	"context"
 	"fmt"
 	components "github.com/willabides/octo-go/components"
+	internal "github.com/willabides/octo-go/internal"
+	options "github.com/willabides/octo-go/options"
 	"net/http"
 	"net/url"
 )
@@ -19,20 +21,26 @@ Get GitHub meta information.
 
 https://developer.github.com/v3/meta/#get-github-meta-information
 */
-func MetaGet(ctx context.Context, req *MetaGetReq, opt ...RequestOption) (*MetaGetResponse, error) {
+func MetaGet(ctx context.Context, req *MetaGetReq, opt ...options.Option) (*MetaGetResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(MetaGetReq)
 	}
 	resp := &MetaGetResponse{request: req}
-	r, err := doRequest(ctx, req, "meta/get", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.ApiOverview{}
-	err = r.decodeBody(&resp.Data, "meta/get")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -48,7 +56,7 @@ Get GitHub meta information.
 
 https://developer.github.com/v3/meta/#get-github-meta-information
 */
-func (c Client) MetaGet(ctx context.Context, req *MetaGetReq, opt ...RequestOption) (*MetaGetResponse, error) {
+func (c Client) MetaGet(ctx context.Context, req *MetaGetReq, opt ...options.Option) (*MetaGetResponse, error) {
 	return MetaGet(ctx, req, append(c, opt...)...)
 }
 
@@ -61,44 +69,33 @@ type MetaGetReq struct {
 	_url string
 }
 
-func (r *MetaGetReq) url() string {
-	return r._url
-}
-
-func (r *MetaGetReq) urlPath() string {
-	return fmt.Sprintf("/meta")
-}
-
-func (r *MetaGetReq) method() string {
-	return "GET"
-}
-
-func (r *MetaGetReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *MetaGetReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *MetaGetReq) body() interface{} {
-	return nil
-}
-
-func (r *MetaGetReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *MetaGetReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *MetaGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "meta/get", opt)
+func (r *MetaGetReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *MetaGetReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "meta/get",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/meta"),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
+	}
+	return builder
 }
 
 /*
@@ -106,7 +103,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *MetaGetReq) Rel(link RelName, resp *MetaGetResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -120,7 +117,7 @@ MetaGetResponse is a response for MetaGet
 https://developer.github.com/v3/meta/#get-github-meta-information
 */
 type MetaGetResponse struct {
-	response
+	internal.Response
 	request *MetaGetReq
 	Data    components.ApiOverview
 }
@@ -133,19 +130,25 @@ Get Octocat.
   GET /octocat
 
 */
-func MetaGetOctocat(ctx context.Context, req *MetaGetOctocatReq, opt ...RequestOption) (*MetaGetOctocatResponse, error) {
+func MetaGetOctocat(ctx context.Context, req *MetaGetOctocatReq, opt ...options.Option) (*MetaGetOctocatResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(MetaGetOctocatReq)
 	}
 	resp := &MetaGetOctocatResponse{request: req}
-	r, err := doRequest(ctx, req, "meta/get-octocat", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "meta/get-octocat")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -160,7 +163,7 @@ Get Octocat.
   GET /octocat
 
 */
-func (c Client) MetaGetOctocat(ctx context.Context, req *MetaGetOctocatReq, opt ...RequestOption) (*MetaGetOctocatResponse, error) {
+func (c Client) MetaGetOctocat(ctx context.Context, req *MetaGetOctocatReq, opt ...options.Option) (*MetaGetOctocatResponse, error) {
 	return MetaGetOctocat(ctx, req, append(c, opt...)...)
 }
 
@@ -175,47 +178,36 @@ type MetaGetOctocatReq struct {
 	S *string
 }
 
-func (r *MetaGetOctocatReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *MetaGetOctocatReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *MetaGetOctocatReq) urlPath() string {
-	return fmt.Sprintf("/octocat")
-}
-
-func (r *MetaGetOctocatReq) method() string {
-	return "GET"
-}
-
-func (r *MetaGetOctocatReq) urlQuery() url.Values {
+func (r *MetaGetOctocatReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.S != nil {
 		query.Set("s", *r.S)
 	}
-	return query
-}
 
-func (r *MetaGetOctocatReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *MetaGetOctocatReq) body() interface{} {
-	return nil
-}
-
-func (r *MetaGetOctocatReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *MetaGetOctocatReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *MetaGetOctocatReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "meta/get-octocat", opt)
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "GET",
+		OperationID:      "meta/get-octocat",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/octocat"),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -223,7 +215,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *MetaGetOctocatReq) Rel(link RelName, resp *MetaGetOctocatResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -236,7 +228,7 @@ MetaGetOctocatResponse is a response for MetaGetOctocat
 
 */
 type MetaGetOctocatResponse struct {
-	response
+	internal.Response
 	request *MetaGetOctocatReq
 }
 
@@ -248,19 +240,25 @@ Get the Zen of GitHub.
   GET /zen
 
 */
-func MetaGetZen(ctx context.Context, req *MetaGetZenReq, opt ...RequestOption) (*MetaGetZenResponse, error) {
+func MetaGetZen(ctx context.Context, req *MetaGetZenReq, opt ...options.Option) (*MetaGetZenResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(MetaGetZenReq)
 	}
 	resp := &MetaGetZenResponse{request: req}
-	r, err := doRequest(ctx, req, "meta/get-zen", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "meta/get-zen")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -275,7 +273,7 @@ Get the Zen of GitHub.
   GET /zen
 
 */
-func (c Client) MetaGetZen(ctx context.Context, req *MetaGetZenReq, opt ...RequestOption) (*MetaGetZenResponse, error) {
+func (c Client) MetaGetZen(ctx context.Context, req *MetaGetZenReq, opt ...options.Option) (*MetaGetZenResponse, error) {
 	return MetaGetZen(ctx, req, append(c, opt...)...)
 }
 
@@ -287,44 +285,33 @@ type MetaGetZenReq struct {
 	_url string
 }
 
-func (r *MetaGetZenReq) url() string {
-	return r._url
-}
-
-func (r *MetaGetZenReq) urlPath() string {
-	return fmt.Sprintf("/zen")
-}
-
-func (r *MetaGetZenReq) method() string {
-	return "GET"
-}
-
-func (r *MetaGetZenReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *MetaGetZenReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *MetaGetZenReq) body() interface{} {
-	return nil
-}
-
-func (r *MetaGetZenReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *MetaGetZenReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *MetaGetZenReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "meta/get-zen", opt)
+func (r *MetaGetZenReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *MetaGetZenReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "GET",
+		OperationID:      "meta/get-zen",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/zen"),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -332,7 +319,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *MetaGetZenReq) Rel(link RelName, resp *MetaGetZenResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -345,7 +332,7 @@ MetaGetZenResponse is a response for MetaGetZen
 
 */
 type MetaGetZenResponse struct {
-	response
+	internal.Response
 	request *MetaGetZenReq
 }
 
@@ -357,20 +344,26 @@ GitHub API Root.
   GET /
 
 */
-func MetaRoot(ctx context.Context, req *MetaRootReq, opt ...RequestOption) (*MetaRootResponse, error) {
+func MetaRoot(ctx context.Context, req *MetaRootReq, opt ...options.Option) (*MetaRootResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(MetaRootReq)
 	}
 	resp := &MetaRootResponse{request: req}
-	r, err := doRequest(ctx, req, "meta/root", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = MetaRootResponseBody{}
-	err = r.decodeBody(&resp.Data, "meta/root")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -385,7 +378,7 @@ GitHub API Root.
   GET /
 
 */
-func (c Client) MetaRoot(ctx context.Context, req *MetaRootReq, opt ...RequestOption) (*MetaRootResponse, error) {
+func (c Client) MetaRoot(ctx context.Context, req *MetaRootReq, opt ...options.Option) (*MetaRootResponse, error) {
 	return MetaRoot(ctx, req, append(c, opt...)...)
 }
 
@@ -397,44 +390,33 @@ type MetaRootReq struct {
 	_url string
 }
 
-func (r *MetaRootReq) url() string {
-	return r._url
-}
-
-func (r *MetaRootReq) urlPath() string {
-	return fmt.Sprintf("/")
-}
-
-func (r *MetaRootReq) method() string {
-	return "GET"
-}
-
-func (r *MetaRootReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *MetaRootReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *MetaRootReq) body() interface{} {
-	return nil
-}
-
-func (r *MetaRootReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *MetaRootReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *MetaRootReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "meta/root", opt)
+func (r *MetaRootReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *MetaRootReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "meta/root",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/"),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -442,7 +424,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *MetaRootReq) Rel(link RelName, resp *MetaRootResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -495,7 +477,7 @@ MetaRootResponse is a response for MetaRoot
 
 */
 type MetaRootResponse struct {
-	response
+	internal.Response
 	request *MetaRootReq
 	Data    MetaRootResponseBody
 }

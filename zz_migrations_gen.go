@@ -6,6 +6,8 @@ import (
 	"context"
 	"fmt"
 	components "github.com/willabides/octo-go/components"
+	internal "github.com/willabides/octo-go/internal"
+	options "github.com/willabides/octo-go/options"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -20,19 +22,25 @@ Cancel an import.
 
 https://developer.github.com/v3/migrations/source_imports/#cancel-an-import
 */
-func MigrationsCancelImport(ctx context.Context, req *MigrationsCancelImportReq, opt ...RequestOption) (*MigrationsCancelImportResponse, error) {
+func MigrationsCancelImport(ctx context.Context, req *MigrationsCancelImportReq, opt ...options.Option) (*MigrationsCancelImportResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(MigrationsCancelImportReq)
 	}
 	resp := &MigrationsCancelImportResponse{request: req}
-	r, err := doRequest(ctx, req, "migrations/cancel-import", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "migrations/cancel-import")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -48,7 +56,7 @@ Cancel an import.
 
 https://developer.github.com/v3/migrations/source_imports/#cancel-an-import
 */
-func (c Client) MigrationsCancelImport(ctx context.Context, req *MigrationsCancelImportReq, opt ...RequestOption) (*MigrationsCancelImportResponse, error) {
+func (c Client) MigrationsCancelImport(ctx context.Context, req *MigrationsCancelImportReq, opt ...options.Option) (*MigrationsCancelImportResponse, error) {
 	return MigrationsCancelImport(ctx, req, append(c, opt...)...)
 }
 
@@ -63,44 +71,33 @@ type MigrationsCancelImportReq struct {
 	Repo  string
 }
 
-func (r *MigrationsCancelImportReq) url() string {
-	return r._url
-}
-
-func (r *MigrationsCancelImportReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/import", r.Owner, r.Repo)
-}
-
-func (r *MigrationsCancelImportReq) method() string {
-	return "DELETE"
-}
-
-func (r *MigrationsCancelImportReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *MigrationsCancelImportReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *MigrationsCancelImportReq) body() interface{} {
-	return nil
-}
-
-func (r *MigrationsCancelImportReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *MigrationsCancelImportReq) validStatuses() []int {
-	return []int{204}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *MigrationsCancelImportReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "migrations/cancel-import", opt)
+func (r *MigrationsCancelImportReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *MigrationsCancelImportReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		OperationID:      "migrations/cancel-import",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/import", r.Owner, r.Repo),
+		URLQuery:         query,
+		ValidStatuses:    []int{204},
+	}
+	return builder
 }
 
 /*
@@ -108,7 +105,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *MigrationsCancelImportReq) Rel(link RelName, resp *MigrationsCancelImportResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -122,7 +119,7 @@ MigrationsCancelImportResponse is a response for MigrationsCancelImport
 https://developer.github.com/v3/migrations/source_imports/#cancel-an-import
 */
 type MigrationsCancelImportResponse struct {
-	response
+	internal.Response
 	request *MigrationsCancelImportReq
 }
 
@@ -135,19 +132,25 @@ Delete a user migration archive.
 
 https://developer.github.com/v3/migrations/users/#delete-a-user-migration-archive
 */
-func MigrationsDeleteArchiveForAuthenticatedUser(ctx context.Context, req *MigrationsDeleteArchiveForAuthenticatedUserReq, opt ...RequestOption) (*MigrationsDeleteArchiveForAuthenticatedUserResponse, error) {
+func MigrationsDeleteArchiveForAuthenticatedUser(ctx context.Context, req *MigrationsDeleteArchiveForAuthenticatedUserReq, opt ...options.Option) (*MigrationsDeleteArchiveForAuthenticatedUserResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(MigrationsDeleteArchiveForAuthenticatedUserReq)
 	}
 	resp := &MigrationsDeleteArchiveForAuthenticatedUserResponse{request: req}
-	r, err := doRequest(ctx, req, "migrations/delete-archive-for-authenticated-user", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "migrations/delete-archive-for-authenticated-user")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -163,7 +166,7 @@ Delete a user migration archive.
 
 https://developer.github.com/v3/migrations/users/#delete-a-user-migration-archive
 */
-func (c Client) MigrationsDeleteArchiveForAuthenticatedUser(ctx context.Context, req *MigrationsDeleteArchiveForAuthenticatedUserReq, opt ...RequestOption) (*MigrationsDeleteArchiveForAuthenticatedUserResponse, error) {
+func (c Client) MigrationsDeleteArchiveForAuthenticatedUser(ctx context.Context, req *MigrationsDeleteArchiveForAuthenticatedUserReq, opt ...options.Option) (*MigrationsDeleteArchiveForAuthenticatedUserResponse, error) {
 	return MigrationsDeleteArchiveForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
@@ -182,50 +185,33 @@ type MigrationsDeleteArchiveForAuthenticatedUserReq struct {
 	WyandottePreview bool
 }
 
-func (r *MigrationsDeleteArchiveForAuthenticatedUserReq) url() string {
-	return r._url
-}
-
-func (r *MigrationsDeleteArchiveForAuthenticatedUserReq) urlPath() string {
-	return fmt.Sprintf("/user/migrations/%v/archive", r.MigrationId)
-}
-
-func (r *MigrationsDeleteArchiveForAuthenticatedUserReq) method() string {
-	return "DELETE"
-}
-
-func (r *MigrationsDeleteArchiveForAuthenticatedUserReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *MigrationsDeleteArchiveForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"wyandotte": r.WyandottePreview}
-	if requiredPreviews {
-		previewVals["wyandotte"] = true
-	}
-	if allPreviews {
-		previewVals["wyandotte"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *MigrationsDeleteArchiveForAuthenticatedUserReq) body() interface{} {
-	return nil
-}
-
-func (r *MigrationsDeleteArchiveForAuthenticatedUserReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *MigrationsDeleteArchiveForAuthenticatedUserReq) validStatuses() []int {
-	return []int{204, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *MigrationsDeleteArchiveForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "migrations/delete-archive-for-authenticated-user", opt)
+func (r *MigrationsDeleteArchiveForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *MigrationsDeleteArchiveForAuthenticatedUserReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"wyandotte"},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		OperationID:      "migrations/delete-archive-for-authenticated-user",
+		Previews:         map[string]bool{"wyandotte": r.WyandottePreview},
+		RequiredPreviews: []string{"wyandotte"},
+		URLPath:          fmt.Sprintf("/user/migrations/%v/archive", r.MigrationId),
+		URLQuery:         query,
+		ValidStatuses:    []int{204, 304},
+	}
+	return builder
 }
 
 /*
@@ -233,7 +219,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *MigrationsDeleteArchiveForAuthenticatedUserReq) Rel(link RelName, resp *MigrationsDeleteArchiveForAuthenticatedUserResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -247,7 +233,7 @@ MigrationsDeleteArchiveForAuthenticatedUserResponse is a response for Migrations
 https://developer.github.com/v3/migrations/users/#delete-a-user-migration-archive
 */
 type MigrationsDeleteArchiveForAuthenticatedUserResponse struct {
-	response
+	internal.Response
 	request *MigrationsDeleteArchiveForAuthenticatedUserReq
 }
 
@@ -260,23 +246,29 @@ Delete an organization migration archive.
 
 https://developer.github.com/v3/migrations/orgs/#delete-an-organization-migration-archive
 */
-func MigrationsDeleteArchiveForOrg(ctx context.Context, req *MigrationsDeleteArchiveForOrgReq, opt ...RequestOption) (*MigrationsDeleteArchiveForOrgResponse, error) {
+func MigrationsDeleteArchiveForOrg(ctx context.Context, req *MigrationsDeleteArchiveForOrgReq, opt ...options.Option) (*MigrationsDeleteArchiveForOrgResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(MigrationsDeleteArchiveForOrgReq)
 	}
 	resp := &MigrationsDeleteArchiveForOrgResponse{request: req}
-	r, err := doRequest(ctx, req, "migrations/delete-archive-for-org", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.setBoolResult(&resp.Data)
+
+	err = internal.SetBoolResult(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
-	err = r.decodeBody(nil, "migrations/delete-archive-for-org")
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -292,7 +284,7 @@ Delete an organization migration archive.
 
 https://developer.github.com/v3/migrations/orgs/#delete-an-organization-migration-archive
 */
-func (c Client) MigrationsDeleteArchiveForOrg(ctx context.Context, req *MigrationsDeleteArchiveForOrgReq, opt ...RequestOption) (*MigrationsDeleteArchiveForOrgResponse, error) {
+func (c Client) MigrationsDeleteArchiveForOrg(ctx context.Context, req *MigrationsDeleteArchiveForOrgReq, opt ...options.Option) (*MigrationsDeleteArchiveForOrgResponse, error) {
 	return MigrationsDeleteArchiveForOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -312,50 +304,33 @@ type MigrationsDeleteArchiveForOrgReq struct {
 	WyandottePreview bool
 }
 
-func (r *MigrationsDeleteArchiveForOrgReq) url() string {
-	return r._url
-}
-
-func (r *MigrationsDeleteArchiveForOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/migrations/%v/archive", r.Org, r.MigrationId)
-}
-
-func (r *MigrationsDeleteArchiveForOrgReq) method() string {
-	return "DELETE"
-}
-
-func (r *MigrationsDeleteArchiveForOrgReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *MigrationsDeleteArchiveForOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"wyandotte": r.WyandottePreview}
-	if requiredPreviews {
-		previewVals["wyandotte"] = true
-	}
-	if allPreviews {
-		previewVals["wyandotte"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *MigrationsDeleteArchiveForOrgReq) body() interface{} {
-	return nil
-}
-
-func (r *MigrationsDeleteArchiveForOrgReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *MigrationsDeleteArchiveForOrgReq) validStatuses() []int {
-	return []int{204}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *MigrationsDeleteArchiveForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "migrations/delete-archive-for-org", opt)
+func (r *MigrationsDeleteArchiveForOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *MigrationsDeleteArchiveForOrgReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"wyandotte"},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		OperationID:      "migrations/delete-archive-for-org",
+		Previews:         map[string]bool{"wyandotte": r.WyandottePreview},
+		RequiredPreviews: []string{"wyandotte"},
+		URLPath:          fmt.Sprintf("/orgs/%v/migrations/%v/archive", r.Org, r.MigrationId),
+		URLQuery:         query,
+		ValidStatuses:    []int{204},
+	}
+	return builder
 }
 
 /*
@@ -363,7 +338,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *MigrationsDeleteArchiveForOrgReq) Rel(link RelName, resp *MigrationsDeleteArchiveForOrgResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -377,7 +352,7 @@ MigrationsDeleteArchiveForOrgResponse is a response for MigrationsDeleteArchiveF
 https://developer.github.com/v3/migrations/orgs/#delete-an-organization-migration-archive
 */
 type MigrationsDeleteArchiveForOrgResponse struct {
-	response
+	internal.Response
 	request *MigrationsDeleteArchiveForOrgReq
 	Data    bool
 }
@@ -391,19 +366,25 @@ Download an organization migration archive.
 
 https://developer.github.com/v3/migrations/orgs/#download-an-organization-migration-archive
 */
-func MigrationsDownloadArchiveForOrg(ctx context.Context, req *MigrationsDownloadArchiveForOrgReq, opt ...RequestOption) (*MigrationsDownloadArchiveForOrgResponse, error) {
+func MigrationsDownloadArchiveForOrg(ctx context.Context, req *MigrationsDownloadArchiveForOrgReq, opt ...options.Option) (*MigrationsDownloadArchiveForOrgResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(MigrationsDownloadArchiveForOrgReq)
 	}
 	resp := &MigrationsDownloadArchiveForOrgResponse{request: req}
-	r, err := doRequest(ctx, req, "migrations/download-archive-for-org", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "migrations/download-archive-for-org")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -419,7 +400,7 @@ Download an organization migration archive.
 
 https://developer.github.com/v3/migrations/orgs/#download-an-organization-migration-archive
 */
-func (c Client) MigrationsDownloadArchiveForOrg(ctx context.Context, req *MigrationsDownloadArchiveForOrgReq, opt ...RequestOption) (*MigrationsDownloadArchiveForOrgResponse, error) {
+func (c Client) MigrationsDownloadArchiveForOrg(ctx context.Context, req *MigrationsDownloadArchiveForOrgReq, opt ...options.Option) (*MigrationsDownloadArchiveForOrgResponse, error) {
 	return MigrationsDownloadArchiveForOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -439,50 +420,33 @@ type MigrationsDownloadArchiveForOrgReq struct {
 	WyandottePreview bool
 }
 
-func (r *MigrationsDownloadArchiveForOrgReq) url() string {
-	return r._url
-}
-
-func (r *MigrationsDownloadArchiveForOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/migrations/%v/archive", r.Org, r.MigrationId)
-}
-
-func (r *MigrationsDownloadArchiveForOrgReq) method() string {
-	return "GET"
-}
-
-func (r *MigrationsDownloadArchiveForOrgReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *MigrationsDownloadArchiveForOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"wyandotte": r.WyandottePreview}
-	if requiredPreviews {
-		previewVals["wyandotte"] = true
-	}
-	if allPreviews {
-		previewVals["wyandotte"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *MigrationsDownloadArchiveForOrgReq) body() interface{} {
-	return nil
-}
-
-func (r *MigrationsDownloadArchiveForOrgReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *MigrationsDownloadArchiveForOrgReq) validStatuses() []int {
-	return []int{302}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *MigrationsDownloadArchiveForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "migrations/download-archive-for-org", opt)
+func (r *MigrationsDownloadArchiveForOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *MigrationsDownloadArchiveForOrgReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"wyandotte"},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "GET",
+		OperationID:      "migrations/download-archive-for-org",
+		Previews:         map[string]bool{"wyandotte": r.WyandottePreview},
+		RequiredPreviews: []string{"wyandotte"},
+		URLPath:          fmt.Sprintf("/orgs/%v/migrations/%v/archive", r.Org, r.MigrationId),
+		URLQuery:         query,
+		ValidStatuses:    []int{302},
+	}
+	return builder
 }
 
 /*
@@ -490,7 +454,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *MigrationsDownloadArchiveForOrgReq) Rel(link RelName, resp *MigrationsDownloadArchiveForOrgResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -504,7 +468,7 @@ MigrationsDownloadArchiveForOrgResponse is a response for MigrationsDownloadArch
 https://developer.github.com/v3/migrations/orgs/#download-an-organization-migration-archive
 */
 type MigrationsDownloadArchiveForOrgResponse struct {
-	response
+	internal.Response
 	request *MigrationsDownloadArchiveForOrgReq
 }
 
@@ -517,19 +481,25 @@ Download a user migration archive.
 
 https://developer.github.com/v3/migrations/users/#download-a-user-migration-archive
 */
-func MigrationsGetArchiveForAuthenticatedUser(ctx context.Context, req *MigrationsGetArchiveForAuthenticatedUserReq, opt ...RequestOption) (*MigrationsGetArchiveForAuthenticatedUserResponse, error) {
+func MigrationsGetArchiveForAuthenticatedUser(ctx context.Context, req *MigrationsGetArchiveForAuthenticatedUserReq, opt ...options.Option) (*MigrationsGetArchiveForAuthenticatedUserResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(MigrationsGetArchiveForAuthenticatedUserReq)
 	}
 	resp := &MigrationsGetArchiveForAuthenticatedUserResponse{request: req}
-	r, err := doRequest(ctx, req, "migrations/get-archive-for-authenticated-user", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "migrations/get-archive-for-authenticated-user")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -545,7 +515,7 @@ Download a user migration archive.
 
 https://developer.github.com/v3/migrations/users/#download-a-user-migration-archive
 */
-func (c Client) MigrationsGetArchiveForAuthenticatedUser(ctx context.Context, req *MigrationsGetArchiveForAuthenticatedUserReq, opt ...RequestOption) (*MigrationsGetArchiveForAuthenticatedUserResponse, error) {
+func (c Client) MigrationsGetArchiveForAuthenticatedUser(ctx context.Context, req *MigrationsGetArchiveForAuthenticatedUserReq, opt ...options.Option) (*MigrationsGetArchiveForAuthenticatedUserResponse, error) {
 	return MigrationsGetArchiveForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
@@ -564,50 +534,33 @@ type MigrationsGetArchiveForAuthenticatedUserReq struct {
 	WyandottePreview bool
 }
 
-func (r *MigrationsGetArchiveForAuthenticatedUserReq) url() string {
-	return r._url
-}
-
-func (r *MigrationsGetArchiveForAuthenticatedUserReq) urlPath() string {
-	return fmt.Sprintf("/user/migrations/%v/archive", r.MigrationId)
-}
-
-func (r *MigrationsGetArchiveForAuthenticatedUserReq) method() string {
-	return "GET"
-}
-
-func (r *MigrationsGetArchiveForAuthenticatedUserReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *MigrationsGetArchiveForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"wyandotte": r.WyandottePreview}
-	if requiredPreviews {
-		previewVals["wyandotte"] = true
-	}
-	if allPreviews {
-		previewVals["wyandotte"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *MigrationsGetArchiveForAuthenticatedUserReq) body() interface{} {
-	return nil
-}
-
-func (r *MigrationsGetArchiveForAuthenticatedUserReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *MigrationsGetArchiveForAuthenticatedUserReq) validStatuses() []int {
-	return []int{302, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *MigrationsGetArchiveForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "migrations/get-archive-for-authenticated-user", opt)
+func (r *MigrationsGetArchiveForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *MigrationsGetArchiveForAuthenticatedUserReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"wyandotte"},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "GET",
+		OperationID:      "migrations/get-archive-for-authenticated-user",
+		Previews:         map[string]bool{"wyandotte": r.WyandottePreview},
+		RequiredPreviews: []string{"wyandotte"},
+		URLPath:          fmt.Sprintf("/user/migrations/%v/archive", r.MigrationId),
+		URLQuery:         query,
+		ValidStatuses:    []int{302, 304},
+	}
+	return builder
 }
 
 /*
@@ -615,7 +568,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *MigrationsGetArchiveForAuthenticatedUserReq) Rel(link RelName, resp *MigrationsGetArchiveForAuthenticatedUserResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -629,7 +582,7 @@ MigrationsGetArchiveForAuthenticatedUserResponse is a response for MigrationsGet
 https://developer.github.com/v3/migrations/users/#download-a-user-migration-archive
 */
 type MigrationsGetArchiveForAuthenticatedUserResponse struct {
-	response
+	internal.Response
 	request *MigrationsGetArchiveForAuthenticatedUserReq
 }
 
@@ -642,20 +595,26 @@ Get commit authors.
 
 https://developer.github.com/v3/migrations/source_imports/#get-commit-authors
 */
-func MigrationsGetCommitAuthors(ctx context.Context, req *MigrationsGetCommitAuthorsReq, opt ...RequestOption) (*MigrationsGetCommitAuthorsResponse, error) {
+func MigrationsGetCommitAuthors(ctx context.Context, req *MigrationsGetCommitAuthorsReq, opt ...options.Option) (*MigrationsGetCommitAuthorsResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(MigrationsGetCommitAuthorsReq)
 	}
 	resp := &MigrationsGetCommitAuthorsResponse{request: req}
-	r, err := doRequest(ctx, req, "migrations/get-commit-authors", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.PorterAuthor{}
-	err = r.decodeBody(&resp.Data, "migrations/get-commit-authors")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -671,7 +630,7 @@ Get commit authors.
 
 https://developer.github.com/v3/migrations/source_imports/#get-commit-authors
 */
-func (c Client) MigrationsGetCommitAuthors(ctx context.Context, req *MigrationsGetCommitAuthorsReq, opt ...RequestOption) (*MigrationsGetCommitAuthorsResponse, error) {
+func (c Client) MigrationsGetCommitAuthors(ctx context.Context, req *MigrationsGetCommitAuthorsReq, opt ...options.Option) (*MigrationsGetCommitAuthorsResponse, error) {
 	return MigrationsGetCommitAuthors(ctx, req, append(c, opt...)...)
 }
 
@@ -693,47 +652,36 @@ type MigrationsGetCommitAuthorsReq struct {
 	Since *string
 }
 
-func (r *MigrationsGetCommitAuthorsReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *MigrationsGetCommitAuthorsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *MigrationsGetCommitAuthorsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/import/authors", r.Owner, r.Repo)
-}
-
-func (r *MigrationsGetCommitAuthorsReq) method() string {
-	return "GET"
-}
-
-func (r *MigrationsGetCommitAuthorsReq) urlQuery() url.Values {
+func (r *MigrationsGetCommitAuthorsReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Since != nil {
 		query.Set("since", *r.Since)
 	}
-	return query
-}
 
-func (r *MigrationsGetCommitAuthorsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *MigrationsGetCommitAuthorsReq) body() interface{} {
-	return nil
-}
-
-func (r *MigrationsGetCommitAuthorsReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *MigrationsGetCommitAuthorsReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *MigrationsGetCommitAuthorsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "migrations/get-commit-authors", opt)
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "migrations/get-commit-authors",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/import/authors", r.Owner, r.Repo),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -741,7 +689,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *MigrationsGetCommitAuthorsReq) Rel(link RelName, resp *MigrationsGetCommitAuthorsResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -755,7 +703,7 @@ MigrationsGetCommitAuthorsResponse is a response for MigrationsGetCommitAuthors
 https://developer.github.com/v3/migrations/source_imports/#get-commit-authors
 */
 type MigrationsGetCommitAuthorsResponse struct {
-	response
+	internal.Response
 	request *MigrationsGetCommitAuthorsReq
 	Data    []components.PorterAuthor
 }
@@ -769,20 +717,26 @@ Get an import status.
 
 https://developer.github.com/v3/migrations/source_imports/#get-an-import-status
 */
-func MigrationsGetImportStatus(ctx context.Context, req *MigrationsGetImportStatusReq, opt ...RequestOption) (*MigrationsGetImportStatusResponse, error) {
+func MigrationsGetImportStatus(ctx context.Context, req *MigrationsGetImportStatusReq, opt ...options.Option) (*MigrationsGetImportStatusResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(MigrationsGetImportStatusReq)
 	}
 	resp := &MigrationsGetImportStatusResponse{request: req}
-	r, err := doRequest(ctx, req, "migrations/get-import-status", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.Import{}
-	err = r.decodeBody(&resp.Data, "migrations/get-import-status")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -798,7 +752,7 @@ Get an import status.
 
 https://developer.github.com/v3/migrations/source_imports/#get-an-import-status
 */
-func (c Client) MigrationsGetImportStatus(ctx context.Context, req *MigrationsGetImportStatusReq, opt ...RequestOption) (*MigrationsGetImportStatusResponse, error) {
+func (c Client) MigrationsGetImportStatus(ctx context.Context, req *MigrationsGetImportStatusReq, opt ...options.Option) (*MigrationsGetImportStatusResponse, error) {
 	return MigrationsGetImportStatus(ctx, req, append(c, opt...)...)
 }
 
@@ -813,44 +767,33 @@ type MigrationsGetImportStatusReq struct {
 	Repo  string
 }
 
-func (r *MigrationsGetImportStatusReq) url() string {
-	return r._url
-}
-
-func (r *MigrationsGetImportStatusReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/import", r.Owner, r.Repo)
-}
-
-func (r *MigrationsGetImportStatusReq) method() string {
-	return "GET"
-}
-
-func (r *MigrationsGetImportStatusReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *MigrationsGetImportStatusReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *MigrationsGetImportStatusReq) body() interface{} {
-	return nil
-}
-
-func (r *MigrationsGetImportStatusReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *MigrationsGetImportStatusReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *MigrationsGetImportStatusReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "migrations/get-import-status", opt)
+func (r *MigrationsGetImportStatusReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *MigrationsGetImportStatusReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "migrations/get-import-status",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/import", r.Owner, r.Repo),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -858,7 +801,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *MigrationsGetImportStatusReq) Rel(link RelName, resp *MigrationsGetImportStatusResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -872,7 +815,7 @@ MigrationsGetImportStatusResponse is a response for MigrationsGetImportStatus
 https://developer.github.com/v3/migrations/source_imports/#get-an-import-status
 */
 type MigrationsGetImportStatusResponse struct {
-	response
+	internal.Response
 	request *MigrationsGetImportStatusReq
 	Data    components.Import
 }
@@ -886,20 +829,26 @@ Get large files.
 
 https://developer.github.com/v3/migrations/source_imports/#get-large-files
 */
-func MigrationsGetLargeFiles(ctx context.Context, req *MigrationsGetLargeFilesReq, opt ...RequestOption) (*MigrationsGetLargeFilesResponse, error) {
+func MigrationsGetLargeFiles(ctx context.Context, req *MigrationsGetLargeFilesReq, opt ...options.Option) (*MigrationsGetLargeFilesResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(MigrationsGetLargeFilesReq)
 	}
 	resp := &MigrationsGetLargeFilesResponse{request: req}
-	r, err := doRequest(ctx, req, "migrations/get-large-files", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.PorterLargeFile{}
-	err = r.decodeBody(&resp.Data, "migrations/get-large-files")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -915,7 +864,7 @@ Get large files.
 
 https://developer.github.com/v3/migrations/source_imports/#get-large-files
 */
-func (c Client) MigrationsGetLargeFiles(ctx context.Context, req *MigrationsGetLargeFilesReq, opt ...RequestOption) (*MigrationsGetLargeFilesResponse, error) {
+func (c Client) MigrationsGetLargeFiles(ctx context.Context, req *MigrationsGetLargeFilesReq, opt ...options.Option) (*MigrationsGetLargeFilesResponse, error) {
 	return MigrationsGetLargeFiles(ctx, req, append(c, opt...)...)
 }
 
@@ -930,44 +879,33 @@ type MigrationsGetLargeFilesReq struct {
 	Repo  string
 }
 
-func (r *MigrationsGetLargeFilesReq) url() string {
-	return r._url
-}
-
-func (r *MigrationsGetLargeFilesReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/import/large_files", r.Owner, r.Repo)
-}
-
-func (r *MigrationsGetLargeFilesReq) method() string {
-	return "GET"
-}
-
-func (r *MigrationsGetLargeFilesReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *MigrationsGetLargeFilesReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *MigrationsGetLargeFilesReq) body() interface{} {
-	return nil
-}
-
-func (r *MigrationsGetLargeFilesReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *MigrationsGetLargeFilesReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *MigrationsGetLargeFilesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "migrations/get-large-files", opt)
+func (r *MigrationsGetLargeFilesReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *MigrationsGetLargeFilesReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "migrations/get-large-files",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/import/large_files", r.Owner, r.Repo),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -975,7 +913,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *MigrationsGetLargeFilesReq) Rel(link RelName, resp *MigrationsGetLargeFilesResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -989,7 +927,7 @@ MigrationsGetLargeFilesResponse is a response for MigrationsGetLargeFiles
 https://developer.github.com/v3/migrations/source_imports/#get-large-files
 */
 type MigrationsGetLargeFilesResponse struct {
-	response
+	internal.Response
 	request *MigrationsGetLargeFilesReq
 	Data    []components.PorterLargeFile
 }
@@ -1003,20 +941,26 @@ Get a user migration status.
 
 https://developer.github.com/v3/migrations/users/#get-a-user-migration-status
 */
-func MigrationsGetStatusForAuthenticatedUser(ctx context.Context, req *MigrationsGetStatusForAuthenticatedUserReq, opt ...RequestOption) (*MigrationsGetStatusForAuthenticatedUserResponse, error) {
+func MigrationsGetStatusForAuthenticatedUser(ctx context.Context, req *MigrationsGetStatusForAuthenticatedUserReq, opt ...options.Option) (*MigrationsGetStatusForAuthenticatedUserResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(MigrationsGetStatusForAuthenticatedUserReq)
 	}
 	resp := &MigrationsGetStatusForAuthenticatedUserResponse{request: req}
-	r, err := doRequest(ctx, req, "migrations/get-status-for-authenticated-user", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.Migration{}
-	err = r.decodeBody(&resp.Data, "migrations/get-status-for-authenticated-user")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1032,7 +976,7 @@ Get a user migration status.
 
 https://developer.github.com/v3/migrations/users/#get-a-user-migration-status
 */
-func (c Client) MigrationsGetStatusForAuthenticatedUser(ctx context.Context, req *MigrationsGetStatusForAuthenticatedUserReq, opt ...RequestOption) (*MigrationsGetStatusForAuthenticatedUserResponse, error) {
+func (c Client) MigrationsGetStatusForAuthenticatedUser(ctx context.Context, req *MigrationsGetStatusForAuthenticatedUserReq, opt ...options.Option) (*MigrationsGetStatusForAuthenticatedUserResponse, error) {
 	return MigrationsGetStatusForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
@@ -1051,50 +995,33 @@ type MigrationsGetStatusForAuthenticatedUserReq struct {
 	WyandottePreview bool
 }
 
-func (r *MigrationsGetStatusForAuthenticatedUserReq) url() string {
-	return r._url
-}
-
-func (r *MigrationsGetStatusForAuthenticatedUserReq) urlPath() string {
-	return fmt.Sprintf("/user/migrations/%v", r.MigrationId)
-}
-
-func (r *MigrationsGetStatusForAuthenticatedUserReq) method() string {
-	return "GET"
-}
-
-func (r *MigrationsGetStatusForAuthenticatedUserReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *MigrationsGetStatusForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{"wyandotte": r.WyandottePreview}
-	if requiredPreviews {
-		previewVals["wyandotte"] = true
-	}
-	if allPreviews {
-		previewVals["wyandotte"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *MigrationsGetStatusForAuthenticatedUserReq) body() interface{} {
-	return nil
-}
-
-func (r *MigrationsGetStatusForAuthenticatedUserReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *MigrationsGetStatusForAuthenticatedUserReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *MigrationsGetStatusForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "migrations/get-status-for-authenticated-user", opt)
+func (r *MigrationsGetStatusForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *MigrationsGetStatusForAuthenticatedUserReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"wyandotte"},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "migrations/get-status-for-authenticated-user",
+		Previews:         map[string]bool{"wyandotte": r.WyandottePreview},
+		RequiredPreviews: []string{"wyandotte"},
+		URLPath:          fmt.Sprintf("/user/migrations/%v", r.MigrationId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
+	}
+	return builder
 }
 
 /*
@@ -1102,7 +1029,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *MigrationsGetStatusForAuthenticatedUserReq) Rel(link RelName, resp *MigrationsGetStatusForAuthenticatedUserResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1116,7 +1043,7 @@ MigrationsGetStatusForAuthenticatedUserResponse is a response for MigrationsGetS
 https://developer.github.com/v3/migrations/users/#get-a-user-migration-status
 */
 type MigrationsGetStatusForAuthenticatedUserResponse struct {
-	response
+	internal.Response
 	request *MigrationsGetStatusForAuthenticatedUserReq
 	Data    components.Migration
 }
@@ -1130,20 +1057,26 @@ Get an organization migration status.
 
 https://developer.github.com/v3/migrations/orgs/#get-an-organization-migration-status
 */
-func MigrationsGetStatusForOrg(ctx context.Context, req *MigrationsGetStatusForOrgReq, opt ...RequestOption) (*MigrationsGetStatusForOrgResponse, error) {
+func MigrationsGetStatusForOrg(ctx context.Context, req *MigrationsGetStatusForOrgReq, opt ...options.Option) (*MigrationsGetStatusForOrgResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(MigrationsGetStatusForOrgReq)
 	}
 	resp := &MigrationsGetStatusForOrgResponse{request: req}
-	r, err := doRequest(ctx, req, "migrations/get-status-for-org", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.Migration{}
-	err = r.decodeBody(&resp.Data, "migrations/get-status-for-org")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1159,7 +1092,7 @@ Get an organization migration status.
 
 https://developer.github.com/v3/migrations/orgs/#get-an-organization-migration-status
 */
-func (c Client) MigrationsGetStatusForOrg(ctx context.Context, req *MigrationsGetStatusForOrgReq, opt ...RequestOption) (*MigrationsGetStatusForOrgResponse, error) {
+func (c Client) MigrationsGetStatusForOrg(ctx context.Context, req *MigrationsGetStatusForOrgReq, opt ...options.Option) (*MigrationsGetStatusForOrgResponse, error) {
 	return MigrationsGetStatusForOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -1179,50 +1112,33 @@ type MigrationsGetStatusForOrgReq struct {
 	WyandottePreview bool
 }
 
-func (r *MigrationsGetStatusForOrgReq) url() string {
-	return r._url
-}
-
-func (r *MigrationsGetStatusForOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/migrations/%v", r.Org, r.MigrationId)
-}
-
-func (r *MigrationsGetStatusForOrgReq) method() string {
-	return "GET"
-}
-
-func (r *MigrationsGetStatusForOrgReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *MigrationsGetStatusForOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{"wyandotte": r.WyandottePreview}
-	if requiredPreviews {
-		previewVals["wyandotte"] = true
-	}
-	if allPreviews {
-		previewVals["wyandotte"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *MigrationsGetStatusForOrgReq) body() interface{} {
-	return nil
-}
-
-func (r *MigrationsGetStatusForOrgReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *MigrationsGetStatusForOrgReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *MigrationsGetStatusForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "migrations/get-status-for-org", opt)
+func (r *MigrationsGetStatusForOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *MigrationsGetStatusForOrgReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"wyandotte"},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "migrations/get-status-for-org",
+		Previews:         map[string]bool{"wyandotte": r.WyandottePreview},
+		RequiredPreviews: []string{"wyandotte"},
+		URLPath:          fmt.Sprintf("/orgs/%v/migrations/%v", r.Org, r.MigrationId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -1230,7 +1146,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *MigrationsGetStatusForOrgReq) Rel(link RelName, resp *MigrationsGetStatusForOrgResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1244,7 +1160,7 @@ MigrationsGetStatusForOrgResponse is a response for MigrationsGetStatusForOrg
 https://developer.github.com/v3/migrations/orgs/#get-an-organization-migration-status
 */
 type MigrationsGetStatusForOrgResponse struct {
-	response
+	internal.Response
 	request *MigrationsGetStatusForOrgReq
 	Data    components.Migration
 }
@@ -1258,20 +1174,26 @@ List user migrations.
 
 https://developer.github.com/v3/migrations/users/#list-user-migrations
 */
-func MigrationsListForAuthenticatedUser(ctx context.Context, req *MigrationsListForAuthenticatedUserReq, opt ...RequestOption) (*MigrationsListForAuthenticatedUserResponse, error) {
+func MigrationsListForAuthenticatedUser(ctx context.Context, req *MigrationsListForAuthenticatedUserReq, opt ...options.Option) (*MigrationsListForAuthenticatedUserResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(MigrationsListForAuthenticatedUserReq)
 	}
 	resp := &MigrationsListForAuthenticatedUserResponse{request: req}
-	r, err := doRequest(ctx, req, "migrations/list-for-authenticated-user", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.Migration{}
-	err = r.decodeBody(&resp.Data, "migrations/list-for-authenticated-user")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1287,7 +1209,7 @@ List user migrations.
 
 https://developer.github.com/v3/migrations/users/#list-user-migrations
 */
-func (c Client) MigrationsListForAuthenticatedUser(ctx context.Context, req *MigrationsListForAuthenticatedUserReq, opt ...RequestOption) (*MigrationsListForAuthenticatedUserResponse, error) {
+func (c Client) MigrationsListForAuthenticatedUser(ctx context.Context, req *MigrationsListForAuthenticatedUserReq, opt ...options.Option) (*MigrationsListForAuthenticatedUserResponse, error) {
 	return MigrationsListForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
@@ -1309,19 +1231,16 @@ type MigrationsListForAuthenticatedUserReq struct {
 	WyandottePreview bool
 }
 
-func (r *MigrationsListForAuthenticatedUserReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *MigrationsListForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *MigrationsListForAuthenticatedUserReq) urlPath() string {
-	return fmt.Sprintf("/user/migrations")
-}
-
-func (r *MigrationsListForAuthenticatedUserReq) method() string {
-	return "GET"
-}
-
-func (r *MigrationsListForAuthenticatedUserReq) urlQuery() url.Values {
+func (r *MigrationsListForAuthenticatedUserReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -1329,36 +1248,22 @@ func (r *MigrationsListForAuthenticatedUserReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *MigrationsListForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{"wyandotte": r.WyandottePreview}
-	if requiredPreviews {
-		previewVals["wyandotte"] = true
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"wyandotte"},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "migrations/list-for-authenticated-user",
+		Previews:         map[string]bool{"wyandotte": r.WyandottePreview},
+		RequiredPreviews: []string{"wyandotte"},
+		URLPath:          fmt.Sprintf("/user/migrations"),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
 	}
-	if allPreviews {
-		previewVals["wyandotte"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *MigrationsListForAuthenticatedUserReq) body() interface{} {
-	return nil
-}
-
-func (r *MigrationsListForAuthenticatedUserReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *MigrationsListForAuthenticatedUserReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *MigrationsListForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "migrations/list-for-authenticated-user", opt)
+	return builder
 }
 
 /*
@@ -1366,7 +1271,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *MigrationsListForAuthenticatedUserReq) Rel(link RelName, resp *MigrationsListForAuthenticatedUserResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1380,7 +1285,7 @@ MigrationsListForAuthenticatedUserResponse is a response for MigrationsListForAu
 https://developer.github.com/v3/migrations/users/#list-user-migrations
 */
 type MigrationsListForAuthenticatedUserResponse struct {
-	response
+	internal.Response
 	request *MigrationsListForAuthenticatedUserReq
 	Data    []components.Migration
 }
@@ -1394,20 +1299,26 @@ List organization migrations.
 
 https://developer.github.com/v3/migrations/orgs/#list-organization-migrations
 */
-func MigrationsListForOrg(ctx context.Context, req *MigrationsListForOrgReq, opt ...RequestOption) (*MigrationsListForOrgResponse, error) {
+func MigrationsListForOrg(ctx context.Context, req *MigrationsListForOrgReq, opt ...options.Option) (*MigrationsListForOrgResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(MigrationsListForOrgReq)
 	}
 	resp := &MigrationsListForOrgResponse{request: req}
-	r, err := doRequest(ctx, req, "migrations/list-for-org", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.Migration{}
-	err = r.decodeBody(&resp.Data, "migrations/list-for-org")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1423,7 +1334,7 @@ List organization migrations.
 
 https://developer.github.com/v3/migrations/orgs/#list-organization-migrations
 */
-func (c Client) MigrationsListForOrg(ctx context.Context, req *MigrationsListForOrgReq, opt ...RequestOption) (*MigrationsListForOrgResponse, error) {
+func (c Client) MigrationsListForOrg(ctx context.Context, req *MigrationsListForOrgReq, opt ...options.Option) (*MigrationsListForOrgResponse, error) {
 	return MigrationsListForOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -1446,19 +1357,16 @@ type MigrationsListForOrgReq struct {
 	WyandottePreview bool
 }
 
-func (r *MigrationsListForOrgReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *MigrationsListForOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *MigrationsListForOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/migrations", r.Org)
-}
-
-func (r *MigrationsListForOrgReq) method() string {
-	return "GET"
-}
-
-func (r *MigrationsListForOrgReq) urlQuery() url.Values {
+func (r *MigrationsListForOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -1466,36 +1374,22 @@ func (r *MigrationsListForOrgReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *MigrationsListForOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{"wyandotte": r.WyandottePreview}
-	if requiredPreviews {
-		previewVals["wyandotte"] = true
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"wyandotte"},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "migrations/list-for-org",
+		Previews:         map[string]bool{"wyandotte": r.WyandottePreview},
+		RequiredPreviews: []string{"wyandotte"},
+		URLPath:          fmt.Sprintf("/orgs/%v/migrations", r.Org),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
 	}
-	if allPreviews {
-		previewVals["wyandotte"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *MigrationsListForOrgReq) body() interface{} {
-	return nil
-}
-
-func (r *MigrationsListForOrgReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *MigrationsListForOrgReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *MigrationsListForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "migrations/list-for-org", opt)
+	return builder
 }
 
 /*
@@ -1503,7 +1397,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *MigrationsListForOrgReq) Rel(link RelName, resp *MigrationsListForOrgResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1517,7 +1411,7 @@ MigrationsListForOrgResponse is a response for MigrationsListForOrg
 https://developer.github.com/v3/migrations/orgs/#list-organization-migrations
 */
 type MigrationsListForOrgResponse struct {
-	response
+	internal.Response
 	request *MigrationsListForOrgReq
 	Data    []components.Migration
 }
@@ -1531,20 +1425,26 @@ List repositories in an organization migration.
 
 https://developer.github.com/v3/migrations/orgs/#list-repositories-in-an-organization-migration
 */
-func MigrationsListReposForOrg(ctx context.Context, req *MigrationsListReposForOrgReq, opt ...RequestOption) (*MigrationsListReposForOrgResponse, error) {
+func MigrationsListReposForOrg(ctx context.Context, req *MigrationsListReposForOrgReq, opt ...options.Option) (*MigrationsListReposForOrgResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(MigrationsListReposForOrgReq)
 	}
 	resp := &MigrationsListReposForOrgResponse{request: req}
-	r, err := doRequest(ctx, req, "migrations/list-repos-for-org", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.MinimalRepository{}
-	err = r.decodeBody(&resp.Data, "migrations/list-repos-for-org")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1560,7 +1460,7 @@ List repositories in an organization migration.
 
 https://developer.github.com/v3/migrations/orgs/#list-repositories-in-an-organization-migration
 */
-func (c Client) MigrationsListReposForOrg(ctx context.Context, req *MigrationsListReposForOrgReq, opt ...RequestOption) (*MigrationsListReposForOrgResponse, error) {
+func (c Client) MigrationsListReposForOrg(ctx context.Context, req *MigrationsListReposForOrgReq, opt ...options.Option) (*MigrationsListReposForOrgResponse, error) {
 	return MigrationsListReposForOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -1586,19 +1486,16 @@ type MigrationsListReposForOrgReq struct {
 	WyandottePreview bool
 }
 
-func (r *MigrationsListReposForOrgReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *MigrationsListReposForOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *MigrationsListReposForOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/migrations/%v/repositories", r.Org, r.MigrationId)
-}
-
-func (r *MigrationsListReposForOrgReq) method() string {
-	return "GET"
-}
-
-func (r *MigrationsListReposForOrgReq) urlQuery() url.Values {
+func (r *MigrationsListReposForOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -1606,36 +1503,22 @@ func (r *MigrationsListReposForOrgReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *MigrationsListReposForOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{"wyandotte": r.WyandottePreview}
-	if requiredPreviews {
-		previewVals["wyandotte"] = true
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"wyandotte"},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "migrations/list-repos-for-org",
+		Previews:         map[string]bool{"wyandotte": r.WyandottePreview},
+		RequiredPreviews: []string{"wyandotte"},
+		URLPath:          fmt.Sprintf("/orgs/%v/migrations/%v/repositories", r.Org, r.MigrationId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
 	}
-	if allPreviews {
-		previewVals["wyandotte"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *MigrationsListReposForOrgReq) body() interface{} {
-	return nil
-}
-
-func (r *MigrationsListReposForOrgReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *MigrationsListReposForOrgReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *MigrationsListReposForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "migrations/list-repos-for-org", opt)
+	return builder
 }
 
 /*
@@ -1643,7 +1526,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *MigrationsListReposForOrgReq) Rel(link RelName, resp *MigrationsListReposForOrgResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1657,7 +1540,7 @@ MigrationsListReposForOrgResponse is a response for MigrationsListReposForOrg
 https://developer.github.com/v3/migrations/orgs/#list-repositories-in-an-organization-migration
 */
 type MigrationsListReposForOrgResponse struct {
-	response
+	internal.Response
 	request *MigrationsListReposForOrgReq
 	Data    []components.MinimalRepository
 }
@@ -1671,20 +1554,26 @@ List repositories for a user migration.
 
 https://developer.github.com/v3/migrations/users/#list-repositories-for-a-user-migration
 */
-func MigrationsListReposForUser(ctx context.Context, req *MigrationsListReposForUserReq, opt ...RequestOption) (*MigrationsListReposForUserResponse, error) {
+func MigrationsListReposForUser(ctx context.Context, req *MigrationsListReposForUserReq, opt ...options.Option) (*MigrationsListReposForUserResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(MigrationsListReposForUserReq)
 	}
 	resp := &MigrationsListReposForUserResponse{request: req}
-	r, err := doRequest(ctx, req, "migrations/list-repos-for-user", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.MinimalRepository{}
-	err = r.decodeBody(&resp.Data, "migrations/list-repos-for-user")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1700,7 +1589,7 @@ List repositories for a user migration.
 
 https://developer.github.com/v3/migrations/users/#list-repositories-for-a-user-migration
 */
-func (c Client) MigrationsListReposForUser(ctx context.Context, req *MigrationsListReposForUserReq, opt ...RequestOption) (*MigrationsListReposForUserResponse, error) {
+func (c Client) MigrationsListReposForUser(ctx context.Context, req *MigrationsListReposForUserReq, opt ...options.Option) (*MigrationsListReposForUserResponse, error) {
 	return MigrationsListReposForUser(ctx, req, append(c, opt...)...)
 }
 
@@ -1725,19 +1614,16 @@ type MigrationsListReposForUserReq struct {
 	WyandottePreview bool
 }
 
-func (r *MigrationsListReposForUserReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *MigrationsListReposForUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *MigrationsListReposForUserReq) urlPath() string {
-	return fmt.Sprintf("/user/migrations/%v/repositories", r.MigrationId)
-}
-
-func (r *MigrationsListReposForUserReq) method() string {
-	return "GET"
-}
-
-func (r *MigrationsListReposForUserReq) urlQuery() url.Values {
+func (r *MigrationsListReposForUserReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -1745,36 +1631,22 @@ func (r *MigrationsListReposForUserReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *MigrationsListReposForUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{"wyandotte": r.WyandottePreview}
-	if requiredPreviews {
-		previewVals["wyandotte"] = true
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"wyandotte"},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "migrations/list-repos-for-user",
+		Previews:         map[string]bool{"wyandotte": r.WyandottePreview},
+		RequiredPreviews: []string{"wyandotte"},
+		URLPath:          fmt.Sprintf("/user/migrations/%v/repositories", r.MigrationId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
 	}
-	if allPreviews {
-		previewVals["wyandotte"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *MigrationsListReposForUserReq) body() interface{} {
-	return nil
-}
-
-func (r *MigrationsListReposForUserReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *MigrationsListReposForUserReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *MigrationsListReposForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "migrations/list-repos-for-user", opt)
+	return builder
 }
 
 /*
@@ -1782,7 +1654,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *MigrationsListReposForUserReq) Rel(link RelName, resp *MigrationsListReposForUserResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1796,7 +1668,7 @@ MigrationsListReposForUserResponse is a response for MigrationsListReposForUser
 https://developer.github.com/v3/migrations/users/#list-repositories-for-a-user-migration
 */
 type MigrationsListReposForUserResponse struct {
-	response
+	internal.Response
 	request *MigrationsListReposForUserReq
 	Data    []components.MinimalRepository
 }
@@ -1810,20 +1682,26 @@ Map a commit author.
 
 https://developer.github.com/v3/migrations/source_imports/#map-a-commit-author
 */
-func MigrationsMapCommitAuthor(ctx context.Context, req *MigrationsMapCommitAuthorReq, opt ...RequestOption) (*MigrationsMapCommitAuthorResponse, error) {
+func MigrationsMapCommitAuthor(ctx context.Context, req *MigrationsMapCommitAuthorReq, opt ...options.Option) (*MigrationsMapCommitAuthorResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(MigrationsMapCommitAuthorReq)
 	}
 	resp := &MigrationsMapCommitAuthorResponse{request: req}
-	r, err := doRequest(ctx, req, "migrations/map-commit-author", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.PorterAuthor{}
-	err = r.decodeBody(&resp.Data, "migrations/map-commit-author")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1839,7 +1717,7 @@ Map a commit author.
 
 https://developer.github.com/v3/migrations/source_imports/#map-a-commit-author
 */
-func (c Client) MigrationsMapCommitAuthor(ctx context.Context, req *MigrationsMapCommitAuthorReq, opt ...RequestOption) (*MigrationsMapCommitAuthorResponse, error) {
+func (c Client) MigrationsMapCommitAuthor(ctx context.Context, req *MigrationsMapCommitAuthorReq, opt ...options.Option) (*MigrationsMapCommitAuthorResponse, error) {
 	return MigrationsMapCommitAuthor(ctx, req, append(c, opt...)...)
 }
 
@@ -1858,47 +1736,36 @@ type MigrationsMapCommitAuthorReq struct {
 	RequestBody MigrationsMapCommitAuthorReqBody
 }
 
-func (r *MigrationsMapCommitAuthorReq) url() string {
-	return r._url
-}
-
-func (r *MigrationsMapCommitAuthorReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/import/authors/%v", r.Owner, r.Repo, r.AuthorId)
-}
-
-func (r *MigrationsMapCommitAuthorReq) method() string {
-	return "PATCH"
-}
-
-func (r *MigrationsMapCommitAuthorReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *MigrationsMapCommitAuthorReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *MigrationsMapCommitAuthorReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *MigrationsMapCommitAuthorReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *MigrationsMapCommitAuthorReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *MigrationsMapCommitAuthorReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "migrations/map-commit-author", opt)
+func (r *MigrationsMapCommitAuthorReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *MigrationsMapCommitAuthorReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{},
+		Body:         r.RequestBody,
+		DataStatuses: []int{200},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "PATCH",
+		OperationID:      "migrations/map-commit-author",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/import/authors/%v", r.Owner, r.Repo, r.AuthorId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -1906,7 +1773,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *MigrationsMapCommitAuthorReq) Rel(link RelName, resp *MigrationsMapCommitAuthorResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1935,7 +1802,7 @@ MigrationsMapCommitAuthorResponse is a response for MigrationsMapCommitAuthor
 https://developer.github.com/v3/migrations/source_imports/#map-a-commit-author
 */
 type MigrationsMapCommitAuthorResponse struct {
-	response
+	internal.Response
 	request *MigrationsMapCommitAuthorReq
 	Data    components.PorterAuthor
 }
@@ -1949,20 +1816,26 @@ Update Git LFS preference.
 
 https://developer.github.com/v3/migrations/source_imports/#update-git-lfs-preference
 */
-func MigrationsSetLfsPreference(ctx context.Context, req *MigrationsSetLfsPreferenceReq, opt ...RequestOption) (*MigrationsSetLfsPreferenceResponse, error) {
+func MigrationsSetLfsPreference(ctx context.Context, req *MigrationsSetLfsPreferenceReq, opt ...options.Option) (*MigrationsSetLfsPreferenceResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(MigrationsSetLfsPreferenceReq)
 	}
 	resp := &MigrationsSetLfsPreferenceResponse{request: req}
-	r, err := doRequest(ctx, req, "migrations/set-lfs-preference", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.Import{}
-	err = r.decodeBody(&resp.Data, "migrations/set-lfs-preference")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1978,7 +1851,7 @@ Update Git LFS preference.
 
 https://developer.github.com/v3/migrations/source_imports/#update-git-lfs-preference
 */
-func (c Client) MigrationsSetLfsPreference(ctx context.Context, req *MigrationsSetLfsPreferenceReq, opt ...RequestOption) (*MigrationsSetLfsPreferenceResponse, error) {
+func (c Client) MigrationsSetLfsPreference(ctx context.Context, req *MigrationsSetLfsPreferenceReq, opt ...options.Option) (*MigrationsSetLfsPreferenceResponse, error) {
 	return MigrationsSetLfsPreference(ctx, req, append(c, opt...)...)
 }
 
@@ -1994,47 +1867,36 @@ type MigrationsSetLfsPreferenceReq struct {
 	RequestBody MigrationsSetLfsPreferenceReqBody
 }
 
-func (r *MigrationsSetLfsPreferenceReq) url() string {
-	return r._url
-}
-
-func (r *MigrationsSetLfsPreferenceReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/import/lfs", r.Owner, r.Repo)
-}
-
-func (r *MigrationsSetLfsPreferenceReq) method() string {
-	return "PATCH"
-}
-
-func (r *MigrationsSetLfsPreferenceReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *MigrationsSetLfsPreferenceReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *MigrationsSetLfsPreferenceReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *MigrationsSetLfsPreferenceReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *MigrationsSetLfsPreferenceReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *MigrationsSetLfsPreferenceReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "migrations/set-lfs-preference", opt)
+func (r *MigrationsSetLfsPreferenceReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *MigrationsSetLfsPreferenceReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{},
+		Body:         r.RequestBody,
+		DataStatuses: []int{200},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "PATCH",
+		OperationID:      "migrations/set-lfs-preference",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/import/lfs", r.Owner, r.Repo),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -2042,7 +1904,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *MigrationsSetLfsPreferenceReq) Rel(link RelName, resp *MigrationsSetLfsPreferenceResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -2070,7 +1932,7 @@ MigrationsSetLfsPreferenceResponse is a response for MigrationsSetLfsPreference
 https://developer.github.com/v3/migrations/source_imports/#update-git-lfs-preference
 */
 type MigrationsSetLfsPreferenceResponse struct {
-	response
+	internal.Response
 	request *MigrationsSetLfsPreferenceReq
 	Data    components.Import
 }
@@ -2084,20 +1946,26 @@ Start a user migration.
 
 https://developer.github.com/v3/migrations/users/#start-a-user-migration
 */
-func MigrationsStartForAuthenticatedUser(ctx context.Context, req *MigrationsStartForAuthenticatedUserReq, opt ...RequestOption) (*MigrationsStartForAuthenticatedUserResponse, error) {
+func MigrationsStartForAuthenticatedUser(ctx context.Context, req *MigrationsStartForAuthenticatedUserReq, opt ...options.Option) (*MigrationsStartForAuthenticatedUserResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(MigrationsStartForAuthenticatedUserReq)
 	}
 	resp := &MigrationsStartForAuthenticatedUserResponse{request: req}
-	r, err := doRequest(ctx, req, "migrations/start-for-authenticated-user", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.Migration{}
-	err = r.decodeBody(&resp.Data, "migrations/start-for-authenticated-user")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2113,7 +1981,7 @@ Start a user migration.
 
 https://developer.github.com/v3/migrations/users/#start-a-user-migration
 */
-func (c Client) MigrationsStartForAuthenticatedUser(ctx context.Context, req *MigrationsStartForAuthenticatedUserReq, opt ...RequestOption) (*MigrationsStartForAuthenticatedUserResponse, error) {
+func (c Client) MigrationsStartForAuthenticatedUser(ctx context.Context, req *MigrationsStartForAuthenticatedUserReq, opt ...options.Option) (*MigrationsStartForAuthenticatedUserResponse, error) {
 	return MigrationsStartForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
@@ -2127,47 +1995,36 @@ type MigrationsStartForAuthenticatedUserReq struct {
 	RequestBody MigrationsStartForAuthenticatedUserReqBody
 }
 
-func (r *MigrationsStartForAuthenticatedUserReq) url() string {
-	return r._url
-}
-
-func (r *MigrationsStartForAuthenticatedUserReq) urlPath() string {
-	return fmt.Sprintf("/user/migrations")
-}
-
-func (r *MigrationsStartForAuthenticatedUserReq) method() string {
-	return "POST"
-}
-
-func (r *MigrationsStartForAuthenticatedUserReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *MigrationsStartForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *MigrationsStartForAuthenticatedUserReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *MigrationsStartForAuthenticatedUserReq) dataStatuses() []int {
-	return []int{201}
-}
-
-func (r *MigrationsStartForAuthenticatedUserReq) validStatuses() []int {
-	return []int{201, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *MigrationsStartForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "migrations/start-for-authenticated-user", opt)
+func (r *MigrationsStartForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *MigrationsStartForAuthenticatedUserReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{},
+		Body:         r.RequestBody,
+		DataStatuses: []int{201},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "POST",
+		OperationID:      "migrations/start-for-authenticated-user",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/user/migrations"),
+		URLQuery:         query,
+		ValidStatuses:    []int{201, 304},
+	}
+	return builder
 }
 
 /*
@@ -2175,7 +2032,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *MigrationsStartForAuthenticatedUserReq) Rel(link RelName, resp *MigrationsStartForAuthenticatedUserResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -2207,7 +2064,7 @@ MigrationsStartForAuthenticatedUserResponse is a response for MigrationsStartFor
 https://developer.github.com/v3/migrations/users/#start-a-user-migration
 */
 type MigrationsStartForAuthenticatedUserResponse struct {
-	response
+	internal.Response
 	request *MigrationsStartForAuthenticatedUserReq
 	Data    components.Migration
 }
@@ -2221,20 +2078,26 @@ Start an organization migration.
 
 https://developer.github.com/v3/migrations/orgs/#start-an-organization-migration
 */
-func MigrationsStartForOrg(ctx context.Context, req *MigrationsStartForOrgReq, opt ...RequestOption) (*MigrationsStartForOrgResponse, error) {
+func MigrationsStartForOrg(ctx context.Context, req *MigrationsStartForOrgReq, opt ...options.Option) (*MigrationsStartForOrgResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(MigrationsStartForOrgReq)
 	}
 	resp := &MigrationsStartForOrgResponse{request: req}
-	r, err := doRequest(ctx, req, "migrations/start-for-org", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.Migration{}
-	err = r.decodeBody(&resp.Data, "migrations/start-for-org")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2250,7 +2113,7 @@ Start an organization migration.
 
 https://developer.github.com/v3/migrations/orgs/#start-an-organization-migration
 */
-func (c Client) MigrationsStartForOrg(ctx context.Context, req *MigrationsStartForOrgReq, opt ...RequestOption) (*MigrationsStartForOrgResponse, error) {
+func (c Client) MigrationsStartForOrg(ctx context.Context, req *MigrationsStartForOrgReq, opt ...options.Option) (*MigrationsStartForOrgResponse, error) {
 	return MigrationsStartForOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -2265,47 +2128,36 @@ type MigrationsStartForOrgReq struct {
 	RequestBody MigrationsStartForOrgReqBody
 }
 
-func (r *MigrationsStartForOrgReq) url() string {
-	return r._url
-}
-
-func (r *MigrationsStartForOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/migrations", r.Org)
-}
-
-func (r *MigrationsStartForOrgReq) method() string {
-	return "POST"
-}
-
-func (r *MigrationsStartForOrgReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *MigrationsStartForOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *MigrationsStartForOrgReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *MigrationsStartForOrgReq) dataStatuses() []int {
-	return []int{201}
-}
-
-func (r *MigrationsStartForOrgReq) validStatuses() []int {
-	return []int{201}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *MigrationsStartForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "migrations/start-for-org", opt)
+func (r *MigrationsStartForOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *MigrationsStartForOrgReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{},
+		Body:         r.RequestBody,
+		DataStatuses: []int{201},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "POST",
+		OperationID:      "migrations/start-for-org",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/orgs/%v/migrations", r.Org),
+		URLQuery:         query,
+		ValidStatuses:    []int{201},
+	}
+	return builder
 }
 
 /*
@@ -2313,7 +2165,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *MigrationsStartForOrgReq) Rel(link RelName, resp *MigrationsStartForOrgResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -2345,7 +2197,7 @@ MigrationsStartForOrgResponse is a response for MigrationsStartForOrg
 https://developer.github.com/v3/migrations/orgs/#start-an-organization-migration
 */
 type MigrationsStartForOrgResponse struct {
-	response
+	internal.Response
 	request *MigrationsStartForOrgReq
 	Data    components.Migration
 }
@@ -2359,20 +2211,26 @@ Start an import.
 
 https://developer.github.com/v3/migrations/source_imports/#start-an-import
 */
-func MigrationsStartImport(ctx context.Context, req *MigrationsStartImportReq, opt ...RequestOption) (*MigrationsStartImportResponse, error) {
+func MigrationsStartImport(ctx context.Context, req *MigrationsStartImportReq, opt ...options.Option) (*MigrationsStartImportResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(MigrationsStartImportReq)
 	}
 	resp := &MigrationsStartImportResponse{request: req}
-	r, err := doRequest(ctx, req, "migrations/start-import", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.Import{}
-	err = r.decodeBody(&resp.Data, "migrations/start-import")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2388,7 +2246,7 @@ Start an import.
 
 https://developer.github.com/v3/migrations/source_imports/#start-an-import
 */
-func (c Client) MigrationsStartImport(ctx context.Context, req *MigrationsStartImportReq, opt ...RequestOption) (*MigrationsStartImportResponse, error) {
+func (c Client) MigrationsStartImport(ctx context.Context, req *MigrationsStartImportReq, opt ...options.Option) (*MigrationsStartImportResponse, error) {
 	return MigrationsStartImport(ctx, req, append(c, opt...)...)
 }
 
@@ -2404,47 +2262,36 @@ type MigrationsStartImportReq struct {
 	RequestBody MigrationsStartImportReqBody
 }
 
-func (r *MigrationsStartImportReq) url() string {
-	return r._url
-}
-
-func (r *MigrationsStartImportReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/import", r.Owner, r.Repo)
-}
-
-func (r *MigrationsStartImportReq) method() string {
-	return "PUT"
-}
-
-func (r *MigrationsStartImportReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *MigrationsStartImportReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *MigrationsStartImportReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *MigrationsStartImportReq) dataStatuses() []int {
-	return []int{201}
-}
-
-func (r *MigrationsStartImportReq) validStatuses() []int {
-	return []int{201}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *MigrationsStartImportReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "migrations/start-import", opt)
+func (r *MigrationsStartImportReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *MigrationsStartImportReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{},
+		Body:         r.RequestBody,
+		DataStatuses: []int{201},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "PUT",
+		OperationID:      "migrations/start-import",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/import", r.Owner, r.Repo),
+		URLQuery:         query,
+		ValidStatuses:    []int{201},
+	}
+	return builder
 }
 
 /*
@@ -2452,7 +2299,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *MigrationsStartImportReq) Rel(link RelName, resp *MigrationsStartImportResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -2494,7 +2341,7 @@ MigrationsStartImportResponse is a response for MigrationsStartImport
 https://developer.github.com/v3/migrations/source_imports/#start-an-import
 */
 type MigrationsStartImportResponse struct {
-	response
+	internal.Response
 	request *MigrationsStartImportReq
 	Data    components.Import
 }
@@ -2508,19 +2355,25 @@ Unlock a user repository.
 
 https://developer.github.com/v3/migrations/users/#unlock-a-user-repository
 */
-func MigrationsUnlockRepoForAuthenticatedUser(ctx context.Context, req *MigrationsUnlockRepoForAuthenticatedUserReq, opt ...RequestOption) (*MigrationsUnlockRepoForAuthenticatedUserResponse, error) {
+func MigrationsUnlockRepoForAuthenticatedUser(ctx context.Context, req *MigrationsUnlockRepoForAuthenticatedUserReq, opt ...options.Option) (*MigrationsUnlockRepoForAuthenticatedUserResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(MigrationsUnlockRepoForAuthenticatedUserReq)
 	}
 	resp := &MigrationsUnlockRepoForAuthenticatedUserResponse{request: req}
-	r, err := doRequest(ctx, req, "migrations/unlock-repo-for-authenticated-user", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "migrations/unlock-repo-for-authenticated-user")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -2536,7 +2389,7 @@ Unlock a user repository.
 
 https://developer.github.com/v3/migrations/users/#unlock-a-user-repository
 */
-func (c Client) MigrationsUnlockRepoForAuthenticatedUser(ctx context.Context, req *MigrationsUnlockRepoForAuthenticatedUserReq, opt ...RequestOption) (*MigrationsUnlockRepoForAuthenticatedUserResponse, error) {
+func (c Client) MigrationsUnlockRepoForAuthenticatedUser(ctx context.Context, req *MigrationsUnlockRepoForAuthenticatedUserReq, opt ...options.Option) (*MigrationsUnlockRepoForAuthenticatedUserResponse, error) {
 	return MigrationsUnlockRepoForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
@@ -2558,50 +2411,33 @@ type MigrationsUnlockRepoForAuthenticatedUserReq struct {
 	WyandottePreview bool
 }
 
-func (r *MigrationsUnlockRepoForAuthenticatedUserReq) url() string {
-	return r._url
-}
-
-func (r *MigrationsUnlockRepoForAuthenticatedUserReq) urlPath() string {
-	return fmt.Sprintf("/user/migrations/%v/repos/%v/lock", r.MigrationId, r.RepoName)
-}
-
-func (r *MigrationsUnlockRepoForAuthenticatedUserReq) method() string {
-	return "DELETE"
-}
-
-func (r *MigrationsUnlockRepoForAuthenticatedUserReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *MigrationsUnlockRepoForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"wyandotte": r.WyandottePreview}
-	if requiredPreviews {
-		previewVals["wyandotte"] = true
-	}
-	if allPreviews {
-		previewVals["wyandotte"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *MigrationsUnlockRepoForAuthenticatedUserReq) body() interface{} {
-	return nil
-}
-
-func (r *MigrationsUnlockRepoForAuthenticatedUserReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *MigrationsUnlockRepoForAuthenticatedUserReq) validStatuses() []int {
-	return []int{204, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *MigrationsUnlockRepoForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "migrations/unlock-repo-for-authenticated-user", opt)
+func (r *MigrationsUnlockRepoForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *MigrationsUnlockRepoForAuthenticatedUserReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"wyandotte"},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		OperationID:      "migrations/unlock-repo-for-authenticated-user",
+		Previews:         map[string]bool{"wyandotte": r.WyandottePreview},
+		RequiredPreviews: []string{"wyandotte"},
+		URLPath:          fmt.Sprintf("/user/migrations/%v/repos/%v/lock", r.MigrationId, r.RepoName),
+		URLQuery:         query,
+		ValidStatuses:    []int{204, 304},
+	}
+	return builder
 }
 
 /*
@@ -2609,7 +2445,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *MigrationsUnlockRepoForAuthenticatedUserReq) Rel(link RelName, resp *MigrationsUnlockRepoForAuthenticatedUserResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -2623,7 +2459,7 @@ MigrationsUnlockRepoForAuthenticatedUserResponse is a response for MigrationsUnl
 https://developer.github.com/v3/migrations/users/#unlock-a-user-repository
 */
 type MigrationsUnlockRepoForAuthenticatedUserResponse struct {
-	response
+	internal.Response
 	request *MigrationsUnlockRepoForAuthenticatedUserReq
 }
 
@@ -2636,23 +2472,29 @@ Unlock an organization repository.
 
 https://developer.github.com/v3/migrations/orgs/#unlock-an-organization-repository
 */
-func MigrationsUnlockRepoForOrg(ctx context.Context, req *MigrationsUnlockRepoForOrgReq, opt ...RequestOption) (*MigrationsUnlockRepoForOrgResponse, error) {
+func MigrationsUnlockRepoForOrg(ctx context.Context, req *MigrationsUnlockRepoForOrgReq, opt ...options.Option) (*MigrationsUnlockRepoForOrgResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(MigrationsUnlockRepoForOrgReq)
 	}
 	resp := &MigrationsUnlockRepoForOrgResponse{request: req}
-	r, err := doRequest(ctx, req, "migrations/unlock-repo-for-org", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.setBoolResult(&resp.Data)
+
+	err = internal.SetBoolResult(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
-	err = r.decodeBody(nil, "migrations/unlock-repo-for-org")
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -2668,7 +2510,7 @@ Unlock an organization repository.
 
 https://developer.github.com/v3/migrations/orgs/#unlock-an-organization-repository
 */
-func (c Client) MigrationsUnlockRepoForOrg(ctx context.Context, req *MigrationsUnlockRepoForOrgReq, opt ...RequestOption) (*MigrationsUnlockRepoForOrgResponse, error) {
+func (c Client) MigrationsUnlockRepoForOrg(ctx context.Context, req *MigrationsUnlockRepoForOrgReq, opt ...options.Option) (*MigrationsUnlockRepoForOrgResponse, error) {
 	return MigrationsUnlockRepoForOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -2691,50 +2533,33 @@ type MigrationsUnlockRepoForOrgReq struct {
 	WyandottePreview bool
 }
 
-func (r *MigrationsUnlockRepoForOrgReq) url() string {
-	return r._url
-}
-
-func (r *MigrationsUnlockRepoForOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/migrations/%v/repos/%v/lock", r.Org, r.MigrationId, r.RepoName)
-}
-
-func (r *MigrationsUnlockRepoForOrgReq) method() string {
-	return "DELETE"
-}
-
-func (r *MigrationsUnlockRepoForOrgReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *MigrationsUnlockRepoForOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"wyandotte": r.WyandottePreview}
-	if requiredPreviews {
-		previewVals["wyandotte"] = true
-	}
-	if allPreviews {
-		previewVals["wyandotte"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *MigrationsUnlockRepoForOrgReq) body() interface{} {
-	return nil
-}
-
-func (r *MigrationsUnlockRepoForOrgReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *MigrationsUnlockRepoForOrgReq) validStatuses() []int {
-	return []int{204}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *MigrationsUnlockRepoForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "migrations/unlock-repo-for-org", opt)
+func (r *MigrationsUnlockRepoForOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *MigrationsUnlockRepoForOrgReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"wyandotte"},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		OperationID:      "migrations/unlock-repo-for-org",
+		Previews:         map[string]bool{"wyandotte": r.WyandottePreview},
+		RequiredPreviews: []string{"wyandotte"},
+		URLPath:          fmt.Sprintf("/orgs/%v/migrations/%v/repos/%v/lock", r.Org, r.MigrationId, r.RepoName),
+		URLQuery:         query,
+		ValidStatuses:    []int{204},
+	}
+	return builder
 }
 
 /*
@@ -2742,7 +2567,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *MigrationsUnlockRepoForOrgReq) Rel(link RelName, resp *MigrationsUnlockRepoForOrgResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -2756,7 +2581,7 @@ MigrationsUnlockRepoForOrgResponse is a response for MigrationsUnlockRepoForOrg
 https://developer.github.com/v3/migrations/orgs/#unlock-an-organization-repository
 */
 type MigrationsUnlockRepoForOrgResponse struct {
-	response
+	internal.Response
 	request *MigrationsUnlockRepoForOrgReq
 	Data    bool
 }
@@ -2770,20 +2595,26 @@ Update an import.
 
 https://developer.github.com/v3/migrations/source_imports/#update-an-import
 */
-func MigrationsUpdateImport(ctx context.Context, req *MigrationsUpdateImportReq, opt ...RequestOption) (*MigrationsUpdateImportResponse, error) {
+func MigrationsUpdateImport(ctx context.Context, req *MigrationsUpdateImportReq, opt ...options.Option) (*MigrationsUpdateImportResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(MigrationsUpdateImportReq)
 	}
 	resp := &MigrationsUpdateImportResponse{request: req}
-	r, err := doRequest(ctx, req, "migrations/update-import", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.Import{}
-	err = r.decodeBody(&resp.Data, "migrations/update-import")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2799,7 +2630,7 @@ Update an import.
 
 https://developer.github.com/v3/migrations/source_imports/#update-an-import
 */
-func (c Client) MigrationsUpdateImport(ctx context.Context, req *MigrationsUpdateImportReq, opt ...RequestOption) (*MigrationsUpdateImportResponse, error) {
+func (c Client) MigrationsUpdateImport(ctx context.Context, req *MigrationsUpdateImportReq, opt ...options.Option) (*MigrationsUpdateImportResponse, error) {
 	return MigrationsUpdateImport(ctx, req, append(c, opt...)...)
 }
 
@@ -2815,47 +2646,36 @@ type MigrationsUpdateImportReq struct {
 	RequestBody MigrationsUpdateImportReqBody
 }
 
-func (r *MigrationsUpdateImportReq) url() string {
-	return r._url
-}
-
-func (r *MigrationsUpdateImportReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/import", r.Owner, r.Repo)
-}
-
-func (r *MigrationsUpdateImportReq) method() string {
-	return "PATCH"
-}
-
-func (r *MigrationsUpdateImportReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *MigrationsUpdateImportReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *MigrationsUpdateImportReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *MigrationsUpdateImportReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *MigrationsUpdateImportReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *MigrationsUpdateImportReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "migrations/update-import", opt)
+func (r *MigrationsUpdateImportReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *MigrationsUpdateImportReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{},
+		Body:         r.RequestBody,
+		DataStatuses: []int{200},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "PATCH",
+		OperationID:      "migrations/update-import",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/import", r.Owner, r.Repo),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -2863,7 +2683,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *MigrationsUpdateImportReq) Rel(link RelName, resp *MigrationsUpdateImportResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -2893,7 +2713,7 @@ MigrationsUpdateImportResponse is a response for MigrationsUpdateImport
 https://developer.github.com/v3/migrations/source_imports/#update-an-import
 */
 type MigrationsUpdateImportResponse struct {
-	response
+	internal.Response
 	request *MigrationsUpdateImportReq
 	Data    components.Import
 }

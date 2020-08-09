@@ -1,7 +1,11 @@
 package internal
 
 import (
+	"context"
+	"fmt"
 	"reflect"
+
+	"github.com/willabides/octo-go/options"
 )
 
 var (
@@ -35,4 +39,39 @@ func structName(tp reflect.Type) string {
 		return structName(tp.Elem())
 	}
 	return tp.Name()
+}
+
+// DoRequest performs an http request and returns a Response
+func DoRequest(ctx context.Context, builder *RequestBuilder, opts *options.Options) (*Response, error) {
+	req, err := builder.HTTPRequest(ctx, opts)
+	if err != nil {
+		return nil, err
+	}
+
+	// TODO: move this into builder.HTTPRequest
+	authProvider := opts.AuthProvider()
+	if authProvider != nil {
+		var authHeader string
+		authHeader, err = authProvider.AuthorizationHeader(ctx)
+		if err != nil {
+			return nil, fmt.Errorf("error setting authorization header: %v", err)
+		}
+		req.Header.Set("Authorization", authHeader)
+	}
+	httpResponse, err := opts.HttpClient().Do(req)
+	if err != nil {
+		return nil, err
+	}
+	resp := &Response{
+		opts:         opts,
+		httpResponse: httpResponse,
+		reqBuilder:   builder,
+	}
+
+	err = ErrorCheck(resp)
+	if err != nil {
+		return nil, err
+	}
+
+	return resp, nil
 }

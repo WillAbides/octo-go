@@ -6,6 +6,8 @@ import (
 	"context"
 	"fmt"
 	components "github.com/willabides/octo-go/components"
+	internal "github.com/willabides/octo-go/internal"
+	options "github.com/willabides/octo-go/options"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -20,20 +22,26 @@ Get a license.
 
 https://developer.github.com/v3/licenses/#get-a-license
 */
-func LicensesGet(ctx context.Context, req *LicensesGetReq, opt ...RequestOption) (*LicensesGetResponse, error) {
+func LicensesGet(ctx context.Context, req *LicensesGetReq, opt ...options.Option) (*LicensesGetResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(LicensesGetReq)
 	}
 	resp := &LicensesGetResponse{request: req}
-	r, err := doRequest(ctx, req, "licenses/get", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.License{}
-	err = r.decodeBody(&resp.Data, "licenses/get")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -49,7 +57,7 @@ Get a license.
 
 https://developer.github.com/v3/licenses/#get-a-license
 */
-func (c Client) LicensesGet(ctx context.Context, req *LicensesGetReq, opt ...RequestOption) (*LicensesGetResponse, error) {
+func (c Client) LicensesGet(ctx context.Context, req *LicensesGetReq, opt ...options.Option) (*LicensesGetResponse, error) {
 	return LicensesGet(ctx, req, append(c, opt...)...)
 }
 
@@ -65,44 +73,33 @@ type LicensesGetReq struct {
 	License string
 }
 
-func (r *LicensesGetReq) url() string {
-	return r._url
-}
-
-func (r *LicensesGetReq) urlPath() string {
-	return fmt.Sprintf("/licenses/%v", r.License)
-}
-
-func (r *LicensesGetReq) method() string {
-	return "GET"
-}
-
-func (r *LicensesGetReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *LicensesGetReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *LicensesGetReq) body() interface{} {
-	return nil
-}
-
-func (r *LicensesGetReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *LicensesGetReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *LicensesGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "licenses/get", opt)
+func (r *LicensesGetReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *LicensesGetReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "licenses/get",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/licenses/%v", r.License),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
+	}
+	return builder
 }
 
 /*
@@ -110,7 +107,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *LicensesGetReq) Rel(link RelName, resp *LicensesGetResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -124,7 +121,7 @@ LicensesGetResponse is a response for LicensesGet
 https://developer.github.com/v3/licenses/#get-a-license
 */
 type LicensesGetResponse struct {
-	response
+	internal.Response
 	request *LicensesGetReq
 	Data    components.License
 }
@@ -138,20 +135,26 @@ Get all commonly used licenses.
 
 https://developer.github.com/v3/licenses/#get-all-commonly-used-licenses
 */
-func LicensesGetAllCommonlyUsed(ctx context.Context, req *LicensesGetAllCommonlyUsedReq, opt ...RequestOption) (*LicensesGetAllCommonlyUsedResponse, error) {
+func LicensesGetAllCommonlyUsed(ctx context.Context, req *LicensesGetAllCommonlyUsedReq, opt ...options.Option) (*LicensesGetAllCommonlyUsedResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(LicensesGetAllCommonlyUsedReq)
 	}
 	resp := &LicensesGetAllCommonlyUsedResponse{request: req}
-	r, err := doRequest(ctx, req, "licenses/get-all-commonly-used", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.LicenseSimple{}
-	err = r.decodeBody(&resp.Data, "licenses/get-all-commonly-used")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -167,7 +170,7 @@ Get all commonly used licenses.
 
 https://developer.github.com/v3/licenses/#get-all-commonly-used-licenses
 */
-func (c Client) LicensesGetAllCommonlyUsed(ctx context.Context, req *LicensesGetAllCommonlyUsedReq, opt ...RequestOption) (*LicensesGetAllCommonlyUsedResponse, error) {
+func (c Client) LicensesGetAllCommonlyUsed(ctx context.Context, req *LicensesGetAllCommonlyUsedReq, opt ...options.Option) (*LicensesGetAllCommonlyUsedResponse, error) {
 	return LicensesGetAllCommonlyUsed(ctx, req, append(c, opt...)...)
 }
 
@@ -184,19 +187,16 @@ type LicensesGetAllCommonlyUsedReq struct {
 	PerPage *int64
 }
 
-func (r *LicensesGetAllCommonlyUsedReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *LicensesGetAllCommonlyUsedReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *LicensesGetAllCommonlyUsedReq) urlPath() string {
-	return fmt.Sprintf("/licenses")
-}
-
-func (r *LicensesGetAllCommonlyUsedReq) method() string {
-	return "GET"
-}
-
-func (r *LicensesGetAllCommonlyUsedReq) urlQuery() url.Values {
+func (r *LicensesGetAllCommonlyUsedReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Featured != nil {
 		query.Set("featured", strconv.FormatBool(*r.Featured))
@@ -204,30 +204,22 @@ func (r *LicensesGetAllCommonlyUsedReq) urlQuery() url.Values {
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
 	}
-	return query
-}
 
-func (r *LicensesGetAllCommonlyUsedReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *LicensesGetAllCommonlyUsedReq) body() interface{} {
-	return nil
-}
-
-func (r *LicensesGetAllCommonlyUsedReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *LicensesGetAllCommonlyUsedReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *LicensesGetAllCommonlyUsedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "licenses/get-all-commonly-used", opt)
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "licenses/get-all-commonly-used",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/licenses"),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
+	}
+	return builder
 }
 
 /*
@@ -235,7 +227,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *LicensesGetAllCommonlyUsedReq) Rel(link RelName, resp *LicensesGetAllCommonlyUsedResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -249,7 +241,7 @@ LicensesGetAllCommonlyUsedResponse is a response for LicensesGetAllCommonlyUsed
 https://developer.github.com/v3/licenses/#get-all-commonly-used-licenses
 */
 type LicensesGetAllCommonlyUsedResponse struct {
-	response
+	internal.Response
 	request *LicensesGetAllCommonlyUsedReq
 	Data    []components.LicenseSimple
 }
@@ -263,20 +255,26 @@ Get the license for a repository.
 
 https://developer.github.com/v3/licenses/#get-the-license-for-a-repository
 */
-func LicensesGetForRepo(ctx context.Context, req *LicensesGetForRepoReq, opt ...RequestOption) (*LicensesGetForRepoResponse, error) {
+func LicensesGetForRepo(ctx context.Context, req *LicensesGetForRepoReq, opt ...options.Option) (*LicensesGetForRepoResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(LicensesGetForRepoReq)
 	}
 	resp := &LicensesGetForRepoResponse{request: req}
-	r, err := doRequest(ctx, req, "licenses/get-for-repo", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.LicenseContent{}
-	err = r.decodeBody(&resp.Data, "licenses/get-for-repo")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -292,7 +290,7 @@ Get the license for a repository.
 
 https://developer.github.com/v3/licenses/#get-the-license-for-a-repository
 */
-func (c Client) LicensesGetForRepo(ctx context.Context, req *LicensesGetForRepoReq, opt ...RequestOption) (*LicensesGetForRepoResponse, error) {
+func (c Client) LicensesGetForRepo(ctx context.Context, req *LicensesGetForRepoReq, opt ...options.Option) (*LicensesGetForRepoResponse, error) {
 	return LicensesGetForRepo(ctx, req, append(c, opt...)...)
 }
 
@@ -307,44 +305,33 @@ type LicensesGetForRepoReq struct {
 	Repo  string
 }
 
-func (r *LicensesGetForRepoReq) url() string {
-	return r._url
-}
-
-func (r *LicensesGetForRepoReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/license", r.Owner, r.Repo)
-}
-
-func (r *LicensesGetForRepoReq) method() string {
-	return "GET"
-}
-
-func (r *LicensesGetForRepoReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *LicensesGetForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *LicensesGetForRepoReq) body() interface{} {
-	return nil
-}
-
-func (r *LicensesGetForRepoReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *LicensesGetForRepoReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *LicensesGetForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "licenses/get-for-repo", opt)
+func (r *LicensesGetForRepoReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *LicensesGetForRepoReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "licenses/get-for-repo",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/license", r.Owner, r.Repo),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -352,7 +339,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *LicensesGetForRepoReq) Rel(link RelName, resp *LicensesGetForRepoResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -366,7 +353,7 @@ LicensesGetForRepoResponse is a response for LicensesGetForRepo
 https://developer.github.com/v3/licenses/#get-the-license-for-a-repository
 */
 type LicensesGetForRepoResponse struct {
-	response
+	internal.Response
 	request *LicensesGetForRepoReq
 	Data    components.LicenseContent
 }

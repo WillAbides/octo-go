@@ -12,6 +12,7 @@ import (
 	"path/filepath"
 
 	"github.com/willabides/octo-go"
+	"github.com/willabides/octo-go/options/auth"
 )
 
 func main() {
@@ -33,7 +34,7 @@ func main() {
 	if githubToken == "" {
 		log.Fatal("GITHUB_TOKEN is required")
 	}
-	client := octo.NewClient(octo.WithPATAuth(githubToken))
+	client := octo.NewClient(auth.WithPATAuth(githubToken))
 
 	tag := releaseTag
 	var err error

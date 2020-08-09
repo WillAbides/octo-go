@@ -6,6 +6,7 @@ import (
 
 	"github.com/stretchr/testify/require"
 	"github.com/willabides/octo-go"
+	"github.com/willabides/octo-go/options/auth"
 )
 
 func TestAppsCreateInstallationAccessToken(t *testing.T) {
@@ -17,7 +18,7 @@ func TestAppsCreateInstallationAccessToken(t *testing.T) {
 	require.NoError(t, err)
 
 	// revoke the token so that we don't inadvertently commit a valid token to git
-	_, err = client.AppsRevokeInstallationAccessToken(ctx, nil, octo.WithPATAuth(token.Data.Token))
+	_, err = client.AppsRevokeInstallationAccessToken(ctx, nil, auth.WithPATAuth(token.Data.Token))
 	require.NoError(t, err)
 }
 

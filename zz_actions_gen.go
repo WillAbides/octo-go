@@ -6,6 +6,8 @@ import (
 	"context"
 	"fmt"
 	components "github.com/willabides/octo-go/components"
+	internal "github.com/willabides/octo-go/internal"
+	options "github.com/willabides/octo-go/options"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -20,19 +22,25 @@ Add selected repository to an organization secret.
 
 https://developer.github.com/v3/actions/secrets/#add-selected-repository-to-an-organization-secret
 */
-func ActionsAddSelectedRepoToOrgSecret(ctx context.Context, req *ActionsAddSelectedRepoToOrgSecretReq, opt ...RequestOption) (*ActionsAddSelectedRepoToOrgSecretResponse, error) {
+func ActionsAddSelectedRepoToOrgSecret(ctx context.Context, req *ActionsAddSelectedRepoToOrgSecretReq, opt ...options.Option) (*ActionsAddSelectedRepoToOrgSecretResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActionsAddSelectedRepoToOrgSecretReq)
 	}
 	resp := &ActionsAddSelectedRepoToOrgSecretResponse{request: req}
-	r, err := doRequest(ctx, req, "actions/add-selected-repo-to-org-secret", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "actions/add-selected-repo-to-org-secret")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -48,7 +56,7 @@ Add selected repository to an organization secret.
 
 https://developer.github.com/v3/actions/secrets/#add-selected-repository-to-an-organization-secret
 */
-func (c Client) ActionsAddSelectedRepoToOrgSecret(ctx context.Context, req *ActionsAddSelectedRepoToOrgSecretReq, opt ...RequestOption) (*ActionsAddSelectedRepoToOrgSecretResponse, error) {
+func (c Client) ActionsAddSelectedRepoToOrgSecret(ctx context.Context, req *ActionsAddSelectedRepoToOrgSecretReq, opt ...options.Option) (*ActionsAddSelectedRepoToOrgSecretResponse, error) {
 	return ActionsAddSelectedRepoToOrgSecret(ctx, req, append(c, opt...)...)
 }
 
@@ -68,44 +76,33 @@ type ActionsAddSelectedRepoToOrgSecretReq struct {
 	RepositoryId int64
 }
 
-func (r *ActionsAddSelectedRepoToOrgSecretReq) url() string {
-	return r._url
-}
-
-func (r *ActionsAddSelectedRepoToOrgSecretReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/actions/secrets/%v/repositories/%v", r.Org, r.SecretName, r.RepositoryId)
-}
-
-func (r *ActionsAddSelectedRepoToOrgSecretReq) method() string {
-	return "PUT"
-}
-
-func (r *ActionsAddSelectedRepoToOrgSecretReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ActionsAddSelectedRepoToOrgSecretReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActionsAddSelectedRepoToOrgSecretReq) body() interface{} {
-	return nil
-}
-
-func (r *ActionsAddSelectedRepoToOrgSecretReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *ActionsAddSelectedRepoToOrgSecretReq) validStatuses() []int {
-	return []int{204}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ActionsAddSelectedRepoToOrgSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "actions/add-selected-repo-to-org-secret", opt)
+func (r *ActionsAddSelectedRepoToOrgSecretReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ActionsAddSelectedRepoToOrgSecretReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "PUT",
+		OperationID:      "actions/add-selected-repo-to-org-secret",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/orgs/%v/actions/secrets/%v/repositories/%v", r.Org, r.SecretName, r.RepositoryId),
+		URLQuery:         query,
+		ValidStatuses:    []int{204},
+	}
+	return builder
 }
 
 /*
@@ -113,7 +110,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActionsAddSelectedRepoToOrgSecretReq) Rel(link RelName, resp *ActionsAddSelectedRepoToOrgSecretResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -127,7 +124,7 @@ ActionsAddSelectedRepoToOrgSecretResponse is a response for ActionsAddSelectedRe
 https://developer.github.com/v3/actions/secrets/#add-selected-repository-to-an-organization-secret
 */
 type ActionsAddSelectedRepoToOrgSecretResponse struct {
-	response
+	internal.Response
 	request *ActionsAddSelectedRepoToOrgSecretReq
 }
 
@@ -140,19 +137,25 @@ Cancel a workflow run.
 
 https://developer.github.com/v3/actions/workflow-runs/#cancel-a-workflow-run
 */
-func ActionsCancelWorkflowRun(ctx context.Context, req *ActionsCancelWorkflowRunReq, opt ...RequestOption) (*ActionsCancelWorkflowRunResponse, error) {
+func ActionsCancelWorkflowRun(ctx context.Context, req *ActionsCancelWorkflowRunReq, opt ...options.Option) (*ActionsCancelWorkflowRunResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActionsCancelWorkflowRunReq)
 	}
 	resp := &ActionsCancelWorkflowRunResponse{request: req}
-	r, err := doRequest(ctx, req, "actions/cancel-workflow-run", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "actions/cancel-workflow-run")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -168,7 +171,7 @@ Cancel a workflow run.
 
 https://developer.github.com/v3/actions/workflow-runs/#cancel-a-workflow-run
 */
-func (c Client) ActionsCancelWorkflowRun(ctx context.Context, req *ActionsCancelWorkflowRunReq, opt ...RequestOption) (*ActionsCancelWorkflowRunResponse, error) {
+func (c Client) ActionsCancelWorkflowRun(ctx context.Context, req *ActionsCancelWorkflowRunReq, opt ...options.Option) (*ActionsCancelWorkflowRunResponse, error) {
 	return ActionsCancelWorkflowRun(ctx, req, append(c, opt...)...)
 }
 
@@ -184,44 +187,33 @@ type ActionsCancelWorkflowRunReq struct {
 	RunId int64
 }
 
-func (r *ActionsCancelWorkflowRunReq) url() string {
-	return r._url
-}
-
-func (r *ActionsCancelWorkflowRunReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/actions/runs/%v/cancel", r.Owner, r.Repo, r.RunId)
-}
-
-func (r *ActionsCancelWorkflowRunReq) method() string {
-	return "POST"
-}
-
-func (r *ActionsCancelWorkflowRunReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ActionsCancelWorkflowRunReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActionsCancelWorkflowRunReq) body() interface{} {
-	return nil
-}
-
-func (r *ActionsCancelWorkflowRunReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *ActionsCancelWorkflowRunReq) validStatuses() []int {
-	return []int{202}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ActionsCancelWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "actions/cancel-workflow-run", opt)
+func (r *ActionsCancelWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ActionsCancelWorkflowRunReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "POST",
+		OperationID:      "actions/cancel-workflow-run",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/actions/runs/%v/cancel", r.Owner, r.Repo, r.RunId),
+		URLQuery:         query,
+		ValidStatuses:    []int{202},
+	}
+	return builder
 }
 
 /*
@@ -229,7 +221,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActionsCancelWorkflowRunReq) Rel(link RelName, resp *ActionsCancelWorkflowRunResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -243,7 +235,7 @@ ActionsCancelWorkflowRunResponse is a response for ActionsCancelWorkflowRun
 https://developer.github.com/v3/actions/workflow-runs/#cancel-a-workflow-run
 */
 type ActionsCancelWorkflowRunResponse struct {
-	response
+	internal.Response
 	request *ActionsCancelWorkflowRunReq
 }
 
@@ -256,19 +248,25 @@ Create or update an organization secret.
 
 https://developer.github.com/v3/actions/secrets/#create-or-update-an-organization-secret
 */
-func ActionsCreateOrUpdateOrgSecret(ctx context.Context, req *ActionsCreateOrUpdateOrgSecretReq, opt ...RequestOption) (*ActionsCreateOrUpdateOrgSecretResponse, error) {
+func ActionsCreateOrUpdateOrgSecret(ctx context.Context, req *ActionsCreateOrUpdateOrgSecretReq, opt ...options.Option) (*ActionsCreateOrUpdateOrgSecretResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActionsCreateOrUpdateOrgSecretReq)
 	}
 	resp := &ActionsCreateOrUpdateOrgSecretResponse{request: req}
-	r, err := doRequest(ctx, req, "actions/create-or-update-org-secret", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "actions/create-or-update-org-secret")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -284,7 +282,7 @@ Create or update an organization secret.
 
 https://developer.github.com/v3/actions/secrets/#create-or-update-an-organization-secret
 */
-func (c Client) ActionsCreateOrUpdateOrgSecret(ctx context.Context, req *ActionsCreateOrUpdateOrgSecretReq, opt ...RequestOption) (*ActionsCreateOrUpdateOrgSecretResponse, error) {
+func (c Client) ActionsCreateOrUpdateOrgSecret(ctx context.Context, req *ActionsCreateOrUpdateOrgSecretReq, opt ...options.Option) (*ActionsCreateOrUpdateOrgSecretResponse, error) {
 	return ActionsCreateOrUpdateOrgSecret(ctx, req, append(c, opt...)...)
 }
 
@@ -302,44 +300,33 @@ type ActionsCreateOrUpdateOrgSecretReq struct {
 	RequestBody ActionsCreateOrUpdateOrgSecretReqBody
 }
 
-func (r *ActionsCreateOrUpdateOrgSecretReq) url() string {
-	return r._url
-}
-
-func (r *ActionsCreateOrUpdateOrgSecretReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/actions/secrets/%v", r.Org, r.SecretName)
-}
-
-func (r *ActionsCreateOrUpdateOrgSecretReq) method() string {
-	return "PUT"
-}
-
-func (r *ActionsCreateOrUpdateOrgSecretReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ActionsCreateOrUpdateOrgSecretReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"content-type": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActionsCreateOrUpdateOrgSecretReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *ActionsCreateOrUpdateOrgSecretReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *ActionsCreateOrUpdateOrgSecretReq) validStatuses() []int {
-	return []int{201, 204}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ActionsCreateOrUpdateOrgSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "actions/create-or-update-org-secret", opt)
+func (r *ActionsCreateOrUpdateOrgSecretReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ActionsCreateOrUpdateOrgSecretReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             r.RequestBody,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"content-type": String("application/json")},
+		Method:           "PUT",
+		OperationID:      "actions/create-or-update-org-secret",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/orgs/%v/actions/secrets/%v", r.Org, r.SecretName),
+		URLQuery:         query,
+		ValidStatuses:    []int{201, 204},
+	}
+	return builder
 }
 
 /*
@@ -347,7 +334,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActionsCreateOrUpdateOrgSecretReq) Rel(link RelName, resp *ActionsCreateOrUpdateOrgSecretResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -404,7 +391,7 @@ ActionsCreateOrUpdateOrgSecretResponse is a response for ActionsCreateOrUpdateOr
 https://developer.github.com/v3/actions/secrets/#create-or-update-an-organization-secret
 */
 type ActionsCreateOrUpdateOrgSecretResponse struct {
-	response
+	internal.Response
 	request *ActionsCreateOrUpdateOrgSecretReq
 }
 
@@ -417,19 +404,25 @@ Create or update a repository secret.
 
 https://developer.github.com/v3/actions/secrets/#create-or-update-a-repository-secret
 */
-func ActionsCreateOrUpdateRepoSecret(ctx context.Context, req *ActionsCreateOrUpdateRepoSecretReq, opt ...RequestOption) (*ActionsCreateOrUpdateRepoSecretResponse, error) {
+func ActionsCreateOrUpdateRepoSecret(ctx context.Context, req *ActionsCreateOrUpdateRepoSecretReq, opt ...options.Option) (*ActionsCreateOrUpdateRepoSecretResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActionsCreateOrUpdateRepoSecretReq)
 	}
 	resp := &ActionsCreateOrUpdateRepoSecretResponse{request: req}
-	r, err := doRequest(ctx, req, "actions/create-or-update-repo-secret", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "actions/create-or-update-repo-secret")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -445,7 +438,7 @@ Create or update a repository secret.
 
 https://developer.github.com/v3/actions/secrets/#create-or-update-a-repository-secret
 */
-func (c Client) ActionsCreateOrUpdateRepoSecret(ctx context.Context, req *ActionsCreateOrUpdateRepoSecretReq, opt ...RequestOption) (*ActionsCreateOrUpdateRepoSecretResponse, error) {
+func (c Client) ActionsCreateOrUpdateRepoSecret(ctx context.Context, req *ActionsCreateOrUpdateRepoSecretReq, opt ...options.Option) (*ActionsCreateOrUpdateRepoSecretResponse, error) {
 	return ActionsCreateOrUpdateRepoSecret(ctx, req, append(c, opt...)...)
 }
 
@@ -464,44 +457,33 @@ type ActionsCreateOrUpdateRepoSecretReq struct {
 	RequestBody ActionsCreateOrUpdateRepoSecretReqBody
 }
 
-func (r *ActionsCreateOrUpdateRepoSecretReq) url() string {
-	return r._url
-}
-
-func (r *ActionsCreateOrUpdateRepoSecretReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/actions/secrets/%v", r.Owner, r.Repo, r.SecretName)
-}
-
-func (r *ActionsCreateOrUpdateRepoSecretReq) method() string {
-	return "PUT"
-}
-
-func (r *ActionsCreateOrUpdateRepoSecretReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ActionsCreateOrUpdateRepoSecretReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"content-type": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActionsCreateOrUpdateRepoSecretReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *ActionsCreateOrUpdateRepoSecretReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *ActionsCreateOrUpdateRepoSecretReq) validStatuses() []int {
-	return []int{201, 204}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ActionsCreateOrUpdateRepoSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "actions/create-or-update-repo-secret", opt)
+func (r *ActionsCreateOrUpdateRepoSecretReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ActionsCreateOrUpdateRepoSecretReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             r.RequestBody,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"content-type": String("application/json")},
+		Method:           "PUT",
+		OperationID:      "actions/create-or-update-repo-secret",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/actions/secrets/%v", r.Owner, r.Repo, r.SecretName),
+		URLQuery:         query,
+		ValidStatuses:    []int{201, 204},
+	}
+	return builder
 }
 
 /*
@@ -509,7 +491,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActionsCreateOrUpdateRepoSecretReq) Rel(link RelName, resp *ActionsCreateOrUpdateRepoSecretResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -543,7 +525,7 @@ ActionsCreateOrUpdateRepoSecretResponse is a response for ActionsCreateOrUpdateR
 https://developer.github.com/v3/actions/secrets/#create-or-update-a-repository-secret
 */
 type ActionsCreateOrUpdateRepoSecretResponse struct {
-	response
+	internal.Response
 	request *ActionsCreateOrUpdateRepoSecretReq
 }
 
@@ -556,20 +538,26 @@ Create a registration token for an organization.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-registration-token-for-an-organization
 */
-func ActionsCreateRegistrationTokenForOrg(ctx context.Context, req *ActionsCreateRegistrationTokenForOrgReq, opt ...RequestOption) (*ActionsCreateRegistrationTokenForOrgResponse, error) {
+func ActionsCreateRegistrationTokenForOrg(ctx context.Context, req *ActionsCreateRegistrationTokenForOrgReq, opt ...options.Option) (*ActionsCreateRegistrationTokenForOrgResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActionsCreateRegistrationTokenForOrgReq)
 	}
 	resp := &ActionsCreateRegistrationTokenForOrgResponse{request: req}
-	r, err := doRequest(ctx, req, "actions/create-registration-token-for-org", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.AuthenticationToken{}
-	err = r.decodeBody(&resp.Data, "actions/create-registration-token-for-org")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -585,7 +573,7 @@ Create a registration token for an organization.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-registration-token-for-an-organization
 */
-func (c Client) ActionsCreateRegistrationTokenForOrg(ctx context.Context, req *ActionsCreateRegistrationTokenForOrgReq, opt ...RequestOption) (*ActionsCreateRegistrationTokenForOrgResponse, error) {
+func (c Client) ActionsCreateRegistrationTokenForOrg(ctx context.Context, req *ActionsCreateRegistrationTokenForOrgReq, opt ...options.Option) (*ActionsCreateRegistrationTokenForOrgResponse, error) {
 	return ActionsCreateRegistrationTokenForOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -599,44 +587,33 @@ type ActionsCreateRegistrationTokenForOrgReq struct {
 	Org  string
 }
 
-func (r *ActionsCreateRegistrationTokenForOrgReq) url() string {
-	return r._url
-}
-
-func (r *ActionsCreateRegistrationTokenForOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/actions/runners/registration-token", r.Org)
-}
-
-func (r *ActionsCreateRegistrationTokenForOrgReq) method() string {
-	return "POST"
-}
-
-func (r *ActionsCreateRegistrationTokenForOrgReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ActionsCreateRegistrationTokenForOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActionsCreateRegistrationTokenForOrgReq) body() interface{} {
-	return nil
-}
-
-func (r *ActionsCreateRegistrationTokenForOrgReq) dataStatuses() []int {
-	return []int{201}
-}
-
-func (r *ActionsCreateRegistrationTokenForOrgReq) validStatuses() []int {
-	return []int{201}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ActionsCreateRegistrationTokenForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "actions/create-registration-token-for-org", opt)
+func (r *ActionsCreateRegistrationTokenForOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ActionsCreateRegistrationTokenForOrgReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{201},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "POST",
+		OperationID:      "actions/create-registration-token-for-org",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/orgs/%v/actions/runners/registration-token", r.Org),
+		URLQuery:         query,
+		ValidStatuses:    []int{201},
+	}
+	return builder
 }
 
 /*
@@ -644,7 +621,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActionsCreateRegistrationTokenForOrgReq) Rel(link RelName, resp *ActionsCreateRegistrationTokenForOrgResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -658,7 +635,7 @@ ActionsCreateRegistrationTokenForOrgResponse is a response for ActionsCreateRegi
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-registration-token-for-an-organization
 */
 type ActionsCreateRegistrationTokenForOrgResponse struct {
-	response
+	internal.Response
 	request *ActionsCreateRegistrationTokenForOrgReq
 	Data    components.AuthenticationToken
 }
@@ -672,20 +649,26 @@ Create a registration token for a repository.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-registration-token-for-a-repository
 */
-func ActionsCreateRegistrationTokenForRepo(ctx context.Context, req *ActionsCreateRegistrationTokenForRepoReq, opt ...RequestOption) (*ActionsCreateRegistrationTokenForRepoResponse, error) {
+func ActionsCreateRegistrationTokenForRepo(ctx context.Context, req *ActionsCreateRegistrationTokenForRepoReq, opt ...options.Option) (*ActionsCreateRegistrationTokenForRepoResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActionsCreateRegistrationTokenForRepoReq)
 	}
 	resp := &ActionsCreateRegistrationTokenForRepoResponse{request: req}
-	r, err := doRequest(ctx, req, "actions/create-registration-token-for-repo", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.AuthenticationToken{}
-	err = r.decodeBody(&resp.Data, "actions/create-registration-token-for-repo")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -701,7 +684,7 @@ Create a registration token for a repository.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-registration-token-for-a-repository
 */
-func (c Client) ActionsCreateRegistrationTokenForRepo(ctx context.Context, req *ActionsCreateRegistrationTokenForRepoReq, opt ...RequestOption) (*ActionsCreateRegistrationTokenForRepoResponse, error) {
+func (c Client) ActionsCreateRegistrationTokenForRepo(ctx context.Context, req *ActionsCreateRegistrationTokenForRepoReq, opt ...options.Option) (*ActionsCreateRegistrationTokenForRepoResponse, error) {
 	return ActionsCreateRegistrationTokenForRepo(ctx, req, append(c, opt...)...)
 }
 
@@ -716,44 +699,33 @@ type ActionsCreateRegistrationTokenForRepoReq struct {
 	Repo  string
 }
 
-func (r *ActionsCreateRegistrationTokenForRepoReq) url() string {
-	return r._url
-}
-
-func (r *ActionsCreateRegistrationTokenForRepoReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/actions/runners/registration-token", r.Owner, r.Repo)
-}
-
-func (r *ActionsCreateRegistrationTokenForRepoReq) method() string {
-	return "POST"
-}
-
-func (r *ActionsCreateRegistrationTokenForRepoReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ActionsCreateRegistrationTokenForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActionsCreateRegistrationTokenForRepoReq) body() interface{} {
-	return nil
-}
-
-func (r *ActionsCreateRegistrationTokenForRepoReq) dataStatuses() []int {
-	return []int{201}
-}
-
-func (r *ActionsCreateRegistrationTokenForRepoReq) validStatuses() []int {
-	return []int{201}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ActionsCreateRegistrationTokenForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "actions/create-registration-token-for-repo", opt)
+func (r *ActionsCreateRegistrationTokenForRepoReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ActionsCreateRegistrationTokenForRepoReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{201},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "POST",
+		OperationID:      "actions/create-registration-token-for-repo",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/actions/runners/registration-token", r.Owner, r.Repo),
+		URLQuery:         query,
+		ValidStatuses:    []int{201},
+	}
+	return builder
 }
 
 /*
@@ -761,7 +733,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActionsCreateRegistrationTokenForRepoReq) Rel(link RelName, resp *ActionsCreateRegistrationTokenForRepoResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -775,7 +747,7 @@ ActionsCreateRegistrationTokenForRepoResponse is a response for ActionsCreateReg
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-registration-token-for-a-repository
 */
 type ActionsCreateRegistrationTokenForRepoResponse struct {
-	response
+	internal.Response
 	request *ActionsCreateRegistrationTokenForRepoReq
 	Data    components.AuthenticationToken
 }
@@ -789,20 +761,26 @@ Create a remove token for an organization.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-remove-token-for-an-organization
 */
-func ActionsCreateRemoveTokenForOrg(ctx context.Context, req *ActionsCreateRemoveTokenForOrgReq, opt ...RequestOption) (*ActionsCreateRemoveTokenForOrgResponse, error) {
+func ActionsCreateRemoveTokenForOrg(ctx context.Context, req *ActionsCreateRemoveTokenForOrgReq, opt ...options.Option) (*ActionsCreateRemoveTokenForOrgResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActionsCreateRemoveTokenForOrgReq)
 	}
 	resp := &ActionsCreateRemoveTokenForOrgResponse{request: req}
-	r, err := doRequest(ctx, req, "actions/create-remove-token-for-org", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.AuthenticationToken{}
-	err = r.decodeBody(&resp.Data, "actions/create-remove-token-for-org")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -818,7 +796,7 @@ Create a remove token for an organization.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-remove-token-for-an-organization
 */
-func (c Client) ActionsCreateRemoveTokenForOrg(ctx context.Context, req *ActionsCreateRemoveTokenForOrgReq, opt ...RequestOption) (*ActionsCreateRemoveTokenForOrgResponse, error) {
+func (c Client) ActionsCreateRemoveTokenForOrg(ctx context.Context, req *ActionsCreateRemoveTokenForOrgReq, opt ...options.Option) (*ActionsCreateRemoveTokenForOrgResponse, error) {
 	return ActionsCreateRemoveTokenForOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -832,44 +810,33 @@ type ActionsCreateRemoveTokenForOrgReq struct {
 	Org  string
 }
 
-func (r *ActionsCreateRemoveTokenForOrgReq) url() string {
-	return r._url
-}
-
-func (r *ActionsCreateRemoveTokenForOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/actions/runners/remove-token", r.Org)
-}
-
-func (r *ActionsCreateRemoveTokenForOrgReq) method() string {
-	return "POST"
-}
-
-func (r *ActionsCreateRemoveTokenForOrgReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ActionsCreateRemoveTokenForOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActionsCreateRemoveTokenForOrgReq) body() interface{} {
-	return nil
-}
-
-func (r *ActionsCreateRemoveTokenForOrgReq) dataStatuses() []int {
-	return []int{201}
-}
-
-func (r *ActionsCreateRemoveTokenForOrgReq) validStatuses() []int {
-	return []int{201}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ActionsCreateRemoveTokenForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "actions/create-remove-token-for-org", opt)
+func (r *ActionsCreateRemoveTokenForOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ActionsCreateRemoveTokenForOrgReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{201},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "POST",
+		OperationID:      "actions/create-remove-token-for-org",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/orgs/%v/actions/runners/remove-token", r.Org),
+		URLQuery:         query,
+		ValidStatuses:    []int{201},
+	}
+	return builder
 }
 
 /*
@@ -877,7 +844,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActionsCreateRemoveTokenForOrgReq) Rel(link RelName, resp *ActionsCreateRemoveTokenForOrgResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -891,7 +858,7 @@ ActionsCreateRemoveTokenForOrgResponse is a response for ActionsCreateRemoveToke
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-remove-token-for-an-organization
 */
 type ActionsCreateRemoveTokenForOrgResponse struct {
-	response
+	internal.Response
 	request *ActionsCreateRemoveTokenForOrgReq
 	Data    components.AuthenticationToken
 }
@@ -905,20 +872,26 @@ Create a remove token for a repository.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-remove-token-for-a-repository
 */
-func ActionsCreateRemoveTokenForRepo(ctx context.Context, req *ActionsCreateRemoveTokenForRepoReq, opt ...RequestOption) (*ActionsCreateRemoveTokenForRepoResponse, error) {
+func ActionsCreateRemoveTokenForRepo(ctx context.Context, req *ActionsCreateRemoveTokenForRepoReq, opt ...options.Option) (*ActionsCreateRemoveTokenForRepoResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActionsCreateRemoveTokenForRepoReq)
 	}
 	resp := &ActionsCreateRemoveTokenForRepoResponse{request: req}
-	r, err := doRequest(ctx, req, "actions/create-remove-token-for-repo", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.AuthenticationToken{}
-	err = r.decodeBody(&resp.Data, "actions/create-remove-token-for-repo")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -934,7 +907,7 @@ Create a remove token for a repository.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-remove-token-for-a-repository
 */
-func (c Client) ActionsCreateRemoveTokenForRepo(ctx context.Context, req *ActionsCreateRemoveTokenForRepoReq, opt ...RequestOption) (*ActionsCreateRemoveTokenForRepoResponse, error) {
+func (c Client) ActionsCreateRemoveTokenForRepo(ctx context.Context, req *ActionsCreateRemoveTokenForRepoReq, opt ...options.Option) (*ActionsCreateRemoveTokenForRepoResponse, error) {
 	return ActionsCreateRemoveTokenForRepo(ctx, req, append(c, opt...)...)
 }
 
@@ -949,44 +922,33 @@ type ActionsCreateRemoveTokenForRepoReq struct {
 	Repo  string
 }
 
-func (r *ActionsCreateRemoveTokenForRepoReq) url() string {
-	return r._url
-}
-
-func (r *ActionsCreateRemoveTokenForRepoReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/actions/runners/remove-token", r.Owner, r.Repo)
-}
-
-func (r *ActionsCreateRemoveTokenForRepoReq) method() string {
-	return "POST"
-}
-
-func (r *ActionsCreateRemoveTokenForRepoReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ActionsCreateRemoveTokenForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActionsCreateRemoveTokenForRepoReq) body() interface{} {
-	return nil
-}
-
-func (r *ActionsCreateRemoveTokenForRepoReq) dataStatuses() []int {
-	return []int{201}
-}
-
-func (r *ActionsCreateRemoveTokenForRepoReq) validStatuses() []int {
-	return []int{201}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ActionsCreateRemoveTokenForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "actions/create-remove-token-for-repo", opt)
+func (r *ActionsCreateRemoveTokenForRepoReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ActionsCreateRemoveTokenForRepoReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{201},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "POST",
+		OperationID:      "actions/create-remove-token-for-repo",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/actions/runners/remove-token", r.Owner, r.Repo),
+		URLQuery:         query,
+		ValidStatuses:    []int{201},
+	}
+	return builder
 }
 
 /*
@@ -994,7 +956,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActionsCreateRemoveTokenForRepoReq) Rel(link RelName, resp *ActionsCreateRemoveTokenForRepoResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1008,7 +970,7 @@ ActionsCreateRemoveTokenForRepoResponse is a response for ActionsCreateRemoveTok
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-remove-token-for-a-repository
 */
 type ActionsCreateRemoveTokenForRepoResponse struct {
-	response
+	internal.Response
 	request *ActionsCreateRemoveTokenForRepoReq
 	Data    components.AuthenticationToken
 }
@@ -1022,19 +984,25 @@ Create a workflow dispatch event.
 
 https://developer.github.com/v3/actions/workflows/#create-a-workflow-dispatch-event
 */
-func ActionsCreateWorkflowDispatch(ctx context.Context, req *ActionsCreateWorkflowDispatchReq, opt ...RequestOption) (*ActionsCreateWorkflowDispatchResponse, error) {
+func ActionsCreateWorkflowDispatch(ctx context.Context, req *ActionsCreateWorkflowDispatchReq, opt ...options.Option) (*ActionsCreateWorkflowDispatchResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActionsCreateWorkflowDispatchReq)
 	}
 	resp := &ActionsCreateWorkflowDispatchResponse{request: req}
-	r, err := doRequest(ctx, req, "actions/create-workflow-dispatch", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "actions/create-workflow-dispatch")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -1050,7 +1018,7 @@ Create a workflow dispatch event.
 
 https://developer.github.com/v3/actions/workflows/#create-a-workflow-dispatch-event
 */
-func (c Client) ActionsCreateWorkflowDispatch(ctx context.Context, req *ActionsCreateWorkflowDispatchReq, opt ...RequestOption) (*ActionsCreateWorkflowDispatchResponse, error) {
+func (c Client) ActionsCreateWorkflowDispatch(ctx context.Context, req *ActionsCreateWorkflowDispatchReq, opt ...options.Option) (*ActionsCreateWorkflowDispatchResponse, error) {
 	return ActionsCreateWorkflowDispatch(ctx, req, append(c, opt...)...)
 }
 
@@ -1067,44 +1035,33 @@ type ActionsCreateWorkflowDispatchReq struct {
 	RequestBody ActionsCreateWorkflowDispatchReqBody
 }
 
-func (r *ActionsCreateWorkflowDispatchReq) url() string {
-	return r._url
-}
-
-func (r *ActionsCreateWorkflowDispatchReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/actions/workflows/%v/dispatches", r.Owner, r.Repo, r.WorkflowId)
-}
-
-func (r *ActionsCreateWorkflowDispatchReq) method() string {
-	return "POST"
-}
-
-func (r *ActionsCreateWorkflowDispatchReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ActionsCreateWorkflowDispatchReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"content-type": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActionsCreateWorkflowDispatchReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *ActionsCreateWorkflowDispatchReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *ActionsCreateWorkflowDispatchReq) validStatuses() []int {
-	return []int{204}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ActionsCreateWorkflowDispatchReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "actions/create-workflow-dispatch", opt)
+func (r *ActionsCreateWorkflowDispatchReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ActionsCreateWorkflowDispatchReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             r.RequestBody,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"content-type": String("application/json")},
+		Method:           "POST",
+		OperationID:      "actions/create-workflow-dispatch",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/actions/workflows/%v/dispatches", r.Owner, r.Repo, r.WorkflowId),
+		URLQuery:         query,
+		ValidStatuses:    []int{204},
+	}
+	return builder
 }
 
 /*
@@ -1112,7 +1069,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActionsCreateWorkflowDispatchReq) Rel(link RelName, resp *ActionsCreateWorkflowDispatchResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1144,7 +1101,7 @@ ActionsCreateWorkflowDispatchResponse is a response for ActionsCreateWorkflowDis
 https://developer.github.com/v3/actions/workflows/#create-a-workflow-dispatch-event
 */
 type ActionsCreateWorkflowDispatchResponse struct {
-	response
+	internal.Response
 	request *ActionsCreateWorkflowDispatchReq
 }
 
@@ -1157,19 +1114,25 @@ Delete an artifact.
 
 https://developer.github.com/v3/actions/artifacts/#delete-an-artifact
 */
-func ActionsDeleteArtifact(ctx context.Context, req *ActionsDeleteArtifactReq, opt ...RequestOption) (*ActionsDeleteArtifactResponse, error) {
+func ActionsDeleteArtifact(ctx context.Context, req *ActionsDeleteArtifactReq, opt ...options.Option) (*ActionsDeleteArtifactResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActionsDeleteArtifactReq)
 	}
 	resp := &ActionsDeleteArtifactResponse{request: req}
-	r, err := doRequest(ctx, req, "actions/delete-artifact", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "actions/delete-artifact")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -1185,7 +1148,7 @@ Delete an artifact.
 
 https://developer.github.com/v3/actions/artifacts/#delete-an-artifact
 */
-func (c Client) ActionsDeleteArtifact(ctx context.Context, req *ActionsDeleteArtifactReq, opt ...RequestOption) (*ActionsDeleteArtifactResponse, error) {
+func (c Client) ActionsDeleteArtifact(ctx context.Context, req *ActionsDeleteArtifactReq, opt ...options.Option) (*ActionsDeleteArtifactResponse, error) {
 	return ActionsDeleteArtifact(ctx, req, append(c, opt...)...)
 }
 
@@ -1203,44 +1166,33 @@ type ActionsDeleteArtifactReq struct {
 	ArtifactId int64
 }
 
-func (r *ActionsDeleteArtifactReq) url() string {
-	return r._url
-}
-
-func (r *ActionsDeleteArtifactReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/actions/artifacts/%v", r.Owner, r.Repo, r.ArtifactId)
-}
-
-func (r *ActionsDeleteArtifactReq) method() string {
-	return "DELETE"
-}
-
-func (r *ActionsDeleteArtifactReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ActionsDeleteArtifactReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActionsDeleteArtifactReq) body() interface{} {
-	return nil
-}
-
-func (r *ActionsDeleteArtifactReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *ActionsDeleteArtifactReq) validStatuses() []int {
-	return []int{204}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ActionsDeleteArtifactReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "actions/delete-artifact", opt)
+func (r *ActionsDeleteArtifactReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ActionsDeleteArtifactReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		OperationID:      "actions/delete-artifact",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/actions/artifacts/%v", r.Owner, r.Repo, r.ArtifactId),
+		URLQuery:         query,
+		ValidStatuses:    []int{204},
+	}
+	return builder
 }
 
 /*
@@ -1248,7 +1200,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActionsDeleteArtifactReq) Rel(link RelName, resp *ActionsDeleteArtifactResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1262,7 +1214,7 @@ ActionsDeleteArtifactResponse is a response for ActionsDeleteArtifact
 https://developer.github.com/v3/actions/artifacts/#delete-an-artifact
 */
 type ActionsDeleteArtifactResponse struct {
-	response
+	internal.Response
 	request *ActionsDeleteArtifactReq
 }
 
@@ -1275,19 +1227,25 @@ Delete an organization secret.
 
 https://developer.github.com/v3/actions/secrets/#delete-an-organization-secret
 */
-func ActionsDeleteOrgSecret(ctx context.Context, req *ActionsDeleteOrgSecretReq, opt ...RequestOption) (*ActionsDeleteOrgSecretResponse, error) {
+func ActionsDeleteOrgSecret(ctx context.Context, req *ActionsDeleteOrgSecretReq, opt ...options.Option) (*ActionsDeleteOrgSecretResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActionsDeleteOrgSecretReq)
 	}
 	resp := &ActionsDeleteOrgSecretResponse{request: req}
-	r, err := doRequest(ctx, req, "actions/delete-org-secret", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "actions/delete-org-secret")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -1303,7 +1261,7 @@ Delete an organization secret.
 
 https://developer.github.com/v3/actions/secrets/#delete-an-organization-secret
 */
-func (c Client) ActionsDeleteOrgSecret(ctx context.Context, req *ActionsDeleteOrgSecretReq, opt ...RequestOption) (*ActionsDeleteOrgSecretResponse, error) {
+func (c Client) ActionsDeleteOrgSecret(ctx context.Context, req *ActionsDeleteOrgSecretReq, opt ...options.Option) (*ActionsDeleteOrgSecretResponse, error) {
 	return ActionsDeleteOrgSecret(ctx, req, append(c, opt...)...)
 }
 
@@ -1320,44 +1278,33 @@ type ActionsDeleteOrgSecretReq struct {
 	SecretName string
 }
 
-func (r *ActionsDeleteOrgSecretReq) url() string {
-	return r._url
-}
-
-func (r *ActionsDeleteOrgSecretReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/actions/secrets/%v", r.Org, r.SecretName)
-}
-
-func (r *ActionsDeleteOrgSecretReq) method() string {
-	return "DELETE"
-}
-
-func (r *ActionsDeleteOrgSecretReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ActionsDeleteOrgSecretReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActionsDeleteOrgSecretReq) body() interface{} {
-	return nil
-}
-
-func (r *ActionsDeleteOrgSecretReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *ActionsDeleteOrgSecretReq) validStatuses() []int {
-	return []int{204}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ActionsDeleteOrgSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "actions/delete-org-secret", opt)
+func (r *ActionsDeleteOrgSecretReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ActionsDeleteOrgSecretReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		OperationID:      "actions/delete-org-secret",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/orgs/%v/actions/secrets/%v", r.Org, r.SecretName),
+		URLQuery:         query,
+		ValidStatuses:    []int{204},
+	}
+	return builder
 }
 
 /*
@@ -1365,7 +1312,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActionsDeleteOrgSecretReq) Rel(link RelName, resp *ActionsDeleteOrgSecretResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1379,7 +1326,7 @@ ActionsDeleteOrgSecretResponse is a response for ActionsDeleteOrgSecret
 https://developer.github.com/v3/actions/secrets/#delete-an-organization-secret
 */
 type ActionsDeleteOrgSecretResponse struct {
-	response
+	internal.Response
 	request *ActionsDeleteOrgSecretReq
 }
 
@@ -1392,19 +1339,25 @@ Delete a repository secret.
 
 https://developer.github.com/v3/actions/secrets/#delete-a-repository-secret
 */
-func ActionsDeleteRepoSecret(ctx context.Context, req *ActionsDeleteRepoSecretReq, opt ...RequestOption) (*ActionsDeleteRepoSecretResponse, error) {
+func ActionsDeleteRepoSecret(ctx context.Context, req *ActionsDeleteRepoSecretReq, opt ...options.Option) (*ActionsDeleteRepoSecretResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActionsDeleteRepoSecretReq)
 	}
 	resp := &ActionsDeleteRepoSecretResponse{request: req}
-	r, err := doRequest(ctx, req, "actions/delete-repo-secret", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "actions/delete-repo-secret")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -1420,7 +1373,7 @@ Delete a repository secret.
 
 https://developer.github.com/v3/actions/secrets/#delete-a-repository-secret
 */
-func (c Client) ActionsDeleteRepoSecret(ctx context.Context, req *ActionsDeleteRepoSecretReq, opt ...RequestOption) (*ActionsDeleteRepoSecretResponse, error) {
+func (c Client) ActionsDeleteRepoSecret(ctx context.Context, req *ActionsDeleteRepoSecretReq, opt ...options.Option) (*ActionsDeleteRepoSecretResponse, error) {
 	return ActionsDeleteRepoSecret(ctx, req, append(c, opt...)...)
 }
 
@@ -1438,44 +1391,33 @@ type ActionsDeleteRepoSecretReq struct {
 	SecretName string
 }
 
-func (r *ActionsDeleteRepoSecretReq) url() string {
-	return r._url
-}
-
-func (r *ActionsDeleteRepoSecretReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/actions/secrets/%v", r.Owner, r.Repo, r.SecretName)
-}
-
-func (r *ActionsDeleteRepoSecretReq) method() string {
-	return "DELETE"
-}
-
-func (r *ActionsDeleteRepoSecretReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ActionsDeleteRepoSecretReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActionsDeleteRepoSecretReq) body() interface{} {
-	return nil
-}
-
-func (r *ActionsDeleteRepoSecretReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *ActionsDeleteRepoSecretReq) validStatuses() []int {
-	return []int{204}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ActionsDeleteRepoSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "actions/delete-repo-secret", opt)
+func (r *ActionsDeleteRepoSecretReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ActionsDeleteRepoSecretReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		OperationID:      "actions/delete-repo-secret",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/actions/secrets/%v", r.Owner, r.Repo, r.SecretName),
+		URLQuery:         query,
+		ValidStatuses:    []int{204},
+	}
+	return builder
 }
 
 /*
@@ -1483,7 +1425,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActionsDeleteRepoSecretReq) Rel(link RelName, resp *ActionsDeleteRepoSecretResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1497,7 +1439,7 @@ ActionsDeleteRepoSecretResponse is a response for ActionsDeleteRepoSecret
 https://developer.github.com/v3/actions/secrets/#delete-a-repository-secret
 */
 type ActionsDeleteRepoSecretResponse struct {
-	response
+	internal.Response
 	request *ActionsDeleteRepoSecretReq
 }
 
@@ -1510,19 +1452,25 @@ Delete a self-hosted runner from an organization.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#delete-a-self-hosted-runner-from-an-organization
 */
-func ActionsDeleteSelfHostedRunnerFromOrg(ctx context.Context, req *ActionsDeleteSelfHostedRunnerFromOrgReq, opt ...RequestOption) (*ActionsDeleteSelfHostedRunnerFromOrgResponse, error) {
+func ActionsDeleteSelfHostedRunnerFromOrg(ctx context.Context, req *ActionsDeleteSelfHostedRunnerFromOrgReq, opt ...options.Option) (*ActionsDeleteSelfHostedRunnerFromOrgResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActionsDeleteSelfHostedRunnerFromOrgReq)
 	}
 	resp := &ActionsDeleteSelfHostedRunnerFromOrgResponse{request: req}
-	r, err := doRequest(ctx, req, "actions/delete-self-hosted-runner-from-org", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "actions/delete-self-hosted-runner-from-org")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -1538,7 +1486,7 @@ Delete a self-hosted runner from an organization.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#delete-a-self-hosted-runner-from-an-organization
 */
-func (c Client) ActionsDeleteSelfHostedRunnerFromOrg(ctx context.Context, req *ActionsDeleteSelfHostedRunnerFromOrgReq, opt ...RequestOption) (*ActionsDeleteSelfHostedRunnerFromOrgResponse, error) {
+func (c Client) ActionsDeleteSelfHostedRunnerFromOrg(ctx context.Context, req *ActionsDeleteSelfHostedRunnerFromOrgReq, opt ...options.Option) (*ActionsDeleteSelfHostedRunnerFromOrgResponse, error) {
 	return ActionsDeleteSelfHostedRunnerFromOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -1555,44 +1503,33 @@ type ActionsDeleteSelfHostedRunnerFromOrgReq struct {
 	RunnerId int64
 }
 
-func (r *ActionsDeleteSelfHostedRunnerFromOrgReq) url() string {
-	return r._url
-}
-
-func (r *ActionsDeleteSelfHostedRunnerFromOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/actions/runners/%v", r.Org, r.RunnerId)
-}
-
-func (r *ActionsDeleteSelfHostedRunnerFromOrgReq) method() string {
-	return "DELETE"
-}
-
-func (r *ActionsDeleteSelfHostedRunnerFromOrgReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ActionsDeleteSelfHostedRunnerFromOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActionsDeleteSelfHostedRunnerFromOrgReq) body() interface{} {
-	return nil
-}
-
-func (r *ActionsDeleteSelfHostedRunnerFromOrgReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *ActionsDeleteSelfHostedRunnerFromOrgReq) validStatuses() []int {
-	return []int{204}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ActionsDeleteSelfHostedRunnerFromOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "actions/delete-self-hosted-runner-from-org", opt)
+func (r *ActionsDeleteSelfHostedRunnerFromOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ActionsDeleteSelfHostedRunnerFromOrgReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		OperationID:      "actions/delete-self-hosted-runner-from-org",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/orgs/%v/actions/runners/%v", r.Org, r.RunnerId),
+		URLQuery:         query,
+		ValidStatuses:    []int{204},
+	}
+	return builder
 }
 
 /*
@@ -1600,7 +1537,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActionsDeleteSelfHostedRunnerFromOrgReq) Rel(link RelName, resp *ActionsDeleteSelfHostedRunnerFromOrgResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1614,7 +1551,7 @@ ActionsDeleteSelfHostedRunnerFromOrgResponse is a response for ActionsDeleteSelf
 https://developer.github.com/v3/actions/self-hosted-runners/#delete-a-self-hosted-runner-from-an-organization
 */
 type ActionsDeleteSelfHostedRunnerFromOrgResponse struct {
-	response
+	internal.Response
 	request *ActionsDeleteSelfHostedRunnerFromOrgReq
 }
 
@@ -1627,19 +1564,25 @@ Delete a self-hosted runner from a repository.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#delete-a-self-hosted-runner-from-a-repository
 */
-func ActionsDeleteSelfHostedRunnerFromRepo(ctx context.Context, req *ActionsDeleteSelfHostedRunnerFromRepoReq, opt ...RequestOption) (*ActionsDeleteSelfHostedRunnerFromRepoResponse, error) {
+func ActionsDeleteSelfHostedRunnerFromRepo(ctx context.Context, req *ActionsDeleteSelfHostedRunnerFromRepoReq, opt ...options.Option) (*ActionsDeleteSelfHostedRunnerFromRepoResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActionsDeleteSelfHostedRunnerFromRepoReq)
 	}
 	resp := &ActionsDeleteSelfHostedRunnerFromRepoResponse{request: req}
-	r, err := doRequest(ctx, req, "actions/delete-self-hosted-runner-from-repo", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "actions/delete-self-hosted-runner-from-repo")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -1655,7 +1598,7 @@ Delete a self-hosted runner from a repository.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#delete-a-self-hosted-runner-from-a-repository
 */
-func (c Client) ActionsDeleteSelfHostedRunnerFromRepo(ctx context.Context, req *ActionsDeleteSelfHostedRunnerFromRepoReq, opt ...RequestOption) (*ActionsDeleteSelfHostedRunnerFromRepoResponse, error) {
+func (c Client) ActionsDeleteSelfHostedRunnerFromRepo(ctx context.Context, req *ActionsDeleteSelfHostedRunnerFromRepoReq, opt ...options.Option) (*ActionsDeleteSelfHostedRunnerFromRepoResponse, error) {
 	return ActionsDeleteSelfHostedRunnerFromRepo(ctx, req, append(c, opt...)...)
 }
 
@@ -1673,44 +1616,33 @@ type ActionsDeleteSelfHostedRunnerFromRepoReq struct {
 	RunnerId int64
 }
 
-func (r *ActionsDeleteSelfHostedRunnerFromRepoReq) url() string {
-	return r._url
-}
-
-func (r *ActionsDeleteSelfHostedRunnerFromRepoReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/actions/runners/%v", r.Owner, r.Repo, r.RunnerId)
-}
-
-func (r *ActionsDeleteSelfHostedRunnerFromRepoReq) method() string {
-	return "DELETE"
-}
-
-func (r *ActionsDeleteSelfHostedRunnerFromRepoReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ActionsDeleteSelfHostedRunnerFromRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActionsDeleteSelfHostedRunnerFromRepoReq) body() interface{} {
-	return nil
-}
-
-func (r *ActionsDeleteSelfHostedRunnerFromRepoReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *ActionsDeleteSelfHostedRunnerFromRepoReq) validStatuses() []int {
-	return []int{204}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ActionsDeleteSelfHostedRunnerFromRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "actions/delete-self-hosted-runner-from-repo", opt)
+func (r *ActionsDeleteSelfHostedRunnerFromRepoReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ActionsDeleteSelfHostedRunnerFromRepoReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		OperationID:      "actions/delete-self-hosted-runner-from-repo",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/actions/runners/%v", r.Owner, r.Repo, r.RunnerId),
+		URLQuery:         query,
+		ValidStatuses:    []int{204},
+	}
+	return builder
 }
 
 /*
@@ -1718,7 +1650,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActionsDeleteSelfHostedRunnerFromRepoReq) Rel(link RelName, resp *ActionsDeleteSelfHostedRunnerFromRepoResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1732,7 +1664,7 @@ ActionsDeleteSelfHostedRunnerFromRepoResponse is a response for ActionsDeleteSel
 https://developer.github.com/v3/actions/self-hosted-runners/#delete-a-self-hosted-runner-from-a-repository
 */
 type ActionsDeleteSelfHostedRunnerFromRepoResponse struct {
-	response
+	internal.Response
 	request *ActionsDeleteSelfHostedRunnerFromRepoReq
 }
 
@@ -1745,19 +1677,25 @@ Delete a workflow run.
 
 https://developer.github.com/v3/actions/workflow-runs/#delete-a-workflow-run
 */
-func ActionsDeleteWorkflowRun(ctx context.Context, req *ActionsDeleteWorkflowRunReq, opt ...RequestOption) (*ActionsDeleteWorkflowRunResponse, error) {
+func ActionsDeleteWorkflowRun(ctx context.Context, req *ActionsDeleteWorkflowRunReq, opt ...options.Option) (*ActionsDeleteWorkflowRunResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActionsDeleteWorkflowRunReq)
 	}
 	resp := &ActionsDeleteWorkflowRunResponse{request: req}
-	r, err := doRequest(ctx, req, "actions/delete-workflow-run", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "actions/delete-workflow-run")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -1773,7 +1711,7 @@ Delete a workflow run.
 
 https://developer.github.com/v3/actions/workflow-runs/#delete-a-workflow-run
 */
-func (c Client) ActionsDeleteWorkflowRun(ctx context.Context, req *ActionsDeleteWorkflowRunReq, opt ...RequestOption) (*ActionsDeleteWorkflowRunResponse, error) {
+func (c Client) ActionsDeleteWorkflowRun(ctx context.Context, req *ActionsDeleteWorkflowRunReq, opt ...options.Option) (*ActionsDeleteWorkflowRunResponse, error) {
 	return ActionsDeleteWorkflowRun(ctx, req, append(c, opt...)...)
 }
 
@@ -1789,44 +1727,33 @@ type ActionsDeleteWorkflowRunReq struct {
 	RunId int64
 }
 
-func (r *ActionsDeleteWorkflowRunReq) url() string {
-	return r._url
-}
-
-func (r *ActionsDeleteWorkflowRunReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/actions/runs/%v", r.Owner, r.Repo, r.RunId)
-}
-
-func (r *ActionsDeleteWorkflowRunReq) method() string {
-	return "DELETE"
-}
-
-func (r *ActionsDeleteWorkflowRunReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ActionsDeleteWorkflowRunReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActionsDeleteWorkflowRunReq) body() interface{} {
-	return nil
-}
-
-func (r *ActionsDeleteWorkflowRunReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *ActionsDeleteWorkflowRunReq) validStatuses() []int {
-	return []int{204}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ActionsDeleteWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "actions/delete-workflow-run", opt)
+func (r *ActionsDeleteWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ActionsDeleteWorkflowRunReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		OperationID:      "actions/delete-workflow-run",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/actions/runs/%v", r.Owner, r.Repo, r.RunId),
+		URLQuery:         query,
+		ValidStatuses:    []int{204},
+	}
+	return builder
 }
 
 /*
@@ -1834,7 +1761,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActionsDeleteWorkflowRunReq) Rel(link RelName, resp *ActionsDeleteWorkflowRunResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1848,7 +1775,7 @@ ActionsDeleteWorkflowRunResponse is a response for ActionsDeleteWorkflowRun
 https://developer.github.com/v3/actions/workflow-runs/#delete-a-workflow-run
 */
 type ActionsDeleteWorkflowRunResponse struct {
-	response
+	internal.Response
 	request *ActionsDeleteWorkflowRunReq
 }
 
@@ -1861,19 +1788,25 @@ Delete workflow run logs.
 
 https://developer.github.com/v3/actions/workflow-runs/#delete-workflow-run-logs
 */
-func ActionsDeleteWorkflowRunLogs(ctx context.Context, req *ActionsDeleteWorkflowRunLogsReq, opt ...RequestOption) (*ActionsDeleteWorkflowRunLogsResponse, error) {
+func ActionsDeleteWorkflowRunLogs(ctx context.Context, req *ActionsDeleteWorkflowRunLogsReq, opt ...options.Option) (*ActionsDeleteWorkflowRunLogsResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActionsDeleteWorkflowRunLogsReq)
 	}
 	resp := &ActionsDeleteWorkflowRunLogsResponse{request: req}
-	r, err := doRequest(ctx, req, "actions/delete-workflow-run-logs", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "actions/delete-workflow-run-logs")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -1889,7 +1822,7 @@ Delete workflow run logs.
 
 https://developer.github.com/v3/actions/workflow-runs/#delete-workflow-run-logs
 */
-func (c Client) ActionsDeleteWorkflowRunLogs(ctx context.Context, req *ActionsDeleteWorkflowRunLogsReq, opt ...RequestOption) (*ActionsDeleteWorkflowRunLogsResponse, error) {
+func (c Client) ActionsDeleteWorkflowRunLogs(ctx context.Context, req *ActionsDeleteWorkflowRunLogsReq, opt ...options.Option) (*ActionsDeleteWorkflowRunLogsResponse, error) {
 	return ActionsDeleteWorkflowRunLogs(ctx, req, append(c, opt...)...)
 }
 
@@ -1905,44 +1838,33 @@ type ActionsDeleteWorkflowRunLogsReq struct {
 	RunId int64
 }
 
-func (r *ActionsDeleteWorkflowRunLogsReq) url() string {
-	return r._url
-}
-
-func (r *ActionsDeleteWorkflowRunLogsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/actions/runs/%v/logs", r.Owner, r.Repo, r.RunId)
-}
-
-func (r *ActionsDeleteWorkflowRunLogsReq) method() string {
-	return "DELETE"
-}
-
-func (r *ActionsDeleteWorkflowRunLogsReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ActionsDeleteWorkflowRunLogsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActionsDeleteWorkflowRunLogsReq) body() interface{} {
-	return nil
-}
-
-func (r *ActionsDeleteWorkflowRunLogsReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *ActionsDeleteWorkflowRunLogsReq) validStatuses() []int {
-	return []int{204}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ActionsDeleteWorkflowRunLogsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "actions/delete-workflow-run-logs", opt)
+func (r *ActionsDeleteWorkflowRunLogsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ActionsDeleteWorkflowRunLogsReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		OperationID:      "actions/delete-workflow-run-logs",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/actions/runs/%v/logs", r.Owner, r.Repo, r.RunId),
+		URLQuery:         query,
+		ValidStatuses:    []int{204},
+	}
+	return builder
 }
 
 /*
@@ -1950,7 +1872,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActionsDeleteWorkflowRunLogsReq) Rel(link RelName, resp *ActionsDeleteWorkflowRunLogsResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1964,7 +1886,7 @@ ActionsDeleteWorkflowRunLogsResponse is a response for ActionsDeleteWorkflowRunL
 https://developer.github.com/v3/actions/workflow-runs/#delete-workflow-run-logs
 */
 type ActionsDeleteWorkflowRunLogsResponse struct {
-	response
+	internal.Response
 	request *ActionsDeleteWorkflowRunLogsReq
 }
 
@@ -1977,19 +1899,25 @@ Download an artifact.
 
 https://developer.github.com/v3/actions/artifacts/#download-an-artifact
 */
-func ActionsDownloadArtifact(ctx context.Context, req *ActionsDownloadArtifactReq, opt ...RequestOption) (*ActionsDownloadArtifactResponse, error) {
+func ActionsDownloadArtifact(ctx context.Context, req *ActionsDownloadArtifactReq, opt ...options.Option) (*ActionsDownloadArtifactResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActionsDownloadArtifactReq)
 	}
 	resp := &ActionsDownloadArtifactResponse{request: req}
-	r, err := doRequest(ctx, req, "actions/download-artifact", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "actions/download-artifact")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -2005,7 +1933,7 @@ Download an artifact.
 
 https://developer.github.com/v3/actions/artifacts/#download-an-artifact
 */
-func (c Client) ActionsDownloadArtifact(ctx context.Context, req *ActionsDownloadArtifactReq, opt ...RequestOption) (*ActionsDownloadArtifactResponse, error) {
+func (c Client) ActionsDownloadArtifact(ctx context.Context, req *ActionsDownloadArtifactReq, opt ...options.Option) (*ActionsDownloadArtifactResponse, error) {
 	return ActionsDownloadArtifact(ctx, req, append(c, opt...)...)
 }
 
@@ -2026,44 +1954,33 @@ type ActionsDownloadArtifactReq struct {
 	ArchiveFormat string
 }
 
-func (r *ActionsDownloadArtifactReq) url() string {
-	return r._url
-}
-
-func (r *ActionsDownloadArtifactReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/actions/artifacts/%v/%v", r.Owner, r.Repo, r.ArtifactId, r.ArchiveFormat)
-}
-
-func (r *ActionsDownloadArtifactReq) method() string {
-	return "GET"
-}
-
-func (r *ActionsDownloadArtifactReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ActionsDownloadArtifactReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActionsDownloadArtifactReq) body() interface{} {
-	return nil
-}
-
-func (r *ActionsDownloadArtifactReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *ActionsDownloadArtifactReq) validStatuses() []int {
-	return []int{302}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ActionsDownloadArtifactReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "actions/download-artifact", opt)
+func (r *ActionsDownloadArtifactReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ActionsDownloadArtifactReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "GET",
+		OperationID:      "actions/download-artifact",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/actions/artifacts/%v/%v", r.Owner, r.Repo, r.ArtifactId, r.ArchiveFormat),
+		URLQuery:         query,
+		ValidStatuses:    []int{302},
+	}
+	return builder
 }
 
 /*
@@ -2071,7 +1988,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActionsDownloadArtifactReq) Rel(link RelName, resp *ActionsDownloadArtifactResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -2085,7 +2002,7 @@ ActionsDownloadArtifactResponse is a response for ActionsDownloadArtifact
 https://developer.github.com/v3/actions/artifacts/#download-an-artifact
 */
 type ActionsDownloadArtifactResponse struct {
-	response
+	internal.Response
 	request *ActionsDownloadArtifactReq
 }
 
@@ -2098,19 +2015,25 @@ Download job logs for a workflow run.
 
 https://developer.github.com/v3/actions/workflow-jobs/#download-job-logs-for-a-workflow-run
 */
-func ActionsDownloadJobLogsForWorkflowRun(ctx context.Context, req *ActionsDownloadJobLogsForWorkflowRunReq, opt ...RequestOption) (*ActionsDownloadJobLogsForWorkflowRunResponse, error) {
+func ActionsDownloadJobLogsForWorkflowRun(ctx context.Context, req *ActionsDownloadJobLogsForWorkflowRunReq, opt ...options.Option) (*ActionsDownloadJobLogsForWorkflowRunResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActionsDownloadJobLogsForWorkflowRunReq)
 	}
 	resp := &ActionsDownloadJobLogsForWorkflowRunResponse{request: req}
-	r, err := doRequest(ctx, req, "actions/download-job-logs-for-workflow-run", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "actions/download-job-logs-for-workflow-run")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -2126,7 +2049,7 @@ Download job logs for a workflow run.
 
 https://developer.github.com/v3/actions/workflow-jobs/#download-job-logs-for-a-workflow-run
 */
-func (c Client) ActionsDownloadJobLogsForWorkflowRun(ctx context.Context, req *ActionsDownloadJobLogsForWorkflowRunReq, opt ...RequestOption) (*ActionsDownloadJobLogsForWorkflowRunResponse, error) {
+func (c Client) ActionsDownloadJobLogsForWorkflowRun(ctx context.Context, req *ActionsDownloadJobLogsForWorkflowRunReq, opt ...options.Option) (*ActionsDownloadJobLogsForWorkflowRunResponse, error) {
 	return ActionsDownloadJobLogsForWorkflowRun(ctx, req, append(c, opt...)...)
 }
 
@@ -2144,44 +2067,33 @@ type ActionsDownloadJobLogsForWorkflowRunReq struct {
 	JobId int64
 }
 
-func (r *ActionsDownloadJobLogsForWorkflowRunReq) url() string {
-	return r._url
-}
-
-func (r *ActionsDownloadJobLogsForWorkflowRunReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/actions/jobs/%v/logs", r.Owner, r.Repo, r.JobId)
-}
-
-func (r *ActionsDownloadJobLogsForWorkflowRunReq) method() string {
-	return "GET"
-}
-
-func (r *ActionsDownloadJobLogsForWorkflowRunReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ActionsDownloadJobLogsForWorkflowRunReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActionsDownloadJobLogsForWorkflowRunReq) body() interface{} {
-	return nil
-}
-
-func (r *ActionsDownloadJobLogsForWorkflowRunReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *ActionsDownloadJobLogsForWorkflowRunReq) validStatuses() []int {
-	return []int{302}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ActionsDownloadJobLogsForWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "actions/download-job-logs-for-workflow-run", opt)
+func (r *ActionsDownloadJobLogsForWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ActionsDownloadJobLogsForWorkflowRunReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "GET",
+		OperationID:      "actions/download-job-logs-for-workflow-run",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/actions/jobs/%v/logs", r.Owner, r.Repo, r.JobId),
+		URLQuery:         query,
+		ValidStatuses:    []int{302},
+	}
+	return builder
 }
 
 /*
@@ -2189,7 +2101,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActionsDownloadJobLogsForWorkflowRunReq) Rel(link RelName, resp *ActionsDownloadJobLogsForWorkflowRunResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -2203,7 +2115,7 @@ ActionsDownloadJobLogsForWorkflowRunResponse is a response for ActionsDownloadJo
 https://developer.github.com/v3/actions/workflow-jobs/#download-job-logs-for-a-workflow-run
 */
 type ActionsDownloadJobLogsForWorkflowRunResponse struct {
-	response
+	internal.Response
 	request *ActionsDownloadJobLogsForWorkflowRunReq
 }
 
@@ -2216,19 +2128,25 @@ Download workflow run logs.
 
 https://developer.github.com/v3/actions/workflow-runs/#download-workflow-run-logs
 */
-func ActionsDownloadWorkflowRunLogs(ctx context.Context, req *ActionsDownloadWorkflowRunLogsReq, opt ...RequestOption) (*ActionsDownloadWorkflowRunLogsResponse, error) {
+func ActionsDownloadWorkflowRunLogs(ctx context.Context, req *ActionsDownloadWorkflowRunLogsReq, opt ...options.Option) (*ActionsDownloadWorkflowRunLogsResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActionsDownloadWorkflowRunLogsReq)
 	}
 	resp := &ActionsDownloadWorkflowRunLogsResponse{request: req}
-	r, err := doRequest(ctx, req, "actions/download-workflow-run-logs", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "actions/download-workflow-run-logs")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -2244,7 +2162,7 @@ Download workflow run logs.
 
 https://developer.github.com/v3/actions/workflow-runs/#download-workflow-run-logs
 */
-func (c Client) ActionsDownloadWorkflowRunLogs(ctx context.Context, req *ActionsDownloadWorkflowRunLogsReq, opt ...RequestOption) (*ActionsDownloadWorkflowRunLogsResponse, error) {
+func (c Client) ActionsDownloadWorkflowRunLogs(ctx context.Context, req *ActionsDownloadWorkflowRunLogsReq, opt ...options.Option) (*ActionsDownloadWorkflowRunLogsResponse, error) {
 	return ActionsDownloadWorkflowRunLogs(ctx, req, append(c, opt...)...)
 }
 
@@ -2260,44 +2178,33 @@ type ActionsDownloadWorkflowRunLogsReq struct {
 	RunId int64
 }
 
-func (r *ActionsDownloadWorkflowRunLogsReq) url() string {
-	return r._url
-}
-
-func (r *ActionsDownloadWorkflowRunLogsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/actions/runs/%v/logs", r.Owner, r.Repo, r.RunId)
-}
-
-func (r *ActionsDownloadWorkflowRunLogsReq) method() string {
-	return "GET"
-}
-
-func (r *ActionsDownloadWorkflowRunLogsReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ActionsDownloadWorkflowRunLogsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActionsDownloadWorkflowRunLogsReq) body() interface{} {
-	return nil
-}
-
-func (r *ActionsDownloadWorkflowRunLogsReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *ActionsDownloadWorkflowRunLogsReq) validStatuses() []int {
-	return []int{302}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ActionsDownloadWorkflowRunLogsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "actions/download-workflow-run-logs", opt)
+func (r *ActionsDownloadWorkflowRunLogsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ActionsDownloadWorkflowRunLogsReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "GET",
+		OperationID:      "actions/download-workflow-run-logs",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/actions/runs/%v/logs", r.Owner, r.Repo, r.RunId),
+		URLQuery:         query,
+		ValidStatuses:    []int{302},
+	}
+	return builder
 }
 
 /*
@@ -2305,7 +2212,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActionsDownloadWorkflowRunLogsReq) Rel(link RelName, resp *ActionsDownloadWorkflowRunLogsResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -2319,7 +2226,7 @@ ActionsDownloadWorkflowRunLogsResponse is a response for ActionsDownloadWorkflow
 https://developer.github.com/v3/actions/workflow-runs/#download-workflow-run-logs
 */
 type ActionsDownloadWorkflowRunLogsResponse struct {
-	response
+	internal.Response
 	request *ActionsDownloadWorkflowRunLogsReq
 }
 
@@ -2332,20 +2239,26 @@ Get an artifact.
 
 https://developer.github.com/v3/actions/artifacts/#get-an-artifact
 */
-func ActionsGetArtifact(ctx context.Context, req *ActionsGetArtifactReq, opt ...RequestOption) (*ActionsGetArtifactResponse, error) {
+func ActionsGetArtifact(ctx context.Context, req *ActionsGetArtifactReq, opt ...options.Option) (*ActionsGetArtifactResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActionsGetArtifactReq)
 	}
 	resp := &ActionsGetArtifactResponse{request: req}
-	r, err := doRequest(ctx, req, "actions/get-artifact", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.Artifact{}
-	err = r.decodeBody(&resp.Data, "actions/get-artifact")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2361,7 +2274,7 @@ Get an artifact.
 
 https://developer.github.com/v3/actions/artifacts/#get-an-artifact
 */
-func (c Client) ActionsGetArtifact(ctx context.Context, req *ActionsGetArtifactReq, opt ...RequestOption) (*ActionsGetArtifactResponse, error) {
+func (c Client) ActionsGetArtifact(ctx context.Context, req *ActionsGetArtifactReq, opt ...options.Option) (*ActionsGetArtifactResponse, error) {
 	return ActionsGetArtifact(ctx, req, append(c, opt...)...)
 }
 
@@ -2379,44 +2292,33 @@ type ActionsGetArtifactReq struct {
 	ArtifactId int64
 }
 
-func (r *ActionsGetArtifactReq) url() string {
-	return r._url
-}
-
-func (r *ActionsGetArtifactReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/actions/artifacts/%v", r.Owner, r.Repo, r.ArtifactId)
-}
-
-func (r *ActionsGetArtifactReq) method() string {
-	return "GET"
-}
-
-func (r *ActionsGetArtifactReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ActionsGetArtifactReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActionsGetArtifactReq) body() interface{} {
-	return nil
-}
-
-func (r *ActionsGetArtifactReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ActionsGetArtifactReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ActionsGetArtifactReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "actions/get-artifact", opt)
+func (r *ActionsGetArtifactReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ActionsGetArtifactReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "actions/get-artifact",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/actions/artifacts/%v", r.Owner, r.Repo, r.ArtifactId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -2424,7 +2326,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActionsGetArtifactReq) Rel(link RelName, resp *ActionsGetArtifactResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -2438,7 +2340,7 @@ ActionsGetArtifactResponse is a response for ActionsGetArtifact
 https://developer.github.com/v3/actions/artifacts/#get-an-artifact
 */
 type ActionsGetArtifactResponse struct {
-	response
+	internal.Response
 	request *ActionsGetArtifactReq
 	Data    components.Artifact
 }
@@ -2452,20 +2354,26 @@ Get a job for a workflow run.
 
 https://developer.github.com/v3/actions/workflow-jobs/#get-a-job-for-a-workflow-run
 */
-func ActionsGetJobForWorkflowRun(ctx context.Context, req *ActionsGetJobForWorkflowRunReq, opt ...RequestOption) (*ActionsGetJobForWorkflowRunResponse, error) {
+func ActionsGetJobForWorkflowRun(ctx context.Context, req *ActionsGetJobForWorkflowRunReq, opt ...options.Option) (*ActionsGetJobForWorkflowRunResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActionsGetJobForWorkflowRunReq)
 	}
 	resp := &ActionsGetJobForWorkflowRunResponse{request: req}
-	r, err := doRequest(ctx, req, "actions/get-job-for-workflow-run", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.Job{}
-	err = r.decodeBody(&resp.Data, "actions/get-job-for-workflow-run")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2481,7 +2389,7 @@ Get a job for a workflow run.
 
 https://developer.github.com/v3/actions/workflow-jobs/#get-a-job-for-a-workflow-run
 */
-func (c Client) ActionsGetJobForWorkflowRun(ctx context.Context, req *ActionsGetJobForWorkflowRunReq, opt ...RequestOption) (*ActionsGetJobForWorkflowRunResponse, error) {
+func (c Client) ActionsGetJobForWorkflowRun(ctx context.Context, req *ActionsGetJobForWorkflowRunReq, opt ...options.Option) (*ActionsGetJobForWorkflowRunResponse, error) {
 	return ActionsGetJobForWorkflowRun(ctx, req, append(c, opt...)...)
 }
 
@@ -2499,44 +2407,33 @@ type ActionsGetJobForWorkflowRunReq struct {
 	JobId int64
 }
 
-func (r *ActionsGetJobForWorkflowRunReq) url() string {
-	return r._url
-}
-
-func (r *ActionsGetJobForWorkflowRunReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/actions/jobs/%v", r.Owner, r.Repo, r.JobId)
-}
-
-func (r *ActionsGetJobForWorkflowRunReq) method() string {
-	return "GET"
-}
-
-func (r *ActionsGetJobForWorkflowRunReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ActionsGetJobForWorkflowRunReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActionsGetJobForWorkflowRunReq) body() interface{} {
-	return nil
-}
-
-func (r *ActionsGetJobForWorkflowRunReq) dataStatuses() []int {
-	return []int{202}
-}
-
-func (r *ActionsGetJobForWorkflowRunReq) validStatuses() []int {
-	return []int{202}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ActionsGetJobForWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "actions/get-job-for-workflow-run", opt)
+func (r *ActionsGetJobForWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ActionsGetJobForWorkflowRunReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{202},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "actions/get-job-for-workflow-run",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/actions/jobs/%v", r.Owner, r.Repo, r.JobId),
+		URLQuery:         query,
+		ValidStatuses:    []int{202},
+	}
+	return builder
 }
 
 /*
@@ -2544,7 +2441,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActionsGetJobForWorkflowRunReq) Rel(link RelName, resp *ActionsGetJobForWorkflowRunResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -2558,7 +2455,7 @@ ActionsGetJobForWorkflowRunResponse is a response for ActionsGetJobForWorkflowRu
 https://developer.github.com/v3/actions/workflow-jobs/#get-a-job-for-a-workflow-run
 */
 type ActionsGetJobForWorkflowRunResponse struct {
-	response
+	internal.Response
 	request *ActionsGetJobForWorkflowRunReq
 	Data    components.Job
 }
@@ -2572,20 +2469,26 @@ Get an organization public key.
 
 https://developer.github.com/v3/actions/secrets/#get-an-organization-public-key
 */
-func ActionsGetOrgPublicKey(ctx context.Context, req *ActionsGetOrgPublicKeyReq, opt ...RequestOption) (*ActionsGetOrgPublicKeyResponse, error) {
+func ActionsGetOrgPublicKey(ctx context.Context, req *ActionsGetOrgPublicKeyReq, opt ...options.Option) (*ActionsGetOrgPublicKeyResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActionsGetOrgPublicKeyReq)
 	}
 	resp := &ActionsGetOrgPublicKeyResponse{request: req}
-	r, err := doRequest(ctx, req, "actions/get-org-public-key", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.ActionsPublicKey{}
-	err = r.decodeBody(&resp.Data, "actions/get-org-public-key")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2601,7 +2504,7 @@ Get an organization public key.
 
 https://developer.github.com/v3/actions/secrets/#get-an-organization-public-key
 */
-func (c Client) ActionsGetOrgPublicKey(ctx context.Context, req *ActionsGetOrgPublicKeyReq, opt ...RequestOption) (*ActionsGetOrgPublicKeyResponse, error) {
+func (c Client) ActionsGetOrgPublicKey(ctx context.Context, req *ActionsGetOrgPublicKeyReq, opt ...options.Option) (*ActionsGetOrgPublicKeyResponse, error) {
 	return ActionsGetOrgPublicKey(ctx, req, append(c, opt...)...)
 }
 
@@ -2615,44 +2518,33 @@ type ActionsGetOrgPublicKeyReq struct {
 	Org  string
 }
 
-func (r *ActionsGetOrgPublicKeyReq) url() string {
-	return r._url
-}
-
-func (r *ActionsGetOrgPublicKeyReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/actions/secrets/public-key", r.Org)
-}
-
-func (r *ActionsGetOrgPublicKeyReq) method() string {
-	return "GET"
-}
-
-func (r *ActionsGetOrgPublicKeyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ActionsGetOrgPublicKeyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActionsGetOrgPublicKeyReq) body() interface{} {
-	return nil
-}
-
-func (r *ActionsGetOrgPublicKeyReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ActionsGetOrgPublicKeyReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ActionsGetOrgPublicKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "actions/get-org-public-key", opt)
+func (r *ActionsGetOrgPublicKeyReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ActionsGetOrgPublicKeyReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "actions/get-org-public-key",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/orgs/%v/actions/secrets/public-key", r.Org),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -2660,7 +2552,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActionsGetOrgPublicKeyReq) Rel(link RelName, resp *ActionsGetOrgPublicKeyResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -2674,7 +2566,7 @@ ActionsGetOrgPublicKeyResponse is a response for ActionsGetOrgPublicKey
 https://developer.github.com/v3/actions/secrets/#get-an-organization-public-key
 */
 type ActionsGetOrgPublicKeyResponse struct {
-	response
+	internal.Response
 	request *ActionsGetOrgPublicKeyReq
 	Data    components.ActionsPublicKey
 }
@@ -2688,20 +2580,26 @@ Get an organization secret.
 
 https://developer.github.com/v3/actions/secrets/#get-an-organization-secret
 */
-func ActionsGetOrgSecret(ctx context.Context, req *ActionsGetOrgSecretReq, opt ...RequestOption) (*ActionsGetOrgSecretResponse, error) {
+func ActionsGetOrgSecret(ctx context.Context, req *ActionsGetOrgSecretReq, opt ...options.Option) (*ActionsGetOrgSecretResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActionsGetOrgSecretReq)
 	}
 	resp := &ActionsGetOrgSecretResponse{request: req}
-	r, err := doRequest(ctx, req, "actions/get-org-secret", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.OrganizationActionsSecret{}
-	err = r.decodeBody(&resp.Data, "actions/get-org-secret")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2717,7 +2615,7 @@ Get an organization secret.
 
 https://developer.github.com/v3/actions/secrets/#get-an-organization-secret
 */
-func (c Client) ActionsGetOrgSecret(ctx context.Context, req *ActionsGetOrgSecretReq, opt ...RequestOption) (*ActionsGetOrgSecretResponse, error) {
+func (c Client) ActionsGetOrgSecret(ctx context.Context, req *ActionsGetOrgSecretReq, opt ...options.Option) (*ActionsGetOrgSecretResponse, error) {
 	return ActionsGetOrgSecret(ctx, req, append(c, opt...)...)
 }
 
@@ -2734,44 +2632,33 @@ type ActionsGetOrgSecretReq struct {
 	SecretName string
 }
 
-func (r *ActionsGetOrgSecretReq) url() string {
-	return r._url
-}
-
-func (r *ActionsGetOrgSecretReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/actions/secrets/%v", r.Org, r.SecretName)
-}
-
-func (r *ActionsGetOrgSecretReq) method() string {
-	return "GET"
-}
-
-func (r *ActionsGetOrgSecretReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ActionsGetOrgSecretReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActionsGetOrgSecretReq) body() interface{} {
-	return nil
-}
-
-func (r *ActionsGetOrgSecretReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ActionsGetOrgSecretReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ActionsGetOrgSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "actions/get-org-secret", opt)
+func (r *ActionsGetOrgSecretReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ActionsGetOrgSecretReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "actions/get-org-secret",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/orgs/%v/actions/secrets/%v", r.Org, r.SecretName),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -2779,7 +2666,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActionsGetOrgSecretReq) Rel(link RelName, resp *ActionsGetOrgSecretResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -2793,7 +2680,7 @@ ActionsGetOrgSecretResponse is a response for ActionsGetOrgSecret
 https://developer.github.com/v3/actions/secrets/#get-an-organization-secret
 */
 type ActionsGetOrgSecretResponse struct {
-	response
+	internal.Response
 	request *ActionsGetOrgSecretReq
 	Data    components.OrganizationActionsSecret
 }
@@ -2807,20 +2694,26 @@ Get a repository public key.
 
 https://developer.github.com/v3/actions/secrets/#get-a-repository-public-key
 */
-func ActionsGetRepoPublicKey(ctx context.Context, req *ActionsGetRepoPublicKeyReq, opt ...RequestOption) (*ActionsGetRepoPublicKeyResponse, error) {
+func ActionsGetRepoPublicKey(ctx context.Context, req *ActionsGetRepoPublicKeyReq, opt ...options.Option) (*ActionsGetRepoPublicKeyResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActionsGetRepoPublicKeyReq)
 	}
 	resp := &ActionsGetRepoPublicKeyResponse{request: req}
-	r, err := doRequest(ctx, req, "actions/get-repo-public-key", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.ActionsPublicKey{}
-	err = r.decodeBody(&resp.Data, "actions/get-repo-public-key")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2836,7 +2729,7 @@ Get a repository public key.
 
 https://developer.github.com/v3/actions/secrets/#get-a-repository-public-key
 */
-func (c Client) ActionsGetRepoPublicKey(ctx context.Context, req *ActionsGetRepoPublicKeyReq, opt ...RequestOption) (*ActionsGetRepoPublicKeyResponse, error) {
+func (c Client) ActionsGetRepoPublicKey(ctx context.Context, req *ActionsGetRepoPublicKeyReq, opt ...options.Option) (*ActionsGetRepoPublicKeyResponse, error) {
 	return ActionsGetRepoPublicKey(ctx, req, append(c, opt...)...)
 }
 
@@ -2851,44 +2744,33 @@ type ActionsGetRepoPublicKeyReq struct {
 	Repo  string
 }
 
-func (r *ActionsGetRepoPublicKeyReq) url() string {
-	return r._url
-}
-
-func (r *ActionsGetRepoPublicKeyReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/actions/secrets/public-key", r.Owner, r.Repo)
-}
-
-func (r *ActionsGetRepoPublicKeyReq) method() string {
-	return "GET"
-}
-
-func (r *ActionsGetRepoPublicKeyReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ActionsGetRepoPublicKeyReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActionsGetRepoPublicKeyReq) body() interface{} {
-	return nil
-}
-
-func (r *ActionsGetRepoPublicKeyReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ActionsGetRepoPublicKeyReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ActionsGetRepoPublicKeyReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "actions/get-repo-public-key", opt)
+func (r *ActionsGetRepoPublicKeyReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ActionsGetRepoPublicKeyReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "actions/get-repo-public-key",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/actions/secrets/public-key", r.Owner, r.Repo),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -2896,7 +2778,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActionsGetRepoPublicKeyReq) Rel(link RelName, resp *ActionsGetRepoPublicKeyResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -2910,7 +2792,7 @@ ActionsGetRepoPublicKeyResponse is a response for ActionsGetRepoPublicKey
 https://developer.github.com/v3/actions/secrets/#get-a-repository-public-key
 */
 type ActionsGetRepoPublicKeyResponse struct {
-	response
+	internal.Response
 	request *ActionsGetRepoPublicKeyReq
 	Data    components.ActionsPublicKey
 }
@@ -2924,20 +2806,26 @@ Get a repository secret.
 
 https://developer.github.com/v3/actions/secrets/#get-a-repository-secret
 */
-func ActionsGetRepoSecret(ctx context.Context, req *ActionsGetRepoSecretReq, opt ...RequestOption) (*ActionsGetRepoSecretResponse, error) {
+func ActionsGetRepoSecret(ctx context.Context, req *ActionsGetRepoSecretReq, opt ...options.Option) (*ActionsGetRepoSecretResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActionsGetRepoSecretReq)
 	}
 	resp := &ActionsGetRepoSecretResponse{request: req}
-	r, err := doRequest(ctx, req, "actions/get-repo-secret", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.ActionsSecret{}
-	err = r.decodeBody(&resp.Data, "actions/get-repo-secret")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2953,7 +2841,7 @@ Get a repository secret.
 
 https://developer.github.com/v3/actions/secrets/#get-a-repository-secret
 */
-func (c Client) ActionsGetRepoSecret(ctx context.Context, req *ActionsGetRepoSecretReq, opt ...RequestOption) (*ActionsGetRepoSecretResponse, error) {
+func (c Client) ActionsGetRepoSecret(ctx context.Context, req *ActionsGetRepoSecretReq, opt ...options.Option) (*ActionsGetRepoSecretResponse, error) {
 	return ActionsGetRepoSecret(ctx, req, append(c, opt...)...)
 }
 
@@ -2971,44 +2859,33 @@ type ActionsGetRepoSecretReq struct {
 	SecretName string
 }
 
-func (r *ActionsGetRepoSecretReq) url() string {
-	return r._url
-}
-
-func (r *ActionsGetRepoSecretReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/actions/secrets/%v", r.Owner, r.Repo, r.SecretName)
-}
-
-func (r *ActionsGetRepoSecretReq) method() string {
-	return "GET"
-}
-
-func (r *ActionsGetRepoSecretReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ActionsGetRepoSecretReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActionsGetRepoSecretReq) body() interface{} {
-	return nil
-}
-
-func (r *ActionsGetRepoSecretReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ActionsGetRepoSecretReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ActionsGetRepoSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "actions/get-repo-secret", opt)
+func (r *ActionsGetRepoSecretReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ActionsGetRepoSecretReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "actions/get-repo-secret",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/actions/secrets/%v", r.Owner, r.Repo, r.SecretName),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -3016,7 +2893,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActionsGetRepoSecretReq) Rel(link RelName, resp *ActionsGetRepoSecretResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -3030,7 +2907,7 @@ ActionsGetRepoSecretResponse is a response for ActionsGetRepoSecret
 https://developer.github.com/v3/actions/secrets/#get-a-repository-secret
 */
 type ActionsGetRepoSecretResponse struct {
-	response
+	internal.Response
 	request *ActionsGetRepoSecretReq
 	Data    components.ActionsSecret
 }
@@ -3044,20 +2921,26 @@ Get a self-hosted runner for an organization.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#get-a-self-hosted-runner-for-an-organization
 */
-func ActionsGetSelfHostedRunnerForOrg(ctx context.Context, req *ActionsGetSelfHostedRunnerForOrgReq, opt ...RequestOption) (*ActionsGetSelfHostedRunnerForOrgResponse, error) {
+func ActionsGetSelfHostedRunnerForOrg(ctx context.Context, req *ActionsGetSelfHostedRunnerForOrgReq, opt ...options.Option) (*ActionsGetSelfHostedRunnerForOrgResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActionsGetSelfHostedRunnerForOrgReq)
 	}
 	resp := &ActionsGetSelfHostedRunnerForOrgResponse{request: req}
-	r, err := doRequest(ctx, req, "actions/get-self-hosted-runner-for-org", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.Runner{}
-	err = r.decodeBody(&resp.Data, "actions/get-self-hosted-runner-for-org")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3073,7 +2956,7 @@ Get a self-hosted runner for an organization.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#get-a-self-hosted-runner-for-an-organization
 */
-func (c Client) ActionsGetSelfHostedRunnerForOrg(ctx context.Context, req *ActionsGetSelfHostedRunnerForOrgReq, opt ...RequestOption) (*ActionsGetSelfHostedRunnerForOrgResponse, error) {
+func (c Client) ActionsGetSelfHostedRunnerForOrg(ctx context.Context, req *ActionsGetSelfHostedRunnerForOrgReq, opt ...options.Option) (*ActionsGetSelfHostedRunnerForOrgResponse, error) {
 	return ActionsGetSelfHostedRunnerForOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -3090,44 +2973,33 @@ type ActionsGetSelfHostedRunnerForOrgReq struct {
 	RunnerId int64
 }
 
-func (r *ActionsGetSelfHostedRunnerForOrgReq) url() string {
-	return r._url
-}
-
-func (r *ActionsGetSelfHostedRunnerForOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/actions/runners/%v", r.Org, r.RunnerId)
-}
-
-func (r *ActionsGetSelfHostedRunnerForOrgReq) method() string {
-	return "GET"
-}
-
-func (r *ActionsGetSelfHostedRunnerForOrgReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ActionsGetSelfHostedRunnerForOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActionsGetSelfHostedRunnerForOrgReq) body() interface{} {
-	return nil
-}
-
-func (r *ActionsGetSelfHostedRunnerForOrgReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ActionsGetSelfHostedRunnerForOrgReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ActionsGetSelfHostedRunnerForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "actions/get-self-hosted-runner-for-org", opt)
+func (r *ActionsGetSelfHostedRunnerForOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ActionsGetSelfHostedRunnerForOrgReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "actions/get-self-hosted-runner-for-org",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/orgs/%v/actions/runners/%v", r.Org, r.RunnerId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -3135,7 +3007,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActionsGetSelfHostedRunnerForOrgReq) Rel(link RelName, resp *ActionsGetSelfHostedRunnerForOrgResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -3149,7 +3021,7 @@ ActionsGetSelfHostedRunnerForOrgResponse is a response for ActionsGetSelfHostedR
 https://developer.github.com/v3/actions/self-hosted-runners/#get-a-self-hosted-runner-for-an-organization
 */
 type ActionsGetSelfHostedRunnerForOrgResponse struct {
-	response
+	internal.Response
 	request *ActionsGetSelfHostedRunnerForOrgReq
 	Data    components.Runner
 }
@@ -3163,20 +3035,26 @@ Get a self-hosted runner for a repository.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#get-a-self-hosted-runner-for-a-repository
 */
-func ActionsGetSelfHostedRunnerForRepo(ctx context.Context, req *ActionsGetSelfHostedRunnerForRepoReq, opt ...RequestOption) (*ActionsGetSelfHostedRunnerForRepoResponse, error) {
+func ActionsGetSelfHostedRunnerForRepo(ctx context.Context, req *ActionsGetSelfHostedRunnerForRepoReq, opt ...options.Option) (*ActionsGetSelfHostedRunnerForRepoResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActionsGetSelfHostedRunnerForRepoReq)
 	}
 	resp := &ActionsGetSelfHostedRunnerForRepoResponse{request: req}
-	r, err := doRequest(ctx, req, "actions/get-self-hosted-runner-for-repo", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.Runner{}
-	err = r.decodeBody(&resp.Data, "actions/get-self-hosted-runner-for-repo")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3192,7 +3070,7 @@ Get a self-hosted runner for a repository.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#get-a-self-hosted-runner-for-a-repository
 */
-func (c Client) ActionsGetSelfHostedRunnerForRepo(ctx context.Context, req *ActionsGetSelfHostedRunnerForRepoReq, opt ...RequestOption) (*ActionsGetSelfHostedRunnerForRepoResponse, error) {
+func (c Client) ActionsGetSelfHostedRunnerForRepo(ctx context.Context, req *ActionsGetSelfHostedRunnerForRepoReq, opt ...options.Option) (*ActionsGetSelfHostedRunnerForRepoResponse, error) {
 	return ActionsGetSelfHostedRunnerForRepo(ctx, req, append(c, opt...)...)
 }
 
@@ -3210,44 +3088,33 @@ type ActionsGetSelfHostedRunnerForRepoReq struct {
 	RunnerId int64
 }
 
-func (r *ActionsGetSelfHostedRunnerForRepoReq) url() string {
-	return r._url
-}
-
-func (r *ActionsGetSelfHostedRunnerForRepoReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/actions/runners/%v", r.Owner, r.Repo, r.RunnerId)
-}
-
-func (r *ActionsGetSelfHostedRunnerForRepoReq) method() string {
-	return "GET"
-}
-
-func (r *ActionsGetSelfHostedRunnerForRepoReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ActionsGetSelfHostedRunnerForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActionsGetSelfHostedRunnerForRepoReq) body() interface{} {
-	return nil
-}
-
-func (r *ActionsGetSelfHostedRunnerForRepoReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ActionsGetSelfHostedRunnerForRepoReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ActionsGetSelfHostedRunnerForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "actions/get-self-hosted-runner-for-repo", opt)
+func (r *ActionsGetSelfHostedRunnerForRepoReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ActionsGetSelfHostedRunnerForRepoReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "actions/get-self-hosted-runner-for-repo",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/actions/runners/%v", r.Owner, r.Repo, r.RunnerId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -3255,7 +3122,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActionsGetSelfHostedRunnerForRepoReq) Rel(link RelName, resp *ActionsGetSelfHostedRunnerForRepoResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -3269,7 +3136,7 @@ ActionsGetSelfHostedRunnerForRepoResponse is a response for ActionsGetSelfHosted
 https://developer.github.com/v3/actions/self-hosted-runners/#get-a-self-hosted-runner-for-a-repository
 */
 type ActionsGetSelfHostedRunnerForRepoResponse struct {
-	response
+	internal.Response
 	request *ActionsGetSelfHostedRunnerForRepoReq
 	Data    components.Runner
 }
@@ -3283,20 +3150,26 @@ Get a workflow.
 
 https://developer.github.com/v3/actions/workflows/#get-a-workflow
 */
-func ActionsGetWorkflow(ctx context.Context, req *ActionsGetWorkflowReq, opt ...RequestOption) (*ActionsGetWorkflowResponse, error) {
+func ActionsGetWorkflow(ctx context.Context, req *ActionsGetWorkflowReq, opt ...options.Option) (*ActionsGetWorkflowResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActionsGetWorkflowReq)
 	}
 	resp := &ActionsGetWorkflowResponse{request: req}
-	r, err := doRequest(ctx, req, "actions/get-workflow", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.Workflow{}
-	err = r.decodeBody(&resp.Data, "actions/get-workflow")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3312,7 +3185,7 @@ Get a workflow.
 
 https://developer.github.com/v3/actions/workflows/#get-a-workflow
 */
-func (c Client) ActionsGetWorkflow(ctx context.Context, req *ActionsGetWorkflowReq, opt ...RequestOption) (*ActionsGetWorkflowResponse, error) {
+func (c Client) ActionsGetWorkflow(ctx context.Context, req *ActionsGetWorkflowReq, opt ...options.Option) (*ActionsGetWorkflowResponse, error) {
 	return ActionsGetWorkflow(ctx, req, append(c, opt...)...)
 }
 
@@ -3328,44 +3201,33 @@ type ActionsGetWorkflowReq struct {
 	WorkflowId int64
 }
 
-func (r *ActionsGetWorkflowReq) url() string {
-	return r._url
-}
-
-func (r *ActionsGetWorkflowReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/actions/workflows/%v", r.Owner, r.Repo, r.WorkflowId)
-}
-
-func (r *ActionsGetWorkflowReq) method() string {
-	return "GET"
-}
-
-func (r *ActionsGetWorkflowReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ActionsGetWorkflowReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActionsGetWorkflowReq) body() interface{} {
-	return nil
-}
-
-func (r *ActionsGetWorkflowReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ActionsGetWorkflowReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ActionsGetWorkflowReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "actions/get-workflow", opt)
+func (r *ActionsGetWorkflowReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ActionsGetWorkflowReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "actions/get-workflow",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/actions/workflows/%v", r.Owner, r.Repo, r.WorkflowId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -3373,7 +3235,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActionsGetWorkflowReq) Rel(link RelName, resp *ActionsGetWorkflowResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -3387,7 +3249,7 @@ ActionsGetWorkflowResponse is a response for ActionsGetWorkflow
 https://developer.github.com/v3/actions/workflows/#get-a-workflow
 */
 type ActionsGetWorkflowResponse struct {
-	response
+	internal.Response
 	request *ActionsGetWorkflowReq
 	Data    components.Workflow
 }
@@ -3401,20 +3263,26 @@ Get a workflow run.
 
 https://developer.github.com/v3/actions/workflow-runs/#get-a-workflow-run
 */
-func ActionsGetWorkflowRun(ctx context.Context, req *ActionsGetWorkflowRunReq, opt ...RequestOption) (*ActionsGetWorkflowRunResponse, error) {
+func ActionsGetWorkflowRun(ctx context.Context, req *ActionsGetWorkflowRunReq, opt ...options.Option) (*ActionsGetWorkflowRunResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActionsGetWorkflowRunReq)
 	}
 	resp := &ActionsGetWorkflowRunResponse{request: req}
-	r, err := doRequest(ctx, req, "actions/get-workflow-run", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.WorkflowRun{}
-	err = r.decodeBody(&resp.Data, "actions/get-workflow-run")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3430,7 +3298,7 @@ Get a workflow run.
 
 https://developer.github.com/v3/actions/workflow-runs/#get-a-workflow-run
 */
-func (c Client) ActionsGetWorkflowRun(ctx context.Context, req *ActionsGetWorkflowRunReq, opt ...RequestOption) (*ActionsGetWorkflowRunResponse, error) {
+func (c Client) ActionsGetWorkflowRun(ctx context.Context, req *ActionsGetWorkflowRunReq, opt ...options.Option) (*ActionsGetWorkflowRunResponse, error) {
 	return ActionsGetWorkflowRun(ctx, req, append(c, opt...)...)
 }
 
@@ -3446,44 +3314,33 @@ type ActionsGetWorkflowRunReq struct {
 	RunId int64
 }
 
-func (r *ActionsGetWorkflowRunReq) url() string {
-	return r._url
-}
-
-func (r *ActionsGetWorkflowRunReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/actions/runs/%v", r.Owner, r.Repo, r.RunId)
-}
-
-func (r *ActionsGetWorkflowRunReq) method() string {
-	return "GET"
-}
-
-func (r *ActionsGetWorkflowRunReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ActionsGetWorkflowRunReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActionsGetWorkflowRunReq) body() interface{} {
-	return nil
-}
-
-func (r *ActionsGetWorkflowRunReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ActionsGetWorkflowRunReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ActionsGetWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "actions/get-workflow-run", opt)
+func (r *ActionsGetWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ActionsGetWorkflowRunReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "actions/get-workflow-run",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/actions/runs/%v", r.Owner, r.Repo, r.RunId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -3491,7 +3348,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActionsGetWorkflowRunReq) Rel(link RelName, resp *ActionsGetWorkflowRunResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -3505,7 +3362,7 @@ ActionsGetWorkflowRunResponse is a response for ActionsGetWorkflowRun
 https://developer.github.com/v3/actions/workflow-runs/#get-a-workflow-run
 */
 type ActionsGetWorkflowRunResponse struct {
-	response
+	internal.Response
 	request *ActionsGetWorkflowRunReq
 	Data    components.WorkflowRun
 }
@@ -3519,20 +3376,26 @@ Get workflow run usage.
 
 https://developer.github.com/v3/actions/workflow-runs/#get-workflow-run-usage
 */
-func ActionsGetWorkflowRunUsage(ctx context.Context, req *ActionsGetWorkflowRunUsageReq, opt ...RequestOption) (*ActionsGetWorkflowRunUsageResponse, error) {
+func ActionsGetWorkflowRunUsage(ctx context.Context, req *ActionsGetWorkflowRunUsageReq, opt ...options.Option) (*ActionsGetWorkflowRunUsageResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActionsGetWorkflowRunUsageReq)
 	}
 	resp := &ActionsGetWorkflowRunUsageResponse{request: req}
-	r, err := doRequest(ctx, req, "actions/get-workflow-run-usage", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.WorkflowRunUsage{}
-	err = r.decodeBody(&resp.Data, "actions/get-workflow-run-usage")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3548,7 +3411,7 @@ Get workflow run usage.
 
 https://developer.github.com/v3/actions/workflow-runs/#get-workflow-run-usage
 */
-func (c Client) ActionsGetWorkflowRunUsage(ctx context.Context, req *ActionsGetWorkflowRunUsageReq, opt ...RequestOption) (*ActionsGetWorkflowRunUsageResponse, error) {
+func (c Client) ActionsGetWorkflowRunUsage(ctx context.Context, req *ActionsGetWorkflowRunUsageReq, opt ...options.Option) (*ActionsGetWorkflowRunUsageResponse, error) {
 	return ActionsGetWorkflowRunUsage(ctx, req, append(c, opt...)...)
 }
 
@@ -3564,44 +3427,33 @@ type ActionsGetWorkflowRunUsageReq struct {
 	RunId int64
 }
 
-func (r *ActionsGetWorkflowRunUsageReq) url() string {
-	return r._url
-}
-
-func (r *ActionsGetWorkflowRunUsageReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/actions/runs/%v/timing", r.Owner, r.Repo, r.RunId)
-}
-
-func (r *ActionsGetWorkflowRunUsageReq) method() string {
-	return "GET"
-}
-
-func (r *ActionsGetWorkflowRunUsageReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ActionsGetWorkflowRunUsageReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActionsGetWorkflowRunUsageReq) body() interface{} {
-	return nil
-}
-
-func (r *ActionsGetWorkflowRunUsageReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ActionsGetWorkflowRunUsageReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ActionsGetWorkflowRunUsageReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "actions/get-workflow-run-usage", opt)
+func (r *ActionsGetWorkflowRunUsageReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ActionsGetWorkflowRunUsageReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "actions/get-workflow-run-usage",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/actions/runs/%v/timing", r.Owner, r.Repo, r.RunId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -3609,7 +3461,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActionsGetWorkflowRunUsageReq) Rel(link RelName, resp *ActionsGetWorkflowRunUsageResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -3623,7 +3475,7 @@ ActionsGetWorkflowRunUsageResponse is a response for ActionsGetWorkflowRunUsage
 https://developer.github.com/v3/actions/workflow-runs/#get-workflow-run-usage
 */
 type ActionsGetWorkflowRunUsageResponse struct {
-	response
+	internal.Response
 	request *ActionsGetWorkflowRunUsageReq
 	Data    components.WorkflowRunUsage
 }
@@ -3637,20 +3489,26 @@ Get workflow usage.
 
 https://developer.github.com/v3/actions/workflows/#get-workflow-usage
 */
-func ActionsGetWorkflowUsage(ctx context.Context, req *ActionsGetWorkflowUsageReq, opt ...RequestOption) (*ActionsGetWorkflowUsageResponse, error) {
+func ActionsGetWorkflowUsage(ctx context.Context, req *ActionsGetWorkflowUsageReq, opt ...options.Option) (*ActionsGetWorkflowUsageResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActionsGetWorkflowUsageReq)
 	}
 	resp := &ActionsGetWorkflowUsageResponse{request: req}
-	r, err := doRequest(ctx, req, "actions/get-workflow-usage", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.WorkflowUsage{}
-	err = r.decodeBody(&resp.Data, "actions/get-workflow-usage")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3666,7 +3524,7 @@ Get workflow usage.
 
 https://developer.github.com/v3/actions/workflows/#get-workflow-usage
 */
-func (c Client) ActionsGetWorkflowUsage(ctx context.Context, req *ActionsGetWorkflowUsageReq, opt ...RequestOption) (*ActionsGetWorkflowUsageResponse, error) {
+func (c Client) ActionsGetWorkflowUsage(ctx context.Context, req *ActionsGetWorkflowUsageReq, opt ...options.Option) (*ActionsGetWorkflowUsageResponse, error) {
 	return ActionsGetWorkflowUsage(ctx, req, append(c, opt...)...)
 }
 
@@ -3682,44 +3540,33 @@ type ActionsGetWorkflowUsageReq struct {
 	WorkflowId int64
 }
 
-func (r *ActionsGetWorkflowUsageReq) url() string {
-	return r._url
-}
-
-func (r *ActionsGetWorkflowUsageReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/actions/workflows/%v/timing", r.Owner, r.Repo, r.WorkflowId)
-}
-
-func (r *ActionsGetWorkflowUsageReq) method() string {
-	return "GET"
-}
-
-func (r *ActionsGetWorkflowUsageReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ActionsGetWorkflowUsageReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActionsGetWorkflowUsageReq) body() interface{} {
-	return nil
-}
-
-func (r *ActionsGetWorkflowUsageReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ActionsGetWorkflowUsageReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ActionsGetWorkflowUsageReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "actions/get-workflow-usage", opt)
+func (r *ActionsGetWorkflowUsageReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ActionsGetWorkflowUsageReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "actions/get-workflow-usage",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/actions/workflows/%v/timing", r.Owner, r.Repo, r.WorkflowId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -3727,7 +3574,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActionsGetWorkflowUsageReq) Rel(link RelName, resp *ActionsGetWorkflowUsageResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -3741,7 +3588,7 @@ ActionsGetWorkflowUsageResponse is a response for ActionsGetWorkflowUsage
 https://developer.github.com/v3/actions/workflows/#get-workflow-usage
 */
 type ActionsGetWorkflowUsageResponse struct {
-	response
+	internal.Response
 	request *ActionsGetWorkflowUsageReq
 	Data    components.WorkflowUsage
 }
@@ -3755,20 +3602,26 @@ List artifacts for a repository.
 
 https://developer.github.com/v3/actions/artifacts/#list-artifacts-for-a-repository
 */
-func ActionsListArtifactsForRepo(ctx context.Context, req *ActionsListArtifactsForRepoReq, opt ...RequestOption) (*ActionsListArtifactsForRepoResponse, error) {
+func ActionsListArtifactsForRepo(ctx context.Context, req *ActionsListArtifactsForRepoReq, opt ...options.Option) (*ActionsListArtifactsForRepoResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActionsListArtifactsForRepoReq)
 	}
 	resp := &ActionsListArtifactsForRepoResponse{request: req}
-	r, err := doRequest(ctx, req, "actions/list-artifacts-for-repo", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = ActionsListArtifactsForRepoResponseBody{}
-	err = r.decodeBody(&resp.Data, "actions/list-artifacts-for-repo")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3784,7 +3637,7 @@ List artifacts for a repository.
 
 https://developer.github.com/v3/actions/artifacts/#list-artifacts-for-a-repository
 */
-func (c Client) ActionsListArtifactsForRepo(ctx context.Context, req *ActionsListArtifactsForRepoReq, opt ...RequestOption) (*ActionsListArtifactsForRepoResponse, error) {
+func (c Client) ActionsListArtifactsForRepo(ctx context.Context, req *ActionsListArtifactsForRepoReq, opt ...options.Option) (*ActionsListArtifactsForRepoResponse, error) {
 	return ActionsListArtifactsForRepo(ctx, req, append(c, opt...)...)
 }
 
@@ -3805,19 +3658,16 @@ type ActionsListArtifactsForRepoReq struct {
 	Page *int64
 }
 
-func (r *ActionsListArtifactsForRepoReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *ActionsListArtifactsForRepoReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *ActionsListArtifactsForRepoReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/actions/artifacts", r.Owner, r.Repo)
-}
-
-func (r *ActionsListArtifactsForRepoReq) method() string {
-	return "GET"
-}
-
-func (r *ActionsListArtifactsForRepoReq) urlQuery() url.Values {
+func (r *ActionsListArtifactsForRepoReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -3825,30 +3675,22 @@ func (r *ActionsListArtifactsForRepoReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *ActionsListArtifactsForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActionsListArtifactsForRepoReq) body() interface{} {
-	return nil
-}
-
-func (r *ActionsListArtifactsForRepoReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ActionsListArtifactsForRepoReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ActionsListArtifactsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "actions/list-artifacts-for-repo", opt)
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "actions/list-artifacts-for-repo",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/actions/artifacts", r.Owner, r.Repo),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -3856,7 +3698,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActionsListArtifactsForRepoReq) Rel(link RelName, resp *ActionsListArtifactsForRepoResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -3880,7 +3722,7 @@ ActionsListArtifactsForRepoResponse is a response for ActionsListArtifactsForRep
 https://developer.github.com/v3/actions/artifacts/#list-artifacts-for-a-repository
 */
 type ActionsListArtifactsForRepoResponse struct {
-	response
+	internal.Response
 	request *ActionsListArtifactsForRepoReq
 	Data    ActionsListArtifactsForRepoResponseBody
 }
@@ -3894,20 +3736,26 @@ List jobs for a workflow run.
 
 https://developer.github.com/v3/actions/workflow-jobs/#list-jobs-for-a-workflow-run
 */
-func ActionsListJobsForWorkflowRun(ctx context.Context, req *ActionsListJobsForWorkflowRunReq, opt ...RequestOption) (*ActionsListJobsForWorkflowRunResponse, error) {
+func ActionsListJobsForWorkflowRun(ctx context.Context, req *ActionsListJobsForWorkflowRunReq, opt ...options.Option) (*ActionsListJobsForWorkflowRunResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActionsListJobsForWorkflowRunReq)
 	}
 	resp := &ActionsListJobsForWorkflowRunResponse{request: req}
-	r, err := doRequest(ctx, req, "actions/list-jobs-for-workflow-run", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = ActionsListJobsForWorkflowRunResponseBody{}
-	err = r.decodeBody(&resp.Data, "actions/list-jobs-for-workflow-run")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3923,7 +3771,7 @@ List jobs for a workflow run.
 
 https://developer.github.com/v3/actions/workflow-jobs/#list-jobs-for-a-workflow-run
 */
-func (c Client) ActionsListJobsForWorkflowRun(ctx context.Context, req *ActionsListJobsForWorkflowRunReq, opt ...RequestOption) (*ActionsListJobsForWorkflowRunResponse, error) {
+func (c Client) ActionsListJobsForWorkflowRun(ctx context.Context, req *ActionsListJobsForWorkflowRunReq, opt ...options.Option) (*ActionsListJobsForWorkflowRunResponse, error) {
 	return ActionsListJobsForWorkflowRun(ctx, req, append(c, opt...)...)
 }
 
@@ -3953,19 +3801,16 @@ type ActionsListJobsForWorkflowRunReq struct {
 	Page *int64
 }
 
-func (r *ActionsListJobsForWorkflowRunReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *ActionsListJobsForWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *ActionsListJobsForWorkflowRunReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/actions/runs/%v/jobs", r.Owner, r.Repo, r.RunId)
-}
-
-func (r *ActionsListJobsForWorkflowRunReq) method() string {
-	return "GET"
-}
-
-func (r *ActionsListJobsForWorkflowRunReq) urlQuery() url.Values {
+func (r *ActionsListJobsForWorkflowRunReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Filter != nil {
 		query.Set("filter", *r.Filter)
@@ -3976,30 +3821,22 @@ func (r *ActionsListJobsForWorkflowRunReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *ActionsListJobsForWorkflowRunReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActionsListJobsForWorkflowRunReq) body() interface{} {
-	return nil
-}
-
-func (r *ActionsListJobsForWorkflowRunReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ActionsListJobsForWorkflowRunReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ActionsListJobsForWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "actions/list-jobs-for-workflow-run", opt)
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "actions/list-jobs-for-workflow-run",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/actions/runs/%v/jobs", r.Owner, r.Repo, r.RunId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -4007,7 +3844,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActionsListJobsForWorkflowRunReq) Rel(link RelName, resp *ActionsListJobsForWorkflowRunResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -4031,7 +3868,7 @@ ActionsListJobsForWorkflowRunResponse is a response for ActionsListJobsForWorkfl
 https://developer.github.com/v3/actions/workflow-jobs/#list-jobs-for-a-workflow-run
 */
 type ActionsListJobsForWorkflowRunResponse struct {
-	response
+	internal.Response
 	request *ActionsListJobsForWorkflowRunReq
 	Data    ActionsListJobsForWorkflowRunResponseBody
 }
@@ -4045,20 +3882,26 @@ List organization secrets.
 
 https://developer.github.com/v3/actions/secrets/#list-organization-secrets
 */
-func ActionsListOrgSecrets(ctx context.Context, req *ActionsListOrgSecretsReq, opt ...RequestOption) (*ActionsListOrgSecretsResponse, error) {
+func ActionsListOrgSecrets(ctx context.Context, req *ActionsListOrgSecretsReq, opt ...options.Option) (*ActionsListOrgSecretsResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActionsListOrgSecretsReq)
 	}
 	resp := &ActionsListOrgSecretsResponse{request: req}
-	r, err := doRequest(ctx, req, "actions/list-org-secrets", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = ActionsListOrgSecretsResponseBody{}
-	err = r.decodeBody(&resp.Data, "actions/list-org-secrets")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4074,7 +3917,7 @@ List organization secrets.
 
 https://developer.github.com/v3/actions/secrets/#list-organization-secrets
 */
-func (c Client) ActionsListOrgSecrets(ctx context.Context, req *ActionsListOrgSecretsReq, opt ...RequestOption) (*ActionsListOrgSecretsResponse, error) {
+func (c Client) ActionsListOrgSecrets(ctx context.Context, req *ActionsListOrgSecretsReq, opt ...options.Option) (*ActionsListOrgSecretsResponse, error) {
 	return ActionsListOrgSecrets(ctx, req, append(c, opt...)...)
 }
 
@@ -4094,19 +3937,16 @@ type ActionsListOrgSecretsReq struct {
 	Page *int64
 }
 
-func (r *ActionsListOrgSecretsReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *ActionsListOrgSecretsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *ActionsListOrgSecretsReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/actions/secrets", r.Org)
-}
-
-func (r *ActionsListOrgSecretsReq) method() string {
-	return "GET"
-}
-
-func (r *ActionsListOrgSecretsReq) urlQuery() url.Values {
+func (r *ActionsListOrgSecretsReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -4114,30 +3954,22 @@ func (r *ActionsListOrgSecretsReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *ActionsListOrgSecretsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActionsListOrgSecretsReq) body() interface{} {
-	return nil
-}
-
-func (r *ActionsListOrgSecretsReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ActionsListOrgSecretsReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ActionsListOrgSecretsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "actions/list-org-secrets", opt)
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "actions/list-org-secrets",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/orgs/%v/actions/secrets", r.Org),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -4145,7 +3977,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActionsListOrgSecretsReq) Rel(link RelName, resp *ActionsListOrgSecretsResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -4169,7 +4001,7 @@ ActionsListOrgSecretsResponse is a response for ActionsListOrgSecrets
 https://developer.github.com/v3/actions/secrets/#list-organization-secrets
 */
 type ActionsListOrgSecretsResponse struct {
-	response
+	internal.Response
 	request *ActionsListOrgSecretsReq
 	Data    ActionsListOrgSecretsResponseBody
 }
@@ -4183,20 +4015,26 @@ List repository secrets.
 
 https://developer.github.com/v3/actions/secrets/#list-repository-secrets
 */
-func ActionsListRepoSecrets(ctx context.Context, req *ActionsListRepoSecretsReq, opt ...RequestOption) (*ActionsListRepoSecretsResponse, error) {
+func ActionsListRepoSecrets(ctx context.Context, req *ActionsListRepoSecretsReq, opt ...options.Option) (*ActionsListRepoSecretsResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActionsListRepoSecretsReq)
 	}
 	resp := &ActionsListRepoSecretsResponse{request: req}
-	r, err := doRequest(ctx, req, "actions/list-repo-secrets", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = ActionsListRepoSecretsResponseBody{}
-	err = r.decodeBody(&resp.Data, "actions/list-repo-secrets")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4212,7 +4050,7 @@ List repository secrets.
 
 https://developer.github.com/v3/actions/secrets/#list-repository-secrets
 */
-func (c Client) ActionsListRepoSecrets(ctx context.Context, req *ActionsListRepoSecretsReq, opt ...RequestOption) (*ActionsListRepoSecretsResponse, error) {
+func (c Client) ActionsListRepoSecrets(ctx context.Context, req *ActionsListRepoSecretsReq, opt ...options.Option) (*ActionsListRepoSecretsResponse, error) {
 	return ActionsListRepoSecrets(ctx, req, append(c, opt...)...)
 }
 
@@ -4233,19 +4071,16 @@ type ActionsListRepoSecretsReq struct {
 	Page *int64
 }
 
-func (r *ActionsListRepoSecretsReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *ActionsListRepoSecretsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *ActionsListRepoSecretsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/actions/secrets", r.Owner, r.Repo)
-}
-
-func (r *ActionsListRepoSecretsReq) method() string {
-	return "GET"
-}
-
-func (r *ActionsListRepoSecretsReq) urlQuery() url.Values {
+func (r *ActionsListRepoSecretsReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -4253,30 +4088,22 @@ func (r *ActionsListRepoSecretsReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *ActionsListRepoSecretsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActionsListRepoSecretsReq) body() interface{} {
-	return nil
-}
-
-func (r *ActionsListRepoSecretsReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ActionsListRepoSecretsReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ActionsListRepoSecretsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "actions/list-repo-secrets", opt)
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "actions/list-repo-secrets",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/actions/secrets", r.Owner, r.Repo),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -4284,7 +4111,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActionsListRepoSecretsReq) Rel(link RelName, resp *ActionsListRepoSecretsResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -4308,7 +4135,7 @@ ActionsListRepoSecretsResponse is a response for ActionsListRepoSecrets
 https://developer.github.com/v3/actions/secrets/#list-repository-secrets
 */
 type ActionsListRepoSecretsResponse struct {
-	response
+	internal.Response
 	request *ActionsListRepoSecretsReq
 	Data    ActionsListRepoSecretsResponseBody
 }
@@ -4322,20 +4149,26 @@ List repository workflows.
 
 https://developer.github.com/v3/actions/workflows/#list-repository-workflows
 */
-func ActionsListRepoWorkflows(ctx context.Context, req *ActionsListRepoWorkflowsReq, opt ...RequestOption) (*ActionsListRepoWorkflowsResponse, error) {
+func ActionsListRepoWorkflows(ctx context.Context, req *ActionsListRepoWorkflowsReq, opt ...options.Option) (*ActionsListRepoWorkflowsResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActionsListRepoWorkflowsReq)
 	}
 	resp := &ActionsListRepoWorkflowsResponse{request: req}
-	r, err := doRequest(ctx, req, "actions/list-repo-workflows", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = ActionsListRepoWorkflowsResponseBody{}
-	err = r.decodeBody(&resp.Data, "actions/list-repo-workflows")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4351,7 +4184,7 @@ List repository workflows.
 
 https://developer.github.com/v3/actions/workflows/#list-repository-workflows
 */
-func (c Client) ActionsListRepoWorkflows(ctx context.Context, req *ActionsListRepoWorkflowsReq, opt ...RequestOption) (*ActionsListRepoWorkflowsResponse, error) {
+func (c Client) ActionsListRepoWorkflows(ctx context.Context, req *ActionsListRepoWorkflowsReq, opt ...options.Option) (*ActionsListRepoWorkflowsResponse, error) {
 	return ActionsListRepoWorkflows(ctx, req, append(c, opt...)...)
 }
 
@@ -4372,19 +4205,16 @@ type ActionsListRepoWorkflowsReq struct {
 	Page *int64
 }
 
-func (r *ActionsListRepoWorkflowsReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *ActionsListRepoWorkflowsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *ActionsListRepoWorkflowsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/actions/workflows", r.Owner, r.Repo)
-}
-
-func (r *ActionsListRepoWorkflowsReq) method() string {
-	return "GET"
-}
-
-func (r *ActionsListRepoWorkflowsReq) urlQuery() url.Values {
+func (r *ActionsListRepoWorkflowsReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -4392,30 +4222,22 @@ func (r *ActionsListRepoWorkflowsReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *ActionsListRepoWorkflowsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActionsListRepoWorkflowsReq) body() interface{} {
-	return nil
-}
-
-func (r *ActionsListRepoWorkflowsReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ActionsListRepoWorkflowsReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ActionsListRepoWorkflowsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "actions/list-repo-workflows", opt)
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "actions/list-repo-workflows",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/actions/workflows", r.Owner, r.Repo),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -4423,7 +4245,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActionsListRepoWorkflowsReq) Rel(link RelName, resp *ActionsListRepoWorkflowsResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -4447,7 +4269,7 @@ ActionsListRepoWorkflowsResponse is a response for ActionsListRepoWorkflows
 https://developer.github.com/v3/actions/workflows/#list-repository-workflows
 */
 type ActionsListRepoWorkflowsResponse struct {
-	response
+	internal.Response
 	request *ActionsListRepoWorkflowsReq
 	Data    ActionsListRepoWorkflowsResponseBody
 }
@@ -4461,20 +4283,26 @@ List runner applications for an organization.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#list-runner-applications-for-an-organization
 */
-func ActionsListRunnerApplicationsForOrg(ctx context.Context, req *ActionsListRunnerApplicationsForOrgReq, opt ...RequestOption) (*ActionsListRunnerApplicationsForOrgResponse, error) {
+func ActionsListRunnerApplicationsForOrg(ctx context.Context, req *ActionsListRunnerApplicationsForOrgReq, opt ...options.Option) (*ActionsListRunnerApplicationsForOrgResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActionsListRunnerApplicationsForOrgReq)
 	}
 	resp := &ActionsListRunnerApplicationsForOrgResponse{request: req}
-	r, err := doRequest(ctx, req, "actions/list-runner-applications-for-org", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.RunnerApplication{}
-	err = r.decodeBody(&resp.Data, "actions/list-runner-applications-for-org")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4490,7 +4318,7 @@ List runner applications for an organization.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#list-runner-applications-for-an-organization
 */
-func (c Client) ActionsListRunnerApplicationsForOrg(ctx context.Context, req *ActionsListRunnerApplicationsForOrgReq, opt ...RequestOption) (*ActionsListRunnerApplicationsForOrgResponse, error) {
+func (c Client) ActionsListRunnerApplicationsForOrg(ctx context.Context, req *ActionsListRunnerApplicationsForOrgReq, opt ...options.Option) (*ActionsListRunnerApplicationsForOrgResponse, error) {
 	return ActionsListRunnerApplicationsForOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -4504,44 +4332,33 @@ type ActionsListRunnerApplicationsForOrgReq struct {
 	Org  string
 }
 
-func (r *ActionsListRunnerApplicationsForOrgReq) url() string {
-	return r._url
-}
-
-func (r *ActionsListRunnerApplicationsForOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/actions/runners/downloads", r.Org)
-}
-
-func (r *ActionsListRunnerApplicationsForOrgReq) method() string {
-	return "GET"
-}
-
-func (r *ActionsListRunnerApplicationsForOrgReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ActionsListRunnerApplicationsForOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActionsListRunnerApplicationsForOrgReq) body() interface{} {
-	return nil
-}
-
-func (r *ActionsListRunnerApplicationsForOrgReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ActionsListRunnerApplicationsForOrgReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ActionsListRunnerApplicationsForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "actions/list-runner-applications-for-org", opt)
+func (r *ActionsListRunnerApplicationsForOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ActionsListRunnerApplicationsForOrgReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "actions/list-runner-applications-for-org",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/orgs/%v/actions/runners/downloads", r.Org),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -4549,7 +4366,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActionsListRunnerApplicationsForOrgReq) Rel(link RelName, resp *ActionsListRunnerApplicationsForOrgResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -4563,7 +4380,7 @@ ActionsListRunnerApplicationsForOrgResponse is a response for ActionsListRunnerA
 https://developer.github.com/v3/actions/self-hosted-runners/#list-runner-applications-for-an-organization
 */
 type ActionsListRunnerApplicationsForOrgResponse struct {
-	response
+	internal.Response
 	request *ActionsListRunnerApplicationsForOrgReq
 	Data    []components.RunnerApplication
 }
@@ -4577,20 +4394,26 @@ List runner applications for a repository.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#list-runner-applications-for-a-repository
 */
-func ActionsListRunnerApplicationsForRepo(ctx context.Context, req *ActionsListRunnerApplicationsForRepoReq, opt ...RequestOption) (*ActionsListRunnerApplicationsForRepoResponse, error) {
+func ActionsListRunnerApplicationsForRepo(ctx context.Context, req *ActionsListRunnerApplicationsForRepoReq, opt ...options.Option) (*ActionsListRunnerApplicationsForRepoResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActionsListRunnerApplicationsForRepoReq)
 	}
 	resp := &ActionsListRunnerApplicationsForRepoResponse{request: req}
-	r, err := doRequest(ctx, req, "actions/list-runner-applications-for-repo", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.RunnerApplication{}
-	err = r.decodeBody(&resp.Data, "actions/list-runner-applications-for-repo")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4606,7 +4429,7 @@ List runner applications for a repository.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#list-runner-applications-for-a-repository
 */
-func (c Client) ActionsListRunnerApplicationsForRepo(ctx context.Context, req *ActionsListRunnerApplicationsForRepoReq, opt ...RequestOption) (*ActionsListRunnerApplicationsForRepoResponse, error) {
+func (c Client) ActionsListRunnerApplicationsForRepo(ctx context.Context, req *ActionsListRunnerApplicationsForRepoReq, opt ...options.Option) (*ActionsListRunnerApplicationsForRepoResponse, error) {
 	return ActionsListRunnerApplicationsForRepo(ctx, req, append(c, opt...)...)
 }
 
@@ -4621,44 +4444,33 @@ type ActionsListRunnerApplicationsForRepoReq struct {
 	Repo  string
 }
 
-func (r *ActionsListRunnerApplicationsForRepoReq) url() string {
-	return r._url
-}
-
-func (r *ActionsListRunnerApplicationsForRepoReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/actions/runners/downloads", r.Owner, r.Repo)
-}
-
-func (r *ActionsListRunnerApplicationsForRepoReq) method() string {
-	return "GET"
-}
-
-func (r *ActionsListRunnerApplicationsForRepoReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ActionsListRunnerApplicationsForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActionsListRunnerApplicationsForRepoReq) body() interface{} {
-	return nil
-}
-
-func (r *ActionsListRunnerApplicationsForRepoReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ActionsListRunnerApplicationsForRepoReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ActionsListRunnerApplicationsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "actions/list-runner-applications-for-repo", opt)
+func (r *ActionsListRunnerApplicationsForRepoReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ActionsListRunnerApplicationsForRepoReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "actions/list-runner-applications-for-repo",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/actions/runners/downloads", r.Owner, r.Repo),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -4666,7 +4478,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActionsListRunnerApplicationsForRepoReq) Rel(link RelName, resp *ActionsListRunnerApplicationsForRepoResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -4680,7 +4492,7 @@ ActionsListRunnerApplicationsForRepoResponse is a response for ActionsListRunner
 https://developer.github.com/v3/actions/self-hosted-runners/#list-runner-applications-for-a-repository
 */
 type ActionsListRunnerApplicationsForRepoResponse struct {
-	response
+	internal.Response
 	request *ActionsListRunnerApplicationsForRepoReq
 	Data    []components.RunnerApplication
 }
@@ -4694,20 +4506,26 @@ List selected repositories for an organization secret.
 
 https://developer.github.com/v3/actions/secrets/#list-selected-repositories-for-an-organization-secret
 */
-func ActionsListSelectedReposForOrgSecret(ctx context.Context, req *ActionsListSelectedReposForOrgSecretReq, opt ...RequestOption) (*ActionsListSelectedReposForOrgSecretResponse, error) {
+func ActionsListSelectedReposForOrgSecret(ctx context.Context, req *ActionsListSelectedReposForOrgSecretReq, opt ...options.Option) (*ActionsListSelectedReposForOrgSecretResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActionsListSelectedReposForOrgSecretReq)
 	}
 	resp := &ActionsListSelectedReposForOrgSecretResponse{request: req}
-	r, err := doRequest(ctx, req, "actions/list-selected-repos-for-org-secret", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = ActionsListSelectedReposForOrgSecretResponseBody{}
-	err = r.decodeBody(&resp.Data, "actions/list-selected-repos-for-org-secret")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4723,7 +4541,7 @@ List selected repositories for an organization secret.
 
 https://developer.github.com/v3/actions/secrets/#list-selected-repositories-for-an-organization-secret
 */
-func (c Client) ActionsListSelectedReposForOrgSecret(ctx context.Context, req *ActionsListSelectedReposForOrgSecretReq, opt ...RequestOption) (*ActionsListSelectedReposForOrgSecretResponse, error) {
+func (c Client) ActionsListSelectedReposForOrgSecret(ctx context.Context, req *ActionsListSelectedReposForOrgSecretReq, opt ...options.Option) (*ActionsListSelectedReposForOrgSecretResponse, error) {
 	return ActionsListSelectedReposForOrgSecret(ctx, req, append(c, opt...)...)
 }
 
@@ -4740,44 +4558,33 @@ type ActionsListSelectedReposForOrgSecretReq struct {
 	SecretName string
 }
 
-func (r *ActionsListSelectedReposForOrgSecretReq) url() string {
-	return r._url
-}
-
-func (r *ActionsListSelectedReposForOrgSecretReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/actions/secrets/%v/repositories", r.Org, r.SecretName)
-}
-
-func (r *ActionsListSelectedReposForOrgSecretReq) method() string {
-	return "GET"
-}
-
-func (r *ActionsListSelectedReposForOrgSecretReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ActionsListSelectedReposForOrgSecretReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActionsListSelectedReposForOrgSecretReq) body() interface{} {
-	return nil
-}
-
-func (r *ActionsListSelectedReposForOrgSecretReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ActionsListSelectedReposForOrgSecretReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ActionsListSelectedReposForOrgSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "actions/list-selected-repos-for-org-secret", opt)
+func (r *ActionsListSelectedReposForOrgSecretReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ActionsListSelectedReposForOrgSecretReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "actions/list-selected-repos-for-org-secret",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/orgs/%v/actions/secrets/%v/repositories", r.Org, r.SecretName),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -4785,7 +4592,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActionsListSelectedReposForOrgSecretReq) Rel(link RelName, resp *ActionsListSelectedReposForOrgSecretResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -4809,7 +4616,7 @@ ActionsListSelectedReposForOrgSecretResponse is a response for ActionsListSelect
 https://developer.github.com/v3/actions/secrets/#list-selected-repositories-for-an-organization-secret
 */
 type ActionsListSelectedReposForOrgSecretResponse struct {
-	response
+	internal.Response
 	request *ActionsListSelectedReposForOrgSecretReq
 	Data    ActionsListSelectedReposForOrgSecretResponseBody
 }
@@ -4823,20 +4630,26 @@ List self-hosted runners for an organization.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#list-self-hosted-runners-for-an-organization
 */
-func ActionsListSelfHostedRunnersForOrg(ctx context.Context, req *ActionsListSelfHostedRunnersForOrgReq, opt ...RequestOption) (*ActionsListSelfHostedRunnersForOrgResponse, error) {
+func ActionsListSelfHostedRunnersForOrg(ctx context.Context, req *ActionsListSelfHostedRunnersForOrgReq, opt ...options.Option) (*ActionsListSelfHostedRunnersForOrgResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActionsListSelfHostedRunnersForOrgReq)
 	}
 	resp := &ActionsListSelfHostedRunnersForOrgResponse{request: req}
-	r, err := doRequest(ctx, req, "actions/list-self-hosted-runners-for-org", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = ActionsListSelfHostedRunnersForOrgResponseBody{}
-	err = r.decodeBody(&resp.Data, "actions/list-self-hosted-runners-for-org")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4852,7 +4665,7 @@ List self-hosted runners for an organization.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#list-self-hosted-runners-for-an-organization
 */
-func (c Client) ActionsListSelfHostedRunnersForOrg(ctx context.Context, req *ActionsListSelfHostedRunnersForOrgReq, opt ...RequestOption) (*ActionsListSelfHostedRunnersForOrgResponse, error) {
+func (c Client) ActionsListSelfHostedRunnersForOrg(ctx context.Context, req *ActionsListSelfHostedRunnersForOrgReq, opt ...options.Option) (*ActionsListSelfHostedRunnersForOrgResponse, error) {
 	return ActionsListSelfHostedRunnersForOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -4872,19 +4685,16 @@ type ActionsListSelfHostedRunnersForOrgReq struct {
 	Page *int64
 }
 
-func (r *ActionsListSelfHostedRunnersForOrgReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *ActionsListSelfHostedRunnersForOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *ActionsListSelfHostedRunnersForOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/actions/runners", r.Org)
-}
-
-func (r *ActionsListSelfHostedRunnersForOrgReq) method() string {
-	return "GET"
-}
-
-func (r *ActionsListSelfHostedRunnersForOrgReq) urlQuery() url.Values {
+func (r *ActionsListSelfHostedRunnersForOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -4892,30 +4702,22 @@ func (r *ActionsListSelfHostedRunnersForOrgReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *ActionsListSelfHostedRunnersForOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActionsListSelfHostedRunnersForOrgReq) body() interface{} {
-	return nil
-}
-
-func (r *ActionsListSelfHostedRunnersForOrgReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ActionsListSelfHostedRunnersForOrgReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ActionsListSelfHostedRunnersForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "actions/list-self-hosted-runners-for-org", opt)
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "actions/list-self-hosted-runners-for-org",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/orgs/%v/actions/runners", r.Org),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -4923,7 +4725,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActionsListSelfHostedRunnersForOrgReq) Rel(link RelName, resp *ActionsListSelfHostedRunnersForOrgResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -4947,7 +4749,7 @@ ActionsListSelfHostedRunnersForOrgResponse is a response for ActionsListSelfHost
 https://developer.github.com/v3/actions/self-hosted-runners/#list-self-hosted-runners-for-an-organization
 */
 type ActionsListSelfHostedRunnersForOrgResponse struct {
-	response
+	internal.Response
 	request *ActionsListSelfHostedRunnersForOrgReq
 	Data    ActionsListSelfHostedRunnersForOrgResponseBody
 }
@@ -4961,20 +4763,26 @@ List self-hosted runners for a repository.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#list-self-hosted-runners-for-a-repository
 */
-func ActionsListSelfHostedRunnersForRepo(ctx context.Context, req *ActionsListSelfHostedRunnersForRepoReq, opt ...RequestOption) (*ActionsListSelfHostedRunnersForRepoResponse, error) {
+func ActionsListSelfHostedRunnersForRepo(ctx context.Context, req *ActionsListSelfHostedRunnersForRepoReq, opt ...options.Option) (*ActionsListSelfHostedRunnersForRepoResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActionsListSelfHostedRunnersForRepoReq)
 	}
 	resp := &ActionsListSelfHostedRunnersForRepoResponse{request: req}
-	r, err := doRequest(ctx, req, "actions/list-self-hosted-runners-for-repo", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = ActionsListSelfHostedRunnersForRepoResponseBody{}
-	err = r.decodeBody(&resp.Data, "actions/list-self-hosted-runners-for-repo")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4990,7 +4798,7 @@ List self-hosted runners for a repository.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#list-self-hosted-runners-for-a-repository
 */
-func (c Client) ActionsListSelfHostedRunnersForRepo(ctx context.Context, req *ActionsListSelfHostedRunnersForRepoReq, opt ...RequestOption) (*ActionsListSelfHostedRunnersForRepoResponse, error) {
+func (c Client) ActionsListSelfHostedRunnersForRepo(ctx context.Context, req *ActionsListSelfHostedRunnersForRepoReq, opt ...options.Option) (*ActionsListSelfHostedRunnersForRepoResponse, error) {
 	return ActionsListSelfHostedRunnersForRepo(ctx, req, append(c, opt...)...)
 }
 
@@ -5011,19 +4819,16 @@ type ActionsListSelfHostedRunnersForRepoReq struct {
 	Page *int64
 }
 
-func (r *ActionsListSelfHostedRunnersForRepoReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *ActionsListSelfHostedRunnersForRepoReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *ActionsListSelfHostedRunnersForRepoReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/actions/runners", r.Owner, r.Repo)
-}
-
-func (r *ActionsListSelfHostedRunnersForRepoReq) method() string {
-	return "GET"
-}
-
-func (r *ActionsListSelfHostedRunnersForRepoReq) urlQuery() url.Values {
+func (r *ActionsListSelfHostedRunnersForRepoReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -5031,30 +4836,22 @@ func (r *ActionsListSelfHostedRunnersForRepoReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *ActionsListSelfHostedRunnersForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActionsListSelfHostedRunnersForRepoReq) body() interface{} {
-	return nil
-}
-
-func (r *ActionsListSelfHostedRunnersForRepoReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ActionsListSelfHostedRunnersForRepoReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ActionsListSelfHostedRunnersForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "actions/list-self-hosted-runners-for-repo", opt)
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "actions/list-self-hosted-runners-for-repo",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/actions/runners", r.Owner, r.Repo),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -5062,7 +4859,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActionsListSelfHostedRunnersForRepoReq) Rel(link RelName, resp *ActionsListSelfHostedRunnersForRepoResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -5086,7 +4883,7 @@ ActionsListSelfHostedRunnersForRepoResponse is a response for ActionsListSelfHos
 https://developer.github.com/v3/actions/self-hosted-runners/#list-self-hosted-runners-for-a-repository
 */
 type ActionsListSelfHostedRunnersForRepoResponse struct {
-	response
+	internal.Response
 	request *ActionsListSelfHostedRunnersForRepoReq
 	Data    ActionsListSelfHostedRunnersForRepoResponseBody
 }
@@ -5100,20 +4897,26 @@ List workflow run artifacts.
 
 https://developer.github.com/v3/actions/artifacts/#list-workflow-run-artifacts
 */
-func ActionsListWorkflowRunArtifacts(ctx context.Context, req *ActionsListWorkflowRunArtifactsReq, opt ...RequestOption) (*ActionsListWorkflowRunArtifactsResponse, error) {
+func ActionsListWorkflowRunArtifacts(ctx context.Context, req *ActionsListWorkflowRunArtifactsReq, opt ...options.Option) (*ActionsListWorkflowRunArtifactsResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActionsListWorkflowRunArtifactsReq)
 	}
 	resp := &ActionsListWorkflowRunArtifactsResponse{request: req}
-	r, err := doRequest(ctx, req, "actions/list-workflow-run-artifacts", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = ActionsListWorkflowRunArtifactsResponseBody{}
-	err = r.decodeBody(&resp.Data, "actions/list-workflow-run-artifacts")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -5129,7 +4932,7 @@ List workflow run artifacts.
 
 https://developer.github.com/v3/actions/artifacts/#list-workflow-run-artifacts
 */
-func (c Client) ActionsListWorkflowRunArtifacts(ctx context.Context, req *ActionsListWorkflowRunArtifactsReq, opt ...RequestOption) (*ActionsListWorkflowRunArtifactsResponse, error) {
+func (c Client) ActionsListWorkflowRunArtifacts(ctx context.Context, req *ActionsListWorkflowRunArtifactsReq, opt ...options.Option) (*ActionsListWorkflowRunArtifactsResponse, error) {
 	return ActionsListWorkflowRunArtifacts(ctx, req, append(c, opt...)...)
 }
 
@@ -5151,19 +4954,16 @@ type ActionsListWorkflowRunArtifactsReq struct {
 	Page *int64
 }
 
-func (r *ActionsListWorkflowRunArtifactsReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *ActionsListWorkflowRunArtifactsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *ActionsListWorkflowRunArtifactsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/actions/runs/%v/artifacts", r.Owner, r.Repo, r.RunId)
-}
-
-func (r *ActionsListWorkflowRunArtifactsReq) method() string {
-	return "GET"
-}
-
-func (r *ActionsListWorkflowRunArtifactsReq) urlQuery() url.Values {
+func (r *ActionsListWorkflowRunArtifactsReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -5171,30 +4971,22 @@ func (r *ActionsListWorkflowRunArtifactsReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *ActionsListWorkflowRunArtifactsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActionsListWorkflowRunArtifactsReq) body() interface{} {
-	return nil
-}
-
-func (r *ActionsListWorkflowRunArtifactsReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ActionsListWorkflowRunArtifactsReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ActionsListWorkflowRunArtifactsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "actions/list-workflow-run-artifacts", opt)
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "actions/list-workflow-run-artifacts",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/actions/runs/%v/artifacts", r.Owner, r.Repo, r.RunId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -5202,7 +4994,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActionsListWorkflowRunArtifactsReq) Rel(link RelName, resp *ActionsListWorkflowRunArtifactsResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -5226,7 +5018,7 @@ ActionsListWorkflowRunArtifactsResponse is a response for ActionsListWorkflowRun
 https://developer.github.com/v3/actions/artifacts/#list-workflow-run-artifacts
 */
 type ActionsListWorkflowRunArtifactsResponse struct {
-	response
+	internal.Response
 	request *ActionsListWorkflowRunArtifactsReq
 	Data    ActionsListWorkflowRunArtifactsResponseBody
 }
@@ -5240,20 +5032,26 @@ List workflow runs.
 
 https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs
 */
-func ActionsListWorkflowRuns(ctx context.Context, req *ActionsListWorkflowRunsReq, opt ...RequestOption) (*ActionsListWorkflowRunsResponse, error) {
+func ActionsListWorkflowRuns(ctx context.Context, req *ActionsListWorkflowRunsReq, opt ...options.Option) (*ActionsListWorkflowRunsResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActionsListWorkflowRunsReq)
 	}
 	resp := &ActionsListWorkflowRunsResponse{request: req}
-	r, err := doRequest(ctx, req, "actions/list-workflow-runs", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = ActionsListWorkflowRunsResponseBody{}
-	err = r.decodeBody(&resp.Data, "actions/list-workflow-runs")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -5269,7 +5067,7 @@ List workflow runs.
 
 https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs
 */
-func (c Client) ActionsListWorkflowRuns(ctx context.Context, req *ActionsListWorkflowRunsReq, opt ...RequestOption) (*ActionsListWorkflowRunsResponse, error) {
+func (c Client) ActionsListWorkflowRuns(ctx context.Context, req *ActionsListWorkflowRunsReq, opt ...options.Option) (*ActionsListWorkflowRunsResponse, error) {
 	return ActionsListWorkflowRuns(ctx, req, append(c, opt...)...)
 }
 
@@ -5319,19 +5117,16 @@ type ActionsListWorkflowRunsReq struct {
 	Page *int64
 }
 
-func (r *ActionsListWorkflowRunsReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *ActionsListWorkflowRunsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *ActionsListWorkflowRunsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/actions/workflows/%v/runs", r.Owner, r.Repo, r.WorkflowId)
-}
-
-func (r *ActionsListWorkflowRunsReq) method() string {
-	return "GET"
-}
-
-func (r *ActionsListWorkflowRunsReq) urlQuery() url.Values {
+func (r *ActionsListWorkflowRunsReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Actor != nil {
 		query.Set("actor", *r.Actor)
@@ -5351,30 +5146,22 @@ func (r *ActionsListWorkflowRunsReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *ActionsListWorkflowRunsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActionsListWorkflowRunsReq) body() interface{} {
-	return nil
-}
-
-func (r *ActionsListWorkflowRunsReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ActionsListWorkflowRunsReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ActionsListWorkflowRunsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "actions/list-workflow-runs", opt)
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "actions/list-workflow-runs",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/actions/workflows/%v/runs", r.Owner, r.Repo, r.WorkflowId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -5382,7 +5169,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActionsListWorkflowRunsReq) Rel(link RelName, resp *ActionsListWorkflowRunsResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -5406,7 +5193,7 @@ ActionsListWorkflowRunsResponse is a response for ActionsListWorkflowRuns
 https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs
 */
 type ActionsListWorkflowRunsResponse struct {
-	response
+	internal.Response
 	request *ActionsListWorkflowRunsReq
 	Data    ActionsListWorkflowRunsResponseBody
 }
@@ -5420,20 +5207,26 @@ List workflow runs for a repository.
 
 https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs-for-a-repository
 */
-func ActionsListWorkflowRunsForRepo(ctx context.Context, req *ActionsListWorkflowRunsForRepoReq, opt ...RequestOption) (*ActionsListWorkflowRunsForRepoResponse, error) {
+func ActionsListWorkflowRunsForRepo(ctx context.Context, req *ActionsListWorkflowRunsForRepoReq, opt ...options.Option) (*ActionsListWorkflowRunsForRepoResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActionsListWorkflowRunsForRepoReq)
 	}
 	resp := &ActionsListWorkflowRunsForRepoResponse{request: req}
-	r, err := doRequest(ctx, req, "actions/list-workflow-runs-for-repo", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = ActionsListWorkflowRunsForRepoResponseBody{}
-	err = r.decodeBody(&resp.Data, "actions/list-workflow-runs-for-repo")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -5449,7 +5242,7 @@ List workflow runs for a repository.
 
 https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs-for-a-repository
 */
-func (c Client) ActionsListWorkflowRunsForRepo(ctx context.Context, req *ActionsListWorkflowRunsForRepoReq, opt ...RequestOption) (*ActionsListWorkflowRunsForRepoResponse, error) {
+func (c Client) ActionsListWorkflowRunsForRepo(ctx context.Context, req *ActionsListWorkflowRunsForRepoReq, opt ...options.Option) (*ActionsListWorkflowRunsForRepoResponse, error) {
 	return ActionsListWorkflowRunsForRepo(ctx, req, append(c, opt...)...)
 }
 
@@ -5498,19 +5291,16 @@ type ActionsListWorkflowRunsForRepoReq struct {
 	Page *int64
 }
 
-func (r *ActionsListWorkflowRunsForRepoReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *ActionsListWorkflowRunsForRepoReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *ActionsListWorkflowRunsForRepoReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/actions/runs", r.Owner, r.Repo)
-}
-
-func (r *ActionsListWorkflowRunsForRepoReq) method() string {
-	return "GET"
-}
-
-func (r *ActionsListWorkflowRunsForRepoReq) urlQuery() url.Values {
+func (r *ActionsListWorkflowRunsForRepoReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Actor != nil {
 		query.Set("actor", *r.Actor)
@@ -5530,30 +5320,22 @@ func (r *ActionsListWorkflowRunsForRepoReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *ActionsListWorkflowRunsForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActionsListWorkflowRunsForRepoReq) body() interface{} {
-	return nil
-}
-
-func (r *ActionsListWorkflowRunsForRepoReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ActionsListWorkflowRunsForRepoReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ActionsListWorkflowRunsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "actions/list-workflow-runs-for-repo", opt)
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "actions/list-workflow-runs-for-repo",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/actions/runs", r.Owner, r.Repo),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -5561,7 +5343,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActionsListWorkflowRunsForRepoReq) Rel(link RelName, resp *ActionsListWorkflowRunsForRepoResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -5585,7 +5367,7 @@ ActionsListWorkflowRunsForRepoResponse is a response for ActionsListWorkflowRuns
 https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs-for-a-repository
 */
 type ActionsListWorkflowRunsForRepoResponse struct {
-	response
+	internal.Response
 	request *ActionsListWorkflowRunsForRepoReq
 	Data    ActionsListWorkflowRunsForRepoResponseBody
 }
@@ -5599,19 +5381,25 @@ Re-run a workflow.
 
 https://developer.github.com/v3/actions/workflow-runs/#re-run-a-workflow
 */
-func ActionsReRunWorkflow(ctx context.Context, req *ActionsReRunWorkflowReq, opt ...RequestOption) (*ActionsReRunWorkflowResponse, error) {
+func ActionsReRunWorkflow(ctx context.Context, req *ActionsReRunWorkflowReq, opt ...options.Option) (*ActionsReRunWorkflowResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActionsReRunWorkflowReq)
 	}
 	resp := &ActionsReRunWorkflowResponse{request: req}
-	r, err := doRequest(ctx, req, "actions/re-run-workflow", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "actions/re-run-workflow")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -5627,7 +5415,7 @@ Re-run a workflow.
 
 https://developer.github.com/v3/actions/workflow-runs/#re-run-a-workflow
 */
-func (c Client) ActionsReRunWorkflow(ctx context.Context, req *ActionsReRunWorkflowReq, opt ...RequestOption) (*ActionsReRunWorkflowResponse, error) {
+func (c Client) ActionsReRunWorkflow(ctx context.Context, req *ActionsReRunWorkflowReq, opt ...options.Option) (*ActionsReRunWorkflowResponse, error) {
 	return ActionsReRunWorkflow(ctx, req, append(c, opt...)...)
 }
 
@@ -5643,44 +5431,33 @@ type ActionsReRunWorkflowReq struct {
 	RunId int64
 }
 
-func (r *ActionsReRunWorkflowReq) url() string {
-	return r._url
-}
-
-func (r *ActionsReRunWorkflowReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/actions/runs/%v/rerun", r.Owner, r.Repo, r.RunId)
-}
-
-func (r *ActionsReRunWorkflowReq) method() string {
-	return "POST"
-}
-
-func (r *ActionsReRunWorkflowReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ActionsReRunWorkflowReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActionsReRunWorkflowReq) body() interface{} {
-	return nil
-}
-
-func (r *ActionsReRunWorkflowReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *ActionsReRunWorkflowReq) validStatuses() []int {
-	return []int{201}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ActionsReRunWorkflowReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "actions/re-run-workflow", opt)
+func (r *ActionsReRunWorkflowReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ActionsReRunWorkflowReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "POST",
+		OperationID:      "actions/re-run-workflow",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/actions/runs/%v/rerun", r.Owner, r.Repo, r.RunId),
+		URLQuery:         query,
+		ValidStatuses:    []int{201},
+	}
+	return builder
 }
 
 /*
@@ -5688,7 +5465,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActionsReRunWorkflowReq) Rel(link RelName, resp *ActionsReRunWorkflowResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -5702,7 +5479,7 @@ ActionsReRunWorkflowResponse is a response for ActionsReRunWorkflow
 https://developer.github.com/v3/actions/workflow-runs/#re-run-a-workflow
 */
 type ActionsReRunWorkflowResponse struct {
-	response
+	internal.Response
 	request *ActionsReRunWorkflowReq
 }
 
@@ -5715,19 +5492,25 @@ Remove selected repository from an organization secret.
 
 https://developer.github.com/v3/actions/secrets/#remove-selected-repository-from-an-organization-secret
 */
-func ActionsRemoveSelectedRepoFromOrgSecret(ctx context.Context, req *ActionsRemoveSelectedRepoFromOrgSecretReq, opt ...RequestOption) (*ActionsRemoveSelectedRepoFromOrgSecretResponse, error) {
+func ActionsRemoveSelectedRepoFromOrgSecret(ctx context.Context, req *ActionsRemoveSelectedRepoFromOrgSecretReq, opt ...options.Option) (*ActionsRemoveSelectedRepoFromOrgSecretResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActionsRemoveSelectedRepoFromOrgSecretReq)
 	}
 	resp := &ActionsRemoveSelectedRepoFromOrgSecretResponse{request: req}
-	r, err := doRequest(ctx, req, "actions/remove-selected-repo-from-org-secret", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "actions/remove-selected-repo-from-org-secret")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -5743,7 +5526,7 @@ Remove selected repository from an organization secret.
 
 https://developer.github.com/v3/actions/secrets/#remove-selected-repository-from-an-organization-secret
 */
-func (c Client) ActionsRemoveSelectedRepoFromOrgSecret(ctx context.Context, req *ActionsRemoveSelectedRepoFromOrgSecretReq, opt ...RequestOption) (*ActionsRemoveSelectedRepoFromOrgSecretResponse, error) {
+func (c Client) ActionsRemoveSelectedRepoFromOrgSecret(ctx context.Context, req *ActionsRemoveSelectedRepoFromOrgSecretReq, opt ...options.Option) (*ActionsRemoveSelectedRepoFromOrgSecretResponse, error) {
 	return ActionsRemoveSelectedRepoFromOrgSecret(ctx, req, append(c, opt...)...)
 }
 
@@ -5763,44 +5546,33 @@ type ActionsRemoveSelectedRepoFromOrgSecretReq struct {
 	RepositoryId int64
 }
 
-func (r *ActionsRemoveSelectedRepoFromOrgSecretReq) url() string {
-	return r._url
-}
-
-func (r *ActionsRemoveSelectedRepoFromOrgSecretReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/actions/secrets/%v/repositories/%v", r.Org, r.SecretName, r.RepositoryId)
-}
-
-func (r *ActionsRemoveSelectedRepoFromOrgSecretReq) method() string {
-	return "DELETE"
-}
-
-func (r *ActionsRemoveSelectedRepoFromOrgSecretReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ActionsRemoveSelectedRepoFromOrgSecretReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActionsRemoveSelectedRepoFromOrgSecretReq) body() interface{} {
-	return nil
-}
-
-func (r *ActionsRemoveSelectedRepoFromOrgSecretReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *ActionsRemoveSelectedRepoFromOrgSecretReq) validStatuses() []int {
-	return []int{204}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ActionsRemoveSelectedRepoFromOrgSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "actions/remove-selected-repo-from-org-secret", opt)
+func (r *ActionsRemoveSelectedRepoFromOrgSecretReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ActionsRemoveSelectedRepoFromOrgSecretReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		OperationID:      "actions/remove-selected-repo-from-org-secret",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/orgs/%v/actions/secrets/%v/repositories/%v", r.Org, r.SecretName, r.RepositoryId),
+		URLQuery:         query,
+		ValidStatuses:    []int{204},
+	}
+	return builder
 }
 
 /*
@@ -5808,7 +5580,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActionsRemoveSelectedRepoFromOrgSecretReq) Rel(link RelName, resp *ActionsRemoveSelectedRepoFromOrgSecretResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -5822,7 +5594,7 @@ ActionsRemoveSelectedRepoFromOrgSecretResponse is a response for ActionsRemoveSe
 https://developer.github.com/v3/actions/secrets/#remove-selected-repository-from-an-organization-secret
 */
 type ActionsRemoveSelectedRepoFromOrgSecretResponse struct {
-	response
+	internal.Response
 	request *ActionsRemoveSelectedRepoFromOrgSecretReq
 }
 
@@ -5835,19 +5607,25 @@ Set selected repositories for an organization secret.
 
 https://developer.github.com/v3/actions/secrets/#set-selected-repositories-for-an-organization-secret
 */
-func ActionsSetSelectedReposForOrgSecret(ctx context.Context, req *ActionsSetSelectedReposForOrgSecretReq, opt ...RequestOption) (*ActionsSetSelectedReposForOrgSecretResponse, error) {
+func ActionsSetSelectedReposForOrgSecret(ctx context.Context, req *ActionsSetSelectedReposForOrgSecretReq, opt ...options.Option) (*ActionsSetSelectedReposForOrgSecretResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ActionsSetSelectedReposForOrgSecretReq)
 	}
 	resp := &ActionsSetSelectedReposForOrgSecretResponse{request: req}
-	r, err := doRequest(ctx, req, "actions/set-selected-repos-for-org-secret", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "actions/set-selected-repos-for-org-secret")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -5863,7 +5641,7 @@ Set selected repositories for an organization secret.
 
 https://developer.github.com/v3/actions/secrets/#set-selected-repositories-for-an-organization-secret
 */
-func (c Client) ActionsSetSelectedReposForOrgSecret(ctx context.Context, req *ActionsSetSelectedReposForOrgSecretReq, opt ...RequestOption) (*ActionsSetSelectedReposForOrgSecretResponse, error) {
+func (c Client) ActionsSetSelectedReposForOrgSecret(ctx context.Context, req *ActionsSetSelectedReposForOrgSecretReq, opt ...options.Option) (*ActionsSetSelectedReposForOrgSecretResponse, error) {
 	return ActionsSetSelectedReposForOrgSecret(ctx, req, append(c, opt...)...)
 }
 
@@ -5881,44 +5659,33 @@ type ActionsSetSelectedReposForOrgSecretReq struct {
 	RequestBody ActionsSetSelectedReposForOrgSecretReqBody
 }
 
-func (r *ActionsSetSelectedReposForOrgSecretReq) url() string {
-	return r._url
-}
-
-func (r *ActionsSetSelectedReposForOrgSecretReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/actions/secrets/%v/repositories", r.Org, r.SecretName)
-}
-
-func (r *ActionsSetSelectedReposForOrgSecretReq) method() string {
-	return "PUT"
-}
-
-func (r *ActionsSetSelectedReposForOrgSecretReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ActionsSetSelectedReposForOrgSecretReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"content-type": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ActionsSetSelectedReposForOrgSecretReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *ActionsSetSelectedReposForOrgSecretReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *ActionsSetSelectedReposForOrgSecretReq) validStatuses() []int {
-	return []int{204}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ActionsSetSelectedReposForOrgSecretReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "actions/set-selected-repos-for-org-secret", opt)
+func (r *ActionsSetSelectedReposForOrgSecretReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ActionsSetSelectedReposForOrgSecretReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             r.RequestBody,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"content-type": String("application/json")},
+		Method:           "PUT",
+		OperationID:      "actions/set-selected-repos-for-org-secret",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/orgs/%v/actions/secrets/%v/repositories", r.Org, r.SecretName),
+		URLQuery:         query,
+		ValidStatuses:    []int{204},
+	}
+	return builder
 }
 
 /*
@@ -5926,7 +5693,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ActionsSetSelectedReposForOrgSecretReq) Rel(link RelName, resp *ActionsSetSelectedReposForOrgSecretResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -5960,6 +5727,6 @@ ActionsSetSelectedReposForOrgSecretResponse is a response for ActionsSetSelected
 https://developer.github.com/v3/actions/secrets/#set-selected-repositories-for-an-organization-secret
 */
 type ActionsSetSelectedReposForOrgSecretResponse struct {
-	response
+	internal.Response
 	request *ActionsSetSelectedReposForOrgSecretReq
 }

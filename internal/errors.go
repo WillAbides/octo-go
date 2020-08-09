@@ -1,4 +1,4 @@
-package octo
+package internal
 
 import (
 	"bytes"
@@ -7,12 +7,11 @@ import (
 	"io"
 	"io/ioutil"
 	"net/http"
-
-	"github.com/willabides/octo-go/internal"
 )
 
-func errorCheck(resp *response, opID string) error {
-	err := clientErrorCheck(resp, opID)
+// ErrorCheck checks for errors in the response
+func ErrorCheck(resp *Response) error {
+	err := clientErrorCheck(resp)
 	if err != nil {
 		return err
 	}
@@ -20,7 +19,7 @@ func errorCheck(resp *response, opID string) error {
 	if err != nil {
 		return err
 	}
-	err = unexpectedStatusCheck(resp, opID)
+	err = unexpectedStatusCheck(resp)
 	if err != nil {
 		return err
 	}
@@ -32,20 +31,22 @@ func errorCheck(resp *response, opID string) error {
 type UnexpectedStatusCodeError struct {
 	wantedCodes []int
 	gotCode     int
-	response
+	Response
 }
 
 func (e *UnexpectedStatusCodeError) Error() string {
 	return fmt.Sprintf("received unexpected http status code %d, expected codes are %v", e.gotCode, e.wantedCodes)
 }
 
-func unexpectedStatusCheck(resp *response, opID string) error {
-	valid := resp.httpRequester.validStatuses()
-	if internal.OperationHasAttribute(opID, internal.AttrRedirectOnly) {
-		return nil
-	}
-	if internal.OperationHasAttribute(opID, internal.AttrBoolean) {
+func unexpectedStatusCheck(resp *Response) error {
+	builder := resp.reqBuilder
+	valid := make([]int, len(builder.ValidStatuses))
+	copy(valid, builder.ValidStatuses)
+	if builder.HasAttribute(AttrBoolean) {
 		valid = append(valid, 404)
+	}
+	if builder.HasAttribute(AttrRedirectOnly) {
+		return nil
 	}
 	statusCode := resp.httpResponse.StatusCode
 	if resp.statusCodeInList(valid) {
@@ -54,36 +55,37 @@ func unexpectedStatusCheck(resp *response, opID string) error {
 	return &UnexpectedStatusCodeError{
 		wantedCodes: valid,
 		gotCode:     statusCode,
-		response:    *resp,
+		Response:    *resp,
 	}
 }
 
 // ClientError is returned when the http status is in the 4xx range
 type ClientError struct {
-	response
+	Response
 	ErrorData *ErrorData
 }
 
 func (e *ClientError) Error() string {
 	if e.ErrorData == nil || e.ErrorData.Message == "" {
-		return fmt.Sprintf("client error %d", e.response.httpResponse.StatusCode)
+		return fmt.Sprintf("client error %d", e.Response.httpResponse.StatusCode)
 	}
-	return fmt.Sprintf("client error %d: %s", e.response.httpResponse.StatusCode, e.ErrorData.Message)
+	return fmt.Sprintf("client error %d: %s", e.Response.httpResponse.StatusCode, e.ErrorData.Message)
 }
 
-func clientErrorCheck(resp *response, opID string) error {
+func clientErrorCheck(resp *Response) error {
+	builder := resp.reqBuilder
 	statusCode := resp.httpResponse.StatusCode
 	if statusCode < 400 || statusCode > 499 {
 		return nil
 	}
 
 	// 404 isn't an error for boolean endpoints ¯\_(ツ)_/¯
-	if internal.OperationHasAttribute(opID, internal.AttrBoolean) && statusCode == 404 {
+	if builder.HasAttribute(AttrBoolean) && statusCode == 404 {
 		return nil
 	}
 
 	clientErr := &ClientError{
-		response:  *resp,
+		Response:  *resp,
 		ErrorData: new(ErrorData),
 	}
 	err := clientErr.ErrorData.decode(resp.httpResponse)
@@ -95,24 +97,24 @@ func clientErrorCheck(resp *response, opID string) error {
 
 // ServerError is returned when the http status is in the 5xx range
 type ServerError struct {
-	response
+	Response
 	ErrorData *ErrorData
 }
 
 func (e *ServerError) Error() string {
 	if e.ErrorData == nil || e.ErrorData.Message == "" {
-		return fmt.Sprintf("client error %d", e.response.httpResponse.StatusCode)
+		return fmt.Sprintf("client error %d", e.Response.httpResponse.StatusCode)
 	}
-	return fmt.Sprintf("client error %d: %s", e.response.httpResponse.StatusCode, e.ErrorData.Message)
+	return fmt.Sprintf("client error %d: %s", e.Response.httpResponse.StatusCode, e.ErrorData.Message)
 }
 
-func serverErrorCheck(resp *response) error {
+func serverErrorCheck(resp *Response) error {
 	statusCode := resp.httpResponse.StatusCode
 	if statusCode < 500 || statusCode > 599 {
 		return nil
 	}
 	serverErr := &ServerError{
-		response:  *resp,
+		Response:  *resp,
 		ErrorData: new(ErrorData),
 	}
 	err := serverErr.ErrorData.decode(resp.httpResponse)

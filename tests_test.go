@@ -18,6 +18,8 @@ import (
 	"github.com/stretchr/testify/require"
 	"github.com/tidwall/gjson"
 	"github.com/willabides/octo-go"
+	"github.com/willabides/octo-go/options"
+	"github.com/willabides/octo-go/options/auth"
 )
 
 const (
@@ -42,27 +44,27 @@ func init() {
 	}
 }
 
-func patAuth() octo.RequestOption {
-	return octo.WithPATAuth(os.Getenv("GITHUB_TOKEN"))
+func patAuth() options.Option {
+	return auth.WithPATAuth(os.Getenv("GITHUB_TOKEN"))
 }
 
-func appAuth(t *testing.T) octo.RequestOption {
+func appAuth(t *testing.T) options.Option {
 	key := appPrivateKey(t)
 	if key == nil {
 		return nil
 	}
-	return octo.WithAppAuth(appID, key)
+	return auth.WithAppAuth(appID, key)
 }
 
-func appInstallationAuth(t *testing.T) octo.RequestOption {
+func appInstallationAuth(t *testing.T) options.Option {
 	key := appPrivateKey(t)
 	if key == nil {
 		return nil
 	}
-	return octo.WithAppInstallationAuth(appID, appInstallationID, key, nil)
+	return auth.WithAppInstallationAuth(appID, appInstallationID, key, nil)
 }
 
-func vcrClient(t *testing.T, cas string, opts ...octo.RequestOption) octo.Client {
+func vcrClient(t *testing.T, cas string, opts ...options.Option) octo.Client {
 	t.Helper()
 	cas = strings.ReplaceAll(cas, "/", "_")
 	cas = filepath.Join(filepath.FromSlash("testdata/vcr/"), cas)

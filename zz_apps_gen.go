@@ -6,6 +6,8 @@ import (
 	"context"
 	"fmt"
 	components "github.com/willabides/octo-go/components"
+	internal "github.com/willabides/octo-go/internal"
+	options "github.com/willabides/octo-go/options"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -20,19 +22,25 @@ Add a repository to an app installation.
 
 https://developer.github.com/v3/apps/installations/#add-a-repository-to-an-app-installation
 */
-func AppsAddRepoToInstallation(ctx context.Context, req *AppsAddRepoToInstallationReq, opt ...RequestOption) (*AppsAddRepoToInstallationResponse, error) {
+func AppsAddRepoToInstallation(ctx context.Context, req *AppsAddRepoToInstallationReq, opt ...options.Option) (*AppsAddRepoToInstallationResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(AppsAddRepoToInstallationReq)
 	}
 	resp := &AppsAddRepoToInstallationResponse{request: req}
-	r, err := doRequest(ctx, req, "apps/add-repo-to-installation", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "apps/add-repo-to-installation")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -48,7 +56,7 @@ Add a repository to an app installation.
 
 https://developer.github.com/v3/apps/installations/#add-a-repository-to-an-app-installation
 */
-func (c Client) AppsAddRepoToInstallation(ctx context.Context, req *AppsAddRepoToInstallationReq, opt ...RequestOption) (*AppsAddRepoToInstallationResponse, error) {
+func (c Client) AppsAddRepoToInstallation(ctx context.Context, req *AppsAddRepoToInstallationReq, opt ...options.Option) (*AppsAddRepoToInstallationResponse, error) {
 	return AppsAddRepoToInstallation(ctx, req, append(c, opt...)...)
 }
 
@@ -73,50 +81,33 @@ type AppsAddRepoToInstallationReq struct {
 	MachineManPreview bool
 }
 
-func (r *AppsAddRepoToInstallationReq) url() string {
-	return r._url
-}
-
-func (r *AppsAddRepoToInstallationReq) urlPath() string {
-	return fmt.Sprintf("/user/installations/%v/repositories/%v", r.InstallationId, r.RepositoryId)
-}
-
-func (r *AppsAddRepoToInstallationReq) method() string {
-	return "PUT"
-}
-
-func (r *AppsAddRepoToInstallationReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *AppsAddRepoToInstallationReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"machine-man": r.MachineManPreview}
-	if requiredPreviews {
-		previewVals["machine-man"] = true
-	}
-	if allPreviews {
-		previewVals["machine-man"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *AppsAddRepoToInstallationReq) body() interface{} {
-	return nil
-}
-
-func (r *AppsAddRepoToInstallationReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *AppsAddRepoToInstallationReq) validStatuses() []int {
-	return []int{204, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *AppsAddRepoToInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "apps/add-repo-to-installation", opt)
+func (r *AppsAddRepoToInstallationReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *AppsAddRepoToInstallationReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"machine-man"},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "PUT",
+		OperationID:      "apps/add-repo-to-installation",
+		Previews:         map[string]bool{"machine-man": r.MachineManPreview},
+		RequiredPreviews: []string{"machine-man"},
+		URLPath:          fmt.Sprintf("/user/installations/%v/repositories/%v", r.InstallationId, r.RepositoryId),
+		URLQuery:         query,
+		ValidStatuses:    []int{204, 304},
+	}
+	return builder
 }
 
 /*
@@ -124,7 +115,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *AppsAddRepoToInstallationReq) Rel(link RelName, resp *AppsAddRepoToInstallationResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -138,7 +129,7 @@ AppsAddRepoToInstallationResponse is a response for AppsAddRepoToInstallation
 https://developer.github.com/v3/apps/installations/#add-a-repository-to-an-app-installation
 */
 type AppsAddRepoToInstallationResponse struct {
-	response
+	internal.Response
 	request *AppsAddRepoToInstallationReq
 }
 
@@ -151,20 +142,26 @@ Check an authorization.
 
 https://developer.github.com/v3/apps/oauth_applications/#check-an-authorization
 */
-func AppsCheckAuthorization(ctx context.Context, req *AppsCheckAuthorizationReq, opt ...RequestOption) (*AppsCheckAuthorizationResponse, error) {
+func AppsCheckAuthorization(ctx context.Context, req *AppsCheckAuthorizationReq, opt ...options.Option) (*AppsCheckAuthorizationResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(AppsCheckAuthorizationReq)
 	}
 	resp := &AppsCheckAuthorizationResponse{request: req}
-	r, err := doRequest(ctx, req, "apps/check-authorization", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = AppsCheckAuthorizationResponseBody{}
-	err = r.decodeBody(&resp.Data, "apps/check-authorization")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -180,7 +177,7 @@ Check an authorization.
 
 https://developer.github.com/v3/apps/oauth_applications/#check-an-authorization
 */
-func (c Client) AppsCheckAuthorization(ctx context.Context, req *AppsCheckAuthorizationReq, opt ...RequestOption) (*AppsCheckAuthorizationResponse, error) {
+func (c Client) AppsCheckAuthorization(ctx context.Context, req *AppsCheckAuthorizationReq, opt ...options.Option) (*AppsCheckAuthorizationResponse, error) {
 	return AppsCheckAuthorization(ctx, req, append(c, opt...)...)
 }
 
@@ -195,44 +192,33 @@ type AppsCheckAuthorizationReq struct {
 	AccessToken string
 }
 
-func (r *AppsCheckAuthorizationReq) url() string {
-	return r._url
-}
-
-func (r *AppsCheckAuthorizationReq) urlPath() string {
-	return fmt.Sprintf("/applications/%v/tokens/%v", r.ClientId, r.AccessToken)
-}
-
-func (r *AppsCheckAuthorizationReq) method() string {
-	return "GET"
-}
-
-func (r *AppsCheckAuthorizationReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *AppsCheckAuthorizationReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *AppsCheckAuthorizationReq) body() interface{} {
-	return nil
-}
-
-func (r *AppsCheckAuthorizationReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *AppsCheckAuthorizationReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *AppsCheckAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "apps/check-authorization", opt)
+func (r *AppsCheckAuthorizationReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *AppsCheckAuthorizationReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "apps/check-authorization",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/applications/%v/tokens/%v", r.ClientId, r.AccessToken),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -240,7 +226,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *AppsCheckAuthorizationReq) Rel(link RelName, resp *AppsCheckAuthorizationResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -312,7 +298,7 @@ AppsCheckAuthorizationResponse is a response for AppsCheckAuthorization
 https://developer.github.com/v3/apps/oauth_applications/#check-an-authorization
 */
 type AppsCheckAuthorizationResponse struct {
-	response
+	internal.Response
 	request *AppsCheckAuthorizationReq
 	Data    AppsCheckAuthorizationResponseBody
 }
@@ -326,20 +312,26 @@ Check a token.
 
 https://developer.github.com/v3/apps/oauth_applications/#check-a-token
 */
-func AppsCheckToken(ctx context.Context, req *AppsCheckTokenReq, opt ...RequestOption) (*AppsCheckTokenResponse, error) {
+func AppsCheckToken(ctx context.Context, req *AppsCheckTokenReq, opt ...options.Option) (*AppsCheckTokenResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(AppsCheckTokenReq)
 	}
 	resp := &AppsCheckTokenResponse{request: req}
-	r, err := doRequest(ctx, req, "apps/check-token", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.Authorization{}
-	err = r.decodeBody(&resp.Data, "apps/check-token")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -355,7 +347,7 @@ Check a token.
 
 https://developer.github.com/v3/apps/oauth_applications/#check-a-token
 */
-func (c Client) AppsCheckToken(ctx context.Context, req *AppsCheckTokenReq, opt ...RequestOption) (*AppsCheckTokenResponse, error) {
+func (c Client) AppsCheckToken(ctx context.Context, req *AppsCheckTokenReq, opt ...options.Option) (*AppsCheckTokenResponse, error) {
 	return AppsCheckToken(ctx, req, append(c, opt...)...)
 }
 
@@ -370,47 +362,36 @@ type AppsCheckTokenReq struct {
 	RequestBody AppsCheckTokenReqBody
 }
 
-func (r *AppsCheckTokenReq) url() string {
-	return r._url
-}
-
-func (r *AppsCheckTokenReq) urlPath() string {
-	return fmt.Sprintf("/applications/%v/token", r.ClientId)
-}
-
-func (r *AppsCheckTokenReq) method() string {
-	return "POST"
-}
-
-func (r *AppsCheckTokenReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *AppsCheckTokenReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *AppsCheckTokenReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *AppsCheckTokenReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *AppsCheckTokenReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *AppsCheckTokenReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "apps/check-token", opt)
+func (r *AppsCheckTokenReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *AppsCheckTokenReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{},
+		Body:         r.RequestBody,
+		DataStatuses: []int{200},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "POST",
+		OperationID:      "apps/check-token",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/applications/%v/token", r.ClientId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -418,7 +399,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *AppsCheckTokenReq) Rel(link RelName, resp *AppsCheckTokenResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -443,7 +424,7 @@ AppsCheckTokenResponse is a response for AppsCheckToken
 https://developer.github.com/v3/apps/oauth_applications/#check-a-token
 */
 type AppsCheckTokenResponse struct {
-	response
+	internal.Response
 	request *AppsCheckTokenReq
 	Data    components.Authorization
 }
@@ -457,20 +438,26 @@ Create a content attachment.
 
 https://developer.github.com/v3/apps/installations/#create-a-content-attachment
 */
-func AppsCreateContentAttachment(ctx context.Context, req *AppsCreateContentAttachmentReq, opt ...RequestOption) (*AppsCreateContentAttachmentResponse, error) {
+func AppsCreateContentAttachment(ctx context.Context, req *AppsCreateContentAttachmentReq, opt ...options.Option) (*AppsCreateContentAttachmentResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(AppsCreateContentAttachmentReq)
 	}
 	resp := &AppsCreateContentAttachmentResponse{request: req}
-	r, err := doRequest(ctx, req, "apps/create-content-attachment", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.ContentReferenceAttachment{}
-	err = r.decodeBody(&resp.Data, "apps/create-content-attachment")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -486,7 +473,7 @@ Create a content attachment.
 
 https://developer.github.com/v3/apps/installations/#create-a-content-attachment
 */
-func (c Client) AppsCreateContentAttachment(ctx context.Context, req *AppsCreateContentAttachmentReq, opt ...RequestOption) (*AppsCreateContentAttachmentResponse, error) {
+func (c Client) AppsCreateContentAttachment(ctx context.Context, req *AppsCreateContentAttachmentReq, opt ...options.Option) (*AppsCreateContentAttachmentResponse, error) {
 	return AppsCreateContentAttachment(ctx, req, append(c, opt...)...)
 }
 
@@ -509,53 +496,36 @@ type AppsCreateContentAttachmentReq struct {
 	CorsairPreview bool
 }
 
-func (r *AppsCreateContentAttachmentReq) url() string {
-	return r._url
-}
-
-func (r *AppsCreateContentAttachmentReq) urlPath() string {
-	return fmt.Sprintf("/content_references/%v/attachments", r.ContentReferenceId)
-}
-
-func (r *AppsCreateContentAttachmentReq) method() string {
-	return "POST"
-}
-
-func (r *AppsCreateContentAttachmentReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *AppsCreateContentAttachmentReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{"corsair": r.CorsairPreview}
-	if requiredPreviews {
-		previewVals["corsair"] = true
-	}
-	if allPreviews {
-		previewVals["corsair"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *AppsCreateContentAttachmentReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *AppsCreateContentAttachmentReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *AppsCreateContentAttachmentReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *AppsCreateContentAttachmentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "apps/create-content-attachment", opt)
+func (r *AppsCreateContentAttachmentReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *AppsCreateContentAttachmentReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{"corsair"},
+		Body:         r.RequestBody,
+		DataStatuses: []int{200},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "POST",
+		OperationID:      "apps/create-content-attachment",
+		Previews:         map[string]bool{"corsair": r.CorsairPreview},
+		RequiredPreviews: []string{"corsair"},
+		URLPath:          fmt.Sprintf("/content_references/%v/attachments", r.ContentReferenceId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
+	}
+	return builder
 }
 
 /*
@@ -563,7 +533,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *AppsCreateContentAttachmentReq) Rel(link RelName, resp *AppsCreateContentAttachmentResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -591,7 +561,7 @@ AppsCreateContentAttachmentResponse is a response for AppsCreateContentAttachmen
 https://developer.github.com/v3/apps/installations/#create-a-content-attachment
 */
 type AppsCreateContentAttachmentResponse struct {
-	response
+	internal.Response
 	request *AppsCreateContentAttachmentReq
 	Data    components.ContentReferenceAttachment
 }
@@ -605,20 +575,26 @@ Create a GitHub App from a manifest.
 
 https://developer.github.com/v3/apps/#create-a-github-app-from-a-manifest
 */
-func AppsCreateFromManifest(ctx context.Context, req *AppsCreateFromManifestReq, opt ...RequestOption) (*AppsCreateFromManifestResponse, error) {
+func AppsCreateFromManifest(ctx context.Context, req *AppsCreateFromManifestReq, opt ...options.Option) (*AppsCreateFromManifestResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(AppsCreateFromManifestReq)
 	}
 	resp := &AppsCreateFromManifestResponse{request: req}
-	r, err := doRequest(ctx, req, "apps/create-from-manifest", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = AppsCreateFromManifestResponseBody{}
-	err = r.decodeBody(&resp.Data, "apps/create-from-manifest")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -634,7 +610,7 @@ Create a GitHub App from a manifest.
 
 https://developer.github.com/v3/apps/#create-a-github-app-from-a-manifest
 */
-func (c Client) AppsCreateFromManifest(ctx context.Context, req *AppsCreateFromManifestReq, opt ...RequestOption) (*AppsCreateFromManifestResponse, error) {
+func (c Client) AppsCreateFromManifest(ctx context.Context, req *AppsCreateFromManifestReq, opt ...options.Option) (*AppsCreateFromManifestResponse, error) {
 	return AppsCreateFromManifest(ctx, req, append(c, opt...)...)
 }
 
@@ -650,44 +626,33 @@ type AppsCreateFromManifestReq struct {
 	Code string
 }
 
-func (r *AppsCreateFromManifestReq) url() string {
-	return r._url
-}
-
-func (r *AppsCreateFromManifestReq) urlPath() string {
-	return fmt.Sprintf("/app-manifests/%v/conversions", r.Code)
-}
-
-func (r *AppsCreateFromManifestReq) method() string {
-	return "POST"
-}
-
-func (r *AppsCreateFromManifestReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *AppsCreateFromManifestReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *AppsCreateFromManifestReq) body() interface{} {
-	return nil
-}
-
-func (r *AppsCreateFromManifestReq) dataStatuses() []int {
-	return []int{201}
-}
-
-func (r *AppsCreateFromManifestReq) validStatuses() []int {
-	return []int{201}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *AppsCreateFromManifestReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "apps/create-from-manifest", opt)
+func (r *AppsCreateFromManifestReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *AppsCreateFromManifestReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{201},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "POST",
+		OperationID:      "apps/create-from-manifest",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/app-manifests/%v/conversions", r.Code),
+		URLQuery:         query,
+		ValidStatuses:    []int{201},
+	}
+	return builder
 }
 
 /*
@@ -695,7 +660,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *AppsCreateFromManifestReq) Rel(link RelName, resp *AppsCreateFromManifestResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -766,7 +731,7 @@ AppsCreateFromManifestResponse is a response for AppsCreateFromManifest
 https://developer.github.com/v3/apps/#create-a-github-app-from-a-manifest
 */
 type AppsCreateFromManifestResponse struct {
-	response
+	internal.Response
 	request *AppsCreateFromManifestReq
 	Data    AppsCreateFromManifestResponseBody
 }
@@ -780,20 +745,26 @@ Create an installation access token for an app.
 
 https://developer.github.com/v3/apps/#create-an-installation-access-token-for-an-app
 */
-func AppsCreateInstallationAccessToken(ctx context.Context, req *AppsCreateInstallationAccessTokenReq, opt ...RequestOption) (*AppsCreateInstallationAccessTokenResponse, error) {
+func AppsCreateInstallationAccessToken(ctx context.Context, req *AppsCreateInstallationAccessTokenReq, opt ...options.Option) (*AppsCreateInstallationAccessTokenResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(AppsCreateInstallationAccessTokenReq)
 	}
 	resp := &AppsCreateInstallationAccessTokenResponse{request: req}
-	r, err := doRequest(ctx, req, "apps/create-installation-access-token", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.InstallationToken{}
-	err = r.decodeBody(&resp.Data, "apps/create-installation-access-token")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -809,7 +780,7 @@ Create an installation access token for an app.
 
 https://developer.github.com/v3/apps/#create-an-installation-access-token-for-an-app
 */
-func (c Client) AppsCreateInstallationAccessToken(ctx context.Context, req *AppsCreateInstallationAccessTokenReq, opt ...RequestOption) (*AppsCreateInstallationAccessTokenResponse, error) {
+func (c Client) AppsCreateInstallationAccessToken(ctx context.Context, req *AppsCreateInstallationAccessTokenReq, opt ...options.Option) (*AppsCreateInstallationAccessTokenResponse, error) {
 	return AppsCreateInstallationAccessToken(ctx, req, append(c, opt...)...)
 }
 
@@ -832,53 +803,36 @@ type AppsCreateInstallationAccessTokenReq struct {
 	MachineManPreview bool
 }
 
-func (r *AppsCreateInstallationAccessTokenReq) url() string {
-	return r._url
-}
-
-func (r *AppsCreateInstallationAccessTokenReq) urlPath() string {
-	return fmt.Sprintf("/app/installations/%v/access_tokens", r.InstallationId)
-}
-
-func (r *AppsCreateInstallationAccessTokenReq) method() string {
-	return "POST"
-}
-
-func (r *AppsCreateInstallationAccessTokenReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *AppsCreateInstallationAccessTokenReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{"machine-man": r.MachineManPreview}
-	if requiredPreviews {
-		previewVals["machine-man"] = true
-	}
-	if allPreviews {
-		previewVals["machine-man"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *AppsCreateInstallationAccessTokenReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *AppsCreateInstallationAccessTokenReq) dataStatuses() []int {
-	return []int{201}
-}
-
-func (r *AppsCreateInstallationAccessTokenReq) validStatuses() []int {
-	return []int{201}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *AppsCreateInstallationAccessTokenReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "apps/create-installation-access-token", opt)
+func (r *AppsCreateInstallationAccessTokenReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *AppsCreateInstallationAccessTokenReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{"machine-man"},
+		Body:         r.RequestBody,
+		DataStatuses: []int{201},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "POST",
+		OperationID:      "apps/create-installation-access-token",
+		Previews:         map[string]bool{"machine-man": r.MachineManPreview},
+		RequiredPreviews: []string{"machine-man"},
+		URLPath:          fmt.Sprintf("/app/installations/%v/access_tokens", r.InstallationId),
+		URLQuery:         query,
+		ValidStatuses:    []int{201},
+	}
+	return builder
 }
 
 /*
@@ -886,7 +840,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *AppsCreateInstallationAccessTokenReq) Rel(link RelName, resp *AppsCreateInstallationAccessTokenResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -918,7 +872,7 @@ AppsCreateInstallationAccessTokenResponse is a response for AppsCreateInstallati
 https://developer.github.com/v3/apps/#create-an-installation-access-token-for-an-app
 */
 type AppsCreateInstallationAccessTokenResponse struct {
-	response
+	internal.Response
 	request *AppsCreateInstallationAccessTokenReq
 	Data    components.InstallationToken
 }
@@ -932,19 +886,25 @@ Delete an app authorization.
 
 https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-authorization
 */
-func AppsDeleteAuthorization(ctx context.Context, req *AppsDeleteAuthorizationReq, opt ...RequestOption) (*AppsDeleteAuthorizationResponse, error) {
+func AppsDeleteAuthorization(ctx context.Context, req *AppsDeleteAuthorizationReq, opt ...options.Option) (*AppsDeleteAuthorizationResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(AppsDeleteAuthorizationReq)
 	}
 	resp := &AppsDeleteAuthorizationResponse{request: req}
-	r, err := doRequest(ctx, req, "apps/delete-authorization", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "apps/delete-authorization")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -960,7 +920,7 @@ Delete an app authorization.
 
 https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-authorization
 */
-func (c Client) AppsDeleteAuthorization(ctx context.Context, req *AppsDeleteAuthorizationReq, opt ...RequestOption) (*AppsDeleteAuthorizationResponse, error) {
+func (c Client) AppsDeleteAuthorization(ctx context.Context, req *AppsDeleteAuthorizationReq, opt ...options.Option) (*AppsDeleteAuthorizationResponse, error) {
 	return AppsDeleteAuthorization(ctx, req, append(c, opt...)...)
 }
 
@@ -975,44 +935,33 @@ type AppsDeleteAuthorizationReq struct {
 	RequestBody AppsDeleteAuthorizationReqBody
 }
 
-func (r *AppsDeleteAuthorizationReq) url() string {
-	return r._url
-}
-
-func (r *AppsDeleteAuthorizationReq) urlPath() string {
-	return fmt.Sprintf("/applications/%v/grant", r.ClientId)
-}
-
-func (r *AppsDeleteAuthorizationReq) method() string {
-	return "DELETE"
-}
-
-func (r *AppsDeleteAuthorizationReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *AppsDeleteAuthorizationReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"content-type": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *AppsDeleteAuthorizationReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *AppsDeleteAuthorizationReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *AppsDeleteAuthorizationReq) validStatuses() []int {
-	return []int{204}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *AppsDeleteAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "apps/delete-authorization", opt)
+func (r *AppsDeleteAuthorizationReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *AppsDeleteAuthorizationReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             r.RequestBody,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"content-type": String("application/json")},
+		Method:           "DELETE",
+		OperationID:      "apps/delete-authorization",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/applications/%v/grant", r.ClientId),
+		URLQuery:         query,
+		ValidStatuses:    []int{204},
+	}
+	return builder
 }
 
 /*
@@ -1020,7 +969,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *AppsDeleteAuthorizationReq) Rel(link RelName, resp *AppsDeleteAuthorizationResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1045,7 +994,7 @@ AppsDeleteAuthorizationResponse is a response for AppsDeleteAuthorization
 https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-authorization
 */
 type AppsDeleteAuthorizationResponse struct {
-	response
+	internal.Response
 	request *AppsDeleteAuthorizationReq
 }
 
@@ -1058,23 +1007,29 @@ Delete an installation for the authenticated app.
 
 https://developer.github.com/v3/apps/#delete-an-installation-for-the-authenticated-app
 */
-func AppsDeleteInstallation(ctx context.Context, req *AppsDeleteInstallationReq, opt ...RequestOption) (*AppsDeleteInstallationResponse, error) {
+func AppsDeleteInstallation(ctx context.Context, req *AppsDeleteInstallationReq, opt ...options.Option) (*AppsDeleteInstallationResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(AppsDeleteInstallationReq)
 	}
 	resp := &AppsDeleteInstallationResponse{request: req}
-	r, err := doRequest(ctx, req, "apps/delete-installation", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.setBoolResult(&resp.Data)
+
+	err = internal.SetBoolResult(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
-	err = r.decodeBody(nil, "apps/delete-installation")
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -1090,7 +1045,7 @@ Delete an installation for the authenticated app.
 
 https://developer.github.com/v3/apps/#delete-an-installation-for-the-authenticated-app
 */
-func (c Client) AppsDeleteInstallation(ctx context.Context, req *AppsDeleteInstallationReq, opt ...RequestOption) (*AppsDeleteInstallationResponse, error) {
+func (c Client) AppsDeleteInstallation(ctx context.Context, req *AppsDeleteInstallationReq, opt ...options.Option) (*AppsDeleteInstallationResponse, error) {
 	return AppsDeleteInstallation(ctx, req, append(c, opt...)...)
 }
 
@@ -1112,50 +1067,33 @@ type AppsDeleteInstallationReq struct {
 	MachineManPreview bool
 }
 
-func (r *AppsDeleteInstallationReq) url() string {
-	return r._url
-}
-
-func (r *AppsDeleteInstallationReq) urlPath() string {
-	return fmt.Sprintf("/app/installations/%v", r.InstallationId)
-}
-
-func (r *AppsDeleteInstallationReq) method() string {
-	return "DELETE"
-}
-
-func (r *AppsDeleteInstallationReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *AppsDeleteInstallationReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"machine-man": r.MachineManPreview}
-	if requiredPreviews {
-		previewVals["machine-man"] = true
-	}
-	if allPreviews {
-		previewVals["machine-man"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *AppsDeleteInstallationReq) body() interface{} {
-	return nil
-}
-
-func (r *AppsDeleteInstallationReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *AppsDeleteInstallationReq) validStatuses() []int {
-	return []int{204}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *AppsDeleteInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "apps/delete-installation", opt)
+func (r *AppsDeleteInstallationReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *AppsDeleteInstallationReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"machine-man"},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		OperationID:      "apps/delete-installation",
+		Previews:         map[string]bool{"machine-man": r.MachineManPreview},
+		RequiredPreviews: []string{"machine-man"},
+		URLPath:          fmt.Sprintf("/app/installations/%v", r.InstallationId),
+		URLQuery:         query,
+		ValidStatuses:    []int{204},
+	}
+	return builder
 }
 
 /*
@@ -1163,7 +1101,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *AppsDeleteInstallationReq) Rel(link RelName, resp *AppsDeleteInstallationResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1177,7 +1115,7 @@ AppsDeleteInstallationResponse is a response for AppsDeleteInstallation
 https://developer.github.com/v3/apps/#delete-an-installation-for-the-authenticated-app
 */
 type AppsDeleteInstallationResponse struct {
-	response
+	internal.Response
 	request *AppsDeleteInstallationReq
 	Data    bool
 }
@@ -1191,19 +1129,25 @@ Delete an app token.
 
 https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-token
 */
-func AppsDeleteToken(ctx context.Context, req *AppsDeleteTokenReq, opt ...RequestOption) (*AppsDeleteTokenResponse, error) {
+func AppsDeleteToken(ctx context.Context, req *AppsDeleteTokenReq, opt ...options.Option) (*AppsDeleteTokenResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(AppsDeleteTokenReq)
 	}
 	resp := &AppsDeleteTokenResponse{request: req}
-	r, err := doRequest(ctx, req, "apps/delete-token", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "apps/delete-token")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -1219,7 +1163,7 @@ Delete an app token.
 
 https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-token
 */
-func (c Client) AppsDeleteToken(ctx context.Context, req *AppsDeleteTokenReq, opt ...RequestOption) (*AppsDeleteTokenResponse, error) {
+func (c Client) AppsDeleteToken(ctx context.Context, req *AppsDeleteTokenReq, opt ...options.Option) (*AppsDeleteTokenResponse, error) {
 	return AppsDeleteToken(ctx, req, append(c, opt...)...)
 }
 
@@ -1234,44 +1178,33 @@ type AppsDeleteTokenReq struct {
 	RequestBody AppsDeleteTokenReqBody
 }
 
-func (r *AppsDeleteTokenReq) url() string {
-	return r._url
-}
-
-func (r *AppsDeleteTokenReq) urlPath() string {
-	return fmt.Sprintf("/applications/%v/token", r.ClientId)
-}
-
-func (r *AppsDeleteTokenReq) method() string {
-	return "DELETE"
-}
-
-func (r *AppsDeleteTokenReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *AppsDeleteTokenReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"content-type": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *AppsDeleteTokenReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *AppsDeleteTokenReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *AppsDeleteTokenReq) validStatuses() []int {
-	return []int{204}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *AppsDeleteTokenReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "apps/delete-token", opt)
+func (r *AppsDeleteTokenReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *AppsDeleteTokenReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             r.RequestBody,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"content-type": String("application/json")},
+		Method:           "DELETE",
+		OperationID:      "apps/delete-token",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/applications/%v/token", r.ClientId),
+		URLQuery:         query,
+		ValidStatuses:    []int{204},
+	}
+	return builder
 }
 
 /*
@@ -1279,7 +1212,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *AppsDeleteTokenReq) Rel(link RelName, resp *AppsDeleteTokenResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1304,7 +1237,7 @@ AppsDeleteTokenResponse is a response for AppsDeleteToken
 https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-token
 */
 type AppsDeleteTokenResponse struct {
-	response
+	internal.Response
 	request *AppsDeleteTokenReq
 }
 
@@ -1317,20 +1250,26 @@ Get the authenticated app.
 
 https://developer.github.com/v3/apps/#get-the-authenticated-app
 */
-func AppsGetAuthenticated(ctx context.Context, req *AppsGetAuthenticatedReq, opt ...RequestOption) (*AppsGetAuthenticatedResponse, error) {
+func AppsGetAuthenticated(ctx context.Context, req *AppsGetAuthenticatedReq, opt ...options.Option) (*AppsGetAuthenticatedResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(AppsGetAuthenticatedReq)
 	}
 	resp := &AppsGetAuthenticatedResponse{request: req}
-	r, err := doRequest(ctx, req, "apps/get-authenticated", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.Integration{}
-	err = r.decodeBody(&resp.Data, "apps/get-authenticated")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1346,7 +1285,7 @@ Get the authenticated app.
 
 https://developer.github.com/v3/apps/#get-the-authenticated-app
 */
-func (c Client) AppsGetAuthenticated(ctx context.Context, req *AppsGetAuthenticatedReq, opt ...RequestOption) (*AppsGetAuthenticatedResponse, error) {
+func (c Client) AppsGetAuthenticated(ctx context.Context, req *AppsGetAuthenticatedReq, opt ...options.Option) (*AppsGetAuthenticatedResponse, error) {
 	return AppsGetAuthenticated(ctx, req, append(c, opt...)...)
 }
 
@@ -1365,50 +1304,33 @@ type AppsGetAuthenticatedReq struct {
 	MachineManPreview bool
 }
 
-func (r *AppsGetAuthenticatedReq) url() string {
-	return r._url
-}
-
-func (r *AppsGetAuthenticatedReq) urlPath() string {
-	return fmt.Sprintf("/app")
-}
-
-func (r *AppsGetAuthenticatedReq) method() string {
-	return "GET"
-}
-
-func (r *AppsGetAuthenticatedReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *AppsGetAuthenticatedReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{"machine-man": r.MachineManPreview}
-	if requiredPreviews {
-		previewVals["machine-man"] = true
-	}
-	if allPreviews {
-		previewVals["machine-man"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *AppsGetAuthenticatedReq) body() interface{} {
-	return nil
-}
-
-func (r *AppsGetAuthenticatedReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *AppsGetAuthenticatedReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *AppsGetAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "apps/get-authenticated", opt)
+func (r *AppsGetAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *AppsGetAuthenticatedReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"machine-man"},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "apps/get-authenticated",
+		Previews:         map[string]bool{"machine-man": r.MachineManPreview},
+		RequiredPreviews: []string{"machine-man"},
+		URLPath:          fmt.Sprintf("/app"),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -1416,7 +1338,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *AppsGetAuthenticatedReq) Rel(link RelName, resp *AppsGetAuthenticatedResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1430,7 +1352,7 @@ AppsGetAuthenticatedResponse is a response for AppsGetAuthenticated
 https://developer.github.com/v3/apps/#get-the-authenticated-app
 */
 type AppsGetAuthenticatedResponse struct {
-	response
+	internal.Response
 	request *AppsGetAuthenticatedReq
 	Data    components.Integration
 }
@@ -1444,20 +1366,26 @@ Get an app.
 
 https://developer.github.com/v3/apps/#get-an-app
 */
-func AppsGetBySlug(ctx context.Context, req *AppsGetBySlugReq, opt ...RequestOption) (*AppsGetBySlugResponse, error) {
+func AppsGetBySlug(ctx context.Context, req *AppsGetBySlugReq, opt ...options.Option) (*AppsGetBySlugResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(AppsGetBySlugReq)
 	}
 	resp := &AppsGetBySlugResponse{request: req}
-	r, err := doRequest(ctx, req, "apps/get-by-slug", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.Integration{}
-	err = r.decodeBody(&resp.Data, "apps/get-by-slug")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1473,7 +1401,7 @@ Get an app.
 
 https://developer.github.com/v3/apps/#get-an-app
 */
-func (c Client) AppsGetBySlug(ctx context.Context, req *AppsGetBySlugReq, opt ...RequestOption) (*AppsGetBySlugResponse, error) {
+func (c Client) AppsGetBySlug(ctx context.Context, req *AppsGetBySlugReq, opt ...options.Option) (*AppsGetBySlugResponse, error) {
 	return AppsGetBySlug(ctx, req, append(c, opt...)...)
 }
 
@@ -1495,50 +1423,33 @@ type AppsGetBySlugReq struct {
 	MachineManPreview bool
 }
 
-func (r *AppsGetBySlugReq) url() string {
-	return r._url
-}
-
-func (r *AppsGetBySlugReq) urlPath() string {
-	return fmt.Sprintf("/apps/%v", r.AppSlug)
-}
-
-func (r *AppsGetBySlugReq) method() string {
-	return "GET"
-}
-
-func (r *AppsGetBySlugReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *AppsGetBySlugReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{"machine-man": r.MachineManPreview}
-	if requiredPreviews {
-		previewVals["machine-man"] = true
-	}
-	if allPreviews {
-		previewVals["machine-man"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *AppsGetBySlugReq) body() interface{} {
-	return nil
-}
-
-func (r *AppsGetBySlugReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *AppsGetBySlugReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *AppsGetBySlugReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "apps/get-by-slug", opt)
+func (r *AppsGetBySlugReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *AppsGetBySlugReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"machine-man"},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "apps/get-by-slug",
+		Previews:         map[string]bool{"machine-man": r.MachineManPreview},
+		RequiredPreviews: []string{"machine-man"},
+		URLPath:          fmt.Sprintf("/apps/%v", r.AppSlug),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -1546,7 +1457,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *AppsGetBySlugReq) Rel(link RelName, resp *AppsGetBySlugResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1560,7 +1471,7 @@ AppsGetBySlugResponse is a response for AppsGetBySlug
 https://developer.github.com/v3/apps/#get-an-app
 */
 type AppsGetBySlugResponse struct {
-	response
+	internal.Response
 	request *AppsGetBySlugReq
 	Data    components.Integration
 }
@@ -1574,20 +1485,26 @@ Get an installation for the authenticated app.
 
 https://developer.github.com/v3/apps/#get-an-installation-for-the-authenticated-app
 */
-func AppsGetInstallation(ctx context.Context, req *AppsGetInstallationReq, opt ...RequestOption) (*AppsGetInstallationResponse, error) {
+func AppsGetInstallation(ctx context.Context, req *AppsGetInstallationReq, opt ...options.Option) (*AppsGetInstallationResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(AppsGetInstallationReq)
 	}
 	resp := &AppsGetInstallationResponse{request: req}
-	r, err := doRequest(ctx, req, "apps/get-installation", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.Installation{}
-	err = r.decodeBody(&resp.Data, "apps/get-installation")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1603,7 +1520,7 @@ Get an installation for the authenticated app.
 
 https://developer.github.com/v3/apps/#get-an-installation-for-the-authenticated-app
 */
-func (c Client) AppsGetInstallation(ctx context.Context, req *AppsGetInstallationReq, opt ...RequestOption) (*AppsGetInstallationResponse, error) {
+func (c Client) AppsGetInstallation(ctx context.Context, req *AppsGetInstallationReq, opt ...options.Option) (*AppsGetInstallationResponse, error) {
 	return AppsGetInstallation(ctx, req, append(c, opt...)...)
 }
 
@@ -1625,50 +1542,33 @@ type AppsGetInstallationReq struct {
 	MachineManPreview bool
 }
 
-func (r *AppsGetInstallationReq) url() string {
-	return r._url
-}
-
-func (r *AppsGetInstallationReq) urlPath() string {
-	return fmt.Sprintf("/app/installations/%v", r.InstallationId)
-}
-
-func (r *AppsGetInstallationReq) method() string {
-	return "GET"
-}
-
-func (r *AppsGetInstallationReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *AppsGetInstallationReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{"machine-man": r.MachineManPreview}
-	if requiredPreviews {
-		previewVals["machine-man"] = true
-	}
-	if allPreviews {
-		previewVals["machine-man"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *AppsGetInstallationReq) body() interface{} {
-	return nil
-}
-
-func (r *AppsGetInstallationReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *AppsGetInstallationReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *AppsGetInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "apps/get-installation", opt)
+func (r *AppsGetInstallationReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *AppsGetInstallationReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"machine-man"},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "apps/get-installation",
+		Previews:         map[string]bool{"machine-man": r.MachineManPreview},
+		RequiredPreviews: []string{"machine-man"},
+		URLPath:          fmt.Sprintf("/app/installations/%v", r.InstallationId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -1676,7 +1576,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *AppsGetInstallationReq) Rel(link RelName, resp *AppsGetInstallationResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1690,7 +1590,7 @@ AppsGetInstallationResponse is a response for AppsGetInstallation
 https://developer.github.com/v3/apps/#get-an-installation-for-the-authenticated-app
 */
 type AppsGetInstallationResponse struct {
-	response
+	internal.Response
 	request *AppsGetInstallationReq
 	Data    components.Installation
 }
@@ -1704,20 +1604,26 @@ Get an organization installation for the authenticated app.
 
 https://developer.github.com/v3/apps/#get-an-organization-installation-for-the-authenticated-app
 */
-func AppsGetOrgInstallation(ctx context.Context, req *AppsGetOrgInstallationReq, opt ...RequestOption) (*AppsGetOrgInstallationResponse, error) {
+func AppsGetOrgInstallation(ctx context.Context, req *AppsGetOrgInstallationReq, opt ...options.Option) (*AppsGetOrgInstallationResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(AppsGetOrgInstallationReq)
 	}
 	resp := &AppsGetOrgInstallationResponse{request: req}
-	r, err := doRequest(ctx, req, "apps/get-org-installation", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.Installation{}
-	err = r.decodeBody(&resp.Data, "apps/get-org-installation")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1733,7 +1639,7 @@ Get an organization installation for the authenticated app.
 
 https://developer.github.com/v3/apps/#get-an-organization-installation-for-the-authenticated-app
 */
-func (c Client) AppsGetOrgInstallation(ctx context.Context, req *AppsGetOrgInstallationReq, opt ...RequestOption) (*AppsGetOrgInstallationResponse, error) {
+func (c Client) AppsGetOrgInstallation(ctx context.Context, req *AppsGetOrgInstallationReq, opt ...options.Option) (*AppsGetOrgInstallationResponse, error) {
 	return AppsGetOrgInstallation(ctx, req, append(c, opt...)...)
 }
 
@@ -1753,50 +1659,33 @@ type AppsGetOrgInstallationReq struct {
 	MachineManPreview bool
 }
 
-func (r *AppsGetOrgInstallationReq) url() string {
-	return r._url
-}
-
-func (r *AppsGetOrgInstallationReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/installation", r.Org)
-}
-
-func (r *AppsGetOrgInstallationReq) method() string {
-	return "GET"
-}
-
-func (r *AppsGetOrgInstallationReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *AppsGetOrgInstallationReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{"machine-man": r.MachineManPreview}
-	if requiredPreviews {
-		previewVals["machine-man"] = true
-	}
-	if allPreviews {
-		previewVals["machine-man"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *AppsGetOrgInstallationReq) body() interface{} {
-	return nil
-}
-
-func (r *AppsGetOrgInstallationReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *AppsGetOrgInstallationReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *AppsGetOrgInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "apps/get-org-installation", opt)
+func (r *AppsGetOrgInstallationReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *AppsGetOrgInstallationReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"machine-man"},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "apps/get-org-installation",
+		Previews:         map[string]bool{"machine-man": r.MachineManPreview},
+		RequiredPreviews: []string{"machine-man"},
+		URLPath:          fmt.Sprintf("/orgs/%v/installation", r.Org),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -1804,7 +1693,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *AppsGetOrgInstallationReq) Rel(link RelName, resp *AppsGetOrgInstallationResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1818,7 +1707,7 @@ AppsGetOrgInstallationResponse is a response for AppsGetOrgInstallation
 https://developer.github.com/v3/apps/#get-an-organization-installation-for-the-authenticated-app
 */
 type AppsGetOrgInstallationResponse struct {
-	response
+	internal.Response
 	request *AppsGetOrgInstallationReq
 	Data    components.Installation
 }
@@ -1832,20 +1721,26 @@ Get a repository installation for the authenticated app.
 
 https://developer.github.com/v3/apps/#get-a-repository-installation-for-the-authenticated-app
 */
-func AppsGetRepoInstallation(ctx context.Context, req *AppsGetRepoInstallationReq, opt ...RequestOption) (*AppsGetRepoInstallationResponse, error) {
+func AppsGetRepoInstallation(ctx context.Context, req *AppsGetRepoInstallationReq, opt ...options.Option) (*AppsGetRepoInstallationResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(AppsGetRepoInstallationReq)
 	}
 	resp := &AppsGetRepoInstallationResponse{request: req}
-	r, err := doRequest(ctx, req, "apps/get-repo-installation", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.Installation{}
-	err = r.decodeBody(&resp.Data, "apps/get-repo-installation")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1861,7 +1756,7 @@ Get a repository installation for the authenticated app.
 
 https://developer.github.com/v3/apps/#get-a-repository-installation-for-the-authenticated-app
 */
-func (c Client) AppsGetRepoInstallation(ctx context.Context, req *AppsGetRepoInstallationReq, opt ...RequestOption) (*AppsGetRepoInstallationResponse, error) {
+func (c Client) AppsGetRepoInstallation(ctx context.Context, req *AppsGetRepoInstallationReq, opt ...options.Option) (*AppsGetRepoInstallationResponse, error) {
 	return AppsGetRepoInstallation(ctx, req, append(c, opt...)...)
 }
 
@@ -1882,50 +1777,33 @@ type AppsGetRepoInstallationReq struct {
 	MachineManPreview bool
 }
 
-func (r *AppsGetRepoInstallationReq) url() string {
-	return r._url
-}
-
-func (r *AppsGetRepoInstallationReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/installation", r.Owner, r.Repo)
-}
-
-func (r *AppsGetRepoInstallationReq) method() string {
-	return "GET"
-}
-
-func (r *AppsGetRepoInstallationReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *AppsGetRepoInstallationReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{"machine-man": r.MachineManPreview}
-	if requiredPreviews {
-		previewVals["machine-man"] = true
-	}
-	if allPreviews {
-		previewVals["machine-man"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *AppsGetRepoInstallationReq) body() interface{} {
-	return nil
-}
-
-func (r *AppsGetRepoInstallationReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *AppsGetRepoInstallationReq) validStatuses() []int {
-	return []int{200, 301}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *AppsGetRepoInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "apps/get-repo-installation", opt)
+func (r *AppsGetRepoInstallationReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *AppsGetRepoInstallationReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"machine-man"},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "apps/get-repo-installation",
+		Previews:         map[string]bool{"machine-man": r.MachineManPreview},
+		RequiredPreviews: []string{"machine-man"},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/installation", r.Owner, r.Repo),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 301},
+	}
+	return builder
 }
 
 /*
@@ -1933,7 +1811,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *AppsGetRepoInstallationReq) Rel(link RelName, resp *AppsGetRepoInstallationResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1947,7 +1825,7 @@ AppsGetRepoInstallationResponse is a response for AppsGetRepoInstallation
 https://developer.github.com/v3/apps/#get-a-repository-installation-for-the-authenticated-app
 */
 type AppsGetRepoInstallationResponse struct {
-	response
+	internal.Response
 	request *AppsGetRepoInstallationReq
 	Data    components.Installation
 }
@@ -1961,20 +1839,26 @@ Get a subscription plan for an account.
 
 https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account
 */
-func AppsGetSubscriptionPlanForAccount(ctx context.Context, req *AppsGetSubscriptionPlanForAccountReq, opt ...RequestOption) (*AppsGetSubscriptionPlanForAccountResponse, error) {
+func AppsGetSubscriptionPlanForAccount(ctx context.Context, req *AppsGetSubscriptionPlanForAccountReq, opt ...options.Option) (*AppsGetSubscriptionPlanForAccountResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(AppsGetSubscriptionPlanForAccountReq)
 	}
 	resp := &AppsGetSubscriptionPlanForAccountResponse{request: req}
-	r, err := doRequest(ctx, req, "apps/get-subscription-plan-for-account", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.MarketplacePurchase{}
-	err = r.decodeBody(&resp.Data, "apps/get-subscription-plan-for-account")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1990,7 +1874,7 @@ Get a subscription plan for an account.
 
 https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account
 */
-func (c Client) AppsGetSubscriptionPlanForAccount(ctx context.Context, req *AppsGetSubscriptionPlanForAccountReq, opt ...RequestOption) (*AppsGetSubscriptionPlanForAccountResponse, error) {
+func (c Client) AppsGetSubscriptionPlanForAccount(ctx context.Context, req *AppsGetSubscriptionPlanForAccountReq, opt ...options.Option) (*AppsGetSubscriptionPlanForAccountResponse, error) {
 	return AppsGetSubscriptionPlanForAccount(ctx, req, append(c, opt...)...)
 }
 
@@ -2006,44 +1890,33 @@ type AppsGetSubscriptionPlanForAccountReq struct {
 	AccountId int64
 }
 
-func (r *AppsGetSubscriptionPlanForAccountReq) url() string {
-	return r._url
-}
-
-func (r *AppsGetSubscriptionPlanForAccountReq) urlPath() string {
-	return fmt.Sprintf("/marketplace_listing/accounts/%v", r.AccountId)
-}
-
-func (r *AppsGetSubscriptionPlanForAccountReq) method() string {
-	return "GET"
-}
-
-func (r *AppsGetSubscriptionPlanForAccountReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *AppsGetSubscriptionPlanForAccountReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *AppsGetSubscriptionPlanForAccountReq) body() interface{} {
-	return nil
-}
-
-func (r *AppsGetSubscriptionPlanForAccountReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *AppsGetSubscriptionPlanForAccountReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *AppsGetSubscriptionPlanForAccountReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "apps/get-subscription-plan-for-account", opt)
+func (r *AppsGetSubscriptionPlanForAccountReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *AppsGetSubscriptionPlanForAccountReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "apps/get-subscription-plan-for-account",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/marketplace_listing/accounts/%v", r.AccountId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -2051,7 +1924,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *AppsGetSubscriptionPlanForAccountReq) Rel(link RelName, resp *AppsGetSubscriptionPlanForAccountResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -2065,7 +1938,7 @@ AppsGetSubscriptionPlanForAccountResponse is a response for AppsGetSubscriptionP
 https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account
 */
 type AppsGetSubscriptionPlanForAccountResponse struct {
-	response
+	internal.Response
 	request *AppsGetSubscriptionPlanForAccountReq
 	Data    components.MarketplacePurchase
 }
@@ -2079,20 +1952,26 @@ Get a subscription plan for an account (stubbed).
 
 https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account-stubbed
 */
-func AppsGetSubscriptionPlanForAccountStubbed(ctx context.Context, req *AppsGetSubscriptionPlanForAccountStubbedReq, opt ...RequestOption) (*AppsGetSubscriptionPlanForAccountStubbedResponse, error) {
+func AppsGetSubscriptionPlanForAccountStubbed(ctx context.Context, req *AppsGetSubscriptionPlanForAccountStubbedReq, opt ...options.Option) (*AppsGetSubscriptionPlanForAccountStubbedResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(AppsGetSubscriptionPlanForAccountStubbedReq)
 	}
 	resp := &AppsGetSubscriptionPlanForAccountStubbedResponse{request: req}
-	r, err := doRequest(ctx, req, "apps/get-subscription-plan-for-account-stubbed", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.MarketplacePurchase{}
-	err = r.decodeBody(&resp.Data, "apps/get-subscription-plan-for-account-stubbed")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2108,7 +1987,7 @@ Get a subscription plan for an account (stubbed).
 
 https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account-stubbed
 */
-func (c Client) AppsGetSubscriptionPlanForAccountStubbed(ctx context.Context, req *AppsGetSubscriptionPlanForAccountStubbedReq, opt ...RequestOption) (*AppsGetSubscriptionPlanForAccountStubbedResponse, error) {
+func (c Client) AppsGetSubscriptionPlanForAccountStubbed(ctx context.Context, req *AppsGetSubscriptionPlanForAccountStubbedReq, opt ...options.Option) (*AppsGetSubscriptionPlanForAccountStubbedResponse, error) {
 	return AppsGetSubscriptionPlanForAccountStubbed(ctx, req, append(c, opt...)...)
 }
 
@@ -2124,44 +2003,33 @@ type AppsGetSubscriptionPlanForAccountStubbedReq struct {
 	AccountId int64
 }
 
-func (r *AppsGetSubscriptionPlanForAccountStubbedReq) url() string {
-	return r._url
-}
-
-func (r *AppsGetSubscriptionPlanForAccountStubbedReq) urlPath() string {
-	return fmt.Sprintf("/marketplace_listing/stubbed/accounts/%v", r.AccountId)
-}
-
-func (r *AppsGetSubscriptionPlanForAccountStubbedReq) method() string {
-	return "GET"
-}
-
-func (r *AppsGetSubscriptionPlanForAccountStubbedReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *AppsGetSubscriptionPlanForAccountStubbedReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *AppsGetSubscriptionPlanForAccountStubbedReq) body() interface{} {
-	return nil
-}
-
-func (r *AppsGetSubscriptionPlanForAccountStubbedReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *AppsGetSubscriptionPlanForAccountStubbedReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *AppsGetSubscriptionPlanForAccountStubbedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "apps/get-subscription-plan-for-account-stubbed", opt)
+func (r *AppsGetSubscriptionPlanForAccountStubbedReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *AppsGetSubscriptionPlanForAccountStubbedReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "apps/get-subscription-plan-for-account-stubbed",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/marketplace_listing/stubbed/accounts/%v", r.AccountId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -2169,7 +2037,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *AppsGetSubscriptionPlanForAccountStubbedReq) Rel(link RelName, resp *AppsGetSubscriptionPlanForAccountStubbedResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -2183,7 +2051,7 @@ AppsGetSubscriptionPlanForAccountStubbedResponse is a response for AppsGetSubscr
 https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account-stubbed
 */
 type AppsGetSubscriptionPlanForAccountStubbedResponse struct {
-	response
+	internal.Response
 	request *AppsGetSubscriptionPlanForAccountStubbedReq
 	Data    components.MarketplacePurchase
 }
@@ -2197,20 +2065,26 @@ Get a user installation for the authenticated app.
 
 https://developer.github.com/v3/apps/#get-a-user-installation-for-the-authenticated-app
 */
-func AppsGetUserInstallation(ctx context.Context, req *AppsGetUserInstallationReq, opt ...RequestOption) (*AppsGetUserInstallationResponse, error) {
+func AppsGetUserInstallation(ctx context.Context, req *AppsGetUserInstallationReq, opt ...options.Option) (*AppsGetUserInstallationResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(AppsGetUserInstallationReq)
 	}
 	resp := &AppsGetUserInstallationResponse{request: req}
-	r, err := doRequest(ctx, req, "apps/get-user-installation", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.Installation{}
-	err = r.decodeBody(&resp.Data, "apps/get-user-installation")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2226,7 +2100,7 @@ Get a user installation for the authenticated app.
 
 https://developer.github.com/v3/apps/#get-a-user-installation-for-the-authenticated-app
 */
-func (c Client) AppsGetUserInstallation(ctx context.Context, req *AppsGetUserInstallationReq, opt ...RequestOption) (*AppsGetUserInstallationResponse, error) {
+func (c Client) AppsGetUserInstallation(ctx context.Context, req *AppsGetUserInstallationReq, opt ...options.Option) (*AppsGetUserInstallationResponse, error) {
 	return AppsGetUserInstallation(ctx, req, append(c, opt...)...)
 }
 
@@ -2246,50 +2120,33 @@ type AppsGetUserInstallationReq struct {
 	MachineManPreview bool
 }
 
-func (r *AppsGetUserInstallationReq) url() string {
-	return r._url
-}
-
-func (r *AppsGetUserInstallationReq) urlPath() string {
-	return fmt.Sprintf("/users/%v/installation", r.Username)
-}
-
-func (r *AppsGetUserInstallationReq) method() string {
-	return "GET"
-}
-
-func (r *AppsGetUserInstallationReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *AppsGetUserInstallationReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{"machine-man": r.MachineManPreview}
-	if requiredPreviews {
-		previewVals["machine-man"] = true
-	}
-	if allPreviews {
-		previewVals["machine-man"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *AppsGetUserInstallationReq) body() interface{} {
-	return nil
-}
-
-func (r *AppsGetUserInstallationReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *AppsGetUserInstallationReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *AppsGetUserInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "apps/get-user-installation", opt)
+func (r *AppsGetUserInstallationReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *AppsGetUserInstallationReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"machine-man"},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "apps/get-user-installation",
+		Previews:         map[string]bool{"machine-man": r.MachineManPreview},
+		RequiredPreviews: []string{"machine-man"},
+		URLPath:          fmt.Sprintf("/users/%v/installation", r.Username),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -2297,7 +2154,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *AppsGetUserInstallationReq) Rel(link RelName, resp *AppsGetUserInstallationResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -2311,7 +2168,7 @@ AppsGetUserInstallationResponse is a response for AppsGetUserInstallation
 https://developer.github.com/v3/apps/#get-a-user-installation-for-the-authenticated-app
 */
 type AppsGetUserInstallationResponse struct {
-	response
+	internal.Response
 	request *AppsGetUserInstallationReq
 	Data    components.Installation
 }
@@ -2325,20 +2182,26 @@ List accounts for a plan.
 
 https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan
 */
-func AppsListAccountsForPlan(ctx context.Context, req *AppsListAccountsForPlanReq, opt ...RequestOption) (*AppsListAccountsForPlanResponse, error) {
+func AppsListAccountsForPlan(ctx context.Context, req *AppsListAccountsForPlanReq, opt ...options.Option) (*AppsListAccountsForPlanResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(AppsListAccountsForPlanReq)
 	}
 	resp := &AppsListAccountsForPlanResponse{request: req}
-	r, err := doRequest(ctx, req, "apps/list-accounts-for-plan", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.MarketplacePurchase{}
-	err = r.decodeBody(&resp.Data, "apps/list-accounts-for-plan")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2354,7 +2217,7 @@ List accounts for a plan.
 
 https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan
 */
-func (c Client) AppsListAccountsForPlan(ctx context.Context, req *AppsListAccountsForPlanReq, opt ...RequestOption) (*AppsListAccountsForPlanResponse, error) {
+func (c Client) AppsListAccountsForPlan(ctx context.Context, req *AppsListAccountsForPlanReq, opt ...options.Option) (*AppsListAccountsForPlanResponse, error) {
 	return AppsListAccountsForPlan(ctx, req, append(c, opt...)...)
 }
 
@@ -2388,19 +2251,16 @@ type AppsListAccountsForPlanReq struct {
 	Page *int64
 }
 
-func (r *AppsListAccountsForPlanReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *AppsListAccountsForPlanReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *AppsListAccountsForPlanReq) urlPath() string {
-	return fmt.Sprintf("/marketplace_listing/plans/%v/accounts", r.PlanId)
-}
-
-func (r *AppsListAccountsForPlanReq) method() string {
-	return "GET"
-}
-
-func (r *AppsListAccountsForPlanReq) urlQuery() url.Values {
+func (r *AppsListAccountsForPlanReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Sort != nil {
 		query.Set("sort", *r.Sort)
@@ -2414,30 +2274,22 @@ func (r *AppsListAccountsForPlanReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *AppsListAccountsForPlanReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *AppsListAccountsForPlanReq) body() interface{} {
-	return nil
-}
-
-func (r *AppsListAccountsForPlanReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *AppsListAccountsForPlanReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *AppsListAccountsForPlanReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "apps/list-accounts-for-plan", opt)
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "apps/list-accounts-for-plan",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/marketplace_listing/plans/%v/accounts", r.PlanId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -2445,7 +2297,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *AppsListAccountsForPlanReq) Rel(link RelName, resp *AppsListAccountsForPlanResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -2459,7 +2311,7 @@ AppsListAccountsForPlanResponse is a response for AppsListAccountsForPlan
 https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan
 */
 type AppsListAccountsForPlanResponse struct {
-	response
+	internal.Response
 	request *AppsListAccountsForPlanReq
 	Data    []components.MarketplacePurchase
 }
@@ -2473,20 +2325,26 @@ List accounts for a plan (stubbed).
 
 https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan-stubbed
 */
-func AppsListAccountsForPlanStubbed(ctx context.Context, req *AppsListAccountsForPlanStubbedReq, opt ...RequestOption) (*AppsListAccountsForPlanStubbedResponse, error) {
+func AppsListAccountsForPlanStubbed(ctx context.Context, req *AppsListAccountsForPlanStubbedReq, opt ...options.Option) (*AppsListAccountsForPlanStubbedResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(AppsListAccountsForPlanStubbedReq)
 	}
 	resp := &AppsListAccountsForPlanStubbedResponse{request: req}
-	r, err := doRequest(ctx, req, "apps/list-accounts-for-plan-stubbed", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.MarketplacePurchase{}
-	err = r.decodeBody(&resp.Data, "apps/list-accounts-for-plan-stubbed")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2502,7 +2360,7 @@ List accounts for a plan (stubbed).
 
 https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan-stubbed
 */
-func (c Client) AppsListAccountsForPlanStubbed(ctx context.Context, req *AppsListAccountsForPlanStubbedReq, opt ...RequestOption) (*AppsListAccountsForPlanStubbedResponse, error) {
+func (c Client) AppsListAccountsForPlanStubbed(ctx context.Context, req *AppsListAccountsForPlanStubbedReq, opt ...options.Option) (*AppsListAccountsForPlanStubbedResponse, error) {
 	return AppsListAccountsForPlanStubbed(ctx, req, append(c, opt...)...)
 }
 
@@ -2536,19 +2394,16 @@ type AppsListAccountsForPlanStubbedReq struct {
 	Page *int64
 }
 
-func (r *AppsListAccountsForPlanStubbedReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *AppsListAccountsForPlanStubbedReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *AppsListAccountsForPlanStubbedReq) urlPath() string {
-	return fmt.Sprintf("/marketplace_listing/stubbed/plans/%v/accounts", r.PlanId)
-}
-
-func (r *AppsListAccountsForPlanStubbedReq) method() string {
-	return "GET"
-}
-
-func (r *AppsListAccountsForPlanStubbedReq) urlQuery() url.Values {
+func (r *AppsListAccountsForPlanStubbedReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Sort != nil {
 		query.Set("sort", *r.Sort)
@@ -2562,30 +2417,22 @@ func (r *AppsListAccountsForPlanStubbedReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *AppsListAccountsForPlanStubbedReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *AppsListAccountsForPlanStubbedReq) body() interface{} {
-	return nil
-}
-
-func (r *AppsListAccountsForPlanStubbedReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *AppsListAccountsForPlanStubbedReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *AppsListAccountsForPlanStubbedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "apps/list-accounts-for-plan-stubbed", opt)
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "apps/list-accounts-for-plan-stubbed",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/marketplace_listing/stubbed/plans/%v/accounts", r.PlanId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -2593,7 +2440,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *AppsListAccountsForPlanStubbedReq) Rel(link RelName, resp *AppsListAccountsForPlanStubbedResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -2607,7 +2454,7 @@ AppsListAccountsForPlanStubbedResponse is a response for AppsListAccountsForPlan
 https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan-stubbed
 */
 type AppsListAccountsForPlanStubbedResponse struct {
-	response
+	internal.Response
 	request *AppsListAccountsForPlanStubbedReq
 	Data    []components.MarketplacePurchase
 }
@@ -2621,20 +2468,26 @@ List repositories accessible to the user access token.
 
 https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-access-token
 */
-func AppsListInstallationReposForAuthenticatedUser(ctx context.Context, req *AppsListInstallationReposForAuthenticatedUserReq, opt ...RequestOption) (*AppsListInstallationReposForAuthenticatedUserResponse, error) {
+func AppsListInstallationReposForAuthenticatedUser(ctx context.Context, req *AppsListInstallationReposForAuthenticatedUserReq, opt ...options.Option) (*AppsListInstallationReposForAuthenticatedUserResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(AppsListInstallationReposForAuthenticatedUserReq)
 	}
 	resp := &AppsListInstallationReposForAuthenticatedUserResponse{request: req}
-	r, err := doRequest(ctx, req, "apps/list-installation-repos-for-authenticated-user", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = AppsListInstallationReposForAuthenticatedUserResponseBody{}
-	err = r.decodeBody(&resp.Data, "apps/list-installation-repos-for-authenticated-user")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2650,7 +2503,7 @@ List repositories accessible to the user access token.
 
 https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-access-token
 */
-func (c Client) AppsListInstallationReposForAuthenticatedUser(ctx context.Context, req *AppsListInstallationReposForAuthenticatedUserReq, opt ...RequestOption) (*AppsListInstallationReposForAuthenticatedUserResponse, error) {
+func (c Client) AppsListInstallationReposForAuthenticatedUser(ctx context.Context, req *AppsListInstallationReposForAuthenticatedUserReq, opt ...options.Option) (*AppsListInstallationReposForAuthenticatedUserResponse, error) {
 	return AppsListInstallationReposForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
@@ -2685,19 +2538,16 @@ type AppsListInstallationReposForAuthenticatedUserReq struct {
 	MercyPreview bool
 }
 
-func (r *AppsListInstallationReposForAuthenticatedUserReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *AppsListInstallationReposForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *AppsListInstallationReposForAuthenticatedUserReq) urlPath() string {
-	return fmt.Sprintf("/user/installations/%v/repositories", r.InstallationId)
-}
-
-func (r *AppsListInstallationReposForAuthenticatedUserReq) method() string {
-	return "GET"
-}
-
-func (r *AppsListInstallationReposForAuthenticatedUserReq) urlQuery() url.Values {
+func (r *AppsListInstallationReposForAuthenticatedUserReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -2705,40 +2555,25 @@ func (r *AppsListInstallationReposForAuthenticatedUserReq) urlQuery() url.Values
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *AppsListInstallationReposForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{
-		"machine-man": r.MachineManPreview,
-		"mercy":       r.MercyPreview,
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{"machine-man", "mercy"},
+		Body:         nil,
+		DataStatuses: []int{200},
+		ExplicitURL:  r._url,
+		HeaderVals:   map[string]*string{"accept": String("application/json")},
+		Method:       "GET",
+		OperationID:  "apps/list-installation-repos-for-authenticated-user",
+		Previews: map[string]bool{
+			"machine-man": r.MachineManPreview,
+			"mercy":       r.MercyPreview,
+		},
+		RequiredPreviews: []string{"machine-man"},
+		URLPath:          fmt.Sprintf("/user/installations/%v/repositories", r.InstallationId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
 	}
-	if requiredPreviews {
-		previewVals["machine-man"] = true
-	}
-	if allPreviews {
-		previewVals["machine-man"] = true
-		previewVals["mercy"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *AppsListInstallationReposForAuthenticatedUserReq) body() interface{} {
-	return nil
-}
-
-func (r *AppsListInstallationReposForAuthenticatedUserReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *AppsListInstallationReposForAuthenticatedUserReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *AppsListInstallationReposForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "apps/list-installation-repos-for-authenticated-user", opt)
+	return builder
 }
 
 /*
@@ -2746,7 +2581,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *AppsListInstallationReposForAuthenticatedUserReq) Rel(link RelName, resp *AppsListInstallationReposForAuthenticatedUserResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -2771,7 +2606,7 @@ AppsListInstallationReposForAuthenticatedUserResponse is a response for AppsList
 https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-access-token
 */
 type AppsListInstallationReposForAuthenticatedUserResponse struct {
-	response
+	internal.Response
 	request *AppsListInstallationReposForAuthenticatedUserReq
 	Data    AppsListInstallationReposForAuthenticatedUserResponseBody
 }
@@ -2785,20 +2620,26 @@ List installations for the authenticated app.
 
 https://developer.github.com/v3/apps/#list-installations-for-the-authenticated-app
 */
-func AppsListInstallations(ctx context.Context, req *AppsListInstallationsReq, opt ...RequestOption) (*AppsListInstallationsResponse, error) {
+func AppsListInstallations(ctx context.Context, req *AppsListInstallationsReq, opt ...options.Option) (*AppsListInstallationsResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(AppsListInstallationsReq)
 	}
 	resp := &AppsListInstallationsResponse{request: req}
-	r, err := doRequest(ctx, req, "apps/list-installations", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.Installation{}
-	err = r.decodeBody(&resp.Data, "apps/list-installations")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2814,7 +2655,7 @@ List installations for the authenticated app.
 
 https://developer.github.com/v3/apps/#list-installations-for-the-authenticated-app
 */
-func (c Client) AppsListInstallations(ctx context.Context, req *AppsListInstallationsReq, opt ...RequestOption) (*AppsListInstallationsResponse, error) {
+func (c Client) AppsListInstallations(ctx context.Context, req *AppsListInstallationsReq, opt ...options.Option) (*AppsListInstallationsResponse, error) {
 	return AppsListInstallations(ctx, req, append(c, opt...)...)
 }
 
@@ -2847,19 +2688,16 @@ type AppsListInstallationsReq struct {
 	MachineManPreview bool
 }
 
-func (r *AppsListInstallationsReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *AppsListInstallationsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *AppsListInstallationsReq) urlPath() string {
-	return fmt.Sprintf("/app/installations")
-}
-
-func (r *AppsListInstallationsReq) method() string {
-	return "GET"
-}
-
-func (r *AppsListInstallationsReq) urlQuery() url.Values {
+func (r *AppsListInstallationsReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -2873,36 +2711,22 @@ func (r *AppsListInstallationsReq) urlQuery() url.Values {
 	if r.Outdated != nil {
 		query.Set("outdated", *r.Outdated)
 	}
-	return query
-}
 
-func (r *AppsListInstallationsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{"machine-man": r.MachineManPreview}
-	if requiredPreviews {
-		previewVals["machine-man"] = true
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"machine-man"},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "apps/list-installations",
+		Previews:         map[string]bool{"machine-man": r.MachineManPreview},
+		RequiredPreviews: []string{"machine-man"},
+		URLPath:          fmt.Sprintf("/app/installations"),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
 	}
-	if allPreviews {
-		previewVals["machine-man"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *AppsListInstallationsReq) body() interface{} {
-	return nil
-}
-
-func (r *AppsListInstallationsReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *AppsListInstallationsReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *AppsListInstallationsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "apps/list-installations", opt)
+	return builder
 }
 
 /*
@@ -2910,7 +2734,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *AppsListInstallationsReq) Rel(link RelName, resp *AppsListInstallationsResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -2924,7 +2748,7 @@ AppsListInstallationsResponse is a response for AppsListInstallations
 https://developer.github.com/v3/apps/#list-installations-for-the-authenticated-app
 */
 type AppsListInstallationsResponse struct {
-	response
+	internal.Response
 	request *AppsListInstallationsReq
 	Data    []components.Installation
 }
@@ -2938,20 +2762,26 @@ List app installations accessible to the user access token.
 
 https://developer.github.com/v3/apps/installations/#list-app-installations-accessible-to-the-user-access-token
 */
-func AppsListInstallationsForAuthenticatedUser(ctx context.Context, req *AppsListInstallationsForAuthenticatedUserReq, opt ...RequestOption) (*AppsListInstallationsForAuthenticatedUserResponse, error) {
+func AppsListInstallationsForAuthenticatedUser(ctx context.Context, req *AppsListInstallationsForAuthenticatedUserReq, opt ...options.Option) (*AppsListInstallationsForAuthenticatedUserResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(AppsListInstallationsForAuthenticatedUserReq)
 	}
 	resp := &AppsListInstallationsForAuthenticatedUserResponse{request: req}
-	r, err := doRequest(ctx, req, "apps/list-installations-for-authenticated-user", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = AppsListInstallationsForAuthenticatedUserResponseBody{}
-	err = r.decodeBody(&resp.Data, "apps/list-installations-for-authenticated-user")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2967,7 +2797,7 @@ List app installations accessible to the user access token.
 
 https://developer.github.com/v3/apps/installations/#list-app-installations-accessible-to-the-user-access-token
 */
-func (c Client) AppsListInstallationsForAuthenticatedUser(ctx context.Context, req *AppsListInstallationsForAuthenticatedUserReq, opt ...RequestOption) (*AppsListInstallationsForAuthenticatedUserResponse, error) {
+func (c Client) AppsListInstallationsForAuthenticatedUser(ctx context.Context, req *AppsListInstallationsForAuthenticatedUserReq, opt ...options.Option) (*AppsListInstallationsForAuthenticatedUserResponse, error) {
 	return AppsListInstallationsForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
@@ -2992,19 +2822,16 @@ type AppsListInstallationsForAuthenticatedUserReq struct {
 	MachineManPreview bool
 }
 
-func (r *AppsListInstallationsForAuthenticatedUserReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *AppsListInstallationsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *AppsListInstallationsForAuthenticatedUserReq) urlPath() string {
-	return fmt.Sprintf("/user/installations")
-}
-
-func (r *AppsListInstallationsForAuthenticatedUserReq) method() string {
-	return "GET"
-}
-
-func (r *AppsListInstallationsForAuthenticatedUserReq) urlQuery() url.Values {
+func (r *AppsListInstallationsForAuthenticatedUserReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -3012,36 +2839,22 @@ func (r *AppsListInstallationsForAuthenticatedUserReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *AppsListInstallationsForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{"machine-man": r.MachineManPreview}
-	if requiredPreviews {
-		previewVals["machine-man"] = true
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"machine-man"},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "apps/list-installations-for-authenticated-user",
+		Previews:         map[string]bool{"machine-man": r.MachineManPreview},
+		RequiredPreviews: []string{"machine-man"},
+		URLPath:          fmt.Sprintf("/user/installations"),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
 	}
-	if allPreviews {
-		previewVals["machine-man"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *AppsListInstallationsForAuthenticatedUserReq) body() interface{} {
-	return nil
-}
-
-func (r *AppsListInstallationsForAuthenticatedUserReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *AppsListInstallationsForAuthenticatedUserReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *AppsListInstallationsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "apps/list-installations-for-authenticated-user", opt)
+	return builder
 }
 
 /*
@@ -3049,7 +2862,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *AppsListInstallationsForAuthenticatedUserReq) Rel(link RelName, resp *AppsListInstallationsForAuthenticatedUserResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -3073,7 +2886,7 @@ AppsListInstallationsForAuthenticatedUserResponse is a response for AppsListInst
 https://developer.github.com/v3/apps/installations/#list-app-installations-accessible-to-the-user-access-token
 */
 type AppsListInstallationsForAuthenticatedUserResponse struct {
-	response
+	internal.Response
 	request *AppsListInstallationsForAuthenticatedUserReq
 	Data    AppsListInstallationsForAuthenticatedUserResponseBody
 }
@@ -3087,20 +2900,26 @@ List plans.
 
 https://developer.github.com/v3/apps/marketplace/#list-plans
 */
-func AppsListPlans(ctx context.Context, req *AppsListPlansReq, opt ...RequestOption) (*AppsListPlansResponse, error) {
+func AppsListPlans(ctx context.Context, req *AppsListPlansReq, opt ...options.Option) (*AppsListPlansResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(AppsListPlansReq)
 	}
 	resp := &AppsListPlansResponse{request: req}
-	r, err := doRequest(ctx, req, "apps/list-plans", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.MarketplaceListingPlan{}
-	err = r.decodeBody(&resp.Data, "apps/list-plans")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3116,7 +2935,7 @@ List plans.
 
 https://developer.github.com/v3/apps/marketplace/#list-plans
 */
-func (c Client) AppsListPlans(ctx context.Context, req *AppsListPlansReq, opt ...RequestOption) (*AppsListPlansResponse, error) {
+func (c Client) AppsListPlans(ctx context.Context, req *AppsListPlansReq, opt ...options.Option) (*AppsListPlansResponse, error) {
 	return AppsListPlans(ctx, req, append(c, opt...)...)
 }
 
@@ -3135,19 +2954,16 @@ type AppsListPlansReq struct {
 	Page *int64
 }
 
-func (r *AppsListPlansReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *AppsListPlansReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *AppsListPlansReq) urlPath() string {
-	return fmt.Sprintf("/marketplace_listing/plans")
-}
-
-func (r *AppsListPlansReq) method() string {
-	return "GET"
-}
-
-func (r *AppsListPlansReq) urlQuery() url.Values {
+func (r *AppsListPlansReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -3155,30 +2971,22 @@ func (r *AppsListPlansReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *AppsListPlansReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *AppsListPlansReq) body() interface{} {
-	return nil
-}
-
-func (r *AppsListPlansReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *AppsListPlansReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *AppsListPlansReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "apps/list-plans", opt)
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "apps/list-plans",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/marketplace_listing/plans"),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -3186,7 +2994,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *AppsListPlansReq) Rel(link RelName, resp *AppsListPlansResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -3200,7 +3008,7 @@ AppsListPlansResponse is a response for AppsListPlans
 https://developer.github.com/v3/apps/marketplace/#list-plans
 */
 type AppsListPlansResponse struct {
-	response
+	internal.Response
 	request *AppsListPlansReq
 	Data    []components.MarketplaceListingPlan
 }
@@ -3214,20 +3022,26 @@ List plans (stubbed).
 
 https://developer.github.com/v3/apps/marketplace/#list-plans-stubbed
 */
-func AppsListPlansStubbed(ctx context.Context, req *AppsListPlansStubbedReq, opt ...RequestOption) (*AppsListPlansStubbedResponse, error) {
+func AppsListPlansStubbed(ctx context.Context, req *AppsListPlansStubbedReq, opt ...options.Option) (*AppsListPlansStubbedResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(AppsListPlansStubbedReq)
 	}
 	resp := &AppsListPlansStubbedResponse{request: req}
-	r, err := doRequest(ctx, req, "apps/list-plans-stubbed", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.MarketplaceListingPlan{}
-	err = r.decodeBody(&resp.Data, "apps/list-plans-stubbed")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3243,7 +3057,7 @@ List plans (stubbed).
 
 https://developer.github.com/v3/apps/marketplace/#list-plans-stubbed
 */
-func (c Client) AppsListPlansStubbed(ctx context.Context, req *AppsListPlansStubbedReq, opt ...RequestOption) (*AppsListPlansStubbedResponse, error) {
+func (c Client) AppsListPlansStubbed(ctx context.Context, req *AppsListPlansStubbedReq, opt ...options.Option) (*AppsListPlansStubbedResponse, error) {
 	return AppsListPlansStubbed(ctx, req, append(c, opt...)...)
 }
 
@@ -3262,19 +3076,16 @@ type AppsListPlansStubbedReq struct {
 	Page *int64
 }
 
-func (r *AppsListPlansStubbedReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *AppsListPlansStubbedReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *AppsListPlansStubbedReq) urlPath() string {
-	return fmt.Sprintf("/marketplace_listing/stubbed/plans")
-}
-
-func (r *AppsListPlansStubbedReq) method() string {
-	return "GET"
-}
-
-func (r *AppsListPlansStubbedReq) urlQuery() url.Values {
+func (r *AppsListPlansStubbedReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -3282,30 +3093,22 @@ func (r *AppsListPlansStubbedReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *AppsListPlansStubbedReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *AppsListPlansStubbedReq) body() interface{} {
-	return nil
-}
-
-func (r *AppsListPlansStubbedReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *AppsListPlansStubbedReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *AppsListPlansStubbedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "apps/list-plans-stubbed", opt)
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "apps/list-plans-stubbed",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/marketplace_listing/stubbed/plans"),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -3313,7 +3116,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *AppsListPlansStubbedReq) Rel(link RelName, resp *AppsListPlansStubbedResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -3327,7 +3130,7 @@ AppsListPlansStubbedResponse is a response for AppsListPlansStubbed
 https://developer.github.com/v3/apps/marketplace/#list-plans-stubbed
 */
 type AppsListPlansStubbedResponse struct {
-	response
+	internal.Response
 	request *AppsListPlansStubbedReq
 	Data    []components.MarketplaceListingPlan
 }
@@ -3341,20 +3144,26 @@ List repositories accessible to the app installation.
 
 https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-app-installation
 */
-func AppsListReposAccessibleToInstallation(ctx context.Context, req *AppsListReposAccessibleToInstallationReq, opt ...RequestOption) (*AppsListReposAccessibleToInstallationResponse, error) {
+func AppsListReposAccessibleToInstallation(ctx context.Context, req *AppsListReposAccessibleToInstallationReq, opt ...options.Option) (*AppsListReposAccessibleToInstallationResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(AppsListReposAccessibleToInstallationReq)
 	}
 	resp := &AppsListReposAccessibleToInstallationResponse{request: req}
-	r, err := doRequest(ctx, req, "apps/list-repos-accessible-to-installation", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = AppsListReposAccessibleToInstallationResponseBody{}
-	err = r.decodeBody(&resp.Data, "apps/list-repos-accessible-to-installation")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3370,7 +3179,7 @@ List repositories accessible to the app installation.
 
 https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-app-installation
 */
-func (c Client) AppsListReposAccessibleToInstallation(ctx context.Context, req *AppsListReposAccessibleToInstallationReq, opt ...RequestOption) (*AppsListReposAccessibleToInstallationResponse, error) {
+func (c Client) AppsListReposAccessibleToInstallation(ctx context.Context, req *AppsListReposAccessibleToInstallationReq, opt ...options.Option) (*AppsListReposAccessibleToInstallationResponse, error) {
 	return AppsListReposAccessibleToInstallation(ctx, req, append(c, opt...)...)
 }
 
@@ -3402,19 +3211,16 @@ type AppsListReposAccessibleToInstallationReq struct {
 	MercyPreview bool
 }
 
-func (r *AppsListReposAccessibleToInstallationReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *AppsListReposAccessibleToInstallationReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *AppsListReposAccessibleToInstallationReq) urlPath() string {
-	return fmt.Sprintf("/installation/repositories")
-}
-
-func (r *AppsListReposAccessibleToInstallationReq) method() string {
-	return "GET"
-}
-
-func (r *AppsListReposAccessibleToInstallationReq) urlQuery() url.Values {
+func (r *AppsListReposAccessibleToInstallationReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -3422,40 +3228,25 @@ func (r *AppsListReposAccessibleToInstallationReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *AppsListReposAccessibleToInstallationReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{
-		"machine-man": r.MachineManPreview,
-		"mercy":       r.MercyPreview,
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{"machine-man", "mercy"},
+		Body:         nil,
+		DataStatuses: []int{200},
+		ExplicitURL:  r._url,
+		HeaderVals:   map[string]*string{"accept": String("application/json")},
+		Method:       "GET",
+		OperationID:  "apps/list-repos-accessible-to-installation",
+		Previews: map[string]bool{
+			"machine-man": r.MachineManPreview,
+			"mercy":       r.MercyPreview,
+		},
+		RequiredPreviews: []string{"machine-man"},
+		URLPath:          fmt.Sprintf("/installation/repositories"),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
 	}
-	if requiredPreviews {
-		previewVals["machine-man"] = true
-	}
-	if allPreviews {
-		previewVals["machine-man"] = true
-		previewVals["mercy"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *AppsListReposAccessibleToInstallationReq) body() interface{} {
-	return nil
-}
-
-func (r *AppsListReposAccessibleToInstallationReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *AppsListReposAccessibleToInstallationReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *AppsListReposAccessibleToInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "apps/list-repos-accessible-to-installation", opt)
+	return builder
 }
 
 /*
@@ -3463,7 +3254,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *AppsListReposAccessibleToInstallationReq) Rel(link RelName, resp *AppsListReposAccessibleToInstallationResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -3488,7 +3279,7 @@ AppsListReposAccessibleToInstallationResponse is a response for AppsListReposAcc
 https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-app-installation
 */
 type AppsListReposAccessibleToInstallationResponse struct {
-	response
+	internal.Response
 	request *AppsListReposAccessibleToInstallationReq
 	Data    AppsListReposAccessibleToInstallationResponseBody
 }
@@ -3502,20 +3293,26 @@ List subscriptions for the authenticated user.
 
 https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user
 */
-func AppsListSubscriptionsForAuthenticatedUser(ctx context.Context, req *AppsListSubscriptionsForAuthenticatedUserReq, opt ...RequestOption) (*AppsListSubscriptionsForAuthenticatedUserResponse, error) {
+func AppsListSubscriptionsForAuthenticatedUser(ctx context.Context, req *AppsListSubscriptionsForAuthenticatedUserReq, opt ...options.Option) (*AppsListSubscriptionsForAuthenticatedUserResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(AppsListSubscriptionsForAuthenticatedUserReq)
 	}
 	resp := &AppsListSubscriptionsForAuthenticatedUserResponse{request: req}
-	r, err := doRequest(ctx, req, "apps/list-subscriptions-for-authenticated-user", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.UserMarketplacePurchase{}
-	err = r.decodeBody(&resp.Data, "apps/list-subscriptions-for-authenticated-user")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3531,7 +3328,7 @@ List subscriptions for the authenticated user.
 
 https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user
 */
-func (c Client) AppsListSubscriptionsForAuthenticatedUser(ctx context.Context, req *AppsListSubscriptionsForAuthenticatedUserReq, opt ...RequestOption) (*AppsListSubscriptionsForAuthenticatedUserResponse, error) {
+func (c Client) AppsListSubscriptionsForAuthenticatedUser(ctx context.Context, req *AppsListSubscriptionsForAuthenticatedUserReq, opt ...options.Option) (*AppsListSubscriptionsForAuthenticatedUserResponse, error) {
 	return AppsListSubscriptionsForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
@@ -3550,19 +3347,16 @@ type AppsListSubscriptionsForAuthenticatedUserReq struct {
 	Page *int64
 }
 
-func (r *AppsListSubscriptionsForAuthenticatedUserReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *AppsListSubscriptionsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *AppsListSubscriptionsForAuthenticatedUserReq) urlPath() string {
-	return fmt.Sprintf("/user/marketplace_purchases")
-}
-
-func (r *AppsListSubscriptionsForAuthenticatedUserReq) method() string {
-	return "GET"
-}
-
-func (r *AppsListSubscriptionsForAuthenticatedUserReq) urlQuery() url.Values {
+func (r *AppsListSubscriptionsForAuthenticatedUserReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -3570,30 +3364,22 @@ func (r *AppsListSubscriptionsForAuthenticatedUserReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *AppsListSubscriptionsForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *AppsListSubscriptionsForAuthenticatedUserReq) body() interface{} {
-	return nil
-}
-
-func (r *AppsListSubscriptionsForAuthenticatedUserReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *AppsListSubscriptionsForAuthenticatedUserReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *AppsListSubscriptionsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "apps/list-subscriptions-for-authenticated-user", opt)
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "apps/list-subscriptions-for-authenticated-user",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/user/marketplace_purchases"),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
+	}
+	return builder
 }
 
 /*
@@ -3601,7 +3387,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *AppsListSubscriptionsForAuthenticatedUserReq) Rel(link RelName, resp *AppsListSubscriptionsForAuthenticatedUserResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -3615,7 +3401,7 @@ AppsListSubscriptionsForAuthenticatedUserResponse is a response for AppsListSubs
 https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user
 */
 type AppsListSubscriptionsForAuthenticatedUserResponse struct {
-	response
+	internal.Response
 	request *AppsListSubscriptionsForAuthenticatedUserReq
 	Data    []components.UserMarketplacePurchase
 }
@@ -3629,20 +3415,26 @@ List subscriptions for the authenticated user (stubbed).
 
 https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user-stubbed
 */
-func AppsListSubscriptionsForAuthenticatedUserStubbed(ctx context.Context, req *AppsListSubscriptionsForAuthenticatedUserStubbedReq, opt ...RequestOption) (*AppsListSubscriptionsForAuthenticatedUserStubbedResponse, error) {
+func AppsListSubscriptionsForAuthenticatedUserStubbed(ctx context.Context, req *AppsListSubscriptionsForAuthenticatedUserStubbedReq, opt ...options.Option) (*AppsListSubscriptionsForAuthenticatedUserStubbedResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(AppsListSubscriptionsForAuthenticatedUserStubbedReq)
 	}
 	resp := &AppsListSubscriptionsForAuthenticatedUserStubbedResponse{request: req}
-	r, err := doRequest(ctx, req, "apps/list-subscriptions-for-authenticated-user-stubbed", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.UserMarketplacePurchase{}
-	err = r.decodeBody(&resp.Data, "apps/list-subscriptions-for-authenticated-user-stubbed")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3658,7 +3450,7 @@ List subscriptions for the authenticated user (stubbed).
 
 https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user-stubbed
 */
-func (c Client) AppsListSubscriptionsForAuthenticatedUserStubbed(ctx context.Context, req *AppsListSubscriptionsForAuthenticatedUserStubbedReq, opt ...RequestOption) (*AppsListSubscriptionsForAuthenticatedUserStubbedResponse, error) {
+func (c Client) AppsListSubscriptionsForAuthenticatedUserStubbed(ctx context.Context, req *AppsListSubscriptionsForAuthenticatedUserStubbedReq, opt ...options.Option) (*AppsListSubscriptionsForAuthenticatedUserStubbedResponse, error) {
 	return AppsListSubscriptionsForAuthenticatedUserStubbed(ctx, req, append(c, opt...)...)
 }
 
@@ -3677,19 +3469,16 @@ type AppsListSubscriptionsForAuthenticatedUserStubbedReq struct {
 	Page *int64
 }
 
-func (r *AppsListSubscriptionsForAuthenticatedUserStubbedReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *AppsListSubscriptionsForAuthenticatedUserStubbedReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *AppsListSubscriptionsForAuthenticatedUserStubbedReq) urlPath() string {
-	return fmt.Sprintf("/user/marketplace_purchases/stubbed")
-}
-
-func (r *AppsListSubscriptionsForAuthenticatedUserStubbedReq) method() string {
-	return "GET"
-}
-
-func (r *AppsListSubscriptionsForAuthenticatedUserStubbedReq) urlQuery() url.Values {
+func (r *AppsListSubscriptionsForAuthenticatedUserStubbedReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -3697,30 +3486,22 @@ func (r *AppsListSubscriptionsForAuthenticatedUserStubbedReq) urlQuery() url.Val
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *AppsListSubscriptionsForAuthenticatedUserStubbedReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *AppsListSubscriptionsForAuthenticatedUserStubbedReq) body() interface{} {
-	return nil
-}
-
-func (r *AppsListSubscriptionsForAuthenticatedUserStubbedReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *AppsListSubscriptionsForAuthenticatedUserStubbedReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *AppsListSubscriptionsForAuthenticatedUserStubbedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "apps/list-subscriptions-for-authenticated-user-stubbed", opt)
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "apps/list-subscriptions-for-authenticated-user-stubbed",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/user/marketplace_purchases/stubbed"),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
+	}
+	return builder
 }
 
 /*
@@ -3728,7 +3509,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *AppsListSubscriptionsForAuthenticatedUserStubbedReq) Rel(link RelName, resp *AppsListSubscriptionsForAuthenticatedUserStubbedResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -3742,7 +3523,7 @@ AppsListSubscriptionsForAuthenticatedUserStubbedResponse is a response for AppsL
 https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user-stubbed
 */
 type AppsListSubscriptionsForAuthenticatedUserStubbedResponse struct {
-	response
+	internal.Response
 	request *AppsListSubscriptionsForAuthenticatedUserStubbedReq
 	Data    []components.UserMarketplacePurchase
 }
@@ -3756,19 +3537,25 @@ Remove a repository from an app installation.
 
 https://developer.github.com/v3/apps/installations/#remove-a-repository-from-an-app-installation
 */
-func AppsRemoveRepoFromInstallation(ctx context.Context, req *AppsRemoveRepoFromInstallationReq, opt ...RequestOption) (*AppsRemoveRepoFromInstallationResponse, error) {
+func AppsRemoveRepoFromInstallation(ctx context.Context, req *AppsRemoveRepoFromInstallationReq, opt ...options.Option) (*AppsRemoveRepoFromInstallationResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(AppsRemoveRepoFromInstallationReq)
 	}
 	resp := &AppsRemoveRepoFromInstallationResponse{request: req}
-	r, err := doRequest(ctx, req, "apps/remove-repo-from-installation", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "apps/remove-repo-from-installation")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -3784,7 +3571,7 @@ Remove a repository from an app installation.
 
 https://developer.github.com/v3/apps/installations/#remove-a-repository-from-an-app-installation
 */
-func (c Client) AppsRemoveRepoFromInstallation(ctx context.Context, req *AppsRemoveRepoFromInstallationReq, opt ...RequestOption) (*AppsRemoveRepoFromInstallationResponse, error) {
+func (c Client) AppsRemoveRepoFromInstallation(ctx context.Context, req *AppsRemoveRepoFromInstallationReq, opt ...options.Option) (*AppsRemoveRepoFromInstallationResponse, error) {
 	return AppsRemoveRepoFromInstallation(ctx, req, append(c, opt...)...)
 }
 
@@ -3809,50 +3596,33 @@ type AppsRemoveRepoFromInstallationReq struct {
 	MachineManPreview bool
 }
 
-func (r *AppsRemoveRepoFromInstallationReq) url() string {
-	return r._url
-}
-
-func (r *AppsRemoveRepoFromInstallationReq) urlPath() string {
-	return fmt.Sprintf("/user/installations/%v/repositories/%v", r.InstallationId, r.RepositoryId)
-}
-
-func (r *AppsRemoveRepoFromInstallationReq) method() string {
-	return "DELETE"
-}
-
-func (r *AppsRemoveRepoFromInstallationReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *AppsRemoveRepoFromInstallationReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"machine-man": r.MachineManPreview}
-	if requiredPreviews {
-		previewVals["machine-man"] = true
-	}
-	if allPreviews {
-		previewVals["machine-man"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *AppsRemoveRepoFromInstallationReq) body() interface{} {
-	return nil
-}
-
-func (r *AppsRemoveRepoFromInstallationReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *AppsRemoveRepoFromInstallationReq) validStatuses() []int {
-	return []int{204, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *AppsRemoveRepoFromInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "apps/remove-repo-from-installation", opt)
+func (r *AppsRemoveRepoFromInstallationReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *AppsRemoveRepoFromInstallationReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"machine-man"},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		OperationID:      "apps/remove-repo-from-installation",
+		Previews:         map[string]bool{"machine-man": r.MachineManPreview},
+		RequiredPreviews: []string{"machine-man"},
+		URLPath:          fmt.Sprintf("/user/installations/%v/repositories/%v", r.InstallationId, r.RepositoryId),
+		URLQuery:         query,
+		ValidStatuses:    []int{204, 304},
+	}
+	return builder
 }
 
 /*
@@ -3860,7 +3630,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *AppsRemoveRepoFromInstallationReq) Rel(link RelName, resp *AppsRemoveRepoFromInstallationResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -3874,7 +3644,7 @@ AppsRemoveRepoFromInstallationResponse is a response for AppsRemoveRepoFromInsta
 https://developer.github.com/v3/apps/installations/#remove-a-repository-from-an-app-installation
 */
 type AppsRemoveRepoFromInstallationResponse struct {
-	response
+	internal.Response
 	request *AppsRemoveRepoFromInstallationReq
 }
 
@@ -3887,20 +3657,26 @@ Reset an authorization.
 
 https://developer.github.com/v3/apps/oauth_applications/#reset-an-authorization
 */
-func AppsResetAuthorization(ctx context.Context, req *AppsResetAuthorizationReq, opt ...RequestOption) (*AppsResetAuthorizationResponse, error) {
+func AppsResetAuthorization(ctx context.Context, req *AppsResetAuthorizationReq, opt ...options.Option) (*AppsResetAuthorizationResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(AppsResetAuthorizationReq)
 	}
 	resp := &AppsResetAuthorizationResponse{request: req}
-	r, err := doRequest(ctx, req, "apps/reset-authorization", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.Authorization{}
-	err = r.decodeBody(&resp.Data, "apps/reset-authorization")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3916,7 +3692,7 @@ Reset an authorization.
 
 https://developer.github.com/v3/apps/oauth_applications/#reset-an-authorization
 */
-func (c Client) AppsResetAuthorization(ctx context.Context, req *AppsResetAuthorizationReq, opt ...RequestOption) (*AppsResetAuthorizationResponse, error) {
+func (c Client) AppsResetAuthorization(ctx context.Context, req *AppsResetAuthorizationReq, opt ...options.Option) (*AppsResetAuthorizationResponse, error) {
 	return AppsResetAuthorization(ctx, req, append(c, opt...)...)
 }
 
@@ -3931,44 +3707,33 @@ type AppsResetAuthorizationReq struct {
 	AccessToken string
 }
 
-func (r *AppsResetAuthorizationReq) url() string {
-	return r._url
-}
-
-func (r *AppsResetAuthorizationReq) urlPath() string {
-	return fmt.Sprintf("/applications/%v/tokens/%v", r.ClientId, r.AccessToken)
-}
-
-func (r *AppsResetAuthorizationReq) method() string {
-	return "POST"
-}
-
-func (r *AppsResetAuthorizationReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *AppsResetAuthorizationReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *AppsResetAuthorizationReq) body() interface{} {
-	return nil
-}
-
-func (r *AppsResetAuthorizationReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *AppsResetAuthorizationReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *AppsResetAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "apps/reset-authorization", opt)
+func (r *AppsResetAuthorizationReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *AppsResetAuthorizationReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "POST",
+		OperationID:      "apps/reset-authorization",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/applications/%v/tokens/%v", r.ClientId, r.AccessToken),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -3976,7 +3741,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *AppsResetAuthorizationReq) Rel(link RelName, resp *AppsResetAuthorizationResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -3990,7 +3755,7 @@ AppsResetAuthorizationResponse is a response for AppsResetAuthorization
 https://developer.github.com/v3/apps/oauth_applications/#reset-an-authorization
 */
 type AppsResetAuthorizationResponse struct {
-	response
+	internal.Response
 	request *AppsResetAuthorizationReq
 	Data    components.Authorization
 }
@@ -4004,20 +3769,26 @@ Reset a token.
 
 https://developer.github.com/v3/apps/oauth_applications/#reset-a-token
 */
-func AppsResetToken(ctx context.Context, req *AppsResetTokenReq, opt ...RequestOption) (*AppsResetTokenResponse, error) {
+func AppsResetToken(ctx context.Context, req *AppsResetTokenReq, opt ...options.Option) (*AppsResetTokenResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(AppsResetTokenReq)
 	}
 	resp := &AppsResetTokenResponse{request: req}
-	r, err := doRequest(ctx, req, "apps/reset-token", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.Authorization{}
-	err = r.decodeBody(&resp.Data, "apps/reset-token")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4033,7 +3804,7 @@ Reset a token.
 
 https://developer.github.com/v3/apps/oauth_applications/#reset-a-token
 */
-func (c Client) AppsResetToken(ctx context.Context, req *AppsResetTokenReq, opt ...RequestOption) (*AppsResetTokenResponse, error) {
+func (c Client) AppsResetToken(ctx context.Context, req *AppsResetTokenReq, opt ...options.Option) (*AppsResetTokenResponse, error) {
 	return AppsResetToken(ctx, req, append(c, opt...)...)
 }
 
@@ -4048,47 +3819,36 @@ type AppsResetTokenReq struct {
 	RequestBody AppsResetTokenReqBody
 }
 
-func (r *AppsResetTokenReq) url() string {
-	return r._url
-}
-
-func (r *AppsResetTokenReq) urlPath() string {
-	return fmt.Sprintf("/applications/%v/token", r.ClientId)
-}
-
-func (r *AppsResetTokenReq) method() string {
-	return "PATCH"
-}
-
-func (r *AppsResetTokenReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *AppsResetTokenReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *AppsResetTokenReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *AppsResetTokenReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *AppsResetTokenReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *AppsResetTokenReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "apps/reset-token", opt)
+func (r *AppsResetTokenReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *AppsResetTokenReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{},
+		Body:         r.RequestBody,
+		DataStatuses: []int{200},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "PATCH",
+		OperationID:      "apps/reset-token",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/applications/%v/token", r.ClientId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -4096,7 +3856,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *AppsResetTokenReq) Rel(link RelName, resp *AppsResetTokenResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -4121,7 +3881,7 @@ AppsResetTokenResponse is a response for AppsResetToken
 https://developer.github.com/v3/apps/oauth_applications/#reset-a-token
 */
 type AppsResetTokenResponse struct {
-	response
+	internal.Response
 	request *AppsResetTokenReq
 	Data    components.Authorization
 }
@@ -4135,19 +3895,25 @@ Revoke an authorization for an application.
 
 https://developer.github.com/v3/apps/oauth_applications/#revoke-an-authorization-for-an-application
 */
-func AppsRevokeAuthorizationForApplication(ctx context.Context, req *AppsRevokeAuthorizationForApplicationReq, opt ...RequestOption) (*AppsRevokeAuthorizationForApplicationResponse, error) {
+func AppsRevokeAuthorizationForApplication(ctx context.Context, req *AppsRevokeAuthorizationForApplicationReq, opt ...options.Option) (*AppsRevokeAuthorizationForApplicationResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(AppsRevokeAuthorizationForApplicationReq)
 	}
 	resp := &AppsRevokeAuthorizationForApplicationResponse{request: req}
-	r, err := doRequest(ctx, req, "apps/revoke-authorization-for-application", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "apps/revoke-authorization-for-application")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -4163,7 +3929,7 @@ Revoke an authorization for an application.
 
 https://developer.github.com/v3/apps/oauth_applications/#revoke-an-authorization-for-an-application
 */
-func (c Client) AppsRevokeAuthorizationForApplication(ctx context.Context, req *AppsRevokeAuthorizationForApplicationReq, opt ...RequestOption) (*AppsRevokeAuthorizationForApplicationResponse, error) {
+func (c Client) AppsRevokeAuthorizationForApplication(ctx context.Context, req *AppsRevokeAuthorizationForApplicationReq, opt ...options.Option) (*AppsRevokeAuthorizationForApplicationResponse, error) {
 	return AppsRevokeAuthorizationForApplication(ctx, req, append(c, opt...)...)
 }
 
@@ -4178,44 +3944,33 @@ type AppsRevokeAuthorizationForApplicationReq struct {
 	AccessToken string
 }
 
-func (r *AppsRevokeAuthorizationForApplicationReq) url() string {
-	return r._url
-}
-
-func (r *AppsRevokeAuthorizationForApplicationReq) urlPath() string {
-	return fmt.Sprintf("/applications/%v/tokens/%v", r.ClientId, r.AccessToken)
-}
-
-func (r *AppsRevokeAuthorizationForApplicationReq) method() string {
-	return "DELETE"
-}
-
-func (r *AppsRevokeAuthorizationForApplicationReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *AppsRevokeAuthorizationForApplicationReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *AppsRevokeAuthorizationForApplicationReq) body() interface{} {
-	return nil
-}
-
-func (r *AppsRevokeAuthorizationForApplicationReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *AppsRevokeAuthorizationForApplicationReq) validStatuses() []int {
-	return []int{204}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *AppsRevokeAuthorizationForApplicationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "apps/revoke-authorization-for-application", opt)
+func (r *AppsRevokeAuthorizationForApplicationReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *AppsRevokeAuthorizationForApplicationReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		OperationID:      "apps/revoke-authorization-for-application",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/applications/%v/tokens/%v", r.ClientId, r.AccessToken),
+		URLQuery:         query,
+		ValidStatuses:    []int{204},
+	}
+	return builder
 }
 
 /*
@@ -4223,7 +3978,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *AppsRevokeAuthorizationForApplicationReq) Rel(link RelName, resp *AppsRevokeAuthorizationForApplicationResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -4237,7 +3992,7 @@ AppsRevokeAuthorizationForApplicationResponse is a response for AppsRevokeAuthor
 https://developer.github.com/v3/apps/oauth_applications/#revoke-an-authorization-for-an-application
 */
 type AppsRevokeAuthorizationForApplicationResponse struct {
-	response
+	internal.Response
 	request *AppsRevokeAuthorizationForApplicationReq
 }
 
@@ -4250,19 +4005,25 @@ Revoke a grant for an application.
 
 https://developer.github.com/v3/apps/oauth_applications/#revoke-a-grant-for-an-application
 */
-func AppsRevokeGrantForApplication(ctx context.Context, req *AppsRevokeGrantForApplicationReq, opt ...RequestOption) (*AppsRevokeGrantForApplicationResponse, error) {
+func AppsRevokeGrantForApplication(ctx context.Context, req *AppsRevokeGrantForApplicationReq, opt ...options.Option) (*AppsRevokeGrantForApplicationResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(AppsRevokeGrantForApplicationReq)
 	}
 	resp := &AppsRevokeGrantForApplicationResponse{request: req}
-	r, err := doRequest(ctx, req, "apps/revoke-grant-for-application", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "apps/revoke-grant-for-application")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -4278,7 +4039,7 @@ Revoke a grant for an application.
 
 https://developer.github.com/v3/apps/oauth_applications/#revoke-a-grant-for-an-application
 */
-func (c Client) AppsRevokeGrantForApplication(ctx context.Context, req *AppsRevokeGrantForApplicationReq, opt ...RequestOption) (*AppsRevokeGrantForApplicationResponse, error) {
+func (c Client) AppsRevokeGrantForApplication(ctx context.Context, req *AppsRevokeGrantForApplicationReq, opt ...options.Option) (*AppsRevokeGrantForApplicationResponse, error) {
 	return AppsRevokeGrantForApplication(ctx, req, append(c, opt...)...)
 }
 
@@ -4293,44 +4054,33 @@ type AppsRevokeGrantForApplicationReq struct {
 	AccessToken string
 }
 
-func (r *AppsRevokeGrantForApplicationReq) url() string {
-	return r._url
-}
-
-func (r *AppsRevokeGrantForApplicationReq) urlPath() string {
-	return fmt.Sprintf("/applications/%v/grants/%v", r.ClientId, r.AccessToken)
-}
-
-func (r *AppsRevokeGrantForApplicationReq) method() string {
-	return "DELETE"
-}
-
-func (r *AppsRevokeGrantForApplicationReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *AppsRevokeGrantForApplicationReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *AppsRevokeGrantForApplicationReq) body() interface{} {
-	return nil
-}
-
-func (r *AppsRevokeGrantForApplicationReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *AppsRevokeGrantForApplicationReq) validStatuses() []int {
-	return []int{204}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *AppsRevokeGrantForApplicationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "apps/revoke-grant-for-application", opt)
+func (r *AppsRevokeGrantForApplicationReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *AppsRevokeGrantForApplicationReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		OperationID:      "apps/revoke-grant-for-application",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/applications/%v/grants/%v", r.ClientId, r.AccessToken),
+		URLQuery:         query,
+		ValidStatuses:    []int{204},
+	}
+	return builder
 }
 
 /*
@@ -4338,7 +4088,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *AppsRevokeGrantForApplicationReq) Rel(link RelName, resp *AppsRevokeGrantForApplicationResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -4352,7 +4102,7 @@ AppsRevokeGrantForApplicationResponse is a response for AppsRevokeGrantForApplic
 https://developer.github.com/v3/apps/oauth_applications/#revoke-a-grant-for-an-application
 */
 type AppsRevokeGrantForApplicationResponse struct {
-	response
+	internal.Response
 	request *AppsRevokeGrantForApplicationReq
 }
 
@@ -4365,19 +4115,25 @@ Revoke an installation access token.
 
 https://developer.github.com/v3/apps/installations/#revoke-an-installation-access-token
 */
-func AppsRevokeInstallationAccessToken(ctx context.Context, req *AppsRevokeInstallationAccessTokenReq, opt ...RequestOption) (*AppsRevokeInstallationAccessTokenResponse, error) {
+func AppsRevokeInstallationAccessToken(ctx context.Context, req *AppsRevokeInstallationAccessTokenReq, opt ...options.Option) (*AppsRevokeInstallationAccessTokenResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(AppsRevokeInstallationAccessTokenReq)
 	}
 	resp := &AppsRevokeInstallationAccessTokenResponse{request: req}
-	r, err := doRequest(ctx, req, "apps/revoke-installation-access-token", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "apps/revoke-installation-access-token")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -4393,7 +4149,7 @@ Revoke an installation access token.
 
 https://developer.github.com/v3/apps/installations/#revoke-an-installation-access-token
 */
-func (c Client) AppsRevokeInstallationAccessToken(ctx context.Context, req *AppsRevokeInstallationAccessTokenReq, opt ...RequestOption) (*AppsRevokeInstallationAccessTokenResponse, error) {
+func (c Client) AppsRevokeInstallationAccessToken(ctx context.Context, req *AppsRevokeInstallationAccessTokenReq, opt ...options.Option) (*AppsRevokeInstallationAccessTokenResponse, error) {
 	return AppsRevokeInstallationAccessToken(ctx, req, append(c, opt...)...)
 }
 
@@ -4406,44 +4162,33 @@ type AppsRevokeInstallationAccessTokenReq struct {
 	_url string
 }
 
-func (r *AppsRevokeInstallationAccessTokenReq) url() string {
-	return r._url
-}
-
-func (r *AppsRevokeInstallationAccessTokenReq) urlPath() string {
-	return fmt.Sprintf("/installation/token")
-}
-
-func (r *AppsRevokeInstallationAccessTokenReq) method() string {
-	return "DELETE"
-}
-
-func (r *AppsRevokeInstallationAccessTokenReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *AppsRevokeInstallationAccessTokenReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *AppsRevokeInstallationAccessTokenReq) body() interface{} {
-	return nil
-}
-
-func (r *AppsRevokeInstallationAccessTokenReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *AppsRevokeInstallationAccessTokenReq) validStatuses() []int {
-	return []int{204}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *AppsRevokeInstallationAccessTokenReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "apps/revoke-installation-access-token", opt)
+func (r *AppsRevokeInstallationAccessTokenReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *AppsRevokeInstallationAccessTokenReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		OperationID:      "apps/revoke-installation-access-token",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/installation/token"),
+		URLQuery:         query,
+		ValidStatuses:    []int{204},
+	}
+	return builder
 }
 
 /*
@@ -4451,7 +4196,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *AppsRevokeInstallationAccessTokenReq) Rel(link RelName, resp *AppsRevokeInstallationAccessTokenResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -4465,7 +4210,7 @@ AppsRevokeInstallationAccessTokenResponse is a response for AppsRevokeInstallati
 https://developer.github.com/v3/apps/installations/#revoke-an-installation-access-token
 */
 type AppsRevokeInstallationAccessTokenResponse struct {
-	response
+	internal.Response
 	request *AppsRevokeInstallationAccessTokenReq
 }
 
@@ -4478,23 +4223,29 @@ Suspend an app installation.
 
 https://developer.github.com/v3/apps/#suspend-an-app-installation
 */
-func AppsSuspendInstallation(ctx context.Context, req *AppsSuspendInstallationReq, opt ...RequestOption) (*AppsSuspendInstallationResponse, error) {
+func AppsSuspendInstallation(ctx context.Context, req *AppsSuspendInstallationReq, opt ...options.Option) (*AppsSuspendInstallationResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(AppsSuspendInstallationReq)
 	}
 	resp := &AppsSuspendInstallationResponse{request: req}
-	r, err := doRequest(ctx, req, "apps/suspend-installation", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.setBoolResult(&resp.Data)
+
+	err = internal.SetBoolResult(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
-	err = r.decodeBody(nil, "apps/suspend-installation")
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -4510,7 +4261,7 @@ Suspend an app installation.
 
 https://developer.github.com/v3/apps/#suspend-an-app-installation
 */
-func (c Client) AppsSuspendInstallation(ctx context.Context, req *AppsSuspendInstallationReq, opt ...RequestOption) (*AppsSuspendInstallationResponse, error) {
+func (c Client) AppsSuspendInstallation(ctx context.Context, req *AppsSuspendInstallationReq, opt ...options.Option) (*AppsSuspendInstallationResponse, error) {
 	return AppsSuspendInstallation(ctx, req, append(c, opt...)...)
 }
 
@@ -4526,44 +4277,33 @@ type AppsSuspendInstallationReq struct {
 	InstallationId int64
 }
 
-func (r *AppsSuspendInstallationReq) url() string {
-	return r._url
-}
-
-func (r *AppsSuspendInstallationReq) urlPath() string {
-	return fmt.Sprintf("/app/installations/%v/suspended", r.InstallationId)
-}
-
-func (r *AppsSuspendInstallationReq) method() string {
-	return "PUT"
-}
-
-func (r *AppsSuspendInstallationReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *AppsSuspendInstallationReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *AppsSuspendInstallationReq) body() interface{} {
-	return nil
-}
-
-func (r *AppsSuspendInstallationReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *AppsSuspendInstallationReq) validStatuses() []int {
-	return []int{204}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *AppsSuspendInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "apps/suspend-installation", opt)
+func (r *AppsSuspendInstallationReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *AppsSuspendInstallationReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "PUT",
+		OperationID:      "apps/suspend-installation",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/app/installations/%v/suspended", r.InstallationId),
+		URLQuery:         query,
+		ValidStatuses:    []int{204},
+	}
+	return builder
 }
 
 /*
@@ -4571,7 +4311,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *AppsSuspendInstallationReq) Rel(link RelName, resp *AppsSuspendInstallationResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -4585,7 +4325,7 @@ AppsSuspendInstallationResponse is a response for AppsSuspendInstallation
 https://developer.github.com/v3/apps/#suspend-an-app-installation
 */
 type AppsSuspendInstallationResponse struct {
-	response
+	internal.Response
 	request *AppsSuspendInstallationReq
 	Data    bool
 }
@@ -4599,23 +4339,29 @@ Unsuspend an app installation.
 
 https://developer.github.com/v3/apps/#unsuspend-an-app-installation
 */
-func AppsUnsuspendInstallation(ctx context.Context, req *AppsUnsuspendInstallationReq, opt ...RequestOption) (*AppsUnsuspendInstallationResponse, error) {
+func AppsUnsuspendInstallation(ctx context.Context, req *AppsUnsuspendInstallationReq, opt ...options.Option) (*AppsUnsuspendInstallationResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(AppsUnsuspendInstallationReq)
 	}
 	resp := &AppsUnsuspendInstallationResponse{request: req}
-	r, err := doRequest(ctx, req, "apps/unsuspend-installation", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.setBoolResult(&resp.Data)
+
+	err = internal.SetBoolResult(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
-	err = r.decodeBody(nil, "apps/unsuspend-installation")
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -4631,7 +4377,7 @@ Unsuspend an app installation.
 
 https://developer.github.com/v3/apps/#unsuspend-an-app-installation
 */
-func (c Client) AppsUnsuspendInstallation(ctx context.Context, req *AppsUnsuspendInstallationReq, opt ...RequestOption) (*AppsUnsuspendInstallationResponse, error) {
+func (c Client) AppsUnsuspendInstallation(ctx context.Context, req *AppsUnsuspendInstallationReq, opt ...options.Option) (*AppsUnsuspendInstallationResponse, error) {
 	return AppsUnsuspendInstallation(ctx, req, append(c, opt...)...)
 }
 
@@ -4647,44 +4393,33 @@ type AppsUnsuspendInstallationReq struct {
 	InstallationId int64
 }
 
-func (r *AppsUnsuspendInstallationReq) url() string {
-	return r._url
-}
-
-func (r *AppsUnsuspendInstallationReq) urlPath() string {
-	return fmt.Sprintf("/app/installations/%v/suspended", r.InstallationId)
-}
-
-func (r *AppsUnsuspendInstallationReq) method() string {
-	return "DELETE"
-}
-
-func (r *AppsUnsuspendInstallationReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *AppsUnsuspendInstallationReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *AppsUnsuspendInstallationReq) body() interface{} {
-	return nil
-}
-
-func (r *AppsUnsuspendInstallationReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *AppsUnsuspendInstallationReq) validStatuses() []int {
-	return []int{204}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *AppsUnsuspendInstallationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "apps/unsuspend-installation", opt)
+func (r *AppsUnsuspendInstallationReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *AppsUnsuspendInstallationReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		OperationID:      "apps/unsuspend-installation",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/app/installations/%v/suspended", r.InstallationId),
+		URLQuery:         query,
+		ValidStatuses:    []int{204},
+	}
+	return builder
 }
 
 /*
@@ -4692,7 +4427,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *AppsUnsuspendInstallationReq) Rel(link RelName, resp *AppsUnsuspendInstallationResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -4706,7 +4441,7 @@ AppsUnsuspendInstallationResponse is a response for AppsUnsuspendInstallation
 https://developer.github.com/v3/apps/#unsuspend-an-app-installation
 */
 type AppsUnsuspendInstallationResponse struct {
-	response
+	internal.Response
 	request *AppsUnsuspendInstallationReq
 	Data    bool
 }

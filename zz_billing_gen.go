@@ -6,6 +6,8 @@ import (
 	"context"
 	"fmt"
 	components "github.com/willabides/octo-go/components"
+	internal "github.com/willabides/octo-go/internal"
+	options "github.com/willabides/octo-go/options"
 	"net/http"
 	"net/url"
 )
@@ -19,20 +21,26 @@ Get GitHub Actions billing for an enterprise.
 
 https://developer.github.com/v3/billing/#get-github-actions-billing-for-an-enterprise
 */
-func BillingGetGithubActionsBillingGhe(ctx context.Context, req *BillingGetGithubActionsBillingGheReq, opt ...RequestOption) (*BillingGetGithubActionsBillingGheResponse, error) {
+func BillingGetGithubActionsBillingGhe(ctx context.Context, req *BillingGetGithubActionsBillingGheReq, opt ...options.Option) (*BillingGetGithubActionsBillingGheResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(BillingGetGithubActionsBillingGheReq)
 	}
 	resp := &BillingGetGithubActionsBillingGheResponse{request: req}
-	r, err := doRequest(ctx, req, "billing/get-github-actions-billing-ghe", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.ActionsBillingUsage{}
-	err = r.decodeBody(&resp.Data, "billing/get-github-actions-billing-ghe")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -48,7 +56,7 @@ Get GitHub Actions billing for an enterprise.
 
 https://developer.github.com/v3/billing/#get-github-actions-billing-for-an-enterprise
 */
-func (c Client) BillingGetGithubActionsBillingGhe(ctx context.Context, req *BillingGetGithubActionsBillingGheReq, opt ...RequestOption) (*BillingGetGithubActionsBillingGheResponse, error) {
+func (c Client) BillingGetGithubActionsBillingGhe(ctx context.Context, req *BillingGetGithubActionsBillingGheReq, opt ...options.Option) (*BillingGetGithubActionsBillingGheResponse, error) {
 	return BillingGetGithubActionsBillingGhe(ctx, req, append(c, opt...)...)
 }
 
@@ -64,44 +72,33 @@ type BillingGetGithubActionsBillingGheReq struct {
 	EnterpriseId string
 }
 
-func (r *BillingGetGithubActionsBillingGheReq) url() string {
-	return r._url
-}
-
-func (r *BillingGetGithubActionsBillingGheReq) urlPath() string {
-	return fmt.Sprintf("/enterprises/%v/settings/billing/actions", r.EnterpriseId)
-}
-
-func (r *BillingGetGithubActionsBillingGheReq) method() string {
-	return "GET"
-}
-
-func (r *BillingGetGithubActionsBillingGheReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *BillingGetGithubActionsBillingGheReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *BillingGetGithubActionsBillingGheReq) body() interface{} {
-	return nil
-}
-
-func (r *BillingGetGithubActionsBillingGheReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *BillingGetGithubActionsBillingGheReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *BillingGetGithubActionsBillingGheReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "billing/get-github-actions-billing-ghe", opt)
+func (r *BillingGetGithubActionsBillingGheReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *BillingGetGithubActionsBillingGheReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "billing/get-github-actions-billing-ghe",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/enterprises/%v/settings/billing/actions", r.EnterpriseId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -109,7 +106,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *BillingGetGithubActionsBillingGheReq) Rel(link RelName, resp *BillingGetGithubActionsBillingGheResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -123,7 +120,7 @@ BillingGetGithubActionsBillingGheResponse is a response for BillingGetGithubActi
 https://developer.github.com/v3/billing/#get-github-actions-billing-for-an-enterprise
 */
 type BillingGetGithubActionsBillingGheResponse struct {
-	response
+	internal.Response
 	request *BillingGetGithubActionsBillingGheReq
 	Data    components.ActionsBillingUsage
 }
@@ -137,20 +134,26 @@ Get GitHub Actions billing for an organization.
 
 https://developer.github.com/v3/billing/#get-github-actions-billing-for-an-organization
 */
-func BillingGetGithubActionsBillingOrg(ctx context.Context, req *BillingGetGithubActionsBillingOrgReq, opt ...RequestOption) (*BillingGetGithubActionsBillingOrgResponse, error) {
+func BillingGetGithubActionsBillingOrg(ctx context.Context, req *BillingGetGithubActionsBillingOrgReq, opt ...options.Option) (*BillingGetGithubActionsBillingOrgResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(BillingGetGithubActionsBillingOrgReq)
 	}
 	resp := &BillingGetGithubActionsBillingOrgResponse{request: req}
-	r, err := doRequest(ctx, req, "billing/get-github-actions-billing-org", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.ActionsBillingUsage{}
-	err = r.decodeBody(&resp.Data, "billing/get-github-actions-billing-org")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -166,7 +169,7 @@ Get GitHub Actions billing for an organization.
 
 https://developer.github.com/v3/billing/#get-github-actions-billing-for-an-organization
 */
-func (c Client) BillingGetGithubActionsBillingOrg(ctx context.Context, req *BillingGetGithubActionsBillingOrgReq, opt ...RequestOption) (*BillingGetGithubActionsBillingOrgResponse, error) {
+func (c Client) BillingGetGithubActionsBillingOrg(ctx context.Context, req *BillingGetGithubActionsBillingOrgReq, opt ...options.Option) (*BillingGetGithubActionsBillingOrgResponse, error) {
 	return BillingGetGithubActionsBillingOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -180,44 +183,33 @@ type BillingGetGithubActionsBillingOrgReq struct {
 	Org  string
 }
 
-func (r *BillingGetGithubActionsBillingOrgReq) url() string {
-	return r._url
-}
-
-func (r *BillingGetGithubActionsBillingOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/settings/billing/actions", r.Org)
-}
-
-func (r *BillingGetGithubActionsBillingOrgReq) method() string {
-	return "GET"
-}
-
-func (r *BillingGetGithubActionsBillingOrgReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *BillingGetGithubActionsBillingOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *BillingGetGithubActionsBillingOrgReq) body() interface{} {
-	return nil
-}
-
-func (r *BillingGetGithubActionsBillingOrgReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *BillingGetGithubActionsBillingOrgReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *BillingGetGithubActionsBillingOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "billing/get-github-actions-billing-org", opt)
+func (r *BillingGetGithubActionsBillingOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *BillingGetGithubActionsBillingOrgReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "billing/get-github-actions-billing-org",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/orgs/%v/settings/billing/actions", r.Org),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -225,7 +217,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *BillingGetGithubActionsBillingOrgReq) Rel(link RelName, resp *BillingGetGithubActionsBillingOrgResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -239,7 +231,7 @@ BillingGetGithubActionsBillingOrgResponse is a response for BillingGetGithubActi
 https://developer.github.com/v3/billing/#get-github-actions-billing-for-an-organization
 */
 type BillingGetGithubActionsBillingOrgResponse struct {
-	response
+	internal.Response
 	request *BillingGetGithubActionsBillingOrgReq
 	Data    components.ActionsBillingUsage
 }
@@ -253,20 +245,26 @@ Get GitHub Actions billing for a user.
 
 https://developer.github.com/v3/billing/#get-github-actions-billing-for-a-user
 */
-func BillingGetGithubActionsBillingUser(ctx context.Context, req *BillingGetGithubActionsBillingUserReq, opt ...RequestOption) (*BillingGetGithubActionsBillingUserResponse, error) {
+func BillingGetGithubActionsBillingUser(ctx context.Context, req *BillingGetGithubActionsBillingUserReq, opt ...options.Option) (*BillingGetGithubActionsBillingUserResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(BillingGetGithubActionsBillingUserReq)
 	}
 	resp := &BillingGetGithubActionsBillingUserResponse{request: req}
-	r, err := doRequest(ctx, req, "billing/get-github-actions-billing-user", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.ActionsBillingUsage{}
-	err = r.decodeBody(&resp.Data, "billing/get-github-actions-billing-user")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -282,7 +280,7 @@ Get GitHub Actions billing for a user.
 
 https://developer.github.com/v3/billing/#get-github-actions-billing-for-a-user
 */
-func (c Client) BillingGetGithubActionsBillingUser(ctx context.Context, req *BillingGetGithubActionsBillingUserReq, opt ...RequestOption) (*BillingGetGithubActionsBillingUserResponse, error) {
+func (c Client) BillingGetGithubActionsBillingUser(ctx context.Context, req *BillingGetGithubActionsBillingUserReq, opt ...options.Option) (*BillingGetGithubActionsBillingUserResponse, error) {
 	return BillingGetGithubActionsBillingUser(ctx, req, append(c, opt...)...)
 }
 
@@ -296,44 +294,33 @@ type BillingGetGithubActionsBillingUserReq struct {
 	Username string
 }
 
-func (r *BillingGetGithubActionsBillingUserReq) url() string {
-	return r._url
-}
-
-func (r *BillingGetGithubActionsBillingUserReq) urlPath() string {
-	return fmt.Sprintf("/users/%v/settings/billing/actions", r.Username)
-}
-
-func (r *BillingGetGithubActionsBillingUserReq) method() string {
-	return "GET"
-}
-
-func (r *BillingGetGithubActionsBillingUserReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *BillingGetGithubActionsBillingUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *BillingGetGithubActionsBillingUserReq) body() interface{} {
-	return nil
-}
-
-func (r *BillingGetGithubActionsBillingUserReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *BillingGetGithubActionsBillingUserReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *BillingGetGithubActionsBillingUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "billing/get-github-actions-billing-user", opt)
+func (r *BillingGetGithubActionsBillingUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *BillingGetGithubActionsBillingUserReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "billing/get-github-actions-billing-user",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/users/%v/settings/billing/actions", r.Username),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -341,7 +328,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *BillingGetGithubActionsBillingUserReq) Rel(link RelName, resp *BillingGetGithubActionsBillingUserResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -355,7 +342,7 @@ BillingGetGithubActionsBillingUserResponse is a response for BillingGetGithubAct
 https://developer.github.com/v3/billing/#get-github-actions-billing-for-a-user
 */
 type BillingGetGithubActionsBillingUserResponse struct {
-	response
+	internal.Response
 	request *BillingGetGithubActionsBillingUserReq
 	Data    components.ActionsBillingUsage
 }
@@ -369,20 +356,26 @@ Get GitHub Packages billing for an enterprise.
 
 https://developer.github.com/v3/billing/#get-github-packages-billing-for-an-enterprise
 */
-func BillingGetGithubPackagesBillingGhe(ctx context.Context, req *BillingGetGithubPackagesBillingGheReq, opt ...RequestOption) (*BillingGetGithubPackagesBillingGheResponse, error) {
+func BillingGetGithubPackagesBillingGhe(ctx context.Context, req *BillingGetGithubPackagesBillingGheReq, opt ...options.Option) (*BillingGetGithubPackagesBillingGheResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(BillingGetGithubPackagesBillingGheReq)
 	}
 	resp := &BillingGetGithubPackagesBillingGheResponse{request: req}
-	r, err := doRequest(ctx, req, "billing/get-github-packages-billing-ghe", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.PackagesBillingUsage{}
-	err = r.decodeBody(&resp.Data, "billing/get-github-packages-billing-ghe")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -398,7 +391,7 @@ Get GitHub Packages billing for an enterprise.
 
 https://developer.github.com/v3/billing/#get-github-packages-billing-for-an-enterprise
 */
-func (c Client) BillingGetGithubPackagesBillingGhe(ctx context.Context, req *BillingGetGithubPackagesBillingGheReq, opt ...RequestOption) (*BillingGetGithubPackagesBillingGheResponse, error) {
+func (c Client) BillingGetGithubPackagesBillingGhe(ctx context.Context, req *BillingGetGithubPackagesBillingGheReq, opt ...options.Option) (*BillingGetGithubPackagesBillingGheResponse, error) {
 	return BillingGetGithubPackagesBillingGhe(ctx, req, append(c, opt...)...)
 }
 
@@ -414,44 +407,33 @@ type BillingGetGithubPackagesBillingGheReq struct {
 	EnterpriseId string
 }
 
-func (r *BillingGetGithubPackagesBillingGheReq) url() string {
-	return r._url
-}
-
-func (r *BillingGetGithubPackagesBillingGheReq) urlPath() string {
-	return fmt.Sprintf("/enterprises/%v/settings/billing/packages", r.EnterpriseId)
-}
-
-func (r *BillingGetGithubPackagesBillingGheReq) method() string {
-	return "GET"
-}
-
-func (r *BillingGetGithubPackagesBillingGheReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *BillingGetGithubPackagesBillingGheReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *BillingGetGithubPackagesBillingGheReq) body() interface{} {
-	return nil
-}
-
-func (r *BillingGetGithubPackagesBillingGheReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *BillingGetGithubPackagesBillingGheReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *BillingGetGithubPackagesBillingGheReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "billing/get-github-packages-billing-ghe", opt)
+func (r *BillingGetGithubPackagesBillingGheReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *BillingGetGithubPackagesBillingGheReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "billing/get-github-packages-billing-ghe",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/enterprises/%v/settings/billing/packages", r.EnterpriseId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -459,7 +441,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *BillingGetGithubPackagesBillingGheReq) Rel(link RelName, resp *BillingGetGithubPackagesBillingGheResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -473,7 +455,7 @@ BillingGetGithubPackagesBillingGheResponse is a response for BillingGetGithubPac
 https://developer.github.com/v3/billing/#get-github-packages-billing-for-an-enterprise
 */
 type BillingGetGithubPackagesBillingGheResponse struct {
-	response
+	internal.Response
 	request *BillingGetGithubPackagesBillingGheReq
 	Data    components.PackagesBillingUsage
 }
@@ -487,20 +469,26 @@ Get GitHub Packages billing for an organization.
 
 https://developer.github.com/v3/billing/#get-github-packages-billing-for-an-organization
 */
-func BillingGetGithubPackagesBillingOrg(ctx context.Context, req *BillingGetGithubPackagesBillingOrgReq, opt ...RequestOption) (*BillingGetGithubPackagesBillingOrgResponse, error) {
+func BillingGetGithubPackagesBillingOrg(ctx context.Context, req *BillingGetGithubPackagesBillingOrgReq, opt ...options.Option) (*BillingGetGithubPackagesBillingOrgResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(BillingGetGithubPackagesBillingOrgReq)
 	}
 	resp := &BillingGetGithubPackagesBillingOrgResponse{request: req}
-	r, err := doRequest(ctx, req, "billing/get-github-packages-billing-org", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.PackagesBillingUsage{}
-	err = r.decodeBody(&resp.Data, "billing/get-github-packages-billing-org")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -516,7 +504,7 @@ Get GitHub Packages billing for an organization.
 
 https://developer.github.com/v3/billing/#get-github-packages-billing-for-an-organization
 */
-func (c Client) BillingGetGithubPackagesBillingOrg(ctx context.Context, req *BillingGetGithubPackagesBillingOrgReq, opt ...RequestOption) (*BillingGetGithubPackagesBillingOrgResponse, error) {
+func (c Client) BillingGetGithubPackagesBillingOrg(ctx context.Context, req *BillingGetGithubPackagesBillingOrgReq, opt ...options.Option) (*BillingGetGithubPackagesBillingOrgResponse, error) {
 	return BillingGetGithubPackagesBillingOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -530,44 +518,33 @@ type BillingGetGithubPackagesBillingOrgReq struct {
 	Org  string
 }
 
-func (r *BillingGetGithubPackagesBillingOrgReq) url() string {
-	return r._url
-}
-
-func (r *BillingGetGithubPackagesBillingOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/settings/billing/packages", r.Org)
-}
-
-func (r *BillingGetGithubPackagesBillingOrgReq) method() string {
-	return "GET"
-}
-
-func (r *BillingGetGithubPackagesBillingOrgReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *BillingGetGithubPackagesBillingOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *BillingGetGithubPackagesBillingOrgReq) body() interface{} {
-	return nil
-}
-
-func (r *BillingGetGithubPackagesBillingOrgReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *BillingGetGithubPackagesBillingOrgReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *BillingGetGithubPackagesBillingOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "billing/get-github-packages-billing-org", opt)
+func (r *BillingGetGithubPackagesBillingOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *BillingGetGithubPackagesBillingOrgReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "billing/get-github-packages-billing-org",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/orgs/%v/settings/billing/packages", r.Org),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -575,7 +552,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *BillingGetGithubPackagesBillingOrgReq) Rel(link RelName, resp *BillingGetGithubPackagesBillingOrgResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -589,7 +566,7 @@ BillingGetGithubPackagesBillingOrgResponse is a response for BillingGetGithubPac
 https://developer.github.com/v3/billing/#get-github-packages-billing-for-an-organization
 */
 type BillingGetGithubPackagesBillingOrgResponse struct {
-	response
+	internal.Response
 	request *BillingGetGithubPackagesBillingOrgReq
 	Data    components.PackagesBillingUsage
 }
@@ -603,20 +580,26 @@ Get GitHub Packages billing for a user.
 
 https://developer.github.com/v3/billing/#get-github-packages-billing-for-a-user
 */
-func BillingGetGithubPackagesBillingUser(ctx context.Context, req *BillingGetGithubPackagesBillingUserReq, opt ...RequestOption) (*BillingGetGithubPackagesBillingUserResponse, error) {
+func BillingGetGithubPackagesBillingUser(ctx context.Context, req *BillingGetGithubPackagesBillingUserReq, opt ...options.Option) (*BillingGetGithubPackagesBillingUserResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(BillingGetGithubPackagesBillingUserReq)
 	}
 	resp := &BillingGetGithubPackagesBillingUserResponse{request: req}
-	r, err := doRequest(ctx, req, "billing/get-github-packages-billing-user", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.PackagesBillingUsage{}
-	err = r.decodeBody(&resp.Data, "billing/get-github-packages-billing-user")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -632,7 +615,7 @@ Get GitHub Packages billing for a user.
 
 https://developer.github.com/v3/billing/#get-github-packages-billing-for-a-user
 */
-func (c Client) BillingGetGithubPackagesBillingUser(ctx context.Context, req *BillingGetGithubPackagesBillingUserReq, opt ...RequestOption) (*BillingGetGithubPackagesBillingUserResponse, error) {
+func (c Client) BillingGetGithubPackagesBillingUser(ctx context.Context, req *BillingGetGithubPackagesBillingUserReq, opt ...options.Option) (*BillingGetGithubPackagesBillingUserResponse, error) {
 	return BillingGetGithubPackagesBillingUser(ctx, req, append(c, opt...)...)
 }
 
@@ -646,44 +629,33 @@ type BillingGetGithubPackagesBillingUserReq struct {
 	Username string
 }
 
-func (r *BillingGetGithubPackagesBillingUserReq) url() string {
-	return r._url
-}
-
-func (r *BillingGetGithubPackagesBillingUserReq) urlPath() string {
-	return fmt.Sprintf("/users/%v/settings/billing/packages", r.Username)
-}
-
-func (r *BillingGetGithubPackagesBillingUserReq) method() string {
-	return "GET"
-}
-
-func (r *BillingGetGithubPackagesBillingUserReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *BillingGetGithubPackagesBillingUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *BillingGetGithubPackagesBillingUserReq) body() interface{} {
-	return nil
-}
-
-func (r *BillingGetGithubPackagesBillingUserReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *BillingGetGithubPackagesBillingUserReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *BillingGetGithubPackagesBillingUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "billing/get-github-packages-billing-user", opt)
+func (r *BillingGetGithubPackagesBillingUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *BillingGetGithubPackagesBillingUserReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "billing/get-github-packages-billing-user",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/users/%v/settings/billing/packages", r.Username),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -691,7 +663,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *BillingGetGithubPackagesBillingUserReq) Rel(link RelName, resp *BillingGetGithubPackagesBillingUserResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -705,7 +677,7 @@ BillingGetGithubPackagesBillingUserResponse is a response for BillingGetGithubPa
 https://developer.github.com/v3/billing/#get-github-packages-billing-for-a-user
 */
 type BillingGetGithubPackagesBillingUserResponse struct {
-	response
+	internal.Response
 	request *BillingGetGithubPackagesBillingUserReq
 	Data    components.PackagesBillingUsage
 }
@@ -719,20 +691,26 @@ Get shared storage billing for an enterprise.
 
 https://developer.github.com/v3/billing/#get-shared-storage-billing-for-an-enterprise
 */
-func BillingGetSharedStorageBillingGhe(ctx context.Context, req *BillingGetSharedStorageBillingGheReq, opt ...RequestOption) (*BillingGetSharedStorageBillingGheResponse, error) {
+func BillingGetSharedStorageBillingGhe(ctx context.Context, req *BillingGetSharedStorageBillingGheReq, opt ...options.Option) (*BillingGetSharedStorageBillingGheResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(BillingGetSharedStorageBillingGheReq)
 	}
 	resp := &BillingGetSharedStorageBillingGheResponse{request: req}
-	r, err := doRequest(ctx, req, "billing/get-shared-storage-billing-ghe", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.CombinedBillingUsage{}
-	err = r.decodeBody(&resp.Data, "billing/get-shared-storage-billing-ghe")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -748,7 +726,7 @@ Get shared storage billing for an enterprise.
 
 https://developer.github.com/v3/billing/#get-shared-storage-billing-for-an-enterprise
 */
-func (c Client) BillingGetSharedStorageBillingGhe(ctx context.Context, req *BillingGetSharedStorageBillingGheReq, opt ...RequestOption) (*BillingGetSharedStorageBillingGheResponse, error) {
+func (c Client) BillingGetSharedStorageBillingGhe(ctx context.Context, req *BillingGetSharedStorageBillingGheReq, opt ...options.Option) (*BillingGetSharedStorageBillingGheResponse, error) {
 	return BillingGetSharedStorageBillingGhe(ctx, req, append(c, opt...)...)
 }
 
@@ -764,44 +742,33 @@ type BillingGetSharedStorageBillingGheReq struct {
 	EnterpriseId string
 }
 
-func (r *BillingGetSharedStorageBillingGheReq) url() string {
-	return r._url
-}
-
-func (r *BillingGetSharedStorageBillingGheReq) urlPath() string {
-	return fmt.Sprintf("/enterprises/%v/settings/billing/shared-storage", r.EnterpriseId)
-}
-
-func (r *BillingGetSharedStorageBillingGheReq) method() string {
-	return "GET"
-}
-
-func (r *BillingGetSharedStorageBillingGheReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *BillingGetSharedStorageBillingGheReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *BillingGetSharedStorageBillingGheReq) body() interface{} {
-	return nil
-}
-
-func (r *BillingGetSharedStorageBillingGheReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *BillingGetSharedStorageBillingGheReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *BillingGetSharedStorageBillingGheReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "billing/get-shared-storage-billing-ghe", opt)
+func (r *BillingGetSharedStorageBillingGheReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *BillingGetSharedStorageBillingGheReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "billing/get-shared-storage-billing-ghe",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/enterprises/%v/settings/billing/shared-storage", r.EnterpriseId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -809,7 +776,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *BillingGetSharedStorageBillingGheReq) Rel(link RelName, resp *BillingGetSharedStorageBillingGheResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -823,7 +790,7 @@ BillingGetSharedStorageBillingGheResponse is a response for BillingGetSharedStor
 https://developer.github.com/v3/billing/#get-shared-storage-billing-for-an-enterprise
 */
 type BillingGetSharedStorageBillingGheResponse struct {
-	response
+	internal.Response
 	request *BillingGetSharedStorageBillingGheReq
 	Data    components.CombinedBillingUsage
 }
@@ -837,20 +804,26 @@ Get shared storage billing for an organization.
 
 https://developer.github.com/v3/billing/#get-shared-storage-billing-for-an-organization
 */
-func BillingGetSharedStorageBillingOrg(ctx context.Context, req *BillingGetSharedStorageBillingOrgReq, opt ...RequestOption) (*BillingGetSharedStorageBillingOrgResponse, error) {
+func BillingGetSharedStorageBillingOrg(ctx context.Context, req *BillingGetSharedStorageBillingOrgReq, opt ...options.Option) (*BillingGetSharedStorageBillingOrgResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(BillingGetSharedStorageBillingOrgReq)
 	}
 	resp := &BillingGetSharedStorageBillingOrgResponse{request: req}
-	r, err := doRequest(ctx, req, "billing/get-shared-storage-billing-org", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.CombinedBillingUsage{}
-	err = r.decodeBody(&resp.Data, "billing/get-shared-storage-billing-org")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -866,7 +839,7 @@ Get shared storage billing for an organization.
 
 https://developer.github.com/v3/billing/#get-shared-storage-billing-for-an-organization
 */
-func (c Client) BillingGetSharedStorageBillingOrg(ctx context.Context, req *BillingGetSharedStorageBillingOrgReq, opt ...RequestOption) (*BillingGetSharedStorageBillingOrgResponse, error) {
+func (c Client) BillingGetSharedStorageBillingOrg(ctx context.Context, req *BillingGetSharedStorageBillingOrgReq, opt ...options.Option) (*BillingGetSharedStorageBillingOrgResponse, error) {
 	return BillingGetSharedStorageBillingOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -880,44 +853,33 @@ type BillingGetSharedStorageBillingOrgReq struct {
 	Org  string
 }
 
-func (r *BillingGetSharedStorageBillingOrgReq) url() string {
-	return r._url
-}
-
-func (r *BillingGetSharedStorageBillingOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/settings/billing/shared-storage", r.Org)
-}
-
-func (r *BillingGetSharedStorageBillingOrgReq) method() string {
-	return "GET"
-}
-
-func (r *BillingGetSharedStorageBillingOrgReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *BillingGetSharedStorageBillingOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *BillingGetSharedStorageBillingOrgReq) body() interface{} {
-	return nil
-}
-
-func (r *BillingGetSharedStorageBillingOrgReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *BillingGetSharedStorageBillingOrgReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *BillingGetSharedStorageBillingOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "billing/get-shared-storage-billing-org", opt)
+func (r *BillingGetSharedStorageBillingOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *BillingGetSharedStorageBillingOrgReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "billing/get-shared-storage-billing-org",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/orgs/%v/settings/billing/shared-storage", r.Org),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -925,7 +887,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *BillingGetSharedStorageBillingOrgReq) Rel(link RelName, resp *BillingGetSharedStorageBillingOrgResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -939,7 +901,7 @@ BillingGetSharedStorageBillingOrgResponse is a response for BillingGetSharedStor
 https://developer.github.com/v3/billing/#get-shared-storage-billing-for-an-organization
 */
 type BillingGetSharedStorageBillingOrgResponse struct {
-	response
+	internal.Response
 	request *BillingGetSharedStorageBillingOrgReq
 	Data    components.CombinedBillingUsage
 }
@@ -953,20 +915,26 @@ Get shared storage billing for a user.
 
 https://developer.github.com/v3/billing/#get-shared-storage-billing-for-a-user
 */
-func BillingGetSharedStorageBillingUser(ctx context.Context, req *BillingGetSharedStorageBillingUserReq, opt ...RequestOption) (*BillingGetSharedStorageBillingUserResponse, error) {
+func BillingGetSharedStorageBillingUser(ctx context.Context, req *BillingGetSharedStorageBillingUserReq, opt ...options.Option) (*BillingGetSharedStorageBillingUserResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(BillingGetSharedStorageBillingUserReq)
 	}
 	resp := &BillingGetSharedStorageBillingUserResponse{request: req}
-	r, err := doRequest(ctx, req, "billing/get-shared-storage-billing-user", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.CombinedBillingUsage{}
-	err = r.decodeBody(&resp.Data, "billing/get-shared-storage-billing-user")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -982,7 +950,7 @@ Get shared storage billing for a user.
 
 https://developer.github.com/v3/billing/#get-shared-storage-billing-for-a-user
 */
-func (c Client) BillingGetSharedStorageBillingUser(ctx context.Context, req *BillingGetSharedStorageBillingUserReq, opt ...RequestOption) (*BillingGetSharedStorageBillingUserResponse, error) {
+func (c Client) BillingGetSharedStorageBillingUser(ctx context.Context, req *BillingGetSharedStorageBillingUserReq, opt ...options.Option) (*BillingGetSharedStorageBillingUserResponse, error) {
 	return BillingGetSharedStorageBillingUser(ctx, req, append(c, opt...)...)
 }
 
@@ -996,44 +964,33 @@ type BillingGetSharedStorageBillingUserReq struct {
 	Username string
 }
 
-func (r *BillingGetSharedStorageBillingUserReq) url() string {
-	return r._url
-}
-
-func (r *BillingGetSharedStorageBillingUserReq) urlPath() string {
-	return fmt.Sprintf("/users/%v/settings/billing/shared-storage", r.Username)
-}
-
-func (r *BillingGetSharedStorageBillingUserReq) method() string {
-	return "GET"
-}
-
-func (r *BillingGetSharedStorageBillingUserReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *BillingGetSharedStorageBillingUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *BillingGetSharedStorageBillingUserReq) body() interface{} {
-	return nil
-}
-
-func (r *BillingGetSharedStorageBillingUserReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *BillingGetSharedStorageBillingUserReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *BillingGetSharedStorageBillingUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "billing/get-shared-storage-billing-user", opt)
+func (r *BillingGetSharedStorageBillingUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *BillingGetSharedStorageBillingUserReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "billing/get-shared-storage-billing-user",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/users/%v/settings/billing/shared-storage", r.Username),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -1041,7 +998,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *BillingGetSharedStorageBillingUserReq) Rel(link RelName, resp *BillingGetSharedStorageBillingUserResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1055,7 +1012,7 @@ BillingGetSharedStorageBillingUserResponse is a response for BillingGetSharedSto
 https://developer.github.com/v3/billing/#get-shared-storage-billing-for-a-user
 */
 type BillingGetSharedStorageBillingUserResponse struct {
-	response
+	internal.Response
 	request *BillingGetSharedStorageBillingUserReq
 	Data    components.CombinedBillingUsage
 }

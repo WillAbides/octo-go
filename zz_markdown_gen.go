@@ -5,6 +5,8 @@ package octo
 import (
 	"context"
 	"fmt"
+	internal "github.com/willabides/octo-go/internal"
+	options "github.com/willabides/octo-go/options"
 	"io"
 	"net/http"
 	"net/url"
@@ -19,19 +21,25 @@ Render a Markdown document.
 
 https://developer.github.com/v3/markdown/#render-a-markdown-document
 */
-func MarkdownRender(ctx context.Context, req *MarkdownRenderReq, opt ...RequestOption) (*MarkdownRenderResponse, error) {
+func MarkdownRender(ctx context.Context, req *MarkdownRenderReq, opt ...options.Option) (*MarkdownRenderResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(MarkdownRenderReq)
 	}
 	resp := &MarkdownRenderResponse{request: req}
-	r, err := doRequest(ctx, req, "markdown/render", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "markdown/render")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -47,7 +55,7 @@ Render a Markdown document.
 
 https://developer.github.com/v3/markdown/#render-a-markdown-document
 */
-func (c Client) MarkdownRender(ctx context.Context, req *MarkdownRenderReq, opt ...RequestOption) (*MarkdownRenderResponse, error) {
+func (c Client) MarkdownRender(ctx context.Context, req *MarkdownRenderReq, opt ...options.Option) (*MarkdownRenderResponse, error) {
 	return MarkdownRender(ctx, req, append(c, opt...)...)
 }
 
@@ -61,44 +69,33 @@ type MarkdownRenderReq struct {
 	RequestBody MarkdownRenderReqBody
 }
 
-func (r *MarkdownRenderReq) url() string {
-	return r._url
-}
-
-func (r *MarkdownRenderReq) urlPath() string {
-	return fmt.Sprintf("/markdown")
-}
-
-func (r *MarkdownRenderReq) method() string {
-	return "POST"
-}
-
-func (r *MarkdownRenderReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *MarkdownRenderReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"content-type": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *MarkdownRenderReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *MarkdownRenderReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *MarkdownRenderReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *MarkdownRenderReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "markdown/render", opt)
+func (r *MarkdownRenderReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *MarkdownRenderReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             r.RequestBody,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"content-type": String("application/json")},
+		Method:           "POST",
+		OperationID:      "markdown/render",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/markdown"),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
+	}
+	return builder
 }
 
 /*
@@ -106,7 +103,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *MarkdownRenderReq) Rel(link RelName, resp *MarkdownRenderResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -137,7 +134,7 @@ MarkdownRenderResponse is a response for MarkdownRender
 https://developer.github.com/v3/markdown/#render-a-markdown-document
 */
 type MarkdownRenderResponse struct {
-	response
+	internal.Response
 	request *MarkdownRenderReq
 }
 
@@ -150,19 +147,25 @@ Render a Markdown document in raw mode.
 
 https://developer.github.com/v3/markdown/#render-a-markdown-document-in-raw-mode
 */
-func MarkdownRenderRaw(ctx context.Context, req *MarkdownRenderRawReq, opt ...RequestOption) (*MarkdownRenderRawResponse, error) {
+func MarkdownRenderRaw(ctx context.Context, req *MarkdownRenderRawReq, opt ...options.Option) (*MarkdownRenderRawResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(MarkdownRenderRawReq)
 	}
 	resp := &MarkdownRenderRawResponse{request: req}
-	r, err := doRequest(ctx, req, "markdown/render-raw", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "markdown/render-raw")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -178,7 +181,7 @@ Render a Markdown document in raw mode.
 
 https://developer.github.com/v3/markdown/#render-a-markdown-document-in-raw-mode
 */
-func (c Client) MarkdownRenderRaw(ctx context.Context, req *MarkdownRenderRawReq, opt ...RequestOption) (*MarkdownRenderRawResponse, error) {
+func (c Client) MarkdownRenderRaw(ctx context.Context, req *MarkdownRenderRawReq, opt ...options.Option) (*MarkdownRenderRawResponse, error) {
 	return MarkdownRenderRaw(ctx, req, append(c, opt...)...)
 }
 
@@ -194,44 +197,33 @@ type MarkdownRenderRawReq struct {
 	RequestBody io.Reader
 }
 
-func (r *MarkdownRenderRawReq) url() string {
-	return r._url
-}
-
-func (r *MarkdownRenderRawReq) urlPath() string {
-	return fmt.Sprintf("/markdown/raw")
-}
-
-func (r *MarkdownRenderRawReq) method() string {
-	return "POST"
-}
-
-func (r *MarkdownRenderRawReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *MarkdownRenderRawReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"content-type": String("text/x-markdown")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *MarkdownRenderRawReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *MarkdownRenderRawReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *MarkdownRenderRawReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *MarkdownRenderRawReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "markdown/render-raw", opt)
+func (r *MarkdownRenderRawReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *MarkdownRenderRawReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             r.RequestBody,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"content-type": String("text/x-markdown")},
+		Method:           "POST",
+		OperationID:      "markdown/render-raw",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/markdown/raw"),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
+	}
+	return builder
 }
 
 /*
@@ -239,7 +231,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *MarkdownRenderRawReq) Rel(link RelName, resp *MarkdownRenderRawResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -253,6 +245,6 @@ MarkdownRenderRawResponse is a response for MarkdownRenderRaw
 https://developer.github.com/v3/markdown/#render-a-markdown-document-in-raw-mode
 */
 type MarkdownRenderRawResponse struct {
-	response
+	internal.Response
 	request *MarkdownRenderRawReq
 }

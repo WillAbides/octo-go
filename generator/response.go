@@ -29,7 +29,7 @@ func sortedResponseCodes(endpoint *model.Endpoint) []int {
 	return sortedCodes
 }
 
-func addResponse(file *jen.File, endpoint *model.Endpoint) {
+func addResponse(file *jen.File, pq pkgQual, endpoint *model.Endpoint) {
 	structName := respStructName(endpoint)
 	file.Commentf("%s is a response for %s\n\n%s",
 		structName,
@@ -37,12 +37,12 @@ func addResponse(file *jen.File, endpoint *model.Endpoint) {
 		endpoint.DocsURL,
 	)
 	file.Type().Id(structName).StructFunc(func(group *jen.Group) {
-		group.Id("response")
+		group.Qual(pq.pkgPath("internal"), "Response")
 		group.Id("request").Op("*").Id(reqStructName(endpoint))
 		if endpointHasAttribute(endpoint, attrNoResponseBody) {
 			return
 		}
-		bodyType := respBodyType(endpoint)
+		bodyType := respBodyType(endpoint, pq)
 		if bodyType != nil {
 			group.Id("Data").Do(func(stmt *jen.Statement) {
 				if bodyType.slice {
@@ -56,7 +56,7 @@ func addResponse(file *jen.File, endpoint *model.Endpoint) {
 	})
 }
 
-func respBodyType(endpoint *model.Endpoint) *qualifiedType {
+func respBodyType(endpoint *model.Endpoint, pq pkgQual) *qualifiedType {
 	codeBodies := responseCodesWithBodies(endpoint)
 	if len(codeBodies) == 0 {
 		return nil
@@ -66,7 +66,7 @@ func respBodyType(endpoint *model.Endpoint) *qualifiedType {
 		if strings.HasPrefix(body.ItemSchema.Ref, "#/components/schemas/") {
 			nm := strings.TrimPrefix(body.ItemSchema.Ref, "#/components/schemas/")
 			return &qualifiedType{
-				pkg:   "github.com/willabides/octo-go/components",
+				pkg:   pq.pkgPath("components"),
 				name:  toExportedName(nm),
 				slice: true,
 			}
@@ -76,12 +76,12 @@ func respBodyType(endpoint *model.Endpoint) *qualifiedType {
 	if strings.HasPrefix(body.Ref, "#/components/schemas/") {
 		nm := strings.TrimPrefix(body.Ref, "#/components/schemas/")
 		return &qualifiedType{
-			pkg:  "github.com/willabides/octo-go/components",
+			pkg:  pq.pkgPath("components"),
 			name: toExportedName(nm),
 		}
 	}
 	return &qualifiedType{
-		pkg:  "github.com/willabides/octo-go",
+		pkg:  pq.pkgPath("octo"),
 		name: toExportedName(fmt.Sprintf("%s-%s-response-body", endpoint.Concern, endpoint.Name)),
 	}
 }
@@ -111,11 +111,11 @@ func responseCodesWithBodies(endpoint *model.Endpoint) []int {
 	return bodyCodes
 }
 
-func addResponseBody(file *jen.File, endpoint *model.Endpoint) {
+func addResponseBody(file *jen.File, pq pkgQual, endpoint *model.Endpoint) {
 	if endpointHasAttribute(endpoint, attrNoResponseBody) {
 		return
 	}
-	bt := respBodyType(endpoint)
+	bt := respBodyType(endpoint, pq)
 	if bt != nil && bt.pkg == "github.com/willabides/octo-go/components" {
 		return
 	}
@@ -125,7 +125,7 @@ func addResponseBody(file *jen.File, endpoint *model.Endpoint) {
 	}
 	respCode := bodyCodes[0]
 	resp := endpoint.Responses[respCode]
-	tp := paramSchemaFieldType(resp.Body, []string{endpoint.ID, "responseBody"}, nil)
+	tp := paramSchemaFieldType(resp.Body, []string{endpoint.ID, "responseBody"}, pq, nil)
 	if tp == nil {
 		return
 	}
@@ -139,9 +139,9 @@ func addResponseBody(file *jen.File, endpoint *model.Endpoint) {
 
 	if resp.Body.Type == model.ParamTypeOneOf {
 		file.Line()
-		file.Add(oneOfValueFunc(structName, resp.Body))
+		file.Add(oneOfValueFunc(structName, pq, resp.Body))
 		file.Line()
-		file.Add(oneOfSetValueFunc(structName, resp.Body))
+		file.Add(oneOfSetValueFunc(structName, pq, resp.Body))
 		file.Line()
 		file.Add(oneOfMarshalJSONFunc(structName, resp.Body))
 		file.Line()

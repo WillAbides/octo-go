@@ -6,6 +6,8 @@ import (
 	"context"
 	"fmt"
 	components "github.com/willabides/octo-go/components"
+	internal "github.com/willabides/octo-go/internal"
+	options "github.com/willabides/octo-go/options"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -20,19 +22,25 @@ Add project collaborator.
 
 https://developer.github.com/v3/projects/collaborators/#add-project-collaborator
 */
-func ProjectsAddCollaborator(ctx context.Context, req *ProjectsAddCollaboratorReq, opt ...RequestOption) (*ProjectsAddCollaboratorResponse, error) {
+func ProjectsAddCollaborator(ctx context.Context, req *ProjectsAddCollaboratorReq, opt ...options.Option) (*ProjectsAddCollaboratorResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ProjectsAddCollaboratorReq)
 	}
 	resp := &ProjectsAddCollaboratorResponse{request: req}
-	r, err := doRequest(ctx, req, "projects/add-collaborator", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "projects/add-collaborator")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -48,7 +56,7 @@ Add project collaborator.
 
 https://developer.github.com/v3/projects/collaborators/#add-project-collaborator
 */
-func (c Client) ProjectsAddCollaborator(ctx context.Context, req *ProjectsAddCollaboratorReq, opt ...RequestOption) (*ProjectsAddCollaboratorResponse, error) {
+func (c Client) ProjectsAddCollaborator(ctx context.Context, req *ProjectsAddCollaboratorReq, opt ...options.Option) (*ProjectsAddCollaboratorResponse, error) {
 	return ProjectsAddCollaborator(ctx, req, append(c, opt...)...)
 }
 
@@ -73,50 +81,33 @@ type ProjectsAddCollaboratorReq struct {
 	InertiaPreview bool
 }
 
-func (r *ProjectsAddCollaboratorReq) url() string {
-	return r._url
-}
-
-func (r *ProjectsAddCollaboratorReq) urlPath() string {
-	return fmt.Sprintf("/projects/%v/collaborators/%v", r.ProjectId, r.Username)
-}
-
-func (r *ProjectsAddCollaboratorReq) method() string {
-	return "PUT"
-}
-
-func (r *ProjectsAddCollaboratorReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ProjectsAddCollaboratorReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"content-type": String("application/json")}
-	previewVals := map[string]bool{"inertia": r.InertiaPreview}
-	if requiredPreviews {
-		previewVals["inertia"] = true
-	}
-	if allPreviews {
-		previewVals["inertia"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ProjectsAddCollaboratorReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *ProjectsAddCollaboratorReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *ProjectsAddCollaboratorReq) validStatuses() []int {
-	return []int{204, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ProjectsAddCollaboratorReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "projects/add-collaborator", opt)
+func (r *ProjectsAddCollaboratorReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ProjectsAddCollaboratorReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"inertia"},
+		Body:             r.RequestBody,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"content-type": String("application/json")},
+		Method:           "PUT",
+		OperationID:      "projects/add-collaborator",
+		Previews:         map[string]bool{"inertia": r.InertiaPreview},
+		RequiredPreviews: []string{"inertia"},
+		URLPath:          fmt.Sprintf("/projects/%v/collaborators/%v", r.ProjectId, r.Username),
+		URLQuery:         query,
+		ValidStatuses:    []int{204, 304},
+	}
+	return builder
 }
 
 /*
@@ -124,7 +115,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ProjectsAddCollaboratorReq) Rel(link RelName, resp *ProjectsAddCollaboratorResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -149,7 +140,7 @@ ProjectsAddCollaboratorResponse is a response for ProjectsAddCollaborator
 https://developer.github.com/v3/projects/collaborators/#add-project-collaborator
 */
 type ProjectsAddCollaboratorResponse struct {
-	response
+	internal.Response
 	request *ProjectsAddCollaboratorReq
 }
 
@@ -162,20 +153,26 @@ Create a project card.
 
 https://developer.github.com/v3/projects/cards/#create-a-project-card
 */
-func ProjectsCreateCard(ctx context.Context, req *ProjectsCreateCardReq, opt ...RequestOption) (*ProjectsCreateCardResponse, error) {
+func ProjectsCreateCard(ctx context.Context, req *ProjectsCreateCardReq, opt ...options.Option) (*ProjectsCreateCardResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ProjectsCreateCardReq)
 	}
 	resp := &ProjectsCreateCardResponse{request: req}
-	r, err := doRequest(ctx, req, "projects/create-card", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.ProjectCard{}
-	err = r.decodeBody(&resp.Data, "projects/create-card")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -191,7 +188,7 @@ Create a project card.
 
 https://developer.github.com/v3/projects/cards/#create-a-project-card
 */
-func (c Client) ProjectsCreateCard(ctx context.Context, req *ProjectsCreateCardReq, opt ...RequestOption) (*ProjectsCreateCardResponse, error) {
+func (c Client) ProjectsCreateCard(ctx context.Context, req *ProjectsCreateCardReq, opt ...options.Option) (*ProjectsCreateCardResponse, error) {
 	return ProjectsCreateCard(ctx, req, append(c, opt...)...)
 }
 
@@ -217,53 +214,36 @@ type ProjectsCreateCardReq struct {
 	InertiaPreview bool
 }
 
-func (r *ProjectsCreateCardReq) url() string {
-	return r._url
-}
-
-func (r *ProjectsCreateCardReq) urlPath() string {
-	return fmt.Sprintf("/projects/columns/%v/cards", r.ColumnId)
-}
-
-func (r *ProjectsCreateCardReq) method() string {
-	return "POST"
-}
-
-func (r *ProjectsCreateCardReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ProjectsCreateCardReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{"inertia": r.InertiaPreview}
-	if requiredPreviews {
-		previewVals["inertia"] = true
-	}
-	if allPreviews {
-		previewVals["inertia"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ProjectsCreateCardReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *ProjectsCreateCardReq) dataStatuses() []int {
-	return []int{201}
-}
-
-func (r *ProjectsCreateCardReq) validStatuses() []int {
-	return []int{201, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ProjectsCreateCardReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "projects/create-card", opt)
+func (r *ProjectsCreateCardReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ProjectsCreateCardReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{"inertia"},
+		Body:         r.RequestBody,
+		DataStatuses: []int{201},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "POST",
+		OperationID:      "projects/create-card",
+		Previews:         map[string]bool{"inertia": r.InertiaPreview},
+		RequiredPreviews: []string{"inertia"},
+		URLPath:          fmt.Sprintf("/projects/columns/%v/cards", r.ColumnId),
+		URLQuery:         query,
+		ValidStatuses:    []int{201, 304},
+	}
+	return builder
 }
 
 /*
@@ -271,7 +251,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ProjectsCreateCardReq) Rel(link RelName, resp *ProjectsCreateCardResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -299,7 +279,7 @@ ProjectsCreateCardResponse is a response for ProjectsCreateCard
 https://developer.github.com/v3/projects/cards/#create-a-project-card
 */
 type ProjectsCreateCardResponse struct {
-	response
+	internal.Response
 	request *ProjectsCreateCardReq
 	Data    components.ProjectCard
 }
@@ -313,20 +293,26 @@ Create a project column.
 
 https://developer.github.com/v3/projects/columns/#create-a-project-column
 */
-func ProjectsCreateColumn(ctx context.Context, req *ProjectsCreateColumnReq, opt ...RequestOption) (*ProjectsCreateColumnResponse, error) {
+func ProjectsCreateColumn(ctx context.Context, req *ProjectsCreateColumnReq, opt ...options.Option) (*ProjectsCreateColumnResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ProjectsCreateColumnReq)
 	}
 	resp := &ProjectsCreateColumnResponse{request: req}
-	r, err := doRequest(ctx, req, "projects/create-column", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.ProjectColumn{}
-	err = r.decodeBody(&resp.Data, "projects/create-column")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -342,7 +328,7 @@ Create a project column.
 
 https://developer.github.com/v3/projects/columns/#create-a-project-column
 */
-func (c Client) ProjectsCreateColumn(ctx context.Context, req *ProjectsCreateColumnReq, opt ...RequestOption) (*ProjectsCreateColumnResponse, error) {
+func (c Client) ProjectsCreateColumn(ctx context.Context, req *ProjectsCreateColumnReq, opt ...options.Option) (*ProjectsCreateColumnResponse, error) {
 	return ProjectsCreateColumn(ctx, req, append(c, opt...)...)
 }
 
@@ -366,53 +352,36 @@ type ProjectsCreateColumnReq struct {
 	InertiaPreview bool
 }
 
-func (r *ProjectsCreateColumnReq) url() string {
-	return r._url
-}
-
-func (r *ProjectsCreateColumnReq) urlPath() string {
-	return fmt.Sprintf("/projects/%v/columns", r.ProjectId)
-}
-
-func (r *ProjectsCreateColumnReq) method() string {
-	return "POST"
-}
-
-func (r *ProjectsCreateColumnReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ProjectsCreateColumnReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{"inertia": r.InertiaPreview}
-	if requiredPreviews {
-		previewVals["inertia"] = true
-	}
-	if allPreviews {
-		previewVals["inertia"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ProjectsCreateColumnReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *ProjectsCreateColumnReq) dataStatuses() []int {
-	return []int{201}
-}
-
-func (r *ProjectsCreateColumnReq) validStatuses() []int {
-	return []int{201, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ProjectsCreateColumnReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "projects/create-column", opt)
+func (r *ProjectsCreateColumnReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ProjectsCreateColumnReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{"inertia"},
+		Body:         r.RequestBody,
+		DataStatuses: []int{201},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "POST",
+		OperationID:      "projects/create-column",
+		Previews:         map[string]bool{"inertia": r.InertiaPreview},
+		RequiredPreviews: []string{"inertia"},
+		URLPath:          fmt.Sprintf("/projects/%v/columns", r.ProjectId),
+		URLQuery:         query,
+		ValidStatuses:    []int{201, 304},
+	}
+	return builder
 }
 
 /*
@@ -420,7 +389,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ProjectsCreateColumnReq) Rel(link RelName, resp *ProjectsCreateColumnResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -445,7 +414,7 @@ ProjectsCreateColumnResponse is a response for ProjectsCreateColumn
 https://developer.github.com/v3/projects/columns/#create-a-project-column
 */
 type ProjectsCreateColumnResponse struct {
-	response
+	internal.Response
 	request *ProjectsCreateColumnReq
 	Data    components.ProjectColumn
 }
@@ -459,20 +428,26 @@ Create a user project.
 
 https://developer.github.com/v3/projects/#create-a-user-project
 */
-func ProjectsCreateForAuthenticatedUser(ctx context.Context, req *ProjectsCreateForAuthenticatedUserReq, opt ...RequestOption) (*ProjectsCreateForAuthenticatedUserResponse, error) {
+func ProjectsCreateForAuthenticatedUser(ctx context.Context, req *ProjectsCreateForAuthenticatedUserReq, opt ...options.Option) (*ProjectsCreateForAuthenticatedUserResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ProjectsCreateForAuthenticatedUserReq)
 	}
 	resp := &ProjectsCreateForAuthenticatedUserResponse{request: req}
-	r, err := doRequest(ctx, req, "projects/create-for-authenticated-user", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.Project{}
-	err = r.decodeBody(&resp.Data, "projects/create-for-authenticated-user")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -488,7 +463,7 @@ Create a user project.
 
 https://developer.github.com/v3/projects/#create-a-user-project
 */
-func (c Client) ProjectsCreateForAuthenticatedUser(ctx context.Context, req *ProjectsCreateForAuthenticatedUserReq, opt ...RequestOption) (*ProjectsCreateForAuthenticatedUserResponse, error) {
+func (c Client) ProjectsCreateForAuthenticatedUser(ctx context.Context, req *ProjectsCreateForAuthenticatedUserReq, opt ...options.Option) (*ProjectsCreateForAuthenticatedUserResponse, error) {
 	return ProjectsCreateForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
@@ -511,53 +486,36 @@ type ProjectsCreateForAuthenticatedUserReq struct {
 	InertiaPreview bool
 }
 
-func (r *ProjectsCreateForAuthenticatedUserReq) url() string {
-	return r._url
-}
-
-func (r *ProjectsCreateForAuthenticatedUserReq) urlPath() string {
-	return fmt.Sprintf("/user/projects")
-}
-
-func (r *ProjectsCreateForAuthenticatedUserReq) method() string {
-	return "POST"
-}
-
-func (r *ProjectsCreateForAuthenticatedUserReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ProjectsCreateForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{"inertia": r.InertiaPreview}
-	if requiredPreviews {
-		previewVals["inertia"] = true
-	}
-	if allPreviews {
-		previewVals["inertia"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ProjectsCreateForAuthenticatedUserReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *ProjectsCreateForAuthenticatedUserReq) dataStatuses() []int {
-	return []int{201}
-}
-
-func (r *ProjectsCreateForAuthenticatedUserReq) validStatuses() []int {
-	return []int{201, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ProjectsCreateForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "projects/create-for-authenticated-user", opt)
+func (r *ProjectsCreateForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ProjectsCreateForAuthenticatedUserReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{"inertia"},
+		Body:         r.RequestBody,
+		DataStatuses: []int{201},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "POST",
+		OperationID:      "projects/create-for-authenticated-user",
+		Previews:         map[string]bool{"inertia": r.InertiaPreview},
+		RequiredPreviews: []string{"inertia"},
+		URLPath:          fmt.Sprintf("/user/projects"),
+		URLQuery:         query,
+		ValidStatuses:    []int{201, 304},
+	}
+	return builder
 }
 
 /*
@@ -565,7 +523,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ProjectsCreateForAuthenticatedUserReq) Rel(link RelName, resp *ProjectsCreateForAuthenticatedUserResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -593,7 +551,7 @@ ProjectsCreateForAuthenticatedUserResponse is a response for ProjectsCreateForAu
 https://developer.github.com/v3/projects/#create-a-user-project
 */
 type ProjectsCreateForAuthenticatedUserResponse struct {
-	response
+	internal.Response
 	request *ProjectsCreateForAuthenticatedUserReq
 	Data    components.Project
 }
@@ -607,20 +565,26 @@ Create an organization project.
 
 https://developer.github.com/v3/projects/#create-an-organization-project
 */
-func ProjectsCreateForOrg(ctx context.Context, req *ProjectsCreateForOrgReq, opt ...RequestOption) (*ProjectsCreateForOrgResponse, error) {
+func ProjectsCreateForOrg(ctx context.Context, req *ProjectsCreateForOrgReq, opt ...options.Option) (*ProjectsCreateForOrgResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ProjectsCreateForOrgReq)
 	}
 	resp := &ProjectsCreateForOrgResponse{request: req}
-	r, err := doRequest(ctx, req, "projects/create-for-org", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.Project{}
-	err = r.decodeBody(&resp.Data, "projects/create-for-org")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -636,7 +600,7 @@ Create an organization project.
 
 https://developer.github.com/v3/projects/#create-an-organization-project
 */
-func (c Client) ProjectsCreateForOrg(ctx context.Context, req *ProjectsCreateForOrgReq, opt ...RequestOption) (*ProjectsCreateForOrgResponse, error) {
+func (c Client) ProjectsCreateForOrg(ctx context.Context, req *ProjectsCreateForOrgReq, opt ...options.Option) (*ProjectsCreateForOrgResponse, error) {
 	return ProjectsCreateForOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -660,53 +624,36 @@ type ProjectsCreateForOrgReq struct {
 	InertiaPreview bool
 }
 
-func (r *ProjectsCreateForOrgReq) url() string {
-	return r._url
-}
-
-func (r *ProjectsCreateForOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/projects", r.Org)
-}
-
-func (r *ProjectsCreateForOrgReq) method() string {
-	return "POST"
-}
-
-func (r *ProjectsCreateForOrgReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ProjectsCreateForOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{"inertia": r.InertiaPreview}
-	if requiredPreviews {
-		previewVals["inertia"] = true
-	}
-	if allPreviews {
-		previewVals["inertia"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ProjectsCreateForOrgReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *ProjectsCreateForOrgReq) dataStatuses() []int {
-	return []int{201}
-}
-
-func (r *ProjectsCreateForOrgReq) validStatuses() []int {
-	return []int{201}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ProjectsCreateForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "projects/create-for-org", opt)
+func (r *ProjectsCreateForOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ProjectsCreateForOrgReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{"inertia"},
+		Body:         r.RequestBody,
+		DataStatuses: []int{201},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "POST",
+		OperationID:      "projects/create-for-org",
+		Previews:         map[string]bool{"inertia": r.InertiaPreview},
+		RequiredPreviews: []string{"inertia"},
+		URLPath:          fmt.Sprintf("/orgs/%v/projects", r.Org),
+		URLQuery:         query,
+		ValidStatuses:    []int{201},
+	}
+	return builder
 }
 
 /*
@@ -714,7 +661,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ProjectsCreateForOrgReq) Rel(link RelName, resp *ProjectsCreateForOrgResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -742,7 +689,7 @@ ProjectsCreateForOrgResponse is a response for ProjectsCreateForOrg
 https://developer.github.com/v3/projects/#create-an-organization-project
 */
 type ProjectsCreateForOrgResponse struct {
-	response
+	internal.Response
 	request *ProjectsCreateForOrgReq
 	Data    components.Project
 }
@@ -756,20 +703,26 @@ Create a repository project.
 
 https://developer.github.com/v3/projects/#create-a-repository-project
 */
-func ProjectsCreateForRepo(ctx context.Context, req *ProjectsCreateForRepoReq, opt ...RequestOption) (*ProjectsCreateForRepoResponse, error) {
+func ProjectsCreateForRepo(ctx context.Context, req *ProjectsCreateForRepoReq, opt ...options.Option) (*ProjectsCreateForRepoResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ProjectsCreateForRepoReq)
 	}
 	resp := &ProjectsCreateForRepoResponse{request: req}
-	r, err := doRequest(ctx, req, "projects/create-for-repo", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.Project{}
-	err = r.decodeBody(&resp.Data, "projects/create-for-repo")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -785,7 +738,7 @@ Create a repository project.
 
 https://developer.github.com/v3/projects/#create-a-repository-project
 */
-func (c Client) ProjectsCreateForRepo(ctx context.Context, req *ProjectsCreateForRepoReq, opt ...RequestOption) (*ProjectsCreateForRepoResponse, error) {
+func (c Client) ProjectsCreateForRepo(ctx context.Context, req *ProjectsCreateForRepoReq, opt ...options.Option) (*ProjectsCreateForRepoResponse, error) {
 	return ProjectsCreateForRepo(ctx, req, append(c, opt...)...)
 }
 
@@ -810,53 +763,36 @@ type ProjectsCreateForRepoReq struct {
 	InertiaPreview bool
 }
 
-func (r *ProjectsCreateForRepoReq) url() string {
-	return r._url
-}
-
-func (r *ProjectsCreateForRepoReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/projects", r.Owner, r.Repo)
-}
-
-func (r *ProjectsCreateForRepoReq) method() string {
-	return "POST"
-}
-
-func (r *ProjectsCreateForRepoReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ProjectsCreateForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{"inertia": r.InertiaPreview}
-	if requiredPreviews {
-		previewVals["inertia"] = true
-	}
-	if allPreviews {
-		previewVals["inertia"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ProjectsCreateForRepoReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *ProjectsCreateForRepoReq) dataStatuses() []int {
-	return []int{201}
-}
-
-func (r *ProjectsCreateForRepoReq) validStatuses() []int {
-	return []int{201}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ProjectsCreateForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "projects/create-for-repo", opt)
+func (r *ProjectsCreateForRepoReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ProjectsCreateForRepoReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{"inertia"},
+		Body:         r.RequestBody,
+		DataStatuses: []int{201},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "POST",
+		OperationID:      "projects/create-for-repo",
+		Previews:         map[string]bool{"inertia": r.InertiaPreview},
+		RequiredPreviews: []string{"inertia"},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/projects", r.Owner, r.Repo),
+		URLQuery:         query,
+		ValidStatuses:    []int{201},
+	}
+	return builder
 }
 
 /*
@@ -864,7 +800,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ProjectsCreateForRepoReq) Rel(link RelName, resp *ProjectsCreateForRepoResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -892,7 +828,7 @@ ProjectsCreateForRepoResponse is a response for ProjectsCreateForRepo
 https://developer.github.com/v3/projects/#create-a-repository-project
 */
 type ProjectsCreateForRepoResponse struct {
-	response
+	internal.Response
 	request *ProjectsCreateForRepoReq
 	Data    components.Project
 }
@@ -906,19 +842,25 @@ Delete a project.
 
 https://developer.github.com/v3/projects/#delete-a-project
 */
-func ProjectsDelete(ctx context.Context, req *ProjectsDeleteReq, opt ...RequestOption) (*ProjectsDeleteResponse, error) {
+func ProjectsDelete(ctx context.Context, req *ProjectsDeleteReq, opt ...options.Option) (*ProjectsDeleteResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ProjectsDeleteReq)
 	}
 	resp := &ProjectsDeleteResponse{request: req}
-	r, err := doRequest(ctx, req, "projects/delete", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "projects/delete")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -934,7 +876,7 @@ Delete a project.
 
 https://developer.github.com/v3/projects/#delete-a-project
 */
-func (c Client) ProjectsDelete(ctx context.Context, req *ProjectsDeleteReq, opt ...RequestOption) (*ProjectsDeleteResponse, error) {
+func (c Client) ProjectsDelete(ctx context.Context, req *ProjectsDeleteReq, opt ...options.Option) (*ProjectsDeleteResponse, error) {
 	return ProjectsDelete(ctx, req, append(c, opt...)...)
 }
 
@@ -957,50 +899,33 @@ type ProjectsDeleteReq struct {
 	InertiaPreview bool
 }
 
-func (r *ProjectsDeleteReq) url() string {
-	return r._url
-}
-
-func (r *ProjectsDeleteReq) urlPath() string {
-	return fmt.Sprintf("/projects/%v", r.ProjectId)
-}
-
-func (r *ProjectsDeleteReq) method() string {
-	return "DELETE"
-}
-
-func (r *ProjectsDeleteReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ProjectsDeleteReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"inertia": r.InertiaPreview}
-	if requiredPreviews {
-		previewVals["inertia"] = true
-	}
-	if allPreviews {
-		previewVals["inertia"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ProjectsDeleteReq) body() interface{} {
-	return nil
-}
-
-func (r *ProjectsDeleteReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *ProjectsDeleteReq) validStatuses() []int {
-	return []int{204, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ProjectsDeleteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "projects/delete", opt)
+func (r *ProjectsDeleteReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ProjectsDeleteReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"inertia"},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		OperationID:      "projects/delete",
+		Previews:         map[string]bool{"inertia": r.InertiaPreview},
+		RequiredPreviews: []string{"inertia"},
+		URLPath:          fmt.Sprintf("/projects/%v", r.ProjectId),
+		URLQuery:         query,
+		ValidStatuses:    []int{204, 304},
+	}
+	return builder
 }
 
 /*
@@ -1008,7 +933,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ProjectsDeleteReq) Rel(link RelName, resp *ProjectsDeleteResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1022,7 +947,7 @@ ProjectsDeleteResponse is a response for ProjectsDelete
 https://developer.github.com/v3/projects/#delete-a-project
 */
 type ProjectsDeleteResponse struct {
-	response
+	internal.Response
 	request *ProjectsDeleteReq
 }
 
@@ -1035,19 +960,25 @@ Delete a project card.
 
 https://developer.github.com/v3/projects/cards/#delete-a-project-card
 */
-func ProjectsDeleteCard(ctx context.Context, req *ProjectsDeleteCardReq, opt ...RequestOption) (*ProjectsDeleteCardResponse, error) {
+func ProjectsDeleteCard(ctx context.Context, req *ProjectsDeleteCardReq, opt ...options.Option) (*ProjectsDeleteCardResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ProjectsDeleteCardReq)
 	}
 	resp := &ProjectsDeleteCardResponse{request: req}
-	r, err := doRequest(ctx, req, "projects/delete-card", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "projects/delete-card")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -1063,7 +994,7 @@ Delete a project card.
 
 https://developer.github.com/v3/projects/cards/#delete-a-project-card
 */
-func (c Client) ProjectsDeleteCard(ctx context.Context, req *ProjectsDeleteCardReq, opt ...RequestOption) (*ProjectsDeleteCardResponse, error) {
+func (c Client) ProjectsDeleteCard(ctx context.Context, req *ProjectsDeleteCardReq, opt ...options.Option) (*ProjectsDeleteCardResponse, error) {
 	return ProjectsDeleteCard(ctx, req, append(c, opt...)...)
 }
 
@@ -1088,50 +1019,33 @@ type ProjectsDeleteCardReq struct {
 	InertiaPreview bool
 }
 
-func (r *ProjectsDeleteCardReq) url() string {
-	return r._url
-}
-
-func (r *ProjectsDeleteCardReq) urlPath() string {
-	return fmt.Sprintf("/projects/columns/cards/%v", r.CardId)
-}
-
-func (r *ProjectsDeleteCardReq) method() string {
-	return "DELETE"
-}
-
-func (r *ProjectsDeleteCardReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ProjectsDeleteCardReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"inertia": r.InertiaPreview}
-	if requiredPreviews {
-		previewVals["inertia"] = true
-	}
-	if allPreviews {
-		previewVals["inertia"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ProjectsDeleteCardReq) body() interface{} {
-	return nil
-}
-
-func (r *ProjectsDeleteCardReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *ProjectsDeleteCardReq) validStatuses() []int {
-	return []int{204, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ProjectsDeleteCardReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "projects/delete-card", opt)
+func (r *ProjectsDeleteCardReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ProjectsDeleteCardReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"inertia"},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		OperationID:      "projects/delete-card",
+		Previews:         map[string]bool{"inertia": r.InertiaPreview},
+		RequiredPreviews: []string{"inertia"},
+		URLPath:          fmt.Sprintf("/projects/columns/cards/%v", r.CardId),
+		URLQuery:         query,
+		ValidStatuses:    []int{204, 304},
+	}
+	return builder
 }
 
 /*
@@ -1139,7 +1053,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ProjectsDeleteCardReq) Rel(link RelName, resp *ProjectsDeleteCardResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1153,7 +1067,7 @@ ProjectsDeleteCardResponse is a response for ProjectsDeleteCard
 https://developer.github.com/v3/projects/cards/#delete-a-project-card
 */
 type ProjectsDeleteCardResponse struct {
-	response
+	internal.Response
 	request *ProjectsDeleteCardReq
 }
 
@@ -1166,19 +1080,25 @@ Delete a project column.
 
 https://developer.github.com/v3/projects/columns/#delete-a-project-column
 */
-func ProjectsDeleteColumn(ctx context.Context, req *ProjectsDeleteColumnReq, opt ...RequestOption) (*ProjectsDeleteColumnResponse, error) {
+func ProjectsDeleteColumn(ctx context.Context, req *ProjectsDeleteColumnReq, opt ...options.Option) (*ProjectsDeleteColumnResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ProjectsDeleteColumnReq)
 	}
 	resp := &ProjectsDeleteColumnResponse{request: req}
-	r, err := doRequest(ctx, req, "projects/delete-column", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "projects/delete-column")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -1194,7 +1114,7 @@ Delete a project column.
 
 https://developer.github.com/v3/projects/columns/#delete-a-project-column
 */
-func (c Client) ProjectsDeleteColumn(ctx context.Context, req *ProjectsDeleteColumnReq, opt ...RequestOption) (*ProjectsDeleteColumnResponse, error) {
+func (c Client) ProjectsDeleteColumn(ctx context.Context, req *ProjectsDeleteColumnReq, opt ...options.Option) (*ProjectsDeleteColumnResponse, error) {
 	return ProjectsDeleteColumn(ctx, req, append(c, opt...)...)
 }
 
@@ -1219,50 +1139,33 @@ type ProjectsDeleteColumnReq struct {
 	InertiaPreview bool
 }
 
-func (r *ProjectsDeleteColumnReq) url() string {
-	return r._url
-}
-
-func (r *ProjectsDeleteColumnReq) urlPath() string {
-	return fmt.Sprintf("/projects/columns/%v", r.ColumnId)
-}
-
-func (r *ProjectsDeleteColumnReq) method() string {
-	return "DELETE"
-}
-
-func (r *ProjectsDeleteColumnReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ProjectsDeleteColumnReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"inertia": r.InertiaPreview}
-	if requiredPreviews {
-		previewVals["inertia"] = true
-	}
-	if allPreviews {
-		previewVals["inertia"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ProjectsDeleteColumnReq) body() interface{} {
-	return nil
-}
-
-func (r *ProjectsDeleteColumnReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *ProjectsDeleteColumnReq) validStatuses() []int {
-	return []int{204, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ProjectsDeleteColumnReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "projects/delete-column", opt)
+func (r *ProjectsDeleteColumnReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ProjectsDeleteColumnReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"inertia"},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		OperationID:      "projects/delete-column",
+		Previews:         map[string]bool{"inertia": r.InertiaPreview},
+		RequiredPreviews: []string{"inertia"},
+		URLPath:          fmt.Sprintf("/projects/columns/%v", r.ColumnId),
+		URLQuery:         query,
+		ValidStatuses:    []int{204, 304},
+	}
+	return builder
 }
 
 /*
@@ -1270,7 +1173,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ProjectsDeleteColumnReq) Rel(link RelName, resp *ProjectsDeleteColumnResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1284,7 +1187,7 @@ ProjectsDeleteColumnResponse is a response for ProjectsDeleteColumn
 https://developer.github.com/v3/projects/columns/#delete-a-project-column
 */
 type ProjectsDeleteColumnResponse struct {
-	response
+	internal.Response
 	request *ProjectsDeleteColumnReq
 }
 
@@ -1297,20 +1200,26 @@ Get a project.
 
 https://developer.github.com/v3/projects/#get-a-project
 */
-func ProjectsGet(ctx context.Context, req *ProjectsGetReq, opt ...RequestOption) (*ProjectsGetResponse, error) {
+func ProjectsGet(ctx context.Context, req *ProjectsGetReq, opt ...options.Option) (*ProjectsGetResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ProjectsGetReq)
 	}
 	resp := &ProjectsGetResponse{request: req}
-	r, err := doRequest(ctx, req, "projects/get", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.Project{}
-	err = r.decodeBody(&resp.Data, "projects/get")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1326,7 +1235,7 @@ Get a project.
 
 https://developer.github.com/v3/projects/#get-a-project
 */
-func (c Client) ProjectsGet(ctx context.Context, req *ProjectsGetReq, opt ...RequestOption) (*ProjectsGetResponse, error) {
+func (c Client) ProjectsGet(ctx context.Context, req *ProjectsGetReq, opt ...options.Option) (*ProjectsGetResponse, error) {
 	return ProjectsGet(ctx, req, append(c, opt...)...)
 }
 
@@ -1349,50 +1258,33 @@ type ProjectsGetReq struct {
 	InertiaPreview bool
 }
 
-func (r *ProjectsGetReq) url() string {
-	return r._url
-}
-
-func (r *ProjectsGetReq) urlPath() string {
-	return fmt.Sprintf("/projects/%v", r.ProjectId)
-}
-
-func (r *ProjectsGetReq) method() string {
-	return "GET"
-}
-
-func (r *ProjectsGetReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ProjectsGetReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{"inertia": r.InertiaPreview}
-	if requiredPreviews {
-		previewVals["inertia"] = true
-	}
-	if allPreviews {
-		previewVals["inertia"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ProjectsGetReq) body() interface{} {
-	return nil
-}
-
-func (r *ProjectsGetReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ProjectsGetReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ProjectsGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "projects/get", opt)
+func (r *ProjectsGetReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ProjectsGetReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"inertia"},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "projects/get",
+		Previews:         map[string]bool{"inertia": r.InertiaPreview},
+		RequiredPreviews: []string{"inertia"},
+		URLPath:          fmt.Sprintf("/projects/%v", r.ProjectId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
+	}
+	return builder
 }
 
 /*
@@ -1400,7 +1292,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ProjectsGetReq) Rel(link RelName, resp *ProjectsGetResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1414,7 +1306,7 @@ ProjectsGetResponse is a response for ProjectsGet
 https://developer.github.com/v3/projects/#get-a-project
 */
 type ProjectsGetResponse struct {
-	response
+	internal.Response
 	request *ProjectsGetReq
 	Data    components.Project
 }
@@ -1428,20 +1320,26 @@ Get a project card.
 
 https://developer.github.com/v3/projects/cards/#get-a-project-card
 */
-func ProjectsGetCard(ctx context.Context, req *ProjectsGetCardReq, opt ...RequestOption) (*ProjectsGetCardResponse, error) {
+func ProjectsGetCard(ctx context.Context, req *ProjectsGetCardReq, opt ...options.Option) (*ProjectsGetCardResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ProjectsGetCardReq)
 	}
 	resp := &ProjectsGetCardResponse{request: req}
-	r, err := doRequest(ctx, req, "projects/get-card", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.ProjectCard{}
-	err = r.decodeBody(&resp.Data, "projects/get-card")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1457,7 +1355,7 @@ Get a project card.
 
 https://developer.github.com/v3/projects/cards/#get-a-project-card
 */
-func (c Client) ProjectsGetCard(ctx context.Context, req *ProjectsGetCardReq, opt ...RequestOption) (*ProjectsGetCardResponse, error) {
+func (c Client) ProjectsGetCard(ctx context.Context, req *ProjectsGetCardReq, opt ...options.Option) (*ProjectsGetCardResponse, error) {
 	return ProjectsGetCard(ctx, req, append(c, opt...)...)
 }
 
@@ -1482,50 +1380,33 @@ type ProjectsGetCardReq struct {
 	InertiaPreview bool
 }
 
-func (r *ProjectsGetCardReq) url() string {
-	return r._url
-}
-
-func (r *ProjectsGetCardReq) urlPath() string {
-	return fmt.Sprintf("/projects/columns/cards/%v", r.CardId)
-}
-
-func (r *ProjectsGetCardReq) method() string {
-	return "GET"
-}
-
-func (r *ProjectsGetCardReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ProjectsGetCardReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{"inertia": r.InertiaPreview}
-	if requiredPreviews {
-		previewVals["inertia"] = true
-	}
-	if allPreviews {
-		previewVals["inertia"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ProjectsGetCardReq) body() interface{} {
-	return nil
-}
-
-func (r *ProjectsGetCardReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ProjectsGetCardReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ProjectsGetCardReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "projects/get-card", opt)
+func (r *ProjectsGetCardReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ProjectsGetCardReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"inertia"},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "projects/get-card",
+		Previews:         map[string]bool{"inertia": r.InertiaPreview},
+		RequiredPreviews: []string{"inertia"},
+		URLPath:          fmt.Sprintf("/projects/columns/cards/%v", r.CardId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
+	}
+	return builder
 }
 
 /*
@@ -1533,7 +1414,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ProjectsGetCardReq) Rel(link RelName, resp *ProjectsGetCardResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1547,7 +1428,7 @@ ProjectsGetCardResponse is a response for ProjectsGetCard
 https://developer.github.com/v3/projects/cards/#get-a-project-card
 */
 type ProjectsGetCardResponse struct {
-	response
+	internal.Response
 	request *ProjectsGetCardReq
 	Data    components.ProjectCard
 }
@@ -1561,20 +1442,26 @@ Get a project column.
 
 https://developer.github.com/v3/projects/columns/#get-a-project-column
 */
-func ProjectsGetColumn(ctx context.Context, req *ProjectsGetColumnReq, opt ...RequestOption) (*ProjectsGetColumnResponse, error) {
+func ProjectsGetColumn(ctx context.Context, req *ProjectsGetColumnReq, opt ...options.Option) (*ProjectsGetColumnResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ProjectsGetColumnReq)
 	}
 	resp := &ProjectsGetColumnResponse{request: req}
-	r, err := doRequest(ctx, req, "projects/get-column", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.ProjectColumn{}
-	err = r.decodeBody(&resp.Data, "projects/get-column")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1590,7 +1477,7 @@ Get a project column.
 
 https://developer.github.com/v3/projects/columns/#get-a-project-column
 */
-func (c Client) ProjectsGetColumn(ctx context.Context, req *ProjectsGetColumnReq, opt ...RequestOption) (*ProjectsGetColumnResponse, error) {
+func (c Client) ProjectsGetColumn(ctx context.Context, req *ProjectsGetColumnReq, opt ...options.Option) (*ProjectsGetColumnResponse, error) {
 	return ProjectsGetColumn(ctx, req, append(c, opt...)...)
 }
 
@@ -1615,50 +1502,33 @@ type ProjectsGetColumnReq struct {
 	InertiaPreview bool
 }
 
-func (r *ProjectsGetColumnReq) url() string {
-	return r._url
-}
-
-func (r *ProjectsGetColumnReq) urlPath() string {
-	return fmt.Sprintf("/projects/columns/%v", r.ColumnId)
-}
-
-func (r *ProjectsGetColumnReq) method() string {
-	return "GET"
-}
-
-func (r *ProjectsGetColumnReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ProjectsGetColumnReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{"inertia": r.InertiaPreview}
-	if requiredPreviews {
-		previewVals["inertia"] = true
-	}
-	if allPreviews {
-		previewVals["inertia"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ProjectsGetColumnReq) body() interface{} {
-	return nil
-}
-
-func (r *ProjectsGetColumnReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ProjectsGetColumnReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ProjectsGetColumnReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "projects/get-column", opt)
+func (r *ProjectsGetColumnReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ProjectsGetColumnReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"inertia"},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "projects/get-column",
+		Previews:         map[string]bool{"inertia": r.InertiaPreview},
+		RequiredPreviews: []string{"inertia"},
+		URLPath:          fmt.Sprintf("/projects/columns/%v", r.ColumnId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
+	}
+	return builder
 }
 
 /*
@@ -1666,7 +1536,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ProjectsGetColumnReq) Rel(link RelName, resp *ProjectsGetColumnResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1680,7 +1550,7 @@ ProjectsGetColumnResponse is a response for ProjectsGetColumn
 https://developer.github.com/v3/projects/columns/#get-a-project-column
 */
 type ProjectsGetColumnResponse struct {
-	response
+	internal.Response
 	request *ProjectsGetColumnReq
 	Data    components.ProjectColumn
 }
@@ -1694,20 +1564,26 @@ Get project permission for a user.
 
 https://developer.github.com/v3/projects/collaborators/#get-project-permission-for-a-user
 */
-func ProjectsGetPermissionForUser(ctx context.Context, req *ProjectsGetPermissionForUserReq, opt ...RequestOption) (*ProjectsGetPermissionForUserResponse, error) {
+func ProjectsGetPermissionForUser(ctx context.Context, req *ProjectsGetPermissionForUserReq, opt ...options.Option) (*ProjectsGetPermissionForUserResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ProjectsGetPermissionForUserReq)
 	}
 	resp := &ProjectsGetPermissionForUserResponse{request: req}
-	r, err := doRequest(ctx, req, "projects/get-permission-for-user", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.RepositoryCollaboratorPermission{}
-	err = r.decodeBody(&resp.Data, "projects/get-permission-for-user")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1723,7 +1599,7 @@ Get project permission for a user.
 
 https://developer.github.com/v3/projects/collaborators/#get-project-permission-for-a-user
 */
-func (c Client) ProjectsGetPermissionForUser(ctx context.Context, req *ProjectsGetPermissionForUserReq, opt ...RequestOption) (*ProjectsGetPermissionForUserResponse, error) {
+func (c Client) ProjectsGetPermissionForUser(ctx context.Context, req *ProjectsGetPermissionForUserReq, opt ...options.Option) (*ProjectsGetPermissionForUserResponse, error) {
 	return ProjectsGetPermissionForUser(ctx, req, append(c, opt...)...)
 }
 
@@ -1747,50 +1623,33 @@ type ProjectsGetPermissionForUserReq struct {
 	InertiaPreview bool
 }
 
-func (r *ProjectsGetPermissionForUserReq) url() string {
-	return r._url
-}
-
-func (r *ProjectsGetPermissionForUserReq) urlPath() string {
-	return fmt.Sprintf("/projects/%v/collaborators/%v/permission", r.ProjectId, r.Username)
-}
-
-func (r *ProjectsGetPermissionForUserReq) method() string {
-	return "GET"
-}
-
-func (r *ProjectsGetPermissionForUserReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ProjectsGetPermissionForUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{"inertia": r.InertiaPreview}
-	if requiredPreviews {
-		previewVals["inertia"] = true
-	}
-	if allPreviews {
-		previewVals["inertia"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ProjectsGetPermissionForUserReq) body() interface{} {
-	return nil
-}
-
-func (r *ProjectsGetPermissionForUserReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ProjectsGetPermissionForUserReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ProjectsGetPermissionForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "projects/get-permission-for-user", opt)
+func (r *ProjectsGetPermissionForUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ProjectsGetPermissionForUserReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"inertia"},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "projects/get-permission-for-user",
+		Previews:         map[string]bool{"inertia": r.InertiaPreview},
+		RequiredPreviews: []string{"inertia"},
+		URLPath:          fmt.Sprintf("/projects/%v/collaborators/%v/permission", r.ProjectId, r.Username),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
+	}
+	return builder
 }
 
 /*
@@ -1798,7 +1657,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ProjectsGetPermissionForUserReq) Rel(link RelName, resp *ProjectsGetPermissionForUserResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1812,7 +1671,7 @@ ProjectsGetPermissionForUserResponse is a response for ProjectsGetPermissionForU
 https://developer.github.com/v3/projects/collaborators/#get-project-permission-for-a-user
 */
 type ProjectsGetPermissionForUserResponse struct {
-	response
+	internal.Response
 	request *ProjectsGetPermissionForUserReq
 	Data    components.RepositoryCollaboratorPermission
 }
@@ -1826,20 +1685,26 @@ List project cards.
 
 https://developer.github.com/v3/projects/cards/#list-project-cards
 */
-func ProjectsListCards(ctx context.Context, req *ProjectsListCardsReq, opt ...RequestOption) (*ProjectsListCardsResponse, error) {
+func ProjectsListCards(ctx context.Context, req *ProjectsListCardsReq, opt ...options.Option) (*ProjectsListCardsResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ProjectsListCardsReq)
 	}
 	resp := &ProjectsListCardsResponse{request: req}
-	r, err := doRequest(ctx, req, "projects/list-cards", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.ProjectCard{}
-	err = r.decodeBody(&resp.Data, "projects/list-cards")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1855,7 +1720,7 @@ List project cards.
 
 https://developer.github.com/v3/projects/cards/#list-project-cards
 */
-func (c Client) ProjectsListCards(ctx context.Context, req *ProjectsListCardsReq, opt ...RequestOption) (*ProjectsListCardsResponse, error) {
+func (c Client) ProjectsListCards(ctx context.Context, req *ProjectsListCardsReq, opt ...options.Option) (*ProjectsListCardsResponse, error) {
 	return ProjectsListCards(ctx, req, append(c, opt...)...)
 }
 
@@ -1892,19 +1757,16 @@ type ProjectsListCardsReq struct {
 	InertiaPreview bool
 }
 
-func (r *ProjectsListCardsReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *ProjectsListCardsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *ProjectsListCardsReq) urlPath() string {
-	return fmt.Sprintf("/projects/columns/%v/cards", r.ColumnId)
-}
-
-func (r *ProjectsListCardsReq) method() string {
-	return "GET"
-}
-
-func (r *ProjectsListCardsReq) urlQuery() url.Values {
+func (r *ProjectsListCardsReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.ArchivedState != nil {
 		query.Set("archived_state", *r.ArchivedState)
@@ -1915,36 +1777,22 @@ func (r *ProjectsListCardsReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *ProjectsListCardsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{"inertia": r.InertiaPreview}
-	if requiredPreviews {
-		previewVals["inertia"] = true
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"inertia"},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "projects/list-cards",
+		Previews:         map[string]bool{"inertia": r.InertiaPreview},
+		RequiredPreviews: []string{"inertia"},
+		URLPath:          fmt.Sprintf("/projects/columns/%v/cards", r.ColumnId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
 	}
-	if allPreviews {
-		previewVals["inertia"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ProjectsListCardsReq) body() interface{} {
-	return nil
-}
-
-func (r *ProjectsListCardsReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ProjectsListCardsReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ProjectsListCardsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "projects/list-cards", opt)
+	return builder
 }
 
 /*
@@ -1952,7 +1800,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ProjectsListCardsReq) Rel(link RelName, resp *ProjectsListCardsResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1966,7 +1814,7 @@ ProjectsListCardsResponse is a response for ProjectsListCards
 https://developer.github.com/v3/projects/cards/#list-project-cards
 */
 type ProjectsListCardsResponse struct {
-	response
+	internal.Response
 	request *ProjectsListCardsReq
 	Data    []components.ProjectCard
 }
@@ -1980,20 +1828,26 @@ List project collaborators.
 
 https://developer.github.com/v3/projects/collaborators/#list-project-collaborators
 */
-func ProjectsListCollaborators(ctx context.Context, req *ProjectsListCollaboratorsReq, opt ...RequestOption) (*ProjectsListCollaboratorsResponse, error) {
+func ProjectsListCollaborators(ctx context.Context, req *ProjectsListCollaboratorsReq, opt ...options.Option) (*ProjectsListCollaboratorsResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ProjectsListCollaboratorsReq)
 	}
 	resp := &ProjectsListCollaboratorsResponse{request: req}
-	r, err := doRequest(ctx, req, "projects/list-collaborators", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.SimpleUser{}
-	err = r.decodeBody(&resp.Data, "projects/list-collaborators")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2009,7 +1863,7 @@ List project collaborators.
 
 https://developer.github.com/v3/projects/collaborators/#list-project-collaborators
 */
-func (c Client) ProjectsListCollaborators(ctx context.Context, req *ProjectsListCollaboratorsReq, opt ...RequestOption) (*ProjectsListCollaboratorsResponse, error) {
+func (c Client) ProjectsListCollaborators(ctx context.Context, req *ProjectsListCollaboratorsReq, opt ...options.Option) (*ProjectsListCollaboratorsResponse, error) {
 	return ProjectsListCollaborators(ctx, req, append(c, opt...)...)
 }
 
@@ -2048,19 +1902,16 @@ type ProjectsListCollaboratorsReq struct {
 	InertiaPreview bool
 }
 
-func (r *ProjectsListCollaboratorsReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *ProjectsListCollaboratorsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *ProjectsListCollaboratorsReq) urlPath() string {
-	return fmt.Sprintf("/projects/%v/collaborators", r.ProjectId)
-}
-
-func (r *ProjectsListCollaboratorsReq) method() string {
-	return "GET"
-}
-
-func (r *ProjectsListCollaboratorsReq) urlQuery() url.Values {
+func (r *ProjectsListCollaboratorsReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Affiliation != nil {
 		query.Set("affiliation", *r.Affiliation)
@@ -2071,36 +1922,22 @@ func (r *ProjectsListCollaboratorsReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *ProjectsListCollaboratorsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{"inertia": r.InertiaPreview}
-	if requiredPreviews {
-		previewVals["inertia"] = true
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"inertia"},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "projects/list-collaborators",
+		Previews:         map[string]bool{"inertia": r.InertiaPreview},
+		RequiredPreviews: []string{"inertia"},
+		URLPath:          fmt.Sprintf("/projects/%v/collaborators", r.ProjectId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
 	}
-	if allPreviews {
-		previewVals["inertia"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ProjectsListCollaboratorsReq) body() interface{} {
-	return nil
-}
-
-func (r *ProjectsListCollaboratorsReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ProjectsListCollaboratorsReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ProjectsListCollaboratorsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "projects/list-collaborators", opt)
+	return builder
 }
 
 /*
@@ -2108,7 +1945,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ProjectsListCollaboratorsReq) Rel(link RelName, resp *ProjectsListCollaboratorsResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -2122,7 +1959,7 @@ ProjectsListCollaboratorsResponse is a response for ProjectsListCollaborators
 https://developer.github.com/v3/projects/collaborators/#list-project-collaborators
 */
 type ProjectsListCollaboratorsResponse struct {
-	response
+	internal.Response
 	request *ProjectsListCollaboratorsReq
 	Data    []components.SimpleUser
 }
@@ -2136,20 +1973,26 @@ List project columns.
 
 https://developer.github.com/v3/projects/columns/#list-project-columns
 */
-func ProjectsListColumns(ctx context.Context, req *ProjectsListColumnsReq, opt ...RequestOption) (*ProjectsListColumnsResponse, error) {
+func ProjectsListColumns(ctx context.Context, req *ProjectsListColumnsReq, opt ...options.Option) (*ProjectsListColumnsResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ProjectsListColumnsReq)
 	}
 	resp := &ProjectsListColumnsResponse{request: req}
-	r, err := doRequest(ctx, req, "projects/list-columns", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.ProjectColumn{}
-	err = r.decodeBody(&resp.Data, "projects/list-columns")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2165,7 +2008,7 @@ List project columns.
 
 https://developer.github.com/v3/projects/columns/#list-project-columns
 */
-func (c Client) ProjectsListColumns(ctx context.Context, req *ProjectsListColumnsReq, opt ...RequestOption) (*ProjectsListColumnsResponse, error) {
+func (c Client) ProjectsListColumns(ctx context.Context, req *ProjectsListColumnsReq, opt ...options.Option) (*ProjectsListColumnsResponse, error) {
 	return ProjectsListColumns(ctx, req, append(c, opt...)...)
 }
 
@@ -2194,19 +2037,16 @@ type ProjectsListColumnsReq struct {
 	InertiaPreview bool
 }
 
-func (r *ProjectsListColumnsReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *ProjectsListColumnsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *ProjectsListColumnsReq) urlPath() string {
-	return fmt.Sprintf("/projects/%v/columns", r.ProjectId)
-}
-
-func (r *ProjectsListColumnsReq) method() string {
-	return "GET"
-}
-
-func (r *ProjectsListColumnsReq) urlQuery() url.Values {
+func (r *ProjectsListColumnsReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -2214,36 +2054,22 @@ func (r *ProjectsListColumnsReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *ProjectsListColumnsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{"inertia": r.InertiaPreview}
-	if requiredPreviews {
-		previewVals["inertia"] = true
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"inertia"},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "projects/list-columns",
+		Previews:         map[string]bool{"inertia": r.InertiaPreview},
+		RequiredPreviews: []string{"inertia"},
+		URLPath:          fmt.Sprintf("/projects/%v/columns", r.ProjectId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
 	}
-	if allPreviews {
-		previewVals["inertia"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ProjectsListColumnsReq) body() interface{} {
-	return nil
-}
-
-func (r *ProjectsListColumnsReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ProjectsListColumnsReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ProjectsListColumnsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "projects/list-columns", opt)
+	return builder
 }
 
 /*
@@ -2251,7 +2077,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ProjectsListColumnsReq) Rel(link RelName, resp *ProjectsListColumnsResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -2265,7 +2091,7 @@ ProjectsListColumnsResponse is a response for ProjectsListColumns
 https://developer.github.com/v3/projects/columns/#list-project-columns
 */
 type ProjectsListColumnsResponse struct {
-	response
+	internal.Response
 	request *ProjectsListColumnsReq
 	Data    []components.ProjectColumn
 }
@@ -2279,20 +2105,26 @@ List organization projects.
 
 https://developer.github.com/v3/projects/#list-organization-projects
 */
-func ProjectsListForOrg(ctx context.Context, req *ProjectsListForOrgReq, opt ...RequestOption) (*ProjectsListForOrgResponse, error) {
+func ProjectsListForOrg(ctx context.Context, req *ProjectsListForOrgReq, opt ...options.Option) (*ProjectsListForOrgResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ProjectsListForOrgReq)
 	}
 	resp := &ProjectsListForOrgResponse{request: req}
-	r, err := doRequest(ctx, req, "projects/list-for-org", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.Project{}
-	err = r.decodeBody(&resp.Data, "projects/list-for-org")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2308,7 +2140,7 @@ List organization projects.
 
 https://developer.github.com/v3/projects/#list-organization-projects
 */
-func (c Client) ProjectsListForOrg(ctx context.Context, req *ProjectsListForOrgReq, opt ...RequestOption) (*ProjectsListForOrgResponse, error) {
+func (c Client) ProjectsListForOrg(ctx context.Context, req *ProjectsListForOrgReq, opt ...options.Option) (*ProjectsListForOrgResponse, error) {
 	return ProjectsListForOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -2343,19 +2175,16 @@ type ProjectsListForOrgReq struct {
 	InertiaPreview bool
 }
 
-func (r *ProjectsListForOrgReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *ProjectsListForOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *ProjectsListForOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/projects", r.Org)
-}
-
-func (r *ProjectsListForOrgReq) method() string {
-	return "GET"
-}
-
-func (r *ProjectsListForOrgReq) urlQuery() url.Values {
+func (r *ProjectsListForOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.State != nil {
 		query.Set("state", *r.State)
@@ -2366,36 +2195,22 @@ func (r *ProjectsListForOrgReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *ProjectsListForOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{"inertia": r.InertiaPreview}
-	if requiredPreviews {
-		previewVals["inertia"] = true
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"inertia"},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "projects/list-for-org",
+		Previews:         map[string]bool{"inertia": r.InertiaPreview},
+		RequiredPreviews: []string{"inertia"},
+		URLPath:          fmt.Sprintf("/orgs/%v/projects", r.Org),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
 	}
-	if allPreviews {
-		previewVals["inertia"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ProjectsListForOrgReq) body() interface{} {
-	return nil
-}
-
-func (r *ProjectsListForOrgReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ProjectsListForOrgReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ProjectsListForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "projects/list-for-org", opt)
+	return builder
 }
 
 /*
@@ -2403,7 +2218,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ProjectsListForOrgReq) Rel(link RelName, resp *ProjectsListForOrgResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -2417,7 +2232,7 @@ ProjectsListForOrgResponse is a response for ProjectsListForOrg
 https://developer.github.com/v3/projects/#list-organization-projects
 */
 type ProjectsListForOrgResponse struct {
-	response
+	internal.Response
 	request *ProjectsListForOrgReq
 	Data    []components.Project
 }
@@ -2431,20 +2246,26 @@ List repository projects.
 
 https://developer.github.com/v3/projects/#list-repository-projects
 */
-func ProjectsListForRepo(ctx context.Context, req *ProjectsListForRepoReq, opt ...RequestOption) (*ProjectsListForRepoResponse, error) {
+func ProjectsListForRepo(ctx context.Context, req *ProjectsListForRepoReq, opt ...options.Option) (*ProjectsListForRepoResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ProjectsListForRepoReq)
 	}
 	resp := &ProjectsListForRepoResponse{request: req}
-	r, err := doRequest(ctx, req, "projects/list-for-repo", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.Project{}
-	err = r.decodeBody(&resp.Data, "projects/list-for-repo")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2460,7 +2281,7 @@ List repository projects.
 
 https://developer.github.com/v3/projects/#list-repository-projects
 */
-func (c Client) ProjectsListForRepo(ctx context.Context, req *ProjectsListForRepoReq, opt ...RequestOption) (*ProjectsListForRepoResponse, error) {
+func (c Client) ProjectsListForRepo(ctx context.Context, req *ProjectsListForRepoReq, opt ...options.Option) (*ProjectsListForRepoResponse, error) {
 	return ProjectsListForRepo(ctx, req, append(c, opt...)...)
 }
 
@@ -2496,19 +2317,16 @@ type ProjectsListForRepoReq struct {
 	InertiaPreview bool
 }
 
-func (r *ProjectsListForRepoReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *ProjectsListForRepoReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *ProjectsListForRepoReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/projects", r.Owner, r.Repo)
-}
-
-func (r *ProjectsListForRepoReq) method() string {
-	return "GET"
-}
-
-func (r *ProjectsListForRepoReq) urlQuery() url.Values {
+func (r *ProjectsListForRepoReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.State != nil {
 		query.Set("state", *r.State)
@@ -2519,36 +2337,22 @@ func (r *ProjectsListForRepoReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *ProjectsListForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{"inertia": r.InertiaPreview}
-	if requiredPreviews {
-		previewVals["inertia"] = true
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"inertia"},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "projects/list-for-repo",
+		Previews:         map[string]bool{"inertia": r.InertiaPreview},
+		RequiredPreviews: []string{"inertia"},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/projects", r.Owner, r.Repo),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
 	}
-	if allPreviews {
-		previewVals["inertia"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ProjectsListForRepoReq) body() interface{} {
-	return nil
-}
-
-func (r *ProjectsListForRepoReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ProjectsListForRepoReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ProjectsListForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "projects/list-for-repo", opt)
+	return builder
 }
 
 /*
@@ -2556,7 +2360,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ProjectsListForRepoReq) Rel(link RelName, resp *ProjectsListForRepoResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -2570,7 +2374,7 @@ ProjectsListForRepoResponse is a response for ProjectsListForRepo
 https://developer.github.com/v3/projects/#list-repository-projects
 */
 type ProjectsListForRepoResponse struct {
-	response
+	internal.Response
 	request *ProjectsListForRepoReq
 	Data    []components.Project
 }
@@ -2584,20 +2388,26 @@ List user projects.
 
 https://developer.github.com/v3/projects/#list-user-projects
 */
-func ProjectsListForUser(ctx context.Context, req *ProjectsListForUserReq, opt ...RequestOption) (*ProjectsListForUserResponse, error) {
+func ProjectsListForUser(ctx context.Context, req *ProjectsListForUserReq, opt ...options.Option) (*ProjectsListForUserResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ProjectsListForUserReq)
 	}
 	resp := &ProjectsListForUserResponse{request: req}
-	r, err := doRequest(ctx, req, "projects/list-for-user", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.Project{}
-	err = r.decodeBody(&resp.Data, "projects/list-for-user")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2613,7 +2423,7 @@ List user projects.
 
 https://developer.github.com/v3/projects/#list-user-projects
 */
-func (c Client) ProjectsListForUser(ctx context.Context, req *ProjectsListForUserReq, opt ...RequestOption) (*ProjectsListForUserResponse, error) {
+func (c Client) ProjectsListForUser(ctx context.Context, req *ProjectsListForUserReq, opt ...options.Option) (*ProjectsListForUserResponse, error) {
 	return ProjectsListForUser(ctx, req, append(c, opt...)...)
 }
 
@@ -2648,19 +2458,16 @@ type ProjectsListForUserReq struct {
 	InertiaPreview bool
 }
 
-func (r *ProjectsListForUserReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *ProjectsListForUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *ProjectsListForUserReq) urlPath() string {
-	return fmt.Sprintf("/users/%v/projects", r.Username)
-}
-
-func (r *ProjectsListForUserReq) method() string {
-	return "GET"
-}
-
-func (r *ProjectsListForUserReq) urlQuery() url.Values {
+func (r *ProjectsListForUserReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.State != nil {
 		query.Set("state", *r.State)
@@ -2671,36 +2478,22 @@ func (r *ProjectsListForUserReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *ProjectsListForUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{"inertia": r.InertiaPreview}
-	if requiredPreviews {
-		previewVals["inertia"] = true
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"inertia"},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "projects/list-for-user",
+		Previews:         map[string]bool{"inertia": r.InertiaPreview},
+		RequiredPreviews: []string{"inertia"},
+		URLPath:          fmt.Sprintf("/users/%v/projects", r.Username),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
 	}
-	if allPreviews {
-		previewVals["inertia"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ProjectsListForUserReq) body() interface{} {
-	return nil
-}
-
-func (r *ProjectsListForUserReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ProjectsListForUserReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ProjectsListForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "projects/list-for-user", opt)
+	return builder
 }
 
 /*
@@ -2708,7 +2501,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ProjectsListForUserReq) Rel(link RelName, resp *ProjectsListForUserResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -2722,7 +2515,7 @@ ProjectsListForUserResponse is a response for ProjectsListForUser
 https://developer.github.com/v3/projects/#list-user-projects
 */
 type ProjectsListForUserResponse struct {
-	response
+	internal.Response
 	request *ProjectsListForUserReq
 	Data    []components.Project
 }
@@ -2736,19 +2529,25 @@ Move a project card.
 
 https://developer.github.com/v3/projects/cards/#move-a-project-card
 */
-func ProjectsMoveCard(ctx context.Context, req *ProjectsMoveCardReq, opt ...RequestOption) (*ProjectsMoveCardResponse, error) {
+func ProjectsMoveCard(ctx context.Context, req *ProjectsMoveCardReq, opt ...options.Option) (*ProjectsMoveCardResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ProjectsMoveCardReq)
 	}
 	resp := &ProjectsMoveCardResponse{request: req}
-	r, err := doRequest(ctx, req, "projects/move-card", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "projects/move-card")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -2764,7 +2563,7 @@ Move a project card.
 
 https://developer.github.com/v3/projects/cards/#move-a-project-card
 */
-func (c Client) ProjectsMoveCard(ctx context.Context, req *ProjectsMoveCardReq, opt ...RequestOption) (*ProjectsMoveCardResponse, error) {
+func (c Client) ProjectsMoveCard(ctx context.Context, req *ProjectsMoveCardReq, opt ...options.Option) (*ProjectsMoveCardResponse, error) {
 	return ProjectsMoveCard(ctx, req, append(c, opt...)...)
 }
 
@@ -2790,53 +2589,36 @@ type ProjectsMoveCardReq struct {
 	InertiaPreview bool
 }
 
-func (r *ProjectsMoveCardReq) url() string {
-	return r._url
-}
-
-func (r *ProjectsMoveCardReq) urlPath() string {
-	return fmt.Sprintf("/projects/columns/cards/%v/moves", r.CardId)
-}
-
-func (r *ProjectsMoveCardReq) method() string {
-	return "POST"
-}
-
-func (r *ProjectsMoveCardReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ProjectsMoveCardReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{"inertia": r.InertiaPreview}
-	if requiredPreviews {
-		previewVals["inertia"] = true
-	}
-	if allPreviews {
-		previewVals["inertia"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ProjectsMoveCardReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *ProjectsMoveCardReq) dataStatuses() []int {
-	return []int{201}
-}
-
-func (r *ProjectsMoveCardReq) validStatuses() []int {
-	return []int{201, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ProjectsMoveCardReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "projects/move-card", opt)
+func (r *ProjectsMoveCardReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ProjectsMoveCardReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{"inertia"},
+		Body:         r.RequestBody,
+		DataStatuses: []int{201},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "POST",
+		OperationID:      "projects/move-card",
+		Previews:         map[string]bool{"inertia": r.InertiaPreview},
+		RequiredPreviews: []string{"inertia"},
+		URLPath:          fmt.Sprintf("/projects/columns/cards/%v/moves", r.CardId),
+		URLQuery:         query,
+		ValidStatuses:    []int{201, 304},
+	}
+	return builder
 }
 
 /*
@@ -2844,7 +2626,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ProjectsMoveCardReq) Rel(link RelName, resp *ProjectsMoveCardResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -2872,7 +2654,7 @@ ProjectsMoveCardResponse is a response for ProjectsMoveCard
 https://developer.github.com/v3/projects/cards/#move-a-project-card
 */
 type ProjectsMoveCardResponse struct {
-	response
+	internal.Response
 	request *ProjectsMoveCardReq
 }
 
@@ -2885,19 +2667,25 @@ Move a project column.
 
 https://developer.github.com/v3/projects/columns/#move-a-project-column
 */
-func ProjectsMoveColumn(ctx context.Context, req *ProjectsMoveColumnReq, opt ...RequestOption) (*ProjectsMoveColumnResponse, error) {
+func ProjectsMoveColumn(ctx context.Context, req *ProjectsMoveColumnReq, opt ...options.Option) (*ProjectsMoveColumnResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ProjectsMoveColumnReq)
 	}
 	resp := &ProjectsMoveColumnResponse{request: req}
-	r, err := doRequest(ctx, req, "projects/move-column", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "projects/move-column")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -2913,7 +2701,7 @@ Move a project column.
 
 https://developer.github.com/v3/projects/columns/#move-a-project-column
 */
-func (c Client) ProjectsMoveColumn(ctx context.Context, req *ProjectsMoveColumnReq, opt ...RequestOption) (*ProjectsMoveColumnResponse, error) {
+func (c Client) ProjectsMoveColumn(ctx context.Context, req *ProjectsMoveColumnReq, opt ...options.Option) (*ProjectsMoveColumnResponse, error) {
 	return ProjectsMoveColumn(ctx, req, append(c, opt...)...)
 }
 
@@ -2939,53 +2727,36 @@ type ProjectsMoveColumnReq struct {
 	InertiaPreview bool
 }
 
-func (r *ProjectsMoveColumnReq) url() string {
-	return r._url
-}
-
-func (r *ProjectsMoveColumnReq) urlPath() string {
-	return fmt.Sprintf("/projects/columns/%v/moves", r.ColumnId)
-}
-
-func (r *ProjectsMoveColumnReq) method() string {
-	return "POST"
-}
-
-func (r *ProjectsMoveColumnReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ProjectsMoveColumnReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{"inertia": r.InertiaPreview}
-	if requiredPreviews {
-		previewVals["inertia"] = true
-	}
-	if allPreviews {
-		previewVals["inertia"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ProjectsMoveColumnReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *ProjectsMoveColumnReq) dataStatuses() []int {
-	return []int{201}
-}
-
-func (r *ProjectsMoveColumnReq) validStatuses() []int {
-	return []int{201, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ProjectsMoveColumnReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "projects/move-column", opt)
+func (r *ProjectsMoveColumnReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ProjectsMoveColumnReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{"inertia"},
+		Body:         r.RequestBody,
+		DataStatuses: []int{201},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "POST",
+		OperationID:      "projects/move-column",
+		Previews:         map[string]bool{"inertia": r.InertiaPreview},
+		RequiredPreviews: []string{"inertia"},
+		URLPath:          fmt.Sprintf("/projects/columns/%v/moves", r.ColumnId),
+		URLQuery:         query,
+		ValidStatuses:    []int{201, 304},
+	}
+	return builder
 }
 
 /*
@@ -2993,7 +2764,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ProjectsMoveColumnReq) Rel(link RelName, resp *ProjectsMoveColumnResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -3018,7 +2789,7 @@ ProjectsMoveColumnResponse is a response for ProjectsMoveColumn
 https://developer.github.com/v3/projects/columns/#move-a-project-column
 */
 type ProjectsMoveColumnResponse struct {
-	response
+	internal.Response
 	request *ProjectsMoveColumnReq
 }
 
@@ -3031,19 +2802,25 @@ Remove user as a collaborator.
 
 https://developer.github.com/v3/projects/collaborators/#remove-project-collaborator
 */
-func ProjectsRemoveCollaborator(ctx context.Context, req *ProjectsRemoveCollaboratorReq, opt ...RequestOption) (*ProjectsRemoveCollaboratorResponse, error) {
+func ProjectsRemoveCollaborator(ctx context.Context, req *ProjectsRemoveCollaboratorReq, opt ...options.Option) (*ProjectsRemoveCollaboratorResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ProjectsRemoveCollaboratorReq)
 	}
 	resp := &ProjectsRemoveCollaboratorResponse{request: req}
-	r, err := doRequest(ctx, req, "projects/remove-collaborator", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "projects/remove-collaborator")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -3059,7 +2836,7 @@ Remove user as a collaborator.
 
 https://developer.github.com/v3/projects/collaborators/#remove-project-collaborator
 */
-func (c Client) ProjectsRemoveCollaborator(ctx context.Context, req *ProjectsRemoveCollaboratorReq, opt ...RequestOption) (*ProjectsRemoveCollaboratorResponse, error) {
+func (c Client) ProjectsRemoveCollaborator(ctx context.Context, req *ProjectsRemoveCollaboratorReq, opt ...options.Option) (*ProjectsRemoveCollaboratorResponse, error) {
 	return ProjectsRemoveCollaborator(ctx, req, append(c, opt...)...)
 }
 
@@ -3083,50 +2860,33 @@ type ProjectsRemoveCollaboratorReq struct {
 	InertiaPreview bool
 }
 
-func (r *ProjectsRemoveCollaboratorReq) url() string {
-	return r._url
-}
-
-func (r *ProjectsRemoveCollaboratorReq) urlPath() string {
-	return fmt.Sprintf("/projects/%v/collaborators/%v", r.ProjectId, r.Username)
-}
-
-func (r *ProjectsRemoveCollaboratorReq) method() string {
-	return "DELETE"
-}
-
-func (r *ProjectsRemoveCollaboratorReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ProjectsRemoveCollaboratorReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"inertia": r.InertiaPreview}
-	if requiredPreviews {
-		previewVals["inertia"] = true
-	}
-	if allPreviews {
-		previewVals["inertia"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ProjectsRemoveCollaboratorReq) body() interface{} {
-	return nil
-}
-
-func (r *ProjectsRemoveCollaboratorReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *ProjectsRemoveCollaboratorReq) validStatuses() []int {
-	return []int{204, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ProjectsRemoveCollaboratorReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "projects/remove-collaborator", opt)
+func (r *ProjectsRemoveCollaboratorReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ProjectsRemoveCollaboratorReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"inertia"},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		OperationID:      "projects/remove-collaborator",
+		Previews:         map[string]bool{"inertia": r.InertiaPreview},
+		RequiredPreviews: []string{"inertia"},
+		URLPath:          fmt.Sprintf("/projects/%v/collaborators/%v", r.ProjectId, r.Username),
+		URLQuery:         query,
+		ValidStatuses:    []int{204, 304},
+	}
+	return builder
 }
 
 /*
@@ -3134,7 +2894,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ProjectsRemoveCollaboratorReq) Rel(link RelName, resp *ProjectsRemoveCollaboratorResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -3148,7 +2908,7 @@ ProjectsRemoveCollaboratorResponse is a response for ProjectsRemoveCollaborator
 https://developer.github.com/v3/projects/collaborators/#remove-project-collaborator
 */
 type ProjectsRemoveCollaboratorResponse struct {
-	response
+	internal.Response
 	request *ProjectsRemoveCollaboratorReq
 }
 
@@ -3161,20 +2921,26 @@ Update a project.
 
 https://developer.github.com/v3/projects/#update-a-project
 */
-func ProjectsUpdate(ctx context.Context, req *ProjectsUpdateReq, opt ...RequestOption) (*ProjectsUpdateResponse, error) {
+func ProjectsUpdate(ctx context.Context, req *ProjectsUpdateReq, opt ...options.Option) (*ProjectsUpdateResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ProjectsUpdateReq)
 	}
 	resp := &ProjectsUpdateResponse{request: req}
-	r, err := doRequest(ctx, req, "projects/update", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.Project{}
-	err = r.decodeBody(&resp.Data, "projects/update")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3190,7 +2956,7 @@ Update a project.
 
 https://developer.github.com/v3/projects/#update-a-project
 */
-func (c Client) ProjectsUpdate(ctx context.Context, req *ProjectsUpdateReq, opt ...RequestOption) (*ProjectsUpdateResponse, error) {
+func (c Client) ProjectsUpdate(ctx context.Context, req *ProjectsUpdateReq, opt ...options.Option) (*ProjectsUpdateResponse, error) {
 	return ProjectsUpdate(ctx, req, append(c, opt...)...)
 }
 
@@ -3214,53 +2980,36 @@ type ProjectsUpdateReq struct {
 	InertiaPreview bool
 }
 
-func (r *ProjectsUpdateReq) url() string {
-	return r._url
-}
-
-func (r *ProjectsUpdateReq) urlPath() string {
-	return fmt.Sprintf("/projects/%v", r.ProjectId)
-}
-
-func (r *ProjectsUpdateReq) method() string {
-	return "PATCH"
-}
-
-func (r *ProjectsUpdateReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ProjectsUpdateReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{"inertia": r.InertiaPreview}
-	if requiredPreviews {
-		previewVals["inertia"] = true
-	}
-	if allPreviews {
-		previewVals["inertia"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ProjectsUpdateReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *ProjectsUpdateReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ProjectsUpdateReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ProjectsUpdateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "projects/update", opt)
+func (r *ProjectsUpdateReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ProjectsUpdateReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{"inertia"},
+		Body:         r.RequestBody,
+		DataStatuses: []int{200},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "PATCH",
+		OperationID:      "projects/update",
+		Previews:         map[string]bool{"inertia": r.InertiaPreview},
+		RequiredPreviews: []string{"inertia"},
+		URLPath:          fmt.Sprintf("/projects/%v", r.ProjectId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
+	}
+	return builder
 }
 
 /*
@@ -3268,7 +3017,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ProjectsUpdateReq) Rel(link RelName, resp *ProjectsUpdateResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -3305,7 +3054,7 @@ ProjectsUpdateResponse is a response for ProjectsUpdate
 https://developer.github.com/v3/projects/#update-a-project
 */
 type ProjectsUpdateResponse struct {
-	response
+	internal.Response
 	request *ProjectsUpdateReq
 	Data    components.Project
 }
@@ -3319,20 +3068,26 @@ Update an existing project card.
 
 https://developer.github.com/v3/projects/cards/#update-a-project-card
 */
-func ProjectsUpdateCard(ctx context.Context, req *ProjectsUpdateCardReq, opt ...RequestOption) (*ProjectsUpdateCardResponse, error) {
+func ProjectsUpdateCard(ctx context.Context, req *ProjectsUpdateCardReq, opt ...options.Option) (*ProjectsUpdateCardResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ProjectsUpdateCardReq)
 	}
 	resp := &ProjectsUpdateCardResponse{request: req}
-	r, err := doRequest(ctx, req, "projects/update-card", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.ProjectCard{}
-	err = r.decodeBody(&resp.Data, "projects/update-card")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3348,7 +3103,7 @@ Update an existing project card.
 
 https://developer.github.com/v3/projects/cards/#update-a-project-card
 */
-func (c Client) ProjectsUpdateCard(ctx context.Context, req *ProjectsUpdateCardReq, opt ...RequestOption) (*ProjectsUpdateCardResponse, error) {
+func (c Client) ProjectsUpdateCard(ctx context.Context, req *ProjectsUpdateCardReq, opt ...options.Option) (*ProjectsUpdateCardResponse, error) {
 	return ProjectsUpdateCard(ctx, req, append(c, opt...)...)
 }
 
@@ -3374,53 +3129,36 @@ type ProjectsUpdateCardReq struct {
 	InertiaPreview bool
 }
 
-func (r *ProjectsUpdateCardReq) url() string {
-	return r._url
-}
-
-func (r *ProjectsUpdateCardReq) urlPath() string {
-	return fmt.Sprintf("/projects/columns/cards/%v", r.CardId)
-}
-
-func (r *ProjectsUpdateCardReq) method() string {
-	return "PATCH"
-}
-
-func (r *ProjectsUpdateCardReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ProjectsUpdateCardReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{"inertia": r.InertiaPreview}
-	if requiredPreviews {
-		previewVals["inertia"] = true
-	}
-	if allPreviews {
-		previewVals["inertia"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ProjectsUpdateCardReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *ProjectsUpdateCardReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ProjectsUpdateCardReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ProjectsUpdateCardReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "projects/update-card", opt)
+func (r *ProjectsUpdateCardReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ProjectsUpdateCardReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{"inertia"},
+		Body:         r.RequestBody,
+		DataStatuses: []int{200},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "PATCH",
+		OperationID:      "projects/update-card",
+		Previews:         map[string]bool{"inertia": r.InertiaPreview},
+		RequiredPreviews: []string{"inertia"},
+		URLPath:          fmt.Sprintf("/projects/columns/cards/%v", r.CardId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
+	}
+	return builder
 }
 
 /*
@@ -3428,7 +3166,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ProjectsUpdateCardReq) Rel(link RelName, resp *ProjectsUpdateCardResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -3456,7 +3194,7 @@ ProjectsUpdateCardResponse is a response for ProjectsUpdateCard
 https://developer.github.com/v3/projects/cards/#update-a-project-card
 */
 type ProjectsUpdateCardResponse struct {
-	response
+	internal.Response
 	request *ProjectsUpdateCardReq
 	Data    components.ProjectCard
 }
@@ -3470,20 +3208,26 @@ Update an existing project column.
 
 https://developer.github.com/v3/projects/columns/#update-a-project-column
 */
-func ProjectsUpdateColumn(ctx context.Context, req *ProjectsUpdateColumnReq, opt ...RequestOption) (*ProjectsUpdateColumnResponse, error) {
+func ProjectsUpdateColumn(ctx context.Context, req *ProjectsUpdateColumnReq, opt ...options.Option) (*ProjectsUpdateColumnResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ProjectsUpdateColumnReq)
 	}
 	resp := &ProjectsUpdateColumnResponse{request: req}
-	r, err := doRequest(ctx, req, "projects/update-column", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.ProjectColumn{}
-	err = r.decodeBody(&resp.Data, "projects/update-column")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3499,7 +3243,7 @@ Update an existing project column.
 
 https://developer.github.com/v3/projects/columns/#update-a-project-column
 */
-func (c Client) ProjectsUpdateColumn(ctx context.Context, req *ProjectsUpdateColumnReq, opt ...RequestOption) (*ProjectsUpdateColumnResponse, error) {
+func (c Client) ProjectsUpdateColumn(ctx context.Context, req *ProjectsUpdateColumnReq, opt ...options.Option) (*ProjectsUpdateColumnResponse, error) {
 	return ProjectsUpdateColumn(ctx, req, append(c, opt...)...)
 }
 
@@ -3525,53 +3269,36 @@ type ProjectsUpdateColumnReq struct {
 	InertiaPreview bool
 }
 
-func (r *ProjectsUpdateColumnReq) url() string {
-	return r._url
-}
-
-func (r *ProjectsUpdateColumnReq) urlPath() string {
-	return fmt.Sprintf("/projects/columns/%v", r.ColumnId)
-}
-
-func (r *ProjectsUpdateColumnReq) method() string {
-	return "PATCH"
-}
-
-func (r *ProjectsUpdateColumnReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ProjectsUpdateColumnReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{"inertia": r.InertiaPreview}
-	if requiredPreviews {
-		previewVals["inertia"] = true
-	}
-	if allPreviews {
-		previewVals["inertia"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ProjectsUpdateColumnReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *ProjectsUpdateColumnReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ProjectsUpdateColumnReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ProjectsUpdateColumnReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "projects/update-column", opt)
+func (r *ProjectsUpdateColumnReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ProjectsUpdateColumnReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{"inertia"},
+		Body:         r.RequestBody,
+		DataStatuses: []int{200},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "PATCH",
+		OperationID:      "projects/update-column",
+		Previews:         map[string]bool{"inertia": r.InertiaPreview},
+		RequiredPreviews: []string{"inertia"},
+		URLPath:          fmt.Sprintf("/projects/columns/%v", r.ColumnId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
+	}
+	return builder
 }
 
 /*
@@ -3579,7 +3306,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ProjectsUpdateColumnReq) Rel(link RelName, resp *ProjectsUpdateColumnResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -3604,7 +3331,7 @@ ProjectsUpdateColumnResponse is a response for ProjectsUpdateColumn
 https://developer.github.com/v3/projects/columns/#update-a-project-column
 */
 type ProjectsUpdateColumnResponse struct {
-	response
+	internal.Response
 	request *ProjectsUpdateColumnReq
 	Data    components.ProjectColumn
 }

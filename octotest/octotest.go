@@ -12,6 +12,7 @@ import (
 
 	"github.com/willabides/octo-go"
 	"github.com/willabides/octo-go/octotest/internal"
+	"github.com/willabides/octo-go/options"
 )
 
 const (
@@ -23,7 +24,7 @@ const (
 
 // Server is a test server that will serve requests configured with Expect()
 type Server struct {
-	opts    []octo.RequestOption
+	opts    []options.Option
 	server  *httptest.Server
 	mu      sync.Mutex
 	finish  func()
@@ -53,7 +54,7 @@ func (s *Server) handle(w http.ResponseWriter, req *http.Request) {
 }
 
 // New returns a new *Server
-func New(opt ...octo.RequestOption) *Server {
+func New(opt ...options.Option) *Server {
 	s := &Server{
 		opts:    opt,
 		handler: new(internal.RequestHandler),
@@ -105,7 +106,7 @@ func (s *Server) Expect(request HTTPRequester, response http.Handler) {
 
 // HTTPRequester is an interface that is met by all of octo's requests
 type HTTPRequester interface {
-	HTTPRequest(ctx context.Context, opt ...octo.RequestOption) (*http.Request, error)
+	HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error)
 }
 
 // HTTPResponder is a responder for an expected request

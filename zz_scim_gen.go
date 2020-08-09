@@ -6,6 +6,8 @@ import (
 	"context"
 	"fmt"
 	components "github.com/willabides/octo-go/components"
+	internal "github.com/willabides/octo-go/internal"
+	options "github.com/willabides/octo-go/options"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -20,19 +22,25 @@ Delete a SCIM user from an organization.
 
 https://developer.github.com/v3/scim/#delete-a-scim-user-from-an-organization
 */
-func ScimDeleteUserFromOrg(ctx context.Context, req *ScimDeleteUserFromOrgReq, opt ...RequestOption) (*ScimDeleteUserFromOrgResponse, error) {
+func ScimDeleteUserFromOrg(ctx context.Context, req *ScimDeleteUserFromOrgReq, opt ...options.Option) (*ScimDeleteUserFromOrgResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ScimDeleteUserFromOrgReq)
 	}
 	resp := &ScimDeleteUserFromOrgResponse{request: req}
-	r, err := doRequest(ctx, req, "scim/delete-user-from-org", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "scim/delete-user-from-org")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -48,7 +56,7 @@ Delete a SCIM user from an organization.
 
 https://developer.github.com/v3/scim/#delete-a-scim-user-from-an-organization
 */
-func (c Client) ScimDeleteUserFromOrg(ctx context.Context, req *ScimDeleteUserFromOrgReq, opt ...RequestOption) (*ScimDeleteUserFromOrgResponse, error) {
+func (c Client) ScimDeleteUserFromOrg(ctx context.Context, req *ScimDeleteUserFromOrgReq, opt ...options.Option) (*ScimDeleteUserFromOrgResponse, error) {
 	return ScimDeleteUserFromOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -65,44 +73,33 @@ type ScimDeleteUserFromOrgReq struct {
 	ScimUserId string
 }
 
-func (r *ScimDeleteUserFromOrgReq) url() string {
-	return r._url
-}
-
-func (r *ScimDeleteUserFromOrgReq) urlPath() string {
-	return fmt.Sprintf("/scim/v2/organizations/%v/Users/%v", r.Org, r.ScimUserId)
-}
-
-func (r *ScimDeleteUserFromOrgReq) method() string {
-	return "DELETE"
-}
-
-func (r *ScimDeleteUserFromOrgReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ScimDeleteUserFromOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ScimDeleteUserFromOrgReq) body() interface{} {
-	return nil
-}
-
-func (r *ScimDeleteUserFromOrgReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *ScimDeleteUserFromOrgReq) validStatuses() []int {
-	return []int{204, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ScimDeleteUserFromOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "scim/delete-user-from-org", opt)
+func (r *ScimDeleteUserFromOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ScimDeleteUserFromOrgReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		OperationID:      "scim/delete-user-from-org",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/scim/v2/organizations/%v/Users/%v", r.Org, r.ScimUserId),
+		URLQuery:         query,
+		ValidStatuses:    []int{204, 304},
+	}
+	return builder
 }
 
 /*
@@ -110,7 +107,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ScimDeleteUserFromOrgReq) Rel(link RelName, resp *ScimDeleteUserFromOrgResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -124,7 +121,7 @@ ScimDeleteUserFromOrgResponse is a response for ScimDeleteUserFromOrg
 https://developer.github.com/v3/scim/#delete-a-scim-user-from-an-organization
 */
 type ScimDeleteUserFromOrgResponse struct {
-	response
+	internal.Response
 	request *ScimDeleteUserFromOrgReq
 }
 
@@ -137,20 +134,26 @@ Get SCIM provisioning information for a user.
 
 https://developer.github.com/v3/scim/#get-scim-provisioning-information-for-a-user
 */
-func ScimGetProvisioningInformationForUser(ctx context.Context, req *ScimGetProvisioningInformationForUserReq, opt ...RequestOption) (*ScimGetProvisioningInformationForUserResponse, error) {
+func ScimGetProvisioningInformationForUser(ctx context.Context, req *ScimGetProvisioningInformationForUserReq, opt ...options.Option) (*ScimGetProvisioningInformationForUserResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ScimGetProvisioningInformationForUserReq)
 	}
 	resp := &ScimGetProvisioningInformationForUserResponse{request: req}
-	r, err := doRequest(ctx, req, "scim/get-provisioning-information-for-user", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.ScimUser{}
-	err = r.decodeBody(&resp.Data, "scim/get-provisioning-information-for-user")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -166,7 +169,7 @@ Get SCIM provisioning information for a user.
 
 https://developer.github.com/v3/scim/#get-scim-provisioning-information-for-a-user
 */
-func (c Client) ScimGetProvisioningInformationForUser(ctx context.Context, req *ScimGetProvisioningInformationForUserReq, opt ...RequestOption) (*ScimGetProvisioningInformationForUserResponse, error) {
+func (c Client) ScimGetProvisioningInformationForUser(ctx context.Context, req *ScimGetProvisioningInformationForUserReq, opt ...options.Option) (*ScimGetProvisioningInformationForUserResponse, error) {
 	return ScimGetProvisioningInformationForUser(ctx, req, append(c, opt...)...)
 }
 
@@ -183,44 +186,33 @@ type ScimGetProvisioningInformationForUserReq struct {
 	ScimUserId string
 }
 
-func (r *ScimGetProvisioningInformationForUserReq) url() string {
-	return r._url
-}
-
-func (r *ScimGetProvisioningInformationForUserReq) urlPath() string {
-	return fmt.Sprintf("/scim/v2/organizations/%v/Users/%v", r.Org, r.ScimUserId)
-}
-
-func (r *ScimGetProvisioningInformationForUserReq) method() string {
-	return "GET"
-}
-
-func (r *ScimGetProvisioningInformationForUserReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ScimGetProvisioningInformationForUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/scim+json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ScimGetProvisioningInformationForUserReq) body() interface{} {
-	return nil
-}
-
-func (r *ScimGetProvisioningInformationForUserReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ScimGetProvisioningInformationForUserReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ScimGetProvisioningInformationForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "scim/get-provisioning-information-for-user", opt)
+func (r *ScimGetProvisioningInformationForUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ScimGetProvisioningInformationForUserReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/scim+json")},
+		Method:           "GET",
+		OperationID:      "scim/get-provisioning-information-for-user",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/scim/v2/organizations/%v/Users/%v", r.Org, r.ScimUserId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
+	}
+	return builder
 }
 
 /*
@@ -228,7 +220,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ScimGetProvisioningInformationForUserReq) Rel(link RelName, resp *ScimGetProvisioningInformationForUserResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -242,7 +234,7 @@ ScimGetProvisioningInformationForUserResponse is a response for ScimGetProvision
 https://developer.github.com/v3/scim/#get-scim-provisioning-information-for-a-user
 */
 type ScimGetProvisioningInformationForUserResponse struct {
-	response
+	internal.Response
 	request *ScimGetProvisioningInformationForUserReq
 	Data    components.ScimUser
 }
@@ -256,20 +248,26 @@ List SCIM provisioned identities.
 
 https://developer.github.com/v3/scim/#list-scim-provisioned-identities
 */
-func ScimListProvisionedIdentities(ctx context.Context, req *ScimListProvisionedIdentitiesReq, opt ...RequestOption) (*ScimListProvisionedIdentitiesResponse, error) {
+func ScimListProvisionedIdentities(ctx context.Context, req *ScimListProvisionedIdentitiesReq, opt ...options.Option) (*ScimListProvisionedIdentitiesResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ScimListProvisionedIdentitiesReq)
 	}
 	resp := &ScimListProvisionedIdentitiesResponse{request: req}
-	r, err := doRequest(ctx, req, "scim/list-provisioned-identities", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.ScimUserList{}
-	err = r.decodeBody(&resp.Data, "scim/list-provisioned-identities")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -285,7 +283,7 @@ List SCIM provisioned identities.
 
 https://developer.github.com/v3/scim/#list-scim-provisioned-identities
 */
-func (c Client) ScimListProvisionedIdentities(ctx context.Context, req *ScimListProvisionedIdentitiesReq, opt ...RequestOption) (*ScimListProvisionedIdentitiesResponse, error) {
+func (c Client) ScimListProvisionedIdentities(ctx context.Context, req *ScimListProvisionedIdentitiesReq, opt ...options.Option) (*ScimListProvisionedIdentitiesResponse, error) {
 	return ScimListProvisionedIdentities(ctx, req, append(c, opt...)...)
 }
 
@@ -320,19 +318,16 @@ type ScimListProvisionedIdentitiesReq struct {
 	Filter *string
 }
 
-func (r *ScimListProvisionedIdentitiesReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *ScimListProvisionedIdentitiesReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *ScimListProvisionedIdentitiesReq) urlPath() string {
-	return fmt.Sprintf("/scim/v2/organizations/%v/Users", r.Org)
-}
-
-func (r *ScimListProvisionedIdentitiesReq) method() string {
-	return "GET"
-}
-
-func (r *ScimListProvisionedIdentitiesReq) urlQuery() url.Values {
+func (r *ScimListProvisionedIdentitiesReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.StartIndex != nil {
 		query.Set("startIndex", strconv.FormatInt(*r.StartIndex, 10))
@@ -343,30 +338,22 @@ func (r *ScimListProvisionedIdentitiesReq) urlQuery() url.Values {
 	if r.Filter != nil {
 		query.Set("filter", *r.Filter)
 	}
-	return query
-}
 
-func (r *ScimListProvisionedIdentitiesReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/scim+json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ScimListProvisionedIdentitiesReq) body() interface{} {
-	return nil
-}
-
-func (r *ScimListProvisionedIdentitiesReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ScimListProvisionedIdentitiesReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ScimListProvisionedIdentitiesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "scim/list-provisioned-identities", opt)
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/scim+json")},
+		Method:           "GET",
+		OperationID:      "scim/list-provisioned-identities",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/scim/v2/organizations/%v/Users", r.Org),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
+	}
+	return builder
 }
 
 /*
@@ -374,7 +361,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ScimListProvisionedIdentitiesReq) Rel(link RelName, resp *ScimListProvisionedIdentitiesResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -388,7 +375,7 @@ ScimListProvisionedIdentitiesResponse is a response for ScimListProvisionedIdent
 https://developer.github.com/v3/scim/#list-scim-provisioned-identities
 */
 type ScimListProvisionedIdentitiesResponse struct {
-	response
+	internal.Response
 	request *ScimListProvisionedIdentitiesReq
 	Data    components.ScimUserList
 }
@@ -402,20 +389,26 @@ Provision and invite a SCIM user.
 
 https://developer.github.com/v3/scim/#provision-and-invite-a-scim-user
 */
-func ScimProvisionAndInviteUser(ctx context.Context, req *ScimProvisionAndInviteUserReq, opt ...RequestOption) (*ScimProvisionAndInviteUserResponse, error) {
+func ScimProvisionAndInviteUser(ctx context.Context, req *ScimProvisionAndInviteUserReq, opt ...options.Option) (*ScimProvisionAndInviteUserResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ScimProvisionAndInviteUserReq)
 	}
 	resp := &ScimProvisionAndInviteUserResponse{request: req}
-	r, err := doRequest(ctx, req, "scim/provision-and-invite-user", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.ScimUser{}
-	err = r.decodeBody(&resp.Data, "scim/provision-and-invite-user")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -431,7 +424,7 @@ Provision and invite a SCIM user.
 
 https://developer.github.com/v3/scim/#provision-and-invite-a-scim-user
 */
-func (c Client) ScimProvisionAndInviteUser(ctx context.Context, req *ScimProvisionAndInviteUserReq, opt ...RequestOption) (*ScimProvisionAndInviteUserResponse, error) {
+func (c Client) ScimProvisionAndInviteUser(ctx context.Context, req *ScimProvisionAndInviteUserReq, opt ...options.Option) (*ScimProvisionAndInviteUserResponse, error) {
 	return ScimProvisionAndInviteUser(ctx, req, append(c, opt...)...)
 }
 
@@ -446,47 +439,36 @@ type ScimProvisionAndInviteUserReq struct {
 	RequestBody ScimProvisionAndInviteUserReqBody
 }
 
-func (r *ScimProvisionAndInviteUserReq) url() string {
-	return r._url
-}
-
-func (r *ScimProvisionAndInviteUserReq) urlPath() string {
-	return fmt.Sprintf("/scim/v2/organizations/%v/Users", r.Org)
-}
-
-func (r *ScimProvisionAndInviteUserReq) method() string {
-	return "POST"
-}
-
-func (r *ScimProvisionAndInviteUserReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ScimProvisionAndInviteUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/scim+json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ScimProvisionAndInviteUserReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *ScimProvisionAndInviteUserReq) dataStatuses() []int {
-	return []int{201}
-}
-
-func (r *ScimProvisionAndInviteUserReq) validStatuses() []int {
-	return []int{201, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ScimProvisionAndInviteUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "scim/provision-and-invite-user", opt)
+func (r *ScimProvisionAndInviteUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ScimProvisionAndInviteUserReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{},
+		Body:         r.RequestBody,
+		DataStatuses: []int{201},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/scim+json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "POST",
+		OperationID:      "scim/provision-and-invite-user",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/scim/v2/organizations/%v/Users", r.Org),
+		URLQuery:         query,
+		ValidStatuses:    []int{201, 304},
+	}
+	return builder
 }
 
 /*
@@ -494,7 +476,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ScimProvisionAndInviteUserReq) Rel(link RelName, resp *ScimProvisionAndInviteUserResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -541,7 +523,7 @@ ScimProvisionAndInviteUserResponse is a response for ScimProvisionAndInviteUser
 https://developer.github.com/v3/scim/#provision-and-invite-a-scim-user
 */
 type ScimProvisionAndInviteUserResponse struct {
-	response
+	internal.Response
 	request *ScimProvisionAndInviteUserReq
 	Data    components.ScimUser
 }
@@ -555,20 +537,26 @@ Update a provisioned organization membership.
 
 https://developer.github.com/v3/scim/#set-scim-information-for-a-provisioned-user
 */
-func ScimSetInformationForProvisionedUser(ctx context.Context, req *ScimSetInformationForProvisionedUserReq, opt ...RequestOption) (*ScimSetInformationForProvisionedUserResponse, error) {
+func ScimSetInformationForProvisionedUser(ctx context.Context, req *ScimSetInformationForProvisionedUserReq, opt ...options.Option) (*ScimSetInformationForProvisionedUserResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ScimSetInformationForProvisionedUserReq)
 	}
 	resp := &ScimSetInformationForProvisionedUserResponse{request: req}
-	r, err := doRequest(ctx, req, "scim/set-information-for-provisioned-user", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.ScimUser{}
-	err = r.decodeBody(&resp.Data, "scim/set-information-for-provisioned-user")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -584,7 +572,7 @@ Update a provisioned organization membership.
 
 https://developer.github.com/v3/scim/#set-scim-information-for-a-provisioned-user
 */
-func (c Client) ScimSetInformationForProvisionedUser(ctx context.Context, req *ScimSetInformationForProvisionedUserReq, opt ...RequestOption) (*ScimSetInformationForProvisionedUserResponse, error) {
+func (c Client) ScimSetInformationForProvisionedUser(ctx context.Context, req *ScimSetInformationForProvisionedUserReq, opt ...options.Option) (*ScimSetInformationForProvisionedUserResponse, error) {
 	return ScimSetInformationForProvisionedUser(ctx, req, append(c, opt...)...)
 }
 
@@ -602,47 +590,36 @@ type ScimSetInformationForProvisionedUserReq struct {
 	RequestBody ScimSetInformationForProvisionedUserReqBody
 }
 
-func (r *ScimSetInformationForProvisionedUserReq) url() string {
-	return r._url
-}
-
-func (r *ScimSetInformationForProvisionedUserReq) urlPath() string {
-	return fmt.Sprintf("/scim/v2/organizations/%v/Users/%v", r.Org, r.ScimUserId)
-}
-
-func (r *ScimSetInformationForProvisionedUserReq) method() string {
-	return "PUT"
-}
-
-func (r *ScimSetInformationForProvisionedUserReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ScimSetInformationForProvisionedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/scim+json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ScimSetInformationForProvisionedUserReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *ScimSetInformationForProvisionedUserReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ScimSetInformationForProvisionedUserReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ScimSetInformationForProvisionedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "scim/set-information-for-provisioned-user", opt)
+func (r *ScimSetInformationForProvisionedUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ScimSetInformationForProvisionedUserReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{},
+		Body:         r.RequestBody,
+		DataStatuses: []int{200},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/scim+json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "PUT",
+		OperationID:      "scim/set-information-for-provisioned-user",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/scim/v2/organizations/%v/Users/%v", r.Org, r.ScimUserId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
+	}
+	return builder
 }
 
 /*
@@ -650,7 +627,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ScimSetInformationForProvisionedUserReq) Rel(link RelName, resp *ScimSetInformationForProvisionedUserResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -697,7 +674,7 @@ ScimSetInformationForProvisionedUserResponse is a response for ScimSetInformatio
 https://developer.github.com/v3/scim/#set-scim-information-for-a-provisioned-user
 */
 type ScimSetInformationForProvisionedUserResponse struct {
-	response
+	internal.Response
 	request *ScimSetInformationForProvisionedUserReq
 	Data    components.ScimUser
 }
@@ -711,20 +688,26 @@ Update an attribute for a SCIM user.
 
 https://developer.github.com/v3/scim/#update-an-attribute-for-a-scim-user
 */
-func ScimUpdateAttributeForUser(ctx context.Context, req *ScimUpdateAttributeForUserReq, opt ...RequestOption) (*ScimUpdateAttributeForUserResponse, error) {
+func ScimUpdateAttributeForUser(ctx context.Context, req *ScimUpdateAttributeForUserReq, opt ...options.Option) (*ScimUpdateAttributeForUserResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ScimUpdateAttributeForUserReq)
 	}
 	resp := &ScimUpdateAttributeForUserResponse{request: req}
-	r, err := doRequest(ctx, req, "scim/update-attribute-for-user", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.ScimUser{}
-	err = r.decodeBody(&resp.Data, "scim/update-attribute-for-user")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -740,7 +723,7 @@ Update an attribute for a SCIM user.
 
 https://developer.github.com/v3/scim/#update-an-attribute-for-a-scim-user
 */
-func (c Client) ScimUpdateAttributeForUser(ctx context.Context, req *ScimUpdateAttributeForUserReq, opt ...RequestOption) (*ScimUpdateAttributeForUserResponse, error) {
+func (c Client) ScimUpdateAttributeForUser(ctx context.Context, req *ScimUpdateAttributeForUserReq, opt ...options.Option) (*ScimUpdateAttributeForUserResponse, error) {
 	return ScimUpdateAttributeForUser(ctx, req, append(c, opt...)...)
 }
 
@@ -758,47 +741,36 @@ type ScimUpdateAttributeForUserReq struct {
 	RequestBody ScimUpdateAttributeForUserReqBody
 }
 
-func (r *ScimUpdateAttributeForUserReq) url() string {
-	return r._url
-}
-
-func (r *ScimUpdateAttributeForUserReq) urlPath() string {
-	return fmt.Sprintf("/scim/v2/organizations/%v/Users/%v", r.Org, r.ScimUserId)
-}
-
-func (r *ScimUpdateAttributeForUserReq) method() string {
-	return "PATCH"
-}
-
-func (r *ScimUpdateAttributeForUserReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ScimUpdateAttributeForUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/scim+json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ScimUpdateAttributeForUserReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *ScimUpdateAttributeForUserReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ScimUpdateAttributeForUserReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ScimUpdateAttributeForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "scim/update-attribute-for-user", opt)
+func (r *ScimUpdateAttributeForUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ScimUpdateAttributeForUserReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{},
+		Body:         r.RequestBody,
+		DataStatuses: []int{200},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/scim+json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "PATCH",
+		OperationID:      "scim/update-attribute-for-user",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/scim/v2/organizations/%v/Users/%v", r.Org, r.ScimUserId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
+	}
+	return builder
 }
 
 /*
@@ -806,7 +778,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ScimUpdateAttributeForUserReq) Rel(link RelName, resp *ScimUpdateAttributeForUserResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -848,7 +820,7 @@ ScimUpdateAttributeForUserResponse is a response for ScimUpdateAttributeForUser
 https://developer.github.com/v3/scim/#update-an-attribute-for-a-scim-user
 */
 type ScimUpdateAttributeForUserResponse struct {
-	response
+	internal.Response
 	request *ScimUpdateAttributeForUserReq
 	Data    components.ScimUser
 }

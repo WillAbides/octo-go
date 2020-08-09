@@ -50,7 +50,7 @@ func Test_respBodyType(t *testing.T) {
 			},
 		},
 	}
-	got := respBodyType(endpoint)
+	got := respBodyType(endpoint, "github.com/willabides/octo-go")
 	require.Equal(t, &qualifiedType{
 		pkg:   "github.com/willabides/octo-go/components",
 		name:  "FooBar",

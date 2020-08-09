@@ -6,6 +6,8 @@ import (
 	"context"
 	"fmt"
 	components "github.com/willabides/octo-go/components"
+	internal "github.com/willabides/octo-go/internal"
+	options "github.com/willabides/octo-go/options"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -20,20 +22,26 @@ Add assignees to an issue.
 
 https://developer.github.com/v3/issues/assignees/#add-assignees-to-an-issue
 */
-func IssuesAddAssignees(ctx context.Context, req *IssuesAddAssigneesReq, opt ...RequestOption) (*IssuesAddAssigneesResponse, error) {
+func IssuesAddAssignees(ctx context.Context, req *IssuesAddAssigneesReq, opt ...options.Option) (*IssuesAddAssigneesResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(IssuesAddAssigneesReq)
 	}
 	resp := &IssuesAddAssigneesResponse{request: req}
-	r, err := doRequest(ctx, req, "issues/add-assignees", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.IssueSimple{}
-	err = r.decodeBody(&resp.Data, "issues/add-assignees")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -49,7 +57,7 @@ Add assignees to an issue.
 
 https://developer.github.com/v3/issues/assignees/#add-assignees-to-an-issue
 */
-func (c Client) IssuesAddAssignees(ctx context.Context, req *IssuesAddAssigneesReq, opt ...RequestOption) (*IssuesAddAssigneesResponse, error) {
+func (c Client) IssuesAddAssignees(ctx context.Context, req *IssuesAddAssigneesReq, opt ...options.Option) (*IssuesAddAssigneesResponse, error) {
 	return IssuesAddAssignees(ctx, req, append(c, opt...)...)
 }
 
@@ -68,47 +76,36 @@ type IssuesAddAssigneesReq struct {
 	RequestBody IssuesAddAssigneesReqBody
 }
 
-func (r *IssuesAddAssigneesReq) url() string {
-	return r._url
-}
-
-func (r *IssuesAddAssigneesReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/issues/%v/assignees", r.Owner, r.Repo, r.IssueNumber)
-}
-
-func (r *IssuesAddAssigneesReq) method() string {
-	return "POST"
-}
-
-func (r *IssuesAddAssigneesReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *IssuesAddAssigneesReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *IssuesAddAssigneesReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *IssuesAddAssigneesReq) dataStatuses() []int {
-	return []int{201}
-}
-
-func (r *IssuesAddAssigneesReq) validStatuses() []int {
-	return []int{201}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *IssuesAddAssigneesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "issues/add-assignees", opt)
+func (r *IssuesAddAssigneesReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *IssuesAddAssigneesReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{},
+		Body:         r.RequestBody,
+		DataStatuses: []int{201},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "POST",
+		OperationID:      "issues/add-assignees",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/%v/assignees", r.Owner, r.Repo, r.IssueNumber),
+		URLQuery:         query,
+		ValidStatuses:    []int{201},
+	}
+	return builder
 }
 
 /*
@@ -116,7 +113,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *IssuesAddAssigneesReq) Rel(link RelName, resp *IssuesAddAssigneesResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -144,7 +141,7 @@ IssuesAddAssigneesResponse is a response for IssuesAddAssignees
 https://developer.github.com/v3/issues/assignees/#add-assignees-to-an-issue
 */
 type IssuesAddAssigneesResponse struct {
-	response
+	internal.Response
 	request *IssuesAddAssigneesReq
 	Data    components.IssueSimple
 }
@@ -158,20 +155,26 @@ Add labels to an issue.
 
 https://developer.github.com/v3/issues/labels/#add-labels-to-an-issue
 */
-func IssuesAddLabels(ctx context.Context, req *IssuesAddLabelsReq, opt ...RequestOption) (*IssuesAddLabelsResponse, error) {
+func IssuesAddLabels(ctx context.Context, req *IssuesAddLabelsReq, opt ...options.Option) (*IssuesAddLabelsResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(IssuesAddLabelsReq)
 	}
 	resp := &IssuesAddLabelsResponse{request: req}
-	r, err := doRequest(ctx, req, "issues/add-labels", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.Label{}
-	err = r.decodeBody(&resp.Data, "issues/add-labels")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -187,7 +190,7 @@ Add labels to an issue.
 
 https://developer.github.com/v3/issues/labels/#add-labels-to-an-issue
 */
-func (c Client) IssuesAddLabels(ctx context.Context, req *IssuesAddLabelsReq, opt ...RequestOption) (*IssuesAddLabelsResponse, error) {
+func (c Client) IssuesAddLabels(ctx context.Context, req *IssuesAddLabelsReq, opt ...options.Option) (*IssuesAddLabelsResponse, error) {
 	return IssuesAddLabels(ctx, req, append(c, opt...)...)
 }
 
@@ -206,47 +209,36 @@ type IssuesAddLabelsReq struct {
 	RequestBody IssuesAddLabelsReqBody
 }
 
-func (r *IssuesAddLabelsReq) url() string {
-	return r._url
-}
-
-func (r *IssuesAddLabelsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/issues/%v/labels", r.Owner, r.Repo, r.IssueNumber)
-}
-
-func (r *IssuesAddLabelsReq) method() string {
-	return "POST"
-}
-
-func (r *IssuesAddLabelsReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *IssuesAddLabelsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *IssuesAddLabelsReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *IssuesAddLabelsReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *IssuesAddLabelsReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *IssuesAddLabelsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "issues/add-labels", opt)
+func (r *IssuesAddLabelsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *IssuesAddLabelsReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{},
+		Body:         r.RequestBody,
+		DataStatuses: []int{200},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "POST",
+		OperationID:      "issues/add-labels",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/%v/labels", r.Owner, r.Repo, r.IssueNumber),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -254,7 +246,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *IssuesAddLabelsReq) Rel(link RelName, resp *IssuesAddLabelsResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -284,7 +276,7 @@ IssuesAddLabelsResponse is a response for IssuesAddLabels
 https://developer.github.com/v3/issues/labels/#add-labels-to-an-issue
 */
 type IssuesAddLabelsResponse struct {
-	response
+	internal.Response
 	request *IssuesAddLabelsReq
 	Data    []components.Label
 }
@@ -298,23 +290,29 @@ Check if a user can be assigned.
 
 https://developer.github.com/v3/issues/assignees/#check-if-a-user-can-be-assigned
 */
-func IssuesCheckUserCanBeAssigned(ctx context.Context, req *IssuesCheckUserCanBeAssignedReq, opt ...RequestOption) (*IssuesCheckUserCanBeAssignedResponse, error) {
+func IssuesCheckUserCanBeAssigned(ctx context.Context, req *IssuesCheckUserCanBeAssignedReq, opt ...options.Option) (*IssuesCheckUserCanBeAssignedResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(IssuesCheckUserCanBeAssignedReq)
 	}
 	resp := &IssuesCheckUserCanBeAssignedResponse{request: req}
-	r, err := doRequest(ctx, req, "issues/check-user-can-be-assigned", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.setBoolResult(&resp.Data)
+
+	err = internal.SetBoolResult(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
-	err = r.decodeBody(nil, "issues/check-user-can-be-assigned")
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -330,7 +328,7 @@ Check if a user can be assigned.
 
 https://developer.github.com/v3/issues/assignees/#check-if-a-user-can-be-assigned
 */
-func (c Client) IssuesCheckUserCanBeAssigned(ctx context.Context, req *IssuesCheckUserCanBeAssignedReq, opt ...RequestOption) (*IssuesCheckUserCanBeAssignedResponse, error) {
+func (c Client) IssuesCheckUserCanBeAssigned(ctx context.Context, req *IssuesCheckUserCanBeAssignedReq, opt ...options.Option) (*IssuesCheckUserCanBeAssignedResponse, error) {
 	return IssuesCheckUserCanBeAssigned(ctx, req, append(c, opt...)...)
 }
 
@@ -348,44 +346,33 @@ type IssuesCheckUserCanBeAssignedReq struct {
 	Assignee string
 }
 
-func (r *IssuesCheckUserCanBeAssignedReq) url() string {
-	return r._url
-}
-
-func (r *IssuesCheckUserCanBeAssignedReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/assignees/%v", r.Owner, r.Repo, r.Assignee)
-}
-
-func (r *IssuesCheckUserCanBeAssignedReq) method() string {
-	return "GET"
-}
-
-func (r *IssuesCheckUserCanBeAssignedReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *IssuesCheckUserCanBeAssignedReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *IssuesCheckUserCanBeAssignedReq) body() interface{} {
-	return nil
-}
-
-func (r *IssuesCheckUserCanBeAssignedReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *IssuesCheckUserCanBeAssignedReq) validStatuses() []int {
-	return []int{204}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *IssuesCheckUserCanBeAssignedReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "issues/check-user-can-be-assigned", opt)
+func (r *IssuesCheckUserCanBeAssignedReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *IssuesCheckUserCanBeAssignedReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "GET",
+		OperationID:      "issues/check-user-can-be-assigned",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/assignees/%v", r.Owner, r.Repo, r.Assignee),
+		URLQuery:         query,
+		ValidStatuses:    []int{204},
+	}
+	return builder
 }
 
 /*
@@ -393,7 +380,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *IssuesCheckUserCanBeAssignedReq) Rel(link RelName, resp *IssuesCheckUserCanBeAssignedResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -407,7 +394,7 @@ IssuesCheckUserCanBeAssignedResponse is a response for IssuesCheckUserCanBeAssig
 https://developer.github.com/v3/issues/assignees/#check-if-a-user-can-be-assigned
 */
 type IssuesCheckUserCanBeAssignedResponse struct {
-	response
+	internal.Response
 	request *IssuesCheckUserCanBeAssignedReq
 	Data    bool
 }
@@ -421,20 +408,26 @@ Create an issue.
 
 https://developer.github.com/v3/issues/#create-an-issue
 */
-func IssuesCreate(ctx context.Context, req *IssuesCreateReq, opt ...RequestOption) (*IssuesCreateResponse, error) {
+func IssuesCreate(ctx context.Context, req *IssuesCreateReq, opt ...options.Option) (*IssuesCreateResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(IssuesCreateReq)
 	}
 	resp := &IssuesCreateResponse{request: req}
-	r, err := doRequest(ctx, req, "issues/create", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.Issue{}
-	err = r.decodeBody(&resp.Data, "issues/create")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -450,7 +443,7 @@ Create an issue.
 
 https://developer.github.com/v3/issues/#create-an-issue
 */
-func (c Client) IssuesCreate(ctx context.Context, req *IssuesCreateReq, opt ...RequestOption) (*IssuesCreateResponse, error) {
+func (c Client) IssuesCreate(ctx context.Context, req *IssuesCreateReq, opt ...options.Option) (*IssuesCreateResponse, error) {
 	return IssuesCreate(ctx, req, append(c, opt...)...)
 }
 
@@ -466,47 +459,36 @@ type IssuesCreateReq struct {
 	RequestBody IssuesCreateReqBody
 }
 
-func (r *IssuesCreateReq) url() string {
-	return r._url
-}
-
-func (r *IssuesCreateReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/issues", r.Owner, r.Repo)
-}
-
-func (r *IssuesCreateReq) method() string {
-	return "POST"
-}
-
-func (r *IssuesCreateReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *IssuesCreateReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *IssuesCreateReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *IssuesCreateReq) dataStatuses() []int {
-	return []int{201}
-}
-
-func (r *IssuesCreateReq) validStatuses() []int {
-	return []int{201}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *IssuesCreateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "issues/create", opt)
+func (r *IssuesCreateReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *IssuesCreateReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{},
+		Body:         r.RequestBody,
+		DataStatuses: []int{201},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "POST",
+		OperationID:      "issues/create",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/issues", r.Owner, r.Repo),
+		URLQuery:         query,
+		ValidStatuses:    []int{201},
+	}
+	return builder
 }
 
 /*
@@ -514,7 +496,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *IssuesCreateReq) Rel(link RelName, resp *IssuesCreateResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -568,7 +550,7 @@ IssuesCreateResponse is a response for IssuesCreate
 https://developer.github.com/v3/issues/#create-an-issue
 */
 type IssuesCreateResponse struct {
-	response
+	internal.Response
 	request *IssuesCreateReq
 	Data    components.Issue
 }
@@ -582,20 +564,26 @@ Create an issue comment.
 
 https://developer.github.com/v3/issues/comments/#create-an-issue-comment
 */
-func IssuesCreateComment(ctx context.Context, req *IssuesCreateCommentReq, opt ...RequestOption) (*IssuesCreateCommentResponse, error) {
+func IssuesCreateComment(ctx context.Context, req *IssuesCreateCommentReq, opt ...options.Option) (*IssuesCreateCommentResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(IssuesCreateCommentReq)
 	}
 	resp := &IssuesCreateCommentResponse{request: req}
-	r, err := doRequest(ctx, req, "issues/create-comment", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.IssueComment{}
-	err = r.decodeBody(&resp.Data, "issues/create-comment")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -611,7 +599,7 @@ Create an issue comment.
 
 https://developer.github.com/v3/issues/comments/#create-an-issue-comment
 */
-func (c Client) IssuesCreateComment(ctx context.Context, req *IssuesCreateCommentReq, opt ...RequestOption) (*IssuesCreateCommentResponse, error) {
+func (c Client) IssuesCreateComment(ctx context.Context, req *IssuesCreateCommentReq, opt ...options.Option) (*IssuesCreateCommentResponse, error) {
 	return IssuesCreateComment(ctx, req, append(c, opt...)...)
 }
 
@@ -630,47 +618,36 @@ type IssuesCreateCommentReq struct {
 	RequestBody IssuesCreateCommentReqBody
 }
 
-func (r *IssuesCreateCommentReq) url() string {
-	return r._url
-}
-
-func (r *IssuesCreateCommentReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/issues/%v/comments", r.Owner, r.Repo, r.IssueNumber)
-}
-
-func (r *IssuesCreateCommentReq) method() string {
-	return "POST"
-}
-
-func (r *IssuesCreateCommentReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *IssuesCreateCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *IssuesCreateCommentReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *IssuesCreateCommentReq) dataStatuses() []int {
-	return []int{201}
-}
-
-func (r *IssuesCreateCommentReq) validStatuses() []int {
-	return []int{201}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *IssuesCreateCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "issues/create-comment", opt)
+func (r *IssuesCreateCommentReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *IssuesCreateCommentReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{},
+		Body:         r.RequestBody,
+		DataStatuses: []int{201},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "POST",
+		OperationID:      "issues/create-comment",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/%v/comments", r.Owner, r.Repo, r.IssueNumber),
+		URLQuery:         query,
+		ValidStatuses:    []int{201},
+	}
+	return builder
 }
 
 /*
@@ -678,7 +655,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *IssuesCreateCommentReq) Rel(link RelName, resp *IssuesCreateCommentResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -703,7 +680,7 @@ IssuesCreateCommentResponse is a response for IssuesCreateComment
 https://developer.github.com/v3/issues/comments/#create-an-issue-comment
 */
 type IssuesCreateCommentResponse struct {
-	response
+	internal.Response
 	request *IssuesCreateCommentReq
 	Data    components.IssueComment
 }
@@ -717,20 +694,26 @@ Create a label.
 
 https://developer.github.com/v3/issues/labels/#create-a-label
 */
-func IssuesCreateLabel(ctx context.Context, req *IssuesCreateLabelReq, opt ...RequestOption) (*IssuesCreateLabelResponse, error) {
+func IssuesCreateLabel(ctx context.Context, req *IssuesCreateLabelReq, opt ...options.Option) (*IssuesCreateLabelResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(IssuesCreateLabelReq)
 	}
 	resp := &IssuesCreateLabelResponse{request: req}
-	r, err := doRequest(ctx, req, "issues/create-label", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.Label{}
-	err = r.decodeBody(&resp.Data, "issues/create-label")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -746,7 +729,7 @@ Create a label.
 
 https://developer.github.com/v3/issues/labels/#create-a-label
 */
-func (c Client) IssuesCreateLabel(ctx context.Context, req *IssuesCreateLabelReq, opt ...RequestOption) (*IssuesCreateLabelResponse, error) {
+func (c Client) IssuesCreateLabel(ctx context.Context, req *IssuesCreateLabelReq, opt ...options.Option) (*IssuesCreateLabelResponse, error) {
 	return IssuesCreateLabel(ctx, req, append(c, opt...)...)
 }
 
@@ -762,47 +745,36 @@ type IssuesCreateLabelReq struct {
 	RequestBody IssuesCreateLabelReqBody
 }
 
-func (r *IssuesCreateLabelReq) url() string {
-	return r._url
-}
-
-func (r *IssuesCreateLabelReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/labels", r.Owner, r.Repo)
-}
-
-func (r *IssuesCreateLabelReq) method() string {
-	return "POST"
-}
-
-func (r *IssuesCreateLabelReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *IssuesCreateLabelReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *IssuesCreateLabelReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *IssuesCreateLabelReq) dataStatuses() []int {
-	return []int{201}
-}
-
-func (r *IssuesCreateLabelReq) validStatuses() []int {
-	return []int{201}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *IssuesCreateLabelReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "issues/create-label", opt)
+func (r *IssuesCreateLabelReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *IssuesCreateLabelReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{},
+		Body:         r.RequestBody,
+		DataStatuses: []int{201},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "POST",
+		OperationID:      "issues/create-label",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/labels", r.Owner, r.Repo),
+		URLQuery:         query,
+		ValidStatuses:    []int{201},
+	}
+	return builder
 }
 
 /*
@@ -810,7 +782,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *IssuesCreateLabelReq) Rel(link RelName, resp *IssuesCreateLabelResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -848,7 +820,7 @@ IssuesCreateLabelResponse is a response for IssuesCreateLabel
 https://developer.github.com/v3/issues/labels/#create-a-label
 */
 type IssuesCreateLabelResponse struct {
-	response
+	internal.Response
 	request *IssuesCreateLabelReq
 	Data    components.Label
 }
@@ -862,20 +834,26 @@ Create a milestone.
 
 https://developer.github.com/v3/issues/milestones/#create-a-milestone
 */
-func IssuesCreateMilestone(ctx context.Context, req *IssuesCreateMilestoneReq, opt ...RequestOption) (*IssuesCreateMilestoneResponse, error) {
+func IssuesCreateMilestone(ctx context.Context, req *IssuesCreateMilestoneReq, opt ...options.Option) (*IssuesCreateMilestoneResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(IssuesCreateMilestoneReq)
 	}
 	resp := &IssuesCreateMilestoneResponse{request: req}
-	r, err := doRequest(ctx, req, "issues/create-milestone", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.Milestone{}
-	err = r.decodeBody(&resp.Data, "issues/create-milestone")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -891,7 +869,7 @@ Create a milestone.
 
 https://developer.github.com/v3/issues/milestones/#create-a-milestone
 */
-func (c Client) IssuesCreateMilestone(ctx context.Context, req *IssuesCreateMilestoneReq, opt ...RequestOption) (*IssuesCreateMilestoneResponse, error) {
+func (c Client) IssuesCreateMilestone(ctx context.Context, req *IssuesCreateMilestoneReq, opt ...options.Option) (*IssuesCreateMilestoneResponse, error) {
 	return IssuesCreateMilestone(ctx, req, append(c, opt...)...)
 }
 
@@ -907,47 +885,36 @@ type IssuesCreateMilestoneReq struct {
 	RequestBody IssuesCreateMilestoneReqBody
 }
 
-func (r *IssuesCreateMilestoneReq) url() string {
-	return r._url
-}
-
-func (r *IssuesCreateMilestoneReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/milestones", r.Owner, r.Repo)
-}
-
-func (r *IssuesCreateMilestoneReq) method() string {
-	return "POST"
-}
-
-func (r *IssuesCreateMilestoneReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *IssuesCreateMilestoneReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *IssuesCreateMilestoneReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *IssuesCreateMilestoneReq) dataStatuses() []int {
-	return []int{201}
-}
-
-func (r *IssuesCreateMilestoneReq) validStatuses() []int {
-	return []int{201}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *IssuesCreateMilestoneReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "issues/create-milestone", opt)
+func (r *IssuesCreateMilestoneReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *IssuesCreateMilestoneReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{},
+		Body:         r.RequestBody,
+		DataStatuses: []int{201},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "POST",
+		OperationID:      "issues/create-milestone",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/milestones", r.Owner, r.Repo),
+		URLQuery:         query,
+		ValidStatuses:    []int{201},
+	}
+	return builder
 }
 
 /*
@@ -955,7 +922,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *IssuesCreateMilestoneReq) Rel(link RelName, resp *IssuesCreateMilestoneResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -992,7 +959,7 @@ IssuesCreateMilestoneResponse is a response for IssuesCreateMilestone
 https://developer.github.com/v3/issues/milestones/#create-a-milestone
 */
 type IssuesCreateMilestoneResponse struct {
-	response
+	internal.Response
 	request *IssuesCreateMilestoneReq
 	Data    components.Milestone
 }
@@ -1006,19 +973,25 @@ Delete an issue comment.
 
 https://developer.github.com/v3/issues/comments/#delete-an-issue-comment
 */
-func IssuesDeleteComment(ctx context.Context, req *IssuesDeleteCommentReq, opt ...RequestOption) (*IssuesDeleteCommentResponse, error) {
+func IssuesDeleteComment(ctx context.Context, req *IssuesDeleteCommentReq, opt ...options.Option) (*IssuesDeleteCommentResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(IssuesDeleteCommentReq)
 	}
 	resp := &IssuesDeleteCommentResponse{request: req}
-	r, err := doRequest(ctx, req, "issues/delete-comment", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "issues/delete-comment")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -1034,7 +1007,7 @@ Delete an issue comment.
 
 https://developer.github.com/v3/issues/comments/#delete-an-issue-comment
 */
-func (c Client) IssuesDeleteComment(ctx context.Context, req *IssuesDeleteCommentReq, opt ...RequestOption) (*IssuesDeleteCommentResponse, error) {
+func (c Client) IssuesDeleteComment(ctx context.Context, req *IssuesDeleteCommentReq, opt ...options.Option) (*IssuesDeleteCommentResponse, error) {
 	return IssuesDeleteComment(ctx, req, append(c, opt...)...)
 }
 
@@ -1052,44 +1025,33 @@ type IssuesDeleteCommentReq struct {
 	CommentId int64
 }
 
-func (r *IssuesDeleteCommentReq) url() string {
-	return r._url
-}
-
-func (r *IssuesDeleteCommentReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/issues/comments/%v", r.Owner, r.Repo, r.CommentId)
-}
-
-func (r *IssuesDeleteCommentReq) method() string {
-	return "DELETE"
-}
-
-func (r *IssuesDeleteCommentReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *IssuesDeleteCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *IssuesDeleteCommentReq) body() interface{} {
-	return nil
-}
-
-func (r *IssuesDeleteCommentReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *IssuesDeleteCommentReq) validStatuses() []int {
-	return []int{204}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *IssuesDeleteCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "issues/delete-comment", opt)
+func (r *IssuesDeleteCommentReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *IssuesDeleteCommentReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		OperationID:      "issues/delete-comment",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/comments/%v", r.Owner, r.Repo, r.CommentId),
+		URLQuery:         query,
+		ValidStatuses:    []int{204},
+	}
+	return builder
 }
 
 /*
@@ -1097,7 +1059,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *IssuesDeleteCommentReq) Rel(link RelName, resp *IssuesDeleteCommentResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1111,7 +1073,7 @@ IssuesDeleteCommentResponse is a response for IssuesDeleteComment
 https://developer.github.com/v3/issues/comments/#delete-an-issue-comment
 */
 type IssuesDeleteCommentResponse struct {
-	response
+	internal.Response
 	request *IssuesDeleteCommentReq
 }
 
@@ -1124,19 +1086,25 @@ Delete a label.
 
 https://developer.github.com/v3/issues/labels/#delete-a-label
 */
-func IssuesDeleteLabel(ctx context.Context, req *IssuesDeleteLabelReq, opt ...RequestOption) (*IssuesDeleteLabelResponse, error) {
+func IssuesDeleteLabel(ctx context.Context, req *IssuesDeleteLabelReq, opt ...options.Option) (*IssuesDeleteLabelResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(IssuesDeleteLabelReq)
 	}
 	resp := &IssuesDeleteLabelResponse{request: req}
-	r, err := doRequest(ctx, req, "issues/delete-label", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "issues/delete-label")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -1152,7 +1120,7 @@ Delete a label.
 
 https://developer.github.com/v3/issues/labels/#delete-a-label
 */
-func (c Client) IssuesDeleteLabel(ctx context.Context, req *IssuesDeleteLabelReq, opt ...RequestOption) (*IssuesDeleteLabelResponse, error) {
+func (c Client) IssuesDeleteLabel(ctx context.Context, req *IssuesDeleteLabelReq, opt ...options.Option) (*IssuesDeleteLabelResponse, error) {
 	return IssuesDeleteLabel(ctx, req, append(c, opt...)...)
 }
 
@@ -1170,44 +1138,33 @@ type IssuesDeleteLabelReq struct {
 	Name string
 }
 
-func (r *IssuesDeleteLabelReq) url() string {
-	return r._url
-}
-
-func (r *IssuesDeleteLabelReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/labels/%v", r.Owner, r.Repo, r.Name)
-}
-
-func (r *IssuesDeleteLabelReq) method() string {
-	return "DELETE"
-}
-
-func (r *IssuesDeleteLabelReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *IssuesDeleteLabelReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *IssuesDeleteLabelReq) body() interface{} {
-	return nil
-}
-
-func (r *IssuesDeleteLabelReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *IssuesDeleteLabelReq) validStatuses() []int {
-	return []int{204}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *IssuesDeleteLabelReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "issues/delete-label", opt)
+func (r *IssuesDeleteLabelReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *IssuesDeleteLabelReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		OperationID:      "issues/delete-label",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/labels/%v", r.Owner, r.Repo, r.Name),
+		URLQuery:         query,
+		ValidStatuses:    []int{204},
+	}
+	return builder
 }
 
 /*
@@ -1215,7 +1172,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *IssuesDeleteLabelReq) Rel(link RelName, resp *IssuesDeleteLabelResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1229,7 +1186,7 @@ IssuesDeleteLabelResponse is a response for IssuesDeleteLabel
 https://developer.github.com/v3/issues/labels/#delete-a-label
 */
 type IssuesDeleteLabelResponse struct {
-	response
+	internal.Response
 	request *IssuesDeleteLabelReq
 }
 
@@ -1242,23 +1199,29 @@ Delete a milestone.
 
 https://developer.github.com/v3/issues/milestones/#delete-a-milestone
 */
-func IssuesDeleteMilestone(ctx context.Context, req *IssuesDeleteMilestoneReq, opt ...RequestOption) (*IssuesDeleteMilestoneResponse, error) {
+func IssuesDeleteMilestone(ctx context.Context, req *IssuesDeleteMilestoneReq, opt ...options.Option) (*IssuesDeleteMilestoneResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(IssuesDeleteMilestoneReq)
 	}
 	resp := &IssuesDeleteMilestoneResponse{request: req}
-	r, err := doRequest(ctx, req, "issues/delete-milestone", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.setBoolResult(&resp.Data)
+
+	err = internal.SetBoolResult(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
-	err = r.decodeBody(nil, "issues/delete-milestone")
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -1274,7 +1237,7 @@ Delete a milestone.
 
 https://developer.github.com/v3/issues/milestones/#delete-a-milestone
 */
-func (c Client) IssuesDeleteMilestone(ctx context.Context, req *IssuesDeleteMilestoneReq, opt ...RequestOption) (*IssuesDeleteMilestoneResponse, error) {
+func (c Client) IssuesDeleteMilestone(ctx context.Context, req *IssuesDeleteMilestoneReq, opt ...options.Option) (*IssuesDeleteMilestoneResponse, error) {
 	return IssuesDeleteMilestone(ctx, req, append(c, opt...)...)
 }
 
@@ -1292,44 +1255,33 @@ type IssuesDeleteMilestoneReq struct {
 	MilestoneNumber int64
 }
 
-func (r *IssuesDeleteMilestoneReq) url() string {
-	return r._url
-}
-
-func (r *IssuesDeleteMilestoneReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/milestones/%v", r.Owner, r.Repo, r.MilestoneNumber)
-}
-
-func (r *IssuesDeleteMilestoneReq) method() string {
-	return "DELETE"
-}
-
-func (r *IssuesDeleteMilestoneReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *IssuesDeleteMilestoneReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *IssuesDeleteMilestoneReq) body() interface{} {
-	return nil
-}
-
-func (r *IssuesDeleteMilestoneReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *IssuesDeleteMilestoneReq) validStatuses() []int {
-	return []int{204}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *IssuesDeleteMilestoneReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "issues/delete-milestone", opt)
+func (r *IssuesDeleteMilestoneReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *IssuesDeleteMilestoneReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		OperationID:      "issues/delete-milestone",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/milestones/%v", r.Owner, r.Repo, r.MilestoneNumber),
+		URLQuery:         query,
+		ValidStatuses:    []int{204},
+	}
+	return builder
 }
 
 /*
@@ -1337,7 +1289,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *IssuesDeleteMilestoneReq) Rel(link RelName, resp *IssuesDeleteMilestoneResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1351,7 +1303,7 @@ IssuesDeleteMilestoneResponse is a response for IssuesDeleteMilestone
 https://developer.github.com/v3/issues/milestones/#delete-a-milestone
 */
 type IssuesDeleteMilestoneResponse struct {
-	response
+	internal.Response
 	request *IssuesDeleteMilestoneReq
 	Data    bool
 }
@@ -1365,20 +1317,26 @@ Get an issue.
 
 https://developer.github.com/v3/issues/#get-an-issue
 */
-func IssuesGet(ctx context.Context, req *IssuesGetReq, opt ...RequestOption) (*IssuesGetResponse, error) {
+func IssuesGet(ctx context.Context, req *IssuesGetReq, opt ...options.Option) (*IssuesGetResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(IssuesGetReq)
 	}
 	resp := &IssuesGetResponse{request: req}
-	r, err := doRequest(ctx, req, "issues/get", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.Issue{}
-	err = r.decodeBody(&resp.Data, "issues/get")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1394,7 +1352,7 @@ Get an issue.
 
 https://developer.github.com/v3/issues/#get-an-issue
 */
-func (c Client) IssuesGet(ctx context.Context, req *IssuesGetReq, opt ...RequestOption) (*IssuesGetResponse, error) {
+func (c Client) IssuesGet(ctx context.Context, req *IssuesGetReq, opt ...options.Option) (*IssuesGetResponse, error) {
 	return IssuesGet(ctx, req, append(c, opt...)...)
 }
 
@@ -1423,47 +1381,33 @@ type IssuesGetReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *IssuesGetReq) url() string {
-	return r._url
-}
-
-func (r *IssuesGetReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/issues/%v", r.Owner, r.Repo, r.IssueNumber)
-}
-
-func (r *IssuesGetReq) method() string {
-	return "GET"
-}
-
-func (r *IssuesGetReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *IssuesGetReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	if allPreviews {
-		previewVals["squirrel-girl"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *IssuesGetReq) body() interface{} {
-	return nil
-}
-
-func (r *IssuesGetReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *IssuesGetReq) validStatuses() []int {
-	return []int{200, 301, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *IssuesGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "issues/get", opt)
+func (r *IssuesGetReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *IssuesGetReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"squirrel-girl"},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "issues/get",
+		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/%v", r.Owner, r.Repo, r.IssueNumber),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 301, 304},
+	}
+	return builder
 }
 
 /*
@@ -1471,7 +1415,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *IssuesGetReq) Rel(link RelName, resp *IssuesGetResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1485,7 +1429,7 @@ IssuesGetResponse is a response for IssuesGet
 https://developer.github.com/v3/issues/#get-an-issue
 */
 type IssuesGetResponse struct {
-	response
+	internal.Response
 	request *IssuesGetReq
 	Data    components.Issue
 }
@@ -1499,20 +1443,26 @@ Get an issue comment.
 
 https://developer.github.com/v3/issues/comments/#get-an-issue-comment
 */
-func IssuesGetComment(ctx context.Context, req *IssuesGetCommentReq, opt ...RequestOption) (*IssuesGetCommentResponse, error) {
+func IssuesGetComment(ctx context.Context, req *IssuesGetCommentReq, opt ...options.Option) (*IssuesGetCommentResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(IssuesGetCommentReq)
 	}
 	resp := &IssuesGetCommentResponse{request: req}
-	r, err := doRequest(ctx, req, "issues/get-comment", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.IssueComment{}
-	err = r.decodeBody(&resp.Data, "issues/get-comment")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1528,7 +1478,7 @@ Get an issue comment.
 
 https://developer.github.com/v3/issues/comments/#get-an-issue-comment
 */
-func (c Client) IssuesGetComment(ctx context.Context, req *IssuesGetCommentReq, opt ...RequestOption) (*IssuesGetCommentResponse, error) {
+func (c Client) IssuesGetComment(ctx context.Context, req *IssuesGetCommentReq, opt ...options.Option) (*IssuesGetCommentResponse, error) {
 	return IssuesGetComment(ctx, req, append(c, opt...)...)
 }
 
@@ -1563,51 +1513,36 @@ type IssuesGetCommentReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *IssuesGetCommentReq) url() string {
-	return r._url
-}
-
-func (r *IssuesGetCommentReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/issues/comments/%v", r.Owner, r.Repo, r.CommentId)
-}
-
-func (r *IssuesGetCommentReq) method() string {
-	return "GET"
-}
-
-func (r *IssuesGetCommentReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *IssuesGetCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{
-		"machine-man":   r.MachineManPreview,
-		"squirrel-girl": r.SquirrelGirlPreview,
-	}
-	if allPreviews {
-		previewVals["machine-man"] = true
-		previewVals["squirrel-girl"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *IssuesGetCommentReq) body() interface{} {
-	return nil
-}
-
-func (r *IssuesGetCommentReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *IssuesGetCommentReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *IssuesGetCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "issues/get-comment", opt)
+func (r *IssuesGetCommentReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *IssuesGetCommentReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{"machine-man", "squirrel-girl"},
+		Body:         nil,
+		DataStatuses: []int{200},
+		ExplicitURL:  r._url,
+		HeaderVals:   map[string]*string{"accept": String("application/json")},
+		Method:       "GET",
+		OperationID:  "issues/get-comment",
+		Previews: map[string]bool{
+			"machine-man":   r.MachineManPreview,
+			"squirrel-girl": r.SquirrelGirlPreview,
+		},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/comments/%v", r.Owner, r.Repo, r.CommentId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -1615,7 +1550,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *IssuesGetCommentReq) Rel(link RelName, resp *IssuesGetCommentResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1629,7 +1564,7 @@ IssuesGetCommentResponse is a response for IssuesGetComment
 https://developer.github.com/v3/issues/comments/#get-an-issue-comment
 */
 type IssuesGetCommentResponse struct {
-	response
+	internal.Response
 	request *IssuesGetCommentReq
 	Data    components.IssueComment
 }
@@ -1643,20 +1578,26 @@ Get an issue event.
 
 https://developer.github.com/v3/issues/events/#get-an-issue-event
 */
-func IssuesGetEvent(ctx context.Context, req *IssuesGetEventReq, opt ...RequestOption) (*IssuesGetEventResponse, error) {
+func IssuesGetEvent(ctx context.Context, req *IssuesGetEventReq, opt ...options.Option) (*IssuesGetEventResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(IssuesGetEventReq)
 	}
 	resp := &IssuesGetEventResponse{request: req}
-	r, err := doRequest(ctx, req, "issues/get-event", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.IssueEvent{}
-	err = r.decodeBody(&resp.Data, "issues/get-event")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1672,7 +1613,7 @@ Get an issue event.
 
 https://developer.github.com/v3/issues/events/#get-an-issue-event
 */
-func (c Client) IssuesGetEvent(ctx context.Context, req *IssuesGetEventReq, opt ...RequestOption) (*IssuesGetEventResponse, error) {
+func (c Client) IssuesGetEvent(ctx context.Context, req *IssuesGetEventReq, opt ...options.Option) (*IssuesGetEventResponse, error) {
 	return IssuesGetEvent(ctx, req, append(c, opt...)...)
 }
 
@@ -1718,53 +1659,37 @@ type IssuesGetEventReq struct {
 	SailorVPreview bool
 }
 
-func (r *IssuesGetEventReq) url() string {
-	return r._url
-}
-
-func (r *IssuesGetEventReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/issues/events/%v", r.Owner, r.Repo, r.EventId)
-}
-
-func (r *IssuesGetEventReq) method() string {
-	return "GET"
-}
-
-func (r *IssuesGetEventReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *IssuesGetEventReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{
-		"machine-man": r.MachineManPreview,
-		"sailor-v":    r.SailorVPreview,
-		"starfox":     r.StarfoxPreview,
-	}
-	if allPreviews {
-		previewVals["starfox"] = true
-		previewVals["machine-man"] = true
-		previewVals["sailor-v"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *IssuesGetEventReq) body() interface{} {
-	return nil
-}
-
-func (r *IssuesGetEventReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *IssuesGetEventReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *IssuesGetEventReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "issues/get-event", opt)
+func (r *IssuesGetEventReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *IssuesGetEventReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{"starfox", "machine-man", "sailor-v"},
+		Body:         nil,
+		DataStatuses: []int{200},
+		ExplicitURL:  r._url,
+		HeaderVals:   map[string]*string{"accept": String("application/json")},
+		Method:       "GET",
+		OperationID:  "issues/get-event",
+		Previews: map[string]bool{
+			"machine-man": r.MachineManPreview,
+			"sailor-v":    r.SailorVPreview,
+			"starfox":     r.StarfoxPreview,
+		},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/events/%v", r.Owner, r.Repo, r.EventId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -1772,7 +1697,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *IssuesGetEventReq) Rel(link RelName, resp *IssuesGetEventResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1786,7 +1711,7 @@ IssuesGetEventResponse is a response for IssuesGetEvent
 https://developer.github.com/v3/issues/events/#get-an-issue-event
 */
 type IssuesGetEventResponse struct {
-	response
+	internal.Response
 	request *IssuesGetEventReq
 	Data    components.IssueEvent
 }
@@ -1800,20 +1725,26 @@ Get a label.
 
 https://developer.github.com/v3/issues/labels/#get-a-label
 */
-func IssuesGetLabel(ctx context.Context, req *IssuesGetLabelReq, opt ...RequestOption) (*IssuesGetLabelResponse, error) {
+func IssuesGetLabel(ctx context.Context, req *IssuesGetLabelReq, opt ...options.Option) (*IssuesGetLabelResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(IssuesGetLabelReq)
 	}
 	resp := &IssuesGetLabelResponse{request: req}
-	r, err := doRequest(ctx, req, "issues/get-label", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.Label{}
-	err = r.decodeBody(&resp.Data, "issues/get-label")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1829,7 +1760,7 @@ Get a label.
 
 https://developer.github.com/v3/issues/labels/#get-a-label
 */
-func (c Client) IssuesGetLabel(ctx context.Context, req *IssuesGetLabelReq, opt ...RequestOption) (*IssuesGetLabelResponse, error) {
+func (c Client) IssuesGetLabel(ctx context.Context, req *IssuesGetLabelReq, opt ...options.Option) (*IssuesGetLabelResponse, error) {
 	return IssuesGetLabel(ctx, req, append(c, opt...)...)
 }
 
@@ -1847,44 +1778,33 @@ type IssuesGetLabelReq struct {
 	Name string
 }
 
-func (r *IssuesGetLabelReq) url() string {
-	return r._url
-}
-
-func (r *IssuesGetLabelReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/labels/%v", r.Owner, r.Repo, r.Name)
-}
-
-func (r *IssuesGetLabelReq) method() string {
-	return "GET"
-}
-
-func (r *IssuesGetLabelReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *IssuesGetLabelReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *IssuesGetLabelReq) body() interface{} {
-	return nil
-}
-
-func (r *IssuesGetLabelReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *IssuesGetLabelReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *IssuesGetLabelReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "issues/get-label", opt)
+func (r *IssuesGetLabelReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *IssuesGetLabelReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "issues/get-label",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/labels/%v", r.Owner, r.Repo, r.Name),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -1892,7 +1812,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *IssuesGetLabelReq) Rel(link RelName, resp *IssuesGetLabelResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1906,7 +1826,7 @@ IssuesGetLabelResponse is a response for IssuesGetLabel
 https://developer.github.com/v3/issues/labels/#get-a-label
 */
 type IssuesGetLabelResponse struct {
-	response
+	internal.Response
 	request *IssuesGetLabelReq
 	Data    components.Label
 }
@@ -1920,20 +1840,26 @@ Get a milestone.
 
 https://developer.github.com/v3/issues/milestones/#get-a-milestone
 */
-func IssuesGetMilestone(ctx context.Context, req *IssuesGetMilestoneReq, opt ...RequestOption) (*IssuesGetMilestoneResponse, error) {
+func IssuesGetMilestone(ctx context.Context, req *IssuesGetMilestoneReq, opt ...options.Option) (*IssuesGetMilestoneResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(IssuesGetMilestoneReq)
 	}
 	resp := &IssuesGetMilestoneResponse{request: req}
-	r, err := doRequest(ctx, req, "issues/get-milestone", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.Milestone{}
-	err = r.decodeBody(&resp.Data, "issues/get-milestone")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1949,7 +1875,7 @@ Get a milestone.
 
 https://developer.github.com/v3/issues/milestones/#get-a-milestone
 */
-func (c Client) IssuesGetMilestone(ctx context.Context, req *IssuesGetMilestoneReq, opt ...RequestOption) (*IssuesGetMilestoneResponse, error) {
+func (c Client) IssuesGetMilestone(ctx context.Context, req *IssuesGetMilestoneReq, opt ...options.Option) (*IssuesGetMilestoneResponse, error) {
 	return IssuesGetMilestone(ctx, req, append(c, opt...)...)
 }
 
@@ -1967,44 +1893,33 @@ type IssuesGetMilestoneReq struct {
 	MilestoneNumber int64
 }
 
-func (r *IssuesGetMilestoneReq) url() string {
-	return r._url
-}
-
-func (r *IssuesGetMilestoneReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/milestones/%v", r.Owner, r.Repo, r.MilestoneNumber)
-}
-
-func (r *IssuesGetMilestoneReq) method() string {
-	return "GET"
-}
-
-func (r *IssuesGetMilestoneReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *IssuesGetMilestoneReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *IssuesGetMilestoneReq) body() interface{} {
-	return nil
-}
-
-func (r *IssuesGetMilestoneReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *IssuesGetMilestoneReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *IssuesGetMilestoneReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "issues/get-milestone", opt)
+func (r *IssuesGetMilestoneReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *IssuesGetMilestoneReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "issues/get-milestone",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/milestones/%v", r.Owner, r.Repo, r.MilestoneNumber),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -2012,7 +1927,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *IssuesGetMilestoneReq) Rel(link RelName, resp *IssuesGetMilestoneResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -2026,7 +1941,7 @@ IssuesGetMilestoneResponse is a response for IssuesGetMilestone
 https://developer.github.com/v3/issues/milestones/#get-a-milestone
 */
 type IssuesGetMilestoneResponse struct {
-	response
+	internal.Response
 	request *IssuesGetMilestoneReq
 	Data    components.Milestone
 }
@@ -2040,20 +1955,26 @@ List issues assigned to the authenticated user.
 
 https://developer.github.com/v3/issues/#list-issues-assigned-to-the-authenticated-user
 */
-func IssuesList(ctx context.Context, req *IssuesListReq, opt ...RequestOption) (*IssuesListResponse, error) {
+func IssuesList(ctx context.Context, req *IssuesListReq, opt ...options.Option) (*IssuesListResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(IssuesListReq)
 	}
 	resp := &IssuesListResponse{request: req}
-	r, err := doRequest(ctx, req, "issues/list", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.Issue{}
-	err = r.decodeBody(&resp.Data, "issues/list")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2069,7 +1990,7 @@ List issues assigned to the authenticated user.
 
 https://developer.github.com/v3/issues/#list-issues-assigned-to-the-authenticated-user
 */
-func (c Client) IssuesList(ctx context.Context, req *IssuesListReq, opt ...RequestOption) (*IssuesListResponse, error) {
+func (c Client) IssuesList(ctx context.Context, req *IssuesListReq, opt ...options.Option) (*IssuesListResponse, error) {
 	return IssuesList(ctx, req, append(c, opt...)...)
 }
 
@@ -2142,19 +2063,16 @@ type IssuesListReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *IssuesListReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *IssuesListReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *IssuesListReq) urlPath() string {
-	return fmt.Sprintf("/issues")
-}
-
-func (r *IssuesListReq) method() string {
-	return "GET"
-}
-
-func (r *IssuesListReq) urlQuery() url.Values {
+func (r *IssuesListReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Filter != nil {
 		query.Set("filter", *r.Filter)
@@ -2192,37 +2110,25 @@ func (r *IssuesListReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *IssuesListReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{
-		"machine-man":   r.MachineManPreview,
-		"squirrel-girl": r.SquirrelGirlPreview,
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{"machine-man", "squirrel-girl"},
+		Body:         nil,
+		DataStatuses: []int{200},
+		ExplicitURL:  r._url,
+		HeaderVals:   map[string]*string{"accept": String("application/json")},
+		Method:       "GET",
+		OperationID:  "issues/list",
+		Previews: map[string]bool{
+			"machine-man":   r.MachineManPreview,
+			"squirrel-girl": r.SquirrelGirlPreview,
+		},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/issues"),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
 	}
-	if allPreviews {
-		previewVals["machine-man"] = true
-		previewVals["squirrel-girl"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *IssuesListReq) body() interface{} {
-	return nil
-}
-
-func (r *IssuesListReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *IssuesListReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *IssuesListReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "issues/list", opt)
+	return builder
 }
 
 /*
@@ -2230,7 +2136,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *IssuesListReq) Rel(link RelName, resp *IssuesListResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -2244,7 +2150,7 @@ IssuesListResponse is a response for IssuesList
 https://developer.github.com/v3/issues/#list-issues-assigned-to-the-authenticated-user
 */
 type IssuesListResponse struct {
-	response
+	internal.Response
 	request *IssuesListReq
 	Data    []components.Issue
 }
@@ -2258,20 +2164,26 @@ List assignees.
 
 https://developer.github.com/v3/issues/assignees/#list-assignees
 */
-func IssuesListAssignees(ctx context.Context, req *IssuesListAssigneesReq, opt ...RequestOption) (*IssuesListAssigneesResponse, error) {
+func IssuesListAssignees(ctx context.Context, req *IssuesListAssigneesReq, opt ...options.Option) (*IssuesListAssigneesResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(IssuesListAssigneesReq)
 	}
 	resp := &IssuesListAssigneesResponse{request: req}
-	r, err := doRequest(ctx, req, "issues/list-assignees", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.SimpleUser{}
-	err = r.decodeBody(&resp.Data, "issues/list-assignees")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2287,7 +2199,7 @@ List assignees.
 
 https://developer.github.com/v3/issues/assignees/#list-assignees
 */
-func (c Client) IssuesListAssignees(ctx context.Context, req *IssuesListAssigneesReq, opt ...RequestOption) (*IssuesListAssigneesResponse, error) {
+func (c Client) IssuesListAssignees(ctx context.Context, req *IssuesListAssigneesReq, opt ...options.Option) (*IssuesListAssigneesResponse, error) {
 	return IssuesListAssignees(ctx, req, append(c, opt...)...)
 }
 
@@ -2308,19 +2220,16 @@ type IssuesListAssigneesReq struct {
 	Page *int64
 }
 
-func (r *IssuesListAssigneesReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *IssuesListAssigneesReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *IssuesListAssigneesReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/assignees", r.Owner, r.Repo)
-}
-
-func (r *IssuesListAssigneesReq) method() string {
-	return "GET"
-}
-
-func (r *IssuesListAssigneesReq) urlQuery() url.Values {
+func (r *IssuesListAssigneesReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -2328,30 +2237,22 @@ func (r *IssuesListAssigneesReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *IssuesListAssigneesReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *IssuesListAssigneesReq) body() interface{} {
-	return nil
-}
-
-func (r *IssuesListAssigneesReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *IssuesListAssigneesReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *IssuesListAssigneesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "issues/list-assignees", opt)
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "issues/list-assignees",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/assignees", r.Owner, r.Repo),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -2359,7 +2260,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *IssuesListAssigneesReq) Rel(link RelName, resp *IssuesListAssigneesResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -2373,7 +2274,7 @@ IssuesListAssigneesResponse is a response for IssuesListAssignees
 https://developer.github.com/v3/issues/assignees/#list-assignees
 */
 type IssuesListAssigneesResponse struct {
-	response
+	internal.Response
 	request *IssuesListAssigneesReq
 	Data    []components.SimpleUser
 }
@@ -2387,20 +2288,26 @@ List issue comments.
 
 https://developer.github.com/v3/issues/comments/#list-issue-comments
 */
-func IssuesListComments(ctx context.Context, req *IssuesListCommentsReq, opt ...RequestOption) (*IssuesListCommentsResponse, error) {
+func IssuesListComments(ctx context.Context, req *IssuesListCommentsReq, opt ...options.Option) (*IssuesListCommentsResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(IssuesListCommentsReq)
 	}
 	resp := &IssuesListCommentsResponse{request: req}
-	r, err := doRequest(ctx, req, "issues/list-comments", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.IssueComment{}
-	err = r.decodeBody(&resp.Data, "issues/list-comments")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2416,7 +2323,7 @@ List issue comments.
 
 https://developer.github.com/v3/issues/comments/#list-issue-comments
 */
-func (c Client) IssuesListComments(ctx context.Context, req *IssuesListCommentsReq, opt ...RequestOption) (*IssuesListCommentsResponse, error) {
+func (c Client) IssuesListComments(ctx context.Context, req *IssuesListCommentsReq, opt ...options.Option) (*IssuesListCommentsResponse, error) {
 	return IssuesListComments(ctx, req, append(c, opt...)...)
 }
 
@@ -2458,19 +2365,16 @@ type IssuesListCommentsReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *IssuesListCommentsReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *IssuesListCommentsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *IssuesListCommentsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/issues/%v/comments", r.Owner, r.Repo, r.IssueNumber)
-}
-
-func (r *IssuesListCommentsReq) method() string {
-	return "GET"
-}
-
-func (r *IssuesListCommentsReq) urlQuery() url.Values {
+func (r *IssuesListCommentsReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Since != nil {
 		query.Set("since", *r.Since)
@@ -2481,33 +2385,22 @@ func (r *IssuesListCommentsReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *IssuesListCommentsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	if allPreviews {
-		previewVals["squirrel-girl"] = true
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"squirrel-girl"},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "issues/list-comments",
+		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/%v/comments", r.Owner, r.Repo, r.IssueNumber),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
 	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *IssuesListCommentsReq) body() interface{} {
-	return nil
-}
-
-func (r *IssuesListCommentsReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *IssuesListCommentsReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *IssuesListCommentsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "issues/list-comments", opt)
+	return builder
 }
 
 /*
@@ -2515,7 +2408,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *IssuesListCommentsReq) Rel(link RelName, resp *IssuesListCommentsResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -2529,7 +2422,7 @@ IssuesListCommentsResponse is a response for IssuesListComments
 https://developer.github.com/v3/issues/comments/#list-issue-comments
 */
 type IssuesListCommentsResponse struct {
-	response
+	internal.Response
 	request *IssuesListCommentsReq
 	Data    []components.IssueComment
 }
@@ -2543,20 +2436,26 @@ List issue comments for a repository.
 
 https://developer.github.com/v3/issues/comments/#list-issue-comments-for-a-repository
 */
-func IssuesListCommentsForRepo(ctx context.Context, req *IssuesListCommentsForRepoReq, opt ...RequestOption) (*IssuesListCommentsForRepoResponse, error) {
+func IssuesListCommentsForRepo(ctx context.Context, req *IssuesListCommentsForRepoReq, opt ...options.Option) (*IssuesListCommentsForRepoResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(IssuesListCommentsForRepoReq)
 	}
 	resp := &IssuesListCommentsForRepoResponse{request: req}
-	r, err := doRequest(ctx, req, "issues/list-comments-for-repo", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.IssueComment{}
-	err = r.decodeBody(&resp.Data, "issues/list-comments-for-repo")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2572,7 +2471,7 @@ List issue comments for a repository.
 
 https://developer.github.com/v3/issues/comments/#list-issue-comments-for-a-repository
 */
-func (c Client) IssuesListCommentsForRepo(ctx context.Context, req *IssuesListCommentsForRepoReq, opt ...RequestOption) (*IssuesListCommentsForRepoResponse, error) {
+func (c Client) IssuesListCommentsForRepo(ctx context.Context, req *IssuesListCommentsForRepoReq, opt ...options.Option) (*IssuesListCommentsForRepoResponse, error) {
 	return IssuesListCommentsForRepo(ctx, req, append(c, opt...)...)
 }
 
@@ -2620,19 +2519,16 @@ type IssuesListCommentsForRepoReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *IssuesListCommentsForRepoReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *IssuesListCommentsForRepoReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *IssuesListCommentsForRepoReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/issues/comments", r.Owner, r.Repo)
-}
-
-func (r *IssuesListCommentsForRepoReq) method() string {
-	return "GET"
-}
-
-func (r *IssuesListCommentsForRepoReq) urlQuery() url.Values {
+func (r *IssuesListCommentsForRepoReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Sort != nil {
 		query.Set("sort", *r.Sort)
@@ -2649,33 +2545,22 @@ func (r *IssuesListCommentsForRepoReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *IssuesListCommentsForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{"squirrel-girl": r.SquirrelGirlPreview}
-	if allPreviews {
-		previewVals["squirrel-girl"] = true
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"squirrel-girl"},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "issues/list-comments-for-repo",
+		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/comments", r.Owner, r.Repo),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
 	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *IssuesListCommentsForRepoReq) body() interface{} {
-	return nil
-}
-
-func (r *IssuesListCommentsForRepoReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *IssuesListCommentsForRepoReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *IssuesListCommentsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "issues/list-comments-for-repo", opt)
+	return builder
 }
 
 /*
@@ -2683,7 +2568,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *IssuesListCommentsForRepoReq) Rel(link RelName, resp *IssuesListCommentsForRepoResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -2697,7 +2582,7 @@ IssuesListCommentsForRepoResponse is a response for IssuesListCommentsForRepo
 https://developer.github.com/v3/issues/comments/#list-issue-comments-for-a-repository
 */
 type IssuesListCommentsForRepoResponse struct {
-	response
+	internal.Response
 	request *IssuesListCommentsForRepoReq
 	Data    []components.IssueComment
 }
@@ -2711,20 +2596,26 @@ List issue events.
 
 https://developer.github.com/v3/issues/events/#list-issue-events
 */
-func IssuesListEvents(ctx context.Context, req *IssuesListEventsReq, opt ...RequestOption) (*IssuesListEventsResponse, error) {
+func IssuesListEvents(ctx context.Context, req *IssuesListEventsReq, opt ...options.Option) (*IssuesListEventsResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(IssuesListEventsReq)
 	}
 	resp := &IssuesListEventsResponse{request: req}
-	r, err := doRequest(ctx, req, "issues/list-events", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.IssueEventForIssue{}
-	err = r.decodeBody(&resp.Data, "issues/list-events")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2740,7 +2631,7 @@ List issue events.
 
 https://developer.github.com/v3/issues/events/#list-issue-events
 */
-func (c Client) IssuesListEvents(ctx context.Context, req *IssuesListEventsReq, opt ...RequestOption) (*IssuesListEventsResponse, error) {
+func (c Client) IssuesListEvents(ctx context.Context, req *IssuesListEventsReq, opt ...options.Option) (*IssuesListEventsResponse, error) {
 	return IssuesListEvents(ctx, req, append(c, opt...)...)
 }
 
@@ -2786,19 +2677,16 @@ type IssuesListEventsReq struct {
 	SailorVPreview bool
 }
 
-func (r *IssuesListEventsReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *IssuesListEventsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *IssuesListEventsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/issues/%v/events", r.Owner, r.Repo, r.IssueNumber)
-}
-
-func (r *IssuesListEventsReq) method() string {
-	return "GET"
-}
-
-func (r *IssuesListEventsReq) urlQuery() url.Values {
+func (r *IssuesListEventsReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -2806,37 +2694,25 @@ func (r *IssuesListEventsReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *IssuesListEventsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{
-		"sailor-v": r.SailorVPreview,
-		"starfox":  r.StarfoxPreview,
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{"starfox", "sailor-v"},
+		Body:         nil,
+		DataStatuses: []int{200},
+		ExplicitURL:  r._url,
+		HeaderVals:   map[string]*string{"accept": String("application/json")},
+		Method:       "GET",
+		OperationID:  "issues/list-events",
+		Previews: map[string]bool{
+			"sailor-v": r.SailorVPreview,
+			"starfox":  r.StarfoxPreview,
+		},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/%v/events", r.Owner, r.Repo, r.IssueNumber),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
 	}
-	if allPreviews {
-		previewVals["starfox"] = true
-		previewVals["sailor-v"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *IssuesListEventsReq) body() interface{} {
-	return nil
-}
-
-func (r *IssuesListEventsReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *IssuesListEventsReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *IssuesListEventsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "issues/list-events", opt)
+	return builder
 }
 
 /*
@@ -2844,7 +2720,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *IssuesListEventsReq) Rel(link RelName, resp *IssuesListEventsResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -2858,7 +2734,7 @@ IssuesListEventsResponse is a response for IssuesListEvents
 https://developer.github.com/v3/issues/events/#list-issue-events
 */
 type IssuesListEventsResponse struct {
-	response
+	internal.Response
 	request *IssuesListEventsReq
 	Data    []components.IssueEventForIssue
 }
@@ -2872,20 +2748,26 @@ List issue events for a repository.
 
 https://developer.github.com/v3/issues/events/#list-issue-events-for-a-repository
 */
-func IssuesListEventsForRepo(ctx context.Context, req *IssuesListEventsForRepoReq, opt ...RequestOption) (*IssuesListEventsForRepoResponse, error) {
+func IssuesListEventsForRepo(ctx context.Context, req *IssuesListEventsForRepoReq, opt ...options.Option) (*IssuesListEventsForRepoResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(IssuesListEventsForRepoReq)
 	}
 	resp := &IssuesListEventsForRepoResponse{request: req}
-	r, err := doRequest(ctx, req, "issues/list-events-for-repo", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.IssueEvent{}
-	err = r.decodeBody(&resp.Data, "issues/list-events-for-repo")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2901,7 +2783,7 @@ List issue events for a repository.
 
 https://developer.github.com/v3/issues/events/#list-issue-events-for-a-repository
 */
-func (c Client) IssuesListEventsForRepo(ctx context.Context, req *IssuesListEventsForRepoReq, opt ...RequestOption) (*IssuesListEventsForRepoResponse, error) {
+func (c Client) IssuesListEventsForRepo(ctx context.Context, req *IssuesListEventsForRepoReq, opt ...options.Option) (*IssuesListEventsForRepoResponse, error) {
 	return IssuesListEventsForRepo(ctx, req, append(c, opt...)...)
 }
 
@@ -2944,19 +2826,16 @@ type IssuesListEventsForRepoReq struct {
 	SailorVPreview bool
 }
 
-func (r *IssuesListEventsForRepoReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *IssuesListEventsForRepoReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *IssuesListEventsForRepoReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/issues/events", r.Owner, r.Repo)
-}
-
-func (r *IssuesListEventsForRepoReq) method() string {
-	return "GET"
-}
-
-func (r *IssuesListEventsForRepoReq) urlQuery() url.Values {
+func (r *IssuesListEventsForRepoReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -2964,37 +2843,25 @@ func (r *IssuesListEventsForRepoReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *IssuesListEventsForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{
-		"sailor-v": r.SailorVPreview,
-		"starfox":  r.StarfoxPreview,
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{"starfox", "sailor-v"},
+		Body:         nil,
+		DataStatuses: []int{200},
+		ExplicitURL:  r._url,
+		HeaderVals:   map[string]*string{"accept": String("application/json")},
+		Method:       "GET",
+		OperationID:  "issues/list-events-for-repo",
+		Previews: map[string]bool{
+			"sailor-v": r.SailorVPreview,
+			"starfox":  r.StarfoxPreview,
+		},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/events", r.Owner, r.Repo),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
 	}
-	if allPreviews {
-		previewVals["starfox"] = true
-		previewVals["sailor-v"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *IssuesListEventsForRepoReq) body() interface{} {
-	return nil
-}
-
-func (r *IssuesListEventsForRepoReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *IssuesListEventsForRepoReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *IssuesListEventsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "issues/list-events-for-repo", opt)
+	return builder
 }
 
 /*
@@ -3002,7 +2869,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *IssuesListEventsForRepoReq) Rel(link RelName, resp *IssuesListEventsForRepoResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -3016,7 +2883,7 @@ IssuesListEventsForRepoResponse is a response for IssuesListEventsForRepo
 https://developer.github.com/v3/issues/events/#list-issue-events-for-a-repository
 */
 type IssuesListEventsForRepoResponse struct {
-	response
+	internal.Response
 	request *IssuesListEventsForRepoReq
 	Data    []components.IssueEvent
 }
@@ -3030,20 +2897,26 @@ List timeline events for an issue.
 
 https://developer.github.com/v3/issues/timeline/#list-timeline-events-for-an-issue
 */
-func IssuesListEventsForTimeline(ctx context.Context, req *IssuesListEventsForTimelineReq, opt ...RequestOption) (*IssuesListEventsForTimelineResponse, error) {
+func IssuesListEventsForTimeline(ctx context.Context, req *IssuesListEventsForTimelineReq, opt ...options.Option) (*IssuesListEventsForTimelineResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(IssuesListEventsForTimelineReq)
 	}
 	resp := &IssuesListEventsForTimelineResponse{request: req}
-	r, err := doRequest(ctx, req, "issues/list-events-for-timeline", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.IssueEventForIssue{}
-	err = r.decodeBody(&resp.Data, "issues/list-events-for-timeline")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3059,7 +2932,7 @@ List timeline events for an issue.
 
 https://developer.github.com/v3/issues/timeline/#list-timeline-events-for-an-issue
 */
-func (c Client) IssuesListEventsForTimeline(ctx context.Context, req *IssuesListEventsForTimelineReq, opt ...RequestOption) (*IssuesListEventsForTimelineResponse, error) {
+func (c Client) IssuesListEventsForTimeline(ctx context.Context, req *IssuesListEventsForTimelineReq, opt ...options.Option) (*IssuesListEventsForTimelineResponse, error) {
 	return IssuesListEventsForTimeline(ctx, req, append(c, opt...)...)
 }
 
@@ -3104,19 +2977,16 @@ type IssuesListEventsForTimelineReq struct {
 	StarfoxPreview bool
 }
 
-func (r *IssuesListEventsForTimelineReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *IssuesListEventsForTimelineReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *IssuesListEventsForTimelineReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/issues/%v/timeline", r.Owner, r.Repo, r.IssueNumber)
-}
-
-func (r *IssuesListEventsForTimelineReq) method() string {
-	return "GET"
-}
-
-func (r *IssuesListEventsForTimelineReq) urlQuery() url.Values {
+func (r *IssuesListEventsForTimelineReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -3124,40 +2994,25 @@ func (r *IssuesListEventsForTimelineReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *IssuesListEventsForTimelineReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{
-		"mockingbird": r.MockingbirdPreview,
-		"starfox":     r.StarfoxPreview,
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{"mockingbird", "starfox"},
+		Body:         nil,
+		DataStatuses: []int{200},
+		ExplicitURL:  r._url,
+		HeaderVals:   map[string]*string{"accept": String("application/json")},
+		Method:       "GET",
+		OperationID:  "issues/list-events-for-timeline",
+		Previews: map[string]bool{
+			"mockingbird": r.MockingbirdPreview,
+			"starfox":     r.StarfoxPreview,
+		},
+		RequiredPreviews: []string{"mockingbird"},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/%v/timeline", r.Owner, r.Repo, r.IssueNumber),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
 	}
-	if requiredPreviews {
-		previewVals["mockingbird"] = true
-	}
-	if allPreviews {
-		previewVals["mockingbird"] = true
-		previewVals["starfox"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *IssuesListEventsForTimelineReq) body() interface{} {
-	return nil
-}
-
-func (r *IssuesListEventsForTimelineReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *IssuesListEventsForTimelineReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *IssuesListEventsForTimelineReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "issues/list-events-for-timeline", opt)
+	return builder
 }
 
 /*
@@ -3165,7 +3020,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *IssuesListEventsForTimelineReq) Rel(link RelName, resp *IssuesListEventsForTimelineResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -3179,7 +3034,7 @@ IssuesListEventsForTimelineResponse is a response for IssuesListEventsForTimelin
 https://developer.github.com/v3/issues/timeline/#list-timeline-events-for-an-issue
 */
 type IssuesListEventsForTimelineResponse struct {
-	response
+	internal.Response
 	request *IssuesListEventsForTimelineReq
 	Data    []components.IssueEventForIssue
 }
@@ -3193,20 +3048,26 @@ List user account issues assigned to the authenticated user.
 
 https://developer.github.com/v3/issues/#list-user-account-issues-assigned-to-the-authenticated-user
 */
-func IssuesListForAuthenticatedUser(ctx context.Context, req *IssuesListForAuthenticatedUserReq, opt ...RequestOption) (*IssuesListForAuthenticatedUserResponse, error) {
+func IssuesListForAuthenticatedUser(ctx context.Context, req *IssuesListForAuthenticatedUserReq, opt ...options.Option) (*IssuesListForAuthenticatedUserResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(IssuesListForAuthenticatedUserReq)
 	}
 	resp := &IssuesListForAuthenticatedUserResponse{request: req}
-	r, err := doRequest(ctx, req, "issues/list-for-authenticated-user", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.Issue{}
-	err = r.decodeBody(&resp.Data, "issues/list-for-authenticated-user")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3222,7 +3083,7 @@ List user account issues assigned to the authenticated user.
 
 https://developer.github.com/v3/issues/#list-user-account-issues-assigned-to-the-authenticated-user
 */
-func (c Client) IssuesListForAuthenticatedUser(ctx context.Context, req *IssuesListForAuthenticatedUserReq, opt ...RequestOption) (*IssuesListForAuthenticatedUserResponse, error) {
+func (c Client) IssuesListForAuthenticatedUser(ctx context.Context, req *IssuesListForAuthenticatedUserReq, opt ...options.Option) (*IssuesListForAuthenticatedUserResponse, error) {
 	return IssuesListForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
@@ -3291,19 +3152,16 @@ type IssuesListForAuthenticatedUserReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *IssuesListForAuthenticatedUserReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *IssuesListForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *IssuesListForAuthenticatedUserReq) urlPath() string {
-	return fmt.Sprintf("/user/issues")
-}
-
-func (r *IssuesListForAuthenticatedUserReq) method() string {
-	return "GET"
-}
-
-func (r *IssuesListForAuthenticatedUserReq) urlQuery() url.Values {
+func (r *IssuesListForAuthenticatedUserReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Filter != nil {
 		query.Set("filter", *r.Filter)
@@ -3329,37 +3187,25 @@ func (r *IssuesListForAuthenticatedUserReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *IssuesListForAuthenticatedUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{
-		"machine-man":   r.MachineManPreview,
-		"squirrel-girl": r.SquirrelGirlPreview,
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{"machine-man", "squirrel-girl"},
+		Body:         nil,
+		DataStatuses: []int{200},
+		ExplicitURL:  r._url,
+		HeaderVals:   map[string]*string{"accept": String("application/json")},
+		Method:       "GET",
+		OperationID:  "issues/list-for-authenticated-user",
+		Previews: map[string]bool{
+			"machine-man":   r.MachineManPreview,
+			"squirrel-girl": r.SquirrelGirlPreview,
+		},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/user/issues"),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
 	}
-	if allPreviews {
-		previewVals["machine-man"] = true
-		previewVals["squirrel-girl"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *IssuesListForAuthenticatedUserReq) body() interface{} {
-	return nil
-}
-
-func (r *IssuesListForAuthenticatedUserReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *IssuesListForAuthenticatedUserReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *IssuesListForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "issues/list-for-authenticated-user", opt)
+	return builder
 }
 
 /*
@@ -3367,7 +3213,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *IssuesListForAuthenticatedUserReq) Rel(link RelName, resp *IssuesListForAuthenticatedUserResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -3381,7 +3227,7 @@ IssuesListForAuthenticatedUserResponse is a response for IssuesListForAuthentica
 https://developer.github.com/v3/issues/#list-user-account-issues-assigned-to-the-authenticated-user
 */
 type IssuesListForAuthenticatedUserResponse struct {
-	response
+	internal.Response
 	request *IssuesListForAuthenticatedUserReq
 	Data    []components.Issue
 }
@@ -3395,20 +3241,26 @@ List organization issues assigned to the authenticated user.
 
 https://developer.github.com/v3/issues/#list-organization-issues-assigned-to-the-authenticated-user
 */
-func IssuesListForOrg(ctx context.Context, req *IssuesListForOrgReq, opt ...RequestOption) (*IssuesListForOrgResponse, error) {
+func IssuesListForOrg(ctx context.Context, req *IssuesListForOrgReq, opt ...options.Option) (*IssuesListForOrgResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(IssuesListForOrgReq)
 	}
 	resp := &IssuesListForOrgResponse{request: req}
-	r, err := doRequest(ctx, req, "issues/list-for-org", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.Issue{}
-	err = r.decodeBody(&resp.Data, "issues/list-for-org")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3424,7 +3276,7 @@ List organization issues assigned to the authenticated user.
 
 https://developer.github.com/v3/issues/#list-organization-issues-assigned-to-the-authenticated-user
 */
-func (c Client) IssuesListForOrg(ctx context.Context, req *IssuesListForOrgReq, opt ...RequestOption) (*IssuesListForOrgResponse, error) {
+func (c Client) IssuesListForOrg(ctx context.Context, req *IssuesListForOrgReq, opt ...options.Option) (*IssuesListForOrgResponse, error) {
 	return IssuesListForOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -3494,19 +3346,16 @@ type IssuesListForOrgReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *IssuesListForOrgReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *IssuesListForOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *IssuesListForOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/issues", r.Org)
-}
-
-func (r *IssuesListForOrgReq) method() string {
-	return "GET"
-}
-
-func (r *IssuesListForOrgReq) urlQuery() url.Values {
+func (r *IssuesListForOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Filter != nil {
 		query.Set("filter", *r.Filter)
@@ -3532,37 +3381,25 @@ func (r *IssuesListForOrgReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *IssuesListForOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{
-		"machine-man":   r.MachineManPreview,
-		"squirrel-girl": r.SquirrelGirlPreview,
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{"machine-man", "squirrel-girl"},
+		Body:         nil,
+		DataStatuses: []int{200},
+		ExplicitURL:  r._url,
+		HeaderVals:   map[string]*string{"accept": String("application/json")},
+		Method:       "GET",
+		OperationID:  "issues/list-for-org",
+		Previews: map[string]bool{
+			"machine-man":   r.MachineManPreview,
+			"squirrel-girl": r.SquirrelGirlPreview,
+		},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/orgs/%v/issues", r.Org),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
 	}
-	if allPreviews {
-		previewVals["machine-man"] = true
-		previewVals["squirrel-girl"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *IssuesListForOrgReq) body() interface{} {
-	return nil
-}
-
-func (r *IssuesListForOrgReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *IssuesListForOrgReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *IssuesListForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "issues/list-for-org", opt)
+	return builder
 }
 
 /*
@@ -3570,7 +3407,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *IssuesListForOrgReq) Rel(link RelName, resp *IssuesListForOrgResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -3584,7 +3421,7 @@ IssuesListForOrgResponse is a response for IssuesListForOrg
 https://developer.github.com/v3/issues/#list-organization-issues-assigned-to-the-authenticated-user
 */
 type IssuesListForOrgResponse struct {
-	response
+	internal.Response
 	request *IssuesListForOrgReq
 	Data    []components.Issue
 }
@@ -3598,20 +3435,26 @@ List repository issues.
 
 https://developer.github.com/v3/issues/#list-repository-issues
 */
-func IssuesListForRepo(ctx context.Context, req *IssuesListForRepoReq, opt ...RequestOption) (*IssuesListForRepoResponse, error) {
+func IssuesListForRepo(ctx context.Context, req *IssuesListForRepoReq, opt ...options.Option) (*IssuesListForRepoResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(IssuesListForRepoReq)
 	}
 	resp := &IssuesListForRepoResponse{request: req}
-	r, err := doRequest(ctx, req, "issues/list-for-repo", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.IssueSimple{}
-	err = r.decodeBody(&resp.Data, "issues/list-for-repo")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3627,7 +3470,7 @@ List repository issues.
 
 https://developer.github.com/v3/issues/#list-repository-issues
 */
-func (c Client) IssuesListForRepo(ctx context.Context, req *IssuesListForRepoReq, opt ...RequestOption) (*IssuesListForRepoResponse, error) {
+func (c Client) IssuesListForRepo(ctx context.Context, req *IssuesListForRepoReq, opt ...options.Option) (*IssuesListForRepoResponse, error) {
 	return IssuesListForRepo(ctx, req, append(c, opt...)...)
 }
 
@@ -3706,19 +3549,16 @@ type IssuesListForRepoReq struct {
 	SquirrelGirlPreview bool
 }
 
-func (r *IssuesListForRepoReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *IssuesListForRepoReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *IssuesListForRepoReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/issues", r.Owner, r.Repo)
-}
-
-func (r *IssuesListForRepoReq) method() string {
-	return "GET"
-}
-
-func (r *IssuesListForRepoReq) urlQuery() url.Values {
+func (r *IssuesListForRepoReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Milestone != nil {
 		query.Set("milestone", *r.Milestone)
@@ -3753,37 +3593,25 @@ func (r *IssuesListForRepoReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *IssuesListForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{
-		"machine-man":   r.MachineManPreview,
-		"squirrel-girl": r.SquirrelGirlPreview,
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{"machine-man", "squirrel-girl"},
+		Body:         nil,
+		DataStatuses: []int{200},
+		ExplicitURL:  r._url,
+		HeaderVals:   map[string]*string{"accept": String("application/json")},
+		Method:       "GET",
+		OperationID:  "issues/list-for-repo",
+		Previews: map[string]bool{
+			"machine-man":   r.MachineManPreview,
+			"squirrel-girl": r.SquirrelGirlPreview,
+		},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/issues", r.Owner, r.Repo),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 301},
 	}
-	if allPreviews {
-		previewVals["machine-man"] = true
-		previewVals["squirrel-girl"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *IssuesListForRepoReq) body() interface{} {
-	return nil
-}
-
-func (r *IssuesListForRepoReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *IssuesListForRepoReq) validStatuses() []int {
-	return []int{200, 301}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *IssuesListForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "issues/list-for-repo", opt)
+	return builder
 }
 
 /*
@@ -3791,7 +3619,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *IssuesListForRepoReq) Rel(link RelName, resp *IssuesListForRepoResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -3805,7 +3633,7 @@ IssuesListForRepoResponse is a response for IssuesListForRepo
 https://developer.github.com/v3/issues/#list-repository-issues
 */
 type IssuesListForRepoResponse struct {
-	response
+	internal.Response
 	request *IssuesListForRepoReq
 	Data    []components.IssueSimple
 }
@@ -3819,20 +3647,26 @@ List labels for issues in a milestone.
 
 https://developer.github.com/v3/issues/labels/#list-labels-for-issues-in-a-milestone
 */
-func IssuesListLabelsForMilestone(ctx context.Context, req *IssuesListLabelsForMilestoneReq, opt ...RequestOption) (*IssuesListLabelsForMilestoneResponse, error) {
+func IssuesListLabelsForMilestone(ctx context.Context, req *IssuesListLabelsForMilestoneReq, opt ...options.Option) (*IssuesListLabelsForMilestoneResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(IssuesListLabelsForMilestoneReq)
 	}
 	resp := &IssuesListLabelsForMilestoneResponse{request: req}
-	r, err := doRequest(ctx, req, "issues/list-labels-for-milestone", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.Label{}
-	err = r.decodeBody(&resp.Data, "issues/list-labels-for-milestone")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3848,7 +3682,7 @@ List labels for issues in a milestone.
 
 https://developer.github.com/v3/issues/labels/#list-labels-for-issues-in-a-milestone
 */
-func (c Client) IssuesListLabelsForMilestone(ctx context.Context, req *IssuesListLabelsForMilestoneReq, opt ...RequestOption) (*IssuesListLabelsForMilestoneResponse, error) {
+func (c Client) IssuesListLabelsForMilestone(ctx context.Context, req *IssuesListLabelsForMilestoneReq, opt ...options.Option) (*IssuesListLabelsForMilestoneResponse, error) {
 	return IssuesListLabelsForMilestone(ctx, req, append(c, opt...)...)
 }
 
@@ -3872,19 +3706,16 @@ type IssuesListLabelsForMilestoneReq struct {
 	Page *int64
 }
 
-func (r *IssuesListLabelsForMilestoneReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *IssuesListLabelsForMilestoneReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *IssuesListLabelsForMilestoneReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/milestones/%v/labels", r.Owner, r.Repo, r.MilestoneNumber)
-}
-
-func (r *IssuesListLabelsForMilestoneReq) method() string {
-	return "GET"
-}
-
-func (r *IssuesListLabelsForMilestoneReq) urlQuery() url.Values {
+func (r *IssuesListLabelsForMilestoneReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -3892,30 +3723,22 @@ func (r *IssuesListLabelsForMilestoneReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *IssuesListLabelsForMilestoneReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *IssuesListLabelsForMilestoneReq) body() interface{} {
-	return nil
-}
-
-func (r *IssuesListLabelsForMilestoneReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *IssuesListLabelsForMilestoneReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *IssuesListLabelsForMilestoneReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "issues/list-labels-for-milestone", opt)
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "issues/list-labels-for-milestone",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/milestones/%v/labels", r.Owner, r.Repo, r.MilestoneNumber),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -3923,7 +3746,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *IssuesListLabelsForMilestoneReq) Rel(link RelName, resp *IssuesListLabelsForMilestoneResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -3937,7 +3760,7 @@ IssuesListLabelsForMilestoneResponse is a response for IssuesListLabelsForMilest
 https://developer.github.com/v3/issues/labels/#list-labels-for-issues-in-a-milestone
 */
 type IssuesListLabelsForMilestoneResponse struct {
-	response
+	internal.Response
 	request *IssuesListLabelsForMilestoneReq
 	Data    []components.Label
 }
@@ -3951,20 +3774,26 @@ List labels for a repository.
 
 https://developer.github.com/v3/issues/labels/#list-labels-for-a-repository
 */
-func IssuesListLabelsForRepo(ctx context.Context, req *IssuesListLabelsForRepoReq, opt ...RequestOption) (*IssuesListLabelsForRepoResponse, error) {
+func IssuesListLabelsForRepo(ctx context.Context, req *IssuesListLabelsForRepoReq, opt ...options.Option) (*IssuesListLabelsForRepoResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(IssuesListLabelsForRepoReq)
 	}
 	resp := &IssuesListLabelsForRepoResponse{request: req}
-	r, err := doRequest(ctx, req, "issues/list-labels-for-repo", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.Label{}
-	err = r.decodeBody(&resp.Data, "issues/list-labels-for-repo")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -3980,7 +3809,7 @@ List labels for a repository.
 
 https://developer.github.com/v3/issues/labels/#list-labels-for-a-repository
 */
-func (c Client) IssuesListLabelsForRepo(ctx context.Context, req *IssuesListLabelsForRepoReq, opt ...RequestOption) (*IssuesListLabelsForRepoResponse, error) {
+func (c Client) IssuesListLabelsForRepo(ctx context.Context, req *IssuesListLabelsForRepoReq, opt ...options.Option) (*IssuesListLabelsForRepoResponse, error) {
 	return IssuesListLabelsForRepo(ctx, req, append(c, opt...)...)
 }
 
@@ -4001,19 +3830,16 @@ type IssuesListLabelsForRepoReq struct {
 	Page *int64
 }
 
-func (r *IssuesListLabelsForRepoReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *IssuesListLabelsForRepoReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *IssuesListLabelsForRepoReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/labels", r.Owner, r.Repo)
-}
-
-func (r *IssuesListLabelsForRepoReq) method() string {
-	return "GET"
-}
-
-func (r *IssuesListLabelsForRepoReq) urlQuery() url.Values {
+func (r *IssuesListLabelsForRepoReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -4021,30 +3847,22 @@ func (r *IssuesListLabelsForRepoReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *IssuesListLabelsForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *IssuesListLabelsForRepoReq) body() interface{} {
-	return nil
-}
-
-func (r *IssuesListLabelsForRepoReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *IssuesListLabelsForRepoReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *IssuesListLabelsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "issues/list-labels-for-repo", opt)
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "issues/list-labels-for-repo",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/labels", r.Owner, r.Repo),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -4052,7 +3870,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *IssuesListLabelsForRepoReq) Rel(link RelName, resp *IssuesListLabelsForRepoResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -4066,7 +3884,7 @@ IssuesListLabelsForRepoResponse is a response for IssuesListLabelsForRepo
 https://developer.github.com/v3/issues/labels/#list-labels-for-a-repository
 */
 type IssuesListLabelsForRepoResponse struct {
-	response
+	internal.Response
 	request *IssuesListLabelsForRepoReq
 	Data    []components.Label
 }
@@ -4080,20 +3898,26 @@ List labels for an issue.
 
 https://developer.github.com/v3/issues/labels/#list-labels-for-an-issue
 */
-func IssuesListLabelsOnIssue(ctx context.Context, req *IssuesListLabelsOnIssueReq, opt ...RequestOption) (*IssuesListLabelsOnIssueResponse, error) {
+func IssuesListLabelsOnIssue(ctx context.Context, req *IssuesListLabelsOnIssueReq, opt ...options.Option) (*IssuesListLabelsOnIssueResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(IssuesListLabelsOnIssueReq)
 	}
 	resp := &IssuesListLabelsOnIssueResponse{request: req}
-	r, err := doRequest(ctx, req, "issues/list-labels-on-issue", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.Label{}
-	err = r.decodeBody(&resp.Data, "issues/list-labels-on-issue")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4109,7 +3933,7 @@ List labels for an issue.
 
 https://developer.github.com/v3/issues/labels/#list-labels-for-an-issue
 */
-func (c Client) IssuesListLabelsOnIssue(ctx context.Context, req *IssuesListLabelsOnIssueReq, opt ...RequestOption) (*IssuesListLabelsOnIssueResponse, error) {
+func (c Client) IssuesListLabelsOnIssue(ctx context.Context, req *IssuesListLabelsOnIssueReq, opt ...options.Option) (*IssuesListLabelsOnIssueResponse, error) {
 	return IssuesListLabelsOnIssue(ctx, req, append(c, opt...)...)
 }
 
@@ -4133,19 +3957,16 @@ type IssuesListLabelsOnIssueReq struct {
 	Page *int64
 }
 
-func (r *IssuesListLabelsOnIssueReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *IssuesListLabelsOnIssueReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *IssuesListLabelsOnIssueReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/issues/%v/labels", r.Owner, r.Repo, r.IssueNumber)
-}
-
-func (r *IssuesListLabelsOnIssueReq) method() string {
-	return "GET"
-}
-
-func (r *IssuesListLabelsOnIssueReq) urlQuery() url.Values {
+func (r *IssuesListLabelsOnIssueReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -4153,30 +3974,22 @@ func (r *IssuesListLabelsOnIssueReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *IssuesListLabelsOnIssueReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *IssuesListLabelsOnIssueReq) body() interface{} {
-	return nil
-}
-
-func (r *IssuesListLabelsOnIssueReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *IssuesListLabelsOnIssueReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *IssuesListLabelsOnIssueReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "issues/list-labels-on-issue", opt)
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "issues/list-labels-on-issue",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/%v/labels", r.Owner, r.Repo, r.IssueNumber),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -4184,7 +3997,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *IssuesListLabelsOnIssueReq) Rel(link RelName, resp *IssuesListLabelsOnIssueResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -4198,7 +4011,7 @@ IssuesListLabelsOnIssueResponse is a response for IssuesListLabelsOnIssue
 https://developer.github.com/v3/issues/labels/#list-labels-for-an-issue
 */
 type IssuesListLabelsOnIssueResponse struct {
-	response
+	internal.Response
 	request *IssuesListLabelsOnIssueReq
 	Data    []components.Label
 }
@@ -4212,20 +4025,26 @@ List milestones.
 
 https://developer.github.com/v3/issues/milestones/#list-milestones
 */
-func IssuesListMilestones(ctx context.Context, req *IssuesListMilestonesReq, opt ...RequestOption) (*IssuesListMilestonesResponse, error) {
+func IssuesListMilestones(ctx context.Context, req *IssuesListMilestonesReq, opt ...options.Option) (*IssuesListMilestonesResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(IssuesListMilestonesReq)
 	}
 	resp := &IssuesListMilestonesResponse{request: req}
-	r, err := doRequest(ctx, req, "issues/list-milestones", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.Milestone{}
-	err = r.decodeBody(&resp.Data, "issues/list-milestones")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4241,7 +4060,7 @@ List milestones.
 
 https://developer.github.com/v3/issues/milestones/#list-milestones
 */
-func (c Client) IssuesListMilestones(ctx context.Context, req *IssuesListMilestonesReq, opt ...RequestOption) (*IssuesListMilestonesResponse, error) {
+func (c Client) IssuesListMilestones(ctx context.Context, req *IssuesListMilestonesReq, opt ...options.Option) (*IssuesListMilestonesResponse, error) {
 	return IssuesListMilestones(ctx, req, append(c, opt...)...)
 }
 
@@ -4271,19 +4090,16 @@ type IssuesListMilestonesReq struct {
 	Page *int64
 }
 
-func (r *IssuesListMilestonesReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *IssuesListMilestonesReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *IssuesListMilestonesReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/milestones", r.Owner, r.Repo)
-}
-
-func (r *IssuesListMilestonesReq) method() string {
-	return "GET"
-}
-
-func (r *IssuesListMilestonesReq) urlQuery() url.Values {
+func (r *IssuesListMilestonesReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.State != nil {
 		query.Set("state", *r.State)
@@ -4300,30 +4116,22 @@ func (r *IssuesListMilestonesReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *IssuesListMilestonesReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *IssuesListMilestonesReq) body() interface{} {
-	return nil
-}
-
-func (r *IssuesListMilestonesReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *IssuesListMilestonesReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *IssuesListMilestonesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "issues/list-milestones", opt)
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "issues/list-milestones",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/milestones", r.Owner, r.Repo),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -4331,7 +4139,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *IssuesListMilestonesReq) Rel(link RelName, resp *IssuesListMilestonesResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -4345,7 +4153,7 @@ IssuesListMilestonesResponse is a response for IssuesListMilestones
 https://developer.github.com/v3/issues/milestones/#list-milestones
 */
 type IssuesListMilestonesResponse struct {
-	response
+	internal.Response
 	request *IssuesListMilestonesReq
 	Data    []components.Milestone
 }
@@ -4359,19 +4167,25 @@ Lock an issue.
 
 https://developer.github.com/v3/issues/#lock-an-issue
 */
-func IssuesLock(ctx context.Context, req *IssuesLockReq, opt ...RequestOption) (*IssuesLockResponse, error) {
+func IssuesLock(ctx context.Context, req *IssuesLockReq, opt ...options.Option) (*IssuesLockResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(IssuesLockReq)
 	}
 	resp := &IssuesLockResponse{request: req}
-	r, err := doRequest(ctx, req, "issues/lock", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "issues/lock")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -4387,7 +4201,7 @@ Lock an issue.
 
 https://developer.github.com/v3/issues/#lock-an-issue
 */
-func (c Client) IssuesLock(ctx context.Context, req *IssuesLockReq, opt ...RequestOption) (*IssuesLockResponse, error) {
+func (c Client) IssuesLock(ctx context.Context, req *IssuesLockReq, opt ...options.Option) (*IssuesLockResponse, error) {
 	return IssuesLock(ctx, req, append(c, opt...)...)
 }
 
@@ -4416,47 +4230,33 @@ type IssuesLockReq struct {
 	SailorVPreview bool
 }
 
-func (r *IssuesLockReq) url() string {
-	return r._url
-}
-
-func (r *IssuesLockReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/issues/%v/lock", r.Owner, r.Repo, r.IssueNumber)
-}
-
-func (r *IssuesLockReq) method() string {
-	return "PUT"
-}
-
-func (r *IssuesLockReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *IssuesLockReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"content-type": String("application/json")}
-	previewVals := map[string]bool{"sailor-v": r.SailorVPreview}
-	if allPreviews {
-		previewVals["sailor-v"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *IssuesLockReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *IssuesLockReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *IssuesLockReq) validStatuses() []int {
-	return []int{204}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *IssuesLockReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "issues/lock", opt)
+func (r *IssuesLockReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *IssuesLockReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"sailor-v"},
+		Body:             r.RequestBody,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"content-type": String("application/json")},
+		Method:           "PUT",
+		OperationID:      "issues/lock",
+		Previews:         map[string]bool{"sailor-v": r.SailorVPreview},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/%v/lock", r.Owner, r.Repo, r.IssueNumber),
+		URLQuery:         query,
+		ValidStatuses:    []int{204},
+	}
+	return builder
 }
 
 /*
@@ -4464,7 +4264,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *IssuesLockReq) Rel(link RelName, resp *IssuesLockResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -4496,7 +4296,7 @@ IssuesLockResponse is a response for IssuesLock
 https://developer.github.com/v3/issues/#lock-an-issue
 */
 type IssuesLockResponse struct {
-	response
+	internal.Response
 	request *IssuesLockReq
 }
 
@@ -4509,19 +4309,25 @@ Remove all labels from an issue.
 
 https://developer.github.com/v3/issues/labels/#remove-all-labels-from-an-issue
 */
-func IssuesRemoveAllLabels(ctx context.Context, req *IssuesRemoveAllLabelsReq, opt ...RequestOption) (*IssuesRemoveAllLabelsResponse, error) {
+func IssuesRemoveAllLabels(ctx context.Context, req *IssuesRemoveAllLabelsReq, opt ...options.Option) (*IssuesRemoveAllLabelsResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(IssuesRemoveAllLabelsReq)
 	}
 	resp := &IssuesRemoveAllLabelsResponse{request: req}
-	r, err := doRequest(ctx, req, "issues/remove-all-labels", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "issues/remove-all-labels")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -4537,7 +4343,7 @@ Remove all labels from an issue.
 
 https://developer.github.com/v3/issues/labels/#remove-all-labels-from-an-issue
 */
-func (c Client) IssuesRemoveAllLabels(ctx context.Context, req *IssuesRemoveAllLabelsReq, opt ...RequestOption) (*IssuesRemoveAllLabelsResponse, error) {
+func (c Client) IssuesRemoveAllLabels(ctx context.Context, req *IssuesRemoveAllLabelsReq, opt ...options.Option) (*IssuesRemoveAllLabelsResponse, error) {
 	return IssuesRemoveAllLabels(ctx, req, append(c, opt...)...)
 }
 
@@ -4555,44 +4361,33 @@ type IssuesRemoveAllLabelsReq struct {
 	IssueNumber int64
 }
 
-func (r *IssuesRemoveAllLabelsReq) url() string {
-	return r._url
-}
-
-func (r *IssuesRemoveAllLabelsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/issues/%v/labels", r.Owner, r.Repo, r.IssueNumber)
-}
-
-func (r *IssuesRemoveAllLabelsReq) method() string {
-	return "DELETE"
-}
-
-func (r *IssuesRemoveAllLabelsReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *IssuesRemoveAllLabelsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *IssuesRemoveAllLabelsReq) body() interface{} {
-	return nil
-}
-
-func (r *IssuesRemoveAllLabelsReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *IssuesRemoveAllLabelsReq) validStatuses() []int {
-	return []int{204}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *IssuesRemoveAllLabelsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "issues/remove-all-labels", opt)
+func (r *IssuesRemoveAllLabelsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *IssuesRemoveAllLabelsReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		OperationID:      "issues/remove-all-labels",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/%v/labels", r.Owner, r.Repo, r.IssueNumber),
+		URLQuery:         query,
+		ValidStatuses:    []int{204},
+	}
+	return builder
 }
 
 /*
@@ -4600,7 +4395,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *IssuesRemoveAllLabelsReq) Rel(link RelName, resp *IssuesRemoveAllLabelsResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -4614,7 +4409,7 @@ IssuesRemoveAllLabelsResponse is a response for IssuesRemoveAllLabels
 https://developer.github.com/v3/issues/labels/#remove-all-labels-from-an-issue
 */
 type IssuesRemoveAllLabelsResponse struct {
-	response
+	internal.Response
 	request *IssuesRemoveAllLabelsReq
 }
 
@@ -4627,20 +4422,26 @@ Remove assignees from an issue.
 
 https://developer.github.com/v3/issues/assignees/#remove-assignees-from-an-issue
 */
-func IssuesRemoveAssignees(ctx context.Context, req *IssuesRemoveAssigneesReq, opt ...RequestOption) (*IssuesRemoveAssigneesResponse, error) {
+func IssuesRemoveAssignees(ctx context.Context, req *IssuesRemoveAssigneesReq, opt ...options.Option) (*IssuesRemoveAssigneesResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(IssuesRemoveAssigneesReq)
 	}
 	resp := &IssuesRemoveAssigneesResponse{request: req}
-	r, err := doRequest(ctx, req, "issues/remove-assignees", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.IssueSimple{}
-	err = r.decodeBody(&resp.Data, "issues/remove-assignees")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4656,7 +4457,7 @@ Remove assignees from an issue.
 
 https://developer.github.com/v3/issues/assignees/#remove-assignees-from-an-issue
 */
-func (c Client) IssuesRemoveAssignees(ctx context.Context, req *IssuesRemoveAssigneesReq, opt ...RequestOption) (*IssuesRemoveAssigneesResponse, error) {
+func (c Client) IssuesRemoveAssignees(ctx context.Context, req *IssuesRemoveAssigneesReq, opt ...options.Option) (*IssuesRemoveAssigneesResponse, error) {
 	return IssuesRemoveAssignees(ctx, req, append(c, opt...)...)
 }
 
@@ -4675,47 +4476,36 @@ type IssuesRemoveAssigneesReq struct {
 	RequestBody IssuesRemoveAssigneesReqBody
 }
 
-func (r *IssuesRemoveAssigneesReq) url() string {
-	return r._url
-}
-
-func (r *IssuesRemoveAssigneesReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/issues/%v/assignees", r.Owner, r.Repo, r.IssueNumber)
-}
-
-func (r *IssuesRemoveAssigneesReq) method() string {
-	return "DELETE"
-}
-
-func (r *IssuesRemoveAssigneesReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *IssuesRemoveAssigneesReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *IssuesRemoveAssigneesReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *IssuesRemoveAssigneesReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *IssuesRemoveAssigneesReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *IssuesRemoveAssigneesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "issues/remove-assignees", opt)
+func (r *IssuesRemoveAssigneesReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *IssuesRemoveAssigneesReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{},
+		Body:         r.RequestBody,
+		DataStatuses: []int{200},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "DELETE",
+		OperationID:      "issues/remove-assignees",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/%v/assignees", r.Owner, r.Repo, r.IssueNumber),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -4723,7 +4513,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *IssuesRemoveAssigneesReq) Rel(link RelName, resp *IssuesRemoveAssigneesResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -4752,7 +4542,7 @@ IssuesRemoveAssigneesResponse is a response for IssuesRemoveAssignees
 https://developer.github.com/v3/issues/assignees/#remove-assignees-from-an-issue
 */
 type IssuesRemoveAssigneesResponse struct {
-	response
+	internal.Response
 	request *IssuesRemoveAssigneesReq
 	Data    components.IssueSimple
 }
@@ -4766,20 +4556,26 @@ Remove a label from an issue.
 
 https://developer.github.com/v3/issues/labels/#remove-a-label-from-an-issue
 */
-func IssuesRemoveLabel(ctx context.Context, req *IssuesRemoveLabelReq, opt ...RequestOption) (*IssuesRemoveLabelResponse, error) {
+func IssuesRemoveLabel(ctx context.Context, req *IssuesRemoveLabelReq, opt ...options.Option) (*IssuesRemoveLabelResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(IssuesRemoveLabelReq)
 	}
 	resp := &IssuesRemoveLabelResponse{request: req}
-	r, err := doRequest(ctx, req, "issues/remove-label", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.Label{}
-	err = r.decodeBody(&resp.Data, "issues/remove-label")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4795,7 +4591,7 @@ Remove a label from an issue.
 
 https://developer.github.com/v3/issues/labels/#remove-a-label-from-an-issue
 */
-func (c Client) IssuesRemoveLabel(ctx context.Context, req *IssuesRemoveLabelReq, opt ...RequestOption) (*IssuesRemoveLabelResponse, error) {
+func (c Client) IssuesRemoveLabel(ctx context.Context, req *IssuesRemoveLabelReq, opt ...options.Option) (*IssuesRemoveLabelResponse, error) {
 	return IssuesRemoveLabel(ctx, req, append(c, opt...)...)
 }
 
@@ -4816,44 +4612,33 @@ type IssuesRemoveLabelReq struct {
 	Name string
 }
 
-func (r *IssuesRemoveLabelReq) url() string {
-	return r._url
-}
-
-func (r *IssuesRemoveLabelReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/issues/%v/labels/%v", r.Owner, r.Repo, r.IssueNumber, r.Name)
-}
-
-func (r *IssuesRemoveLabelReq) method() string {
-	return "DELETE"
-}
-
-func (r *IssuesRemoveLabelReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *IssuesRemoveLabelReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *IssuesRemoveLabelReq) body() interface{} {
-	return nil
-}
-
-func (r *IssuesRemoveLabelReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *IssuesRemoveLabelReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *IssuesRemoveLabelReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "issues/remove-label", opt)
+func (r *IssuesRemoveLabelReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *IssuesRemoveLabelReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "DELETE",
+		OperationID:      "issues/remove-label",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/%v/labels/%v", r.Owner, r.Repo, r.IssueNumber, r.Name),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -4861,7 +4646,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *IssuesRemoveLabelReq) Rel(link RelName, resp *IssuesRemoveLabelResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -4875,7 +4660,7 @@ IssuesRemoveLabelResponse is a response for IssuesRemoveLabel
 https://developer.github.com/v3/issues/labels/#remove-a-label-from-an-issue
 */
 type IssuesRemoveLabelResponse struct {
-	response
+	internal.Response
 	request *IssuesRemoveLabelReq
 	Data    []components.Label
 }
@@ -4889,20 +4674,26 @@ Set labels for an issue.
 
 https://developer.github.com/v3/issues/labels/#set-labels-for-an-issue
 */
-func IssuesSetLabels(ctx context.Context, req *IssuesSetLabelsReq, opt ...RequestOption) (*IssuesSetLabelsResponse, error) {
+func IssuesSetLabels(ctx context.Context, req *IssuesSetLabelsReq, opt ...options.Option) (*IssuesSetLabelsResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(IssuesSetLabelsReq)
 	}
 	resp := &IssuesSetLabelsResponse{request: req}
-	r, err := doRequest(ctx, req, "issues/set-labels", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.Label{}
-	err = r.decodeBody(&resp.Data, "issues/set-labels")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -4918,7 +4709,7 @@ Set labels for an issue.
 
 https://developer.github.com/v3/issues/labels/#set-labels-for-an-issue
 */
-func (c Client) IssuesSetLabels(ctx context.Context, req *IssuesSetLabelsReq, opt ...RequestOption) (*IssuesSetLabelsResponse, error) {
+func (c Client) IssuesSetLabels(ctx context.Context, req *IssuesSetLabelsReq, opt ...options.Option) (*IssuesSetLabelsResponse, error) {
 	return IssuesSetLabels(ctx, req, append(c, opt...)...)
 }
 
@@ -4937,47 +4728,36 @@ type IssuesSetLabelsReq struct {
 	RequestBody IssuesSetLabelsReqBody
 }
 
-func (r *IssuesSetLabelsReq) url() string {
-	return r._url
-}
-
-func (r *IssuesSetLabelsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/issues/%v/labels", r.Owner, r.Repo, r.IssueNumber)
-}
-
-func (r *IssuesSetLabelsReq) method() string {
-	return "PUT"
-}
-
-func (r *IssuesSetLabelsReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *IssuesSetLabelsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *IssuesSetLabelsReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *IssuesSetLabelsReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *IssuesSetLabelsReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *IssuesSetLabelsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "issues/set-labels", opt)
+func (r *IssuesSetLabelsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *IssuesSetLabelsReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{},
+		Body:         r.RequestBody,
+		DataStatuses: []int{200},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "PUT",
+		OperationID:      "issues/set-labels",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/%v/labels", r.Owner, r.Repo, r.IssueNumber),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -4985,7 +4765,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *IssuesSetLabelsReq) Rel(link RelName, resp *IssuesSetLabelsResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -5015,7 +4795,7 @@ IssuesSetLabelsResponse is a response for IssuesSetLabels
 https://developer.github.com/v3/issues/labels/#set-labels-for-an-issue
 */
 type IssuesSetLabelsResponse struct {
-	response
+	internal.Response
 	request *IssuesSetLabelsReq
 	Data    []components.Label
 }
@@ -5029,19 +4809,25 @@ Unlock an issue.
 
 https://developer.github.com/v3/issues/#unlock-an-issue
 */
-func IssuesUnlock(ctx context.Context, req *IssuesUnlockReq, opt ...RequestOption) (*IssuesUnlockResponse, error) {
+func IssuesUnlock(ctx context.Context, req *IssuesUnlockReq, opt ...options.Option) (*IssuesUnlockResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(IssuesUnlockReq)
 	}
 	resp := &IssuesUnlockResponse{request: req}
-	r, err := doRequest(ctx, req, "issues/unlock", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "issues/unlock")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -5057,7 +4843,7 @@ Unlock an issue.
 
 https://developer.github.com/v3/issues/#unlock-an-issue
 */
-func (c Client) IssuesUnlock(ctx context.Context, req *IssuesUnlockReq, opt ...RequestOption) (*IssuesUnlockResponse, error) {
+func (c Client) IssuesUnlock(ctx context.Context, req *IssuesUnlockReq, opt ...options.Option) (*IssuesUnlockResponse, error) {
 	return IssuesUnlock(ctx, req, append(c, opt...)...)
 }
 
@@ -5075,44 +4861,33 @@ type IssuesUnlockReq struct {
 	IssueNumber int64
 }
 
-func (r *IssuesUnlockReq) url() string {
-	return r._url
-}
-
-func (r *IssuesUnlockReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/issues/%v/lock", r.Owner, r.Repo, r.IssueNumber)
-}
-
-func (r *IssuesUnlockReq) method() string {
-	return "DELETE"
-}
-
-func (r *IssuesUnlockReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *IssuesUnlockReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *IssuesUnlockReq) body() interface{} {
-	return nil
-}
-
-func (r *IssuesUnlockReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *IssuesUnlockReq) validStatuses() []int {
-	return []int{204}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *IssuesUnlockReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "issues/unlock", opt)
+func (r *IssuesUnlockReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *IssuesUnlockReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		OperationID:      "issues/unlock",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/%v/lock", r.Owner, r.Repo, r.IssueNumber),
+		URLQuery:         query,
+		ValidStatuses:    []int{204},
+	}
+	return builder
 }
 
 /*
@@ -5120,7 +4895,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *IssuesUnlockReq) Rel(link RelName, resp *IssuesUnlockResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -5134,7 +4909,7 @@ IssuesUnlockResponse is a response for IssuesUnlock
 https://developer.github.com/v3/issues/#unlock-an-issue
 */
 type IssuesUnlockResponse struct {
-	response
+	internal.Response
 	request *IssuesUnlockReq
 }
 
@@ -5147,20 +4922,26 @@ Update an issue.
 
 https://developer.github.com/v3/issues/#update-an-issue
 */
-func IssuesUpdate(ctx context.Context, req *IssuesUpdateReq, opt ...RequestOption) (*IssuesUpdateResponse, error) {
+func IssuesUpdate(ctx context.Context, req *IssuesUpdateReq, opt ...options.Option) (*IssuesUpdateResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(IssuesUpdateReq)
 	}
 	resp := &IssuesUpdateResponse{request: req}
-	r, err := doRequest(ctx, req, "issues/update", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.Issue{}
-	err = r.decodeBody(&resp.Data, "issues/update")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -5176,7 +4957,7 @@ Update an issue.
 
 https://developer.github.com/v3/issues/#update-an-issue
 */
-func (c Client) IssuesUpdate(ctx context.Context, req *IssuesUpdateReq, opt ...RequestOption) (*IssuesUpdateResponse, error) {
+func (c Client) IssuesUpdate(ctx context.Context, req *IssuesUpdateReq, opt ...options.Option) (*IssuesUpdateResponse, error) {
 	return IssuesUpdate(ctx, req, append(c, opt...)...)
 }
 
@@ -5195,47 +4976,36 @@ type IssuesUpdateReq struct {
 	RequestBody IssuesUpdateReqBody
 }
 
-func (r *IssuesUpdateReq) url() string {
-	return r._url
-}
-
-func (r *IssuesUpdateReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/issues/%v", r.Owner, r.Repo, r.IssueNumber)
-}
-
-func (r *IssuesUpdateReq) method() string {
-	return "PATCH"
-}
-
-func (r *IssuesUpdateReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *IssuesUpdateReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *IssuesUpdateReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *IssuesUpdateReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *IssuesUpdateReq) validStatuses() []int {
-	return []int{200, 301}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *IssuesUpdateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "issues/update", opt)
+func (r *IssuesUpdateReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *IssuesUpdateReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{},
+		Body:         r.RequestBody,
+		DataStatuses: []int{200},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "PATCH",
+		OperationID:      "issues/update",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/%v", r.Owner, r.Repo, r.IssueNumber),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 301},
+	}
+	return builder
 }
 
 /*
@@ -5243,7 +5013,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *IssuesUpdateReq) Rel(link RelName, resp *IssuesUpdateResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -5300,7 +5070,7 @@ IssuesUpdateResponse is a response for IssuesUpdate
 https://developer.github.com/v3/issues/#update-an-issue
 */
 type IssuesUpdateResponse struct {
-	response
+	internal.Response
 	request *IssuesUpdateReq
 	Data    components.Issue
 }
@@ -5314,20 +5084,26 @@ Update an issue comment.
 
 https://developer.github.com/v3/issues/comments/#update-an-issue-comment
 */
-func IssuesUpdateComment(ctx context.Context, req *IssuesUpdateCommentReq, opt ...RequestOption) (*IssuesUpdateCommentResponse, error) {
+func IssuesUpdateComment(ctx context.Context, req *IssuesUpdateCommentReq, opt ...options.Option) (*IssuesUpdateCommentResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(IssuesUpdateCommentReq)
 	}
 	resp := &IssuesUpdateCommentResponse{request: req}
-	r, err := doRequest(ctx, req, "issues/update-comment", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.IssueComment{}
-	err = r.decodeBody(&resp.Data, "issues/update-comment")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -5343,7 +5119,7 @@ Update an issue comment.
 
 https://developer.github.com/v3/issues/comments/#update-an-issue-comment
 */
-func (c Client) IssuesUpdateComment(ctx context.Context, req *IssuesUpdateCommentReq, opt ...RequestOption) (*IssuesUpdateCommentResponse, error) {
+func (c Client) IssuesUpdateComment(ctx context.Context, req *IssuesUpdateCommentReq, opt ...options.Option) (*IssuesUpdateCommentResponse, error) {
 	return IssuesUpdateComment(ctx, req, append(c, opt...)...)
 }
 
@@ -5362,47 +5138,36 @@ type IssuesUpdateCommentReq struct {
 	RequestBody IssuesUpdateCommentReqBody
 }
 
-func (r *IssuesUpdateCommentReq) url() string {
-	return r._url
-}
-
-func (r *IssuesUpdateCommentReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/issues/comments/%v", r.Owner, r.Repo, r.CommentId)
-}
-
-func (r *IssuesUpdateCommentReq) method() string {
-	return "PATCH"
-}
-
-func (r *IssuesUpdateCommentReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *IssuesUpdateCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *IssuesUpdateCommentReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *IssuesUpdateCommentReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *IssuesUpdateCommentReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *IssuesUpdateCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "issues/update-comment", opt)
+func (r *IssuesUpdateCommentReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *IssuesUpdateCommentReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{},
+		Body:         r.RequestBody,
+		DataStatuses: []int{200},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "PATCH",
+		OperationID:      "issues/update-comment",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/comments/%v", r.Owner, r.Repo, r.CommentId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -5410,7 +5175,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *IssuesUpdateCommentReq) Rel(link RelName, resp *IssuesUpdateCommentResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -5435,7 +5200,7 @@ IssuesUpdateCommentResponse is a response for IssuesUpdateComment
 https://developer.github.com/v3/issues/comments/#update-an-issue-comment
 */
 type IssuesUpdateCommentResponse struct {
-	response
+	internal.Response
 	request *IssuesUpdateCommentReq
 	Data    components.IssueComment
 }
@@ -5449,20 +5214,26 @@ Update a label.
 
 https://developer.github.com/v3/issues/labels/#update-a-label
 */
-func IssuesUpdateLabel(ctx context.Context, req *IssuesUpdateLabelReq, opt ...RequestOption) (*IssuesUpdateLabelResponse, error) {
+func IssuesUpdateLabel(ctx context.Context, req *IssuesUpdateLabelReq, opt ...options.Option) (*IssuesUpdateLabelResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(IssuesUpdateLabelReq)
 	}
 	resp := &IssuesUpdateLabelResponse{request: req}
-	r, err := doRequest(ctx, req, "issues/update-label", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.Label{}
-	err = r.decodeBody(&resp.Data, "issues/update-label")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -5478,7 +5249,7 @@ Update a label.
 
 https://developer.github.com/v3/issues/labels/#update-a-label
 */
-func (c Client) IssuesUpdateLabel(ctx context.Context, req *IssuesUpdateLabelReq, opt ...RequestOption) (*IssuesUpdateLabelResponse, error) {
+func (c Client) IssuesUpdateLabel(ctx context.Context, req *IssuesUpdateLabelReq, opt ...options.Option) (*IssuesUpdateLabelResponse, error) {
 	return IssuesUpdateLabel(ctx, req, append(c, opt...)...)
 }
 
@@ -5497,47 +5268,36 @@ type IssuesUpdateLabelReq struct {
 	RequestBody IssuesUpdateLabelReqBody
 }
 
-func (r *IssuesUpdateLabelReq) url() string {
-	return r._url
-}
-
-func (r *IssuesUpdateLabelReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/labels/%v", r.Owner, r.Repo, r.Name)
-}
-
-func (r *IssuesUpdateLabelReq) method() string {
-	return "PATCH"
-}
-
-func (r *IssuesUpdateLabelReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *IssuesUpdateLabelReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *IssuesUpdateLabelReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *IssuesUpdateLabelReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *IssuesUpdateLabelReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *IssuesUpdateLabelReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "issues/update-label", opt)
+func (r *IssuesUpdateLabelReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *IssuesUpdateLabelReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{},
+		Body:         r.RequestBody,
+		DataStatuses: []int{200},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "PATCH",
+		OperationID:      "issues/update-label",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/labels/%v", r.Owner, r.Repo, r.Name),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -5545,7 +5305,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *IssuesUpdateLabelReq) Rel(link RelName, resp *IssuesUpdateLabelResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -5583,7 +5343,7 @@ IssuesUpdateLabelResponse is a response for IssuesUpdateLabel
 https://developer.github.com/v3/issues/labels/#update-a-label
 */
 type IssuesUpdateLabelResponse struct {
-	response
+	internal.Response
 	request *IssuesUpdateLabelReq
 	Data    components.Label
 }
@@ -5597,20 +5357,26 @@ Update a milestone.
 
 https://developer.github.com/v3/issues/milestones/#update-a-milestone
 */
-func IssuesUpdateMilestone(ctx context.Context, req *IssuesUpdateMilestoneReq, opt ...RequestOption) (*IssuesUpdateMilestoneResponse, error) {
+func IssuesUpdateMilestone(ctx context.Context, req *IssuesUpdateMilestoneReq, opt ...options.Option) (*IssuesUpdateMilestoneResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(IssuesUpdateMilestoneReq)
 	}
 	resp := &IssuesUpdateMilestoneResponse{request: req}
-	r, err := doRequest(ctx, req, "issues/update-milestone", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.Milestone{}
-	err = r.decodeBody(&resp.Data, "issues/update-milestone")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -5626,7 +5392,7 @@ Update a milestone.
 
 https://developer.github.com/v3/issues/milestones/#update-a-milestone
 */
-func (c Client) IssuesUpdateMilestone(ctx context.Context, req *IssuesUpdateMilestoneReq, opt ...RequestOption) (*IssuesUpdateMilestoneResponse, error) {
+func (c Client) IssuesUpdateMilestone(ctx context.Context, req *IssuesUpdateMilestoneReq, opt ...options.Option) (*IssuesUpdateMilestoneResponse, error) {
 	return IssuesUpdateMilestone(ctx, req, append(c, opt...)...)
 }
 
@@ -5645,47 +5411,36 @@ type IssuesUpdateMilestoneReq struct {
 	RequestBody     IssuesUpdateMilestoneReqBody
 }
 
-func (r *IssuesUpdateMilestoneReq) url() string {
-	return r._url
-}
-
-func (r *IssuesUpdateMilestoneReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/milestones/%v", r.Owner, r.Repo, r.MilestoneNumber)
-}
-
-func (r *IssuesUpdateMilestoneReq) method() string {
-	return "PATCH"
-}
-
-func (r *IssuesUpdateMilestoneReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *IssuesUpdateMilestoneReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *IssuesUpdateMilestoneReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *IssuesUpdateMilestoneReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *IssuesUpdateMilestoneReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *IssuesUpdateMilestoneReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "issues/update-milestone", opt)
+func (r *IssuesUpdateMilestoneReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *IssuesUpdateMilestoneReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{},
+		Body:         r.RequestBody,
+		DataStatuses: []int{200},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "PATCH",
+		OperationID:      "issues/update-milestone",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/milestones/%v", r.Owner, r.Repo, r.MilestoneNumber),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -5693,7 +5448,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *IssuesUpdateMilestoneReq) Rel(link RelName, resp *IssuesUpdateMilestoneResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -5730,7 +5485,7 @@ IssuesUpdateMilestoneResponse is a response for IssuesUpdateMilestone
 https://developer.github.com/v3/issues/milestones/#update-a-milestone
 */
 type IssuesUpdateMilestoneResponse struct {
-	response
+	internal.Response
 	request *IssuesUpdateMilestoneReq
 	Data    components.Milestone
 }

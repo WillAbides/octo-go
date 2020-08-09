@@ -6,6 +6,8 @@ import (
 	"context"
 	"fmt"
 	components "github.com/willabides/octo-go/components"
+	internal "github.com/willabides/octo-go/internal"
+	options "github.com/willabides/octo-go/options"
 	"net/http"
 	"net/url"
 )
@@ -19,20 +21,26 @@ Get all codes of conduct.
 
 https://developer.github.com/v3/codes_of_conduct/#get-all-codes-of-conduct
 */
-func CodesOfConductGetAllCodesOfConduct(ctx context.Context, req *CodesOfConductGetAllCodesOfConductReq, opt ...RequestOption) (*CodesOfConductGetAllCodesOfConductResponse, error) {
+func CodesOfConductGetAllCodesOfConduct(ctx context.Context, req *CodesOfConductGetAllCodesOfConductReq, opt ...options.Option) (*CodesOfConductGetAllCodesOfConductResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(CodesOfConductGetAllCodesOfConductReq)
 	}
 	resp := &CodesOfConductGetAllCodesOfConductResponse{request: req}
-	r, err := doRequest(ctx, req, "codes-of-conduct/get-all-codes-of-conduct", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.CodeOfConduct{}
-	err = r.decodeBody(&resp.Data, "codes-of-conduct/get-all-codes-of-conduct")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -48,7 +56,7 @@ Get all codes of conduct.
 
 https://developer.github.com/v3/codes_of_conduct/#get-all-codes-of-conduct
 */
-func (c Client) CodesOfConductGetAllCodesOfConduct(ctx context.Context, req *CodesOfConductGetAllCodesOfConductReq, opt ...RequestOption) (*CodesOfConductGetAllCodesOfConductResponse, error) {
+func (c Client) CodesOfConductGetAllCodesOfConduct(ctx context.Context, req *CodesOfConductGetAllCodesOfConductReq, opt ...options.Option) (*CodesOfConductGetAllCodesOfConductResponse, error) {
 	return CodesOfConductGetAllCodesOfConduct(ctx, req, append(c, opt...)...)
 }
 
@@ -68,50 +76,33 @@ type CodesOfConductGetAllCodesOfConductReq struct {
 	ScarletWitchPreview bool
 }
 
-func (r *CodesOfConductGetAllCodesOfConductReq) url() string {
-	return r._url
-}
-
-func (r *CodesOfConductGetAllCodesOfConductReq) urlPath() string {
-	return fmt.Sprintf("/codes_of_conduct")
-}
-
-func (r *CodesOfConductGetAllCodesOfConductReq) method() string {
-	return "GET"
-}
-
-func (r *CodesOfConductGetAllCodesOfConductReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *CodesOfConductGetAllCodesOfConductReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{"scarlet-witch": r.ScarletWitchPreview}
-	if requiredPreviews {
-		previewVals["scarlet-witch"] = true
-	}
-	if allPreviews {
-		previewVals["scarlet-witch"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *CodesOfConductGetAllCodesOfConductReq) body() interface{} {
-	return nil
-}
-
-func (r *CodesOfConductGetAllCodesOfConductReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *CodesOfConductGetAllCodesOfConductReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *CodesOfConductGetAllCodesOfConductReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "codes-of-conduct/get-all-codes-of-conduct", opt)
+func (r *CodesOfConductGetAllCodesOfConductReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *CodesOfConductGetAllCodesOfConductReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"scarlet-witch"},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "codes-of-conduct/get-all-codes-of-conduct",
+		Previews:         map[string]bool{"scarlet-witch": r.ScarletWitchPreview},
+		RequiredPreviews: []string{"scarlet-witch"},
+		URLPath:          fmt.Sprintf("/codes_of_conduct"),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
+	}
+	return builder
 }
 
 /*
@@ -119,7 +110,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *CodesOfConductGetAllCodesOfConductReq) Rel(link RelName, resp *CodesOfConductGetAllCodesOfConductResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -133,7 +124,7 @@ CodesOfConductGetAllCodesOfConductResponse is a response for CodesOfConductGetAl
 https://developer.github.com/v3/codes_of_conduct/#get-all-codes-of-conduct
 */
 type CodesOfConductGetAllCodesOfConductResponse struct {
-	response
+	internal.Response
 	request *CodesOfConductGetAllCodesOfConductReq
 	Data    []components.CodeOfConduct
 }
@@ -147,20 +138,26 @@ Get a code of conduct.
 
 https://developer.github.com/v3/codes_of_conduct/#get-a-code-of-conduct
 */
-func CodesOfConductGetConductCode(ctx context.Context, req *CodesOfConductGetConductCodeReq, opt ...RequestOption) (*CodesOfConductGetConductCodeResponse, error) {
+func CodesOfConductGetConductCode(ctx context.Context, req *CodesOfConductGetConductCodeReq, opt ...options.Option) (*CodesOfConductGetConductCodeResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(CodesOfConductGetConductCodeReq)
 	}
 	resp := &CodesOfConductGetConductCodeResponse{request: req}
-	r, err := doRequest(ctx, req, "codes-of-conduct/get-conduct-code", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.CodeOfConduct{}
-	err = r.decodeBody(&resp.Data, "codes-of-conduct/get-conduct-code")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -176,7 +173,7 @@ Get a code of conduct.
 
 https://developer.github.com/v3/codes_of_conduct/#get-a-code-of-conduct
 */
-func (c Client) CodesOfConductGetConductCode(ctx context.Context, req *CodesOfConductGetConductCodeReq, opt ...RequestOption) (*CodesOfConductGetConductCodeResponse, error) {
+func (c Client) CodesOfConductGetConductCode(ctx context.Context, req *CodesOfConductGetConductCodeReq, opt ...options.Option) (*CodesOfConductGetConductCodeResponse, error) {
 	return CodesOfConductGetConductCode(ctx, req, append(c, opt...)...)
 }
 
@@ -199,50 +196,33 @@ type CodesOfConductGetConductCodeReq struct {
 	ScarletWitchPreview bool
 }
 
-func (r *CodesOfConductGetConductCodeReq) url() string {
-	return r._url
-}
-
-func (r *CodesOfConductGetConductCodeReq) urlPath() string {
-	return fmt.Sprintf("/codes_of_conduct/%v", r.Key)
-}
-
-func (r *CodesOfConductGetConductCodeReq) method() string {
-	return "GET"
-}
-
-func (r *CodesOfConductGetConductCodeReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *CodesOfConductGetConductCodeReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{"scarlet-witch": r.ScarletWitchPreview}
-	if requiredPreviews {
-		previewVals["scarlet-witch"] = true
-	}
-	if allPreviews {
-		previewVals["scarlet-witch"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *CodesOfConductGetConductCodeReq) body() interface{} {
-	return nil
-}
-
-func (r *CodesOfConductGetConductCodeReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *CodesOfConductGetConductCodeReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *CodesOfConductGetConductCodeReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "codes-of-conduct/get-conduct-code", opt)
+func (r *CodesOfConductGetConductCodeReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *CodesOfConductGetConductCodeReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"scarlet-witch"},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "codes-of-conduct/get-conduct-code",
+		Previews:         map[string]bool{"scarlet-witch": r.ScarletWitchPreview},
+		RequiredPreviews: []string{"scarlet-witch"},
+		URLPath:          fmt.Sprintf("/codes_of_conduct/%v", r.Key),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
+	}
+	return builder
 }
 
 /*
@@ -250,7 +230,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *CodesOfConductGetConductCodeReq) Rel(link RelName, resp *CodesOfConductGetConductCodeResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -264,7 +244,7 @@ CodesOfConductGetConductCodeResponse is a response for CodesOfConductGetConductC
 https://developer.github.com/v3/codes_of_conduct/#get-a-code-of-conduct
 */
 type CodesOfConductGetConductCodeResponse struct {
-	response
+	internal.Response
 	request *CodesOfConductGetConductCodeReq
 	Data    components.CodeOfConduct
 }
@@ -278,20 +258,26 @@ Get the code of conduct for a repository.
 
 https://developer.github.com/v3/codes_of_conduct/#get-the-code-of-conduct-for-a-repository
 */
-func CodesOfConductGetForRepo(ctx context.Context, req *CodesOfConductGetForRepoReq, opt ...RequestOption) (*CodesOfConductGetForRepoResponse, error) {
+func CodesOfConductGetForRepo(ctx context.Context, req *CodesOfConductGetForRepoReq, opt ...options.Option) (*CodesOfConductGetForRepoResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(CodesOfConductGetForRepoReq)
 	}
 	resp := &CodesOfConductGetForRepoResponse{request: req}
-	r, err := doRequest(ctx, req, "codes-of-conduct/get-for-repo", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.CodeOfConduct{}
-	err = r.decodeBody(&resp.Data, "codes-of-conduct/get-for-repo")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -307,7 +293,7 @@ Get the code of conduct for a repository.
 
 https://developer.github.com/v3/codes_of_conduct/#get-the-code-of-conduct-for-a-repository
 */
-func (c Client) CodesOfConductGetForRepo(ctx context.Context, req *CodesOfConductGetForRepoReq, opt ...RequestOption) (*CodesOfConductGetForRepoResponse, error) {
+func (c Client) CodesOfConductGetForRepo(ctx context.Context, req *CodesOfConductGetForRepoReq, opt ...options.Option) (*CodesOfConductGetForRepoResponse, error) {
 	return CodesOfConductGetForRepo(ctx, req, append(c, opt...)...)
 }
 
@@ -329,50 +315,33 @@ type CodesOfConductGetForRepoReq struct {
 	ScarletWitchPreview bool
 }
 
-func (r *CodesOfConductGetForRepoReq) url() string {
-	return r._url
-}
-
-func (r *CodesOfConductGetForRepoReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/community/code_of_conduct", r.Owner, r.Repo)
-}
-
-func (r *CodesOfConductGetForRepoReq) method() string {
-	return "GET"
-}
-
-func (r *CodesOfConductGetForRepoReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *CodesOfConductGetForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{"scarlet-witch": r.ScarletWitchPreview}
-	if requiredPreviews {
-		previewVals["scarlet-witch"] = true
-	}
-	if allPreviews {
-		previewVals["scarlet-witch"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *CodesOfConductGetForRepoReq) body() interface{} {
-	return nil
-}
-
-func (r *CodesOfConductGetForRepoReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *CodesOfConductGetForRepoReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *CodesOfConductGetForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "codes-of-conduct/get-for-repo", opt)
+func (r *CodesOfConductGetForRepoReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *CodesOfConductGetForRepoReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"scarlet-witch"},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "codes-of-conduct/get-for-repo",
+		Previews:         map[string]bool{"scarlet-witch": r.ScarletWitchPreview},
+		RequiredPreviews: []string{"scarlet-witch"},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/community/code_of_conduct", r.Owner, r.Repo),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -380,7 +349,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *CodesOfConductGetForRepoReq) Rel(link RelName, resp *CodesOfConductGetForRepoResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -394,7 +363,7 @@ CodesOfConductGetForRepoResponse is a response for CodesOfConductGetForRepo
 https://developer.github.com/v3/codes_of_conduct/#get-the-code-of-conduct-for-a-repository
 */
 type CodesOfConductGetForRepoResponse struct {
-	response
+	internal.Response
 	request *CodesOfConductGetForRepoReq
 	Data    components.CodeOfConduct
 }

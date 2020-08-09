@@ -6,6 +6,8 @@ import (
 	"context"
 	"fmt"
 	components "github.com/willabides/octo-go/components"
+	internal "github.com/willabides/octo-go/internal"
+	options "github.com/willabides/octo-go/options"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -20,20 +22,26 @@ Create a check run.
 
 https://developer.github.com/v3/checks/runs/#create-a-check-run
 */
-func ChecksCreate(ctx context.Context, req *ChecksCreateReq, opt ...RequestOption) (*ChecksCreateResponse, error) {
+func ChecksCreate(ctx context.Context, req *ChecksCreateReq, opt ...options.Option) (*ChecksCreateResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ChecksCreateReq)
 	}
 	resp := &ChecksCreateResponse{request: req}
-	r, err := doRequest(ctx, req, "checks/create", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.CheckRun{}
-	err = r.decodeBody(&resp.Data, "checks/create")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -49,7 +57,7 @@ Create a check run.
 
 https://developer.github.com/v3/checks/runs/#create-a-check-run
 */
-func (c Client) ChecksCreate(ctx context.Context, req *ChecksCreateReq, opt ...RequestOption) (*ChecksCreateResponse, error) {
+func (c Client) ChecksCreate(ctx context.Context, req *ChecksCreateReq, opt ...options.Option) (*ChecksCreateResponse, error) {
 	return ChecksCreate(ctx, req, append(c, opt...)...)
 }
 
@@ -74,53 +82,36 @@ type ChecksCreateReq struct {
 	AntiopePreview bool
 }
 
-func (r *ChecksCreateReq) url() string {
-	return r._url
-}
-
-func (r *ChecksCreateReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/check-runs", r.Owner, r.Repo)
-}
-
-func (r *ChecksCreateReq) method() string {
-	return "POST"
-}
-
-func (r *ChecksCreateReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ChecksCreateReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{"antiope": r.AntiopePreview}
-	if requiredPreviews {
-		previewVals["antiope"] = true
-	}
-	if allPreviews {
-		previewVals["antiope"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ChecksCreateReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *ChecksCreateReq) dataStatuses() []int {
-	return []int{201}
-}
-
-func (r *ChecksCreateReq) validStatuses() []int {
-	return []int{201}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ChecksCreateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "checks/create", opt)
+func (r *ChecksCreateReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ChecksCreateReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{"antiope"},
+		Body:         r.RequestBody,
+		DataStatuses: []int{201},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "POST",
+		OperationID:      "checks/create",
+		Previews:         map[string]bool{"antiope": r.AntiopePreview},
+		RequiredPreviews: []string{"antiope"},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/check-runs", r.Owner, r.Repo),
+		URLQuery:         query,
+		ValidStatuses:    []int{201},
+	}
+	return builder
 }
 
 /*
@@ -128,7 +119,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ChecksCreateReq) Rel(link RelName, resp *ChecksCreateResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -320,7 +311,7 @@ ChecksCreateResponse is a response for ChecksCreate
 https://developer.github.com/v3/checks/runs/#create-a-check-run
 */
 type ChecksCreateResponse struct {
-	response
+	internal.Response
 	request *ChecksCreateReq
 	Data    components.CheckRun
 }
@@ -334,20 +325,26 @@ Create a check suite.
 
 https://developer.github.com/v3/checks/suites/#create-a-check-suite
 */
-func ChecksCreateSuite(ctx context.Context, req *ChecksCreateSuiteReq, opt ...RequestOption) (*ChecksCreateSuiteResponse, error) {
+func ChecksCreateSuite(ctx context.Context, req *ChecksCreateSuiteReq, opt ...options.Option) (*ChecksCreateSuiteResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ChecksCreateSuiteReq)
 	}
 	resp := &ChecksCreateSuiteResponse{request: req}
-	r, err := doRequest(ctx, req, "checks/create-suite", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.CheckSuite{}
-	err = r.decodeBody(&resp.Data, "checks/create-suite")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -363,7 +360,7 @@ Create a check suite.
 
 https://developer.github.com/v3/checks/suites/#create-a-check-suite
 */
-func (c Client) ChecksCreateSuite(ctx context.Context, req *ChecksCreateSuiteReq, opt ...RequestOption) (*ChecksCreateSuiteResponse, error) {
+func (c Client) ChecksCreateSuite(ctx context.Context, req *ChecksCreateSuiteReq, opt ...options.Option) (*ChecksCreateSuiteResponse, error) {
 	return ChecksCreateSuite(ctx, req, append(c, opt...)...)
 }
 
@@ -388,53 +385,36 @@ type ChecksCreateSuiteReq struct {
 	AntiopePreview bool
 }
 
-func (r *ChecksCreateSuiteReq) url() string {
-	return r._url
-}
-
-func (r *ChecksCreateSuiteReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/check-suites", r.Owner, r.Repo)
-}
-
-func (r *ChecksCreateSuiteReq) method() string {
-	return "POST"
-}
-
-func (r *ChecksCreateSuiteReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ChecksCreateSuiteReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{"antiope": r.AntiopePreview}
-	if requiredPreviews {
-		previewVals["antiope"] = true
-	}
-	if allPreviews {
-		previewVals["antiope"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ChecksCreateSuiteReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *ChecksCreateSuiteReq) dataStatuses() []int {
-	return []int{201}
-}
-
-func (r *ChecksCreateSuiteReq) validStatuses() []int {
-	return []int{201}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ChecksCreateSuiteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "checks/create-suite", opt)
+func (r *ChecksCreateSuiteReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ChecksCreateSuiteReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{"antiope"},
+		Body:         r.RequestBody,
+		DataStatuses: []int{201},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "POST",
+		OperationID:      "checks/create-suite",
+		Previews:         map[string]bool{"antiope": r.AntiopePreview},
+		RequiredPreviews: []string{"antiope"},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/check-suites", r.Owner, r.Repo),
+		URLQuery:         query,
+		ValidStatuses:    []int{201},
+	}
+	return builder
 }
 
 /*
@@ -442,7 +422,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ChecksCreateSuiteReq) Rel(link RelName, resp *ChecksCreateSuiteResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -467,7 +447,7 @@ ChecksCreateSuiteResponse is a response for ChecksCreateSuite
 https://developer.github.com/v3/checks/suites/#create-a-check-suite
 */
 type ChecksCreateSuiteResponse struct {
-	response
+	internal.Response
 	request *ChecksCreateSuiteReq
 	Data    components.CheckSuite
 }
@@ -481,20 +461,26 @@ Get a check run.
 
 https://developer.github.com/v3/checks/runs/#get-a-check-run
 */
-func ChecksGet(ctx context.Context, req *ChecksGetReq, opt ...RequestOption) (*ChecksGetResponse, error) {
+func ChecksGet(ctx context.Context, req *ChecksGetReq, opt ...options.Option) (*ChecksGetResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ChecksGetReq)
 	}
 	resp := &ChecksGetResponse{request: req}
-	r, err := doRequest(ctx, req, "checks/get", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.CheckRun{}
-	err = r.decodeBody(&resp.Data, "checks/get")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -510,7 +496,7 @@ Get a check run.
 
 https://developer.github.com/v3/checks/runs/#get-a-check-run
 */
-func (c Client) ChecksGet(ctx context.Context, req *ChecksGetReq, opt ...RequestOption) (*ChecksGetResponse, error) {
+func (c Client) ChecksGet(ctx context.Context, req *ChecksGetReq, opt ...options.Option) (*ChecksGetResponse, error) {
 	return ChecksGet(ctx, req, append(c, opt...)...)
 }
 
@@ -537,50 +523,33 @@ type ChecksGetReq struct {
 	AntiopePreview bool
 }
 
-func (r *ChecksGetReq) url() string {
-	return r._url
-}
-
-func (r *ChecksGetReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/check-runs/%v", r.Owner, r.Repo, r.CheckRunId)
-}
-
-func (r *ChecksGetReq) method() string {
-	return "GET"
-}
-
-func (r *ChecksGetReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ChecksGetReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{"antiope": r.AntiopePreview}
-	if requiredPreviews {
-		previewVals["antiope"] = true
-	}
-	if allPreviews {
-		previewVals["antiope"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ChecksGetReq) body() interface{} {
-	return nil
-}
-
-func (r *ChecksGetReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ChecksGetReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ChecksGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "checks/get", opt)
+func (r *ChecksGetReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ChecksGetReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"antiope"},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "checks/get",
+		Previews:         map[string]bool{"antiope": r.AntiopePreview},
+		RequiredPreviews: []string{"antiope"},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/check-runs/%v", r.Owner, r.Repo, r.CheckRunId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -588,7 +557,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ChecksGetReq) Rel(link RelName, resp *ChecksGetResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -602,7 +571,7 @@ ChecksGetResponse is a response for ChecksGet
 https://developer.github.com/v3/checks/runs/#get-a-check-run
 */
 type ChecksGetResponse struct {
-	response
+	internal.Response
 	request *ChecksGetReq
 	Data    components.CheckRun
 }
@@ -616,20 +585,26 @@ Get a check suite.
 
 https://developer.github.com/v3/checks/suites/#get-a-check-suite
 */
-func ChecksGetSuite(ctx context.Context, req *ChecksGetSuiteReq, opt ...RequestOption) (*ChecksGetSuiteResponse, error) {
+func ChecksGetSuite(ctx context.Context, req *ChecksGetSuiteReq, opt ...options.Option) (*ChecksGetSuiteResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ChecksGetSuiteReq)
 	}
 	resp := &ChecksGetSuiteResponse{request: req}
-	r, err := doRequest(ctx, req, "checks/get-suite", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.CheckSuite{}
-	err = r.decodeBody(&resp.Data, "checks/get-suite")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -645,7 +620,7 @@ Get a check suite.
 
 https://developer.github.com/v3/checks/suites/#get-a-check-suite
 */
-func (c Client) ChecksGetSuite(ctx context.Context, req *ChecksGetSuiteReq, opt ...RequestOption) (*ChecksGetSuiteResponse, error) {
+func (c Client) ChecksGetSuite(ctx context.Context, req *ChecksGetSuiteReq, opt ...options.Option) (*ChecksGetSuiteResponse, error) {
 	return ChecksGetSuite(ctx, req, append(c, opt...)...)
 }
 
@@ -672,50 +647,33 @@ type ChecksGetSuiteReq struct {
 	AntiopePreview bool
 }
 
-func (r *ChecksGetSuiteReq) url() string {
-	return r._url
-}
-
-func (r *ChecksGetSuiteReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/check-suites/%v", r.Owner, r.Repo, r.CheckSuiteId)
-}
-
-func (r *ChecksGetSuiteReq) method() string {
-	return "GET"
-}
-
-func (r *ChecksGetSuiteReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ChecksGetSuiteReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{"antiope": r.AntiopePreview}
-	if requiredPreviews {
-		previewVals["antiope"] = true
-	}
-	if allPreviews {
-		previewVals["antiope"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ChecksGetSuiteReq) body() interface{} {
-	return nil
-}
-
-func (r *ChecksGetSuiteReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ChecksGetSuiteReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ChecksGetSuiteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "checks/get-suite", opt)
+func (r *ChecksGetSuiteReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ChecksGetSuiteReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"antiope"},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "checks/get-suite",
+		Previews:         map[string]bool{"antiope": r.AntiopePreview},
+		RequiredPreviews: []string{"antiope"},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/check-suites/%v", r.Owner, r.Repo, r.CheckSuiteId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -723,7 +681,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ChecksGetSuiteReq) Rel(link RelName, resp *ChecksGetSuiteResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -737,7 +695,7 @@ ChecksGetSuiteResponse is a response for ChecksGetSuite
 https://developer.github.com/v3/checks/suites/#get-a-check-suite
 */
 type ChecksGetSuiteResponse struct {
-	response
+	internal.Response
 	request *ChecksGetSuiteReq
 	Data    components.CheckSuite
 }
@@ -751,20 +709,26 @@ List check run annotations.
 
 https://developer.github.com/v3/checks/runs/#list-check-run-annotations
 */
-func ChecksListAnnotations(ctx context.Context, req *ChecksListAnnotationsReq, opt ...RequestOption) (*ChecksListAnnotationsResponse, error) {
+func ChecksListAnnotations(ctx context.Context, req *ChecksListAnnotationsReq, opt ...options.Option) (*ChecksListAnnotationsResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ChecksListAnnotationsReq)
 	}
 	resp := &ChecksListAnnotationsResponse{request: req}
-	r, err := doRequest(ctx, req, "checks/list-annotations", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.CheckAnnotation{}
-	err = r.decodeBody(&resp.Data, "checks/list-annotations")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -780,7 +744,7 @@ List check run annotations.
 
 https://developer.github.com/v3/checks/runs/#list-check-run-annotations
 */
-func (c Client) ChecksListAnnotations(ctx context.Context, req *ChecksListAnnotationsReq, opt ...RequestOption) (*ChecksListAnnotationsResponse, error) {
+func (c Client) ChecksListAnnotations(ctx context.Context, req *ChecksListAnnotationsReq, opt ...options.Option) (*ChecksListAnnotationsResponse, error) {
 	return ChecksListAnnotations(ctx, req, append(c, opt...)...)
 }
 
@@ -813,19 +777,16 @@ type ChecksListAnnotationsReq struct {
 	AntiopePreview bool
 }
 
-func (r *ChecksListAnnotationsReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *ChecksListAnnotationsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *ChecksListAnnotationsReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/check-runs/%v/annotations", r.Owner, r.Repo, r.CheckRunId)
-}
-
-func (r *ChecksListAnnotationsReq) method() string {
-	return "GET"
-}
-
-func (r *ChecksListAnnotationsReq) urlQuery() url.Values {
+func (r *ChecksListAnnotationsReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -833,36 +794,22 @@ func (r *ChecksListAnnotationsReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *ChecksListAnnotationsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{"antiope": r.AntiopePreview}
-	if requiredPreviews {
-		previewVals["antiope"] = true
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"antiope"},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "checks/list-annotations",
+		Previews:         map[string]bool{"antiope": r.AntiopePreview},
+		RequiredPreviews: []string{"antiope"},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/check-runs/%v/annotations", r.Owner, r.Repo, r.CheckRunId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
 	}
-	if allPreviews {
-		previewVals["antiope"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ChecksListAnnotationsReq) body() interface{} {
-	return nil
-}
-
-func (r *ChecksListAnnotationsReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ChecksListAnnotationsReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ChecksListAnnotationsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "checks/list-annotations", opt)
+	return builder
 }
 
 /*
@@ -870,7 +817,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ChecksListAnnotationsReq) Rel(link RelName, resp *ChecksListAnnotationsResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -884,7 +831,7 @@ ChecksListAnnotationsResponse is a response for ChecksListAnnotations
 https://developer.github.com/v3/checks/runs/#list-check-run-annotations
 */
 type ChecksListAnnotationsResponse struct {
-	response
+	internal.Response
 	request *ChecksListAnnotationsReq
 	Data    []components.CheckAnnotation
 }
@@ -898,20 +845,26 @@ List check runs for a Git reference.
 
 https://developer.github.com/v3/checks/runs/#list-check-runs-for-a-git-reference
 */
-func ChecksListForRef(ctx context.Context, req *ChecksListForRefReq, opt ...RequestOption) (*ChecksListForRefResponse, error) {
+func ChecksListForRef(ctx context.Context, req *ChecksListForRefReq, opt ...options.Option) (*ChecksListForRefResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ChecksListForRefReq)
 	}
 	resp := &ChecksListForRefResponse{request: req}
-	r, err := doRequest(ctx, req, "checks/list-for-ref", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = ChecksListForRefResponseBody{}
-	err = r.decodeBody(&resp.Data, "checks/list-for-ref")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -927,7 +880,7 @@ List check runs for a Git reference.
 
 https://developer.github.com/v3/checks/runs/#list-check-runs-for-a-git-reference
 */
-func (c Client) ChecksListForRef(ctx context.Context, req *ChecksListForRefReq, opt ...RequestOption) (*ChecksListForRefResponse, error) {
+func (c Client) ChecksListForRef(ctx context.Context, req *ChecksListForRefReq, opt ...options.Option) (*ChecksListForRefResponse, error) {
 	return ChecksListForRef(ctx, req, append(c, opt...)...)
 }
 
@@ -975,19 +928,16 @@ type ChecksListForRefReq struct {
 	AntiopePreview bool
 }
 
-func (r *ChecksListForRefReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *ChecksListForRefReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *ChecksListForRefReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/commits/%v/check-runs", r.Owner, r.Repo, r.Ref)
-}
-
-func (r *ChecksListForRefReq) method() string {
-	return "GET"
-}
-
-func (r *ChecksListForRefReq) urlQuery() url.Values {
+func (r *ChecksListForRefReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.CheckName != nil {
 		query.Set("check_name", *r.CheckName)
@@ -1004,36 +954,22 @@ func (r *ChecksListForRefReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *ChecksListForRefReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{"antiope": r.AntiopePreview}
-	if requiredPreviews {
-		previewVals["antiope"] = true
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"antiope"},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "checks/list-for-ref",
+		Previews:         map[string]bool{"antiope": r.AntiopePreview},
+		RequiredPreviews: []string{"antiope"},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/commits/%v/check-runs", r.Owner, r.Repo, r.Ref),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
 	}
-	if allPreviews {
-		previewVals["antiope"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ChecksListForRefReq) body() interface{} {
-	return nil
-}
-
-func (r *ChecksListForRefReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ChecksListForRefReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ChecksListForRefReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "checks/list-for-ref", opt)
+	return builder
 }
 
 /*
@@ -1041,7 +977,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ChecksListForRefReq) Rel(link RelName, resp *ChecksListForRefResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1065,7 +1001,7 @@ ChecksListForRefResponse is a response for ChecksListForRef
 https://developer.github.com/v3/checks/runs/#list-check-runs-for-a-git-reference
 */
 type ChecksListForRefResponse struct {
-	response
+	internal.Response
 	request *ChecksListForRefReq
 	Data    ChecksListForRefResponseBody
 }
@@ -1079,20 +1015,26 @@ List check runs in a check suite.
 
 https://developer.github.com/v3/checks/runs/#list-check-runs-in-a-check-suite
 */
-func ChecksListForSuite(ctx context.Context, req *ChecksListForSuiteReq, opt ...RequestOption) (*ChecksListForSuiteResponse, error) {
+func ChecksListForSuite(ctx context.Context, req *ChecksListForSuiteReq, opt ...options.Option) (*ChecksListForSuiteResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ChecksListForSuiteReq)
 	}
 	resp := &ChecksListForSuiteResponse{request: req}
-	r, err := doRequest(ctx, req, "checks/list-for-suite", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = ChecksListForSuiteResponseBody{}
-	err = r.decodeBody(&resp.Data, "checks/list-for-suite")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1108,7 +1050,7 @@ List check runs in a check suite.
 
 https://developer.github.com/v3/checks/runs/#list-check-runs-in-a-check-suite
 */
-func (c Client) ChecksListForSuite(ctx context.Context, req *ChecksListForSuiteReq, opt ...RequestOption) (*ChecksListForSuiteResponse, error) {
+func (c Client) ChecksListForSuite(ctx context.Context, req *ChecksListForSuiteReq, opt ...options.Option) (*ChecksListForSuiteResponse, error) {
 	return ChecksListForSuite(ctx, req, append(c, opt...)...)
 }
 
@@ -1156,19 +1098,16 @@ type ChecksListForSuiteReq struct {
 	AntiopePreview bool
 }
 
-func (r *ChecksListForSuiteReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *ChecksListForSuiteReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *ChecksListForSuiteReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/check-suites/%v/check-runs", r.Owner, r.Repo, r.CheckSuiteId)
-}
-
-func (r *ChecksListForSuiteReq) method() string {
-	return "GET"
-}
-
-func (r *ChecksListForSuiteReq) urlQuery() url.Values {
+func (r *ChecksListForSuiteReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.CheckName != nil {
 		query.Set("check_name", *r.CheckName)
@@ -1185,36 +1124,22 @@ func (r *ChecksListForSuiteReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *ChecksListForSuiteReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{"antiope": r.AntiopePreview}
-	if requiredPreviews {
-		previewVals["antiope"] = true
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"antiope"},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "checks/list-for-suite",
+		Previews:         map[string]bool{"antiope": r.AntiopePreview},
+		RequiredPreviews: []string{"antiope"},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/check-suites/%v/check-runs", r.Owner, r.Repo, r.CheckSuiteId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
 	}
-	if allPreviews {
-		previewVals["antiope"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ChecksListForSuiteReq) body() interface{} {
-	return nil
-}
-
-func (r *ChecksListForSuiteReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ChecksListForSuiteReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ChecksListForSuiteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "checks/list-for-suite", opt)
+	return builder
 }
 
 /*
@@ -1222,7 +1147,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ChecksListForSuiteReq) Rel(link RelName, resp *ChecksListForSuiteResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1246,7 +1171,7 @@ ChecksListForSuiteResponse is a response for ChecksListForSuite
 https://developer.github.com/v3/checks/runs/#list-check-runs-in-a-check-suite
 */
 type ChecksListForSuiteResponse struct {
-	response
+	internal.Response
 	request *ChecksListForSuiteReq
 	Data    ChecksListForSuiteResponseBody
 }
@@ -1260,20 +1185,26 @@ List check suites for a Git reference.
 
 https://developer.github.com/v3/checks/suites/#list-check-suites-for-a-git-reference
 */
-func ChecksListSuitesForRef(ctx context.Context, req *ChecksListSuitesForRefReq, opt ...RequestOption) (*ChecksListSuitesForRefResponse, error) {
+func ChecksListSuitesForRef(ctx context.Context, req *ChecksListSuitesForRefReq, opt ...options.Option) (*ChecksListSuitesForRefResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ChecksListSuitesForRefReq)
 	}
 	resp := &ChecksListSuitesForRefResponse{request: req}
-	r, err := doRequest(ctx, req, "checks/list-suites-for-ref", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = ChecksListSuitesForRefResponseBody{}
-	err = r.decodeBody(&resp.Data, "checks/list-suites-for-ref")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1289,7 +1220,7 @@ List check suites for a Git reference.
 
 https://developer.github.com/v3/checks/suites/#list-check-suites-for-a-git-reference
 */
-func (c Client) ChecksListSuitesForRef(ctx context.Context, req *ChecksListSuitesForRefReq, opt ...RequestOption) (*ChecksListSuitesForRefResponse, error) {
+func (c Client) ChecksListSuitesForRef(ctx context.Context, req *ChecksListSuitesForRefReq, opt ...options.Option) (*ChecksListSuitesForRefResponse, error) {
 	return ChecksListSuitesForRef(ctx, req, append(c, opt...)...)
 }
 
@@ -1328,19 +1259,16 @@ type ChecksListSuitesForRefReq struct {
 	AntiopePreview bool
 }
 
-func (r *ChecksListSuitesForRefReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *ChecksListSuitesForRefReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *ChecksListSuitesForRefReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/commits/%v/check-suites", r.Owner, r.Repo, r.Ref)
-}
-
-func (r *ChecksListSuitesForRefReq) method() string {
-	return "GET"
-}
-
-func (r *ChecksListSuitesForRefReq) urlQuery() url.Values {
+func (r *ChecksListSuitesForRefReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.AppId != nil {
 		query.Set("app_id", strconv.FormatInt(*r.AppId, 10))
@@ -1354,36 +1282,22 @@ func (r *ChecksListSuitesForRefReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *ChecksListSuitesForRefReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{"antiope": r.AntiopePreview}
-	if requiredPreviews {
-		previewVals["antiope"] = true
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"antiope"},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "checks/list-suites-for-ref",
+		Previews:         map[string]bool{"antiope": r.AntiopePreview},
+		RequiredPreviews: []string{"antiope"},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/commits/%v/check-suites", r.Owner, r.Repo, r.Ref),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
 	}
-	if allPreviews {
-		previewVals["antiope"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ChecksListSuitesForRefReq) body() interface{} {
-	return nil
-}
-
-func (r *ChecksListSuitesForRefReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ChecksListSuitesForRefReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *ChecksListSuitesForRefReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "checks/list-suites-for-ref", opt)
+	return builder
 }
 
 /*
@@ -1391,7 +1305,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ChecksListSuitesForRefReq) Rel(link RelName, resp *ChecksListSuitesForRefResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1415,7 +1329,7 @@ ChecksListSuitesForRefResponse is a response for ChecksListSuitesForRef
 https://developer.github.com/v3/checks/suites/#list-check-suites-for-a-git-reference
 */
 type ChecksListSuitesForRefResponse struct {
-	response
+	internal.Response
 	request *ChecksListSuitesForRefReq
 	Data    ChecksListSuitesForRefResponseBody
 }
@@ -1429,19 +1343,25 @@ Rerequest a check suite.
 
 https://developer.github.com/v3/checks/suites/#rerequest-a-check-suite
 */
-func ChecksRerequestSuite(ctx context.Context, req *ChecksRerequestSuiteReq, opt ...RequestOption) (*ChecksRerequestSuiteResponse, error) {
+func ChecksRerequestSuite(ctx context.Context, req *ChecksRerequestSuiteReq, opt ...options.Option) (*ChecksRerequestSuiteResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ChecksRerequestSuiteReq)
 	}
 	resp := &ChecksRerequestSuiteResponse{request: req}
-	r, err := doRequest(ctx, req, "checks/rerequest-suite", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "checks/rerequest-suite")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -1457,7 +1377,7 @@ Rerequest a check suite.
 
 https://developer.github.com/v3/checks/suites/#rerequest-a-check-suite
 */
-func (c Client) ChecksRerequestSuite(ctx context.Context, req *ChecksRerequestSuiteReq, opt ...RequestOption) (*ChecksRerequestSuiteResponse, error) {
+func (c Client) ChecksRerequestSuite(ctx context.Context, req *ChecksRerequestSuiteReq, opt ...options.Option) (*ChecksRerequestSuiteResponse, error) {
 	return ChecksRerequestSuite(ctx, req, append(c, opt...)...)
 }
 
@@ -1484,50 +1404,33 @@ type ChecksRerequestSuiteReq struct {
 	AntiopePreview bool
 }
 
-func (r *ChecksRerequestSuiteReq) url() string {
-	return r._url
-}
-
-func (r *ChecksRerequestSuiteReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/check-suites/%v/rerequest", r.Owner, r.Repo, r.CheckSuiteId)
-}
-
-func (r *ChecksRerequestSuiteReq) method() string {
-	return "POST"
-}
-
-func (r *ChecksRerequestSuiteReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ChecksRerequestSuiteReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"antiope": r.AntiopePreview}
-	if requiredPreviews {
-		previewVals["antiope"] = true
-	}
-	if allPreviews {
-		previewVals["antiope"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ChecksRerequestSuiteReq) body() interface{} {
-	return nil
-}
-
-func (r *ChecksRerequestSuiteReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *ChecksRerequestSuiteReq) validStatuses() []int {
-	return []int{201}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ChecksRerequestSuiteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "checks/rerequest-suite", opt)
+func (r *ChecksRerequestSuiteReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ChecksRerequestSuiteReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"antiope"},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "POST",
+		OperationID:      "checks/rerequest-suite",
+		Previews:         map[string]bool{"antiope": r.AntiopePreview},
+		RequiredPreviews: []string{"antiope"},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/check-suites/%v/rerequest", r.Owner, r.Repo, r.CheckSuiteId),
+		URLQuery:         query,
+		ValidStatuses:    []int{201},
+	}
+	return builder
 }
 
 /*
@@ -1535,7 +1438,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ChecksRerequestSuiteReq) Rel(link RelName, resp *ChecksRerequestSuiteResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1549,7 +1452,7 @@ ChecksRerequestSuiteResponse is a response for ChecksRerequestSuite
 https://developer.github.com/v3/checks/suites/#rerequest-a-check-suite
 */
 type ChecksRerequestSuiteResponse struct {
-	response
+	internal.Response
 	request *ChecksRerequestSuiteReq
 }
 
@@ -1562,20 +1465,26 @@ Update repository preferences for check suites.
 
 https://developer.github.com/v3/checks/suites/#update-repository-preferences-for-check-suites
 */
-func ChecksSetSuitesPreferences(ctx context.Context, req *ChecksSetSuitesPreferencesReq, opt ...RequestOption) (*ChecksSetSuitesPreferencesResponse, error) {
+func ChecksSetSuitesPreferences(ctx context.Context, req *ChecksSetSuitesPreferencesReq, opt ...options.Option) (*ChecksSetSuitesPreferencesResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ChecksSetSuitesPreferencesReq)
 	}
 	resp := &ChecksSetSuitesPreferencesResponse{request: req}
-	r, err := doRequest(ctx, req, "checks/set-suites-preferences", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.CheckSuitePreference{}
-	err = r.decodeBody(&resp.Data, "checks/set-suites-preferences")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1591,7 +1500,7 @@ Update repository preferences for check suites.
 
 https://developer.github.com/v3/checks/suites/#update-repository-preferences-for-check-suites
 */
-func (c Client) ChecksSetSuitesPreferences(ctx context.Context, req *ChecksSetSuitesPreferencesReq, opt ...RequestOption) (*ChecksSetSuitesPreferencesResponse, error) {
+func (c Client) ChecksSetSuitesPreferences(ctx context.Context, req *ChecksSetSuitesPreferencesReq, opt ...options.Option) (*ChecksSetSuitesPreferencesResponse, error) {
 	return ChecksSetSuitesPreferences(ctx, req, append(c, opt...)...)
 }
 
@@ -1616,53 +1525,36 @@ type ChecksSetSuitesPreferencesReq struct {
 	AntiopePreview bool
 }
 
-func (r *ChecksSetSuitesPreferencesReq) url() string {
-	return r._url
-}
-
-func (r *ChecksSetSuitesPreferencesReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/check-suites/preferences", r.Owner, r.Repo)
-}
-
-func (r *ChecksSetSuitesPreferencesReq) method() string {
-	return "PATCH"
-}
-
-func (r *ChecksSetSuitesPreferencesReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ChecksSetSuitesPreferencesReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{"antiope": r.AntiopePreview}
-	if requiredPreviews {
-		previewVals["antiope"] = true
-	}
-	if allPreviews {
-		previewVals["antiope"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ChecksSetSuitesPreferencesReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *ChecksSetSuitesPreferencesReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ChecksSetSuitesPreferencesReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ChecksSetSuitesPreferencesReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "checks/set-suites-preferences", opt)
+func (r *ChecksSetSuitesPreferencesReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ChecksSetSuitesPreferencesReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{"antiope"},
+		Body:         r.RequestBody,
+		DataStatuses: []int{200},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "PATCH",
+		OperationID:      "checks/set-suites-preferences",
+		Previews:         map[string]bool{"antiope": r.AntiopePreview},
+		RequiredPreviews: []string{"antiope"},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/check-suites/preferences", r.Owner, r.Repo),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -1670,7 +1562,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ChecksSetSuitesPreferencesReq) Rel(link RelName, resp *ChecksSetSuitesPreferencesResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1713,7 +1605,7 @@ ChecksSetSuitesPreferencesResponse is a response for ChecksSetSuitesPreferences
 https://developer.github.com/v3/checks/suites/#update-repository-preferences-for-check-suites
 */
 type ChecksSetSuitesPreferencesResponse struct {
-	response
+	internal.Response
 	request *ChecksSetSuitesPreferencesReq
 	Data    components.CheckSuitePreference
 }
@@ -1727,20 +1619,26 @@ Update a check run.
 
 https://developer.github.com/v3/checks/runs/#update-a-check-run
 */
-func ChecksUpdate(ctx context.Context, req *ChecksUpdateReq, opt ...RequestOption) (*ChecksUpdateResponse, error) {
+func ChecksUpdate(ctx context.Context, req *ChecksUpdateReq, opt ...options.Option) (*ChecksUpdateResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(ChecksUpdateReq)
 	}
 	resp := &ChecksUpdateResponse{request: req}
-	r, err := doRequest(ctx, req, "checks/update", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.CheckRun{}
-	err = r.decodeBody(&resp.Data, "checks/update")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1756,7 +1654,7 @@ Update a check run.
 
 https://developer.github.com/v3/checks/runs/#update-a-check-run
 */
-func (c Client) ChecksUpdate(ctx context.Context, req *ChecksUpdateReq, opt ...RequestOption) (*ChecksUpdateResponse, error) {
+func (c Client) ChecksUpdate(ctx context.Context, req *ChecksUpdateReq, opt ...options.Option) (*ChecksUpdateResponse, error) {
 	return ChecksUpdate(ctx, req, append(c, opt...)...)
 }
 
@@ -1784,53 +1682,36 @@ type ChecksUpdateReq struct {
 	AntiopePreview bool
 }
 
-func (r *ChecksUpdateReq) url() string {
-	return r._url
-}
-
-func (r *ChecksUpdateReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/check-runs/%v", r.Owner, r.Repo, r.CheckRunId)
-}
-
-func (r *ChecksUpdateReq) method() string {
-	return "PATCH"
-}
-
-func (r *ChecksUpdateReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *ChecksUpdateReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{"antiope": r.AntiopePreview}
-	if requiredPreviews {
-		previewVals["antiope"] = true
-	}
-	if allPreviews {
-		previewVals["antiope"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *ChecksUpdateReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *ChecksUpdateReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *ChecksUpdateReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *ChecksUpdateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "checks/update", opt)
+func (r *ChecksUpdateReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *ChecksUpdateReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{"antiope"},
+		Body:         r.RequestBody,
+		DataStatuses: []int{200},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "PATCH",
+		OperationID:      "checks/update",
+		Previews:         map[string]bool{"antiope": r.AntiopePreview},
+		RequiredPreviews: []string{"antiope"},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/check-runs/%v", r.Owner, r.Repo, r.CheckRunId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -1838,7 +1719,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ChecksUpdateReq) Rel(link RelName, resp *ChecksUpdateResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -2013,7 +1894,7 @@ ChecksUpdateResponse is a response for ChecksUpdate
 https://developer.github.com/v3/checks/runs/#update-a-check-run
 */
 type ChecksUpdateResponse struct {
-	response
+	internal.Response
 	request *ChecksUpdateReq
 	Data    components.CheckRun
 }

@@ -6,6 +6,8 @@ import (
 	"context"
 	"fmt"
 	components "github.com/willabides/octo-go/components"
+	internal "github.com/willabides/octo-go/internal"
+	options "github.com/willabides/octo-go/options"
 	"net/http"
 	"net/url"
 )
@@ -19,20 +21,26 @@ Get rate limit status for the authenticated user.
 
 https://developer.github.com/v3/rate_limit/#get-rate-limit-status-for-the-authenticated-user
 */
-func RateLimitGet(ctx context.Context, req *RateLimitGetReq, opt ...RequestOption) (*RateLimitGetResponse, error) {
+func RateLimitGet(ctx context.Context, req *RateLimitGetReq, opt ...options.Option) (*RateLimitGetResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(RateLimitGetReq)
 	}
 	resp := &RateLimitGetResponse{request: req}
-	r, err := doRequest(ctx, req, "rate-limit/get", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.RateLimitOverview{}
-	err = r.decodeBody(&resp.Data, "rate-limit/get")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -48,7 +56,7 @@ Get rate limit status for the authenticated user.
 
 https://developer.github.com/v3/rate_limit/#get-rate-limit-status-for-the-authenticated-user
 */
-func (c Client) RateLimitGet(ctx context.Context, req *RateLimitGetReq, opt ...RequestOption) (*RateLimitGetResponse, error) {
+func (c Client) RateLimitGet(ctx context.Context, req *RateLimitGetReq, opt ...options.Option) (*RateLimitGetResponse, error) {
 	return RateLimitGet(ctx, req, append(c, opt...)...)
 }
 
@@ -61,44 +69,33 @@ type RateLimitGetReq struct {
 	_url string
 }
 
-func (r *RateLimitGetReq) url() string {
-	return r._url
-}
-
-func (r *RateLimitGetReq) urlPath() string {
-	return fmt.Sprintf("/rate_limit")
-}
-
-func (r *RateLimitGetReq) method() string {
-	return "GET"
-}
-
-func (r *RateLimitGetReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *RateLimitGetReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *RateLimitGetReq) body() interface{} {
-	return nil
-}
-
-func (r *RateLimitGetReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *RateLimitGetReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *RateLimitGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "rate-limit/get", opt)
+func (r *RateLimitGetReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *RateLimitGetReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "rate-limit/get",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/rate_limit"),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
+	}
+	return builder
 }
 
 /*
@@ -106,7 +103,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *RateLimitGetReq) Rel(link RelName, resp *RateLimitGetResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -120,7 +117,7 @@ RateLimitGetResponse is a response for RateLimitGet
 https://developer.github.com/v3/rate_limit/#get-rate-limit-status-for-the-authenticated-user
 */
 type RateLimitGetResponse struct {
-	response
+	internal.Response
 	request *RateLimitGetReq
 	Data    components.RateLimitOverview
 }

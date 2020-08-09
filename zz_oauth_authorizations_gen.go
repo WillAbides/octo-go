@@ -6,6 +6,8 @@ import (
 	"context"
 	"fmt"
 	components "github.com/willabides/octo-go/components"
+	internal "github.com/willabides/octo-go/internal"
+	options "github.com/willabides/octo-go/options"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -20,20 +22,26 @@ Create a new authorization.
 
 https://developer.github.com/v3/oauth_authorizations/#create-a-new-authorization
 */
-func OauthAuthorizationsCreateAuthorization(ctx context.Context, req *OauthAuthorizationsCreateAuthorizationReq, opt ...RequestOption) (*OauthAuthorizationsCreateAuthorizationResponse, error) {
+func OauthAuthorizationsCreateAuthorization(ctx context.Context, req *OauthAuthorizationsCreateAuthorizationReq, opt ...options.Option) (*OauthAuthorizationsCreateAuthorizationResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(OauthAuthorizationsCreateAuthorizationReq)
 	}
 	resp := &OauthAuthorizationsCreateAuthorizationResponse{request: req}
-	r, err := doRequest(ctx, req, "oauth-authorizations/create-authorization", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.Authorization{}
-	err = r.decodeBody(&resp.Data, "oauth-authorizations/create-authorization")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -49,7 +57,7 @@ Create a new authorization.
 
 https://developer.github.com/v3/oauth_authorizations/#create-a-new-authorization
 */
-func (c Client) OauthAuthorizationsCreateAuthorization(ctx context.Context, req *OauthAuthorizationsCreateAuthorizationReq, opt ...RequestOption) (*OauthAuthorizationsCreateAuthorizationResponse, error) {
+func (c Client) OauthAuthorizationsCreateAuthorization(ctx context.Context, req *OauthAuthorizationsCreateAuthorizationReq, opt ...options.Option) (*OauthAuthorizationsCreateAuthorizationResponse, error) {
 	return OauthAuthorizationsCreateAuthorization(ctx, req, append(c, opt...)...)
 }
 
@@ -63,47 +71,36 @@ type OauthAuthorizationsCreateAuthorizationReq struct {
 	RequestBody OauthAuthorizationsCreateAuthorizationReqBody
 }
 
-func (r *OauthAuthorizationsCreateAuthorizationReq) url() string {
-	return r._url
-}
-
-func (r *OauthAuthorizationsCreateAuthorizationReq) urlPath() string {
-	return fmt.Sprintf("/authorizations")
-}
-
-func (r *OauthAuthorizationsCreateAuthorizationReq) method() string {
-	return "POST"
-}
-
-func (r *OauthAuthorizationsCreateAuthorizationReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *OauthAuthorizationsCreateAuthorizationReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *OauthAuthorizationsCreateAuthorizationReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *OauthAuthorizationsCreateAuthorizationReq) dataStatuses() []int {
-	return []int{201}
-}
-
-func (r *OauthAuthorizationsCreateAuthorizationReq) validStatuses() []int {
-	return []int{201, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *OauthAuthorizationsCreateAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "oauth-authorizations/create-authorization", opt)
+func (r *OauthAuthorizationsCreateAuthorizationReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *OauthAuthorizationsCreateAuthorizationReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{},
+		Body:         r.RequestBody,
+		DataStatuses: []int{201},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "POST",
+		OperationID:      "oauth-authorizations/create-authorization",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/authorizations"),
+		URLQuery:         query,
+		ValidStatuses:    []int{201, 304},
+	}
+	return builder
 }
 
 /*
@@ -111,7 +108,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *OauthAuthorizationsCreateAuthorizationReq) Rel(link RelName, resp *OauthAuthorizationsCreateAuthorizationResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -151,7 +148,7 @@ OauthAuthorizationsCreateAuthorizationResponse is a response for OauthAuthorizat
 https://developer.github.com/v3/oauth_authorizations/#create-a-new-authorization
 */
 type OauthAuthorizationsCreateAuthorizationResponse struct {
-	response
+	internal.Response
 	request *OauthAuthorizationsCreateAuthorizationReq
 	Data    components.Authorization
 }
@@ -165,19 +162,25 @@ Delete an authorization.
 
 https://developer.github.com/v3/oauth_authorizations/#delete-an-authorization
 */
-func OauthAuthorizationsDeleteAuthorization(ctx context.Context, req *OauthAuthorizationsDeleteAuthorizationReq, opt ...RequestOption) (*OauthAuthorizationsDeleteAuthorizationResponse, error) {
+func OauthAuthorizationsDeleteAuthorization(ctx context.Context, req *OauthAuthorizationsDeleteAuthorizationReq, opt ...options.Option) (*OauthAuthorizationsDeleteAuthorizationResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(OauthAuthorizationsDeleteAuthorizationReq)
 	}
 	resp := &OauthAuthorizationsDeleteAuthorizationResponse{request: req}
-	r, err := doRequest(ctx, req, "oauth-authorizations/delete-authorization", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "oauth-authorizations/delete-authorization")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -193,7 +196,7 @@ Delete an authorization.
 
 https://developer.github.com/v3/oauth_authorizations/#delete-an-authorization
 */
-func (c Client) OauthAuthorizationsDeleteAuthorization(ctx context.Context, req *OauthAuthorizationsDeleteAuthorizationReq, opt ...RequestOption) (*OauthAuthorizationsDeleteAuthorizationResponse, error) {
+func (c Client) OauthAuthorizationsDeleteAuthorization(ctx context.Context, req *OauthAuthorizationsDeleteAuthorizationReq, opt ...options.Option) (*OauthAuthorizationsDeleteAuthorizationResponse, error) {
 	return OauthAuthorizationsDeleteAuthorization(ctx, req, append(c, opt...)...)
 }
 
@@ -209,44 +212,33 @@ type OauthAuthorizationsDeleteAuthorizationReq struct {
 	AuthorizationId int64
 }
 
-func (r *OauthAuthorizationsDeleteAuthorizationReq) url() string {
-	return r._url
-}
-
-func (r *OauthAuthorizationsDeleteAuthorizationReq) urlPath() string {
-	return fmt.Sprintf("/authorizations/%v", r.AuthorizationId)
-}
-
-func (r *OauthAuthorizationsDeleteAuthorizationReq) method() string {
-	return "DELETE"
-}
-
-func (r *OauthAuthorizationsDeleteAuthorizationReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *OauthAuthorizationsDeleteAuthorizationReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *OauthAuthorizationsDeleteAuthorizationReq) body() interface{} {
-	return nil
-}
-
-func (r *OauthAuthorizationsDeleteAuthorizationReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *OauthAuthorizationsDeleteAuthorizationReq) validStatuses() []int {
-	return []int{204, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *OauthAuthorizationsDeleteAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "oauth-authorizations/delete-authorization", opt)
+func (r *OauthAuthorizationsDeleteAuthorizationReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *OauthAuthorizationsDeleteAuthorizationReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		OperationID:      "oauth-authorizations/delete-authorization",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/authorizations/%v", r.AuthorizationId),
+		URLQuery:         query,
+		ValidStatuses:    []int{204, 304},
+	}
+	return builder
 }
 
 /*
@@ -254,7 +246,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *OauthAuthorizationsDeleteAuthorizationReq) Rel(link RelName, resp *OauthAuthorizationsDeleteAuthorizationResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -268,7 +260,7 @@ OauthAuthorizationsDeleteAuthorizationResponse is a response for OauthAuthorizat
 https://developer.github.com/v3/oauth_authorizations/#delete-an-authorization
 */
 type OauthAuthorizationsDeleteAuthorizationResponse struct {
-	response
+	internal.Response
 	request *OauthAuthorizationsDeleteAuthorizationReq
 }
 
@@ -281,19 +273,25 @@ Delete a grant.
 
 https://developer.github.com/v3/oauth_authorizations/#delete-a-grant
 */
-func OauthAuthorizationsDeleteGrant(ctx context.Context, req *OauthAuthorizationsDeleteGrantReq, opt ...RequestOption) (*OauthAuthorizationsDeleteGrantResponse, error) {
+func OauthAuthorizationsDeleteGrant(ctx context.Context, req *OauthAuthorizationsDeleteGrantReq, opt ...options.Option) (*OauthAuthorizationsDeleteGrantResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(OauthAuthorizationsDeleteGrantReq)
 	}
 	resp := &OauthAuthorizationsDeleteGrantResponse{request: req}
-	r, err := doRequest(ctx, req, "oauth-authorizations/delete-grant", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "oauth-authorizations/delete-grant")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -309,7 +307,7 @@ Delete a grant.
 
 https://developer.github.com/v3/oauth_authorizations/#delete-a-grant
 */
-func (c Client) OauthAuthorizationsDeleteGrant(ctx context.Context, req *OauthAuthorizationsDeleteGrantReq, opt ...RequestOption) (*OauthAuthorizationsDeleteGrantResponse, error) {
+func (c Client) OauthAuthorizationsDeleteGrant(ctx context.Context, req *OauthAuthorizationsDeleteGrantReq, opt ...options.Option) (*OauthAuthorizationsDeleteGrantResponse, error) {
 	return OauthAuthorizationsDeleteGrant(ctx, req, append(c, opt...)...)
 }
 
@@ -325,44 +323,33 @@ type OauthAuthorizationsDeleteGrantReq struct {
 	GrantId int64
 }
 
-func (r *OauthAuthorizationsDeleteGrantReq) url() string {
-	return r._url
-}
-
-func (r *OauthAuthorizationsDeleteGrantReq) urlPath() string {
-	return fmt.Sprintf("/applications/grants/%v", r.GrantId)
-}
-
-func (r *OauthAuthorizationsDeleteGrantReq) method() string {
-	return "DELETE"
-}
-
-func (r *OauthAuthorizationsDeleteGrantReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *OauthAuthorizationsDeleteGrantReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *OauthAuthorizationsDeleteGrantReq) body() interface{} {
-	return nil
-}
-
-func (r *OauthAuthorizationsDeleteGrantReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *OauthAuthorizationsDeleteGrantReq) validStatuses() []int {
-	return []int{204, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *OauthAuthorizationsDeleteGrantReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "oauth-authorizations/delete-grant", opt)
+func (r *OauthAuthorizationsDeleteGrantReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *OauthAuthorizationsDeleteGrantReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		OperationID:      "oauth-authorizations/delete-grant",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/applications/grants/%v", r.GrantId),
+		URLQuery:         query,
+		ValidStatuses:    []int{204, 304},
+	}
+	return builder
 }
 
 /*
@@ -370,7 +357,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *OauthAuthorizationsDeleteGrantReq) Rel(link RelName, resp *OauthAuthorizationsDeleteGrantResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -384,7 +371,7 @@ OauthAuthorizationsDeleteGrantResponse is a response for OauthAuthorizationsDele
 https://developer.github.com/v3/oauth_authorizations/#delete-a-grant
 */
 type OauthAuthorizationsDeleteGrantResponse struct {
-	response
+	internal.Response
 	request *OauthAuthorizationsDeleteGrantReq
 }
 
@@ -397,20 +384,26 @@ Get a single authorization.
 
 https://developer.github.com/v3/oauth_authorizations/#get-a-single-authorization
 */
-func OauthAuthorizationsGetAuthorization(ctx context.Context, req *OauthAuthorizationsGetAuthorizationReq, opt ...RequestOption) (*OauthAuthorizationsGetAuthorizationResponse, error) {
+func OauthAuthorizationsGetAuthorization(ctx context.Context, req *OauthAuthorizationsGetAuthorizationReq, opt ...options.Option) (*OauthAuthorizationsGetAuthorizationResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(OauthAuthorizationsGetAuthorizationReq)
 	}
 	resp := &OauthAuthorizationsGetAuthorizationResponse{request: req}
-	r, err := doRequest(ctx, req, "oauth-authorizations/get-authorization", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.Authorization{}
-	err = r.decodeBody(&resp.Data, "oauth-authorizations/get-authorization")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -426,7 +419,7 @@ Get a single authorization.
 
 https://developer.github.com/v3/oauth_authorizations/#get-a-single-authorization
 */
-func (c Client) OauthAuthorizationsGetAuthorization(ctx context.Context, req *OauthAuthorizationsGetAuthorizationReq, opt ...RequestOption) (*OauthAuthorizationsGetAuthorizationResponse, error) {
+func (c Client) OauthAuthorizationsGetAuthorization(ctx context.Context, req *OauthAuthorizationsGetAuthorizationReq, opt ...options.Option) (*OauthAuthorizationsGetAuthorizationResponse, error) {
 	return OauthAuthorizationsGetAuthorization(ctx, req, append(c, opt...)...)
 }
 
@@ -442,44 +435,33 @@ type OauthAuthorizationsGetAuthorizationReq struct {
 	AuthorizationId int64
 }
 
-func (r *OauthAuthorizationsGetAuthorizationReq) url() string {
-	return r._url
-}
-
-func (r *OauthAuthorizationsGetAuthorizationReq) urlPath() string {
-	return fmt.Sprintf("/authorizations/%v", r.AuthorizationId)
-}
-
-func (r *OauthAuthorizationsGetAuthorizationReq) method() string {
-	return "GET"
-}
-
-func (r *OauthAuthorizationsGetAuthorizationReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *OauthAuthorizationsGetAuthorizationReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *OauthAuthorizationsGetAuthorizationReq) body() interface{} {
-	return nil
-}
-
-func (r *OauthAuthorizationsGetAuthorizationReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *OauthAuthorizationsGetAuthorizationReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *OauthAuthorizationsGetAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "oauth-authorizations/get-authorization", opt)
+func (r *OauthAuthorizationsGetAuthorizationReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *OauthAuthorizationsGetAuthorizationReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "oauth-authorizations/get-authorization",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/authorizations/%v", r.AuthorizationId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
+	}
+	return builder
 }
 
 /*
@@ -487,7 +469,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *OauthAuthorizationsGetAuthorizationReq) Rel(link RelName, resp *OauthAuthorizationsGetAuthorizationResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -501,7 +483,7 @@ OauthAuthorizationsGetAuthorizationResponse is a response for OauthAuthorization
 https://developer.github.com/v3/oauth_authorizations/#get-a-single-authorization
 */
 type OauthAuthorizationsGetAuthorizationResponse struct {
-	response
+	internal.Response
 	request *OauthAuthorizationsGetAuthorizationReq
 	Data    components.Authorization
 }
@@ -515,20 +497,26 @@ Get a single grant.
 
 https://developer.github.com/v3/oauth_authorizations/#get-a-single-grant
 */
-func OauthAuthorizationsGetGrant(ctx context.Context, req *OauthAuthorizationsGetGrantReq, opt ...RequestOption) (*OauthAuthorizationsGetGrantResponse, error) {
+func OauthAuthorizationsGetGrant(ctx context.Context, req *OauthAuthorizationsGetGrantReq, opt ...options.Option) (*OauthAuthorizationsGetGrantResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(OauthAuthorizationsGetGrantReq)
 	}
 	resp := &OauthAuthorizationsGetGrantResponse{request: req}
-	r, err := doRequest(ctx, req, "oauth-authorizations/get-grant", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.ApplicationGrant{}
-	err = r.decodeBody(&resp.Data, "oauth-authorizations/get-grant")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -544,7 +532,7 @@ Get a single grant.
 
 https://developer.github.com/v3/oauth_authorizations/#get-a-single-grant
 */
-func (c Client) OauthAuthorizationsGetGrant(ctx context.Context, req *OauthAuthorizationsGetGrantReq, opt ...RequestOption) (*OauthAuthorizationsGetGrantResponse, error) {
+func (c Client) OauthAuthorizationsGetGrant(ctx context.Context, req *OauthAuthorizationsGetGrantReq, opt ...options.Option) (*OauthAuthorizationsGetGrantResponse, error) {
 	return OauthAuthorizationsGetGrant(ctx, req, append(c, opt...)...)
 }
 
@@ -560,44 +548,33 @@ type OauthAuthorizationsGetGrantReq struct {
 	GrantId int64
 }
 
-func (r *OauthAuthorizationsGetGrantReq) url() string {
-	return r._url
-}
-
-func (r *OauthAuthorizationsGetGrantReq) urlPath() string {
-	return fmt.Sprintf("/applications/grants/%v", r.GrantId)
-}
-
-func (r *OauthAuthorizationsGetGrantReq) method() string {
-	return "GET"
-}
-
-func (r *OauthAuthorizationsGetGrantReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *OauthAuthorizationsGetGrantReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *OauthAuthorizationsGetGrantReq) body() interface{} {
-	return nil
-}
-
-func (r *OauthAuthorizationsGetGrantReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *OauthAuthorizationsGetGrantReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *OauthAuthorizationsGetGrantReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "oauth-authorizations/get-grant", opt)
+func (r *OauthAuthorizationsGetGrantReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *OauthAuthorizationsGetGrantReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "oauth-authorizations/get-grant",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/applications/grants/%v", r.GrantId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
+	}
+	return builder
 }
 
 /*
@@ -605,7 +582,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *OauthAuthorizationsGetGrantReq) Rel(link RelName, resp *OauthAuthorizationsGetGrantResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -619,7 +596,7 @@ OauthAuthorizationsGetGrantResponse is a response for OauthAuthorizationsGetGran
 https://developer.github.com/v3/oauth_authorizations/#get-a-single-grant
 */
 type OauthAuthorizationsGetGrantResponse struct {
-	response
+	internal.Response
 	request *OauthAuthorizationsGetGrantReq
 	Data    components.ApplicationGrant
 }
@@ -633,20 +610,26 @@ Get-or-create an authorization for a specific app.
 
 https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app
 */
-func OauthAuthorizationsGetOrCreateAuthorizationForApp(ctx context.Context, req *OauthAuthorizationsGetOrCreateAuthorizationForAppReq, opt ...RequestOption) (*OauthAuthorizationsGetOrCreateAuthorizationForAppResponse, error) {
+func OauthAuthorizationsGetOrCreateAuthorizationForApp(ctx context.Context, req *OauthAuthorizationsGetOrCreateAuthorizationForAppReq, opt ...options.Option) (*OauthAuthorizationsGetOrCreateAuthorizationForAppResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(OauthAuthorizationsGetOrCreateAuthorizationForAppReq)
 	}
 	resp := &OauthAuthorizationsGetOrCreateAuthorizationForAppResponse{request: req}
-	r, err := doRequest(ctx, req, "oauth-authorizations/get-or-create-authorization-for-app", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.Authorization{}
-	err = r.decodeBody(&resp.Data, "oauth-authorizations/get-or-create-authorization-for-app")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -662,7 +645,7 @@ Get-or-create an authorization for a specific app.
 
 https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app
 */
-func (c Client) OauthAuthorizationsGetOrCreateAuthorizationForApp(ctx context.Context, req *OauthAuthorizationsGetOrCreateAuthorizationForAppReq, opt ...RequestOption) (*OauthAuthorizationsGetOrCreateAuthorizationForAppResponse, error) {
+func (c Client) OauthAuthorizationsGetOrCreateAuthorizationForApp(ctx context.Context, req *OauthAuthorizationsGetOrCreateAuthorizationForAppReq, opt ...options.Option) (*OauthAuthorizationsGetOrCreateAuthorizationForAppResponse, error) {
 	return OauthAuthorizationsGetOrCreateAuthorizationForApp(ctx, req, append(c, opt...)...)
 }
 
@@ -677,47 +660,36 @@ type OauthAuthorizationsGetOrCreateAuthorizationForAppReq struct {
 	RequestBody OauthAuthorizationsGetOrCreateAuthorizationForAppReqBody
 }
 
-func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppReq) url() string {
-	return r._url
-}
-
-func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppReq) urlPath() string {
-	return fmt.Sprintf("/authorizations/clients/%v", r.ClientId)
-}
-
-func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppReq) method() string {
-	return "PUT"
-}
-
-func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppReq) dataStatuses() []int {
-	return []int{200, 201}
-}
-
-func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppReq) validStatuses() []int {
-	return []int{200, 201, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "oauth-authorizations/get-or-create-authorization-for-app", opt)
+func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{},
+		Body:         r.RequestBody,
+		DataStatuses: []int{200, 201},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "PUT",
+		OperationID:      "oauth-authorizations/get-or-create-authorization-for-app",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/authorizations/clients/%v", r.ClientId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 201, 304},
+	}
+	return builder
 }
 
 /*
@@ -725,7 +697,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppReq) Rel(link RelName, resp *OauthAuthorizationsGetOrCreateAuthorizationForAppResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -762,7 +734,7 @@ OauthAuthorizationsGetOrCreateAuthorizationForAppResponse is a response for Oaut
 https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app
 */
 type OauthAuthorizationsGetOrCreateAuthorizationForAppResponse struct {
-	response
+	internal.Response
 	request *OauthAuthorizationsGetOrCreateAuthorizationForAppReq
 	Data    components.Authorization
 }
@@ -776,20 +748,26 @@ Get-or-create an authorization for a specific app and fingerprint.
 
 https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app-and-fingerprint
 */
-func OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprint(ctx context.Context, req *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq, opt ...RequestOption) (*OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintResponse, error) {
+func OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprint(ctx context.Context, req *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq, opt ...options.Option) (*OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq)
 	}
 	resp := &OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintResponse{request: req}
-	r, err := doRequest(ctx, req, "oauth-authorizations/get-or-create-authorization-for-app-and-fingerprint", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.Authorization{}
-	err = r.decodeBody(&resp.Data, "oauth-authorizations/get-or-create-authorization-for-app-and-fingerprint")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -805,7 +783,7 @@ Get-or-create an authorization for a specific app and fingerprint.
 
 https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app-and-fingerprint
 */
-func (c Client) OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprint(ctx context.Context, req *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq, opt ...RequestOption) (*OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintResponse, error) {
+func (c Client) OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprint(ctx context.Context, req *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq, opt ...options.Option) (*OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintResponse, error) {
 	return OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprint(ctx, req, append(c, opt...)...)
 }
 
@@ -823,47 +801,36 @@ type OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq struct {
 	RequestBody OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReqBody
 }
 
-func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) url() string {
-	return r._url
-}
-
-func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) urlPath() string {
-	return fmt.Sprintf("/authorizations/clients/%v/%v", r.ClientId, r.Fingerprint)
-}
-
-func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) method() string {
-	return "PUT"
-}
-
-func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) dataStatuses() []int {
-	return []int{200, 201}
-}
-
-func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) validStatuses() []int {
-	return []int{200, 201}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "oauth-authorizations/get-or-create-authorization-for-app-and-fingerprint", opt)
+func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{},
+		Body:         r.RequestBody,
+		DataStatuses: []int{200, 201},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "PUT",
+		OperationID:      "oauth-authorizations/get-or-create-authorization-for-app-and-fingerprint",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/authorizations/clients/%v/%v", r.ClientId, r.Fingerprint),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 201},
+	}
+	return builder
 }
 
 /*
@@ -871,7 +838,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) Rel(link RelName, resp *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -905,7 +872,7 @@ OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintResponse is a res
 https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app-and-fingerprint
 */
 type OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintResponse struct {
-	response
+	internal.Response
 	request *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq
 	Data    components.Authorization
 }
@@ -919,20 +886,26 @@ List your authorizations.
 
 https://developer.github.com/v3/oauth_authorizations/#list-your-authorizations
 */
-func OauthAuthorizationsListAuthorizations(ctx context.Context, req *OauthAuthorizationsListAuthorizationsReq, opt ...RequestOption) (*OauthAuthorizationsListAuthorizationsResponse, error) {
+func OauthAuthorizationsListAuthorizations(ctx context.Context, req *OauthAuthorizationsListAuthorizationsReq, opt ...options.Option) (*OauthAuthorizationsListAuthorizationsResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(OauthAuthorizationsListAuthorizationsReq)
 	}
 	resp := &OauthAuthorizationsListAuthorizationsResponse{request: req}
-	r, err := doRequest(ctx, req, "oauth-authorizations/list-authorizations", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.Authorization{}
-	err = r.decodeBody(&resp.Data, "oauth-authorizations/list-authorizations")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -948,7 +921,7 @@ List your authorizations.
 
 https://developer.github.com/v3/oauth_authorizations/#list-your-authorizations
 */
-func (c Client) OauthAuthorizationsListAuthorizations(ctx context.Context, req *OauthAuthorizationsListAuthorizationsReq, opt ...RequestOption) (*OauthAuthorizationsListAuthorizationsResponse, error) {
+func (c Client) OauthAuthorizationsListAuthorizations(ctx context.Context, req *OauthAuthorizationsListAuthorizationsReq, opt ...options.Option) (*OauthAuthorizationsListAuthorizationsResponse, error) {
 	return OauthAuthorizationsListAuthorizations(ctx, req, append(c, opt...)...)
 }
 
@@ -967,19 +940,16 @@ type OauthAuthorizationsListAuthorizationsReq struct {
 	Page *int64
 }
 
-func (r *OauthAuthorizationsListAuthorizationsReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *OauthAuthorizationsListAuthorizationsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *OauthAuthorizationsListAuthorizationsReq) urlPath() string {
-	return fmt.Sprintf("/authorizations")
-}
-
-func (r *OauthAuthorizationsListAuthorizationsReq) method() string {
-	return "GET"
-}
-
-func (r *OauthAuthorizationsListAuthorizationsReq) urlQuery() url.Values {
+func (r *OauthAuthorizationsListAuthorizationsReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -987,30 +957,22 @@ func (r *OauthAuthorizationsListAuthorizationsReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *OauthAuthorizationsListAuthorizationsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *OauthAuthorizationsListAuthorizationsReq) body() interface{} {
-	return nil
-}
-
-func (r *OauthAuthorizationsListAuthorizationsReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *OauthAuthorizationsListAuthorizationsReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *OauthAuthorizationsListAuthorizationsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "oauth-authorizations/list-authorizations", opt)
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "oauth-authorizations/list-authorizations",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/authorizations"),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
+	}
+	return builder
 }
 
 /*
@@ -1018,7 +980,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *OauthAuthorizationsListAuthorizationsReq) Rel(link RelName, resp *OauthAuthorizationsListAuthorizationsResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1032,7 +994,7 @@ OauthAuthorizationsListAuthorizationsResponse is a response for OauthAuthorizati
 https://developer.github.com/v3/oauth_authorizations/#list-your-authorizations
 */
 type OauthAuthorizationsListAuthorizationsResponse struct {
-	response
+	internal.Response
 	request *OauthAuthorizationsListAuthorizationsReq
 	Data    []components.Authorization
 }
@@ -1046,20 +1008,26 @@ List your grants.
 
 https://developer.github.com/v3/oauth_authorizations/#list-your-grants
 */
-func OauthAuthorizationsListGrants(ctx context.Context, req *OauthAuthorizationsListGrantsReq, opt ...RequestOption) (*OauthAuthorizationsListGrantsResponse, error) {
+func OauthAuthorizationsListGrants(ctx context.Context, req *OauthAuthorizationsListGrantsReq, opt ...options.Option) (*OauthAuthorizationsListGrantsResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(OauthAuthorizationsListGrantsReq)
 	}
 	resp := &OauthAuthorizationsListGrantsResponse{request: req}
-	r, err := doRequest(ctx, req, "oauth-authorizations/list-grants", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.ApplicationGrant{}
-	err = r.decodeBody(&resp.Data, "oauth-authorizations/list-grants")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1075,7 +1043,7 @@ List your grants.
 
 https://developer.github.com/v3/oauth_authorizations/#list-your-grants
 */
-func (c Client) OauthAuthorizationsListGrants(ctx context.Context, req *OauthAuthorizationsListGrantsReq, opt ...RequestOption) (*OauthAuthorizationsListGrantsResponse, error) {
+func (c Client) OauthAuthorizationsListGrants(ctx context.Context, req *OauthAuthorizationsListGrantsReq, opt ...options.Option) (*OauthAuthorizationsListGrantsResponse, error) {
 	return OauthAuthorizationsListGrants(ctx, req, append(c, opt...)...)
 }
 
@@ -1094,19 +1062,16 @@ type OauthAuthorizationsListGrantsReq struct {
 	Page *int64
 }
 
-func (r *OauthAuthorizationsListGrantsReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *OauthAuthorizationsListGrantsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *OauthAuthorizationsListGrantsReq) urlPath() string {
-	return fmt.Sprintf("/applications/grants")
-}
-
-func (r *OauthAuthorizationsListGrantsReq) method() string {
-	return "GET"
-}
-
-func (r *OauthAuthorizationsListGrantsReq) urlQuery() url.Values {
+func (r *OauthAuthorizationsListGrantsReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -1114,30 +1079,22 @@ func (r *OauthAuthorizationsListGrantsReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *OauthAuthorizationsListGrantsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *OauthAuthorizationsListGrantsReq) body() interface{} {
-	return nil
-}
-
-func (r *OauthAuthorizationsListGrantsReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *OauthAuthorizationsListGrantsReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *OauthAuthorizationsListGrantsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "oauth-authorizations/list-grants", opt)
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "oauth-authorizations/list-grants",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/applications/grants"),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
+	}
+	return builder
 }
 
 /*
@@ -1145,7 +1102,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *OauthAuthorizationsListGrantsReq) Rel(link RelName, resp *OauthAuthorizationsListGrantsResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1159,7 +1116,7 @@ OauthAuthorizationsListGrantsResponse is a response for OauthAuthorizationsListG
 https://developer.github.com/v3/oauth_authorizations/#list-your-grants
 */
 type OauthAuthorizationsListGrantsResponse struct {
-	response
+	internal.Response
 	request *OauthAuthorizationsListGrantsReq
 	Data    []components.ApplicationGrant
 }
@@ -1173,20 +1130,26 @@ Update an existing authorization.
 
 https://developer.github.com/v3/oauth_authorizations/#update-an-existing-authorization
 */
-func OauthAuthorizationsUpdateAuthorization(ctx context.Context, req *OauthAuthorizationsUpdateAuthorizationReq, opt ...RequestOption) (*OauthAuthorizationsUpdateAuthorizationResponse, error) {
+func OauthAuthorizationsUpdateAuthorization(ctx context.Context, req *OauthAuthorizationsUpdateAuthorizationReq, opt ...options.Option) (*OauthAuthorizationsUpdateAuthorizationResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(OauthAuthorizationsUpdateAuthorizationReq)
 	}
 	resp := &OauthAuthorizationsUpdateAuthorizationResponse{request: req}
-	r, err := doRequest(ctx, req, "oauth-authorizations/update-authorization", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.Authorization{}
-	err = r.decodeBody(&resp.Data, "oauth-authorizations/update-authorization")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1202,7 +1165,7 @@ Update an existing authorization.
 
 https://developer.github.com/v3/oauth_authorizations/#update-an-existing-authorization
 */
-func (c Client) OauthAuthorizationsUpdateAuthorization(ctx context.Context, req *OauthAuthorizationsUpdateAuthorizationReq, opt ...RequestOption) (*OauthAuthorizationsUpdateAuthorizationResponse, error) {
+func (c Client) OauthAuthorizationsUpdateAuthorization(ctx context.Context, req *OauthAuthorizationsUpdateAuthorizationReq, opt ...options.Option) (*OauthAuthorizationsUpdateAuthorizationResponse, error) {
 	return OauthAuthorizationsUpdateAuthorization(ctx, req, append(c, opt...)...)
 }
 
@@ -1219,47 +1182,36 @@ type OauthAuthorizationsUpdateAuthorizationReq struct {
 	RequestBody     OauthAuthorizationsUpdateAuthorizationReqBody
 }
 
-func (r *OauthAuthorizationsUpdateAuthorizationReq) url() string {
-	return r._url
-}
-
-func (r *OauthAuthorizationsUpdateAuthorizationReq) urlPath() string {
-	return fmt.Sprintf("/authorizations/%v", r.AuthorizationId)
-}
-
-func (r *OauthAuthorizationsUpdateAuthorizationReq) method() string {
-	return "PATCH"
-}
-
-func (r *OauthAuthorizationsUpdateAuthorizationReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *OauthAuthorizationsUpdateAuthorizationReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *OauthAuthorizationsUpdateAuthorizationReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *OauthAuthorizationsUpdateAuthorizationReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *OauthAuthorizationsUpdateAuthorizationReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *OauthAuthorizationsUpdateAuthorizationReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "oauth-authorizations/update-authorization", opt)
+func (r *OauthAuthorizationsUpdateAuthorizationReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *OauthAuthorizationsUpdateAuthorizationReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{},
+		Body:         r.RequestBody,
+		DataStatuses: []int{200},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "PATCH",
+		OperationID:      "oauth-authorizations/update-authorization",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/authorizations/%v", r.AuthorizationId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -1267,7 +1219,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *OauthAuthorizationsUpdateAuthorizationReq) Rel(link RelName, resp *OauthAuthorizationsUpdateAuthorizationResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1307,7 +1259,7 @@ OauthAuthorizationsUpdateAuthorizationResponse is a response for OauthAuthorizat
 https://developer.github.com/v3/oauth_authorizations/#update-an-existing-authorization
 */
 type OauthAuthorizationsUpdateAuthorizationResponse struct {
-	response
+	internal.Response
 	request *OauthAuthorizationsUpdateAuthorizationReq
 	Data    components.Authorization
 }

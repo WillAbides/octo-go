@@ -6,6 +6,8 @@ import (
 	"context"
 	"fmt"
 	components "github.com/willabides/octo-go/components"
+	internal "github.com/willabides/octo-go/internal"
+	options "github.com/willabides/octo-go/options"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -20,19 +22,25 @@ Check if a gist is starred.
 
 https://developer.github.com/v3/gists/#check-if-a-gist-is-starred
 */
-func GistsCheckIsStarred(ctx context.Context, req *GistsCheckIsStarredReq, opt ...RequestOption) (*GistsCheckIsStarredResponse, error) {
+func GistsCheckIsStarred(ctx context.Context, req *GistsCheckIsStarredReq, opt ...options.Option) (*GistsCheckIsStarredResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(GistsCheckIsStarredReq)
 	}
 	resp := &GistsCheckIsStarredResponse{request: req}
-	r, err := doRequest(ctx, req, "gists/check-is-starred", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "gists/check-is-starred")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -48,7 +56,7 @@ Check if a gist is starred.
 
 https://developer.github.com/v3/gists/#check-if-a-gist-is-starred
 */
-func (c Client) GistsCheckIsStarred(ctx context.Context, req *GistsCheckIsStarredReq, opt ...RequestOption) (*GistsCheckIsStarredResponse, error) {
+func (c Client) GistsCheckIsStarred(ctx context.Context, req *GistsCheckIsStarredReq, opt ...options.Option) (*GistsCheckIsStarredResponse, error) {
 	return GistsCheckIsStarred(ctx, req, append(c, opt...)...)
 }
 
@@ -64,44 +72,33 @@ type GistsCheckIsStarredReq struct {
 	GistId string
 }
 
-func (r *GistsCheckIsStarredReq) url() string {
-	return r._url
-}
-
-func (r *GistsCheckIsStarredReq) urlPath() string {
-	return fmt.Sprintf("/gists/%v/star", r.GistId)
-}
-
-func (r *GistsCheckIsStarredReq) method() string {
-	return "GET"
-}
-
-func (r *GistsCheckIsStarredReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *GistsCheckIsStarredReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *GistsCheckIsStarredReq) body() interface{} {
-	return nil
-}
-
-func (r *GistsCheckIsStarredReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *GistsCheckIsStarredReq) validStatuses() []int {
-	return []int{204, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *GistsCheckIsStarredReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "gists/check-is-starred", opt)
+func (r *GistsCheckIsStarredReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *GistsCheckIsStarredReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "GET",
+		OperationID:      "gists/check-is-starred",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/gists/%v/star", r.GistId),
+		URLQuery:         query,
+		ValidStatuses:    []int{204, 304},
+	}
+	return builder
 }
 
 /*
@@ -109,7 +106,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GistsCheckIsStarredReq) Rel(link RelName, resp *GistsCheckIsStarredResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -123,7 +120,7 @@ GistsCheckIsStarredResponse is a response for GistsCheckIsStarred
 https://developer.github.com/v3/gists/#check-if-a-gist-is-starred
 */
 type GistsCheckIsStarredResponse struct {
-	response
+	internal.Response
 	request *GistsCheckIsStarredReq
 }
 
@@ -136,20 +133,26 @@ Create a gist.
 
 https://developer.github.com/v3/gists/#create-a-gist
 */
-func GistsCreate(ctx context.Context, req *GistsCreateReq, opt ...RequestOption) (*GistsCreateResponse, error) {
+func GistsCreate(ctx context.Context, req *GistsCreateReq, opt ...options.Option) (*GistsCreateResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(GistsCreateReq)
 	}
 	resp := &GistsCreateResponse{request: req}
-	r, err := doRequest(ctx, req, "gists/create", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.GistFull{}
-	err = r.decodeBody(&resp.Data, "gists/create")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -165,7 +168,7 @@ Create a gist.
 
 https://developer.github.com/v3/gists/#create-a-gist
 */
-func (c Client) GistsCreate(ctx context.Context, req *GistsCreateReq, opt ...RequestOption) (*GistsCreateResponse, error) {
+func (c Client) GistsCreate(ctx context.Context, req *GistsCreateReq, opt ...options.Option) (*GistsCreateResponse, error) {
 	return GistsCreate(ctx, req, append(c, opt...)...)
 }
 
@@ -179,47 +182,36 @@ type GistsCreateReq struct {
 	RequestBody GistsCreateReqBody
 }
 
-func (r *GistsCreateReq) url() string {
-	return r._url
-}
-
-func (r *GistsCreateReq) urlPath() string {
-	return fmt.Sprintf("/gists")
-}
-
-func (r *GistsCreateReq) method() string {
-	return "POST"
-}
-
-func (r *GistsCreateReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *GistsCreateReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *GistsCreateReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *GistsCreateReq) dataStatuses() []int {
-	return []int{201}
-}
-
-func (r *GistsCreateReq) validStatuses() []int {
-	return []int{201, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *GistsCreateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "gists/create", opt)
+func (r *GistsCreateReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *GistsCreateReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{},
+		Body:         r.RequestBody,
+		DataStatuses: []int{201},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "POST",
+		OperationID:      "gists/create",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/gists"),
+		URLQuery:         query,
+		ValidStatuses:    []int{201, 304},
+	}
+	return builder
 }
 
 /*
@@ -227,7 +219,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GistsCreateReq) Rel(link RelName, resp *GistsCreateResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -265,7 +257,7 @@ GistsCreateResponse is a response for GistsCreate
 https://developer.github.com/v3/gists/#create-a-gist
 */
 type GistsCreateResponse struct {
-	response
+	internal.Response
 	request *GistsCreateReq
 	Data    components.GistFull
 }
@@ -279,20 +271,26 @@ Create a gist comment.
 
 https://developer.github.com/v3/gists/comments/#create-a-gist-comment
 */
-func GistsCreateComment(ctx context.Context, req *GistsCreateCommentReq, opt ...RequestOption) (*GistsCreateCommentResponse, error) {
+func GistsCreateComment(ctx context.Context, req *GistsCreateCommentReq, opt ...options.Option) (*GistsCreateCommentResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(GistsCreateCommentReq)
 	}
 	resp := &GistsCreateCommentResponse{request: req}
-	r, err := doRequest(ctx, req, "gists/create-comment", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.GistComment{}
-	err = r.decodeBody(&resp.Data, "gists/create-comment")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -308,7 +306,7 @@ Create a gist comment.
 
 https://developer.github.com/v3/gists/comments/#create-a-gist-comment
 */
-func (c Client) GistsCreateComment(ctx context.Context, req *GistsCreateCommentReq, opt ...RequestOption) (*GistsCreateCommentResponse, error) {
+func (c Client) GistsCreateComment(ctx context.Context, req *GistsCreateCommentReq, opt ...options.Option) (*GistsCreateCommentResponse, error) {
 	return GistsCreateComment(ctx, req, append(c, opt...)...)
 }
 
@@ -325,47 +323,36 @@ type GistsCreateCommentReq struct {
 	RequestBody GistsCreateCommentReqBody
 }
 
-func (r *GistsCreateCommentReq) url() string {
-	return r._url
-}
-
-func (r *GistsCreateCommentReq) urlPath() string {
-	return fmt.Sprintf("/gists/%v/comments", r.GistId)
-}
-
-func (r *GistsCreateCommentReq) method() string {
-	return "POST"
-}
-
-func (r *GistsCreateCommentReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *GistsCreateCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *GistsCreateCommentReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *GistsCreateCommentReq) dataStatuses() []int {
-	return []int{201}
-}
-
-func (r *GistsCreateCommentReq) validStatuses() []int {
-	return []int{201, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *GistsCreateCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "gists/create-comment", opt)
+func (r *GistsCreateCommentReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *GistsCreateCommentReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{},
+		Body:         r.RequestBody,
+		DataStatuses: []int{201},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "POST",
+		OperationID:      "gists/create-comment",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/gists/%v/comments", r.GistId),
+		URLQuery:         query,
+		ValidStatuses:    []int{201, 304},
+	}
+	return builder
 }
 
 /*
@@ -373,7 +360,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GistsCreateCommentReq) Rel(link RelName, resp *GistsCreateCommentResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -398,7 +385,7 @@ GistsCreateCommentResponse is a response for GistsCreateComment
 https://developer.github.com/v3/gists/comments/#create-a-gist-comment
 */
 type GistsCreateCommentResponse struct {
-	response
+	internal.Response
 	request *GistsCreateCommentReq
 	Data    components.GistComment
 }
@@ -412,19 +399,25 @@ Delete a gist.
 
 https://developer.github.com/v3/gists/#delete-a-gist
 */
-func GistsDelete(ctx context.Context, req *GistsDeleteReq, opt ...RequestOption) (*GistsDeleteResponse, error) {
+func GistsDelete(ctx context.Context, req *GistsDeleteReq, opt ...options.Option) (*GistsDeleteResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(GistsDeleteReq)
 	}
 	resp := &GistsDeleteResponse{request: req}
-	r, err := doRequest(ctx, req, "gists/delete", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "gists/delete")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -440,7 +433,7 @@ Delete a gist.
 
 https://developer.github.com/v3/gists/#delete-a-gist
 */
-func (c Client) GistsDelete(ctx context.Context, req *GistsDeleteReq, opt ...RequestOption) (*GistsDeleteResponse, error) {
+func (c Client) GistsDelete(ctx context.Context, req *GistsDeleteReq, opt ...options.Option) (*GistsDeleteResponse, error) {
 	return GistsDelete(ctx, req, append(c, opt...)...)
 }
 
@@ -456,44 +449,33 @@ type GistsDeleteReq struct {
 	GistId string
 }
 
-func (r *GistsDeleteReq) url() string {
-	return r._url
-}
-
-func (r *GistsDeleteReq) urlPath() string {
-	return fmt.Sprintf("/gists/%v", r.GistId)
-}
-
-func (r *GistsDeleteReq) method() string {
-	return "DELETE"
-}
-
-func (r *GistsDeleteReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *GistsDeleteReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *GistsDeleteReq) body() interface{} {
-	return nil
-}
-
-func (r *GistsDeleteReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *GistsDeleteReq) validStatuses() []int {
-	return []int{204, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *GistsDeleteReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "gists/delete", opt)
+func (r *GistsDeleteReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *GistsDeleteReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		OperationID:      "gists/delete",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/gists/%v", r.GistId),
+		URLQuery:         query,
+		ValidStatuses:    []int{204, 304},
+	}
+	return builder
 }
 
 /*
@@ -501,7 +483,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GistsDeleteReq) Rel(link RelName, resp *GistsDeleteResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -515,7 +497,7 @@ GistsDeleteResponse is a response for GistsDelete
 https://developer.github.com/v3/gists/#delete-a-gist
 */
 type GistsDeleteResponse struct {
-	response
+	internal.Response
 	request *GistsDeleteReq
 }
 
@@ -528,19 +510,25 @@ Delete a gist comment.
 
 https://developer.github.com/v3/gists/comments/#delete-a-gist-comment
 */
-func GistsDeleteComment(ctx context.Context, req *GistsDeleteCommentReq, opt ...RequestOption) (*GistsDeleteCommentResponse, error) {
+func GistsDeleteComment(ctx context.Context, req *GistsDeleteCommentReq, opt ...options.Option) (*GistsDeleteCommentResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(GistsDeleteCommentReq)
 	}
 	resp := &GistsDeleteCommentResponse{request: req}
-	r, err := doRequest(ctx, req, "gists/delete-comment", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "gists/delete-comment")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -556,7 +544,7 @@ Delete a gist comment.
 
 https://developer.github.com/v3/gists/comments/#delete-a-gist-comment
 */
-func (c Client) GistsDeleteComment(ctx context.Context, req *GistsDeleteCommentReq, opt ...RequestOption) (*GistsDeleteCommentResponse, error) {
+func (c Client) GistsDeleteComment(ctx context.Context, req *GistsDeleteCommentReq, opt ...options.Option) (*GistsDeleteCommentResponse, error) {
 	return GistsDeleteComment(ctx, req, append(c, opt...)...)
 }
 
@@ -575,44 +563,33 @@ type GistsDeleteCommentReq struct {
 	CommentId int64
 }
 
-func (r *GistsDeleteCommentReq) url() string {
-	return r._url
-}
-
-func (r *GistsDeleteCommentReq) urlPath() string {
-	return fmt.Sprintf("/gists/%v/comments/%v", r.GistId, r.CommentId)
-}
-
-func (r *GistsDeleteCommentReq) method() string {
-	return "DELETE"
-}
-
-func (r *GistsDeleteCommentReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *GistsDeleteCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *GistsDeleteCommentReq) body() interface{} {
-	return nil
-}
-
-func (r *GistsDeleteCommentReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *GistsDeleteCommentReq) validStatuses() []int {
-	return []int{204, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *GistsDeleteCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "gists/delete-comment", opt)
+func (r *GistsDeleteCommentReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *GistsDeleteCommentReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		OperationID:      "gists/delete-comment",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/gists/%v/comments/%v", r.GistId, r.CommentId),
+		URLQuery:         query,
+		ValidStatuses:    []int{204, 304},
+	}
+	return builder
 }
 
 /*
@@ -620,7 +597,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GistsDeleteCommentReq) Rel(link RelName, resp *GistsDeleteCommentResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -634,7 +611,7 @@ GistsDeleteCommentResponse is a response for GistsDeleteComment
 https://developer.github.com/v3/gists/comments/#delete-a-gist-comment
 */
 type GistsDeleteCommentResponse struct {
-	response
+	internal.Response
 	request *GistsDeleteCommentReq
 }
 
@@ -647,20 +624,26 @@ Fork a gist.
 
 https://developer.github.com/v3/gists/#fork-a-gist
 */
-func GistsFork(ctx context.Context, req *GistsForkReq, opt ...RequestOption) (*GistsForkResponse, error) {
+func GistsFork(ctx context.Context, req *GistsForkReq, opt ...options.Option) (*GistsForkResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(GistsForkReq)
 	}
 	resp := &GistsForkResponse{request: req}
-	r, err := doRequest(ctx, req, "gists/fork", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.BaseGist{}
-	err = r.decodeBody(&resp.Data, "gists/fork")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -676,7 +659,7 @@ Fork a gist.
 
 https://developer.github.com/v3/gists/#fork-a-gist
 */
-func (c Client) GistsFork(ctx context.Context, req *GistsForkReq, opt ...RequestOption) (*GistsForkResponse, error) {
+func (c Client) GistsFork(ctx context.Context, req *GistsForkReq, opt ...options.Option) (*GistsForkResponse, error) {
 	return GistsFork(ctx, req, append(c, opt...)...)
 }
 
@@ -692,44 +675,33 @@ type GistsForkReq struct {
 	GistId string
 }
 
-func (r *GistsForkReq) url() string {
-	return r._url
-}
-
-func (r *GistsForkReq) urlPath() string {
-	return fmt.Sprintf("/gists/%v/forks", r.GistId)
-}
-
-func (r *GistsForkReq) method() string {
-	return "POST"
-}
-
-func (r *GistsForkReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *GistsForkReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *GistsForkReq) body() interface{} {
-	return nil
-}
-
-func (r *GistsForkReq) dataStatuses() []int {
-	return []int{201}
-}
-
-func (r *GistsForkReq) validStatuses() []int {
-	return []int{201, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *GistsForkReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "gists/fork", opt)
+func (r *GistsForkReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *GistsForkReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{201},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "POST",
+		OperationID:      "gists/fork",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/gists/%v/forks", r.GistId),
+		URLQuery:         query,
+		ValidStatuses:    []int{201, 304},
+	}
+	return builder
 }
 
 /*
@@ -737,7 +709,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GistsForkReq) Rel(link RelName, resp *GistsForkResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -751,7 +723,7 @@ GistsForkResponse is a response for GistsFork
 https://developer.github.com/v3/gists/#fork-a-gist
 */
 type GistsForkResponse struct {
-	response
+	internal.Response
 	request *GistsForkReq
 	Data    components.BaseGist
 }
@@ -765,20 +737,26 @@ Get a gist.
 
 https://developer.github.com/v3/gists/#get-a-gist
 */
-func GistsGet(ctx context.Context, req *GistsGetReq, opt ...RequestOption) (*GistsGetResponse, error) {
+func GistsGet(ctx context.Context, req *GistsGetReq, opt ...options.Option) (*GistsGetResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(GistsGetReq)
 	}
 	resp := &GistsGetResponse{request: req}
-	r, err := doRequest(ctx, req, "gists/get", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.GistFull{}
-	err = r.decodeBody(&resp.Data, "gists/get")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -794,7 +772,7 @@ Get a gist.
 
 https://developer.github.com/v3/gists/#get-a-gist
 */
-func (c Client) GistsGet(ctx context.Context, req *GistsGetReq, opt ...RequestOption) (*GistsGetResponse, error) {
+func (c Client) GistsGet(ctx context.Context, req *GistsGetReq, opt ...options.Option) (*GistsGetResponse, error) {
 	return GistsGet(ctx, req, append(c, opt...)...)
 }
 
@@ -810,44 +788,33 @@ type GistsGetReq struct {
 	GistId string
 }
 
-func (r *GistsGetReq) url() string {
-	return r._url
-}
-
-func (r *GistsGetReq) urlPath() string {
-	return fmt.Sprintf("/gists/%v", r.GistId)
-}
-
-func (r *GistsGetReq) method() string {
-	return "GET"
-}
-
-func (r *GistsGetReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *GistsGetReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *GistsGetReq) body() interface{} {
-	return nil
-}
-
-func (r *GistsGetReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *GistsGetReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *GistsGetReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "gists/get", opt)
+func (r *GistsGetReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *GistsGetReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "gists/get",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/gists/%v", r.GistId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
+	}
+	return builder
 }
 
 /*
@@ -855,7 +822,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GistsGetReq) Rel(link RelName, resp *GistsGetResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -869,7 +836,7 @@ GistsGetResponse is a response for GistsGet
 https://developer.github.com/v3/gists/#get-a-gist
 */
 type GistsGetResponse struct {
-	response
+	internal.Response
 	request *GistsGetReq
 	Data    components.GistFull
 }
@@ -883,20 +850,26 @@ Get a gist comment.
 
 https://developer.github.com/v3/gists/comments/#get-a-gist-comment
 */
-func GistsGetComment(ctx context.Context, req *GistsGetCommentReq, opt ...RequestOption) (*GistsGetCommentResponse, error) {
+func GistsGetComment(ctx context.Context, req *GistsGetCommentReq, opt ...options.Option) (*GistsGetCommentResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(GistsGetCommentReq)
 	}
 	resp := &GistsGetCommentResponse{request: req}
-	r, err := doRequest(ctx, req, "gists/get-comment", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.GistComment{}
-	err = r.decodeBody(&resp.Data, "gists/get-comment")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -912,7 +885,7 @@ Get a gist comment.
 
 https://developer.github.com/v3/gists/comments/#get-a-gist-comment
 */
-func (c Client) GistsGetComment(ctx context.Context, req *GistsGetCommentReq, opt ...RequestOption) (*GistsGetCommentResponse, error) {
+func (c Client) GistsGetComment(ctx context.Context, req *GistsGetCommentReq, opt ...options.Option) (*GistsGetCommentResponse, error) {
 	return GistsGetComment(ctx, req, append(c, opt...)...)
 }
 
@@ -931,44 +904,33 @@ type GistsGetCommentReq struct {
 	CommentId int64
 }
 
-func (r *GistsGetCommentReq) url() string {
-	return r._url
-}
-
-func (r *GistsGetCommentReq) urlPath() string {
-	return fmt.Sprintf("/gists/%v/comments/%v", r.GistId, r.CommentId)
-}
-
-func (r *GistsGetCommentReq) method() string {
-	return "GET"
-}
-
-func (r *GistsGetCommentReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *GistsGetCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *GistsGetCommentReq) body() interface{} {
-	return nil
-}
-
-func (r *GistsGetCommentReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *GistsGetCommentReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *GistsGetCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "gists/get-comment", opt)
+func (r *GistsGetCommentReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *GistsGetCommentReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "gists/get-comment",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/gists/%v/comments/%v", r.GistId, r.CommentId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
+	}
+	return builder
 }
 
 /*
@@ -976,7 +938,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GistsGetCommentReq) Rel(link RelName, resp *GistsGetCommentResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -990,7 +952,7 @@ GistsGetCommentResponse is a response for GistsGetComment
 https://developer.github.com/v3/gists/comments/#get-a-gist-comment
 */
 type GistsGetCommentResponse struct {
-	response
+	internal.Response
 	request *GistsGetCommentReq
 	Data    components.GistComment
 }
@@ -1004,20 +966,26 @@ Get a gist revision.
 
 https://developer.github.com/v3/gists/#get-a-gist-revision
 */
-func GistsGetRevision(ctx context.Context, req *GistsGetRevisionReq, opt ...RequestOption) (*GistsGetRevisionResponse, error) {
+func GistsGetRevision(ctx context.Context, req *GistsGetRevisionReq, opt ...options.Option) (*GistsGetRevisionResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(GistsGetRevisionReq)
 	}
 	resp := &GistsGetRevisionResponse{request: req}
-	r, err := doRequest(ctx, req, "gists/get-revision", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.GistFull{}
-	err = r.decodeBody(&resp.Data, "gists/get-revision")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1033,7 +1001,7 @@ Get a gist revision.
 
 https://developer.github.com/v3/gists/#get-a-gist-revision
 */
-func (c Client) GistsGetRevision(ctx context.Context, req *GistsGetRevisionReq, opt ...RequestOption) (*GistsGetRevisionResponse, error) {
+func (c Client) GistsGetRevision(ctx context.Context, req *GistsGetRevisionReq, opt ...options.Option) (*GistsGetRevisionResponse, error) {
 	return GistsGetRevision(ctx, req, append(c, opt...)...)
 }
 
@@ -1052,44 +1020,33 @@ type GistsGetRevisionReq struct {
 	Sha string
 }
 
-func (r *GistsGetRevisionReq) url() string {
-	return r._url
-}
-
-func (r *GistsGetRevisionReq) urlPath() string {
-	return fmt.Sprintf("/gists/%v/%v", r.GistId, r.Sha)
-}
-
-func (r *GistsGetRevisionReq) method() string {
-	return "GET"
-}
-
-func (r *GistsGetRevisionReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *GistsGetRevisionReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *GistsGetRevisionReq) body() interface{} {
-	return nil
-}
-
-func (r *GistsGetRevisionReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *GistsGetRevisionReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *GistsGetRevisionReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "gists/get-revision", opt)
+func (r *GistsGetRevisionReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *GistsGetRevisionReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "gists/get-revision",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/gists/%v/%v", r.GistId, r.Sha),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -1097,7 +1054,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GistsGetRevisionReq) Rel(link RelName, resp *GistsGetRevisionResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1111,7 +1068,7 @@ GistsGetRevisionResponse is a response for GistsGetRevision
 https://developer.github.com/v3/gists/#get-a-gist-revision
 */
 type GistsGetRevisionResponse struct {
-	response
+	internal.Response
 	request *GistsGetRevisionReq
 	Data    components.GistFull
 }
@@ -1125,20 +1082,26 @@ List gists for the authenticated user.
 
 https://developer.github.com/v3/gists/#list-gists-for-the-authenticated-user
 */
-func GistsList(ctx context.Context, req *GistsListReq, opt ...RequestOption) (*GistsListResponse, error) {
+func GistsList(ctx context.Context, req *GistsListReq, opt ...options.Option) (*GistsListResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(GistsListReq)
 	}
 	resp := &GistsListResponse{request: req}
-	r, err := doRequest(ctx, req, "gists/list", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.BaseGist{}
-	err = r.decodeBody(&resp.Data, "gists/list")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1154,7 +1117,7 @@ List gists for the authenticated user.
 
 https://developer.github.com/v3/gists/#list-gists-for-the-authenticated-user
 */
-func (c Client) GistsList(ctx context.Context, req *GistsListReq, opt ...RequestOption) (*GistsListResponse, error) {
+func (c Client) GistsList(ctx context.Context, req *GistsListReq, opt ...options.Option) (*GistsListResponse, error) {
 	return GistsList(ctx, req, append(c, opt...)...)
 }
 
@@ -1180,19 +1143,16 @@ type GistsListReq struct {
 	Page *int64
 }
 
-func (r *GistsListReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *GistsListReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *GistsListReq) urlPath() string {
-	return fmt.Sprintf("/gists")
-}
-
-func (r *GistsListReq) method() string {
-	return "GET"
-}
-
-func (r *GistsListReq) urlQuery() url.Values {
+func (r *GistsListReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Since != nil {
 		query.Set("since", *r.Since)
@@ -1203,30 +1163,22 @@ func (r *GistsListReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *GistsListReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *GistsListReq) body() interface{} {
-	return nil
-}
-
-func (r *GistsListReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *GistsListReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *GistsListReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "gists/list", opt)
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "gists/list",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/gists"),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
+	}
+	return builder
 }
 
 /*
@@ -1234,7 +1186,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GistsListReq) Rel(link RelName, resp *GistsListResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1248,7 +1200,7 @@ GistsListResponse is a response for GistsList
 https://developer.github.com/v3/gists/#list-gists-for-the-authenticated-user
 */
 type GistsListResponse struct {
-	response
+	internal.Response
 	request *GistsListReq
 	Data    []components.BaseGist
 }
@@ -1262,20 +1214,26 @@ List gist comments.
 
 https://developer.github.com/v3/gists/comments/#list-gist-comments
 */
-func GistsListComments(ctx context.Context, req *GistsListCommentsReq, opt ...RequestOption) (*GistsListCommentsResponse, error) {
+func GistsListComments(ctx context.Context, req *GistsListCommentsReq, opt ...options.Option) (*GistsListCommentsResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(GistsListCommentsReq)
 	}
 	resp := &GistsListCommentsResponse{request: req}
-	r, err := doRequest(ctx, req, "gists/list-comments", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.GistComment{}
-	err = r.decodeBody(&resp.Data, "gists/list-comments")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1291,7 +1249,7 @@ List gist comments.
 
 https://developer.github.com/v3/gists/comments/#list-gist-comments
 */
-func (c Client) GistsListComments(ctx context.Context, req *GistsListCommentsReq, opt ...RequestOption) (*GistsListCommentsResponse, error) {
+func (c Client) GistsListComments(ctx context.Context, req *GistsListCommentsReq, opt ...options.Option) (*GistsListCommentsResponse, error) {
 	return GistsListComments(ctx, req, append(c, opt...)...)
 }
 
@@ -1313,19 +1271,16 @@ type GistsListCommentsReq struct {
 	Page *int64
 }
 
-func (r *GistsListCommentsReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *GistsListCommentsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *GistsListCommentsReq) urlPath() string {
-	return fmt.Sprintf("/gists/%v/comments", r.GistId)
-}
-
-func (r *GistsListCommentsReq) method() string {
-	return "GET"
-}
-
-func (r *GistsListCommentsReq) urlQuery() url.Values {
+func (r *GistsListCommentsReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -1333,30 +1288,22 @@ func (r *GistsListCommentsReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *GistsListCommentsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *GistsListCommentsReq) body() interface{} {
-	return nil
-}
-
-func (r *GistsListCommentsReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *GistsListCommentsReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *GistsListCommentsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "gists/list-comments", opt)
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "gists/list-comments",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/gists/%v/comments", r.GistId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
+	}
+	return builder
 }
 
 /*
@@ -1364,7 +1311,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GistsListCommentsReq) Rel(link RelName, resp *GistsListCommentsResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1378,7 +1325,7 @@ GistsListCommentsResponse is a response for GistsListComments
 https://developer.github.com/v3/gists/comments/#list-gist-comments
 */
 type GistsListCommentsResponse struct {
-	response
+	internal.Response
 	request *GistsListCommentsReq
 	Data    []components.GistComment
 }
@@ -1392,20 +1339,26 @@ List gist commits.
 
 https://developer.github.com/v3/gists/#list-gist-commits
 */
-func GistsListCommits(ctx context.Context, req *GistsListCommitsReq, opt ...RequestOption) (*GistsListCommitsResponse, error) {
+func GistsListCommits(ctx context.Context, req *GistsListCommitsReq, opt ...options.Option) (*GistsListCommitsResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(GistsListCommitsReq)
 	}
 	resp := &GistsListCommitsResponse{request: req}
-	r, err := doRequest(ctx, req, "gists/list-commits", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.GistCommit{}
-	err = r.decodeBody(&resp.Data, "gists/list-commits")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1421,7 +1374,7 @@ List gist commits.
 
 https://developer.github.com/v3/gists/#list-gist-commits
 */
-func (c Client) GistsListCommits(ctx context.Context, req *GistsListCommitsReq, opt ...RequestOption) (*GistsListCommitsResponse, error) {
+func (c Client) GistsListCommits(ctx context.Context, req *GistsListCommitsReq, opt ...options.Option) (*GistsListCommitsResponse, error) {
 	return GistsListCommits(ctx, req, append(c, opt...)...)
 }
 
@@ -1443,19 +1396,16 @@ type GistsListCommitsReq struct {
 	Page *int64
 }
 
-func (r *GistsListCommitsReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *GistsListCommitsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *GistsListCommitsReq) urlPath() string {
-	return fmt.Sprintf("/gists/%v/commits", r.GistId)
-}
-
-func (r *GistsListCommitsReq) method() string {
-	return "GET"
-}
-
-func (r *GistsListCommitsReq) urlQuery() url.Values {
+func (r *GistsListCommitsReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -1463,30 +1413,22 @@ func (r *GistsListCommitsReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *GistsListCommitsReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *GistsListCommitsReq) body() interface{} {
-	return nil
-}
-
-func (r *GistsListCommitsReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *GistsListCommitsReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *GistsListCommitsReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "gists/list-commits", opt)
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "gists/list-commits",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/gists/%v/commits", r.GistId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
+	}
+	return builder
 }
 
 /*
@@ -1494,7 +1436,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GistsListCommitsReq) Rel(link RelName, resp *GistsListCommitsResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1508,7 +1450,7 @@ GistsListCommitsResponse is a response for GistsListCommits
 https://developer.github.com/v3/gists/#list-gist-commits
 */
 type GistsListCommitsResponse struct {
-	response
+	internal.Response
 	request *GistsListCommitsReq
 	Data    []components.GistCommit
 }
@@ -1522,20 +1464,26 @@ List gists for a user.
 
 https://developer.github.com/v3/gists/#list-gists-for-a-user
 */
-func GistsListForUser(ctx context.Context, req *GistsListForUserReq, opt ...RequestOption) (*GistsListForUserResponse, error) {
+func GistsListForUser(ctx context.Context, req *GistsListForUserReq, opt ...options.Option) (*GistsListForUserResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(GistsListForUserReq)
 	}
 	resp := &GistsListForUserResponse{request: req}
-	r, err := doRequest(ctx, req, "gists/list-for-user", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.BaseGist{}
-	err = r.decodeBody(&resp.Data, "gists/list-for-user")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1551,7 +1499,7 @@ List gists for a user.
 
 https://developer.github.com/v3/gists/#list-gists-for-a-user
 */
-func (c Client) GistsListForUser(ctx context.Context, req *GistsListForUserReq, opt ...RequestOption) (*GistsListForUserResponse, error) {
+func (c Client) GistsListForUser(ctx context.Context, req *GistsListForUserReq, opt ...options.Option) (*GistsListForUserResponse, error) {
 	return GistsListForUser(ctx, req, append(c, opt...)...)
 }
 
@@ -1578,19 +1526,16 @@ type GistsListForUserReq struct {
 	Page *int64
 }
 
-func (r *GistsListForUserReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *GistsListForUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *GistsListForUserReq) urlPath() string {
-	return fmt.Sprintf("/users/%v/gists", r.Username)
-}
-
-func (r *GistsListForUserReq) method() string {
-	return "GET"
-}
-
-func (r *GistsListForUserReq) urlQuery() url.Values {
+func (r *GistsListForUserReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Since != nil {
 		query.Set("since", *r.Since)
@@ -1601,30 +1546,22 @@ func (r *GistsListForUserReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *GistsListForUserReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *GistsListForUserReq) body() interface{} {
-	return nil
-}
-
-func (r *GistsListForUserReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *GistsListForUserReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *GistsListForUserReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "gists/list-for-user", opt)
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "gists/list-for-user",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/users/%v/gists", r.Username),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -1632,7 +1569,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GistsListForUserReq) Rel(link RelName, resp *GistsListForUserResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1646,7 +1583,7 @@ GistsListForUserResponse is a response for GistsListForUser
 https://developer.github.com/v3/gists/#list-gists-for-a-user
 */
 type GistsListForUserResponse struct {
-	response
+	internal.Response
 	request *GistsListForUserReq
 	Data    []components.BaseGist
 }
@@ -1660,20 +1597,26 @@ List gist forks.
 
 https://developer.github.com/v3/gists/#list-gist-forks
 */
-func GistsListForks(ctx context.Context, req *GistsListForksReq, opt ...RequestOption) (*GistsListForksResponse, error) {
+func GistsListForks(ctx context.Context, req *GistsListForksReq, opt ...options.Option) (*GistsListForksResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(GistsListForksReq)
 	}
 	resp := &GistsListForksResponse{request: req}
-	r, err := doRequest(ctx, req, "gists/list-forks", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.GistFull{}
-	err = r.decodeBody(&resp.Data, "gists/list-forks")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1689,7 +1632,7 @@ List gist forks.
 
 https://developer.github.com/v3/gists/#list-gist-forks
 */
-func (c Client) GistsListForks(ctx context.Context, req *GistsListForksReq, opt ...RequestOption) (*GistsListForksResponse, error) {
+func (c Client) GistsListForks(ctx context.Context, req *GistsListForksReq, opt ...options.Option) (*GistsListForksResponse, error) {
 	return GistsListForks(ctx, req, append(c, opt...)...)
 }
 
@@ -1711,19 +1654,16 @@ type GistsListForksReq struct {
 	Page *int64
 }
 
-func (r *GistsListForksReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *GistsListForksReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *GistsListForksReq) urlPath() string {
-	return fmt.Sprintf("/gists/%v/forks", r.GistId)
-}
-
-func (r *GistsListForksReq) method() string {
-	return "GET"
-}
-
-func (r *GistsListForksReq) urlQuery() url.Values {
+func (r *GistsListForksReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -1731,30 +1671,22 @@ func (r *GistsListForksReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *GistsListForksReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *GistsListForksReq) body() interface{} {
-	return nil
-}
-
-func (r *GistsListForksReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *GistsListForksReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *GistsListForksReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "gists/list-forks", opt)
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "gists/list-forks",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/gists/%v/forks", r.GistId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
+	}
+	return builder
 }
 
 /*
@@ -1762,7 +1694,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GistsListForksReq) Rel(link RelName, resp *GistsListForksResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1776,7 +1708,7 @@ GistsListForksResponse is a response for GistsListForks
 https://developer.github.com/v3/gists/#list-gist-forks
 */
 type GistsListForksResponse struct {
-	response
+	internal.Response
 	request *GistsListForksReq
 	Data    []components.GistFull
 }
@@ -1790,20 +1722,26 @@ List public gists.
 
 https://developer.github.com/v3/gists/#list-public-gists
 */
-func GistsListPublic(ctx context.Context, req *GistsListPublicReq, opt ...RequestOption) (*GistsListPublicResponse, error) {
+func GistsListPublic(ctx context.Context, req *GistsListPublicReq, opt ...options.Option) (*GistsListPublicResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(GistsListPublicReq)
 	}
 	resp := &GistsListPublicResponse{request: req}
-	r, err := doRequest(ctx, req, "gists/list-public", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.BaseGist{}
-	err = r.decodeBody(&resp.Data, "gists/list-public")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1819,7 +1757,7 @@ List public gists.
 
 https://developer.github.com/v3/gists/#list-public-gists
 */
-func (c Client) GistsListPublic(ctx context.Context, req *GistsListPublicReq, opt ...RequestOption) (*GistsListPublicResponse, error) {
+func (c Client) GistsListPublic(ctx context.Context, req *GistsListPublicReq, opt ...options.Option) (*GistsListPublicResponse, error) {
 	return GistsListPublic(ctx, req, append(c, opt...)...)
 }
 
@@ -1845,19 +1783,16 @@ type GistsListPublicReq struct {
 	Page *int64
 }
 
-func (r *GistsListPublicReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *GistsListPublicReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *GistsListPublicReq) urlPath() string {
-	return fmt.Sprintf("/gists/public")
-}
-
-func (r *GistsListPublicReq) method() string {
-	return "GET"
-}
-
-func (r *GistsListPublicReq) urlQuery() url.Values {
+func (r *GistsListPublicReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Since != nil {
 		query.Set("since", *r.Since)
@@ -1868,30 +1803,22 @@ func (r *GistsListPublicReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *GistsListPublicReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *GistsListPublicReq) body() interface{} {
-	return nil
-}
-
-func (r *GistsListPublicReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *GistsListPublicReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *GistsListPublicReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "gists/list-public", opt)
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "gists/list-public",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/gists/public"),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
+	}
+	return builder
 }
 
 /*
@@ -1899,7 +1826,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GistsListPublicReq) Rel(link RelName, resp *GistsListPublicResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -1913,7 +1840,7 @@ GistsListPublicResponse is a response for GistsListPublic
 https://developer.github.com/v3/gists/#list-public-gists
 */
 type GistsListPublicResponse struct {
-	response
+	internal.Response
 	request *GistsListPublicReq
 	Data    []components.BaseGist
 }
@@ -1927,20 +1854,26 @@ List starred gists.
 
 https://developer.github.com/v3/gists/#list-starred-gists
 */
-func GistsListStarred(ctx context.Context, req *GistsListStarredReq, opt ...RequestOption) (*GistsListStarredResponse, error) {
+func GistsListStarred(ctx context.Context, req *GistsListStarredReq, opt ...options.Option) (*GistsListStarredResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(GistsListStarredReq)
 	}
 	resp := &GistsListStarredResponse{request: req}
-	r, err := doRequest(ctx, req, "gists/list-starred", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.BaseGist{}
-	err = r.decodeBody(&resp.Data, "gists/list-starred")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -1956,7 +1889,7 @@ List starred gists.
 
 https://developer.github.com/v3/gists/#list-starred-gists
 */
-func (c Client) GistsListStarred(ctx context.Context, req *GistsListStarredReq, opt ...RequestOption) (*GistsListStarredResponse, error) {
+func (c Client) GistsListStarred(ctx context.Context, req *GistsListStarredReq, opt ...options.Option) (*GistsListStarredResponse, error) {
 	return GistsListStarred(ctx, req, append(c, opt...)...)
 }
 
@@ -1982,19 +1915,16 @@ type GistsListStarredReq struct {
 	Page *int64
 }
 
-func (r *GistsListStarredReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *GistsListStarredReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *GistsListStarredReq) urlPath() string {
-	return fmt.Sprintf("/gists/starred")
-}
-
-func (r *GistsListStarredReq) method() string {
-	return "GET"
-}
-
-func (r *GistsListStarredReq) urlQuery() url.Values {
+func (r *GistsListStarredReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Since != nil {
 		query.Set("since", *r.Since)
@@ -2005,30 +1935,22 @@ func (r *GistsListStarredReq) urlQuery() url.Values {
 	if r.Page != nil {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
-	return query
-}
 
-func (r *GistsListStarredReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *GistsListStarredReq) body() interface{} {
-	return nil
-}
-
-func (r *GistsListStarredReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *GistsListStarredReq) validStatuses() []int {
-	return []int{200, 304}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *GistsListStarredReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "gists/list-starred", opt)
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "gists/list-starred",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/gists/starred"),
+		URLQuery:         query,
+		ValidStatuses:    []int{200, 304},
+	}
+	return builder
 }
 
 /*
@@ -2036,7 +1958,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GistsListStarredReq) Rel(link RelName, resp *GistsListStarredResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -2050,7 +1972,7 @@ GistsListStarredResponse is a response for GistsListStarred
 https://developer.github.com/v3/gists/#list-starred-gists
 */
 type GistsListStarredResponse struct {
-	response
+	internal.Response
 	request *GistsListStarredReq
 	Data    []components.BaseGist
 }
@@ -2064,19 +1986,25 @@ Star a gist.
 
 https://developer.github.com/v3/gists/#star-a-gist
 */
-func GistsStar(ctx context.Context, req *GistsStarReq, opt ...RequestOption) (*GistsStarResponse, error) {
+func GistsStar(ctx context.Context, req *GistsStarReq, opt ...options.Option) (*GistsStarResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(GistsStarReq)
 	}
 	resp := &GistsStarResponse{request: req}
-	r, err := doRequest(ctx, req, "gists/star", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "gists/star")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -2092,7 +2020,7 @@ Star a gist.
 
 https://developer.github.com/v3/gists/#star-a-gist
 */
-func (c Client) GistsStar(ctx context.Context, req *GistsStarReq, opt ...RequestOption) (*GistsStarResponse, error) {
+func (c Client) GistsStar(ctx context.Context, req *GistsStarReq, opt ...options.Option) (*GistsStarResponse, error) {
 	return GistsStar(ctx, req, append(c, opt...)...)
 }
 
@@ -2108,44 +2036,33 @@ type GistsStarReq struct {
 	GistId string
 }
 
-func (r *GistsStarReq) url() string {
-	return r._url
-}
-
-func (r *GistsStarReq) urlPath() string {
-	return fmt.Sprintf("/gists/%v/star", r.GistId)
-}
-
-func (r *GistsStarReq) method() string {
-	return "PUT"
-}
-
-func (r *GistsStarReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *GistsStarReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *GistsStarReq) body() interface{} {
-	return nil
-}
-
-func (r *GistsStarReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *GistsStarReq) validStatuses() []int {
-	return []int{204, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *GistsStarReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "gists/star", opt)
+func (r *GistsStarReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *GistsStarReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "PUT",
+		OperationID:      "gists/star",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/gists/%v/star", r.GistId),
+		URLQuery:         query,
+		ValidStatuses:    []int{204, 304},
+	}
+	return builder
 }
 
 /*
@@ -2153,7 +2070,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GistsStarReq) Rel(link RelName, resp *GistsStarResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -2167,7 +2084,7 @@ GistsStarResponse is a response for GistsStar
 https://developer.github.com/v3/gists/#star-a-gist
 */
 type GistsStarResponse struct {
-	response
+	internal.Response
 	request *GistsStarReq
 }
 
@@ -2180,19 +2097,25 @@ Unstar a gist.
 
 https://developer.github.com/v3/gists/#unstar-a-gist
 */
-func GistsUnstar(ctx context.Context, req *GistsUnstarReq, opt ...RequestOption) (*GistsUnstarResponse, error) {
+func GistsUnstar(ctx context.Context, req *GistsUnstarReq, opt ...options.Option) (*GistsUnstarResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(GistsUnstarReq)
 	}
 	resp := &GistsUnstarResponse{request: req}
-	r, err := doRequest(ctx, req, "gists/unstar", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "gists/unstar")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -2208,7 +2131,7 @@ Unstar a gist.
 
 https://developer.github.com/v3/gists/#unstar-a-gist
 */
-func (c Client) GistsUnstar(ctx context.Context, req *GistsUnstarReq, opt ...RequestOption) (*GistsUnstarResponse, error) {
+func (c Client) GistsUnstar(ctx context.Context, req *GistsUnstarReq, opt ...options.Option) (*GistsUnstarResponse, error) {
 	return GistsUnstar(ctx, req, append(c, opt...)...)
 }
 
@@ -2224,44 +2147,33 @@ type GistsUnstarReq struct {
 	GistId string
 }
 
-func (r *GistsUnstarReq) url() string {
-	return r._url
-}
-
-func (r *GistsUnstarReq) urlPath() string {
-	return fmt.Sprintf("/gists/%v/star", r.GistId)
-}
-
-func (r *GistsUnstarReq) method() string {
-	return "DELETE"
-}
-
-func (r *GistsUnstarReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *GistsUnstarReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *GistsUnstarReq) body() interface{} {
-	return nil
-}
-
-func (r *GistsUnstarReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *GistsUnstarReq) validStatuses() []int {
-	return []int{204, 304}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *GistsUnstarReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "gists/unstar", opt)
+func (r *GistsUnstarReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *GistsUnstarReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		OperationID:      "gists/unstar",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/gists/%v/star", r.GistId),
+		URLQuery:         query,
+		ValidStatuses:    []int{204, 304},
+	}
+	return builder
 }
 
 /*
@@ -2269,7 +2181,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GistsUnstarReq) Rel(link RelName, resp *GistsUnstarResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -2283,7 +2195,7 @@ GistsUnstarResponse is a response for GistsUnstar
 https://developer.github.com/v3/gists/#unstar-a-gist
 */
 type GistsUnstarResponse struct {
-	response
+	internal.Response
 	request *GistsUnstarReq
 }
 
@@ -2296,20 +2208,26 @@ Update a gist.
 
 https://developer.github.com/v3/gists/#update-a-gist
 */
-func GistsUpdate(ctx context.Context, req *GistsUpdateReq, opt ...RequestOption) (*GistsUpdateResponse, error) {
+func GistsUpdate(ctx context.Context, req *GistsUpdateReq, opt ...options.Option) (*GistsUpdateResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(GistsUpdateReq)
 	}
 	resp := &GistsUpdateResponse{request: req}
-	r, err := doRequest(ctx, req, "gists/update", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.GistFull{}
-	err = r.decodeBody(&resp.Data, "gists/update")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2325,7 +2243,7 @@ Update a gist.
 
 https://developer.github.com/v3/gists/#update-a-gist
 */
-func (c Client) GistsUpdate(ctx context.Context, req *GistsUpdateReq, opt ...RequestOption) (*GistsUpdateResponse, error) {
+func (c Client) GistsUpdate(ctx context.Context, req *GistsUpdateReq, opt ...options.Option) (*GistsUpdateResponse, error) {
 	return GistsUpdate(ctx, req, append(c, opt...)...)
 }
 
@@ -2342,47 +2260,36 @@ type GistsUpdateReq struct {
 	RequestBody GistsUpdateReqBody
 }
 
-func (r *GistsUpdateReq) url() string {
-	return r._url
-}
-
-func (r *GistsUpdateReq) urlPath() string {
-	return fmt.Sprintf("/gists/%v", r.GistId)
-}
-
-func (r *GistsUpdateReq) method() string {
-	return "PATCH"
-}
-
-func (r *GistsUpdateReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *GistsUpdateReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *GistsUpdateReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *GistsUpdateReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *GistsUpdateReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *GistsUpdateReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "gists/update", opt)
+func (r *GistsUpdateReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *GistsUpdateReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{},
+		Body:         r.RequestBody,
+		DataStatuses: []int{200},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "PATCH",
+		OperationID:      "gists/update",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/gists/%v", r.GistId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -2390,7 +2297,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GistsUpdateReq) Rel(link RelName, resp *GistsUpdateResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -2428,7 +2335,7 @@ GistsUpdateResponse is a response for GistsUpdate
 https://developer.github.com/v3/gists/#update-a-gist
 */
 type GistsUpdateResponse struct {
-	response
+	internal.Response
 	request *GistsUpdateReq
 	Data    components.GistFull
 }
@@ -2442,20 +2349,26 @@ Update a gist comment.
 
 https://developer.github.com/v3/gists/comments/#update-a-gist-comment
 */
-func GistsUpdateComment(ctx context.Context, req *GistsUpdateCommentReq, opt ...RequestOption) (*GistsUpdateCommentResponse, error) {
+func GistsUpdateComment(ctx context.Context, req *GistsUpdateCommentReq, opt ...options.Option) (*GistsUpdateCommentResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(GistsUpdateCommentReq)
 	}
 	resp := &GistsUpdateCommentResponse{request: req}
-	r, err := doRequest(ctx, req, "gists/update-comment", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.GistComment{}
-	err = r.decodeBody(&resp.Data, "gists/update-comment")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -2471,7 +2384,7 @@ Update a gist comment.
 
 https://developer.github.com/v3/gists/comments/#update-a-gist-comment
 */
-func (c Client) GistsUpdateComment(ctx context.Context, req *GistsUpdateCommentReq, opt ...RequestOption) (*GistsUpdateCommentResponse, error) {
+func (c Client) GistsUpdateComment(ctx context.Context, req *GistsUpdateCommentReq, opt ...options.Option) (*GistsUpdateCommentResponse, error) {
 	return GistsUpdateComment(ctx, req, append(c, opt...)...)
 }
 
@@ -2491,47 +2404,36 @@ type GistsUpdateCommentReq struct {
 	RequestBody GistsUpdateCommentReqBody
 }
 
-func (r *GistsUpdateCommentReq) url() string {
-	return r._url
-}
-
-func (r *GistsUpdateCommentReq) urlPath() string {
-	return fmt.Sprintf("/gists/%v/comments/%v", r.GistId, r.CommentId)
-}
-
-func (r *GistsUpdateCommentReq) method() string {
-	return "PATCH"
-}
-
-func (r *GistsUpdateCommentReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *GistsUpdateCommentReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *GistsUpdateCommentReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *GistsUpdateCommentReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *GistsUpdateCommentReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *GistsUpdateCommentReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "gists/update-comment", opt)
+func (r *GistsUpdateCommentReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *GistsUpdateCommentReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{},
+		Body:         r.RequestBody,
+		DataStatuses: []int{200},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "PATCH",
+		OperationID:      "gists/update-comment",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/gists/%v/comments/%v", r.GistId, r.CommentId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -2539,7 +2441,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GistsUpdateCommentReq) Rel(link RelName, resp *GistsUpdateCommentResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -2564,7 +2466,7 @@ GistsUpdateCommentResponse is a response for GistsUpdateComment
 https://developer.github.com/v3/gists/comments/#update-a-gist-comment
 */
 type GistsUpdateCommentResponse struct {
-	response
+	internal.Response
 	request *GistsUpdateCommentReq
 	Data    components.GistComment
 }

@@ -6,6 +6,8 @@ import (
 	"context"
 	"fmt"
 	components "github.com/willabides/octo-go/components"
+	internal "github.com/willabides/octo-go/internal"
+	options "github.com/willabides/octo-go/options"
 	"net/http"
 	"net/url"
 )
@@ -19,20 +21,26 @@ Get interaction restrictions for an organization.
 
 https://developer.github.com/v3/interactions/orgs/#get-interaction-restrictions-for-an-organization
 */
-func InteractionsGetRestrictionsForOrg(ctx context.Context, req *InteractionsGetRestrictionsForOrgReq, opt ...RequestOption) (*InteractionsGetRestrictionsForOrgResponse, error) {
+func InteractionsGetRestrictionsForOrg(ctx context.Context, req *InteractionsGetRestrictionsForOrgReq, opt ...options.Option) (*InteractionsGetRestrictionsForOrgResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(InteractionsGetRestrictionsForOrgReq)
 	}
 	resp := &InteractionsGetRestrictionsForOrgResponse{request: req}
-	r, err := doRequest(ctx, req, "interactions/get-restrictions-for-org", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.InteractionLimit{}
-	err = r.decodeBody(&resp.Data, "interactions/get-restrictions-for-org")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -48,7 +56,7 @@ Get interaction restrictions for an organization.
 
 https://developer.github.com/v3/interactions/orgs/#get-interaction-restrictions-for-an-organization
 */
-func (c Client) InteractionsGetRestrictionsForOrg(ctx context.Context, req *InteractionsGetRestrictionsForOrgReq, opt ...RequestOption) (*InteractionsGetRestrictionsForOrgResponse, error) {
+func (c Client) InteractionsGetRestrictionsForOrg(ctx context.Context, req *InteractionsGetRestrictionsForOrgReq, opt ...options.Option) (*InteractionsGetRestrictionsForOrgResponse, error) {
 	return InteractionsGetRestrictionsForOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -70,50 +78,33 @@ type InteractionsGetRestrictionsForOrgReq struct {
 	SombraPreview bool
 }
 
-func (r *InteractionsGetRestrictionsForOrgReq) url() string {
-	return r._url
-}
-
-func (r *InteractionsGetRestrictionsForOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/interaction-limits", r.Org)
-}
-
-func (r *InteractionsGetRestrictionsForOrgReq) method() string {
-	return "GET"
-}
-
-func (r *InteractionsGetRestrictionsForOrgReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *InteractionsGetRestrictionsForOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{"sombra": r.SombraPreview}
-	if requiredPreviews {
-		previewVals["sombra"] = true
-	}
-	if allPreviews {
-		previewVals["sombra"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *InteractionsGetRestrictionsForOrgReq) body() interface{} {
-	return nil
-}
-
-func (r *InteractionsGetRestrictionsForOrgReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *InteractionsGetRestrictionsForOrgReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *InteractionsGetRestrictionsForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "interactions/get-restrictions-for-org", opt)
+func (r *InteractionsGetRestrictionsForOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *InteractionsGetRestrictionsForOrgReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"sombra"},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "interactions/get-restrictions-for-org",
+		Previews:         map[string]bool{"sombra": r.SombraPreview},
+		RequiredPreviews: []string{"sombra"},
+		URLPath:          fmt.Sprintf("/orgs/%v/interaction-limits", r.Org),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -121,7 +112,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *InteractionsGetRestrictionsForOrgReq) Rel(link RelName, resp *InteractionsGetRestrictionsForOrgResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -135,7 +126,7 @@ InteractionsGetRestrictionsForOrgResponse is a response for InteractionsGetRestr
 https://developer.github.com/v3/interactions/orgs/#get-interaction-restrictions-for-an-organization
 */
 type InteractionsGetRestrictionsForOrgResponse struct {
-	response
+	internal.Response
 	request *InteractionsGetRestrictionsForOrgReq
 	Data    components.InteractionLimit
 }
@@ -149,20 +140,26 @@ Get interaction restrictions for a repository.
 
 https://developer.github.com/v3/interactions/repos/#get-interaction-restrictions-for-a-repository
 */
-func InteractionsGetRestrictionsForRepo(ctx context.Context, req *InteractionsGetRestrictionsForRepoReq, opt ...RequestOption) (*InteractionsGetRestrictionsForRepoResponse, error) {
+func InteractionsGetRestrictionsForRepo(ctx context.Context, req *InteractionsGetRestrictionsForRepoReq, opt ...options.Option) (*InteractionsGetRestrictionsForRepoResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(InteractionsGetRestrictionsForRepoReq)
 	}
 	resp := &InteractionsGetRestrictionsForRepoResponse{request: req}
-	r, err := doRequest(ctx, req, "interactions/get-restrictions-for-repo", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.InteractionLimit{}
-	err = r.decodeBody(&resp.Data, "interactions/get-restrictions-for-repo")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -178,7 +175,7 @@ Get interaction restrictions for a repository.
 
 https://developer.github.com/v3/interactions/repos/#get-interaction-restrictions-for-a-repository
 */
-func (c Client) InteractionsGetRestrictionsForRepo(ctx context.Context, req *InteractionsGetRestrictionsForRepoReq, opt ...RequestOption) (*InteractionsGetRestrictionsForRepoResponse, error) {
+func (c Client) InteractionsGetRestrictionsForRepo(ctx context.Context, req *InteractionsGetRestrictionsForRepoReq, opt ...options.Option) (*InteractionsGetRestrictionsForRepoResponse, error) {
 	return InteractionsGetRestrictionsForRepo(ctx, req, append(c, opt...)...)
 }
 
@@ -201,50 +198,33 @@ type InteractionsGetRestrictionsForRepoReq struct {
 	SombraPreview bool
 }
 
-func (r *InteractionsGetRestrictionsForRepoReq) url() string {
-	return r._url
-}
-
-func (r *InteractionsGetRestrictionsForRepoReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/interaction-limits", r.Owner, r.Repo)
-}
-
-func (r *InteractionsGetRestrictionsForRepoReq) method() string {
-	return "GET"
-}
-
-func (r *InteractionsGetRestrictionsForRepoReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *InteractionsGetRestrictionsForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{"sombra": r.SombraPreview}
-	if requiredPreviews {
-		previewVals["sombra"] = true
-	}
-	if allPreviews {
-		previewVals["sombra"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *InteractionsGetRestrictionsForRepoReq) body() interface{} {
-	return nil
-}
-
-func (r *InteractionsGetRestrictionsForRepoReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *InteractionsGetRestrictionsForRepoReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *InteractionsGetRestrictionsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "interactions/get-restrictions-for-repo", opt)
+func (r *InteractionsGetRestrictionsForRepoReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *InteractionsGetRestrictionsForRepoReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"sombra"},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "interactions/get-restrictions-for-repo",
+		Previews:         map[string]bool{"sombra": r.SombraPreview},
+		RequiredPreviews: []string{"sombra"},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/interaction-limits", r.Owner, r.Repo),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -252,7 +232,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *InteractionsGetRestrictionsForRepoReq) Rel(link RelName, resp *InteractionsGetRestrictionsForRepoResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -266,7 +246,7 @@ InteractionsGetRestrictionsForRepoResponse is a response for InteractionsGetRest
 https://developer.github.com/v3/interactions/repos/#get-interaction-restrictions-for-a-repository
 */
 type InteractionsGetRestrictionsForRepoResponse struct {
-	response
+	internal.Response
 	request *InteractionsGetRestrictionsForRepoReq
 	Data    components.InteractionLimit
 }
@@ -280,19 +260,25 @@ Remove interaction restrictions for an organization.
 
 https://developer.github.com/v3/interactions/orgs/#remove-interaction-restrictions-for-an-organization
 */
-func InteractionsRemoveRestrictionsForOrg(ctx context.Context, req *InteractionsRemoveRestrictionsForOrgReq, opt ...RequestOption) (*InteractionsRemoveRestrictionsForOrgResponse, error) {
+func InteractionsRemoveRestrictionsForOrg(ctx context.Context, req *InteractionsRemoveRestrictionsForOrgReq, opt ...options.Option) (*InteractionsRemoveRestrictionsForOrgResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(InteractionsRemoveRestrictionsForOrgReq)
 	}
 	resp := &InteractionsRemoveRestrictionsForOrgResponse{request: req}
-	r, err := doRequest(ctx, req, "interactions/remove-restrictions-for-org", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "interactions/remove-restrictions-for-org")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -308,7 +294,7 @@ Remove interaction restrictions for an organization.
 
 https://developer.github.com/v3/interactions/orgs/#remove-interaction-restrictions-for-an-organization
 */
-func (c Client) InteractionsRemoveRestrictionsForOrg(ctx context.Context, req *InteractionsRemoveRestrictionsForOrgReq, opt ...RequestOption) (*InteractionsRemoveRestrictionsForOrgResponse, error) {
+func (c Client) InteractionsRemoveRestrictionsForOrg(ctx context.Context, req *InteractionsRemoveRestrictionsForOrgReq, opt ...options.Option) (*InteractionsRemoveRestrictionsForOrgResponse, error) {
 	return InteractionsRemoveRestrictionsForOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -330,50 +316,33 @@ type InteractionsRemoveRestrictionsForOrgReq struct {
 	SombraPreview bool
 }
 
-func (r *InteractionsRemoveRestrictionsForOrgReq) url() string {
-	return r._url
-}
-
-func (r *InteractionsRemoveRestrictionsForOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/interaction-limits", r.Org)
-}
-
-func (r *InteractionsRemoveRestrictionsForOrgReq) method() string {
-	return "DELETE"
-}
-
-func (r *InteractionsRemoveRestrictionsForOrgReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *InteractionsRemoveRestrictionsForOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"sombra": r.SombraPreview}
-	if requiredPreviews {
-		previewVals["sombra"] = true
-	}
-	if allPreviews {
-		previewVals["sombra"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *InteractionsRemoveRestrictionsForOrgReq) body() interface{} {
-	return nil
-}
-
-func (r *InteractionsRemoveRestrictionsForOrgReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *InteractionsRemoveRestrictionsForOrgReq) validStatuses() []int {
-	return []int{204}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *InteractionsRemoveRestrictionsForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "interactions/remove-restrictions-for-org", opt)
+func (r *InteractionsRemoveRestrictionsForOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *InteractionsRemoveRestrictionsForOrgReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"sombra"},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		OperationID:      "interactions/remove-restrictions-for-org",
+		Previews:         map[string]bool{"sombra": r.SombraPreview},
+		RequiredPreviews: []string{"sombra"},
+		URLPath:          fmt.Sprintf("/orgs/%v/interaction-limits", r.Org),
+		URLQuery:         query,
+		ValidStatuses:    []int{204},
+	}
+	return builder
 }
 
 /*
@@ -381,7 +350,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *InteractionsRemoveRestrictionsForOrgReq) Rel(link RelName, resp *InteractionsRemoveRestrictionsForOrgResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -395,7 +364,7 @@ InteractionsRemoveRestrictionsForOrgResponse is a response for InteractionsRemov
 https://developer.github.com/v3/interactions/orgs/#remove-interaction-restrictions-for-an-organization
 */
 type InteractionsRemoveRestrictionsForOrgResponse struct {
-	response
+	internal.Response
 	request *InteractionsRemoveRestrictionsForOrgReq
 }
 
@@ -408,19 +377,25 @@ Remove interaction restrictions for a repository.
 
 https://developer.github.com/v3/interactions/repos/#remove-interaction-restrictions-for-a-repository
 */
-func InteractionsRemoveRestrictionsForRepo(ctx context.Context, req *InteractionsRemoveRestrictionsForRepoReq, opt ...RequestOption) (*InteractionsRemoveRestrictionsForRepoResponse, error) {
+func InteractionsRemoveRestrictionsForRepo(ctx context.Context, req *InteractionsRemoveRestrictionsForRepoReq, opt ...options.Option) (*InteractionsRemoveRestrictionsForRepoResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(InteractionsRemoveRestrictionsForRepoReq)
 	}
 	resp := &InteractionsRemoveRestrictionsForRepoResponse{request: req}
-	r, err := doRequest(ctx, req, "interactions/remove-restrictions-for-repo", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
-	err = r.decodeBody(nil, "interactions/remove-restrictions-for-repo")
+
+	err = internal.DecodeResponseBody(r, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -436,7 +411,7 @@ Remove interaction restrictions for a repository.
 
 https://developer.github.com/v3/interactions/repos/#remove-interaction-restrictions-for-a-repository
 */
-func (c Client) InteractionsRemoveRestrictionsForRepo(ctx context.Context, req *InteractionsRemoveRestrictionsForRepoReq, opt ...RequestOption) (*InteractionsRemoveRestrictionsForRepoResponse, error) {
+func (c Client) InteractionsRemoveRestrictionsForRepo(ctx context.Context, req *InteractionsRemoveRestrictionsForRepoReq, opt ...options.Option) (*InteractionsRemoveRestrictionsForRepoResponse, error) {
 	return InteractionsRemoveRestrictionsForRepo(ctx, req, append(c, opt...)...)
 }
 
@@ -459,50 +434,33 @@ type InteractionsRemoveRestrictionsForRepoReq struct {
 	SombraPreview bool
 }
 
-func (r *InteractionsRemoveRestrictionsForRepoReq) url() string {
-	return r._url
-}
-
-func (r *InteractionsRemoveRestrictionsForRepoReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/interaction-limits", r.Owner, r.Repo)
-}
-
-func (r *InteractionsRemoveRestrictionsForRepoReq) method() string {
-	return "DELETE"
-}
-
-func (r *InteractionsRemoveRestrictionsForRepoReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *InteractionsRemoveRestrictionsForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{}
-	previewVals := map[string]bool{"sombra": r.SombraPreview}
-	if requiredPreviews {
-		previewVals["sombra"] = true
-	}
-	if allPreviews {
-		previewVals["sombra"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *InteractionsRemoveRestrictionsForRepoReq) body() interface{} {
-	return nil
-}
-
-func (r *InteractionsRemoveRestrictionsForRepoReq) dataStatuses() []int {
-	return []int{}
-}
-
-func (r *InteractionsRemoveRestrictionsForRepoReq) validStatuses() []int {
-	return []int{204}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *InteractionsRemoveRestrictionsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "interactions/remove-restrictions-for-repo", opt)
+func (r *InteractionsRemoveRestrictionsForRepoReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *InteractionsRemoveRestrictionsForRepoReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{"sombra"},
+		Body:             nil,
+		DataStatuses:     []int{},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		OperationID:      "interactions/remove-restrictions-for-repo",
+		Previews:         map[string]bool{"sombra": r.SombraPreview},
+		RequiredPreviews: []string{"sombra"},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/interaction-limits", r.Owner, r.Repo),
+		URLQuery:         query,
+		ValidStatuses:    []int{204},
+	}
+	return builder
 }
 
 /*
@@ -510,7 +468,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *InteractionsRemoveRestrictionsForRepoReq) Rel(link RelName, resp *InteractionsRemoveRestrictionsForRepoResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -524,7 +482,7 @@ InteractionsRemoveRestrictionsForRepoResponse is a response for InteractionsRemo
 https://developer.github.com/v3/interactions/repos/#remove-interaction-restrictions-for-a-repository
 */
 type InteractionsRemoveRestrictionsForRepoResponse struct {
-	response
+	internal.Response
 	request *InteractionsRemoveRestrictionsForRepoReq
 }
 
@@ -537,20 +495,26 @@ Set interaction restrictions for an organization.
 
 https://developer.github.com/v3/interactions/orgs/#set-interaction-restrictions-for-an-organization
 */
-func InteractionsSetRestrictionsForOrg(ctx context.Context, req *InteractionsSetRestrictionsForOrgReq, opt ...RequestOption) (*InteractionsSetRestrictionsForOrgResponse, error) {
+func InteractionsSetRestrictionsForOrg(ctx context.Context, req *InteractionsSetRestrictionsForOrgReq, opt ...options.Option) (*InteractionsSetRestrictionsForOrgResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(InteractionsSetRestrictionsForOrgReq)
 	}
 	resp := &InteractionsSetRestrictionsForOrgResponse{request: req}
-	r, err := doRequest(ctx, req, "interactions/set-restrictions-for-org", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.InteractionLimit{}
-	err = r.decodeBody(&resp.Data, "interactions/set-restrictions-for-org")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -566,7 +530,7 @@ Set interaction restrictions for an organization.
 
 https://developer.github.com/v3/interactions/orgs/#set-interaction-restrictions-for-an-organization
 */
-func (c Client) InteractionsSetRestrictionsForOrg(ctx context.Context, req *InteractionsSetRestrictionsForOrgReq, opt ...RequestOption) (*InteractionsSetRestrictionsForOrgResponse, error) {
+func (c Client) InteractionsSetRestrictionsForOrg(ctx context.Context, req *InteractionsSetRestrictionsForOrgReq, opt ...options.Option) (*InteractionsSetRestrictionsForOrgResponse, error) {
 	return InteractionsSetRestrictionsForOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -589,53 +553,36 @@ type InteractionsSetRestrictionsForOrgReq struct {
 	SombraPreview bool
 }
 
-func (r *InteractionsSetRestrictionsForOrgReq) url() string {
-	return r._url
-}
-
-func (r *InteractionsSetRestrictionsForOrgReq) urlPath() string {
-	return fmt.Sprintf("/orgs/%v/interaction-limits", r.Org)
-}
-
-func (r *InteractionsSetRestrictionsForOrgReq) method() string {
-	return "PUT"
-}
-
-func (r *InteractionsSetRestrictionsForOrgReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *InteractionsSetRestrictionsForOrgReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{"sombra": r.SombraPreview}
-	if requiredPreviews {
-		previewVals["sombra"] = true
-	}
-	if allPreviews {
-		previewVals["sombra"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *InteractionsSetRestrictionsForOrgReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *InteractionsSetRestrictionsForOrgReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *InteractionsSetRestrictionsForOrgReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *InteractionsSetRestrictionsForOrgReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "interactions/set-restrictions-for-org", opt)
+func (r *InteractionsSetRestrictionsForOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *InteractionsSetRestrictionsForOrgReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{"sombra"},
+		Body:         r.RequestBody,
+		DataStatuses: []int{200},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "PUT",
+		OperationID:      "interactions/set-restrictions-for-org",
+		Previews:         map[string]bool{"sombra": r.SombraPreview},
+		RequiredPreviews: []string{"sombra"},
+		URLPath:          fmt.Sprintf("/orgs/%v/interaction-limits", r.Org),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -643,7 +590,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *InteractionsSetRestrictionsForOrgReq) Rel(link RelName, resp *InteractionsSetRestrictionsForOrgResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -672,7 +619,7 @@ InteractionsSetRestrictionsForOrgResponse is a response for InteractionsSetRestr
 https://developer.github.com/v3/interactions/orgs/#set-interaction-restrictions-for-an-organization
 */
 type InteractionsSetRestrictionsForOrgResponse struct {
-	response
+	internal.Response
 	request *InteractionsSetRestrictionsForOrgReq
 	Data    components.InteractionLimit
 }
@@ -686,20 +633,26 @@ Set interaction restrictions for a repository.
 
 https://developer.github.com/v3/interactions/repos/#set-interaction-restrictions-for-a-repository
 */
-func InteractionsSetRestrictionsForRepo(ctx context.Context, req *InteractionsSetRestrictionsForRepoReq, opt ...RequestOption) (*InteractionsSetRestrictionsForRepoResponse, error) {
+func InteractionsSetRestrictionsForRepo(ctx context.Context, req *InteractionsSetRestrictionsForRepoReq, opt ...options.Option) (*InteractionsSetRestrictionsForRepoResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(InteractionsSetRestrictionsForRepoReq)
 	}
 	resp := &InteractionsSetRestrictionsForRepoResponse{request: req}
-	r, err := doRequest(ctx, req, "interactions/set-restrictions-for-repo", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.InteractionLimit{}
-	err = r.decodeBody(&resp.Data, "interactions/set-restrictions-for-repo")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -715,7 +668,7 @@ Set interaction restrictions for a repository.
 
 https://developer.github.com/v3/interactions/repos/#set-interaction-restrictions-for-a-repository
 */
-func (c Client) InteractionsSetRestrictionsForRepo(ctx context.Context, req *InteractionsSetRestrictionsForRepoReq, opt ...RequestOption) (*InteractionsSetRestrictionsForRepoResponse, error) {
+func (c Client) InteractionsSetRestrictionsForRepo(ctx context.Context, req *InteractionsSetRestrictionsForRepoReq, opt ...options.Option) (*InteractionsSetRestrictionsForRepoResponse, error) {
 	return InteractionsSetRestrictionsForRepo(ctx, req, append(c, opt...)...)
 }
 
@@ -739,53 +692,36 @@ type InteractionsSetRestrictionsForRepoReq struct {
 	SombraPreview bool
 }
 
-func (r *InteractionsSetRestrictionsForRepoReq) url() string {
-	return r._url
-}
-
-func (r *InteractionsSetRestrictionsForRepoReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/interaction-limits", r.Owner, r.Repo)
-}
-
-func (r *InteractionsSetRestrictionsForRepoReq) method() string {
-	return "PUT"
-}
-
-func (r *InteractionsSetRestrictionsForRepoReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *InteractionsSetRestrictionsForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{
-		"accept":       String("application/json"),
-		"content-type": String("application/json"),
-	}
-	previewVals := map[string]bool{"sombra": r.SombraPreview}
-	if requiredPreviews {
-		previewVals["sombra"] = true
-	}
-	if allPreviews {
-		previewVals["sombra"] = true
-	}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *InteractionsSetRestrictionsForRepoReq) body() interface{} {
-	return r.RequestBody
-}
-
-func (r *InteractionsSetRestrictionsForRepoReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *InteractionsSetRestrictionsForRepoReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *InteractionsSetRestrictionsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "interactions/set-restrictions-for-repo", opt)
+func (r *InteractionsSetRestrictionsForRepoReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *InteractionsSetRestrictionsForRepoReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:  []string{"sombra"},
+		Body:         r.RequestBody,
+		DataStatuses: []int{200},
+		ExplicitURL:  r._url,
+		HeaderVals: map[string]*string{
+			"accept":       String("application/json"),
+			"content-type": String("application/json"),
+		},
+		Method:           "PUT",
+		OperationID:      "interactions/set-restrictions-for-repo",
+		Previews:         map[string]bool{"sombra": r.SombraPreview},
+		RequiredPreviews: []string{"sombra"},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/interaction-limits", r.Owner, r.Repo),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -793,7 +729,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *InteractionsSetRestrictionsForRepoReq) Rel(link RelName, resp *InteractionsSetRestrictionsForRepoResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -822,7 +758,7 @@ InteractionsSetRestrictionsForRepoResponse is a response for InteractionsSetRest
 https://developer.github.com/v3/interactions/repos/#set-interaction-restrictions-for-a-repository
 */
 type InteractionsSetRestrictionsForRepoResponse struct {
-	response
+	internal.Response
 	request *InteractionsSetRestrictionsForRepoReq
 	Data    components.InteractionLimit
 }

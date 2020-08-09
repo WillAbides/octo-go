@@ -6,6 +6,8 @@ import (
 	"context"
 	"fmt"
 	components "github.com/willabides/octo-go/components"
+	internal "github.com/willabides/octo-go/internal"
+	options "github.com/willabides/octo-go/options"
 	"net/http"
 	"net/url"
 )
@@ -19,20 +21,26 @@ Get a code scanning alert.
 
 https://developer.github.com/v3/code-scanning/#get-a-code-scanning-alert
 */
-func CodeScanningGetAlert(ctx context.Context, req *CodeScanningGetAlertReq, opt ...RequestOption) (*CodeScanningGetAlertResponse, error) {
+func CodeScanningGetAlert(ctx context.Context, req *CodeScanningGetAlertReq, opt ...options.Option) (*CodeScanningGetAlertResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(CodeScanningGetAlertReq)
 	}
 	resp := &CodeScanningGetAlertResponse{request: req}
-	r, err := doRequest(ctx, req, "code-scanning/get-alert", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = components.CodeScanningAlert{}
-	err = r.decodeBody(&resp.Data, "code-scanning/get-alert")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -48,7 +56,7 @@ Get a code scanning alert.
 
 https://developer.github.com/v3/code-scanning/#get-a-code-scanning-alert
 */
-func (c Client) CodeScanningGetAlert(ctx context.Context, req *CodeScanningGetAlertReq, opt ...RequestOption) (*CodeScanningGetAlertResponse, error) {
+func (c Client) CodeScanningGetAlert(ctx context.Context, req *CodeScanningGetAlertReq, opt ...options.Option) (*CodeScanningGetAlertResponse, error) {
 	return CodeScanningGetAlert(ctx, req, append(c, opt...)...)
 }
 
@@ -66,44 +74,33 @@ type CodeScanningGetAlertReq struct {
 	AlertId int64
 }
 
-func (r *CodeScanningGetAlertReq) url() string {
-	return r._url
-}
-
-func (r *CodeScanningGetAlertReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/code-scanning/alerts/%v", r.Owner, r.Repo, r.AlertId)
-}
-
-func (r *CodeScanningGetAlertReq) method() string {
-	return "GET"
-}
-
-func (r *CodeScanningGetAlertReq) urlQuery() url.Values {
-	query := url.Values{}
-	return query
-}
-
-func (r *CodeScanningGetAlertReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *CodeScanningGetAlertReq) body() interface{} {
-	return nil
-}
-
-func (r *CodeScanningGetAlertReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *CodeScanningGetAlertReq) validStatuses() []int {
-	return []int{200}
-}
-
 // HTTPRequest builds an *http.Request
-func (r *CodeScanningGetAlertReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "code-scanning/get-alert", opt)
+func (r *CodeScanningGetAlertReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
+}
+
+func (r *CodeScanningGetAlertReq) requestBuilder() *internal.RequestBuilder {
+	query := url.Values{}
+
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "code-scanning/get-alert",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/code-scanning/alerts/%v", r.Owner, r.Repo, r.AlertId),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -111,7 +108,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *CodeScanningGetAlertReq) Rel(link RelName, resp *CodeScanningGetAlertResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -125,7 +122,7 @@ CodeScanningGetAlertResponse is a response for CodeScanningGetAlert
 https://developer.github.com/v3/code-scanning/#get-a-code-scanning-alert
 */
 type CodeScanningGetAlertResponse struct {
-	response
+	internal.Response
 	request *CodeScanningGetAlertReq
 	Data    components.CodeScanningAlert
 }
@@ -139,20 +136,26 @@ List code scanning alerts for a repository.
 
 https://developer.github.com/v3/code-scanning/#list-code-scanning-alerts-for-a-repository
 */
-func CodeScanningListAlertsForRepo(ctx context.Context, req *CodeScanningListAlertsForRepoReq, opt ...RequestOption) (*CodeScanningListAlertsForRepoResponse, error) {
+func CodeScanningListAlertsForRepo(ctx context.Context, req *CodeScanningListAlertsForRepoReq, opt ...options.Option) (*CodeScanningListAlertsForRepoResponse, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
 	if req == nil {
 		req = new(CodeScanningListAlertsForRepoReq)
 	}
 	resp := &CodeScanningListAlertsForRepoResponse{request: req}
-	r, err := doRequest(ctx, req, "code-scanning/list-alerts-for-repo", opt...)
+	r, err := internal.DoRequest(ctx, req.requestBuilder(), opts)
+
 	if r != nil {
-		resp.response = *r
+		resp.Response = *r
 	}
 	if err != nil {
 		return resp, err
 	}
+
 	resp.Data = []components.CodeScanningAlert{}
-	err = r.decodeBody(&resp.Data, "code-scanning/list-alerts-for-repo")
+	err = internal.DecodeResponseBody(r, &resp.Data)
 	if err != nil {
 		return nil, err
 	}
@@ -168,7 +171,7 @@ List code scanning alerts for a repository.
 
 https://developer.github.com/v3/code-scanning/#list-code-scanning-alerts-for-a-repository
 */
-func (c Client) CodeScanningListAlertsForRepo(ctx context.Context, req *CodeScanningListAlertsForRepoReq, opt ...RequestOption) (*CodeScanningListAlertsForRepoResponse, error) {
+func (c Client) CodeScanningListAlertsForRepo(ctx context.Context, req *CodeScanningListAlertsForRepoReq, opt ...options.Option) (*CodeScanningListAlertsForRepoResponse, error) {
 	return CodeScanningListAlertsForRepo(ctx, req, append(c, opt...)...)
 }
 
@@ -192,19 +195,16 @@ type CodeScanningListAlertsForRepoReq struct {
 	Ref *string
 }
 
-func (r *CodeScanningListAlertsForRepoReq) url() string {
-	return r._url
+// HTTPRequest builds an *http.Request
+func (r *CodeScanningListAlertsForRepoReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
+	opts, err := options.BuildOptions(opt...)
+	if err != nil {
+		return nil, err
+	}
+	return r.requestBuilder().HTTPRequest(ctx, opts)
 }
 
-func (r *CodeScanningListAlertsForRepoReq) urlPath() string {
-	return fmt.Sprintf("/repos/%v/%v/code-scanning/alerts", r.Owner, r.Repo)
-}
-
-func (r *CodeScanningListAlertsForRepoReq) method() string {
-	return "GET"
-}
-
-func (r *CodeScanningListAlertsForRepoReq) urlQuery() url.Values {
+func (r *CodeScanningListAlertsForRepoReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.State != nil {
 		query.Set("state", *r.State)
@@ -212,30 +212,22 @@ func (r *CodeScanningListAlertsForRepoReq) urlQuery() url.Values {
 	if r.Ref != nil {
 		query.Set("ref", *r.Ref)
 	}
-	return query
-}
 
-func (r *CodeScanningListAlertsForRepoReq) header(requiredPreviews, allPreviews bool) http.Header {
-	headerVals := map[string]*string{"accept": String("application/json")}
-	previewVals := map[string]bool{}
-	return requestHeaders(headerVals, previewVals)
-}
-
-func (r *CodeScanningListAlertsForRepoReq) body() interface{} {
-	return nil
-}
-
-func (r *CodeScanningListAlertsForRepoReq) dataStatuses() []int {
-	return []int{200}
-}
-
-func (r *CodeScanningListAlertsForRepoReq) validStatuses() []int {
-	return []int{200}
-}
-
-// HTTPRequest builds an *http.Request
-func (r *CodeScanningListAlertsForRepoReq) HTTPRequest(ctx context.Context, opt ...RequestOption) (*http.Request, error) {
-	return buildHTTPRequest(ctx, r, "code-scanning/list-alerts-for-repo", opt)
+	builder := &internal.RequestBuilder{
+		AllPreviews:      []string{},
+		Body:             nil,
+		DataStatuses:     []int{200},
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": String("application/json")},
+		Method:           "GET",
+		OperationID:      "code-scanning/list-alerts-for-repo",
+		Previews:         map[string]bool{},
+		RequiredPreviews: []string{},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/code-scanning/alerts", r.Owner, r.Repo),
+		URLQuery:         query,
+		ValidStatuses:    []int{200},
+	}
+	return builder
 }
 
 /*
@@ -243,7 +235,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *CodeScanningListAlertsForRepoReq) Rel(link RelName, resp *CodeScanningListAlertsForRepoResponse) bool {
-	u := resp.RelLink(link)
+	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
 	}
@@ -257,7 +249,7 @@ CodeScanningListAlertsForRepoResponse is a response for CodeScanningListAlertsFo
 https://developer.github.com/v3/code-scanning/#list-code-scanning-alerts-for-a-repository
 */
 type CodeScanningListAlertsForRepoResponse struct {
-	response
+	internal.Response
 	request *CodeScanningListAlertsForRepoReq
 	Data    []components.CodeScanningAlert
 }

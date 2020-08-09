@@ -25,16 +25,16 @@ func reqBodyNestedStructName(schemaPath []string, schema *model.ParamSchema) str
 	return reqBodyStructName(sp[0]) + suffix
 }
 
-func addRequestBody(file *jen.File, endpoint *model.Endpoint) {
+func addRequestBody(file *jen.File, pq pkgQual, endpoint *model.Endpoint) {
 	if endpointHasAttribute(endpoint, attrBodyUploader) {
 		return
 	}
-	addReqBodyNestedStructs(file, endpoint)
+	addReqBodyNestedStructs(file, pq, endpoint)
 	if endpoint.RequestBody == nil {
 		return
 	}
 	schema := endpoint.RequestBody.Schema
-	tp := paramSchemaFieldType(schema, []string{endpoint.ID, "reqBody"}, &paramSchemaFieldTypeOptions{
+	tp := paramSchemaFieldType(schema, []string{endpoint.ID, "reqBody"}, pq, &paramSchemaFieldTypeOptions{
 		usePointers: true,
 	})
 	if tp == nil {
@@ -50,11 +50,11 @@ func addRequestBody(file *jen.File, endpoint *model.Endpoint) {
 	file.Type().Id(structName).Add(tp)
 }
 
-func reqBodyNestedStructs(schemaPath []string, schema *model.ParamSchema) []*jen.Statement {
+func reqBodyNestedStructs(schemaPath []string, pq pkgQual, schema *model.ParamSchema) []*jen.Statement {
 	var result []*jen.Statement
 	helperName := reqBodyNestedStructName(schemaPath, schema)
 	if helperName != "" {
-		tp := paramSchemaFieldType(schema, schemaPath, &paramSchemaFieldTypeOptions{
+		tp := paramSchemaFieldType(schema, schemaPath, pq, &paramSchemaFieldTypeOptions{
 			usePointers: true,
 			noHelper:    true,
 		})
@@ -66,20 +66,20 @@ func reqBodyNestedStructs(schemaPath []string, schema *model.ParamSchema) []*jen
 		result = append(result, jen.Type().Id(helperName).Add(tp))
 	}
 	if schema.ItemSchema != nil {
-		result = append(result, reqBodyNestedStructs(append(schemaPath, "ITEM_SCHEMA"), schema.ItemSchema)...)
+		result = append(result, reqBodyNestedStructs(append(schemaPath, "ITEM_SCHEMA"), pq, schema.ItemSchema)...)
 	}
 	for _, param := range schema.ObjectParams {
-		nr := reqBodyNestedStructs(append(schemaPath, param.Name), param.Schema)
+		nr := reqBodyNestedStructs(append(schemaPath, param.Name), pq, param.Schema)
 		result = append(result, nr...)
 	}
 	return result
 }
 
-func addReqBodyNestedStructs(file *jen.File, endpoint *model.Endpoint) {
+func addReqBodyNestedStructs(file *jen.File, pq pkgQual, endpoint *model.Endpoint) {
 	if endpoint.RequestBody == nil {
 		return
 	}
-	stmts := reqBodyNestedStructs([]string{endpoint.ID, "reqBody"}, endpoint.RequestBody.Schema)
+	stmts := reqBodyNestedStructs([]string{endpoint.ID, "reqBody"}, pq, endpoint.RequestBody.Schema)
 	for _, stmt := range stmts {
 		file.Add(stmt)
 	}

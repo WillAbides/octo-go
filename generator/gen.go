@@ -1,6 +1,7 @@
 package main
 
 import (
+	"path"
 	"strings"
 
 	"github.com/dave/jennifer/jen"
@@ -8,64 +9,95 @@ import (
 	"github.com/willabides/octo-go/generator/internal/model"
 )
 
-func addRequestFunc(file *jen.File, endpoint *model.Endpoint) {
-	file.Commentf("%s performs requests for \"%s\"\n\n%s.\n\n  %s %s\n\n%s",
+type pkgQual string
+
+func (p pkgQual) pkgPath(pkgName string) string {
+	pq := string(p)
+	switch pkgName {
+	case "octo":
+		return pq
+	case "components":
+		return path.Join(pq, "components")
+	case "internal":
+		return path.Join(pq, "internal")
+	case "options":
+		return path.Join(pq, "options")
+	case "octo_test":
+		return pq + "_test"
+	default:
+		panic("unknown pkg " + pkgName)
+	}
+}
+
+func requestFunc(endpoint *model.Endpoint, pq pkgQual) jen.Code {
+	stmt := jen.Commentf("%s performs requests for \"%s\"\n\n%s.\n\n  %s %s\n\n%s",
 		toExportedName(endpoint.ID),
 		endpoint.ID,
 		endpoint.Summary,
 		endpoint.Method,
 		endpoint.Path,
 		endpoint.DocsURL,
-	)
-	file.Func().Id(toExportedName(endpoint.ID)).Params(
+	).Line()
+	stmt.Func().Id(toExportedName(endpoint.ID)).Params(
 		jen.Id("ctx").Qual("context", "Context"),
 		jen.Id("req").Op("*").Id(reqStructName(endpoint)),
-		jen.Id("opt ...RequestOption"),
+		jen.Id("opt ...").Qual(pq.pkgPath("options"), "Option"),
 	).Params(
 		jen.Op("*").Id(respStructName(endpoint)),
 		jen.Id("error"),
 	).BlockFunc(func(group *jen.Group) {
+		group.Id("opts, err := ").Qual(pq.pkgPath("options"), "BuildOptions").Call(jen.Id("opt..."))
+		group.Id("if err != nil {return nil, err}")
 		group.If(jen.Id("req == nil")).Block(
 			jen.Id("req").Op("=").New(jen.Id(reqStructName(endpoint))),
 		)
 		group.Id("resp").Op(":=").Op("&").Id(respStructName(endpoint)).Values(jen.Dict{
 			jen.Id("request"): jen.Id("req"),
 		})
-		group.Id("r, err := doRequest").Call(
+		group.Id("r, err := ").Qual(pq.pkgPath("internal"), "DoRequest").Call(
 			jen.Id("ctx"),
-			jen.Id("req"),
-			jen.Lit(endpoint.ID),
-			jen.Id("opt..."),
+			jen.Id("req.requestBuilder()"),
+			jen.Id("opts"),
 		)
-		group.If(jen.Id("r != nil")).Block(
-			jen.Id("resp.response = *r"),
-		)
-		group.If(jen.Id("err != nil")).Block(jen.Id("return resp, err"))
-
+		group.Id(`
+if r != nil {
+	resp.Response = *r
+}
+if err != nil {
+	return resp, err
+}
+`)
+		decodeBody := jen.Qual(pq.pkgPath("internal"), "DecodeResponseBody")
+		setBoolResult := jen.Qual(pq.pkgPath("internal"), "SetBoolResult")
 		switch {
 		case endpointHasAttribute(endpoint, attrNoResponseBody):
-			group.Id("err").Op("=").Id("r.decodeBody").Call(jen.Nil(), jen.Lit(endpoint.ID))
+			group.Id("err = ").Add(decodeBody).Id("(r, nil)")
 		case endpointHasAttribute(endpoint, attrBoolean):
-			group.Id("err").Op("=").Id("r.setBoolResult(&resp.Data)")
-			group.If(jen.Id("err != nil")).Block(jen.Id("return nil, err"))
-			group.Id("err").Op("=").Id("r.decodeBody").Call(jen.Nil(), jen.Lit(endpoint.ID))
+			group.Id("err = ").Add(setBoolResult).Id("(r, &resp.Data)")
+			group.Id("if err != nil {return nil, err}")
+			group.Id("err =").Add(decodeBody).Id("(r, nil)")
 		case len(responseCodesWithBodies(endpoint)) > 0:
-			bodyType := respBodyType(endpoint)
-			group.Id("resp").Dot("Data").Op("=").Do(func(stmt *jen.Statement) {
+			bodyType := respBodyType(endpoint, pq)
+			group.Id("resp.Data = ").Do(func(statement *jen.Statement) {
 				if bodyType.slice {
-					stmt.Op("[]")
+					statement.Op("[]")
 				}
 			}).Qual(bodyType.pkg, bodyType.name).Block()
-			group.Id("err").Op("=").Id("r.decodeBody").Call(jen.Id("&resp.Data"), jen.Lit(endpoint.ID))
+			group.Id("err = ").Add(decodeBody).Id("(r, &resp.Data)")
 		default:
-			group.Id("err").Op("=").Id("r.decodeBody").Call(jen.Nil(), jen.Lit(endpoint.ID))
+			group.Id("err = ").Add(decodeBody).Id("(r, nil)")
 		}
-		group.If(jen.Id("err != nil")).Block(jen.Id("return nil, err"))
-		group.Return(jen.Id("resp, nil"))
+		group.Id("if err != nil {return nil, err}")
+		group.Id("return resp, nil")
 	})
+	return stmt
 }
 
-func addClientMethod(file *jen.File, endpoint *model.Endpoint) {
+func addRequestFunc(file *jen.File, pq pkgQual, endpoint *model.Endpoint) {
+	file.Add(requestFunc(endpoint, pq))
+}
+
+func addClientMethod(file *jen.File, pq pkgQual, endpoint *model.Endpoint) {
 	file.Commentf("%s performs requests for \"%s\"\n\n%s.\n\n  %s %s\n\n%s",
 		toExportedName(endpoint.ID),
 		endpoint.ID,
@@ -77,7 +109,7 @@ func addClientMethod(file *jen.File, endpoint *model.Endpoint) {
 	file.Func().Params(jen.Id("c").Id("Client")).Id(toExportedName(endpoint.ID)).Params(
 		jen.Id("ctx").Qual("context", "Context"),
 		jen.Id("req").Op("*").Id(reqStructName(endpoint)),
-		jen.Id("opt ...RequestOption"),
+		jen.Id("opt ...").Qual(pq.pkgPath("options"), "Option"),
 	).Params(
 		jen.Op("*").Id(respStructName(endpoint)),
 		jen.Id("error"),
@@ -139,13 +171,12 @@ type paramSchemaFieldTypeOptions struct {
 	usePointers, noHelper, noHelperRecursive bool
 }
 
-func paramSchemaFieldType(schema *model.ParamSchema, schemaPath []string, opts *paramSchemaFieldTypeOptions) *jen.Statement {
+func paramSchemaFieldType(schema *model.ParamSchema, schemaPath []string, pq pkgQual, opts *paramSchemaFieldTypeOptions) *jen.Statement {
 	if opts == nil {
 		opts = new(paramSchemaFieldTypeOptions)
 	}
 	overrideParamSchema(schemaPath, schema)
-
-	compSchemaRef := compSchemaRefStmt(schema)
+	compSchemaRef := compSchemaRefStmt(schema, pq)
 	if compSchemaRef != nil {
 		return compSchemaRef
 	}
@@ -173,16 +204,16 @@ func paramSchemaFieldType(schema *model.ParamSchema, schemaPath []string, opts *
 	case model.ParamTypeInterface:
 		return jen.Interface()
 	case model.ParamTypeArray:
-		return jen.Id("[]").Add(paramSchemaFieldType(schema.ItemSchema, append(schemaPath, "ITEM_SCHEMA"), opts))
+		return jen.Id("[]").Add(paramSchemaFieldType(schema.ItemSchema, append(schemaPath, "ITEM_SCHEMA"), pq, opts))
 	case model.ParamTypeObject:
-		return paramSchemaObjectFieldType(schema, schemaPath, opts)
+		return paramSchemaObjectFieldType(schema, schemaPath, pq, opts)
 	case model.ParamTypeOneOf:
-		return paramSchemaOneOfFieldType(schema, schemaPath, opts)
+		return paramSchemaOneOfFieldType(schema, schemaPath, pq, opts)
 	}
 	return nil
 }
 
-func paramSchemaOneOfFieldType(schema *model.ParamSchema, schemaPath []string, opts *paramSchemaFieldTypeOptions) *jen.Statement {
+func paramSchemaOneOfFieldType(schema *model.ParamSchema, schemaPath []string, pq pkgQual, opts *paramSchemaFieldTypeOptions) *jen.Statement {
 	if opts == nil {
 		opts = new(paramSchemaFieldTypeOptions)
 	}
@@ -191,12 +222,12 @@ func paramSchemaOneOfFieldType(schema *model.ParamSchema, schemaPath []string, o
 	}
 	paramFields := []jen.Code{jen.Id("oneOfField").String()}
 	for _, param := range schema.ObjectParams {
-		paramFields = append(paramFields, oneOfParamStmt(param, schemaPath, opts))
+		paramFields = append(paramFields, oneOfParamStmt(param, schemaPath, pq, opts))
 	}
 	return jen.Struct(paramFields...)
 }
 
-func paramSchemaObjectFieldType(schema *model.ParamSchema, schemaPath []string, opts *paramSchemaFieldTypeOptions) *jen.Statement {
+func paramSchemaObjectFieldType(schema *model.ParamSchema, schemaPath []string, pq pkgQual, opts *paramSchemaFieldTypeOptions) *jen.Statement {
 	if opts == nil {
 		opts = new(paramSchemaFieldTypeOptions)
 	}
@@ -205,21 +236,21 @@ func paramSchemaObjectFieldType(schema *model.ParamSchema, schemaPath []string, 
 	}
 	var paramFields []jen.Code
 	for _, param := range schema.ObjectParams {
-		paramFields = append(paramFields, objectParamStmt(param, schemaPath, opts))
+		paramFields = append(paramFields, objectParamStmt(param, schemaPath, pq, opts))
 	}
 	if len(paramFields) > 0 {
 		return jen.Struct(paramFields...)
 	}
 	if schema.ItemSchema != nil {
 		stmt := jen.Map(jen.String())
-		return stmt.Add(paramSchemaFieldType(schema.ItemSchema, append(schemaPath, "ITEM_SCHEMA"), opts))
+		return stmt.Add(paramSchemaFieldType(schema.ItemSchema, append(schemaPath, "ITEM_SCHEMA"), pq, opts))
 	}
 	return jen.Interface()
 }
 
-func oneOfParamStmt(param *model.Param, schemaPath []string, opts *paramSchemaFieldTypeOptions) *jen.Statement {
+func oneOfParamStmt(param *model.Param, schemaPath []string, pq pkgQual, opts *paramSchemaFieldTypeOptions) *jen.Statement {
 	stmt := jen.Id(toUnexportedName(param.Name))
-	pType := paramSchemaFieldType(param.Schema, append(schemaPath, param.Name), opts)
+	pType := paramSchemaFieldType(param.Schema, append(schemaPath, param.Name), pq, opts)
 	if needsPointer(param.Schema, opts.usePointers) {
 		stmt.Op("*")
 	}
@@ -238,12 +269,12 @@ func prependCodeWithComment(comment string, code ...jen.Code) *jen.Statement {
 	return jen.Line().Comment(comment).Line().Add(code...)
 }
 
-func objectParamStmt(param *model.Param, schemaPath []string, opts *paramSchemaFieldTypeOptions) *jen.Statement {
+func objectParamStmt(param *model.Param, schemaPath []string, pq pkgQual, opts *paramSchemaFieldTypeOptions) *jen.Statement {
 	stmt := jen.Id(toExportedName(param.Name))
 	if needsPointer(param.Schema, opts.usePointers) {
 		stmt.Op("*")
 	}
-	stmt.Add(paramSchemaFieldType(param.Schema, append(schemaPath, param.Name), opts))
+	stmt.Add(paramSchemaFieldType(param.Schema, append(schemaPath, param.Name), pq, opts))
 	jsonTag := param.Name
 	if !param.Required {
 		jsonTag += ",omitempty"

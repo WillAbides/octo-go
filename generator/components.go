@@ -8,15 +8,15 @@ import (
 	"github.com/willabides/octo-go/generator/internal/model"
 )
 
-func compSchemaRefStmt(schema *model.ParamSchema) *jen.Statement {
+func compSchemaRefStmt(schema *model.ParamSchema, pq pkgQual) *jen.Statement {
 	if !strings.HasPrefix(schema.Ref, "#/components/schemas/") {
 		return nil
 	}
 	nm := strings.TrimPrefix(schema.Ref, "#/components/schemas/")
-	return jen.Qual("github.com/willabides/octo-go/components", toExportedName(nm))
+	return jen.Qual(pq.pkgPath("components"), toExportedName(nm))
 }
 
-func addComponentSchemas(file *jen.File, schemas map[string]*model.ParamSchema) {
+func addComponentSchemas(file *jen.File, schemas map[string]*model.ParamSchema, pq pkgQual) {
 	names := make([]string, 0, len(schemas))
 	for name := range schemas {
 		names = append(names, name)
@@ -25,16 +25,16 @@ func addComponentSchemas(file *jen.File, schemas map[string]*model.ParamSchema) 
 	for _, name := range names {
 		schema := schemas[name]
 		structName := toExportedName(name)
-		tp := paramSchemaFieldType(schema, []string{"components", "schemas", name}, &paramSchemaFieldTypeOptions{
+		tp := paramSchemaFieldType(schema, []string{"components", "schemas", name}, pq, &paramSchemaFieldTypeOptions{
 			noHelperRecursive: true,
 		})
 		file.Type().Id(structName).Add(tp)
 		file.Line()
 		if schema.Type == model.ParamTypeOneOf {
 			file.Line()
-			file.Add(oneOfValueFunc(structName, schema))
+			file.Add(oneOfValueFunc(structName, pq, schema))
 			file.Line()
-			file.Add(oneOfSetValueFunc(structName, schema))
+			file.Add(oneOfSetValueFunc(structName, pq, schema))
 			file.Line()
 			file.Add(oneOfMarshalJSONFunc(structName, schema))
 			file.Line()
@@ -94,8 +94,8 @@ func orList(vals []string) string {
 	return result
 }
 
-func oneOfReturnTypeForComment(name string, schema *model.ParamSchema) string {
-	qt := oneOfQualifiedType(name, schema)
+func oneOfReturnTypeForComment(name string, pq pkgQual, schema *model.ParamSchema) string {
+	qt := oneOfQualifiedType(name, pq, schema)
 	if qt.slice {
 		return "[]" + qt.name
 	}
@@ -108,7 +108,7 @@ type qualifiedType struct {
 	slice bool
 }
 
-func oneOfQualifiedType(name string, schema *model.ParamSchema) *qualifiedType {
+func oneOfQualifiedType(name string, pq pkgQual, schema *model.ParamSchema) *qualifiedType {
 	switch schema.Type {
 	case model.ParamTypeInt:
 		return &qualifiedType{
@@ -123,9 +123,9 @@ func oneOfQualifiedType(name string, schema *model.ParamSchema) *qualifiedType {
 			name: "interface{}",
 		}
 	case model.ParamTypeObject, model.ParamTypeOneOf:
-		pkg := "github.com/willabides/octo-go"
+		pkg := pq.pkgPath("octo")
 		if strings.HasPrefix(schema.Ref, "#/components") {
-			pkg += "/components"
+			pkg = pq.pkgPath("components")
 		}
 		return &qualifiedType{
 			pkg:  pkg,
@@ -139,10 +139,10 @@ func oneOfQualifiedType(name string, schema *model.ParamSchema) *qualifiedType {
 				slice: true,
 			}
 		}
-		rv := oneOfQualifiedType(name, schema.ItemSchema)
+		rv := oneOfQualifiedType(name, pq, schema.ItemSchema)
 		if schema.ItemSchema.Ref == "" {
 			if strings.HasPrefix(schema.Ref, "#/components") {
-				rv.pkg = "github.com/willabides/octo-go/components"
+				rv.pkg = pq.pkgPath("components")
 			}
 		}
 		if schema.Ref == "" {
@@ -156,14 +156,14 @@ func oneOfQualifiedType(name string, schema *model.ParamSchema) *qualifiedType {
 	}
 }
 
-func oneOfSetValueFunc(structName string, schema *model.ParamSchema) jen.Code {
+func oneOfSetValueFunc(structName string, pq pkgQual, schema *model.ParamSchema) jen.Code {
 	paramNames := make([]string, 0, len(schema.ObjectParams))
 	paramCommentTypes := make([]string, 0, len(schema.ObjectParams))
 	paramTypes := make([]*qualifiedType, 0, len(schema.ObjectParams))
 	for _, param := range schema.ObjectParams {
 		paramNames = append(paramNames, toUnexportedName(param.Name))
-		paramCommentTypes = append(paramCommentTypes, oneOfReturnTypeForComment(param.Name, param.Schema))
-		paramTypes = append(paramTypes, oneOfQualifiedType(param.Name, param.Schema))
+		paramCommentTypes = append(paramCommentTypes, oneOfReturnTypeForComment(param.Name, pq, param.Schema))
+		paramTypes = append(paramTypes, oneOfQualifiedType(param.Name, pq, param.Schema))
 	}
 	stmt := jen.Commentf("SetValue sets %s's value. The type must be one of %s.", structName, orList(paramCommentTypes)).Line()
 	stmt.Add(
@@ -194,12 +194,12 @@ func oneOfSetValueFunc(structName string, schema *model.ParamSchema) jen.Code {
 	return stmt
 }
 
-func oneOfValueFunc(structName string, schema *model.ParamSchema) jen.Code {
+func oneOfValueFunc(structName string, pq pkgQual, schema *model.ParamSchema) jen.Code {
 	paramNames := make([]string, 0, len(schema.ObjectParams))
 	paramTypes := make([]string, 0, len(schema.ObjectParams))
 	for _, param := range schema.ObjectParams {
 		paramNames = append(paramNames, toUnexportedName(param.Name))
-		paramTypes = append(paramTypes, oneOfReturnTypeForComment(param.Name, param.Schema))
+		paramTypes = append(paramTypes, oneOfReturnTypeForComment(param.Name, pq, param.Schema))
 	}
 	stmt := jen.Commentf("Value returns %s's value. The type will be one of %s.", structName, orList(paramTypes)).Line()
 	stmt.Add(

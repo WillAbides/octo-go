@@ -7,12 +7,13 @@ import (
 	"os"
 
 	"github.com/willabides/octo-go"
+	"github.com/willabides/octo-go/options/auth"
 )
 
 func main() {
 	ctx := context.Background()
 	client := octo.NewClient(
-		octo.WithPATAuth(os.Getenv("GITHUB_TOKEN")),
+		auth.WithPATAuth(os.Getenv("GITHUB_TOKEN")),
 	)
 
 	blockers, err := getReleaseBlockers(ctx, client)
