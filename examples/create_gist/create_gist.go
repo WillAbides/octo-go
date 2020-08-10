@@ -20,7 +20,7 @@ func main() {
 		octo.WithUserAgent("octo-go examples"),
 	)
 
-	createResp, err := gists.Create(ctx, &gists.CreateReq{
+	createResp, err := client.Gists().Create(ctx, &gists.CreateReq{
 		RequestBody: gists.CreateReqBody{
 			Description: octo.String("test gist, pls delete"),
 			Public:      octo.Bool(false),
@@ -33,7 +33,7 @@ my body
 				},
 			},
 		},
-	}, client)
+	})
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -41,9 +41,9 @@ my body
 	fmt.Printf("don't forget to delete your new gist at %s\n", createResp.Data.HtmlUrl)
 	fmt.Println("on second thought...I'll just delete it for you")
 
-	deleteResp, err := gists.Delete(ctx, &gists.DeleteReq{
+	deleteResp, err := client.Gists().Delete(ctx, &gists.DeleteReq{
 		GistId: createResp.Data.Id,
-	}, client)
+	})
 	if err != nil {
 		log.Fatal(err)
 	}

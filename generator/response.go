@@ -78,7 +78,7 @@ func respBodyType(endpoint *model.Endpoint) *qualifiedType {
 		}
 	}
 	return &qualifiedType{
-		pkg:  path.Join("requests", endpointPackage(endpoint)),
+		pkg:  path.Join("requests", concernPackage(endpoint.Concern)),
 		name: toExportedName(fmt.Sprintf("%s-response-body", endpoint.Name)),
 	}
 }
