@@ -106,7 +106,7 @@ func (r *OrgsBlockUserReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *OrgsBlockUserReq) Rel(link RelName, resp *OrgsBlockUserResponse) bool {
+func (r *OrgsBlockUserReq) Rel(link string, resp *OrgsBlockUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -221,7 +221,7 @@ func (r *OrgsCheckBlockedUserReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *OrgsCheckBlockedUserReq) Rel(link RelName, resp *OrgsCheckBlockedUserResponse) bool {
+func (r *OrgsCheckBlockedUserReq) Rel(link string, resp *OrgsCheckBlockedUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -333,7 +333,7 @@ func (r *OrgsCheckMembershipForUserReq) requestBuilder() *internal.RequestBuilde
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *OrgsCheckMembershipForUserReq) Rel(link RelName, resp *OrgsCheckMembershipForUserResponse) bool {
+func (r *OrgsCheckMembershipForUserReq) Rel(link string, resp *OrgsCheckMembershipForUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -448,7 +448,7 @@ func (r *OrgsCheckPublicMembershipForUserReq) requestBuilder() *internal.Request
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *OrgsCheckPublicMembershipForUserReq) Rel(link RelName, resp *OrgsCheckPublicMembershipForUserResponse) bool {
+func (r *OrgsCheckPublicMembershipForUserReq) Rel(link string, resp *OrgsCheckPublicMembershipForUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -560,7 +560,7 @@ func (r *OrgsConvertMemberToOutsideCollaboratorReq) requestBuilder() *internal.R
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *OrgsConvertMemberToOutsideCollaboratorReq) Rel(link RelName, resp *OrgsConvertMemberToOutsideCollaboratorResponse) bool {
+func (r *OrgsConvertMemberToOutsideCollaboratorReq) Rel(link string, resp *OrgsConvertMemberToOutsideCollaboratorResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -675,7 +675,7 @@ func (r *OrgsCreateInvitationReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *OrgsCreateInvitationReq) Rel(link RelName, resp *OrgsCreateInvitationResponse) bool {
+func (r *OrgsCreateInvitationReq) Rel(link string, resp *OrgsCreateInvitationResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -822,7 +822,7 @@ func (r *OrgsCreateWebhookReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *OrgsCreateWebhookReq) Rel(link RelName, resp *OrgsCreateWebhookResponse) bool {
+func (r *OrgsCreateWebhookReq) Rel(link string, resp *OrgsCreateWebhookResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -990,7 +990,7 @@ func (r *OrgsDeleteWebhookReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *OrgsDeleteWebhookReq) Rel(link RelName, resp *OrgsDeleteWebhookResponse) bool {
+func (r *OrgsDeleteWebhookReq) Rel(link string, resp *OrgsDeleteWebhookResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1117,7 +1117,7 @@ func (r *OrgsGetReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *OrgsGetReq) Rel(link RelName, resp *OrgsGetResponse) bool {
+func (r *OrgsGetReq) Rel(link string, resp *OrgsGetResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1229,7 +1229,7 @@ func (r *OrgsGetMembershipForAuthenticatedUserReq) requestBuilder() *internal.Re
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *OrgsGetMembershipForAuthenticatedUserReq) Rel(link RelName, resp *OrgsGetMembershipForAuthenticatedUserResponse) bool {
+func (r *OrgsGetMembershipForAuthenticatedUserReq) Rel(link string, resp *OrgsGetMembershipForAuthenticatedUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1342,7 +1342,7 @@ func (r *OrgsGetMembershipForUserReq) requestBuilder() *internal.RequestBuilder 
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *OrgsGetMembershipForUserReq) Rel(link RelName, resp *OrgsGetMembershipForUserResponse) bool {
+func (r *OrgsGetMembershipForUserReq) Rel(link string, resp *OrgsGetMembershipForUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1455,7 +1455,7 @@ func (r *OrgsGetWebhookReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *OrgsGetWebhookReq) Rel(link RelName, resp *OrgsGetWebhookResponse) bool {
+func (r *OrgsGetWebhookReq) Rel(link string, resp *OrgsGetWebhookResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1582,7 +1582,7 @@ func (r *OrgsListReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *OrgsListReq) Rel(link RelName, resp *OrgsListResponse) bool {
+func (r *OrgsListReq) Rel(link string, resp *OrgsListResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1712,7 +1712,7 @@ func (r *OrgsListAppInstallationsReq) requestBuilder() *internal.RequestBuilder 
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *OrgsListAppInstallationsReq) Rel(link RelName, resp *OrgsListAppInstallationsResponse) bool {
+func (r *OrgsListAppInstallationsReq) Rel(link string, resp *OrgsListAppInstallationsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1834,7 +1834,7 @@ func (r *OrgsListBlockedUsersReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *OrgsListBlockedUsersReq) Rel(link RelName, resp *OrgsListBlockedUsersResponse) bool {
+func (r *OrgsListBlockedUsersReq) Rel(link string, resp *OrgsListBlockedUsersResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1957,7 +1957,7 @@ func (r *OrgsListForAuthenticatedUserReq) requestBuilder() *internal.RequestBuil
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *OrgsListForAuthenticatedUserReq) Rel(link RelName, resp *OrgsListForAuthenticatedUserResponse) bool {
+func (r *OrgsListForAuthenticatedUserReq) Rel(link string, resp *OrgsListForAuthenticatedUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2081,7 +2081,7 @@ func (r *OrgsListForUserReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *OrgsListForUserReq) Rel(link RelName, resp *OrgsListForUserResponse) bool {
+func (r *OrgsListForUserReq) Rel(link string, resp *OrgsListForUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2208,7 +2208,7 @@ func (r *OrgsListInvitationTeamsReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *OrgsListInvitationTeamsReq) Rel(link RelName, resp *OrgsListInvitationTeamsResponse) bool {
+func (r *OrgsListInvitationTeamsReq) Rel(link string, resp *OrgsListInvitationTeamsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2355,7 +2355,7 @@ func (r *OrgsListMembersReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *OrgsListMembersReq) Rel(link RelName, resp *OrgsListMembersResponse) bool {
+func (r *OrgsListMembersReq) Rel(link string, resp *OrgsListMembersResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2488,7 +2488,7 @@ func (r *OrgsListMembershipsForAuthenticatedUserReq) requestBuilder() *internal.
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *OrgsListMembershipsForAuthenticatedUserReq) Rel(link RelName, resp *OrgsListMembershipsForAuthenticatedUserResponse) bool {
+func (r *OrgsListMembershipsForAuthenticatedUserReq) Rel(link string, resp *OrgsListMembershipsForAuthenticatedUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2623,7 +2623,7 @@ func (r *OrgsListOutsideCollaboratorsReq) requestBuilder() *internal.RequestBuil
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *OrgsListOutsideCollaboratorsReq) Rel(link RelName, resp *OrgsListOutsideCollaboratorsResponse) bool {
+func (r *OrgsListOutsideCollaboratorsReq) Rel(link string, resp *OrgsListOutsideCollaboratorsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2747,7 +2747,7 @@ func (r *OrgsListPendingInvitationsReq) requestBuilder() *internal.RequestBuilde
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *OrgsListPendingInvitationsReq) Rel(link RelName, resp *OrgsListPendingInvitationsResponse) bool {
+func (r *OrgsListPendingInvitationsReq) Rel(link string, resp *OrgsListPendingInvitationsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2871,7 +2871,7 @@ func (r *OrgsListPublicMembersReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *OrgsListPublicMembersReq) Rel(link RelName, resp *OrgsListPublicMembersResponse) bool {
+func (r *OrgsListPublicMembersReq) Rel(link string, resp *OrgsListPublicMembersResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2983,7 +2983,7 @@ func (r *OrgsListSamlSsoAuthorizationsReq) requestBuilder() *internal.RequestBui
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *OrgsListSamlSsoAuthorizationsReq) Rel(link RelName, resp *OrgsListSamlSsoAuthorizationsResponse) bool {
+func (r *OrgsListSamlSsoAuthorizationsReq) Rel(link string, resp *OrgsListSamlSsoAuthorizationsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3107,7 +3107,7 @@ func (r *OrgsListWebhooksReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *OrgsListWebhooksReq) Rel(link RelName, resp *OrgsListWebhooksResponse) bool {
+func (r *OrgsListWebhooksReq) Rel(link string, resp *OrgsListWebhooksResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3223,7 +3223,7 @@ func (r *OrgsPingWebhookReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *OrgsPingWebhookReq) Rel(link RelName, resp *OrgsPingWebhookResponse) bool {
+func (r *OrgsPingWebhookReq) Rel(link string, resp *OrgsPingWebhookResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3335,7 +3335,7 @@ func (r *OrgsRemoveMemberReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *OrgsRemoveMemberReq) Rel(link RelName, resp *OrgsRemoveMemberResponse) bool {
+func (r *OrgsRemoveMemberReq) Rel(link string, resp *OrgsRemoveMemberResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3446,7 +3446,7 @@ func (r *OrgsRemoveMembershipForUserReq) requestBuilder() *internal.RequestBuild
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *OrgsRemoveMembershipForUserReq) Rel(link RelName, resp *OrgsRemoveMembershipForUserResponse) bool {
+func (r *OrgsRemoveMembershipForUserReq) Rel(link string, resp *OrgsRemoveMembershipForUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3557,7 +3557,7 @@ func (r *OrgsRemoveOutsideCollaboratorReq) requestBuilder() *internal.RequestBui
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *OrgsRemoveOutsideCollaboratorReq) Rel(link RelName, resp *OrgsRemoveOutsideCollaboratorResponse) bool {
+func (r *OrgsRemoveOutsideCollaboratorReq) Rel(link string, resp *OrgsRemoveOutsideCollaboratorResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3668,7 +3668,7 @@ func (r *OrgsRemovePublicMembershipForAuthenticatedUserReq) requestBuilder() *in
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *OrgsRemovePublicMembershipForAuthenticatedUserReq) Rel(link RelName, resp *OrgsRemovePublicMembershipForAuthenticatedUserResponse) bool {
+func (r *OrgsRemovePublicMembershipForAuthenticatedUserReq) Rel(link string, resp *OrgsRemovePublicMembershipForAuthenticatedUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3785,7 +3785,7 @@ func (r *OrgsRemoveSamlSsoAuthorizationReq) requestBuilder() *internal.RequestBu
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *OrgsRemoveSamlSsoAuthorizationReq) Rel(link RelName, resp *OrgsRemoveSamlSsoAuthorizationResponse) bool {
+func (r *OrgsRemoveSamlSsoAuthorizationReq) Rel(link string, resp *OrgsRemoveSamlSsoAuthorizationResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3902,7 +3902,7 @@ func (r *OrgsSetMembershipForUserReq) requestBuilder() *internal.RequestBuilder 
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *OrgsSetMembershipForUserReq) Rel(link RelName, resp *OrgsSetMembershipForUserResponse) bool {
+func (r *OrgsSetMembershipForUserReq) Rel(link string, resp *OrgsSetMembershipForUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -4029,7 +4029,7 @@ func (r *OrgsSetPublicMembershipForAuthenticatedUserReq) requestBuilder() *inter
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *OrgsSetPublicMembershipForAuthenticatedUserReq) Rel(link RelName, resp *OrgsSetPublicMembershipForAuthenticatedUserResponse) bool {
+func (r *OrgsSetPublicMembershipForAuthenticatedUserReq) Rel(link string, resp *OrgsSetPublicMembershipForAuthenticatedUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -4140,7 +4140,7 @@ func (r *OrgsUnblockUserReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *OrgsUnblockUserReq) Rel(link RelName, resp *OrgsUnblockUserResponse) bool {
+func (r *OrgsUnblockUserReq) Rel(link string, resp *OrgsUnblockUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -4270,7 +4270,7 @@ func (r *OrgsUpdateReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *OrgsUpdateReq) Rel(link RelName, resp *OrgsUpdateResponse) bool {
+func (r *OrgsUpdateReq) Rel(link string, resp *OrgsUpdateResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -4498,7 +4498,7 @@ func (r *OrgsUpdateMembershipForAuthenticatedUserReq) requestBuilder() *internal
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *OrgsUpdateMembershipForAuthenticatedUserReq) Rel(link RelName, resp *OrgsUpdateMembershipForAuthenticatedUserResponse) bool {
+func (r *OrgsUpdateMembershipForAuthenticatedUserReq) Rel(link string, resp *OrgsUpdateMembershipForAuthenticatedUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -4626,7 +4626,7 @@ func (r *OrgsUpdateWebhookReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *OrgsUpdateWebhookReq) Rel(link RelName, resp *OrgsUpdateWebhookResponse) bool {
+func (r *OrgsUpdateWebhookReq) Rel(link string, resp *OrgsUpdateWebhookResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false

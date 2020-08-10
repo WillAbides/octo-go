@@ -113,7 +113,7 @@ func (r *InteractionsGetRestrictionsForOrgReq) requestBuilder() *internal.Reques
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *InteractionsGetRestrictionsForOrgReq) Rel(link RelName, resp *InteractionsGetRestrictionsForOrgResponse) bool {
+func (r *InteractionsGetRestrictionsForOrgReq) Rel(link string, resp *InteractionsGetRestrictionsForOrgResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -234,7 +234,7 @@ func (r *InteractionsGetRestrictionsForRepoReq) requestBuilder() *internal.Reque
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *InteractionsGetRestrictionsForRepoReq) Rel(link RelName, resp *InteractionsGetRestrictionsForRepoResponse) bool {
+func (r *InteractionsGetRestrictionsForRepoReq) Rel(link string, resp *InteractionsGetRestrictionsForRepoResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -353,7 +353,7 @@ func (r *InteractionsRemoveRestrictionsForOrgReq) requestBuilder() *internal.Req
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *InteractionsRemoveRestrictionsForOrgReq) Rel(link RelName, resp *InteractionsRemoveRestrictionsForOrgResponse) bool {
+func (r *InteractionsRemoveRestrictionsForOrgReq) Rel(link string, resp *InteractionsRemoveRestrictionsForOrgResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -472,7 +472,7 @@ func (r *InteractionsRemoveRestrictionsForRepoReq) requestBuilder() *internal.Re
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *InteractionsRemoveRestrictionsForRepoReq) Rel(link RelName, resp *InteractionsRemoveRestrictionsForRepoResponse) bool {
+func (r *InteractionsRemoveRestrictionsForRepoReq) Rel(link string, resp *InteractionsRemoveRestrictionsForRepoResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -595,7 +595,7 @@ func (r *InteractionsSetRestrictionsForOrgReq) requestBuilder() *internal.Reques
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *InteractionsSetRestrictionsForOrgReq) Rel(link RelName, resp *InteractionsSetRestrictionsForOrgResponse) bool {
+func (r *InteractionsSetRestrictionsForOrgReq) Rel(link string, resp *InteractionsSetRestrictionsForOrgResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -735,7 +735,7 @@ func (r *InteractionsSetRestrictionsForRepoReq) requestBuilder() *internal.Reque
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *InteractionsSetRestrictionsForRepoReq) Rel(link RelName, resp *InteractionsSetRestrictionsForRepoResponse) bool {
+func (r *InteractionsSetRestrictionsForRepoReq) Rel(link string, resp *InteractionsSetRestrictionsForRepoResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false

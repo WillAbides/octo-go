@@ -108,7 +108,7 @@ func (r *ScimDeleteUserFromOrgReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ScimDeleteUserFromOrgReq) Rel(link RelName, resp *ScimDeleteUserFromOrgResponse) bool {
+func (r *ScimDeleteUserFromOrgReq) Rel(link string, resp *ScimDeleteUserFromOrgResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -222,7 +222,7 @@ func (r *ScimGetProvisioningInformationForUserReq) requestBuilder() *internal.Re
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ScimGetProvisioningInformationForUserReq) Rel(link RelName, resp *ScimGetProvisioningInformationForUserResponse) bool {
+func (r *ScimGetProvisioningInformationForUserReq) Rel(link string, resp *ScimGetProvisioningInformationForUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -364,7 +364,7 @@ func (r *ScimListProvisionedIdentitiesReq) requestBuilder() *internal.RequestBui
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ScimListProvisionedIdentitiesReq) Rel(link RelName, resp *ScimListProvisionedIdentitiesResponse) bool {
+func (r *ScimListProvisionedIdentitiesReq) Rel(link string, resp *ScimListProvisionedIdentitiesResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -480,7 +480,7 @@ func (r *ScimProvisionAndInviteUserReq) requestBuilder() *internal.RequestBuilde
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ScimProvisionAndInviteUserReq) Rel(link RelName, resp *ScimProvisionAndInviteUserResponse) bool {
+func (r *ScimProvisionAndInviteUserReq) Rel(link string, resp *ScimProvisionAndInviteUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -632,7 +632,7 @@ func (r *ScimSetInformationForProvisionedUserReq) requestBuilder() *internal.Req
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ScimSetInformationForProvisionedUserReq) Rel(link RelName, resp *ScimSetInformationForProvisionedUserResponse) bool {
+func (r *ScimSetInformationForProvisionedUserReq) Rel(link string, resp *ScimSetInformationForProvisionedUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -784,7 +784,7 @@ func (r *ScimUpdateAttributeForUserReq) requestBuilder() *internal.RequestBuilde
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ScimUpdateAttributeForUserReq) Rel(link RelName, resp *ScimUpdateAttributeForUserResponse) bool {
+func (r *ScimUpdateAttributeForUserReq) Rel(link string, resp *ScimUpdateAttributeForUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false

@@ -116,7 +116,7 @@ func (r *AppsAddRepoToInstallationReq) requestBuilder() *internal.RequestBuilder
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *AppsAddRepoToInstallationReq) Rel(link RelName, resp *AppsAddRepoToInstallationResponse) bool {
+func (r *AppsAddRepoToInstallationReq) Rel(link string, resp *AppsAddRepoToInstallationResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -228,7 +228,7 @@ func (r *AppsCheckAuthorizationReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *AppsCheckAuthorizationReq) Rel(link RelName, resp *AppsCheckAuthorizationResponse) bool {
+func (r *AppsCheckAuthorizationReq) Rel(link string, resp *AppsCheckAuthorizationResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -402,7 +402,7 @@ func (r *AppsCheckTokenReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *AppsCheckTokenReq) Rel(link RelName, resp *AppsCheckTokenResponse) bool {
+func (r *AppsCheckTokenReq) Rel(link string, resp *AppsCheckTokenResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -537,7 +537,7 @@ func (r *AppsCreateContentAttachmentReq) requestBuilder() *internal.RequestBuild
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *AppsCreateContentAttachmentReq) Rel(link RelName, resp *AppsCreateContentAttachmentResponse) bool {
+func (r *AppsCreateContentAttachmentReq) Rel(link string, resp *AppsCreateContentAttachmentResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -665,7 +665,7 @@ func (r *AppsCreateFromManifestReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *AppsCreateFromManifestReq) Rel(link RelName, resp *AppsCreateFromManifestResponse) bool {
+func (r *AppsCreateFromManifestReq) Rel(link string, resp *AppsCreateFromManifestResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -846,7 +846,7 @@ func (r *AppsCreateInstallationAccessTokenReq) requestBuilder() *internal.Reques
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *AppsCreateInstallationAccessTokenReq) Rel(link RelName, resp *AppsCreateInstallationAccessTokenResponse) bool {
+func (r *AppsCreateInstallationAccessTokenReq) Rel(link string, resp *AppsCreateInstallationAccessTokenResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -976,7 +976,7 @@ func (r *AppsDeleteAuthorizationReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *AppsDeleteAuthorizationReq) Rel(link RelName, resp *AppsDeleteAuthorizationResponse) bool {
+func (r *AppsDeleteAuthorizationReq) Rel(link string, resp *AppsDeleteAuthorizationResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1109,7 +1109,7 @@ func (r *AppsDeleteInstallationReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *AppsDeleteInstallationReq) Rel(link RelName, resp *AppsDeleteInstallationResponse) bool {
+func (r *AppsDeleteInstallationReq) Rel(link string, resp *AppsDeleteInstallationResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1221,7 +1221,7 @@ func (r *AppsDeleteTokenReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *AppsDeleteTokenReq) Rel(link RelName, resp *AppsDeleteTokenResponse) bool {
+func (r *AppsDeleteTokenReq) Rel(link string, resp *AppsDeleteTokenResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1348,7 +1348,7 @@ func (r *AppsGetAuthenticatedReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *AppsGetAuthenticatedReq) Rel(link RelName, resp *AppsGetAuthenticatedResponse) bool {
+func (r *AppsGetAuthenticatedReq) Rel(link string, resp *AppsGetAuthenticatedResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1468,7 +1468,7 @@ func (r *AppsGetBySlugReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *AppsGetBySlugReq) Rel(link RelName, resp *AppsGetBySlugResponse) bool {
+func (r *AppsGetBySlugReq) Rel(link string, resp *AppsGetBySlugResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1588,7 +1588,7 @@ func (r *AppsGetInstallationReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *AppsGetInstallationReq) Rel(link RelName, resp *AppsGetInstallationResponse) bool {
+func (r *AppsGetInstallationReq) Rel(link string, resp *AppsGetInstallationResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1706,7 +1706,7 @@ func (r *AppsGetOrgInstallationReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *AppsGetOrgInstallationReq) Rel(link RelName, resp *AppsGetOrgInstallationResponse) bool {
+func (r *AppsGetOrgInstallationReq) Rel(link string, resp *AppsGetOrgInstallationResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1825,7 +1825,7 @@ func (r *AppsGetRepoInstallationReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *AppsGetRepoInstallationReq) Rel(link RelName, resp *AppsGetRepoInstallationResponse) bool {
+func (r *AppsGetRepoInstallationReq) Rel(link string, resp *AppsGetRepoInstallationResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1939,7 +1939,7 @@ func (r *AppsGetSubscriptionPlanForAccountReq) requestBuilder() *internal.Reques
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *AppsGetSubscriptionPlanForAccountReq) Rel(link RelName, resp *AppsGetSubscriptionPlanForAccountResponse) bool {
+func (r *AppsGetSubscriptionPlanForAccountReq) Rel(link string, resp *AppsGetSubscriptionPlanForAccountResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2053,7 +2053,7 @@ func (r *AppsGetSubscriptionPlanForAccountStubbedReq) requestBuilder() *internal
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *AppsGetSubscriptionPlanForAccountStubbedReq) Rel(link RelName, resp *AppsGetSubscriptionPlanForAccountStubbedResponse) bool {
+func (r *AppsGetSubscriptionPlanForAccountStubbedReq) Rel(link string, resp *AppsGetSubscriptionPlanForAccountStubbedResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2171,7 +2171,7 @@ func (r *AppsGetUserInstallationReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *AppsGetUserInstallationReq) Rel(link RelName, resp *AppsGetUserInstallationResponse) bool {
+func (r *AppsGetUserInstallationReq) Rel(link string, resp *AppsGetUserInstallationResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2315,7 +2315,7 @@ func (r *AppsListAccountsForPlanReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *AppsListAccountsForPlanReq) Rel(link RelName, resp *AppsListAccountsForPlanResponse) bool {
+func (r *AppsListAccountsForPlanReq) Rel(link string, resp *AppsListAccountsForPlanResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2459,7 +2459,7 @@ func (r *AppsListAccountsForPlanStubbedReq) requestBuilder() *internal.RequestBu
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *AppsListAccountsForPlanStubbedReq) Rel(link RelName, resp *AppsListAccountsForPlanStubbedResponse) bool {
+func (r *AppsListAccountsForPlanStubbedReq) Rel(link string, resp *AppsListAccountsForPlanStubbedResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2601,7 +2601,7 @@ func (r *AppsListInstallationReposForAuthenticatedUserReq) requestBuilder() *int
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *AppsListInstallationReposForAuthenticatedUserReq) Rel(link RelName, resp *AppsListInstallationReposForAuthenticatedUserResponse) bool {
+func (r *AppsListInstallationReposForAuthenticatedUserReq) Rel(link string, resp *AppsListInstallationReposForAuthenticatedUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2755,7 +2755,7 @@ func (r *AppsListInstallationsReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *AppsListInstallationsReq) Rel(link RelName, resp *AppsListInstallationsResponse) bool {
+func (r *AppsListInstallationsReq) Rel(link string, resp *AppsListInstallationsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2884,7 +2884,7 @@ func (r *AppsListInstallationsForAuthenticatedUserReq) requestBuilder() *interna
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *AppsListInstallationsForAuthenticatedUserReq) Rel(link RelName, resp *AppsListInstallationsForAuthenticatedUserResponse) bool {
+func (r *AppsListInstallationsForAuthenticatedUserReq) Rel(link string, resp *AppsListInstallationsForAuthenticatedUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3017,7 +3017,7 @@ func (r *AppsListPlansReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *AppsListPlansReq) Rel(link RelName, resp *AppsListPlansResponse) bool {
+func (r *AppsListPlansReq) Rel(link string, resp *AppsListPlansResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3140,7 +3140,7 @@ func (r *AppsListPlansStubbedReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *AppsListPlansStubbedReq) Rel(link RelName, resp *AppsListPlansStubbedResponse) bool {
+func (r *AppsListPlansStubbedReq) Rel(link string, resp *AppsListPlansStubbedResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3279,7 +3279,7 @@ func (r *AppsListReposAccessibleToInstallationReq) requestBuilder() *internal.Re
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *AppsListReposAccessibleToInstallationReq) Rel(link RelName, resp *AppsListReposAccessibleToInstallationResponse) bool {
+func (r *AppsListReposAccessibleToInstallationReq) Rel(link string, resp *AppsListReposAccessibleToInstallationResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3413,7 +3413,7 @@ func (r *AppsListSubscriptionsForAuthenticatedUserReq) requestBuilder() *interna
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *AppsListSubscriptionsForAuthenticatedUserReq) Rel(link RelName, resp *AppsListSubscriptionsForAuthenticatedUserResponse) bool {
+func (r *AppsListSubscriptionsForAuthenticatedUserReq) Rel(link string, resp *AppsListSubscriptionsForAuthenticatedUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3536,7 +3536,7 @@ func (r *AppsListSubscriptionsForAuthenticatedUserStubbedReq) requestBuilder() *
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *AppsListSubscriptionsForAuthenticatedUserStubbedReq) Rel(link RelName, resp *AppsListSubscriptionsForAuthenticatedUserStubbedResponse) bool {
+func (r *AppsListSubscriptionsForAuthenticatedUserStubbedReq) Rel(link string, resp *AppsListSubscriptionsForAuthenticatedUserStubbedResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3658,7 +3658,7 @@ func (r *AppsRemoveRepoFromInstallationReq) requestBuilder() *internal.RequestBu
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *AppsRemoveRepoFromInstallationReq) Rel(link RelName, resp *AppsRemoveRepoFromInstallationResponse) bool {
+func (r *AppsRemoveRepoFromInstallationReq) Rel(link string, resp *AppsRemoveRepoFromInstallationResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3770,7 +3770,7 @@ func (r *AppsResetAuthorizationReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *AppsResetAuthorizationReq) Rel(link RelName, resp *AppsResetAuthorizationResponse) bool {
+func (r *AppsResetAuthorizationReq) Rel(link string, resp *AppsResetAuthorizationResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3886,7 +3886,7 @@ func (r *AppsResetTokenReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *AppsResetTokenReq) Rel(link RelName, resp *AppsResetTokenResponse) bool {
+func (r *AppsResetTokenReq) Rel(link string, resp *AppsResetTokenResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -4009,7 +4009,7 @@ func (r *AppsRevokeAuthorizationForApplicationReq) requestBuilder() *internal.Re
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *AppsRevokeAuthorizationForApplicationReq) Rel(link RelName, resp *AppsRevokeAuthorizationForApplicationResponse) bool {
+func (r *AppsRevokeAuthorizationForApplicationReq) Rel(link string, resp *AppsRevokeAuthorizationForApplicationResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -4120,7 +4120,7 @@ func (r *AppsRevokeGrantForApplicationReq) requestBuilder() *internal.RequestBui
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *AppsRevokeGrantForApplicationReq) Rel(link RelName, resp *AppsRevokeGrantForApplicationResponse) bool {
+func (r *AppsRevokeGrantForApplicationReq) Rel(link string, resp *AppsRevokeGrantForApplicationResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -4229,7 +4229,7 @@ func (r *AppsRevokeInstallationAccessTokenReq) requestBuilder() *internal.Reques
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *AppsRevokeInstallationAccessTokenReq) Rel(link RelName, resp *AppsRevokeInstallationAccessTokenResponse) bool {
+func (r *AppsRevokeInstallationAccessTokenReq) Rel(link string, resp *AppsRevokeInstallationAccessTokenResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -4345,7 +4345,7 @@ func (r *AppsSuspendInstallationReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *AppsSuspendInstallationReq) Rel(link RelName, resp *AppsSuspendInstallationResponse) bool {
+func (r *AppsSuspendInstallationReq) Rel(link string, resp *AppsSuspendInstallationResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -4462,7 +4462,7 @@ func (r *AppsUnsuspendInstallationReq) requestBuilder() *internal.RequestBuilder
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *AppsUnsuspendInstallationReq) Rel(link RelName, resp *AppsUnsuspendInstallationResponse) bool {
+func (r *AppsUnsuspendInstallationReq) Rel(link string, resp *AppsUnsuspendInstallationResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false

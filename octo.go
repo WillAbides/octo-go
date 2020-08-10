@@ -8,15 +8,12 @@ import (
 
 //go:generate go run ./generator -schema "api.github.com.json" -pkgpath "github.com/willabides/octo-go" -pkg octo
 
-// RelLink is the name for a relative link in a Link header. Used for paging.
-type RelName string
-
-// Common RelLink values
+// Common values for rel links
 const (
-	RelNext  RelName = "next"
-	RelPrev  RelName = "prev"
-	RelFirst RelName = "first"
-	RelLast  RelName = "last"
+	RelNext  = "next"
+	RelPrev  = "prev"
+	RelFirst = "first"
+	RelLast  = "last"
 )
 
 // ISOTimeString returns a pointer to tm formated as an iso8601/rfc3339 string

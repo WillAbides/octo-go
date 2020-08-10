@@ -107,7 +107,7 @@ func (r *GistsCheckIsStarredReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *GistsCheckIsStarredReq) Rel(link RelName, resp *GistsCheckIsStarredResponse) bool {
+func (r *GistsCheckIsStarredReq) Rel(link string, resp *GistsCheckIsStarredResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -221,7 +221,7 @@ func (r *GistsCreateReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *GistsCreateReq) Rel(link RelName, resp *GistsCreateResponse) bool {
+func (r *GistsCreateReq) Rel(link string, resp *GistsCreateResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -363,7 +363,7 @@ func (r *GistsCreateCommentReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *GistsCreateCommentReq) Rel(link RelName, resp *GistsCreateCommentResponse) bool {
+func (r *GistsCreateCommentReq) Rel(link string, resp *GistsCreateCommentResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -487,7 +487,7 @@ func (r *GistsDeleteReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *GistsDeleteReq) Rel(link RelName, resp *GistsDeleteResponse) bool {
+func (r *GistsDeleteReq) Rel(link string, resp *GistsDeleteResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -602,7 +602,7 @@ func (r *GistsDeleteCommentReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *GistsDeleteCommentReq) Rel(link RelName, resp *GistsDeleteCommentResponse) bool {
+func (r *GistsDeleteCommentReq) Rel(link string, resp *GistsDeleteCommentResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -715,7 +715,7 @@ func (r *GistsForkReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *GistsForkReq) Rel(link RelName, resp *GistsForkResponse) bool {
+func (r *GistsForkReq) Rel(link string, resp *GistsForkResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -829,7 +829,7 @@ func (r *GistsGetReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *GistsGetReq) Rel(link RelName, resp *GistsGetResponse) bool {
+func (r *GistsGetReq) Rel(link string, resp *GistsGetResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -946,7 +946,7 @@ func (r *GistsGetCommentReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *GistsGetCommentReq) Rel(link RelName, resp *GistsGetCommentResponse) bool {
+func (r *GistsGetCommentReq) Rel(link string, resp *GistsGetCommentResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1063,7 +1063,7 @@ func (r *GistsGetRevisionReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *GistsGetRevisionReq) Rel(link RelName, resp *GistsGetRevisionResponse) bool {
+func (r *GistsGetRevisionReq) Rel(link string, resp *GistsGetRevisionResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1196,7 +1196,7 @@ func (r *GistsListReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *GistsListReq) Rel(link RelName, resp *GistsListResponse) bool {
+func (r *GistsListReq) Rel(link string, resp *GistsListResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1322,7 +1322,7 @@ func (r *GistsListCommentsReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *GistsListCommentsReq) Rel(link RelName, resp *GistsListCommentsResponse) bool {
+func (r *GistsListCommentsReq) Rel(link string, resp *GistsListCommentsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1448,7 +1448,7 @@ func (r *GistsListCommitsReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *GistsListCommitsReq) Rel(link RelName, resp *GistsListCommitsResponse) bool {
+func (r *GistsListCommitsReq) Rel(link string, resp *GistsListCommitsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1582,7 +1582,7 @@ func (r *GistsListForUserReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *GistsListForUserReq) Rel(link RelName, resp *GistsListForUserResponse) bool {
+func (r *GistsListForUserReq) Rel(link string, resp *GistsListForUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1708,7 +1708,7 @@ func (r *GistsListForksReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *GistsListForksReq) Rel(link RelName, resp *GistsListForksResponse) bool {
+func (r *GistsListForksReq) Rel(link string, resp *GistsListForksResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1841,7 +1841,7 @@ func (r *GistsListPublicReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *GistsListPublicReq) Rel(link RelName, resp *GistsListPublicResponse) bool {
+func (r *GistsListPublicReq) Rel(link string, resp *GistsListPublicResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1974,7 +1974,7 @@ func (r *GistsListStarredReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *GistsListStarredReq) Rel(link RelName, resp *GistsListStarredResponse) bool {
+func (r *GistsListStarredReq) Rel(link string, resp *GistsListStarredResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2087,7 +2087,7 @@ func (r *GistsStarReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *GistsStarReq) Rel(link RelName, resp *GistsStarResponse) bool {
+func (r *GistsStarReq) Rel(link string, resp *GistsStarResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2199,7 +2199,7 @@ func (r *GistsUnstarReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *GistsUnstarReq) Rel(link RelName, resp *GistsUnstarResponse) bool {
+func (r *GistsUnstarReq) Rel(link string, resp *GistsUnstarResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2316,7 +2316,7 @@ func (r *GistsUpdateReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *GistsUpdateReq) Rel(link RelName, resp *GistsUpdateResponse) bool {
+func (r *GistsUpdateReq) Rel(link string, resp *GistsUpdateResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2461,7 +2461,7 @@ func (r *GistsUpdateCommentReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *GistsUpdateCommentReq) Rel(link RelName, resp *GistsUpdateCommentResponse) bool {
+func (r *GistsUpdateCommentReq) Rel(link string, resp *GistsUpdateCommentResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false

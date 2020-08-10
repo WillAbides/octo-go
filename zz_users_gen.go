@@ -110,7 +110,7 @@ func (r *UsersAddEmailForAuthenticatedReq) requestBuilder() *internal.RequestBui
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *UsersAddEmailForAuthenticatedReq) Rel(link RelName, resp *UsersAddEmailForAuthenticatedResponse) bool {
+func (r *UsersAddEmailForAuthenticatedReq) Rel(link string, resp *UsersAddEmailForAuthenticatedResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -237,7 +237,7 @@ func (r *UsersBlockReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *UsersBlockReq) Rel(link RelName, resp *UsersBlockResponse) bool {
+func (r *UsersBlockReq) Rel(link string, resp *UsersBlockResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -347,7 +347,7 @@ func (r *UsersCheckBlockedReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *UsersCheckBlockedReq) Rel(link RelName, resp *UsersCheckBlockedResponse) bool {
+func (r *UsersCheckBlockedReq) Rel(link string, resp *UsersCheckBlockedResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -464,7 +464,7 @@ func (r *UsersCheckFollowingForUserReq) requestBuilder() *internal.RequestBuilde
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *UsersCheckFollowingForUserReq) Rel(link RelName, resp *UsersCheckFollowingForUserResponse) bool {
+func (r *UsersCheckFollowingForUserReq) Rel(link string, resp *UsersCheckFollowingForUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -575,7 +575,7 @@ func (r *UsersCheckPersonIsFollowedByAuthenticatedReq) requestBuilder() *interna
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *UsersCheckPersonIsFollowedByAuthenticatedReq) Rel(link RelName, resp *UsersCheckPersonIsFollowedByAuthenticatedResponse) bool {
+func (r *UsersCheckPersonIsFollowedByAuthenticatedReq) Rel(link string, resp *UsersCheckPersonIsFollowedByAuthenticatedResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -689,7 +689,7 @@ func (r *UsersCreateGpgKeyForAuthenticatedReq) requestBuilder() *internal.Reques
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *UsersCreateGpgKeyForAuthenticatedReq) Rel(link RelName, resp *UsersCreateGpgKeyForAuthenticatedResponse) bool {
+func (r *UsersCreateGpgKeyForAuthenticatedReq) Rel(link string, resp *UsersCreateGpgKeyForAuthenticatedResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -815,7 +815,7 @@ func (r *UsersCreatePublicSshKeyForAuthenticatedReq) requestBuilder() *internal.
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *UsersCreatePublicSshKeyForAuthenticatedReq) Rel(link RelName, resp *UsersCreatePublicSshKeyForAuthenticatedResponse) bool {
+func (r *UsersCreatePublicSshKeyForAuthenticatedReq) Rel(link string, resp *UsersCreatePublicSshKeyForAuthenticatedResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -940,7 +940,7 @@ func (r *UsersDeleteEmailForAuthenticatedReq) requestBuilder() *internal.Request
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *UsersDeleteEmailForAuthenticatedReq) Rel(link RelName, resp *UsersDeleteEmailForAuthenticatedResponse) bool {
+func (r *UsersDeleteEmailForAuthenticatedReq) Rel(link string, resp *UsersDeleteEmailForAuthenticatedResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1063,7 +1063,7 @@ func (r *UsersDeleteGpgKeyForAuthenticatedReq) requestBuilder() *internal.Reques
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *UsersDeleteGpgKeyForAuthenticatedReq) Rel(link RelName, resp *UsersDeleteGpgKeyForAuthenticatedResponse) bool {
+func (r *UsersDeleteGpgKeyForAuthenticatedReq) Rel(link string, resp *UsersDeleteGpgKeyForAuthenticatedResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1175,7 +1175,7 @@ func (r *UsersDeletePublicSshKeyForAuthenticatedReq) requestBuilder() *internal.
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *UsersDeletePublicSshKeyForAuthenticatedReq) Rel(link RelName, resp *UsersDeletePublicSshKeyForAuthenticatedResponse) bool {
+func (r *UsersDeletePublicSshKeyForAuthenticatedReq) Rel(link string, resp *UsersDeletePublicSshKeyForAuthenticatedResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1285,7 +1285,7 @@ func (r *UsersFollowReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *UsersFollowReq) Rel(link RelName, resp *UsersFollowResponse) bool {
+func (r *UsersFollowReq) Rel(link string, resp *UsersFollowResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1395,7 +1395,7 @@ func (r *UsersGetAuthenticatedReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *UsersGetAuthenticatedReq) Rel(link RelName, resp *UsersGetAuthenticatedResponse) bool {
+func (r *UsersGetAuthenticatedReq) Rel(link string, resp *UsersGetAuthenticatedResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1570,7 +1570,7 @@ func (r *UsersGetByUsernameReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *UsersGetByUsernameReq) Rel(link RelName, resp *UsersGetByUsernameResponse) bool {
+func (r *UsersGetByUsernameReq) Rel(link string, resp *UsersGetByUsernameResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1764,7 +1764,7 @@ func (r *UsersGetContextForUserReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *UsersGetContextForUserReq) Rel(link RelName, resp *UsersGetContextForUserResponse) bool {
+func (r *UsersGetContextForUserReq) Rel(link string, resp *UsersGetContextForUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1878,7 +1878,7 @@ func (r *UsersGetGpgKeyForAuthenticatedReq) requestBuilder() *internal.RequestBu
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *UsersGetGpgKeyForAuthenticatedReq) Rel(link RelName, resp *UsersGetGpgKeyForAuthenticatedResponse) bool {
+func (r *UsersGetGpgKeyForAuthenticatedReq) Rel(link string, resp *UsersGetGpgKeyForAuthenticatedResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1992,7 +1992,7 @@ func (r *UsersGetPublicSshKeyForAuthenticatedReq) requestBuilder() *internal.Req
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *UsersGetPublicSshKeyForAuthenticatedReq) Rel(link RelName, resp *UsersGetPublicSshKeyForAuthenticatedResponse) bool {
+func (r *UsersGetPublicSshKeyForAuthenticatedReq) Rel(link string, resp *UsersGetPublicSshKeyForAuthenticatedResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2119,7 +2119,7 @@ func (r *UsersListReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *UsersListReq) Rel(link RelName, resp *UsersListResponse) bool {
+func (r *UsersListReq) Rel(link string, resp *UsersListResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2230,7 +2230,7 @@ func (r *UsersListBlockedByAuthenticatedReq) requestBuilder() *internal.RequestB
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *UsersListBlockedByAuthenticatedReq) Rel(link RelName, resp *UsersListBlockedByAuthenticatedResponse) bool {
+func (r *UsersListBlockedByAuthenticatedReq) Rel(link string, resp *UsersListBlockedByAuthenticatedResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2353,7 +2353,7 @@ func (r *UsersListEmailsForAuthenticatedReq) requestBuilder() *internal.RequestB
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *UsersListEmailsForAuthenticatedReq) Rel(link RelName, resp *UsersListEmailsForAuthenticatedResponse) bool {
+func (r *UsersListEmailsForAuthenticatedReq) Rel(link string, resp *UsersListEmailsForAuthenticatedResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2476,7 +2476,7 @@ func (r *UsersListFollowedByAuthenticatedReq) requestBuilder() *internal.Request
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *UsersListFollowedByAuthenticatedReq) Rel(link RelName, resp *UsersListFollowedByAuthenticatedResponse) bool {
+func (r *UsersListFollowedByAuthenticatedReq) Rel(link string, resp *UsersListFollowedByAuthenticatedResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2599,7 +2599,7 @@ func (r *UsersListFollowersForAuthenticatedUserReq) requestBuilder() *internal.R
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *UsersListFollowersForAuthenticatedUserReq) Rel(link RelName, resp *UsersListFollowersForAuthenticatedUserResponse) bool {
+func (r *UsersListFollowersForAuthenticatedUserReq) Rel(link string, resp *UsersListFollowersForAuthenticatedUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2723,7 +2723,7 @@ func (r *UsersListFollowersForUserReq) requestBuilder() *internal.RequestBuilder
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *UsersListFollowersForUserReq) Rel(link RelName, resp *UsersListFollowersForUserResponse) bool {
+func (r *UsersListFollowersForUserReq) Rel(link string, resp *UsersListFollowersForUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2847,7 +2847,7 @@ func (r *UsersListFollowingForUserReq) requestBuilder() *internal.RequestBuilder
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *UsersListFollowingForUserReq) Rel(link RelName, resp *UsersListFollowingForUserResponse) bool {
+func (r *UsersListFollowingForUserReq) Rel(link string, resp *UsersListFollowingForUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2970,7 +2970,7 @@ func (r *UsersListGpgKeysForAuthenticatedReq) requestBuilder() *internal.Request
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *UsersListGpgKeysForAuthenticatedReq) Rel(link RelName, resp *UsersListGpgKeysForAuthenticatedResponse) bool {
+func (r *UsersListGpgKeysForAuthenticatedReq) Rel(link string, resp *UsersListGpgKeysForAuthenticatedResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3094,7 +3094,7 @@ func (r *UsersListGpgKeysForUserReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *UsersListGpgKeysForUserReq) Rel(link RelName, resp *UsersListGpgKeysForUserResponse) bool {
+func (r *UsersListGpgKeysForUserReq) Rel(link string, resp *UsersListGpgKeysForUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3217,7 +3217,7 @@ func (r *UsersListPublicEmailsForAuthenticatedReq) requestBuilder() *internal.Re
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *UsersListPublicEmailsForAuthenticatedReq) Rel(link RelName, resp *UsersListPublicEmailsForAuthenticatedResponse) bool {
+func (r *UsersListPublicEmailsForAuthenticatedReq) Rel(link string, resp *UsersListPublicEmailsForAuthenticatedResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3341,7 +3341,7 @@ func (r *UsersListPublicKeysForUserReq) requestBuilder() *internal.RequestBuilde
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *UsersListPublicKeysForUserReq) Rel(link RelName, resp *UsersListPublicKeysForUserResponse) bool {
+func (r *UsersListPublicKeysForUserReq) Rel(link string, resp *UsersListPublicKeysForUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3464,7 +3464,7 @@ func (r *UsersListPublicSshKeysForAuthenticatedReq) requestBuilder() *internal.R
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *UsersListPublicSshKeysForAuthenticatedReq) Rel(link RelName, resp *UsersListPublicSshKeysForAuthenticatedResponse) bool {
+func (r *UsersListPublicSshKeysForAuthenticatedReq) Rel(link string, resp *UsersListPublicSshKeysForAuthenticatedResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3579,7 +3579,7 @@ func (r *UsersSetPrimaryEmailVisibilityForAuthenticatedReq) requestBuilder() *in
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *UsersSetPrimaryEmailVisibilityForAuthenticatedReq) Rel(link RelName, resp *UsersSetPrimaryEmailVisibilityForAuthenticatedResponse) bool {
+func (r *UsersSetPrimaryEmailVisibilityForAuthenticatedReq) Rel(link string, resp *UsersSetPrimaryEmailVisibilityForAuthenticatedResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3704,7 +3704,7 @@ func (r *UsersUnblockReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *UsersUnblockReq) Rel(link RelName, resp *UsersUnblockResponse) bool {
+func (r *UsersUnblockReq) Rel(link string, resp *UsersUnblockResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3814,7 +3814,7 @@ func (r *UsersUnfollowReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *UsersUnfollowReq) Rel(link RelName, resp *UsersUnfollowResponse) bool {
+func (r *UsersUnfollowReq) Rel(link string, resp *UsersUnfollowResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3928,7 +3928,7 @@ func (r *UsersUpdateAuthenticatedReq) requestBuilder() *internal.RequestBuilder 
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *UsersUpdateAuthenticatedReq) Rel(link RelName, resp *UsersUpdateAuthenticatedResponse) bool {
+func (r *UsersUpdateAuthenticatedReq) Rel(link string, resp *UsersUpdateAuthenticatedResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false

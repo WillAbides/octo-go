@@ -104,7 +104,7 @@ func (r *MetaGetReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *MetaGetReq) Rel(link RelName, resp *MetaGetResponse) bool {
+func (r *MetaGetReq) Rel(link string, resp *MetaGetResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -217,7 +217,7 @@ func (r *MetaGetOctocatReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *MetaGetOctocatReq) Rel(link RelName, resp *MetaGetOctocatResponse) bool {
+func (r *MetaGetOctocatReq) Rel(link string, resp *MetaGetOctocatResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -322,7 +322,7 @@ func (r *MetaGetZenReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *MetaGetZenReq) Rel(link RelName, resp *MetaGetZenResponse) bool {
+func (r *MetaGetZenReq) Rel(link string, resp *MetaGetZenResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -428,7 +428,7 @@ func (r *MetaRootReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *MetaRootReq) Rel(link RelName, resp *MetaRootResponse) bool {
+func (r *MetaRootReq) Rel(link string, resp *MetaRootResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false

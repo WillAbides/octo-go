@@ -104,7 +104,7 @@ func (r *GitignoreGetAllTemplatesReq) requestBuilder() *internal.RequestBuilder 
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *GitignoreGetAllTemplatesReq) Rel(link RelName, resp *GitignoreGetAllTemplatesResponse) bool {
+func (r *GitignoreGetAllTemplatesReq) Rel(link string, resp *GitignoreGetAllTemplatesResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -225,7 +225,7 @@ func (r *GitignoreGetTemplateReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *GitignoreGetTemplateReq) Rel(link RelName, resp *GitignoreGetTemplateResponse) bool {
+func (r *GitignoreGetTemplateReq) Rel(link string, resp *GitignoreGetTemplateResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false

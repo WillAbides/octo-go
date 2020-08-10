@@ -109,7 +109,7 @@ func (r *CodeScanningGetAlertReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *CodeScanningGetAlertReq) Rel(link RelName, resp *CodeScanningGetAlertResponse) bool {
+func (r *CodeScanningGetAlertReq) Rel(link string, resp *CodeScanningGetAlertResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -237,7 +237,7 @@ func (r *CodeScanningListAlertsForRepoReq) requestBuilder() *internal.RequestBui
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *CodeScanningListAlertsForRepoReq) Rel(link RelName, resp *CodeScanningListAlertsForRepoResponse) bool {
+func (r *CodeScanningListAlertsForRepoReq) Rel(link string, resp *CodeScanningListAlertsForRepoResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false

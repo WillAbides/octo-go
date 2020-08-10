@@ -109,7 +109,7 @@ func (r *OauthAuthorizationsCreateAuthorizationReq) requestBuilder() *internal.R
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *OauthAuthorizationsCreateAuthorizationReq) Rel(link RelName, resp *OauthAuthorizationsCreateAuthorizationResponse) bool {
+func (r *OauthAuthorizationsCreateAuthorizationReq) Rel(link string, resp *OauthAuthorizationsCreateAuthorizationResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -248,7 +248,7 @@ func (r *OauthAuthorizationsDeleteAuthorizationReq) requestBuilder() *internal.R
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *OauthAuthorizationsDeleteAuthorizationReq) Rel(link RelName, resp *OauthAuthorizationsDeleteAuthorizationResponse) bool {
+func (r *OauthAuthorizationsDeleteAuthorizationReq) Rel(link string, resp *OauthAuthorizationsDeleteAuthorizationResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -360,7 +360,7 @@ func (r *OauthAuthorizationsDeleteGrantReq) requestBuilder() *internal.RequestBu
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *OauthAuthorizationsDeleteGrantReq) Rel(link RelName, resp *OauthAuthorizationsDeleteGrantResponse) bool {
+func (r *OauthAuthorizationsDeleteGrantReq) Rel(link string, resp *OauthAuthorizationsDeleteGrantResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -473,7 +473,7 @@ func (r *OauthAuthorizationsGetAuthorizationReq) requestBuilder() *internal.Requ
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *OauthAuthorizationsGetAuthorizationReq) Rel(link RelName, resp *OauthAuthorizationsGetAuthorizationResponse) bool {
+func (r *OauthAuthorizationsGetAuthorizationReq) Rel(link string, resp *OauthAuthorizationsGetAuthorizationResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -587,7 +587,7 @@ func (r *OauthAuthorizationsGetGrantReq) requestBuilder() *internal.RequestBuild
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *OauthAuthorizationsGetGrantReq) Rel(link RelName, resp *OauthAuthorizationsGetGrantResponse) bool {
+func (r *OauthAuthorizationsGetGrantReq) Rel(link string, resp *OauthAuthorizationsGetGrantResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -703,7 +703,7 @@ func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppReq) requestBuilder() 
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppReq) Rel(link RelName, resp *OauthAuthorizationsGetOrCreateAuthorizationForAppResponse) bool {
+func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppReq) Rel(link string, resp *OauthAuthorizationsGetOrCreateAuthorizationForAppResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -845,7 +845,7 @@ func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) req
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) Rel(link RelName, resp *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintResponse) bool {
+func (r *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintReq) Rel(link string, resp *OauthAuthorizationsGetOrCreateAuthorizationForAppAndFingerprintResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -988,7 +988,7 @@ func (r *OauthAuthorizationsListAuthorizationsReq) requestBuilder() *internal.Re
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *OauthAuthorizationsListAuthorizationsReq) Rel(link RelName, resp *OauthAuthorizationsListAuthorizationsResponse) bool {
+func (r *OauthAuthorizationsListAuthorizationsReq) Rel(link string, resp *OauthAuthorizationsListAuthorizationsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1111,7 +1111,7 @@ func (r *OauthAuthorizationsListGrantsReq) requestBuilder() *internal.RequestBui
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *OauthAuthorizationsListGrantsReq) Rel(link RelName, resp *OauthAuthorizationsListGrantsResponse) bool {
+func (r *OauthAuthorizationsListGrantsReq) Rel(link string, resp *OauthAuthorizationsListGrantsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1229,7 +1229,7 @@ func (r *OauthAuthorizationsUpdateAuthorizationReq) requestBuilder() *internal.R
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *OauthAuthorizationsUpdateAuthorizationReq) Rel(link RelName, resp *OauthAuthorizationsUpdateAuthorizationResponse) bool {
+func (r *OauthAuthorizationsUpdateAuthorizationReq) Rel(link string, resp *OauthAuthorizationsUpdateAuthorizationResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false

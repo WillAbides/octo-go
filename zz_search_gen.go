@@ -151,7 +151,7 @@ func (r *SearchCodeReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *SearchCodeReq) Rel(link RelName, resp *SearchCodeResponse) bool {
+func (r *SearchCodeReq) Rel(link string, resp *SearchCodeResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -328,7 +328,7 @@ func (r *SearchCommitsReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *SearchCommitsReq) Rel(link RelName, resp *SearchCommitsResponse) bool {
+func (r *SearchCommitsReq) Rel(link string, resp *SearchCommitsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -499,7 +499,7 @@ func (r *SearchIssuesAndPullRequestsReq) requestBuilder() *internal.RequestBuild
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *SearchIssuesAndPullRequestsReq) Rel(link RelName, resp *SearchIssuesAndPullRequestsResponse) bool {
+func (r *SearchIssuesAndPullRequestsReq) Rel(link string, resp *SearchIssuesAndPullRequestsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -657,7 +657,7 @@ func (r *SearchLabelsReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *SearchLabelsReq) Rel(link RelName, resp *SearchLabelsResponse) bool {
+func (r *SearchLabelsReq) Rel(link string, resp *SearchLabelsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -833,7 +833,7 @@ func (r *SearchReposReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *SearchReposReq) Rel(link RelName, resp *SearchReposResponse) bool {
+func (r *SearchReposReq) Rel(link string, resp *SearchReposResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -974,7 +974,7 @@ func (r *SearchTopicsReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *SearchTopicsReq) Rel(link RelName, resp *SearchTopicsResponse) bool {
+func (r *SearchTopicsReq) Rel(link string, resp *SearchTopicsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1142,7 +1142,7 @@ func (r *SearchUsersReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *SearchUsersReq) Rel(link RelName, resp *SearchUsersResponse) bool {
+func (r *SearchUsersReq) Rel(link string, resp *SearchUsersResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false

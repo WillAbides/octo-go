@@ -106,7 +106,7 @@ func (r *ActivityCheckRepoIsStarredByAuthenticatedUserReq) requestBuilder() *int
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActivityCheckRepoIsStarredByAuthenticatedUserReq) Rel(link RelName, resp *ActivityCheckRepoIsStarredByAuthenticatedUserResponse) bool {
+func (r *ActivityCheckRepoIsStarredByAuthenticatedUserReq) Rel(link string, resp *ActivityCheckRepoIsStarredByAuthenticatedUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -217,7 +217,7 @@ func (r *ActivityDeleteRepoSubscriptionReq) requestBuilder() *internal.RequestBu
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActivityDeleteRepoSubscriptionReq) Rel(link RelName, resp *ActivityDeleteRepoSubscriptionResponse) bool {
+func (r *ActivityDeleteRepoSubscriptionReq) Rel(link string, resp *ActivityDeleteRepoSubscriptionResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -329,7 +329,7 @@ func (r *ActivityDeleteThreadSubscriptionReq) requestBuilder() *internal.Request
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActivityDeleteThreadSubscriptionReq) Rel(link RelName, resp *ActivityDeleteThreadSubscriptionResponse) bool {
+func (r *ActivityDeleteThreadSubscriptionReq) Rel(link string, resp *ActivityDeleteThreadSubscriptionResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -439,7 +439,7 @@ func (r *ActivityGetFeedsReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActivityGetFeedsReq) Rel(link RelName, resp *ActivityGetFeedsResponse) bool {
+func (r *ActivityGetFeedsReq) Rel(link string, resp *ActivityGetFeedsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -552,7 +552,7 @@ func (r *ActivityGetRepoSubscriptionReq) requestBuilder() *internal.RequestBuild
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActivityGetRepoSubscriptionReq) Rel(link RelName, resp *ActivityGetRepoSubscriptionResponse) bool {
+func (r *ActivityGetRepoSubscriptionReq) Rel(link string, resp *ActivityGetRepoSubscriptionResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -666,7 +666,7 @@ func (r *ActivityGetThreadReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActivityGetThreadReq) Rel(link RelName, resp *ActivityGetThreadResponse) bool {
+func (r *ActivityGetThreadReq) Rel(link string, resp *ActivityGetThreadResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -780,7 +780,7 @@ func (r *ActivityGetThreadSubscriptionForAuthenticatedUserReq) requestBuilder() 
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActivityGetThreadSubscriptionForAuthenticatedUserReq) Rel(link RelName, resp *ActivityGetThreadSubscriptionForAuthenticatedUserResponse) bool {
+func (r *ActivityGetThreadSubscriptionForAuthenticatedUserReq) Rel(link string, resp *ActivityGetThreadSubscriptionForAuthenticatedUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -904,7 +904,7 @@ func (r *ActivityListEventsForAuthenticatedUserReq) requestBuilder() *internal.R
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActivityListEventsForAuthenticatedUserReq) Rel(link RelName, resp *ActivityListEventsForAuthenticatedUserResponse) bool {
+func (r *ActivityListEventsForAuthenticatedUserReq) Rel(link string, resp *ActivityListEventsForAuthenticatedUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1062,7 +1062,7 @@ func (r *ActivityListNotificationsForAuthenticatedUserReq) requestBuilder() *int
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActivityListNotificationsForAuthenticatedUserReq) Rel(link RelName, resp *ActivityListNotificationsForAuthenticatedUserResponse) bool {
+func (r *ActivityListNotificationsForAuthenticatedUserReq) Rel(link string, resp *ActivityListNotificationsForAuthenticatedUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1187,7 +1187,7 @@ func (r *ActivityListOrgEventsForAuthenticatedUserReq) requestBuilder() *interna
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActivityListOrgEventsForAuthenticatedUserReq) Rel(link RelName, resp *ActivityListOrgEventsForAuthenticatedUserResponse) bool {
+func (r *ActivityListOrgEventsForAuthenticatedUserReq) Rel(link string, resp *ActivityListOrgEventsForAuthenticatedUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1310,7 +1310,7 @@ func (r *ActivityListPublicEventsReq) requestBuilder() *internal.RequestBuilder 
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActivityListPublicEventsReq) Rel(link RelName, resp *ActivityListPublicEventsResponse) bool {
+func (r *ActivityListPublicEventsReq) Rel(link string, resp *ActivityListPublicEventsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1435,7 +1435,7 @@ func (r *ActivityListPublicEventsForRepoNetworkReq) requestBuilder() *internal.R
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActivityListPublicEventsForRepoNetworkReq) Rel(link RelName, resp *ActivityListPublicEventsForRepoNetworkResponse) bool {
+func (r *ActivityListPublicEventsForRepoNetworkReq) Rel(link string, resp *ActivityListPublicEventsForRepoNetworkResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1559,7 +1559,7 @@ func (r *ActivityListPublicEventsForUserReq) requestBuilder() *internal.RequestB
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActivityListPublicEventsForUserReq) Rel(link RelName, resp *ActivityListPublicEventsForUserResponse) bool {
+func (r *ActivityListPublicEventsForUserReq) Rel(link string, resp *ActivityListPublicEventsForUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1683,7 +1683,7 @@ func (r *ActivityListPublicOrgEventsReq) requestBuilder() *internal.RequestBuild
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActivityListPublicOrgEventsReq) Rel(link RelName, resp *ActivityListPublicOrgEventsResponse) bool {
+func (r *ActivityListPublicOrgEventsReq) Rel(link string, resp *ActivityListPublicOrgEventsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1807,7 +1807,7 @@ func (r *ActivityListReceivedEventsForUserReq) requestBuilder() *internal.Reques
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActivityListReceivedEventsForUserReq) Rel(link RelName, resp *ActivityListReceivedEventsForUserResponse) bool {
+func (r *ActivityListReceivedEventsForUserReq) Rel(link string, resp *ActivityListReceivedEventsForUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1931,7 +1931,7 @@ func (r *ActivityListReceivedPublicEventsForUserReq) requestBuilder() *internal.
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActivityListReceivedPublicEventsForUserReq) Rel(link RelName, resp *ActivityListReceivedPublicEventsForUserResponse) bool {
+func (r *ActivityListReceivedPublicEventsForUserReq) Rel(link string, resp *ActivityListReceivedPublicEventsForUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2056,7 +2056,7 @@ func (r *ActivityListRepoEventsReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActivityListRepoEventsReq) Rel(link RelName, resp *ActivityListRepoEventsResponse) bool {
+func (r *ActivityListRepoEventsReq) Rel(link string, resp *ActivityListRepoEventsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2216,7 +2216,7 @@ func (r *ActivityListRepoNotificationsForAuthenticatedUserReq) requestBuilder() 
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActivityListRepoNotificationsForAuthenticatedUserReq) Rel(link RelName, resp *ActivityListRepoNotificationsForAuthenticatedUserResponse) bool {
+func (r *ActivityListRepoNotificationsForAuthenticatedUserReq) Rel(link string, resp *ActivityListRepoNotificationsForAuthenticatedUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2354,7 +2354,7 @@ func (r *ActivityListReposStarredByAuthenticatedUserReq) requestBuilder() *inter
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActivityListReposStarredByAuthenticatedUserReq) Rel(link RelName, resp *ActivityListReposStarredByAuthenticatedUserResponse) bool {
+func (r *ActivityListReposStarredByAuthenticatedUserReq) Rel(link string, resp *ActivityListReposStarredByAuthenticatedUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2493,7 +2493,7 @@ func (r *ActivityListReposStarredByUserReq) requestBuilder() *internal.RequestBu
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActivityListReposStarredByUserReq) Rel(link RelName, resp *ActivityListReposStarredByUserResponse) bool {
+func (r *ActivityListReposStarredByUserReq) Rel(link string, resp *ActivityListReposStarredByUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2617,7 +2617,7 @@ func (r *ActivityListReposWatchedByUserReq) requestBuilder() *internal.RequestBu
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActivityListReposWatchedByUserReq) Rel(link RelName, resp *ActivityListReposWatchedByUserResponse) bool {
+func (r *ActivityListReposWatchedByUserReq) Rel(link string, resp *ActivityListReposWatchedByUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2742,7 +2742,7 @@ func (r *ActivityListStargazersForRepoReq) requestBuilder() *internal.RequestBui
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActivityListStargazersForRepoReq) Rel(link RelName, resp *ActivityListStargazersForRepoResponse) bool {
+func (r *ActivityListStargazersForRepoReq) Rel(link string, resp *ActivityListStargazersForRepoResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2865,7 +2865,7 @@ func (r *ActivityListWatchedReposForAuthenticatedUserReq) requestBuilder() *inte
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActivityListWatchedReposForAuthenticatedUserReq) Rel(link RelName, resp *ActivityListWatchedReposForAuthenticatedUserResponse) bool {
+func (r *ActivityListWatchedReposForAuthenticatedUserReq) Rel(link string, resp *ActivityListWatchedReposForAuthenticatedUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2990,7 +2990,7 @@ func (r *ActivityListWatchersForRepoReq) requestBuilder() *internal.RequestBuild
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActivityListWatchersForRepoReq) Rel(link RelName, resp *ActivityListWatchersForRepoResponse) bool {
+func (r *ActivityListWatchersForRepoReq) Rel(link string, resp *ActivityListWatchersForRepoResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3105,7 +3105,7 @@ func (r *ActivityMarkNotificationsAsReadReq) requestBuilder() *internal.RequestB
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActivityMarkNotificationsAsReadReq) Rel(link RelName, resp *ActivityMarkNotificationsAsReadResponse) bool {
+func (r *ActivityMarkNotificationsAsReadReq) Rel(link string, resp *ActivityMarkNotificationsAsReadResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3241,7 +3241,7 @@ func (r *ActivityMarkRepoNotificationsAsReadReq) requestBuilder() *internal.Requ
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActivityMarkRepoNotificationsAsReadReq) Rel(link RelName, resp *ActivityMarkRepoNotificationsAsReadResponse) bool {
+func (r *ActivityMarkRepoNotificationsAsReadReq) Rel(link string, resp *ActivityMarkRepoNotificationsAsReadResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3370,7 +3370,7 @@ func (r *ActivityMarkThreadAsReadReq) requestBuilder() *internal.RequestBuilder 
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActivityMarkThreadAsReadReq) Rel(link RelName, resp *ActivityMarkThreadAsReadResponse) bool {
+func (r *ActivityMarkThreadAsReadReq) Rel(link string, resp *ActivityMarkThreadAsReadResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3486,7 +3486,7 @@ func (r *ActivitySetRepoSubscriptionReq) requestBuilder() *internal.RequestBuild
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActivitySetRepoSubscriptionReq) Rel(link RelName, resp *ActivitySetRepoSubscriptionResponse) bool {
+func (r *ActivitySetRepoSubscriptionReq) Rel(link string, resp *ActivitySetRepoSubscriptionResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3618,7 +3618,7 @@ func (r *ActivitySetThreadSubscriptionReq) requestBuilder() *internal.RequestBui
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActivitySetThreadSubscriptionReq) Rel(link RelName, resp *ActivitySetThreadSubscriptionResponse) bool {
+func (r *ActivitySetThreadSubscriptionReq) Rel(link string, resp *ActivitySetThreadSubscriptionResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3741,7 +3741,7 @@ func (r *ActivityStarRepoForAuthenticatedUserReq) requestBuilder() *internal.Req
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActivityStarRepoForAuthenticatedUserReq) Rel(link RelName, resp *ActivityStarRepoForAuthenticatedUserResponse) bool {
+func (r *ActivityStarRepoForAuthenticatedUserReq) Rel(link string, resp *ActivityStarRepoForAuthenticatedUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3852,7 +3852,7 @@ func (r *ActivityUnstarRepoForAuthenticatedUserReq) requestBuilder() *internal.R
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActivityUnstarRepoForAuthenticatedUserReq) Rel(link RelName, resp *ActivityUnstarRepoForAuthenticatedUserResponse) bool {
+func (r *ActivityUnstarRepoForAuthenticatedUserReq) Rel(link string, resp *ActivityUnstarRepoForAuthenticatedUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false

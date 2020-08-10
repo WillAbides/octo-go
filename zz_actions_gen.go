@@ -111,7 +111,7 @@ func (r *ActionsAddSelectedRepoToOrgSecretReq) requestBuilder() *internal.Reques
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActionsAddSelectedRepoToOrgSecretReq) Rel(link RelName, resp *ActionsAddSelectedRepoToOrgSecretResponse) bool {
+func (r *ActionsAddSelectedRepoToOrgSecretReq) Rel(link string, resp *ActionsAddSelectedRepoToOrgSecretResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -223,7 +223,7 @@ func (r *ActionsCancelWorkflowRunReq) requestBuilder() *internal.RequestBuilder 
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActionsCancelWorkflowRunReq) Rel(link RelName, resp *ActionsCancelWorkflowRunResponse) bool {
+func (r *ActionsCancelWorkflowRunReq) Rel(link string, resp *ActionsCancelWorkflowRunResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -337,7 +337,7 @@ func (r *ActionsCreateOrUpdateOrgSecretReq) requestBuilder() *internal.RequestBu
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActionsCreateOrUpdateOrgSecretReq) Rel(link RelName, resp *ActionsCreateOrUpdateOrgSecretResponse) bool {
+func (r *ActionsCreateOrUpdateOrgSecretReq) Rel(link string, resp *ActionsCreateOrUpdateOrgSecretResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -495,7 +495,7 @@ func (r *ActionsCreateOrUpdateRepoSecretReq) requestBuilder() *internal.RequestB
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActionsCreateOrUpdateRepoSecretReq) Rel(link RelName, resp *ActionsCreateOrUpdateRepoSecretResponse) bool {
+func (r *ActionsCreateOrUpdateRepoSecretReq) Rel(link string, resp *ActionsCreateOrUpdateRepoSecretResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -626,7 +626,7 @@ func (r *ActionsCreateRegistrationTokenForOrgReq) requestBuilder() *internal.Req
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActionsCreateRegistrationTokenForOrgReq) Rel(link RelName, resp *ActionsCreateRegistrationTokenForOrgResponse) bool {
+func (r *ActionsCreateRegistrationTokenForOrgReq) Rel(link string, resp *ActionsCreateRegistrationTokenForOrgResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -739,7 +739,7 @@ func (r *ActionsCreateRegistrationTokenForRepoReq) requestBuilder() *internal.Re
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActionsCreateRegistrationTokenForRepoReq) Rel(link RelName, resp *ActionsCreateRegistrationTokenForRepoResponse) bool {
+func (r *ActionsCreateRegistrationTokenForRepoReq) Rel(link string, resp *ActionsCreateRegistrationTokenForRepoResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -851,7 +851,7 @@ func (r *ActionsCreateRemoveTokenForOrgReq) requestBuilder() *internal.RequestBu
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActionsCreateRemoveTokenForOrgReq) Rel(link RelName, resp *ActionsCreateRemoveTokenForOrgResponse) bool {
+func (r *ActionsCreateRemoveTokenForOrgReq) Rel(link string, resp *ActionsCreateRemoveTokenForOrgResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -964,7 +964,7 @@ func (r *ActionsCreateRemoveTokenForRepoReq) requestBuilder() *internal.RequestB
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActionsCreateRemoveTokenForRepoReq) Rel(link RelName, resp *ActionsCreateRemoveTokenForRepoResponse) bool {
+func (r *ActionsCreateRemoveTokenForRepoReq) Rel(link string, resp *ActionsCreateRemoveTokenForRepoResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1078,7 +1078,7 @@ func (r *ActionsCreateWorkflowDispatchReq) requestBuilder() *internal.RequestBui
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActionsCreateWorkflowDispatchReq) Rel(link RelName, resp *ActionsCreateWorkflowDispatchResponse) bool {
+func (r *ActionsCreateWorkflowDispatchReq) Rel(link string, resp *ActionsCreateWorkflowDispatchResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1210,7 +1210,7 @@ func (r *ActionsDeleteArtifactReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActionsDeleteArtifactReq) Rel(link RelName, resp *ActionsDeleteArtifactResponse) bool {
+func (r *ActionsDeleteArtifactReq) Rel(link string, resp *ActionsDeleteArtifactResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1323,7 +1323,7 @@ func (r *ActionsDeleteOrgSecretReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActionsDeleteOrgSecretReq) Rel(link RelName, resp *ActionsDeleteOrgSecretResponse) bool {
+func (r *ActionsDeleteOrgSecretReq) Rel(link string, resp *ActionsDeleteOrgSecretResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1437,7 +1437,7 @@ func (r *ActionsDeleteRepoSecretReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActionsDeleteRepoSecretReq) Rel(link RelName, resp *ActionsDeleteRepoSecretResponse) bool {
+func (r *ActionsDeleteRepoSecretReq) Rel(link string, resp *ActionsDeleteRepoSecretResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1550,7 +1550,7 @@ func (r *ActionsDeleteSelfHostedRunnerFromOrgReq) requestBuilder() *internal.Req
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActionsDeleteSelfHostedRunnerFromOrgReq) Rel(link RelName, resp *ActionsDeleteSelfHostedRunnerFromOrgResponse) bool {
+func (r *ActionsDeleteSelfHostedRunnerFromOrgReq) Rel(link string, resp *ActionsDeleteSelfHostedRunnerFromOrgResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1664,7 +1664,7 @@ func (r *ActionsDeleteSelfHostedRunnerFromRepoReq) requestBuilder() *internal.Re
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActionsDeleteSelfHostedRunnerFromRepoReq) Rel(link RelName, resp *ActionsDeleteSelfHostedRunnerFromRepoResponse) bool {
+func (r *ActionsDeleteSelfHostedRunnerFromRepoReq) Rel(link string, resp *ActionsDeleteSelfHostedRunnerFromRepoResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1776,7 +1776,7 @@ func (r *ActionsDeleteWorkflowRunReq) requestBuilder() *internal.RequestBuilder 
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActionsDeleteWorkflowRunReq) Rel(link RelName, resp *ActionsDeleteWorkflowRunResponse) bool {
+func (r *ActionsDeleteWorkflowRunReq) Rel(link string, resp *ActionsDeleteWorkflowRunResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1888,7 +1888,7 @@ func (r *ActionsDeleteWorkflowRunLogsReq) requestBuilder() *internal.RequestBuil
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActionsDeleteWorkflowRunLogsReq) Rel(link RelName, resp *ActionsDeleteWorkflowRunLogsResponse) bool {
+func (r *ActionsDeleteWorkflowRunLogsReq) Rel(link string, resp *ActionsDeleteWorkflowRunLogsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2005,7 +2005,7 @@ func (r *ActionsDownloadArtifactReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActionsDownloadArtifactReq) Rel(link RelName, resp *ActionsDownloadArtifactResponse) bool {
+func (r *ActionsDownloadArtifactReq) Rel(link string, resp *ActionsDownloadArtifactResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2119,7 +2119,7 @@ func (r *ActionsDownloadJobLogsForWorkflowRunReq) requestBuilder() *internal.Req
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActionsDownloadJobLogsForWorkflowRunReq) Rel(link RelName, resp *ActionsDownloadJobLogsForWorkflowRunResponse) bool {
+func (r *ActionsDownloadJobLogsForWorkflowRunReq) Rel(link string, resp *ActionsDownloadJobLogsForWorkflowRunResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2231,7 +2231,7 @@ func (r *ActionsDownloadWorkflowRunLogsReq) requestBuilder() *internal.RequestBu
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActionsDownloadWorkflowRunLogsReq) Rel(link RelName, resp *ActionsDownloadWorkflowRunLogsResponse) bool {
+func (r *ActionsDownloadWorkflowRunLogsReq) Rel(link string, resp *ActionsDownloadWorkflowRunLogsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2346,7 +2346,7 @@ func (r *ActionsGetArtifactReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActionsGetArtifactReq) Rel(link RelName, resp *ActionsGetArtifactResponse) bool {
+func (r *ActionsGetArtifactReq) Rel(link string, resp *ActionsGetArtifactResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2462,7 +2462,7 @@ func (r *ActionsGetJobForWorkflowRunReq) requestBuilder() *internal.RequestBuild
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActionsGetJobForWorkflowRunReq) Rel(link RelName, resp *ActionsGetJobForWorkflowRunResponse) bool {
+func (r *ActionsGetJobForWorkflowRunReq) Rel(link string, resp *ActionsGetJobForWorkflowRunResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2574,7 +2574,7 @@ func (r *ActionsGetOrgPublicKeyReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActionsGetOrgPublicKeyReq) Rel(link RelName, resp *ActionsGetOrgPublicKeyResponse) bool {
+func (r *ActionsGetOrgPublicKeyReq) Rel(link string, resp *ActionsGetOrgPublicKeyResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2689,7 +2689,7 @@ func (r *ActionsGetOrgSecretReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActionsGetOrgSecretReq) Rel(link RelName, resp *ActionsGetOrgSecretResponse) bool {
+func (r *ActionsGetOrgSecretReq) Rel(link string, resp *ActionsGetOrgSecretResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2802,7 +2802,7 @@ func (r *ActionsGetRepoPublicKeyReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActionsGetRepoPublicKeyReq) Rel(link RelName, resp *ActionsGetRepoPublicKeyResponse) bool {
+func (r *ActionsGetRepoPublicKeyReq) Rel(link string, resp *ActionsGetRepoPublicKeyResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2918,7 +2918,7 @@ func (r *ActionsGetRepoSecretReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActionsGetRepoSecretReq) Rel(link RelName, resp *ActionsGetRepoSecretResponse) bool {
+func (r *ActionsGetRepoSecretReq) Rel(link string, resp *ActionsGetRepoSecretResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3033,7 +3033,7 @@ func (r *ActionsGetSelfHostedRunnerForOrgReq) requestBuilder() *internal.Request
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActionsGetSelfHostedRunnerForOrgReq) Rel(link RelName, resp *ActionsGetSelfHostedRunnerForOrgResponse) bool {
+func (r *ActionsGetSelfHostedRunnerForOrgReq) Rel(link string, resp *ActionsGetSelfHostedRunnerForOrgResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3149,7 +3149,7 @@ func (r *ActionsGetSelfHostedRunnerForRepoReq) requestBuilder() *internal.Reques
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActionsGetSelfHostedRunnerForRepoReq) Rel(link RelName, resp *ActionsGetSelfHostedRunnerForRepoResponse) bool {
+func (r *ActionsGetSelfHostedRunnerForRepoReq) Rel(link string, resp *ActionsGetSelfHostedRunnerForRepoResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3263,7 +3263,7 @@ func (r *ActionsGetWorkflowReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActionsGetWorkflowReq) Rel(link RelName, resp *ActionsGetWorkflowResponse) bool {
+func (r *ActionsGetWorkflowReq) Rel(link string, resp *ActionsGetWorkflowResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3377,7 +3377,7 @@ func (r *ActionsGetWorkflowRunReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActionsGetWorkflowRunReq) Rel(link RelName, resp *ActionsGetWorkflowRunResponse) bool {
+func (r *ActionsGetWorkflowRunReq) Rel(link string, resp *ActionsGetWorkflowRunResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3491,7 +3491,7 @@ func (r *ActionsGetWorkflowRunUsageReq) requestBuilder() *internal.RequestBuilde
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActionsGetWorkflowRunUsageReq) Rel(link RelName, resp *ActionsGetWorkflowRunUsageResponse) bool {
+func (r *ActionsGetWorkflowRunUsageReq) Rel(link string, resp *ActionsGetWorkflowRunUsageResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3605,7 +3605,7 @@ func (r *ActionsGetWorkflowUsageReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActionsGetWorkflowUsageReq) Rel(link RelName, resp *ActionsGetWorkflowUsageResponse) bool {
+func (r *ActionsGetWorkflowUsageReq) Rel(link string, resp *ActionsGetWorkflowUsageResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3730,7 +3730,7 @@ func (r *ActionsListArtifactsForRepoReq) requestBuilder() *internal.RequestBuild
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActionsListArtifactsForRepoReq) Rel(link RelName, resp *ActionsListArtifactsForRepoResponse) bool {
+func (r *ActionsListArtifactsForRepoReq) Rel(link string, resp *ActionsListArtifactsForRepoResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3877,7 +3877,7 @@ func (r *ActionsListJobsForWorkflowRunReq) requestBuilder() *internal.RequestBui
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActionsListJobsForWorkflowRunReq) Rel(link RelName, resp *ActionsListJobsForWorkflowRunResponse) bool {
+func (r *ActionsListJobsForWorkflowRunReq) Rel(link string, resp *ActionsListJobsForWorkflowRunResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -4011,7 +4011,7 @@ func (r *ActionsListOrgSecretsReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActionsListOrgSecretsReq) Rel(link RelName, resp *ActionsListOrgSecretsResponse) bool {
+func (r *ActionsListOrgSecretsReq) Rel(link string, resp *ActionsListOrgSecretsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -4146,7 +4146,7 @@ func (r *ActionsListRepoSecretsReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActionsListRepoSecretsReq) Rel(link RelName, resp *ActionsListRepoSecretsResponse) bool {
+func (r *ActionsListRepoSecretsReq) Rel(link string, resp *ActionsListRepoSecretsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -4281,7 +4281,7 @@ func (r *ActionsListRepoWorkflowsReq) requestBuilder() *internal.RequestBuilder 
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActionsListRepoWorkflowsReq) Rel(link RelName, resp *ActionsListRepoWorkflowsResponse) bool {
+func (r *ActionsListRepoWorkflowsReq) Rel(link string, resp *ActionsListRepoWorkflowsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -4403,7 +4403,7 @@ func (r *ActionsListRunnerApplicationsForOrgReq) requestBuilder() *internal.Requ
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActionsListRunnerApplicationsForOrgReq) Rel(link RelName, resp *ActionsListRunnerApplicationsForOrgResponse) bool {
+func (r *ActionsListRunnerApplicationsForOrgReq) Rel(link string, resp *ActionsListRunnerApplicationsForOrgResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -4516,7 +4516,7 @@ func (r *ActionsListRunnerApplicationsForRepoReq) requestBuilder() *internal.Req
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActionsListRunnerApplicationsForRepoReq) Rel(link RelName, resp *ActionsListRunnerApplicationsForRepoResponse) bool {
+func (r *ActionsListRunnerApplicationsForRepoReq) Rel(link string, resp *ActionsListRunnerApplicationsForRepoResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -4631,7 +4631,7 @@ func (r *ActionsListSelectedReposForOrgSecretReq) requestBuilder() *internal.Req
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActionsListSelectedReposForOrgSecretReq) Rel(link RelName, resp *ActionsListSelectedReposForOrgSecretResponse) bool {
+func (r *ActionsListSelectedReposForOrgSecretReq) Rel(link string, resp *ActionsListSelectedReposForOrgSecretResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -4765,7 +4765,7 @@ func (r *ActionsListSelfHostedRunnersForOrgReq) requestBuilder() *internal.Reque
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActionsListSelfHostedRunnersForOrgReq) Rel(link RelName, resp *ActionsListSelfHostedRunnersForOrgResponse) bool {
+func (r *ActionsListSelfHostedRunnersForOrgReq) Rel(link string, resp *ActionsListSelfHostedRunnersForOrgResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -4900,7 +4900,7 @@ func (r *ActionsListSelfHostedRunnersForRepoReq) requestBuilder() *internal.Requ
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActionsListSelfHostedRunnersForRepoReq) Rel(link RelName, resp *ActionsListSelfHostedRunnersForRepoResponse) bool {
+func (r *ActionsListSelfHostedRunnersForRepoReq) Rel(link string, resp *ActionsListSelfHostedRunnersForRepoResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -5036,7 +5036,7 @@ func (r *ActionsListWorkflowRunArtifactsReq) requestBuilder() *internal.RequestB
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActionsListWorkflowRunArtifactsReq) Rel(link RelName, resp *ActionsListWorkflowRunArtifactsResponse) bool {
+func (r *ActionsListWorkflowRunArtifactsReq) Rel(link string, resp *ActionsListWorkflowRunArtifactsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -5212,7 +5212,7 @@ func (r *ActionsListWorkflowRunsReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActionsListWorkflowRunsReq) Rel(link RelName, resp *ActionsListWorkflowRunsResponse) bool {
+func (r *ActionsListWorkflowRunsReq) Rel(link string, resp *ActionsListWorkflowRunsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -5387,7 +5387,7 @@ func (r *ActionsListWorkflowRunsForRepoReq) requestBuilder() *internal.RequestBu
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActionsListWorkflowRunsForRepoReq) Rel(link RelName, resp *ActionsListWorkflowRunsForRepoResponse) bool {
+func (r *ActionsListWorkflowRunsForRepoReq) Rel(link string, resp *ActionsListWorkflowRunsForRepoResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -5510,7 +5510,7 @@ func (r *ActionsReRunWorkflowReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActionsReRunWorkflowReq) Rel(link RelName, resp *ActionsReRunWorkflowResponse) bool {
+func (r *ActionsReRunWorkflowReq) Rel(link string, resp *ActionsReRunWorkflowResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -5626,7 +5626,7 @@ func (r *ActionsRemoveSelectedRepoFromOrgSecretReq) requestBuilder() *internal.R
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActionsRemoveSelectedRepoFromOrgSecretReq) Rel(link RelName, resp *ActionsRemoveSelectedRepoFromOrgSecretResponse) bool {
+func (r *ActionsRemoveSelectedRepoFromOrgSecretReq) Rel(link string, resp *ActionsRemoveSelectedRepoFromOrgSecretResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -5740,7 +5740,7 @@ func (r *ActionsSetSelectedReposForOrgSecretReq) requestBuilder() *internal.Requ
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ActionsSetSelectedReposForOrgSecretReq) Rel(link RelName, resp *ActionsSetSelectedReposForOrgSecretResponse) bool {
+func (r *ActionsSetSelectedReposForOrgSecretReq) Rel(link string, resp *ActionsSetSelectedReposForOrgSecretResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false

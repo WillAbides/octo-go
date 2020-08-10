@@ -107,7 +107,7 @@ func (r *BillingGetGithubActionsBillingGheReq) requestBuilder() *internal.Reques
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *BillingGetGithubActionsBillingGheReq) Rel(link RelName, resp *BillingGetGithubActionsBillingGheResponse) bool {
+func (r *BillingGetGithubActionsBillingGheReq) Rel(link string, resp *BillingGetGithubActionsBillingGheResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -219,7 +219,7 @@ func (r *BillingGetGithubActionsBillingOrgReq) requestBuilder() *internal.Reques
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *BillingGetGithubActionsBillingOrgReq) Rel(link RelName, resp *BillingGetGithubActionsBillingOrgResponse) bool {
+func (r *BillingGetGithubActionsBillingOrgReq) Rel(link string, resp *BillingGetGithubActionsBillingOrgResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -331,7 +331,7 @@ func (r *BillingGetGithubActionsBillingUserReq) requestBuilder() *internal.Reque
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *BillingGetGithubActionsBillingUserReq) Rel(link RelName, resp *BillingGetGithubActionsBillingUserResponse) bool {
+func (r *BillingGetGithubActionsBillingUserReq) Rel(link string, resp *BillingGetGithubActionsBillingUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -445,7 +445,7 @@ func (r *BillingGetGithubPackagesBillingGheReq) requestBuilder() *internal.Reque
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *BillingGetGithubPackagesBillingGheReq) Rel(link RelName, resp *BillingGetGithubPackagesBillingGheResponse) bool {
+func (r *BillingGetGithubPackagesBillingGheReq) Rel(link string, resp *BillingGetGithubPackagesBillingGheResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -557,7 +557,7 @@ func (r *BillingGetGithubPackagesBillingOrgReq) requestBuilder() *internal.Reque
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *BillingGetGithubPackagesBillingOrgReq) Rel(link RelName, resp *BillingGetGithubPackagesBillingOrgResponse) bool {
+func (r *BillingGetGithubPackagesBillingOrgReq) Rel(link string, resp *BillingGetGithubPackagesBillingOrgResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -669,7 +669,7 @@ func (r *BillingGetGithubPackagesBillingUserReq) requestBuilder() *internal.Requ
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *BillingGetGithubPackagesBillingUserReq) Rel(link RelName, resp *BillingGetGithubPackagesBillingUserResponse) bool {
+func (r *BillingGetGithubPackagesBillingUserReq) Rel(link string, resp *BillingGetGithubPackagesBillingUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -783,7 +783,7 @@ func (r *BillingGetSharedStorageBillingGheReq) requestBuilder() *internal.Reques
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *BillingGetSharedStorageBillingGheReq) Rel(link RelName, resp *BillingGetSharedStorageBillingGheResponse) bool {
+func (r *BillingGetSharedStorageBillingGheReq) Rel(link string, resp *BillingGetSharedStorageBillingGheResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -895,7 +895,7 @@ func (r *BillingGetSharedStorageBillingOrgReq) requestBuilder() *internal.Reques
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *BillingGetSharedStorageBillingOrgReq) Rel(link RelName, resp *BillingGetSharedStorageBillingOrgResponse) bool {
+func (r *BillingGetSharedStorageBillingOrgReq) Rel(link string, resp *BillingGetSharedStorageBillingOrgResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1007,7 +1007,7 @@ func (r *BillingGetSharedStorageBillingUserReq) requestBuilder() *internal.Reque
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *BillingGetSharedStorageBillingUserReq) Rel(link RelName, resp *BillingGetSharedStorageBillingUserResponse) bool {
+func (r *BillingGetSharedStorageBillingUserReq) Rel(link string, resp *BillingGetSharedStorageBillingUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false

@@ -120,7 +120,7 @@ func (r *ChecksCreateReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ChecksCreateReq) Rel(link RelName, resp *ChecksCreateResponse) bool {
+func (r *ChecksCreateReq) Rel(link string, resp *ChecksCreateResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -424,7 +424,7 @@ func (r *ChecksCreateSuiteReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ChecksCreateSuiteReq) Rel(link RelName, resp *ChecksCreateSuiteResponse) bool {
+func (r *ChecksCreateSuiteReq) Rel(link string, resp *ChecksCreateSuiteResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -560,7 +560,7 @@ func (r *ChecksGetReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ChecksGetReq) Rel(link RelName, resp *ChecksGetResponse) bool {
+func (r *ChecksGetReq) Rel(link string, resp *ChecksGetResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -685,7 +685,7 @@ func (r *ChecksGetSuiteReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ChecksGetSuiteReq) Rel(link RelName, resp *ChecksGetSuiteResponse) bool {
+func (r *ChecksGetSuiteReq) Rel(link string, resp *ChecksGetSuiteResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -822,7 +822,7 @@ func (r *ChecksListAnnotationsReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ChecksListAnnotationsReq) Rel(link RelName, resp *ChecksListAnnotationsResponse) bool {
+func (r *ChecksListAnnotationsReq) Rel(link string, resp *ChecksListAnnotationsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -983,7 +983,7 @@ func (r *ChecksListForRefReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ChecksListForRefReq) Rel(link RelName, resp *ChecksListForRefResponse) bool {
+func (r *ChecksListForRefReq) Rel(link string, resp *ChecksListForRefResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1154,7 +1154,7 @@ func (r *ChecksListForSuiteReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ChecksListForSuiteReq) Rel(link RelName, resp *ChecksListForSuiteResponse) bool {
+func (r *ChecksListForSuiteReq) Rel(link string, resp *ChecksListForSuiteResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1313,7 +1313,7 @@ func (r *ChecksListSuitesForRefReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ChecksListSuitesForRefReq) Rel(link RelName, resp *ChecksListSuitesForRefResponse) bool {
+func (r *ChecksListSuitesForRefReq) Rel(link string, resp *ChecksListSuitesForRefResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1447,7 +1447,7 @@ func (r *ChecksRerequestSuiteReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ChecksRerequestSuiteReq) Rel(link RelName, resp *ChecksRerequestSuiteResponse) bool {
+func (r *ChecksRerequestSuiteReq) Rel(link string, resp *ChecksRerequestSuiteResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1572,7 +1572,7 @@ func (r *ChecksSetSuitesPreferencesReq) requestBuilder() *internal.RequestBuilde
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ChecksSetSuitesPreferencesReq) Rel(link RelName, resp *ChecksSetSuitesPreferencesResponse) bool {
+func (r *ChecksSetSuitesPreferencesReq) Rel(link string, resp *ChecksSetSuitesPreferencesResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1730,7 +1730,7 @@ func (r *ChecksUpdateReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ChecksUpdateReq) Rel(link RelName, resp *ChecksUpdateResponse) bool {
+func (r *ChecksUpdateReq) Rel(link string, resp *ChecksUpdateResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false

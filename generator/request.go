@@ -88,7 +88,7 @@ func reqRelReqFunc(file *jen.File, endpoint *model.Endpoint, pq pkgQual) {
 	comment := `Rel updates this request to point to a relative link from resp. Returns false if the link does not exist. Handy for paging.`
 	file.Comment(wordwrap.WrapString(comment, 80))
 	file.Func().Params(jen.Id("r").Id("*"+structName)).Id("Rel").Params(
-		jen.Id("link RelName"),
+		jen.Id("link string"),
 		jen.Id("resp").Op("*").Id(respStructName(endpoint)),
 	).Params(jen.Bool()).Block(
 		jen.Id("u := resp.RelLink(string(link))"),

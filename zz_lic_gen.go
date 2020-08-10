@@ -108,7 +108,7 @@ func (r *LicensesGetReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *LicensesGetReq) Rel(link RelName, resp *LicensesGetResponse) bool {
+func (r *LicensesGetReq) Rel(link string, resp *LicensesGetResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -229,7 +229,7 @@ func (r *LicensesGetAllCommonlyUsedReq) requestBuilder() *internal.RequestBuilde
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *LicensesGetAllCommonlyUsedReq) Rel(link RelName, resp *LicensesGetAllCommonlyUsedResponse) bool {
+func (r *LicensesGetAllCommonlyUsedReq) Rel(link string, resp *LicensesGetAllCommonlyUsedResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -342,7 +342,7 @@ func (r *LicensesGetForRepoReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *LicensesGetForRepoReq) Rel(link RelName, resp *LicensesGetForRepoResponse) bool {
+func (r *LicensesGetForRepoReq) Rel(link string, resp *LicensesGetForRepoResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false

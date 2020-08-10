@@ -104,7 +104,7 @@ func (r *MarkdownRenderReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *MarkdownRenderReq) Rel(link RelName, resp *MarkdownRenderResponse) bool {
+func (r *MarkdownRenderReq) Rel(link string, resp *MarkdownRenderResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -233,7 +233,7 @@ func (r *MarkdownRenderRawReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *MarkdownRenderRawReq) Rel(link RelName, resp *MarkdownRenderRawResponse) bool {
+func (r *MarkdownRenderRawReq) Rel(link string, resp *MarkdownRenderRawResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false

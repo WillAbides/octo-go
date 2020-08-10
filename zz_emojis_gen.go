@@ -103,7 +103,7 @@ func (r *EmojisGetReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *EmojisGetReq) Rel(link RelName, resp *EmojisGetResponse) bool {
+func (r *EmojisGetReq) Rel(link string, resp *EmojisGetResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false

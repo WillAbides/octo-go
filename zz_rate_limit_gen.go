@@ -104,7 +104,7 @@ func (r *RateLimitGetReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *RateLimitGetReq) Rel(link RelName, resp *RateLimitGetResponse) bool {
+func (r *RateLimitGetReq) Rel(link string, resp *RateLimitGetResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false

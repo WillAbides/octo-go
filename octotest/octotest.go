@@ -144,15 +144,15 @@ func JSONResponder(statusCode int, body interface{}) *HTTPResponder {
 	}
 }
 
-// RelLinkHandler adds a rel link to a common. This is useful for testing paging through results.
-func RelLinkHandler(relName octo.RelName, handler http.Handler, relLinkRequester HTTPRequester, server *Server) http.HandlerFunc {
+// RelLinkHandler adds a rel link to a response. This is useful for testing paging through results.
+func RelLinkHandler(relName string, handler http.Handler, relLinkRequester HTTPRequester, server *Server) http.HandlerFunc {
 	relReq, err := relLinkRequester.HTTPRequest(context.Background(), server.Client()...)
 	if err != nil {
 		panic(fmt.Sprintf("error from relLinkRequester.HTTPRequest(ctx): %v", err))
 	}
 	linkURL := relReq.URL.String()
 	return func(w http.ResponseWriter, req *http.Request) {
-		w.Header().Add("Link", fmt.Sprintf(`<%s>; rel="%s"`, linkURL, string(relName)))
+		w.Header().Add("Link", fmt.Sprintf(`<%s>; rel="%s"`, linkURL, relName))
 		handler.ServeHTTP(w, req)
 	}
 }

@@ -111,7 +111,7 @@ func (r *PullsCheckIfMergedReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *PullsCheckIfMergedReq) Rel(link RelName, resp *PullsCheckIfMergedResponse) bool {
+func (r *PullsCheckIfMergedReq) Rel(link string, resp *PullsCheckIfMergedResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -238,7 +238,7 @@ func (r *PullsCreateReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *PullsCreateReq) Rel(link RelName, resp *PullsCreateResponse) bool {
+func (r *PullsCreateReq) Rel(link string, resp *PullsCreateResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -402,7 +402,7 @@ func (r *PullsCreateReplyForReviewCommentReq) requestBuilder() *internal.Request
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *PullsCreateReplyForReviewCommentReq) Rel(link RelName, resp *PullsCreateReplyForReviewCommentResponse) bool {
+func (r *PullsCreateReplyForReviewCommentReq) Rel(link string, resp *PullsCreateReplyForReviewCommentResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -531,7 +531,7 @@ func (r *PullsCreateReviewReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *PullsCreateReviewReq) Rel(link RelName, resp *PullsCreateReviewResponse) bool {
+func (r *PullsCreateReviewReq) Rel(link string, resp *PullsCreateReviewResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -711,7 +711,7 @@ func (r *PullsCreateReviewCommentReq) requestBuilder() *internal.RequestBuilder 
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *PullsCreateReviewCommentReq) Rel(link RelName, resp *PullsCreateReviewCommentResponse) bool {
+func (r *PullsCreateReviewCommentReq) Rel(link string, resp *PullsCreateReviewCommentResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -897,7 +897,7 @@ func (r *PullsDeletePendingReviewReq) requestBuilder() *internal.RequestBuilder 
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *PullsDeletePendingReviewReq) Rel(link RelName, resp *PullsDeletePendingReviewResponse) bool {
+func (r *PullsDeletePendingReviewReq) Rel(link string, resp *PullsDeletePendingReviewResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1016,7 +1016,7 @@ func (r *PullsDeleteReviewCommentReq) requestBuilder() *internal.RequestBuilder 
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *PullsDeleteReviewCommentReq) Rel(link RelName, resp *PullsDeleteReviewCommentResponse) bool {
+func (r *PullsDeleteReviewCommentReq) Rel(link string, resp *PullsDeleteReviewCommentResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1137,7 +1137,7 @@ func (r *PullsDismissReviewReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *PullsDismissReviewReq) Rel(link RelName, resp *PullsDismissReviewResponse) bool {
+func (r *PullsDismissReviewReq) Rel(link string, resp *PullsDismissReviewResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1273,7 +1273,7 @@ func (r *PullsGetReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *PullsGetReq) Rel(link RelName, resp *PullsGetResponse) bool {
+func (r *PullsGetReq) Rel(link string, resp *PullsGetResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1390,7 +1390,7 @@ func (r *PullsGetReviewReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *PullsGetReviewReq) Rel(link RelName, resp *PullsGetReviewResponse) bool {
+func (r *PullsGetReviewReq) Rel(link string, resp *PullsGetReviewResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1527,7 +1527,7 @@ func (r *PullsGetReviewCommentReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *PullsGetReviewCommentReq) Rel(link RelName, resp *PullsGetReviewCommentResponse) bool {
+func (r *PullsGetReviewCommentReq) Rel(link string, resp *PullsGetReviewCommentResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1703,7 +1703,7 @@ func (r *PullsListReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *PullsListReq) Rel(link RelName, resp *PullsListResponse) bool {
+func (r *PullsListReq) Rel(link string, resp *PullsListResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1832,7 +1832,7 @@ func (r *PullsListCommentsForReviewReq) requestBuilder() *internal.RequestBuilde
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *PullsListCommentsForReviewReq) Rel(link RelName, resp *PullsListCommentsForReviewResponse) bool {
+func (r *PullsListCommentsForReviewReq) Rel(link string, resp *PullsListCommentsForReviewResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1958,7 +1958,7 @@ func (r *PullsListCommitsReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *PullsListCommitsReq) Rel(link RelName, resp *PullsListCommitsResponse) bool {
+func (r *PullsListCommitsReq) Rel(link string, resp *PullsListCommitsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2084,7 +2084,7 @@ func (r *PullsListFilesReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *PullsListFilesReq) Rel(link RelName, resp *PullsListFilesResponse) bool {
+func (r *PullsListFilesReq) Rel(link string, resp *PullsListFilesResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2210,7 +2210,7 @@ func (r *PullsListRequestedReviewersReq) requestBuilder() *internal.RequestBuild
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *PullsListRequestedReviewersReq) Rel(link RelName, resp *PullsListRequestedReviewersResponse) bool {
+func (r *PullsListRequestedReviewersReq) Rel(link string, resp *PullsListRequestedReviewersResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2382,7 +2382,7 @@ func (r *PullsListReviewCommentsReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *PullsListReviewCommentsReq) Rel(link RelName, resp *PullsListReviewCommentsResponse) bool {
+func (r *PullsListReviewCommentsReq) Rel(link string, resp *PullsListReviewCommentsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2553,7 +2553,7 @@ func (r *PullsListReviewCommentsForRepoReq) requestBuilder() *internal.RequestBu
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *PullsListReviewCommentsForRepoReq) Rel(link RelName, resp *PullsListReviewCommentsForRepoResponse) bool {
+func (r *PullsListReviewCommentsForRepoReq) Rel(link string, resp *PullsListReviewCommentsForRepoResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2679,7 +2679,7 @@ func (r *PullsListReviewsReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *PullsListReviewsReq) Rel(link RelName, resp *PullsListReviewsResponse) bool {
+func (r *PullsListReviewsReq) Rel(link string, resp *PullsListReviewsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2797,7 +2797,7 @@ func (r *PullsMergeReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *PullsMergeReq) Rel(link RelName, resp *PullsMergeResponse) bool {
+func (r *PullsMergeReq) Rel(link string, resp *PullsMergeResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2931,7 +2931,7 @@ func (r *PullsRemoveRequestedReviewersReq) requestBuilder() *internal.RequestBui
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *PullsRemoveRequestedReviewersReq) Rel(link RelName, resp *PullsRemoveRequestedReviewersResponse) bool {
+func (r *PullsRemoveRequestedReviewersReq) Rel(link string, resp *PullsRemoveRequestedReviewersResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3062,7 +3062,7 @@ func (r *PullsRequestReviewersReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *PullsRequestReviewersReq) Rel(link RelName, resp *PullsRequestReviewersResponse) bool {
+func (r *PullsRequestReviewersReq) Rel(link string, resp *PullsRequestReviewersResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3197,7 +3197,7 @@ func (r *PullsSubmitReviewReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *PullsSubmitReviewReq) Rel(link RelName, resp *PullsSubmitReviewResponse) bool {
+func (r *PullsSubmitReviewReq) Rel(link string, resp *PullsSubmitReviewResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3345,7 +3345,7 @@ func (r *PullsUpdateReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *PullsUpdateReq) Rel(link RelName, resp *PullsUpdateResponse) bool {
+func (r *PullsUpdateReq) Rel(link string, resp *PullsUpdateResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3501,7 +3501,7 @@ func (r *PullsUpdateBranchReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *PullsUpdateBranchReq) Rel(link RelName, resp *PullsUpdateBranchResponse) bool {
+func (r *PullsUpdateBranchReq) Rel(link string, resp *PullsUpdateBranchResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3651,7 +3651,7 @@ func (r *PullsUpdateReviewReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *PullsUpdateReviewReq) Rel(link RelName, resp *PullsUpdateReviewResponse) bool {
+func (r *PullsUpdateReviewReq) Rel(link string, resp *PullsUpdateReviewResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3789,7 +3789,7 @@ func (r *PullsUpdateReviewCommentReq) requestBuilder() *internal.RequestBuilder 
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *PullsUpdateReviewCommentReq) Rel(link RelName, resp *PullsUpdateReviewCommentResponse) bool {
+func (r *PullsUpdateReviewCommentReq) Rel(link string, resp *PullsUpdateReviewCommentResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false

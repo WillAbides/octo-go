@@ -111,7 +111,7 @@ func (r *CodesOfConductGetAllCodesOfConductReq) requestBuilder() *internal.Reque
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *CodesOfConductGetAllCodesOfConductReq) Rel(link RelName, resp *CodesOfConductGetAllCodesOfConductResponse) bool {
+func (r *CodesOfConductGetAllCodesOfConductReq) Rel(link string, resp *CodesOfConductGetAllCodesOfConductResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -232,7 +232,7 @@ func (r *CodesOfConductGetConductCodeReq) requestBuilder() *internal.RequestBuil
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *CodesOfConductGetConductCodeReq) Rel(link RelName, resp *CodesOfConductGetConductCodeResponse) bool {
+func (r *CodesOfConductGetConductCodeReq) Rel(link string, resp *CodesOfConductGetConductCodeResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -352,7 +352,7 @@ func (r *CodesOfConductGetForRepoReq) requestBuilder() *internal.RequestBuilder 
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *CodesOfConductGetForRepoReq) Rel(link RelName, resp *CodesOfConductGetForRepoResponse) bool {
+func (r *CodesOfConductGetForRepoReq) Rel(link string, resp *CodesOfConductGetForRepoResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false

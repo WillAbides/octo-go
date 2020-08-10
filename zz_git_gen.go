@@ -111,7 +111,7 @@ func (r *GitCreateBlobReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *GitCreateBlobReq) Rel(link RelName, resp *GitCreateBlobResponse) bool {
+func (r *GitCreateBlobReq) Rel(link string, resp *GitCreateBlobResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -242,7 +242,7 @@ func (r *GitCreateCommitReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *GitCreateCommitReq) Rel(link RelName, resp *GitCreateCommitResponse) bool {
+func (r *GitCreateCommitReq) Rel(link string, resp *GitCreateCommitResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -442,7 +442,7 @@ func (r *GitCreateRefReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *GitCreateRefReq) Rel(link RelName, resp *GitCreateRefResponse) bool {
+func (r *GitCreateRefReq) Rel(link string, resp *GitCreateRefResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -577,7 +577,7 @@ func (r *GitCreateTagReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *GitCreateTagReq) Rel(link RelName, resp *GitCreateTagResponse) bool {
+func (r *GitCreateTagReq) Rel(link string, resp *GitCreateTagResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -733,7 +733,7 @@ func (r *GitCreateTreeReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *GitCreateTreeReq) Rel(link RelName, resp *GitCreateTreeResponse) bool {
+func (r *GitCreateTreeReq) Rel(link string, resp *GitCreateTreeResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -901,7 +901,7 @@ func (r *GitDeleteRefReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *GitDeleteRefReq) Rel(link RelName, resp *GitDeleteRefResponse) bool {
+func (r *GitDeleteRefReq) Rel(link string, resp *GitDeleteRefResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1016,7 +1016,7 @@ func (r *GitGetBlobReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *GitGetBlobReq) Rel(link RelName, resp *GitGetBlobResponse) bool {
+func (r *GitGetBlobReq) Rel(link string, resp *GitGetBlobResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1132,7 +1132,7 @@ func (r *GitGetCommitReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *GitGetCommitReq) Rel(link RelName, resp *GitGetCommitResponse) bool {
+func (r *GitGetCommitReq) Rel(link string, resp *GitGetCommitResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1248,7 +1248,7 @@ func (r *GitGetRefReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *GitGetRefReq) Rel(link RelName, resp *GitGetRefResponse) bool {
+func (r *GitGetRefReq) Rel(link string, resp *GitGetRefResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1364,7 +1364,7 @@ func (r *GitGetTagReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *GitGetTagReq) Rel(link RelName, resp *GitGetTagResponse) bool {
+func (r *GitGetTagReq) Rel(link string, resp *GitGetTagResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1492,7 +1492,7 @@ func (r *GitGetTreeReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *GitGetTreeReq) Rel(link RelName, resp *GitGetTreeResponse) bool {
+func (r *GitGetTreeReq) Rel(link string, resp *GitGetTreeResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1620,7 +1620,7 @@ func (r *GitListMatchingRefsReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *GitListMatchingRefsReq) Rel(link RelName, resp *GitListMatchingRefsResponse) bool {
+func (r *GitListMatchingRefsReq) Rel(link string, resp *GitListMatchingRefsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1740,7 +1740,7 @@ func (r *GitUpdateRefReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *GitUpdateRefReq) Rel(link RelName, resp *GitUpdateRefResponse) bool {
+func (r *GitUpdateRefReq) Rel(link string, resp *GitUpdateRefResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false

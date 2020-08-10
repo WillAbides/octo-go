@@ -125,7 +125,7 @@ func (r *ReactionsCreateForCommitCommentReq) requestBuilder() *internal.RequestB
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReactionsCreateForCommitCommentReq) Rel(link RelName, resp *ReactionsCreateForCommitCommentResponse) bool {
+func (r *ReactionsCreateForCommitCommentReq) Rel(link string, resp *ReactionsCreateForCommitCommentResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -267,7 +267,7 @@ func (r *ReactionsCreateForIssueReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReactionsCreateForIssueReq) Rel(link RelName, resp *ReactionsCreateForIssueResponse) bool {
+func (r *ReactionsCreateForIssueReq) Rel(link string, resp *ReactionsCreateForIssueResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -409,7 +409,7 @@ func (r *ReactionsCreateForIssueCommentReq) requestBuilder() *internal.RequestBu
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReactionsCreateForIssueCommentReq) Rel(link RelName, resp *ReactionsCreateForIssueCommentResponse) bool {
+func (r *ReactionsCreateForIssueCommentReq) Rel(link string, resp *ReactionsCreateForIssueCommentResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -551,7 +551,7 @@ func (r *ReactionsCreateForPullRequestReviewCommentReq) requestBuilder() *intern
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReactionsCreateForPullRequestReviewCommentReq) Rel(link RelName, resp *ReactionsCreateForPullRequestReviewCommentResponse) bool {
+func (r *ReactionsCreateForPullRequestReviewCommentReq) Rel(link string, resp *ReactionsCreateForPullRequestReviewCommentResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -697,7 +697,7 @@ func (r *ReactionsCreateForTeamDiscussionCommentInOrgReq) requestBuilder() *inte
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReactionsCreateForTeamDiscussionCommentInOrgReq) Rel(link RelName, resp *ReactionsCreateForTeamDiscussionCommentInOrgResponse) bool {
+func (r *ReactionsCreateForTeamDiscussionCommentInOrgReq) Rel(link string, resp *ReactionsCreateForTeamDiscussionCommentInOrgResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -837,7 +837,7 @@ func (r *ReactionsCreateForTeamDiscussionCommentLegacyReq) requestBuilder() *int
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReactionsCreateForTeamDiscussionCommentLegacyReq) Rel(link RelName, resp *ReactionsCreateForTeamDiscussionCommentLegacyResponse) bool {
+func (r *ReactionsCreateForTeamDiscussionCommentLegacyReq) Rel(link string, resp *ReactionsCreateForTeamDiscussionCommentLegacyResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -979,7 +979,7 @@ func (r *ReactionsCreateForTeamDiscussionInOrgReq) requestBuilder() *internal.Re
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReactionsCreateForTeamDiscussionInOrgReq) Rel(link RelName, resp *ReactionsCreateForTeamDiscussionInOrgResponse) bool {
+func (r *ReactionsCreateForTeamDiscussionInOrgReq) Rel(link string, resp *ReactionsCreateForTeamDiscussionInOrgResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1118,7 +1118,7 @@ func (r *ReactionsCreateForTeamDiscussionLegacyReq) requestBuilder() *internal.R
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReactionsCreateForTeamDiscussionLegacyReq) Rel(link RelName, resp *ReactionsCreateForTeamDiscussionLegacyResponse) bool {
+func (r *ReactionsCreateForTeamDiscussionLegacyReq) Rel(link string, resp *ReactionsCreateForTeamDiscussionLegacyResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1256,7 +1256,7 @@ func (r *ReactionsDeleteForCommitCommentReq) requestBuilder() *internal.RequestB
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReactionsDeleteForCommitCommentReq) Rel(link RelName, resp *ReactionsDeleteForCommitCommentResponse) bool {
+func (r *ReactionsDeleteForCommitCommentReq) Rel(link string, resp *ReactionsDeleteForCommitCommentResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1382,7 +1382,7 @@ func (r *ReactionsDeleteForIssueReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReactionsDeleteForIssueReq) Rel(link RelName, resp *ReactionsDeleteForIssueResponse) bool {
+func (r *ReactionsDeleteForIssueReq) Rel(link string, resp *ReactionsDeleteForIssueResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1508,7 +1508,7 @@ func (r *ReactionsDeleteForIssueCommentReq) requestBuilder() *internal.RequestBu
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReactionsDeleteForIssueCommentReq) Rel(link RelName, resp *ReactionsDeleteForIssueCommentResponse) bool {
+func (r *ReactionsDeleteForIssueCommentReq) Rel(link string, resp *ReactionsDeleteForIssueCommentResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1634,7 +1634,7 @@ func (r *ReactionsDeleteForPullRequestCommentReq) requestBuilder() *internal.Req
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReactionsDeleteForPullRequestCommentReq) Rel(link RelName, resp *ReactionsDeleteForPullRequestCommentResponse) bool {
+func (r *ReactionsDeleteForPullRequestCommentReq) Rel(link string, resp *ReactionsDeleteForPullRequestCommentResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1760,7 +1760,7 @@ func (r *ReactionsDeleteForTeamDiscussionReq) requestBuilder() *internal.Request
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReactionsDeleteForTeamDiscussionReq) Rel(link RelName, resp *ReactionsDeleteForTeamDiscussionResponse) bool {
+func (r *ReactionsDeleteForTeamDiscussionReq) Rel(link string, resp *ReactionsDeleteForTeamDiscussionResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1887,7 +1887,7 @@ func (r *ReactionsDeleteForTeamDiscussionCommentReq) requestBuilder() *internal.
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReactionsDeleteForTeamDiscussionCommentReq) Rel(link RelName, resp *ReactionsDeleteForTeamDiscussionCommentResponse) bool {
+func (r *ReactionsDeleteForTeamDiscussionCommentReq) Rel(link string, resp *ReactionsDeleteForTeamDiscussionCommentResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2008,7 +2008,7 @@ func (r *ReactionsDeleteLegacyReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReactionsDeleteLegacyReq) Rel(link RelName, resp *ReactionsDeleteLegacyResponse) bool {
+func (r *ReactionsDeleteLegacyReq) Rel(link string, resp *ReactionsDeleteLegacyResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2156,7 +2156,7 @@ func (r *ReactionsListForCommitCommentReq) requestBuilder() *internal.RequestBui
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReactionsListForCommitCommentReq) Rel(link RelName, resp *ReactionsListForCommitCommentResponse) bool {
+func (r *ReactionsListForCommitCommentReq) Rel(link string, resp *ReactionsListForCommitCommentResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2305,7 +2305,7 @@ func (r *ReactionsListForIssueReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReactionsListForIssueReq) Rel(link RelName, resp *ReactionsListForIssueResponse) bool {
+func (r *ReactionsListForIssueReq) Rel(link string, resp *ReactionsListForIssueResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2454,7 +2454,7 @@ func (r *ReactionsListForIssueCommentReq) requestBuilder() *internal.RequestBuil
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReactionsListForIssueCommentReq) Rel(link RelName, resp *ReactionsListForIssueCommentResponse) bool {
+func (r *ReactionsListForIssueCommentReq) Rel(link string, resp *ReactionsListForIssueCommentResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2603,7 +2603,7 @@ func (r *ReactionsListForPullRequestReviewCommentReq) requestBuilder() *internal
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReactionsListForPullRequestReviewCommentReq) Rel(link RelName, resp *ReactionsListForPullRequestReviewCommentResponse) bool {
+func (r *ReactionsListForPullRequestReviewCommentReq) Rel(link string, resp *ReactionsListForPullRequestReviewCommentResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2753,7 +2753,7 @@ func (r *ReactionsListForTeamDiscussionCommentInOrgReq) requestBuilder() *intern
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReactionsListForTeamDiscussionCommentInOrgReq) Rel(link RelName, resp *ReactionsListForTeamDiscussionCommentInOrgResponse) bool {
+func (r *ReactionsListForTeamDiscussionCommentInOrgReq) Rel(link string, resp *ReactionsListForTeamDiscussionCommentInOrgResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2900,7 +2900,7 @@ func (r *ReactionsListForTeamDiscussionCommentLegacyReq) requestBuilder() *inter
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReactionsListForTeamDiscussionCommentLegacyReq) Rel(link RelName, resp *ReactionsListForTeamDiscussionCommentLegacyResponse) bool {
+func (r *ReactionsListForTeamDiscussionCommentLegacyReq) Rel(link string, resp *ReactionsListForTeamDiscussionCommentLegacyResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3049,7 +3049,7 @@ func (r *ReactionsListForTeamDiscussionInOrgReq) requestBuilder() *internal.Requ
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReactionsListForTeamDiscussionInOrgReq) Rel(link RelName, resp *ReactionsListForTeamDiscussionInOrgResponse) bool {
+func (r *ReactionsListForTeamDiscussionInOrgReq) Rel(link string, resp *ReactionsListForTeamDiscussionInOrgResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3195,7 +3195,7 @@ func (r *ReactionsListForTeamDiscussionLegacyReq) requestBuilder() *internal.Req
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReactionsListForTeamDiscussionLegacyReq) Rel(link RelName, resp *ReactionsListForTeamDiscussionLegacyResponse) bool {
+func (r *ReactionsListForTeamDiscussionLegacyReq) Rel(link string, resp *ReactionsListForTeamDiscussionLegacyResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false

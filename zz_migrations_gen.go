@@ -106,7 +106,7 @@ func (r *MigrationsCancelImportReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *MigrationsCancelImportReq) Rel(link RelName, resp *MigrationsCancelImportResponse) bool {
+func (r *MigrationsCancelImportReq) Rel(link string, resp *MigrationsCancelImportResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -221,7 +221,7 @@ func (r *MigrationsDeleteArchiveForAuthenticatedUserReq) requestBuilder() *inter
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *MigrationsDeleteArchiveForAuthenticatedUserReq) Rel(link RelName, resp *MigrationsDeleteArchiveForAuthenticatedUserResponse) bool {
+func (r *MigrationsDeleteArchiveForAuthenticatedUserReq) Rel(link string, resp *MigrationsDeleteArchiveForAuthenticatedUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -341,7 +341,7 @@ func (r *MigrationsDeleteArchiveForOrgReq) requestBuilder() *internal.RequestBui
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *MigrationsDeleteArchiveForOrgReq) Rel(link RelName, resp *MigrationsDeleteArchiveForOrgResponse) bool {
+func (r *MigrationsDeleteArchiveForOrgReq) Rel(link string, resp *MigrationsDeleteArchiveForOrgResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -458,7 +458,7 @@ func (r *MigrationsDownloadArchiveForOrgReq) requestBuilder() *internal.RequestB
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *MigrationsDownloadArchiveForOrgReq) Rel(link RelName, resp *MigrationsDownloadArchiveForOrgResponse) bool {
+func (r *MigrationsDownloadArchiveForOrgReq) Rel(link string, resp *MigrationsDownloadArchiveForOrgResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -573,7 +573,7 @@ func (r *MigrationsGetArchiveForAuthenticatedUserReq) requestBuilder() *internal
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *MigrationsGetArchiveForAuthenticatedUserReq) Rel(link RelName, resp *MigrationsGetArchiveForAuthenticatedUserResponse) bool {
+func (r *MigrationsGetArchiveForAuthenticatedUserReq) Rel(link string, resp *MigrationsGetArchiveForAuthenticatedUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -695,7 +695,7 @@ func (r *MigrationsGetCommitAuthorsReq) requestBuilder() *internal.RequestBuilde
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *MigrationsGetCommitAuthorsReq) Rel(link RelName, resp *MigrationsGetCommitAuthorsResponse) bool {
+func (r *MigrationsGetCommitAuthorsReq) Rel(link string, resp *MigrationsGetCommitAuthorsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -808,7 +808,7 @@ func (r *MigrationsGetImportStatusReq) requestBuilder() *internal.RequestBuilder
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *MigrationsGetImportStatusReq) Rel(link RelName, resp *MigrationsGetImportStatusResponse) bool {
+func (r *MigrationsGetImportStatusReq) Rel(link string, resp *MigrationsGetImportStatusResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -921,7 +921,7 @@ func (r *MigrationsGetLargeFilesReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *MigrationsGetLargeFilesReq) Rel(link RelName, resp *MigrationsGetLargeFilesResponse) bool {
+func (r *MigrationsGetLargeFilesReq) Rel(link string, resp *MigrationsGetLargeFilesResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1038,7 +1038,7 @@ func (r *MigrationsGetStatusForAuthenticatedUserReq) requestBuilder() *internal.
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *MigrationsGetStatusForAuthenticatedUserReq) Rel(link RelName, resp *MigrationsGetStatusForAuthenticatedUserResponse) bool {
+func (r *MigrationsGetStatusForAuthenticatedUserReq) Rel(link string, resp *MigrationsGetStatusForAuthenticatedUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1156,7 +1156,7 @@ func (r *MigrationsGetStatusForOrgReq) requestBuilder() *internal.RequestBuilder
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *MigrationsGetStatusForOrgReq) Rel(link RelName, resp *MigrationsGetStatusForOrgResponse) bool {
+func (r *MigrationsGetStatusForOrgReq) Rel(link string, resp *MigrationsGetStatusForOrgResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1282,7 +1282,7 @@ func (r *MigrationsListForAuthenticatedUserReq) requestBuilder() *internal.Reque
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *MigrationsListForAuthenticatedUserReq) Rel(link RelName, resp *MigrationsListForAuthenticatedUserResponse) bool {
+func (r *MigrationsListForAuthenticatedUserReq) Rel(link string, resp *MigrationsListForAuthenticatedUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1409,7 +1409,7 @@ func (r *MigrationsListForOrgReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *MigrationsListForOrgReq) Rel(link RelName, resp *MigrationsListForOrgResponse) bool {
+func (r *MigrationsListForOrgReq) Rel(link string, resp *MigrationsListForOrgResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1539,7 +1539,7 @@ func (r *MigrationsListReposForOrgReq) requestBuilder() *internal.RequestBuilder
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *MigrationsListReposForOrgReq) Rel(link RelName, resp *MigrationsListReposForOrgResponse) bool {
+func (r *MigrationsListReposForOrgReq) Rel(link string, resp *MigrationsListReposForOrgResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1668,7 +1668,7 @@ func (r *MigrationsListReposForUserReq) requestBuilder() *internal.RequestBuilde
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *MigrationsListReposForUserReq) Rel(link RelName, resp *MigrationsListReposForUserResponse) bool {
+func (r *MigrationsListReposForUserReq) Rel(link string, resp *MigrationsListReposForUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1788,7 +1788,7 @@ func (r *MigrationsMapCommitAuthorReq) requestBuilder() *internal.RequestBuilder
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *MigrationsMapCommitAuthorReq) Rel(link RelName, resp *MigrationsMapCommitAuthorResponse) bool {
+func (r *MigrationsMapCommitAuthorReq) Rel(link string, resp *MigrationsMapCommitAuthorResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1920,7 +1920,7 @@ func (r *MigrationsSetLfsPreferenceReq) requestBuilder() *internal.RequestBuilde
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *MigrationsSetLfsPreferenceReq) Rel(link RelName, resp *MigrationsSetLfsPreferenceResponse) bool {
+func (r *MigrationsSetLfsPreferenceReq) Rel(link string, resp *MigrationsSetLfsPreferenceResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2049,7 +2049,7 @@ func (r *MigrationsStartForAuthenticatedUserReq) requestBuilder() *internal.Requ
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *MigrationsStartForAuthenticatedUserReq) Rel(link RelName, resp *MigrationsStartForAuthenticatedUserResponse) bool {
+func (r *MigrationsStartForAuthenticatedUserReq) Rel(link string, resp *MigrationsStartForAuthenticatedUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2183,7 +2183,7 @@ func (r *MigrationsStartForOrgReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *MigrationsStartForOrgReq) Rel(link RelName, resp *MigrationsStartForOrgResponse) bool {
+func (r *MigrationsStartForOrgReq) Rel(link string, resp *MigrationsStartForOrgResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2318,7 +2318,7 @@ func (r *MigrationsStartImportReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *MigrationsStartImportReq) Rel(link RelName, resp *MigrationsStartImportResponse) bool {
+func (r *MigrationsStartImportReq) Rel(link string, resp *MigrationsStartImportResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2465,7 +2465,7 @@ func (r *MigrationsUnlockRepoForAuthenticatedUserReq) requestBuilder() *internal
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *MigrationsUnlockRepoForAuthenticatedUserReq) Rel(link RelName, resp *MigrationsUnlockRepoForAuthenticatedUserResponse) bool {
+func (r *MigrationsUnlockRepoForAuthenticatedUserReq) Rel(link string, resp *MigrationsUnlockRepoForAuthenticatedUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2588,7 +2588,7 @@ func (r *MigrationsUnlockRepoForOrgReq) requestBuilder() *internal.RequestBuilde
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *MigrationsUnlockRepoForOrgReq) Rel(link RelName, resp *MigrationsUnlockRepoForOrgResponse) bool {
+func (r *MigrationsUnlockRepoForOrgReq) Rel(link string, resp *MigrationsUnlockRepoForOrgResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2705,7 +2705,7 @@ func (r *MigrationsUpdateImportReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *MigrationsUpdateImportReq) Rel(link RelName, resp *MigrationsUpdateImportResponse) bool {
+func (r *MigrationsUpdateImportReq) Rel(link string, resp *MigrationsUpdateImportResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false

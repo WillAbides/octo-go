@@ -109,7 +109,7 @@ func (r *ReposAcceptInvitationReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposAcceptInvitationReq) Rel(link RelName, resp *ReposAcceptInvitationResponse) bool {
+func (r *ReposAcceptInvitationReq) Rel(link string, resp *ReposAcceptInvitationResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -228,7 +228,7 @@ func (r *ReposAddAppAccessRestrictionsReq) requestBuilder() *internal.RequestBui
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposAddAppAccessRestrictionsReq) Rel(link RelName, resp *ReposAddAppAccessRestrictionsResponse) bool {
+func (r *ReposAddAppAccessRestrictionsReq) Rel(link string, resp *ReposAddAppAccessRestrictionsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -353,7 +353,7 @@ func (r *ReposAddCollaboratorReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposAddCollaboratorReq) Rel(link RelName, resp *ReposAddCollaboratorResponse) bool {
+func (r *ReposAddCollaboratorReq) Rel(link string, resp *ReposAddCollaboratorResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -495,7 +495,7 @@ func (r *ReposAddStatusCheckContextsReq) requestBuilder() *internal.RequestBuild
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposAddStatusCheckContextsReq) Rel(link RelName, resp *ReposAddStatusCheckContextsResponse) bool {
+func (r *ReposAddStatusCheckContextsReq) Rel(link string, resp *ReposAddStatusCheckContextsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -629,7 +629,7 @@ func (r *ReposAddTeamAccessRestrictionsReq) requestBuilder() *internal.RequestBu
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposAddTeamAccessRestrictionsReq) Rel(link RelName, resp *ReposAddTeamAccessRestrictionsResponse) bool {
+func (r *ReposAddTeamAccessRestrictionsReq) Rel(link string, resp *ReposAddTeamAccessRestrictionsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -756,7 +756,7 @@ func (r *ReposAddUserAccessRestrictionsReq) requestBuilder() *internal.RequestBu
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposAddUserAccessRestrictionsReq) Rel(link RelName, resp *ReposAddUserAccessRestrictionsResponse) bool {
+func (r *ReposAddUserAccessRestrictionsReq) Rel(link string, resp *ReposAddUserAccessRestrictionsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -880,7 +880,7 @@ func (r *ReposCheckCollaboratorReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposCheckCollaboratorReq) Rel(link RelName, resp *ReposCheckCollaboratorResponse) bool {
+func (r *ReposCheckCollaboratorReq) Rel(link string, resp *ReposCheckCollaboratorResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1003,7 +1003,7 @@ func (r *ReposCheckVulnerabilityAlertsReq) requestBuilder() *internal.RequestBui
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposCheckVulnerabilityAlertsReq) Rel(link RelName, resp *ReposCheckVulnerabilityAlertsResponse) bool {
+func (r *ReposCheckVulnerabilityAlertsReq) Rel(link string, resp *ReposCheckVulnerabilityAlertsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1122,7 +1122,7 @@ func (r *ReposCompareCommitsReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposCompareCommitsReq) Rel(link RelName, resp *ReposCompareCommitsResponse) bool {
+func (r *ReposCompareCommitsReq) Rel(link string, resp *ReposCompareCommitsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1242,7 +1242,7 @@ func (r *ReposCreateCommitCommentReq) requestBuilder() *internal.RequestBuilder 
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposCreateCommitCommentReq) Rel(link RelName, resp *ReposCreateCommitCommentResponse) bool {
+func (r *ReposCreateCommitCommentReq) Rel(link string, resp *ReposCreateCommitCommentResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1387,7 +1387,7 @@ func (r *ReposCreateCommitSignatureProtectionReq) requestBuilder() *internal.Req
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposCreateCommitSignatureProtectionReq) Rel(link RelName, resp *ReposCreateCommitSignatureProtectionResponse) bool {
+func (r *ReposCreateCommitSignatureProtectionReq) Rel(link string, resp *ReposCreateCommitSignatureProtectionResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1507,7 +1507,7 @@ func (r *ReposCreateCommitStatusReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposCreateCommitStatusReq) Rel(link RelName, resp *ReposCreateCommitStatusResponse) bool {
+func (r *ReposCreateCommitStatusReq) Rel(link string, resp *ReposCreateCommitStatusResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1650,7 +1650,7 @@ func (r *ReposCreateDeployKeyReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposCreateDeployKeyReq) Rel(link RelName, resp *ReposCreateDeployKeyResponse) bool {
+func (r *ReposCreateDeployKeyReq) Rel(link string, resp *ReposCreateDeployKeyResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1805,7 +1805,7 @@ func (r *ReposCreateDeploymentReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposCreateDeploymentReq) Rel(link RelName, resp *ReposCreateDeploymentResponse) bool {
+func (r *ReposCreateDeploymentReq) Rel(link string, resp *ReposCreateDeploymentResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2006,7 +2006,7 @@ func (r *ReposCreateDeploymentStatusReq) requestBuilder() *internal.RequestBuild
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposCreateDeploymentStatusReq) Rel(link RelName, resp *ReposCreateDeploymentStatusResponse) bool {
+func (r *ReposCreateDeploymentStatusReq) Rel(link string, resp *ReposCreateDeploymentStatusResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2198,7 +2198,7 @@ func (r *ReposCreateDispatchEventReq) requestBuilder() *internal.RequestBuilder 
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposCreateDispatchEventReq) Rel(link RelName, resp *ReposCreateDispatchEventResponse) bool {
+func (r *ReposCreateDispatchEventReq) Rel(link string, resp *ReposCreateDispatchEventResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2350,7 +2350,7 @@ func (r *ReposCreateForAuthenticatedUserReq) requestBuilder() *internal.RequestB
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposCreateForAuthenticatedUserReq) Rel(link RelName, resp *ReposCreateForAuthenticatedUserResponse) bool {
+func (r *ReposCreateForAuthenticatedUserReq) Rel(link string, resp *ReposCreateForAuthenticatedUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2529,7 +2529,7 @@ func (r *ReposCreateForkReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposCreateForkReq) Rel(link RelName, resp *ReposCreateForkResponse) bool {
+func (r *ReposCreateForkReq) Rel(link string, resp *ReposCreateForkResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2680,7 +2680,7 @@ func (r *ReposCreateInOrgReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposCreateInOrgReq) Rel(link RelName, resp *ReposCreateInOrgResponse) bool {
+func (r *ReposCreateInOrgReq) Rel(link string, resp *ReposCreateInOrgResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2891,7 +2891,7 @@ func (r *ReposCreateOrUpdateFileContentsReq) requestBuilder() *internal.RequestB
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposCreateOrUpdateFileContentsReq) Rel(link RelName, resp *ReposCreateOrUpdateFileContentsResponse) bool {
+func (r *ReposCreateOrUpdateFileContentsReq) Rel(link string, resp *ReposCreateOrUpdateFileContentsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3065,7 +3065,7 @@ func (r *ReposCreatePagesSiteReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposCreatePagesSiteReq) Rel(link RelName, resp *ReposCreatePagesSiteResponse) bool {
+func (r *ReposCreatePagesSiteReq) Rel(link string, resp *ReposCreatePagesSiteResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3209,7 +3209,7 @@ func (r *ReposCreateReleaseReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposCreateReleaseReq) Rel(link RelName, resp *ReposCreateReleaseResponse) bool {
+func (r *ReposCreateReleaseReq) Rel(link string, resp *ReposCreateReleaseResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3369,7 +3369,7 @@ func (r *ReposCreateUsingTemplateReq) requestBuilder() *internal.RequestBuilder 
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposCreateUsingTemplateReq) Rel(link RelName, resp *ReposCreateUsingTemplateResponse) bool {
+func (r *ReposCreateUsingTemplateReq) Rel(link string, resp *ReposCreateUsingTemplateResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3510,7 +3510,7 @@ func (r *ReposCreateWebhookReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposCreateWebhookReq) Rel(link RelName, resp *ReposCreateWebhookResponse) bool {
+func (r *ReposCreateWebhookReq) Rel(link string, resp *ReposCreateWebhookResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3675,7 +3675,7 @@ func (r *ReposDeclineInvitationReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposDeclineInvitationReq) Rel(link RelName, resp *ReposDeclineInvitationResponse) bool {
+func (r *ReposDeclineInvitationReq) Rel(link string, resp *ReposDeclineInvitationResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3786,7 +3786,7 @@ func (r *ReposDeleteReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposDeleteReq) Rel(link RelName, resp *ReposDeleteResponse) bool {
+func (r *ReposDeleteReq) Rel(link string, resp *ReposDeleteResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3900,7 +3900,7 @@ func (r *ReposDeleteAccessRestrictionsReq) requestBuilder() *internal.RequestBui
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposDeleteAccessRestrictionsReq) Rel(link RelName, resp *ReposDeleteAccessRestrictionsResponse) bool {
+func (r *ReposDeleteAccessRestrictionsReq) Rel(link string, resp *ReposDeleteAccessRestrictionsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -4018,7 +4018,7 @@ func (r *ReposDeleteAdminBranchProtectionReq) requestBuilder() *internal.Request
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposDeleteAdminBranchProtectionReq) Rel(link RelName, resp *ReposDeleteAdminBranchProtectionResponse) bool {
+func (r *ReposDeleteAdminBranchProtectionReq) Rel(link string, resp *ReposDeleteAdminBranchProtectionResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -4133,7 +4133,7 @@ func (r *ReposDeleteBranchProtectionReq) requestBuilder() *internal.RequestBuild
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposDeleteBranchProtectionReq) Rel(link RelName, resp *ReposDeleteBranchProtectionResponse) bool {
+func (r *ReposDeleteBranchProtectionReq) Rel(link string, resp *ReposDeleteBranchProtectionResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -4251,7 +4251,7 @@ func (r *ReposDeleteCommitCommentReq) requestBuilder() *internal.RequestBuilder 
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposDeleteCommitCommentReq) Rel(link RelName, resp *ReposDeleteCommitCommentResponse) bool {
+func (r *ReposDeleteCommitCommentReq) Rel(link string, resp *ReposDeleteCommitCommentResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -4379,7 +4379,7 @@ func (r *ReposDeleteCommitSignatureProtectionReq) requestBuilder() *internal.Req
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposDeleteCommitSignatureProtectionReq) Rel(link RelName, resp *ReposDeleteCommitSignatureProtectionResponse) bool {
+func (r *ReposDeleteCommitSignatureProtectionReq) Rel(link string, resp *ReposDeleteCommitSignatureProtectionResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -4494,7 +4494,7 @@ func (r *ReposDeleteDeployKeyReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposDeleteDeployKeyReq) Rel(link RelName, resp *ReposDeleteDeployKeyResponse) bool {
+func (r *ReposDeleteDeployKeyReq) Rel(link string, resp *ReposDeleteDeployKeyResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -4608,7 +4608,7 @@ func (r *ReposDeleteDeploymentReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposDeleteDeploymentReq) Rel(link RelName, resp *ReposDeleteDeploymentResponse) bool {
+func (r *ReposDeleteDeploymentReq) Rel(link string, resp *ReposDeleteDeploymentResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -4727,7 +4727,7 @@ func (r *ReposDeleteFileReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposDeleteFileReq) Rel(link RelName, resp *ReposDeleteFileResponse) bool {
+func (r *ReposDeleteFileReq) Rel(link string, resp *ReposDeleteFileResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -4885,7 +4885,7 @@ func (r *ReposDeleteInvitationReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposDeleteInvitationReq) Rel(link RelName, resp *ReposDeleteInvitationResponse) bool {
+func (r *ReposDeleteInvitationReq) Rel(link string, resp *ReposDeleteInvitationResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -5005,7 +5005,7 @@ func (r *ReposDeletePagesSiteReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposDeletePagesSiteReq) Rel(link RelName, resp *ReposDeletePagesSiteResponse) bool {
+func (r *ReposDeletePagesSiteReq) Rel(link string, resp *ReposDeletePagesSiteResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -5123,7 +5123,7 @@ func (r *ReposDeletePullRequestReviewProtectionReq) requestBuilder() *internal.R
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposDeletePullRequestReviewProtectionReq) Rel(link RelName, resp *ReposDeletePullRequestReviewProtectionResponse) bool {
+func (r *ReposDeletePullRequestReviewProtectionReq) Rel(link string, resp *ReposDeletePullRequestReviewProtectionResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -5238,7 +5238,7 @@ func (r *ReposDeleteReleaseReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposDeleteReleaseReq) Rel(link RelName, resp *ReposDeleteReleaseResponse) bool {
+func (r *ReposDeleteReleaseReq) Rel(link string, resp *ReposDeleteReleaseResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -5352,7 +5352,7 @@ func (r *ReposDeleteReleaseAssetReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposDeleteReleaseAssetReq) Rel(link RelName, resp *ReposDeleteReleaseAssetResponse) bool {
+func (r *ReposDeleteReleaseAssetReq) Rel(link string, resp *ReposDeleteReleaseAssetResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -5468,7 +5468,7 @@ func (r *ReposDeleteWebhookReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposDeleteWebhookReq) Rel(link RelName, resp *ReposDeleteWebhookResponse) bool {
+func (r *ReposDeleteWebhookReq) Rel(link string, resp *ReposDeleteWebhookResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -5587,7 +5587,7 @@ func (r *ReposDisableAutomatedSecurityFixesReq) requestBuilder() *internal.Reque
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposDisableAutomatedSecurityFixesReq) Rel(link RelName, resp *ReposDisableAutomatedSecurityFixesResponse) bool {
+func (r *ReposDisableAutomatedSecurityFixesReq) Rel(link string, resp *ReposDisableAutomatedSecurityFixesResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -5705,7 +5705,7 @@ func (r *ReposDisableVulnerabilityAlertsReq) requestBuilder() *internal.RequestB
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposDisableVulnerabilityAlertsReq) Rel(link RelName, resp *ReposDisableVulnerabilityAlertsResponse) bool {
+func (r *ReposDisableVulnerabilityAlertsReq) Rel(link string, resp *ReposDisableVulnerabilityAlertsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -5819,7 +5819,7 @@ func (r *ReposDownloadTarballArchiveReq) requestBuilder() *internal.RequestBuild
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposDownloadTarballArchiveReq) Rel(link RelName, resp *ReposDownloadTarballArchiveResponse) bool {
+func (r *ReposDownloadTarballArchiveReq) Rel(link string, resp *ReposDownloadTarballArchiveResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -5933,7 +5933,7 @@ func (r *ReposDownloadZipballArchiveReq) requestBuilder() *internal.RequestBuild
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposDownloadZipballArchiveReq) Rel(link RelName, resp *ReposDownloadZipballArchiveResponse) bool {
+func (r *ReposDownloadZipballArchiveReq) Rel(link string, resp *ReposDownloadZipballArchiveResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -6051,7 +6051,7 @@ func (r *ReposEnableAutomatedSecurityFixesReq) requestBuilder() *internal.Reques
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposEnableAutomatedSecurityFixesReq) Rel(link RelName, resp *ReposEnableAutomatedSecurityFixesResponse) bool {
+func (r *ReposEnableAutomatedSecurityFixesReq) Rel(link string, resp *ReposEnableAutomatedSecurityFixesResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -6169,7 +6169,7 @@ func (r *ReposEnableVulnerabilityAlertsReq) requestBuilder() *internal.RequestBu
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposEnableVulnerabilityAlertsReq) Rel(link RelName, resp *ReposEnableVulnerabilityAlertsResponse) bool {
+func (r *ReposEnableVulnerabilityAlertsReq) Rel(link string, resp *ReposEnableVulnerabilityAlertsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -6303,7 +6303,7 @@ func (r *ReposGetReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposGetReq) Rel(link RelName, resp *ReposGetResponse) bool {
+func (r *ReposGetReq) Rel(link string, resp *ReposGetResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -6419,7 +6419,7 @@ func (r *ReposGetAccessRestrictionsReq) requestBuilder() *internal.RequestBuilde
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposGetAccessRestrictionsReq) Rel(link RelName, resp *ReposGetAccessRestrictionsResponse) bool {
+func (r *ReposGetAccessRestrictionsReq) Rel(link string, resp *ReposGetAccessRestrictionsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -6535,7 +6535,7 @@ func (r *ReposGetAdminBranchProtectionReq) requestBuilder() *internal.RequestBui
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposGetAdminBranchProtectionReq) Rel(link RelName, resp *ReposGetAdminBranchProtectionResponse) bool {
+func (r *ReposGetAdminBranchProtectionReq) Rel(link string, resp *ReposGetAdminBranchProtectionResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -6651,7 +6651,7 @@ func (r *ReposGetAllStatusCheckContextsReq) requestBuilder() *internal.RequestBu
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposGetAllStatusCheckContextsReq) Rel(link RelName, resp *ReposGetAllStatusCheckContextsResponse) bool {
+func (r *ReposGetAllStatusCheckContextsReq) Rel(link string, resp *ReposGetAllStatusCheckContextsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -6778,7 +6778,7 @@ func (r *ReposGetAllTopicsReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposGetAllTopicsReq) Rel(link RelName, resp *ReposGetAllTopicsResponse) bool {
+func (r *ReposGetAllTopicsReq) Rel(link string, resp *ReposGetAllTopicsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -6894,7 +6894,7 @@ func (r *ReposGetAppsWithAccessToProtectedBranchReq) requestBuilder() *internal.
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposGetAppsWithAccessToProtectedBranchReq) Rel(link RelName, resp *ReposGetAppsWithAccessToProtectedBranchResponse) bool {
+func (r *ReposGetAppsWithAccessToProtectedBranchReq) Rel(link string, resp *ReposGetAppsWithAccessToProtectedBranchResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -7010,7 +7010,7 @@ func (r *ReposGetBranchReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposGetBranchReq) Rel(link RelName, resp *ReposGetBranchResponse) bool {
+func (r *ReposGetBranchReq) Rel(link string, resp *ReposGetBranchResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -7136,7 +7136,7 @@ func (r *ReposGetBranchProtectionReq) requestBuilder() *internal.RequestBuilder 
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposGetBranchProtectionReq) Rel(link RelName, resp *ReposGetBranchProtectionResponse) bool {
+func (r *ReposGetBranchProtectionReq) Rel(link string, resp *ReposGetBranchProtectionResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -7255,7 +7255,7 @@ func (r *ReposGetClonesReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposGetClonesReq) Rel(link RelName, resp *ReposGetClonesResponse) bool {
+func (r *ReposGetClonesReq) Rel(link string, resp *ReposGetClonesResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -7368,7 +7368,7 @@ func (r *ReposGetCodeFrequencyStatsReq) requestBuilder() *internal.RequestBuilde
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposGetCodeFrequencyStatsReq) Rel(link RelName, resp *ReposGetCodeFrequencyStatsResponse) bool {
+func (r *ReposGetCodeFrequencyStatsReq) Rel(link string, resp *ReposGetCodeFrequencyStatsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -7482,7 +7482,7 @@ func (r *ReposGetCollaboratorPermissionLevelReq) requestBuilder() *internal.Requ
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposGetCollaboratorPermissionLevelReq) Rel(link RelName, resp *ReposGetCollaboratorPermissionLevelResponse) bool {
+func (r *ReposGetCollaboratorPermissionLevelReq) Rel(link string, resp *ReposGetCollaboratorPermissionLevelResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -7598,7 +7598,7 @@ func (r *ReposGetCombinedStatusForRefReq) requestBuilder() *internal.RequestBuil
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposGetCombinedStatusForRefReq) Rel(link RelName, resp *ReposGetCombinedStatusForRefResponse) bool {
+func (r *ReposGetCombinedStatusForRefReq) Rel(link string, resp *ReposGetCombinedStatusForRefResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -7714,7 +7714,7 @@ func (r *ReposGetCommitReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposGetCommitReq) Rel(link RelName, resp *ReposGetCommitResponse) bool {
+func (r *ReposGetCommitReq) Rel(link string, resp *ReposGetCommitResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -7827,7 +7827,7 @@ func (r *ReposGetCommitActivityStatsReq) requestBuilder() *internal.RequestBuild
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposGetCommitActivityStatsReq) Rel(link RelName, resp *ReposGetCommitActivityStatsResponse) bool {
+func (r *ReposGetCommitActivityStatsReq) Rel(link string, resp *ReposGetCommitActivityStatsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -7954,7 +7954,7 @@ func (r *ReposGetCommitCommentReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposGetCommitCommentReq) Rel(link RelName, resp *ReposGetCommitCommentResponse) bool {
+func (r *ReposGetCommitCommentReq) Rel(link string, resp *ReposGetCommitCommentResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -8079,7 +8079,7 @@ func (r *ReposGetCommitSignatureProtectionReq) requestBuilder() *internal.Reques
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposGetCommitSignatureProtectionReq) Rel(link RelName, resp *ReposGetCommitSignatureProtectionResponse) bool {
+func (r *ReposGetCommitSignatureProtectionReq) Rel(link string, resp *ReposGetCommitSignatureProtectionResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -8199,7 +8199,7 @@ func (r *ReposGetCommunityProfileMetricsReq) requestBuilder() *internal.RequestB
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposGetCommunityProfileMetricsReq) Rel(link RelName, resp *ReposGetCommunityProfileMetricsResponse) bool {
+func (r *ReposGetCommunityProfileMetricsReq) Rel(link string, resp *ReposGetCommunityProfileMetricsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -8324,7 +8324,7 @@ func (r *ReposGetContentReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposGetContentReq) Rel(link RelName, resp *ReposGetContentResponse) bool {
+func (r *ReposGetContentReq) Rel(link string, resp *ReposGetContentResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -8528,7 +8528,7 @@ func (r *ReposGetContributorsStatsReq) requestBuilder() *internal.RequestBuilder
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposGetContributorsStatsReq) Rel(link RelName, resp *ReposGetContributorsStatsResponse) bool {
+func (r *ReposGetContributorsStatsReq) Rel(link string, resp *ReposGetContributorsStatsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -8644,7 +8644,7 @@ func (r *ReposGetDeployKeyReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposGetDeployKeyReq) Rel(link RelName, resp *ReposGetDeployKeyResponse) bool {
+func (r *ReposGetDeployKeyReq) Rel(link string, resp *ReposGetDeployKeyResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -8780,7 +8780,7 @@ func (r *ReposGetDeploymentReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposGetDeploymentReq) Rel(link RelName, resp *ReposGetDeploymentResponse) bool {
+func (r *ReposGetDeploymentReq) Rel(link string, resp *ReposGetDeploymentResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -8932,7 +8932,7 @@ func (r *ReposGetDeploymentStatusReq) requestBuilder() *internal.RequestBuilder 
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposGetDeploymentStatusReq) Rel(link RelName, resp *ReposGetDeploymentStatusResponse) bool {
+func (r *ReposGetDeploymentStatusReq) Rel(link string, resp *ReposGetDeploymentStatusResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -9045,7 +9045,7 @@ func (r *ReposGetLatestPagesBuildReq) requestBuilder() *internal.RequestBuilder 
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposGetLatestPagesBuildReq) Rel(link RelName, resp *ReposGetLatestPagesBuildResponse) bool {
+func (r *ReposGetLatestPagesBuildReq) Rel(link string, resp *ReposGetLatestPagesBuildResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -9158,7 +9158,7 @@ func (r *ReposGetLatestReleaseReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposGetLatestReleaseReq) Rel(link RelName, resp *ReposGetLatestReleaseResponse) bool {
+func (r *ReposGetLatestReleaseReq) Rel(link string, resp *ReposGetLatestReleaseResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -9271,7 +9271,7 @@ func (r *ReposGetPagesReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposGetPagesReq) Rel(link RelName, resp *ReposGetPagesResponse) bool {
+func (r *ReposGetPagesReq) Rel(link string, resp *ReposGetPagesResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -9387,7 +9387,7 @@ func (r *ReposGetPagesBuildReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposGetPagesBuildReq) Rel(link RelName, resp *ReposGetPagesBuildResponse) bool {
+func (r *ReposGetPagesBuildReq) Rel(link string, resp *ReposGetPagesBuildResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -9500,7 +9500,7 @@ func (r *ReposGetParticipationStatsReq) requestBuilder() *internal.RequestBuilde
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposGetParticipationStatsReq) Rel(link RelName, resp *ReposGetParticipationStatsResponse) bool {
+func (r *ReposGetParticipationStatsReq) Rel(link string, resp *ReposGetParticipationStatsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -9626,7 +9626,7 @@ func (r *ReposGetPullRequestReviewProtectionReq) requestBuilder() *internal.Requ
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposGetPullRequestReviewProtectionReq) Rel(link RelName, resp *ReposGetPullRequestReviewProtectionResponse) bool {
+func (r *ReposGetPullRequestReviewProtectionReq) Rel(link string, resp *ReposGetPullRequestReviewProtectionResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -9739,7 +9739,7 @@ func (r *ReposGetPunchCardStatsReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposGetPunchCardStatsReq) Rel(link RelName, resp *ReposGetPunchCardStatsResponse) bool {
+func (r *ReposGetPunchCardStatsReq) Rel(link string, resp *ReposGetPunchCardStatsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -9861,7 +9861,7 @@ func (r *ReposGetReadmeReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposGetReadmeReq) Rel(link RelName, resp *ReposGetReadmeResponse) bool {
+func (r *ReposGetReadmeReq) Rel(link string, resp *ReposGetReadmeResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -9977,7 +9977,7 @@ func (r *ReposGetReleaseReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposGetReleaseReq) Rel(link RelName, resp *ReposGetReleaseResponse) bool {
+func (r *ReposGetReleaseReq) Rel(link string, resp *ReposGetReleaseResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -10093,7 +10093,7 @@ func (r *ReposGetReleaseAssetReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposGetReleaseAssetReq) Rel(link RelName, resp *ReposGetReleaseAssetResponse) bool {
+func (r *ReposGetReleaseAssetReq) Rel(link string, resp *ReposGetReleaseAssetResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -10209,7 +10209,7 @@ func (r *ReposGetReleaseByTagReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposGetReleaseByTagReq) Rel(link RelName, resp *ReposGetReleaseByTagResponse) bool {
+func (r *ReposGetReleaseByTagReq) Rel(link string, resp *ReposGetReleaseByTagResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -10325,7 +10325,7 @@ func (r *ReposGetStatusChecksProtectionReq) requestBuilder() *internal.RequestBu
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposGetStatusChecksProtectionReq) Rel(link RelName, resp *ReposGetStatusChecksProtectionResponse) bool {
+func (r *ReposGetStatusChecksProtectionReq) Rel(link string, resp *ReposGetStatusChecksProtectionResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -10441,7 +10441,7 @@ func (r *ReposGetTeamsWithAccessToProtectedBranchReq) requestBuilder() *internal
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposGetTeamsWithAccessToProtectedBranchReq) Rel(link RelName, resp *ReposGetTeamsWithAccessToProtectedBranchResponse) bool {
+func (r *ReposGetTeamsWithAccessToProtectedBranchReq) Rel(link string, resp *ReposGetTeamsWithAccessToProtectedBranchResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -10554,7 +10554,7 @@ func (r *ReposGetTopPathsReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposGetTopPathsReq) Rel(link RelName, resp *ReposGetTopPathsResponse) bool {
+func (r *ReposGetTopPathsReq) Rel(link string, resp *ReposGetTopPathsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -10667,7 +10667,7 @@ func (r *ReposGetTopReferrersReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposGetTopReferrersReq) Rel(link RelName, resp *ReposGetTopReferrersResponse) bool {
+func (r *ReposGetTopReferrersReq) Rel(link string, resp *ReposGetTopReferrersResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -10783,7 +10783,7 @@ func (r *ReposGetUsersWithAccessToProtectedBranchReq) requestBuilder() *internal
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposGetUsersWithAccessToProtectedBranchReq) Rel(link RelName, resp *ReposGetUsersWithAccessToProtectedBranchResponse) bool {
+func (r *ReposGetUsersWithAccessToProtectedBranchReq) Rel(link string, resp *ReposGetUsersWithAccessToProtectedBranchResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -10902,7 +10902,7 @@ func (r *ReposGetViewsReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposGetViewsReq) Rel(link RelName, resp *ReposGetViewsResponse) bool {
+func (r *ReposGetViewsReq) Rel(link string, resp *ReposGetViewsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -11016,7 +11016,7 @@ func (r *ReposGetWebhookReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposGetWebhookReq) Rel(link RelName, resp *ReposGetWebhookResponse) bool {
+func (r *ReposGetWebhookReq) Rel(link string, resp *ReposGetWebhookResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -11150,7 +11150,7 @@ func (r *ReposListBranchesReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposListBranchesReq) Rel(link RelName, resp *ReposListBranchesResponse) bool {
+func (r *ReposListBranchesReq) Rel(link string, resp *ReposListBranchesResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -11275,7 +11275,7 @@ func (r *ReposListBranchesForHeadCommitReq) requestBuilder() *internal.RequestBu
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposListBranchesForHeadCommitReq) Rel(link RelName, resp *ReposListBranchesForHeadCommitResponse) bool {
+func (r *ReposListBranchesForHeadCommitReq) Rel(link string, resp *ReposListBranchesForHeadCommitResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -11412,7 +11412,7 @@ func (r *ReposListCollaboratorsReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposListCollaboratorsReq) Rel(link RelName, resp *ReposListCollaboratorsResponse) bool {
+func (r *ReposListCollaboratorsReq) Rel(link string, resp *ReposListCollaboratorsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -11551,7 +11551,7 @@ func (r *ReposListCommentsForCommitReq) requestBuilder() *internal.RequestBuilde
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposListCommentsForCommitReq) Rel(link RelName, resp *ReposListCommentsForCommitResponse) bool {
+func (r *ReposListCommentsForCommitReq) Rel(link string, resp *ReposListCommentsForCommitResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -11687,7 +11687,7 @@ func (r *ReposListCommitCommentsForRepoReq) requestBuilder() *internal.RequestBu
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposListCommitCommentsForRepoReq) Rel(link RelName, resp *ReposListCommitCommentsForRepoResponse) bool {
+func (r *ReposListCommitCommentsForRepoReq) Rel(link string, resp *ReposListCommitCommentsForRepoResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -11815,7 +11815,7 @@ func (r *ReposListCommitStatusesForRefReq) requestBuilder() *internal.RequestBui
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposListCommitStatusesForRefReq) Rel(link RelName, resp *ReposListCommitStatusesForRefResponse) bool {
+func (r *ReposListCommitStatusesForRefReq) Rel(link string, resp *ReposListCommitStatusesForRefResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -11980,7 +11980,7 @@ func (r *ReposListCommitsReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposListCommitsReq) Rel(link RelName, resp *ReposListCommitsResponse) bool {
+func (r *ReposListCommitsReq) Rel(link string, resp *ReposListCommitsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -12111,7 +12111,7 @@ func (r *ReposListContributorsReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposListContributorsReq) Rel(link RelName, resp *ReposListContributorsResponse) bool {
+func (r *ReposListContributorsReq) Rel(link string, resp *ReposListContributorsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -12236,7 +12236,7 @@ func (r *ReposListDeployKeysReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposListDeployKeysReq) Rel(link RelName, resp *ReposListDeployKeysResponse) bool {
+func (r *ReposListDeployKeysReq) Rel(link string, resp *ReposListDeployKeysResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -12390,7 +12390,7 @@ func (r *ReposListDeploymentStatusesReq) requestBuilder() *internal.RequestBuild
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposListDeploymentStatusesReq) Rel(link RelName, resp *ReposListDeploymentStatusesResponse) bool {
+func (r *ReposListDeploymentStatusesReq) Rel(link string, resp *ReposListDeploymentStatusesResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -12553,7 +12553,7 @@ func (r *ReposListDeploymentsReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposListDeploymentsReq) Rel(link RelName, resp *ReposListDeploymentsResponse) bool {
+func (r *ReposListDeploymentsReq) Rel(link string, resp *ReposListDeploymentsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -12743,7 +12743,7 @@ func (r *ReposListForAuthenticatedUserReq) requestBuilder() *internal.RequestBui
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposListForAuthenticatedUserReq) Rel(link RelName, resp *ReposListForAuthenticatedUserResponse) bool {
+func (r *ReposListForAuthenticatedUserReq) Rel(link string, resp *ReposListForAuthenticatedUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -12918,7 +12918,7 @@ func (r *ReposListForOrgReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposListForOrgReq) Rel(link RelName, resp *ReposListForOrgResponse) bool {
+func (r *ReposListForOrgReq) Rel(link string, resp *ReposListForOrgResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -13075,7 +13075,7 @@ func (r *ReposListForUserReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposListForUserReq) Rel(link RelName, resp *ReposListForUserResponse) bool {
+func (r *ReposListForUserReq) Rel(link string, resp *ReposListForUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -13206,7 +13206,7 @@ func (r *ReposListForksReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposListForksReq) Rel(link RelName, resp *ReposListForksResponse) bool {
+func (r *ReposListForksReq) Rel(link string, resp *ReposListForksResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -13331,7 +13331,7 @@ func (r *ReposListInvitationsReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposListInvitationsReq) Rel(link RelName, resp *ReposListInvitationsResponse) bool {
+func (r *ReposListInvitationsReq) Rel(link string, resp *ReposListInvitationsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -13454,7 +13454,7 @@ func (r *ReposListInvitationsForAuthenticatedUserReq) requestBuilder() *internal
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposListInvitationsForAuthenticatedUserReq) Rel(link RelName, resp *ReposListInvitationsForAuthenticatedUserResponse) bool {
+func (r *ReposListInvitationsForAuthenticatedUserReq) Rel(link string, resp *ReposListInvitationsForAuthenticatedUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -13567,7 +13567,7 @@ func (r *ReposListLanguagesReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposListLanguagesReq) Rel(link RelName, resp *ReposListLanguagesResponse) bool {
+func (r *ReposListLanguagesReq) Rel(link string, resp *ReposListLanguagesResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -13692,7 +13692,7 @@ func (r *ReposListPagesBuildsReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposListPagesBuildsReq) Rel(link RelName, resp *ReposListPagesBuildsResponse) bool {
+func (r *ReposListPagesBuildsReq) Rel(link string, resp *ReposListPagesBuildsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -13823,7 +13823,7 @@ func (r *ReposListPublicReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposListPublicReq) Rel(link RelName, resp *ReposListPublicResponse) bool {
+func (r *ReposListPublicReq) Rel(link string, resp *ReposListPublicResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -13960,7 +13960,7 @@ func (r *ReposListPullRequestsAssociatedWithCommitReq) requestBuilder() *interna
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposListPullRequestsAssociatedWithCommitReq) Rel(link RelName, resp *ReposListPullRequestsAssociatedWithCommitResponse) bool {
+func (r *ReposListPullRequestsAssociatedWithCommitReq) Rel(link string, resp *ReposListPullRequestsAssociatedWithCommitResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -14088,7 +14088,7 @@ func (r *ReposListReleaseAssetsReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposListReleaseAssetsReq) Rel(link RelName, resp *ReposListReleaseAssetsResponse) bool {
+func (r *ReposListReleaseAssetsReq) Rel(link string, resp *ReposListReleaseAssetsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -14213,7 +14213,7 @@ func (r *ReposListReleasesReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposListReleasesReq) Rel(link RelName, resp *ReposListReleasesResponse) bool {
+func (r *ReposListReleasesReq) Rel(link string, resp *ReposListReleasesResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -14338,7 +14338,7 @@ func (r *ReposListTagsReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposListTagsReq) Rel(link RelName, resp *ReposListTagsResponse) bool {
+func (r *ReposListTagsReq) Rel(link string, resp *ReposListTagsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -14463,7 +14463,7 @@ func (r *ReposListTeamsReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposListTeamsReq) Rel(link RelName, resp *ReposListTeamsResponse) bool {
+func (r *ReposListTeamsReq) Rel(link string, resp *ReposListTeamsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -14588,7 +14588,7 @@ func (r *ReposListWebhooksReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposListWebhooksReq) Rel(link RelName, resp *ReposListWebhooksResponse) bool {
+func (r *ReposListWebhooksReq) Rel(link string, resp *ReposListWebhooksResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -14705,7 +14705,7 @@ func (r *ReposMergeReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposMergeReq) Rel(link RelName, resp *ReposMergeResponse) bool {
+func (r *ReposMergeReq) Rel(link string, resp *ReposMergeResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -14839,7 +14839,7 @@ func (r *ReposPingWebhookReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposPingWebhookReq) Rel(link RelName, resp *ReposPingWebhookResponse) bool {
+func (r *ReposPingWebhookReq) Rel(link string, resp *ReposPingWebhookResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -14959,7 +14959,7 @@ func (r *ReposRemoveAppAccessRestrictionsReq) requestBuilder() *internal.Request
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposRemoveAppAccessRestrictionsReq) Rel(link RelName, resp *ReposRemoveAppAccessRestrictionsResponse) bool {
+func (r *ReposRemoveAppAccessRestrictionsReq) Rel(link string, resp *ReposRemoveAppAccessRestrictionsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -15079,7 +15079,7 @@ func (r *ReposRemoveCollaboratorReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposRemoveCollaboratorReq) Rel(link RelName, resp *ReposRemoveCollaboratorResponse) bool {
+func (r *ReposRemoveCollaboratorReq) Rel(link string, resp *ReposRemoveCollaboratorResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -15198,7 +15198,7 @@ func (r *ReposRemoveStatusCheckContextsReq) requestBuilder() *internal.RequestBu
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposRemoveStatusCheckContextsReq) Rel(link RelName, resp *ReposRemoveStatusCheckContextsResponse) bool {
+func (r *ReposRemoveStatusCheckContextsReq) Rel(link string, resp *ReposRemoveStatusCheckContextsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -15327,7 +15327,7 @@ func (r *ReposRemoveStatusCheckProtectionReq) requestBuilder() *internal.Request
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposRemoveStatusCheckProtectionReq) Rel(link RelName, resp *ReposRemoveStatusCheckProtectionResponse) bool {
+func (r *ReposRemoveStatusCheckProtectionReq) Rel(link string, resp *ReposRemoveStatusCheckProtectionResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -15446,7 +15446,7 @@ func (r *ReposRemoveTeamAccessRestrictionsReq) requestBuilder() *internal.Reques
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposRemoveTeamAccessRestrictionsReq) Rel(link RelName, resp *ReposRemoveTeamAccessRestrictionsResponse) bool {
+func (r *ReposRemoveTeamAccessRestrictionsReq) Rel(link string, resp *ReposRemoveTeamAccessRestrictionsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -15573,7 +15573,7 @@ func (r *ReposRemoveUserAccessRestrictionsReq) requestBuilder() *internal.Reques
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposRemoveUserAccessRestrictionsReq) Rel(link RelName, resp *ReposRemoveUserAccessRestrictionsResponse) bool {
+func (r *ReposRemoveUserAccessRestrictionsReq) Rel(link string, resp *ReposRemoveUserAccessRestrictionsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -15704,7 +15704,7 @@ func (r *ReposReplaceAllTopicsReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposReplaceAllTopicsReq) Rel(link RelName, resp *ReposReplaceAllTopicsResponse) bool {
+func (r *ReposReplaceAllTopicsReq) Rel(link string, resp *ReposReplaceAllTopicsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -15833,7 +15833,7 @@ func (r *ReposRequestPagesBuildReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposRequestPagesBuildReq) Rel(link RelName, resp *ReposRequestPagesBuildResponse) bool {
+func (r *ReposRequestPagesBuildReq) Rel(link string, resp *ReposRequestPagesBuildResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -15949,7 +15949,7 @@ func (r *ReposSetAdminBranchProtectionReq) requestBuilder() *internal.RequestBui
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposSetAdminBranchProtectionReq) Rel(link RelName, resp *ReposSetAdminBranchProtectionResponse) bool {
+func (r *ReposSetAdminBranchProtectionReq) Rel(link string, resp *ReposSetAdminBranchProtectionResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -16069,7 +16069,7 @@ func (r *ReposSetAppAccessRestrictionsReq) requestBuilder() *internal.RequestBui
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposSetAppAccessRestrictionsReq) Rel(link RelName, resp *ReposSetAppAccessRestrictionsResponse) bool {
+func (r *ReposSetAppAccessRestrictionsReq) Rel(link string, resp *ReposSetAppAccessRestrictionsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -16196,7 +16196,7 @@ func (r *ReposSetStatusCheckContextsReq) requestBuilder() *internal.RequestBuild
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposSetStatusCheckContextsReq) Rel(link RelName, resp *ReposSetStatusCheckContextsResponse) bool {
+func (r *ReposSetStatusCheckContextsReq) Rel(link string, resp *ReposSetStatusCheckContextsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -16330,7 +16330,7 @@ func (r *ReposSetTeamAccessRestrictionsReq) requestBuilder() *internal.RequestBu
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposSetTeamAccessRestrictionsReq) Rel(link RelName, resp *ReposSetTeamAccessRestrictionsResponse) bool {
+func (r *ReposSetTeamAccessRestrictionsReq) Rel(link string, resp *ReposSetTeamAccessRestrictionsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -16457,7 +16457,7 @@ func (r *ReposSetUserAccessRestrictionsReq) requestBuilder() *internal.RequestBu
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposSetUserAccessRestrictionsReq) Rel(link RelName, resp *ReposSetUserAccessRestrictionsResponse) bool {
+func (r *ReposSetUserAccessRestrictionsReq) Rel(link string, resp *ReposSetUserAccessRestrictionsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -16581,7 +16581,7 @@ func (r *ReposTestPushWebhookReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposTestPushWebhookReq) Rel(link RelName, resp *ReposTestPushWebhookResponse) bool {
+func (r *ReposTestPushWebhookReq) Rel(link string, resp *ReposTestPushWebhookResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -16698,7 +16698,7 @@ func (r *ReposTransferReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposTransferReq) Rel(link RelName, resp *ReposTransferResponse) bool {
+func (r *ReposTransferReq) Rel(link string, resp *ReposTransferResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -16853,7 +16853,7 @@ func (r *ReposUpdateReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposUpdateReq) Rel(link RelName, resp *ReposUpdateResponse) bool {
+func (r *ReposUpdateReq) Rel(link string, resp *ReposUpdateResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -17064,7 +17064,7 @@ func (r *ReposUpdateBranchProtectionReq) requestBuilder() *internal.RequestBuild
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposUpdateBranchProtectionReq) Rel(link RelName, resp *ReposUpdateBranchProtectionResponse) bool {
+func (r *ReposUpdateBranchProtectionReq) Rel(link string, resp *ReposUpdateBranchProtectionResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -17295,7 +17295,7 @@ func (r *ReposUpdateCommitCommentReq) requestBuilder() *internal.RequestBuilder 
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposUpdateCommitCommentReq) Rel(link RelName, resp *ReposUpdateCommitCommentResponse) bool {
+func (r *ReposUpdateCommitCommentReq) Rel(link string, resp *ReposUpdateCommitCommentResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -17419,7 +17419,7 @@ func (r *ReposUpdateInformationAboutPagesSiteReq) requestBuilder() *internal.Req
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposUpdateInformationAboutPagesSiteReq) Rel(link RelName, resp *ReposUpdateInformationAboutPagesSiteResponse) bool {
+func (r *ReposUpdateInformationAboutPagesSiteReq) Rel(link string, resp *ReposUpdateInformationAboutPagesSiteResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -17555,7 +17555,7 @@ func (r *ReposUpdateInvitationReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposUpdateInvitationReq) Rel(link RelName, resp *ReposUpdateInvitationResponse) bool {
+func (r *ReposUpdateInvitationReq) Rel(link string, resp *ReposUpdateInvitationResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -17699,7 +17699,7 @@ func (r *ReposUpdatePullRequestReviewProtectionReq) requestBuilder() *internal.R
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposUpdatePullRequestReviewProtectionReq) Rel(link RelName, resp *ReposUpdatePullRequestReviewProtectionResponse) bool {
+func (r *ReposUpdatePullRequestReviewProtectionReq) Rel(link string, resp *ReposUpdatePullRequestReviewProtectionResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -17854,7 +17854,7 @@ func (r *ReposUpdateReleaseReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposUpdateReleaseReq) Rel(link RelName, resp *ReposUpdateReleaseResponse) bool {
+func (r *ReposUpdateReleaseReq) Rel(link string, resp *ReposUpdateReleaseResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -18004,7 +18004,7 @@ func (r *ReposUpdateReleaseAssetReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposUpdateReleaseAssetReq) Rel(link RelName, resp *ReposUpdateReleaseAssetResponse) bool {
+func (r *ReposUpdateReleaseAssetReq) Rel(link string, resp *ReposUpdateReleaseAssetResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -18139,7 +18139,7 @@ func (r *ReposUpdateStatusCheckProtectionReq) requestBuilder() *internal.Request
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposUpdateStatusCheckProtectionReq) Rel(link RelName, resp *ReposUpdateStatusCheckProtectionResponse) bool {
+func (r *ReposUpdateStatusCheckProtectionReq) Rel(link string, resp *ReposUpdateStatusCheckProtectionResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -18271,7 +18271,7 @@ func (r *ReposUpdateWebhookReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposUpdateWebhookReq) Rel(link RelName, resp *ReposUpdateWebhookResponse) bool {
+func (r *ReposUpdateWebhookReq) Rel(link string, resp *ReposUpdateWebhookResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -18464,7 +18464,7 @@ func (r *ReposUploadReleaseAssetReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ReposUploadReleaseAssetReq) Rel(link RelName, resp *ReposUploadReleaseAssetResponse) bool {
+func (r *ReposUploadReleaseAssetReq) Rel(link string, resp *ReposUploadReleaseAssetResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false

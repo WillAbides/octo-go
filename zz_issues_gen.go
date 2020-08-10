@@ -114,7 +114,7 @@ func (r *IssuesAddAssigneesReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *IssuesAddAssigneesReq) Rel(link RelName, resp *IssuesAddAssigneesResponse) bool {
+func (r *IssuesAddAssigneesReq) Rel(link string, resp *IssuesAddAssigneesResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -248,7 +248,7 @@ func (r *IssuesAddLabelsReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *IssuesAddLabelsReq) Rel(link RelName, resp *IssuesAddLabelsResponse) bool {
+func (r *IssuesAddLabelsReq) Rel(link string, resp *IssuesAddLabelsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -383,7 +383,7 @@ func (r *IssuesCheckUserCanBeAssignedReq) requestBuilder() *internal.RequestBuil
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *IssuesCheckUserCanBeAssignedReq) Rel(link RelName, resp *IssuesCheckUserCanBeAssignedResponse) bool {
+func (r *IssuesCheckUserCanBeAssignedReq) Rel(link string, resp *IssuesCheckUserCanBeAssignedResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -500,7 +500,7 @@ func (r *IssuesCreateReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *IssuesCreateReq) Rel(link RelName, resp *IssuesCreateResponse) bool {
+func (r *IssuesCreateReq) Rel(link string, resp *IssuesCreateResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -660,7 +660,7 @@ func (r *IssuesCreateCommentReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *IssuesCreateCommentReq) Rel(link RelName, resp *IssuesCreateCommentResponse) bool {
+func (r *IssuesCreateCommentReq) Rel(link string, resp *IssuesCreateCommentResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -788,7 +788,7 @@ func (r *IssuesCreateLabelReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *IssuesCreateLabelReq) Rel(link RelName, resp *IssuesCreateLabelResponse) bool {
+func (r *IssuesCreateLabelReq) Rel(link string, resp *IssuesCreateLabelResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -929,7 +929,7 @@ func (r *IssuesCreateMilestoneReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *IssuesCreateMilestoneReq) Rel(link RelName, resp *IssuesCreateMilestoneResponse) bool {
+func (r *IssuesCreateMilestoneReq) Rel(link string, resp *IssuesCreateMilestoneResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1067,7 +1067,7 @@ func (r *IssuesDeleteCommentReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *IssuesDeleteCommentReq) Rel(link RelName, resp *IssuesDeleteCommentResponse) bool {
+func (r *IssuesDeleteCommentReq) Rel(link string, resp *IssuesDeleteCommentResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1181,7 +1181,7 @@ func (r *IssuesDeleteLabelReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *IssuesDeleteLabelReq) Rel(link RelName, resp *IssuesDeleteLabelResponse) bool {
+func (r *IssuesDeleteLabelReq) Rel(link string, resp *IssuesDeleteLabelResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1299,7 +1299,7 @@ func (r *IssuesDeleteMilestoneReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *IssuesDeleteMilestoneReq) Rel(link RelName, resp *IssuesDeleteMilestoneResponse) bool {
+func (r *IssuesDeleteMilestoneReq) Rel(link string, resp *IssuesDeleteMilestoneResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1426,7 +1426,7 @@ func (r *IssuesGetReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *IssuesGetReq) Rel(link RelName, resp *IssuesGetResponse) bool {
+func (r *IssuesGetReq) Rel(link string, resp *IssuesGetResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1562,7 +1562,7 @@ func (r *IssuesGetCommentReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *IssuesGetCommentReq) Rel(link RelName, resp *IssuesGetCommentResponse) bool {
+func (r *IssuesGetCommentReq) Rel(link string, resp *IssuesGetCommentResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1710,7 +1710,7 @@ func (r *IssuesGetEventReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *IssuesGetEventReq) Rel(link RelName, resp *IssuesGetEventResponse) bool {
+func (r *IssuesGetEventReq) Rel(link string, resp *IssuesGetEventResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1826,7 +1826,7 @@ func (r *IssuesGetLabelReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *IssuesGetLabelReq) Rel(link RelName, resp *IssuesGetLabelResponse) bool {
+func (r *IssuesGetLabelReq) Rel(link string, resp *IssuesGetLabelResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1942,7 +1942,7 @@ func (r *IssuesGetMilestoneReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *IssuesGetMilestoneReq) Rel(link RelName, resp *IssuesGetMilestoneResponse) bool {
+func (r *IssuesGetMilestoneReq) Rel(link string, resp *IssuesGetMilestoneResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2152,7 +2152,7 @@ func (r *IssuesListReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *IssuesListReq) Rel(link RelName, resp *IssuesListResponse) bool {
+func (r *IssuesListReq) Rel(link string, resp *IssuesListResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2277,7 +2277,7 @@ func (r *IssuesListAssigneesReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *IssuesListAssigneesReq) Rel(link RelName, resp *IssuesListAssigneesResponse) bool {
+func (r *IssuesListAssigneesReq) Rel(link string, resp *IssuesListAssigneesResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2426,7 +2426,7 @@ func (r *IssuesListCommentsReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *IssuesListCommentsReq) Rel(link RelName, resp *IssuesListCommentsResponse) bool {
+func (r *IssuesListCommentsReq) Rel(link string, resp *IssuesListCommentsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2587,7 +2587,7 @@ func (r *IssuesListCommentsForRepoReq) requestBuilder() *internal.RequestBuilder
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *IssuesListCommentsForRepoReq) Rel(link RelName, resp *IssuesListCommentsForRepoResponse) bool {
+func (r *IssuesListCommentsForRepoReq) Rel(link string, resp *IssuesListCommentsForRepoResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2740,7 +2740,7 @@ func (r *IssuesListEventsReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *IssuesListEventsReq) Rel(link RelName, resp *IssuesListEventsResponse) bool {
+func (r *IssuesListEventsReq) Rel(link string, resp *IssuesListEventsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2890,7 +2890,7 @@ func (r *IssuesListEventsForRepoReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *IssuesListEventsForRepoReq) Rel(link RelName, resp *IssuesListEventsForRepoResponse) bool {
+func (r *IssuesListEventsForRepoReq) Rel(link string, resp *IssuesListEventsForRepoResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3042,7 +3042,7 @@ func (r *IssuesListEventsForTimelineReq) requestBuilder() *internal.RequestBuild
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *IssuesListEventsForTimelineReq) Rel(link RelName, resp *IssuesListEventsForTimelineResponse) bool {
+func (r *IssuesListEventsForTimelineReq) Rel(link string, resp *IssuesListEventsForTimelineResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3236,7 +3236,7 @@ func (r *IssuesListForAuthenticatedUserReq) requestBuilder() *internal.RequestBu
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *IssuesListForAuthenticatedUserReq) Rel(link RelName, resp *IssuesListForAuthenticatedUserResponse) bool {
+func (r *IssuesListForAuthenticatedUserReq) Rel(link string, resp *IssuesListForAuthenticatedUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3431,7 +3431,7 @@ func (r *IssuesListForOrgReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *IssuesListForOrgReq) Rel(link RelName, resp *IssuesListForOrgResponse) bool {
+func (r *IssuesListForOrgReq) Rel(link string, resp *IssuesListForOrgResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3644,7 +3644,7 @@ func (r *IssuesListForRepoReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *IssuesListForRepoReq) Rel(link RelName, resp *IssuesListForRepoResponse) bool {
+func (r *IssuesListForRepoReq) Rel(link string, resp *IssuesListForRepoResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3772,7 +3772,7 @@ func (r *IssuesListLabelsForMilestoneReq) requestBuilder() *internal.RequestBuil
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *IssuesListLabelsForMilestoneReq) Rel(link RelName, resp *IssuesListLabelsForMilestoneResponse) bool {
+func (r *IssuesListLabelsForMilestoneReq) Rel(link string, resp *IssuesListLabelsForMilestoneResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3897,7 +3897,7 @@ func (r *IssuesListLabelsForRepoReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *IssuesListLabelsForRepoReq) Rel(link RelName, resp *IssuesListLabelsForRepoResponse) bool {
+func (r *IssuesListLabelsForRepoReq) Rel(link string, resp *IssuesListLabelsForRepoResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -4025,7 +4025,7 @@ func (r *IssuesListLabelsOnIssueReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *IssuesListLabelsOnIssueReq) Rel(link RelName, resp *IssuesListLabelsOnIssueResponse) bool {
+func (r *IssuesListLabelsOnIssueReq) Rel(link string, resp *IssuesListLabelsOnIssueResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -4168,7 +4168,7 @@ func (r *IssuesListMilestonesReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *IssuesListMilestonesReq) Rel(link RelName, resp *IssuesListMilestonesResponse) bool {
+func (r *IssuesListMilestonesReq) Rel(link string, resp *IssuesListMilestonesResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -4294,7 +4294,7 @@ func (r *IssuesLockReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *IssuesLockReq) Rel(link RelName, resp *IssuesLockResponse) bool {
+func (r *IssuesLockReq) Rel(link string, resp *IssuesLockResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -4426,7 +4426,7 @@ func (r *IssuesRemoveAllLabelsReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *IssuesRemoveAllLabelsReq) Rel(link RelName, resp *IssuesRemoveAllLabelsResponse) bool {
+func (r *IssuesRemoveAllLabelsReq) Rel(link string, resp *IssuesRemoveAllLabelsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -4545,7 +4545,7 @@ func (r *IssuesRemoveAssigneesReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *IssuesRemoveAssigneesReq) Rel(link RelName, resp *IssuesRemoveAssigneesResponse) bool {
+func (r *IssuesRemoveAssigneesReq) Rel(link string, resp *IssuesRemoveAssigneesResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -4679,7 +4679,7 @@ func (r *IssuesRemoveLabelReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *IssuesRemoveLabelReq) Rel(link RelName, resp *IssuesRemoveLabelResponse) bool {
+func (r *IssuesRemoveLabelReq) Rel(link string, resp *IssuesRemoveLabelResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -4799,7 +4799,7 @@ func (r *IssuesSetLabelsReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *IssuesSetLabelsReq) Rel(link RelName, resp *IssuesSetLabelsResponse) bool {
+func (r *IssuesSetLabelsReq) Rel(link string, resp *IssuesSetLabelsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -4930,7 +4930,7 @@ func (r *IssuesUnlockReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *IssuesUnlockReq) Rel(link RelName, resp *IssuesUnlockResponse) bool {
+func (r *IssuesUnlockReq) Rel(link string, resp *IssuesUnlockResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -5049,7 +5049,7 @@ func (r *IssuesUpdateReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *IssuesUpdateReq) Rel(link RelName, resp *IssuesUpdateResponse) bool {
+func (r *IssuesUpdateReq) Rel(link string, resp *IssuesUpdateResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -5212,7 +5212,7 @@ func (r *IssuesUpdateCommentReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *IssuesUpdateCommentReq) Rel(link RelName, resp *IssuesUpdateCommentResponse) bool {
+func (r *IssuesUpdateCommentReq) Rel(link string, resp *IssuesUpdateCommentResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -5343,7 +5343,7 @@ func (r *IssuesUpdateLabelReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *IssuesUpdateLabelReq) Rel(link RelName, resp *IssuesUpdateLabelResponse) bool {
+func (r *IssuesUpdateLabelReq) Rel(link string, resp *IssuesUpdateLabelResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -5487,7 +5487,7 @@ func (r *IssuesUpdateMilestoneReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *IssuesUpdateMilestoneReq) Rel(link RelName, resp *IssuesUpdateMilestoneResponse) bool {
+func (r *IssuesUpdateMilestoneReq) Rel(link string, resp *IssuesUpdateMilestoneResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false

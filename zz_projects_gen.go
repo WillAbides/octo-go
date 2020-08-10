@@ -116,7 +116,7 @@ func (r *ProjectsAddCollaboratorReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ProjectsAddCollaboratorReq) Rel(link RelName, resp *ProjectsAddCollaboratorResponse) bool {
+func (r *ProjectsAddCollaboratorReq) Rel(link string, resp *ProjectsAddCollaboratorResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -253,7 +253,7 @@ func (r *ProjectsCreateCardReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ProjectsCreateCardReq) Rel(link RelName, resp *ProjectsCreateCardResponse) bool {
+func (r *ProjectsCreateCardReq) Rel(link string, resp *ProjectsCreateCardResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -392,7 +392,7 @@ func (r *ProjectsCreateColumnReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ProjectsCreateColumnReq) Rel(link RelName, resp *ProjectsCreateColumnResponse) bool {
+func (r *ProjectsCreateColumnReq) Rel(link string, resp *ProjectsCreateColumnResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -527,7 +527,7 @@ func (r *ProjectsCreateForAuthenticatedUserReq) requestBuilder() *internal.Reque
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ProjectsCreateForAuthenticatedUserReq) Rel(link RelName, resp *ProjectsCreateForAuthenticatedUserResponse) bool {
+func (r *ProjectsCreateForAuthenticatedUserReq) Rel(link string, resp *ProjectsCreateForAuthenticatedUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -666,7 +666,7 @@ func (r *ProjectsCreateForOrgReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ProjectsCreateForOrgReq) Rel(link RelName, resp *ProjectsCreateForOrgResponse) bool {
+func (r *ProjectsCreateForOrgReq) Rel(link string, resp *ProjectsCreateForOrgResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -806,7 +806,7 @@ func (r *ProjectsCreateForRepoReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ProjectsCreateForRepoReq) Rel(link RelName, resp *ProjectsCreateForRepoResponse) bool {
+func (r *ProjectsCreateForRepoReq) Rel(link string, resp *ProjectsCreateForRepoResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -940,7 +940,7 @@ func (r *ProjectsDeleteReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ProjectsDeleteReq) Rel(link RelName, resp *ProjectsDeleteResponse) bool {
+func (r *ProjectsDeleteReq) Rel(link string, resp *ProjectsDeleteResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1061,7 +1061,7 @@ func (r *ProjectsDeleteCardReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ProjectsDeleteCardReq) Rel(link RelName, resp *ProjectsDeleteCardResponse) bool {
+func (r *ProjectsDeleteCardReq) Rel(link string, resp *ProjectsDeleteCardResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1182,7 +1182,7 @@ func (r *ProjectsDeleteColumnReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ProjectsDeleteColumnReq) Rel(link RelName, resp *ProjectsDeleteColumnResponse) bool {
+func (r *ProjectsDeleteColumnReq) Rel(link string, resp *ProjectsDeleteColumnResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1302,7 +1302,7 @@ func (r *ProjectsGetReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ProjectsGetReq) Rel(link RelName, resp *ProjectsGetResponse) bool {
+func (r *ProjectsGetReq) Rel(link string, resp *ProjectsGetResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1425,7 +1425,7 @@ func (r *ProjectsGetCardReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ProjectsGetCardReq) Rel(link RelName, resp *ProjectsGetCardResponse) bool {
+func (r *ProjectsGetCardReq) Rel(link string, resp *ProjectsGetCardResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1548,7 +1548,7 @@ func (r *ProjectsGetColumnReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ProjectsGetColumnReq) Rel(link RelName, resp *ProjectsGetColumnResponse) bool {
+func (r *ProjectsGetColumnReq) Rel(link string, resp *ProjectsGetColumnResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1670,7 +1670,7 @@ func (r *ProjectsGetPermissionForUserReq) requestBuilder() *internal.RequestBuil
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ProjectsGetPermissionForUserReq) Rel(link RelName, resp *ProjectsGetPermissionForUserResponse) bool {
+func (r *ProjectsGetPermissionForUserReq) Rel(link string, resp *ProjectsGetPermissionForUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1814,7 +1814,7 @@ func (r *ProjectsListCardsReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ProjectsListCardsReq) Rel(link RelName, resp *ProjectsListCardsResponse) bool {
+func (r *ProjectsListCardsReq) Rel(link string, resp *ProjectsListCardsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -1960,7 +1960,7 @@ func (r *ProjectsListCollaboratorsReq) requestBuilder() *internal.RequestBuilder
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ProjectsListCollaboratorsReq) Rel(link RelName, resp *ProjectsListCollaboratorsResponse) bool {
+func (r *ProjectsListCollaboratorsReq) Rel(link string, resp *ProjectsListCollaboratorsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2093,7 +2093,7 @@ func (r *ProjectsListColumnsReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ProjectsListColumnsReq) Rel(link RelName, resp *ProjectsListColumnsResponse) bool {
+func (r *ProjectsListColumnsReq) Rel(link string, resp *ProjectsListColumnsResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2235,7 +2235,7 @@ func (r *ProjectsListForOrgReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ProjectsListForOrgReq) Rel(link RelName, resp *ProjectsListForOrgResponse) bool {
+func (r *ProjectsListForOrgReq) Rel(link string, resp *ProjectsListForOrgResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2378,7 +2378,7 @@ func (r *ProjectsListForRepoReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ProjectsListForRepoReq) Rel(link RelName, resp *ProjectsListForRepoResponse) bool {
+func (r *ProjectsListForRepoReq) Rel(link string, resp *ProjectsListForRepoResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2520,7 +2520,7 @@ func (r *ProjectsListForUserReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ProjectsListForUserReq) Rel(link RelName, resp *ProjectsListForUserResponse) bool {
+func (r *ProjectsListForUserReq) Rel(link string, resp *ProjectsListForUserResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2646,7 +2646,7 @@ func (r *ProjectsMoveCardReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ProjectsMoveCardReq) Rel(link RelName, resp *ProjectsMoveCardResponse) bool {
+func (r *ProjectsMoveCardReq) Rel(link string, resp *ProjectsMoveCardResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2785,7 +2785,7 @@ func (r *ProjectsMoveColumnReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ProjectsMoveColumnReq) Rel(link RelName, resp *ProjectsMoveColumnResponse) bool {
+func (r *ProjectsMoveColumnReq) Rel(link string, resp *ProjectsMoveColumnResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -2916,7 +2916,7 @@ func (r *ProjectsRemoveCollaboratorReq) requestBuilder() *internal.RequestBuilde
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ProjectsRemoveCollaboratorReq) Rel(link RelName, resp *ProjectsRemoveCollaboratorResponse) bool {
+func (r *ProjectsRemoveCollaboratorReq) Rel(link string, resp *ProjectsRemoveCollaboratorResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3040,7 +3040,7 @@ func (r *ProjectsUpdateReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ProjectsUpdateReq) Rel(link RelName, resp *ProjectsUpdateResponse) bool {
+func (r *ProjectsUpdateReq) Rel(link string, resp *ProjectsUpdateResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3190,7 +3190,7 @@ func (r *ProjectsUpdateCardReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ProjectsUpdateCardReq) Rel(link RelName, resp *ProjectsUpdateCardResponse) bool {
+func (r *ProjectsUpdateCardReq) Rel(link string, resp *ProjectsUpdateCardResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
@@ -3331,7 +3331,7 @@ func (r *ProjectsUpdateColumnReq) requestBuilder() *internal.RequestBuilder {
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ProjectsUpdateColumnReq) Rel(link RelName, resp *ProjectsUpdateColumnResponse) bool {
+func (r *ProjectsUpdateColumnReq) Rel(link string, resp *ProjectsUpdateColumnResponse) bool {
 	u := resp.RelLink(string(link))
 	if u == "" {
 		return false
