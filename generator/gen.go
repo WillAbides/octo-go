@@ -13,6 +13,9 @@ type pkgQual string
 
 func (p pkgQual) pkgPath(pkgName string) string {
 	pq := string(p)
+	if strings.HasPrefix(pkgName, "requests/") {
+		return path.Join(pq, pkgName)
+	}
 	switch pkgName {
 	case "octo":
 		return pq
@@ -80,12 +83,8 @@ if err != nil {
 			group.Id("if err != nil {return nil, err}")
 			group.Id("err =").Add(decodeBody).Id("(r, builder, opts, nil)")
 		case len(responseCodesWithBodies(endpoint)) > 0:
-			bodyType := respBodyType(endpoint, pq)
-			group.Id("resp.Data = ").Do(func(statement *jen.Statement) {
-				if bodyType.slice {
-					statement.Op("[]")
-				}
-			}).Qual(bodyType.pkg, bodyType.name).Block()
+			bodyType := respBodyType(endpoint)
+			group.Id("resp.Data = ").Add(bodyType.jenType(pq)).Block()
 			group.Id("err = ").Add(decodeBody).Id("(r, builder, opts, &resp.Data)")
 		default:
 			group.Id("err = ").Add(decodeBody).Id("(r, builder, opts, nil)")
@@ -127,7 +126,15 @@ func addClientMethod(file *jen.File, pq pkgQual, endpoint *model.Endpoint) {
 	)
 }
 
+func trimToFirstSlash(s string) string {
+	if !strings.Contains(s, "/") {
+		return s
+	}
+	return strings.SplitN(s, "/", 2)[1]
+}
+
 func toUnexportedName(in string) string {
+	in = trimToFirstSlash(in)
 	if _, ok := nameOverrides[in]; ok {
 		in = nameOverrides[in]
 	}
@@ -146,6 +153,7 @@ func toUnexportedName(in string) string {
 }
 
 func toExportedName(in string) string {
+	in = trimToFirstSlash(in)
 	if _, ok := nameOverrides[in]; ok {
 		in = nameOverrides[in]
 	}

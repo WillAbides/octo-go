@@ -1,0 +1,65 @@
+---
+version: 1
+interactions:
+- request:
+    body: |
+      {"labels":["testlabel2","testlabel"]}
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - octo-go
+    url: https://api.github.com/repos/WillAbides/octo-go/issues/12/labels
+    method: POST
+  response:
+    body: '[{"id":2102626192,"node_id":"MDU6TGFiZWwyMTAyNjI2MTky","url":"https://api.github.com/repos/WillAbides/octo-go/labels/testlabel","name":"testlabel","color":"0565ba","default":false,"description":""},{"id":2102651722,"node_id":"MDU6TGFiZWwyMTAyNjUxNzIy","url":"https://api.github.com/repos/WillAbides/octo-go/labels/testlabel2","name":"testlabel2","color":"ededed","default":false,"description":null}]'
+    headers:
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining,
+        X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval,
+        X-GitHub-Media-Type, Deprecation, Sunset
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Mon, 10 Aug 2020 21:27:34 GMT
+      Etag:
+      - W/"0eecb1aa23b2b7cfe394f59b1986e172"
+      Referrer-Policy:
+      - origin-when-cross-origin, strict-origin-when-cross-origin
+      Server:
+      - GitHub.com
+      Status:
+      - 200 OK
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains; preload
+      Vary:
+      - Accept, Authorization, Cookie, X-GitHub-OTP
+      - Accept-Encoding, Accept, X-Requested-With
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - deny
+      X-Github-Media-Type:
+      - github.v3
+      X-Github-Request-Id:
+      - 82F2:4DC5:244350:73AE5A:5F31BBC6
+      X-Ratelimit-Limit:
+      - "5000"
+      X-Ratelimit-Remaining:
+      - "4998"
+      X-Ratelimit-Reset:
+      - "1597097645"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""

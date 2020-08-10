@@ -54,3 +54,8 @@ func DoRequest(ctx context.Context, builder *RequestBuilder, opts *options.Optio
 
 	return resp, nil
 }
+
+// String returns a pointer to s
+func String(s string) *string {
+	return &s
+}

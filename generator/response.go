@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"path"
 	"sort"
 	"strings"
 
@@ -11,11 +12,11 @@ import (
 )
 
 func respBodyStructName(endpoint *model.Endpoint) string {
-	return toExportedName(fmt.Sprintf("%s-%s-response-body", endpoint.Concern, endpoint.Name))
+	return toExportedName(fmt.Sprintf("%s-response-body", endpoint.Name))
 }
 
 func respStructName(endpoint *model.Endpoint) string {
-	return toExportedName(fmt.Sprintf("%s-%s-response", endpoint.Concern, endpoint.Name))
+	return toExportedName(fmt.Sprintf("%s-response", endpoint.Name))
 }
 
 func sortedResponseCodes(endpoint *model.Endpoint) []int {
@@ -42,13 +43,9 @@ func addResponse(file *jen.File, pq pkgQual, endpoint *model.Endpoint) {
 		if endpointHasAttribute(endpoint, attrNoResponseBody) {
 			return
 		}
-		bodyType := respBodyType(endpoint, pq)
+		bodyType := respBodyType(endpoint)
 		if bodyType != nil {
-			group.Id("Data").Do(func(stmt *jen.Statement) {
-				if bodyType.slice {
-					stmt.Op("[]")
-				}
-			}).Qual(bodyType.pkg, bodyType.name)
+			group.Id("Data").Add(bodyType.jenType(pq))
 		}
 		if endpointHasAttribute(endpoint, attrBoolean) {
 			group.Id("Data").Bool()
@@ -56,7 +53,7 @@ func addResponse(file *jen.File, pq pkgQual, endpoint *model.Endpoint) {
 	})
 }
 
-func respBodyType(endpoint *model.Endpoint, pq pkgQual) *qualifiedType {
+func respBodyType(endpoint *model.Endpoint) *qualifiedType {
 	codeBodies := responseCodesWithBodies(endpoint)
 	if len(codeBodies) == 0 {
 		return nil
@@ -66,7 +63,7 @@ func respBodyType(endpoint *model.Endpoint, pq pkgQual) *qualifiedType {
 		if strings.HasPrefix(body.ItemSchema.Ref, "#/components/schemas/") {
 			nm := strings.TrimPrefix(body.ItemSchema.Ref, "#/components/schemas/")
 			return &qualifiedType{
-				pkg:   pq.pkgPath("components"),
+				pkg:   "components",
 				name:  toExportedName(nm),
 				slice: true,
 			}
@@ -76,13 +73,13 @@ func respBodyType(endpoint *model.Endpoint, pq pkgQual) *qualifiedType {
 	if strings.HasPrefix(body.Ref, "#/components/schemas/") {
 		nm := strings.TrimPrefix(body.Ref, "#/components/schemas/")
 		return &qualifiedType{
-			pkg:  pq.pkgPath("components"),
+			pkg:  "components",
 			name: toExportedName(nm),
 		}
 	}
 	return &qualifiedType{
-		pkg:  pq.pkgPath("octo"),
-		name: toExportedName(fmt.Sprintf("%s-%s-response-body", endpoint.Concern, endpoint.Name)),
+		pkg:  path.Join("requests", endpointPackage(endpoint)),
+		name: toExportedName(fmt.Sprintf("%s-response-body", endpoint.Name)),
 	}
 }
 
@@ -115,8 +112,8 @@ func addResponseBody(file *jen.File, pq pkgQual, endpoint *model.Endpoint) {
 	if endpointHasAttribute(endpoint, attrNoResponseBody) {
 		return
 	}
-	bt := respBodyType(endpoint, pq)
-	if bt != nil && bt.pkg == "github.com/willabides/octo-go/components" {
+	bt := respBodyType(endpoint)
+	if bt != nil && bt.pkg == "components" {
 		return
 	}
 	bodyCodes := responseCodesWithBodies(endpoint)

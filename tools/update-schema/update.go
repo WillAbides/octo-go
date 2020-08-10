@@ -13,6 +13,7 @@ import (
 
 	"github.com/willabides/octo-go"
 	"github.com/willabides/octo-go/options/auth"
+	"github.com/willabides/octo-go/requests/repos"
 )
 
 func main() {
@@ -100,10 +101,10 @@ func setCurrentVersion(workingDir, version string) error {
 }
 
 func latestReleaseTag(ctx context.Context, client octo.Client) (string, error) {
-	resp, err := client.ReposGetLatestRelease(ctx, &octo.ReposGetLatestReleaseReq{
+	resp, err := repos.GetLatestRelease(ctx, &repos.GetLatestReleaseReq{
 		Owner: "github",
 		Repo:  "rest-api-description",
-	})
+	}, client)
 	if err != nil {
 		return "", err
 	}

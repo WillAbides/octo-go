@@ -95,17 +95,37 @@ func orList(vals []string) string {
 }
 
 func oneOfReturnTypeForComment(name string, pq pkgQual, schema *model.ParamSchema) string {
-	qt := oneOfQualifiedType(name, pq, schema)
-	if qt.slice {
-		return "[]" + qt.name
-	}
-	return qt.name
+	return oneOfQualifiedType(name, pq, schema).commentString()
 }
 
 type qualifiedType struct {
 	pkg   string
 	name  string
 	slice bool
+}
+
+func (q *qualifiedType) commentString() string {
+	result := ""
+	if q.slice {
+		result += "[]"
+	}
+	if q.pkg != "" {
+		parts := strings.Split(q.pkg, "/")
+		result += parts[len(parts)-1] + "."
+	}
+	result += q.name
+	return result
+}
+
+func (q *qualifiedType) jenType(pq pkgQual) *jen.Statement {
+	nm := jen.Id(q.name)
+	if q.pkg != "" {
+		nm = jen.Qual(pq.pkgPath(q.pkg), q.name)
+	}
+	if !q.slice {
+		return nm
+	}
+	return jen.Op("[]").Add(nm)
 }
 
 func oneOfQualifiedType(name string, pq pkgQual, schema *model.ParamSchema) *qualifiedType {
@@ -123,9 +143,9 @@ func oneOfQualifiedType(name string, pq pkgQual, schema *model.ParamSchema) *qua
 			name: "interface{}",
 		}
 	case model.ParamTypeObject, model.ParamTypeOneOf:
-		pkg := pq.pkgPath("octo")
+		pkg := "octo"
 		if strings.HasPrefix(schema.Ref, "#/components") {
-			pkg = pq.pkgPath("components")
+			pkg = "components"
 		}
 		return &qualifiedType{
 			pkg:  pkg,
@@ -142,7 +162,7 @@ func oneOfQualifiedType(name string, pq pkgQual, schema *model.ParamSchema) *qua
 		rv := oneOfQualifiedType(name, pq, schema.ItemSchema)
 		if schema.ItemSchema.Ref == "" {
 			if strings.HasPrefix(schema.Ref, "#/components") {
-				rv.pkg = pq.pkgPath("components")
+				rv.pkg = "components"
 			}
 		}
 		if schema.Ref == "" {
@@ -174,13 +194,7 @@ func oneOfSetValueFunc(structName string, pq pkgQual, schema *model.ParamSchema)
 						panic("something has gone horribly wrong")
 					}
 					paramType := paramTypes[i]
-					tp := jen.Id(paramType.name)
-					if paramType.pkg != "" {
-						tp = jen.Qual(paramType.pkg, paramType.name)
-					}
-					if paramType.slice {
-						tp = jen.Id("[]").Add(tp)
-					}
+					tp := paramType.jenType(pq)
 					paramName := paramNames[i]
 
 					group.Case(tp)

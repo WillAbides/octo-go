@@ -7,7 +7,9 @@ import (
 	"os"
 
 	"github.com/willabides/octo-go"
+	"github.com/willabides/octo-go/options"
 	"github.com/willabides/octo-go/options/auth"
+	"github.com/willabides/octo-go/requests/issues"
 )
 
 func main() {
@@ -31,11 +33,11 @@ func main() {
 	}
 }
 
-func getReleaseBlockers(ctx context.Context, client octo.Client) ([]string, error) {
+func getReleaseBlockers(ctx context.Context, opts []options.Option) ([]string, error) {
 	var result []string
 
 	// Build the initial request.
-	req := &octo.IssuesListForRepoReq{
+	req := &issues.ListForRepoReq{
 		Owner:  "golang",
 		Repo:   "go",
 		Labels: octo.String("release-blocker"),
@@ -46,7 +48,7 @@ func getReleaseBlockers(ctx context.Context, client octo.Client) ([]string, erro
 
 	for ok {
 		// Get a page of issues.
-		resp, err := client.IssuesListForRepo(ctx, req)
+		resp, err := issues.ListForRepo(ctx, req, opts...)
 		if err != nil {
 			return nil, err
 		}

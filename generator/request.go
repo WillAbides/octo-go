@@ -12,12 +12,13 @@ import (
 )
 
 func reqBodyStructName(endpointID string) string {
+	endpointID = trimToFirstSlash(endpointID)
 	endpointID = strings.ReplaceAll(endpointID, "/", "-")
 	return toExportedName(fmt.Sprintf("%s-req-body", endpointID))
 }
 
 func reqStructName(endpoint *model.Endpoint) string {
-	return toExportedName(fmt.Sprintf("%s-%s-req", endpoint.Concern, endpoint.Name))
+	return toExportedName(fmt.Sprintf("%s-req", endpoint.Name))
 }
 
 func addRequestStruct(file *jen.File, pq pkgQual, endpoint *model.Endpoint) {
@@ -168,7 +169,7 @@ func reqBuilderFunc(endpoint *model.Endpoint, pq pkgQual) jen.Code {
 						group.Add(jen.Lit(preview.Name))
 					}
 				}),
-				jen.Id("HeaderVals"): reqHeaderMap(endpoint),
+				jen.Id("HeaderVals"): reqHeaderMap(endpoint, pq),
 				jen.Id("Previews"): jen.Map(jen.String()).Bool().Values(jen.DictFunc(func(dict jen.Dict) {
 					for _, preview := range endpoint.Previews {
 						dict[jen.Lit(preview.Name)] = jen.Id("r").Dot(toExportedName(preview.Name + "-preview"))
@@ -194,12 +195,13 @@ func validCodes(endpoint *model.Endpoint) []int {
 	return codes
 }
 
-func reqHeaderMap(endpoint *model.Endpoint) *jen.Statement {
+func reqHeaderMap(endpoint *model.Endpoint, pq pkgQual) *jen.Statement {
 	return jen.Map(jen.String()).Op("*").String().Values(
 		jen.DictFunc(func(dict jen.Dict) {
 			headers := map[string]*jen.Statement{}
+			internalPkg := pq.pkgPath("internal")
 			if endpoint.SuccessMediaType != "" {
-				headers["accept"] = jen.Id("String").Call(jen.Lit(endpoint.SuccessMediaType))
+				headers["accept"] = jen.Qual(internalPkg, "String").Call(jen.Lit(endpoint.SuccessMediaType))
 			}
 
 			for _, header := range endpoint.Headers {
@@ -210,7 +212,7 @@ func reqHeaderMap(endpoint *model.Endpoint) *jen.Statement {
 			}
 
 			if headers["content-type"] == nil && endpoint.RequestBody != nil && endpoint.RequestBody.MediaType != "" {
-				headers["content-type"] = jen.Id("String").Call(jen.Lit(endpoint.RequestBody.MediaType))
+				headers["content-type"] = jen.Qual(internalPkg, "String").Call(jen.Lit(endpoint.RequestBody.MediaType))
 			}
 
 			for k, v := range headers {

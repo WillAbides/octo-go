@@ -1,0 +1,70 @@
+---
+version: 1
+interactions:
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      User-Agent:
+      - octo-go
+    url: https://api.github.com/repos/WillAbides/octo-go/contents/generator/main.go
+    method: GET
+  response:
+    body: '{"name":"main.go","path":"generator/main.go","sha":"b602e9d7dc5f8b3ec7457f8f94c8ce028193e177","size":3645,"url":"https://api.github.com/repos/WillAbides/octo-go/contents/generator/main.go?ref=main","html_url":"https://github.com/WillAbides/octo-go/blob/main/generator/main.go","git_url":"https://api.github.com/repos/WillAbides/octo-go/git/blobs/b602e9d7dc5f8b3ec7457f8f94c8ce028193e177","download_url":"https://raw.githubusercontent.com/WillAbides/octo-go/main/generator/main.go","type":"file","content":"cGFja2FnZSBtYWluCgppbXBvcnQgKAoJImZsYWciCgkiZm10IgoJImxvZyIK\nCSJvcyIKCSJwYXRoIgoJInBhdGgvZmlsZXBhdGgiCgkic29ydCIKCSJzdHJp\nbmdzIgoKCSJnaXRodWIuY29tL2RhdmUvamVubmlmZXIvamVuIgoJImdpdGh1\nYi5jb20vd2lsbGFiaWRlcy9vY3RvLWdvL2dlbmVyYXRvci9pbnRlcm5hbC9t\nb2RlbCIKCSJnaXRodWIuY29tL3dpbGxhYmlkZXMvb2N0by1nby9nZW5lcmF0\nb3IvaW50ZXJuYWwvbW9kZWwvb3BlbmFwaSIKKQoKZnVuYyBtYWluKCkgewoJ\ndmFyIHNjaGVtYVBhdGggc3RyaW5nCgl2YXIgb3V0cHV0UGF0aCBzdHJpbmcK\nCXZhciBwa2dQYXRoIHN0cmluZwoJdmFyIHBrZ05hbWUgc3RyaW5nCglmbGFn\nLlN0cmluZ1Zhcigmc2NoZW1hUGF0aCwgInNjaGVtYSIsICIiLCAicGF0aCB0\nbyBvcGVuYXBpIHNjaGVtYSIpCglmbGFnLlN0cmluZ1Zhcigmb3V0cHV0UGF0\naCwgIm91dCIsICIiLCAiZGlyZWN0b3J5IHRvIHdyaXRlIGFsbCB0aGVzZSBm\naWxlcyIpCglmbGFnLlN0cmluZ1ZhcigmcGtnUGF0aCwgInBrZ3BhdGgiLCAi\nIiwgInBhdGggZm9yIG91dHB1dCBwYWNrYWdlIikKCWZsYWcuU3RyaW5nVmFy\nKCZwa2dOYW1lLCAicGtnIiwgIiIsICJuYW1lIGZvciBvdXRwdXQgcGFja2Fn\nZSIpCglmbGFnLlBhcnNlKCkKCWVyciA6PSBydW4oc2NoZW1hUGF0aCwgb3V0\ncHV0UGF0aCwgcGtnUGF0aCwgcGtnTmFtZSkKCWlmIGVyciAhPSBuaWwgewoJ\nCWxvZy5GYXRhbChlcnIpCgl9Cn0KCmZ1bmMgcnVuKHNjaGVtYVBhdGgsIG91\ndHB1dFBhdGgsIHBrZ1BhdGgsIHBrZ05hbWUgc3RyaW5nKSBlcnJvciB7Cgll\ncnIgOj0gY29tcG9uZW50RXhhbXBsZUZpbGVzKHNjaGVtYVBhdGgsIGZpbGVw\nYXRoLkpvaW4ob3V0cHV0UGF0aCwgImNvbXBvbmVudHMiLCAiZXhhbXBsZXMi\nKSkKCWlmIGVyciAhPSBuaWwgewoJCXJldHVybiBlcnIKCX0KCXNjaGVtYUZp\nbGUsIGVyciA6PSBvcy5PcGVuKHNjaGVtYVBhdGgpCglpZiBlcnIgIT0gbmls\nIHsKCQlyZXR1cm4gZXJyCgl9CgltZGwsIGVyciA6PSBvcGVuYXBpLk9wZW5h\ncGkyTW9kZWwoc2NoZW1hRmlsZSkKCWlmIGVyciAhPSBuaWwgewoJCXJldHVy\nbiBlcnIKCX0KCWVuZHBvaW50cyA6PSBtZGwuRW5kcG9pbnRzCgoJc29ydC5T\nbGljZShlbmRwb2ludHMsIGZ1bmMoaSwgaiBpbnQpIGJvb2wgewoJCXJldHVy\nbiBlbmRwb2ludHNbaV0uSUQgPCBlbmRwb2ludHNbal0uSUQKCX0pCgoJY29u\nY2VybkZpbGVzIDo9IG1hcFtzdHJpbmddKmplbi5GaWxle30KCglmb3IgXywg\nZW5kcG9pbnQgOj0gcmFuZ2UgZW5kcG9pbnRzIHsKCQllcnIgPSBhZGRFbmRw\nb2ludFRvQ29uY2VybkZpbGVzKGVuZHBvaW50LCBjb25jZXJuRmlsZXMsIHBr\nZ1BhdGgsIHBrZ05hbWUpCgkJaWYgZXJyICE9IG5pbCB7CgkJCXJldHVybiBl\ncnIKCQl9Cgl9CgoJZXJyID0gcmVuZGVyQ29uY2VybkZpbGVzKGNvbmNlcm5G\naWxlcywgb3V0cHV0UGF0aCkKCWlmIGVyciAhPSBuaWwgewoJCXJldHVybiBl\ncnIKCX0KCgljb21wb25lbnRTY2hlbWFzIDo9IG1kbC5Db21wb25lbnRTY2hl\nbWFzCglpZiBsZW4oY29tcG9uZW50U2NoZW1hcykgPiAwIHsKCQlmaWxlbmFt\nZSA6PSAic2NoZW1hc19nZW4uZ28iCgkJdmFyIGYgKm9zLkZpbGUKCQlmLCBl\ncnIgPSBvcy5DcmVhdGUoZmlsZXBhdGguSm9pbihvdXRwdXRQYXRoLCAiY29t\ncG9uZW50cyIsIGZpbGVuYW1lKSkKCQlpZiBlcnIgIT0gbmlsIHsKCQkJcmV0\ndXJuIGVycgoJCX0KCQljZiA6PSBqZW4uTmV3RmlsZVBhdGgocGF0aC5Kb2lu\nKHBrZ1BhdGgsICJjb21wb25lbnRzIikpCgkJY2YuSGVhZGVyQ29tbWVudCgi\nQ29kZSBnZW5lcmF0ZWQgYnkgb2N0by1nbzsgRE8gTk9UIEVESVQuIikKCQlh\nZGRDb21wb25lbnRTY2hlbWFzKGNmLCBjb21wb25lbnRTY2hlbWFzKQoJCWVy\nciA9IGNmLlJlbmRlcihmKQoJCWlmIGVyciAhPSBuaWwgewoJCQlyZXR1cm4g\nZXJyCgkJfQoJfQoKCWVuZHBvaW50QXR0cnNPdXQsIGVyciA6PSBvcy5DcmVh\ndGUoZmlsZXBhdGguSm9pbihvdXRwdXRQYXRoLCAienpfZW5kcG9pbnRfYXR0\ncnNfZ2VuLmdvIikpCglpZiBlcnIgIT0gbmlsIHsKCQlyZXR1cm4gZXJyCgl9\nCgllbmRwb2ludEF0dHJzRmlsZSA6PSBqZW4uTmV3RmlsZVBhdGhOYW1lKHBr\nZ1BhdGgsIHBrZ05hbWUpCgllbmRwb2ludEF0dHJzRmlsZS5IZWFkZXJDb21t\nZW50KCJDb2RlIGdlbmVyYXRlZCBieSBvY3RvLWdvOyBETyBOT1QgRURJVC4i\nKQoJYWRkRW5kcG9pbnRBdHRyaWJ1dGVzKGVuZHBvaW50QXR0cnNGaWxlKQoJ\nZXJyID0gZW5kcG9pbnRBdHRyc0ZpbGUuUmVuZGVyKGVuZHBvaW50QXR0cnNP\ndXQpCglpZiBlcnIgIT0gbmlsIHsKCQlyZXR1cm4gZXJyCgl9CgoJZXJyID0g\nZ2VuZXJhdGVVbm1hcnNoYWxUZXN0cyhvdXRwdXRQYXRoLCBlbmRwb2ludHMp\nCglpZiBlcnIgIT0gbmlsIHsKCQlyZXR1cm4gZXJyCgl9CgoJcmV0dXJuIG5p\nbAp9CgpmdW5jIHJlbmRlckNvbmNlcm5GaWxlcyhjb25jZXJuRmlsZXMgbWFw\nW3N0cmluZ10qamVuLkZpbGUsIG91dHB1dFBhdGggc3RyaW5nKSBlcnJvciB7\nCglmb3IgY29uY2VybiwgY29uY2VybkZpbGUgOj0gcmFuZ2UgY29uY2VybkZp\nbGVzIHsKCQkvLyB6el9saWNlbnNlc19nZW4uZ28gY2F1c2VzIGlzc3VlcyB3\naXRoIGxpY2Vuc2UgZmlsZSBkZXRlY3Rpb24gb24gR2l0SHViCgkJaWYgY29u\nY2VybiA9PSAibGljZW5zZXMiIHsKCQkJY29uY2VybiA9ICJsaWMiCgkJfQoJ\nCW5hbWUgOj0gZm10LlNwcmludGYoInp6XyVzX2dlbi5nbyIsIHN0cmluZ3Mu\nUmVwbGFjZUFsbChjb25jZXJuLCAiLSIsICJfIikpCgkJdmFyIGYgKm9zLkZp\nbGUKCQlmLCBlcnIgOj0gb3MuQ3JlYXRlKGZpbGVwYXRoLkpvaW4ob3V0cHV0\nUGF0aCwgbmFtZSkpCgkJaWYgZXJyICE9IG5pbCB7CgkJCXJldHVybiBlcnIK\nCQl9CgkJZXJyID0gY29uY2VybkZpbGUuUmVuZGVyKGYpCgkJaWYgZXJyICE9\nIG5pbCB7CgkJCXJldHVybiBlcnIKCQl9Cgl9CglyZXR1cm4gbmlsCn0KCmZ1\nbmMgYWRkRW5kcG9pbnRUb0NvbmNlcm5GaWxlcyhlbmRwb2ludCAqbW9kZWwu\nRW5kcG9pbnQsIGNvbmNlcm5GaWxlcyBtYXBbc3RyaW5nXSpqZW4uRmlsZSwg\ncGtnUGF0aCwgcGtnTmFtZSBzdHJpbmcpIGVycm9yIHsKCWVyciA6PSBhcHBs\neUVuZHBvaW50T3ZlcnJpZGVzKGVuZHBvaW50KQoJaWYgZXJyICE9IG5pbCB7\nCgkJcmV0dXJuIGVycgoJfQoJaWYgZW5kcG9pbnQuTGVnYWN5IHsKCQlyZXR1\ncm4gbmlsCgl9CglpZiBjb25jZXJuRmlsZXNbZW5kcG9pbnQuQ29uY2Vybl0g\nPT0gbmlsIHsKCQljZiA6PSBqZW4uTmV3RmlsZVBhdGhOYW1lKHBrZ1BhdGgs\nIHBrZ05hbWUpCgkJY2YuSGVhZGVyQ29tbWVudCgiQ29kZSBnZW5lcmF0ZWQg\nYnkgb2N0by1nbzsgRE8gTk9UIEVESVQuIikKCQljb25jZXJuRmlsZXNbZW5k\ncG9pbnQuQ29uY2Vybl0gPSBjZgoJfQoJZmlsZSA6PSBjb25jZXJuRmlsZXNb\nZW5kcG9pbnQuQ29uY2Vybl0KCWFkZFJlcXVlc3RGdW5jKGZpbGUsIGVuZHBv\naW50KQoJYWRkQ2xpZW50TWV0aG9kKGZpbGUsIGVuZHBvaW50KQoJYWRkUmVx\ndWVzdFN0cnVjdChmaWxlLCBlbmRwb2ludCkKCWFkZFJlcXVlc3RCb2R5KGZp\nbGUsIGVuZHBvaW50KQoJYWRkUmVzcG9uc2VCb2R5KGZpbGUsIGVuZHBvaW50\nKQoJYWRkUmVzcG9uc2UoZmlsZSwgZW5kcG9pbnQpCglyZXR1cm4gbmlsCn0K\n","encoding":"base64","_links":{"self":"https://api.github.com/repos/WillAbides/octo-go/contents/generator/main.go?ref=main","git":"https://api.github.com/repos/WillAbides/octo-go/git/blobs/b602e9d7dc5f8b3ec7457f8f94c8ce028193e177","html":"https://github.com/WillAbides/octo-go/blob/main/generator/main.go"}}'
+    headers:
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining,
+        X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval,
+        X-GitHub-Media-Type, Deprecation, Sunset
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Mon, 10 Aug 2020 21:38:42 GMT
+      Etag:
+      - W/"b602e9d7dc5f8b3ec7457f8f94c8ce028193e177"
+      Last-Modified:
+      - Thu, 30 Jul 2020 20:36:23 GMT
+      Referrer-Policy:
+      - origin-when-cross-origin, strict-origin-when-cross-origin
+      Server:
+      - GitHub.com
+      Status:
+      - 200 OK
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains; preload
+      Vary:
+      - Accept, Authorization, Cookie, X-GitHub-OTP
+      - Accept-Encoding, Accept, X-Requested-With
+      X-Accepted-Oauth-Scopes:
+      - ""
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - deny
+      X-Github-Media-Type:
+      - github.v3
+      X-Github-Request-Id:
+      - B0CF:0C3C:814D8E:1584DB3:5F31BE61
+      X-Oauth-Scopes:
+      - admin:gpg_key, admin:org, admin:org_hook, admin:public_key, admin:repo_hook,
+        delete_repo, gist, notifications, read:packages, repo, user, workflow, write:discussion,
+        write:packages
+      X-Ratelimit-Limit:
+      - "5000"
+      X-Ratelimit-Remaining:
+      - "4979"
+      X-Ratelimit-Reset:
+      - "1597098628"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""

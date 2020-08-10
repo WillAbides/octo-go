@@ -5,13 +5,13 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/willabides/octo-go"
+	"github.com/willabides/octo-go/requests/issues"
 )
 
 func main() {
 	ctx := context.Background()
 
-	issue, err := octo.IssuesGet(ctx, &octo.IssuesGetReq{
+	issue, err := issues.Get(ctx, &issues.GetReq{
 		Owner:       "golang",
 		Repo:        "go",
 		IssueNumber: 1,

@@ -1516,7 +1516,7 @@ type Email struct {
 	asString      string
 }
 
-// Value returns Email's value. The type will be one of EmailAsObject or string.
+// Value returns Email's value. The type will be one of components.EmailAsObject or string.
 func (c *Email) Value() interface{} {
 	switch c.oneOfField {
 	case "emailAsObject":
@@ -1527,7 +1527,7 @@ func (c *Email) Value() interface{} {
 	return nil
 }
 
-// SetValue sets Email's value. The type must be one of EmailAsObject or string.
+// SetValue sets Email's value. The type must be one of components.EmailAsObject or string.
 func (c *Email) SetValue(value interface{}) {
 	switch v := value.(type) {
 	case EmailAsObject:
@@ -3064,7 +3064,7 @@ type IssueLabelsItem struct {
 	issueLabelsItemAsObject IssueLabelsItemAsObject
 }
 
-// Value returns IssueLabelsItem's value. The type will be one of string or IssueLabelsItemAsObject.
+// Value returns IssueLabelsItem's value. The type will be one of string or components.IssueLabelsItemAsObject.
 func (c *IssueLabelsItem) Value() interface{} {
 	switch c.oneOfField {
 	case "asString":
@@ -3075,7 +3075,7 @@ func (c *IssueLabelsItem) Value() interface{} {
 	return nil
 }
 
-// SetValue sets IssueLabelsItem's value. The type must be one of string or IssueLabelsItemAsObject.
+// SetValue sets IssueLabelsItem's value. The type must be one of string or components.IssueLabelsItemAsObject.
 func (c *IssueLabelsItem) SetValue(value interface{}) {
 	switch v := value.(type) {
 	case string:
@@ -6309,7 +6309,7 @@ type ScimUserOperationsItemValue struct {
 	asArray                             []interface{}
 }
 
-// Value returns ScimUserOperationsItemValue's value. The type will be one of string, ScimUserOperationsItemValueAsObject or []interface{}.
+// Value returns ScimUserOperationsItemValue's value. The type will be one of string, components.ScimUserOperationsItemValueAsObject or []interface{}.
 func (c *ScimUserOperationsItemValue) Value() interface{} {
 	switch c.oneOfField {
 	case "asString":
@@ -6322,7 +6322,7 @@ func (c *ScimUserOperationsItemValue) Value() interface{} {
 	return nil
 }
 
-// SetValue sets ScimUserOperationsItemValue's value. The type must be one of string, ScimUserOperationsItemValueAsObject or []interface{}.
+// SetValue sets ScimUserOperationsItemValue's value. The type must be one of string, components.ScimUserOperationsItemValueAsObject or []interface{}.
 func (c *ScimUserOperationsItemValue) SetValue(value interface{}) {
 	switch v := value.(type) {
 	case string:

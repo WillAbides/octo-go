@@ -39,6 +39,17 @@ func Int64(i int64) *int64 {
 // Client is a set of options to apply to requests
 type Client []options.Option
 
+// Apply implements options.Option
+func (c Client) Apply(opts *options.Options) error {
+	for _, o := range c {
+		err := o.Apply(opts)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
 // NewClient returns a new Client
 func NewClient(opt ...options.Option) Client {
 	return opt

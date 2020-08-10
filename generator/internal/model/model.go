@@ -22,9 +22,31 @@ type Endpoint struct {
 	SuccessMediaType string
 }
 
+func (e *Endpoint) Clone() *Endpoint {
+	result := new(Endpoint)
+	*result = *e
+	result.PathParams = cloneParams(result.PathParams)
+	result.QueryParams = cloneParams(result.QueryParams)
+	result.Headers = cloneParams(result.Headers)
+	result.Previews = clonePreviews(result.Previews)
+	result.RequestBody = result.RequestBody.Clone()
+	result.Responses = cloneResponseMap(result.Responses)
+	return result
+}
+
 type RequestBody struct {
 	MediaType string
 	Schema    *ParamSchema
+}
+
+func (b *RequestBody) Clone() *RequestBody {
+	if b == nil {
+		return nil
+	}
+	result := new(RequestBody)
+	*result = *b
+	result.Schema = result.Schema.Clone()
+	return result
 }
 
 type Response struct {
@@ -33,10 +55,37 @@ type Response struct {
 	HasExample bool
 }
 
+func (r *Response) Clone() *Response {
+	result := new(Response)
+	*result = *r
+	result.Body = result.Body.Clone()
+	return result
+}
+
+func cloneResponseMap(responses map[int]*Response) map[int]*Response {
+	if responses == nil {
+		return nil
+	}
+	result := make(map[int]*Response, len(responses))
+	for k, v := range responses {
+		result[k] = v.Clone()
+	}
+	return result
+}
+
 type Preview struct {
 	Required bool
 	Name     string
 	Note     string
+}
+
+func clonePreviews(previews []*Preview) []*Preview {
+	result := make([]*Preview, len(previews))
+	for i := range previews {
+		preview := *previews[i]
+		result[i] = &preview
+	}
+	return result
 }
 
 type ParamType int
@@ -84,6 +133,9 @@ type ParamSchema struct {
 }
 
 func (p *ParamSchema) Clone() *ParamSchema {
+	if p == nil {
+		return nil
+	}
 	result := ParamSchema{
 		Type: p.Type,
 		Ref:  p.Ref,
@@ -112,4 +164,15 @@ func (p *Param) Clone() *Param {
 	*q = *p
 	q.Schema = q.Schema.Clone()
 	return q
+}
+
+func cloneParams(params []*Param) []*Param {
+	if params == nil {
+		return nil
+	}
+	result := make([]*Param, len(params))
+	for i := range params {
+		result[i] = params[i].Clone()
+	}
+	return result
 }

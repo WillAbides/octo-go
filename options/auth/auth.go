@@ -10,6 +10,7 @@ import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/willabides/octo-go"
 	"github.com/willabides/octo-go/options"
+	"github.com/willabides/octo-go/requests/apps"
 )
 
 // NewPATProvider returns a PATProvider
@@ -81,7 +82,7 @@ func (a *AppProvider) AuthorizationHeader(_ context.Context) (string, error) {
 
 // NewAppInstallationProvider returns an AppInstallationProvider
 func NewAppInstallationProvider(appID, installationID int64, privateKey []byte,
-	requestBody *octo.AppsCreateInstallationAccessTokenReqBody,
+	requestBody *apps.CreateInstallationAccessTokenReqBody,
 	opt ...options.Option) (*AppInstallationProvider, error) {
 	pk, err := jwt.ParseRSAPrivateKeyFromPEM(privateKey)
 	if err != nil {
@@ -104,7 +105,7 @@ func NewAppInstallationProvider(appID, installationID int64, privateKey []byte,
 //  scope of the token's authorizations.
 // requestOptions are options to be use when requesting a token. They do not affect options for the main request.
 func WithAppInstallationAuth(appID, installationID int64, privateKey []byte,
-	requestBody *octo.AppsCreateInstallationAccessTokenReqBody,
+	requestBody *apps.CreateInstallationAccessTokenReqBody,
 	opt ...options.Option) options.Option {
 	provider, err := NewAppInstallationProvider(appID, installationID, privateKey, requestBody, opt...)
 	if err != nil {
@@ -119,7 +120,7 @@ type AppInstallationProvider struct {
 	installationID int64
 	privateKey     *rsa.PrivateKey
 	requestOptions []options.Option
-	requestBody    *octo.AppsCreateInstallationAccessTokenReqBody
+	requestBody    *apps.CreateInstallationAccessTokenReqBody
 	tkn            string
 	tknExpiry      time.Time
 	tknMux         sync.Mutex
@@ -147,13 +148,13 @@ func (a *AppInstallationProvider) AuthorizationHeader(ctx context.Context) (stri
 		return a.tkn, nil
 	}
 	tokenClient := a.getTokenClient()
-	req := &octo.AppsCreateInstallationAccessTokenReq{
+	req := &apps.CreateInstallationAccessTokenReq{
 		InstallationId: a.installationID,
 	}
 	if a.requestBody != nil {
 		req.RequestBody = *a.requestBody
 	}
-	resp, err := octo.AppsCreateInstallationAccessToken(ctx, req, tokenClient...)
+	resp, err := apps.CreateInstallationAccessToken(ctx, req, tokenClient...)
 	if err != nil {
 		return "", fmt.Errorf("error getting installation token: %v", err)
 	}
