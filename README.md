@@ -60,7 +60,7 @@ This is the simplest and most common way to authenticate.
 ```go
 myToken := os.Getenv("GITHUB_TOKEN") // or however you want to provide your token
 
-client := octo.NewClient(octo.WithPATAuth(myToken))
+client := octo.NewClient(auth.WithPATAuth(myToken))
 ```
 
 ### GitHub App
@@ -74,7 +74,7 @@ key, err := ioutil.ReadFile("appsecretkey.pem")
 if err != nil {
     log.Fatal(err)
 }
-client := octo.NewClient(octo.WithAppAuth(appID, key))
+client := octo.NewClient(auth.WithAppAuth(appID, key))
 ```
 
 ### GitHub App Installation
@@ -89,7 +89,7 @@ if err != nil {
     log.Fatal(err)
 }
 
-auth := octo.WithAppInstallationAuth(appID, installationID, key, nil)
+auth := auth.WithAppInstallationAuth(appID, installationID, key, nil)
 client := octo.NewClient(auth)
 ```
 
@@ -118,11 +118,11 @@ client := octo.NewClient(auth)
 ## Pagination
 
 The GitHub API supports paging through result sets using relative links in the Link header. Octo-go makes use of
- these headers to enable paging. Every response has the methods `RelLink(lnk RelName)` and `HasRelLink(lnk RelName)` 
+ these headers to enable paging. Every response has the methods `RelLink(lnk string)` and `HasRelLink(lnk string)` 
  to get relative links. You can call this with `RelNext` for the next page of results, `RelPrev` for the previous
  page. `RelFirst` and `RelLast` point the first and last page of results.
  
-Every request has a `Rel(lnk RelName, resp *ResponseType)` method that will update the request to point to a response's
+Every request has a `Rel(lnk string, resp *ResponseType)` method that will update the request to point to a response's
  relative link.
  
 Let me demonstrate with an example. `getReleaseBlockers` will page through all open golang/go issues that are labeled
