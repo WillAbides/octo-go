@@ -22,6 +22,17 @@ func NewClient(opt ...options.Option) Client {
 	return opt
 }
 
+// Apply implements options.Option
+func (c Client) Apply(opts *options.Options) error {
+	for _, o := range c {
+		err := o.Apply(opts)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
 /*
 Get performs requests for "emojis/get"
 

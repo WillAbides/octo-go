@@ -179,6 +179,18 @@ func addEndpointToRequestFiles(endpoint *model.Endpoint, requestFiles map[string
 		).Id("Client").Block(
 			jen.Return(jen.Id("opt")),
 		)
+		cf.Comment("Apply implements options.Option")
+		cf.Func().Id("(c Client) Apply").Params(
+			jen.Id("opts").Op("*").Qual(pq.pkgPath("options"), "Options"),
+		).Id("error").Block(
+			jen.Id(`for _, o := range c {
+		err := o.Apply(opts)
+		if err != nil {
+			return err
+		}
+	}
+	return nil`),
+		)
 		requestFiles[reqPkg] = cf
 	}
 	file := requestFiles[reqPkg]
