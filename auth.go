@@ -68,13 +68,12 @@ func (p *AppAuthProvider) AuthorizationHeader(_ context.Context) (string, error)
 
 // AppInstallationAuthProvider provides authentication for a GitHub App installation
 type AppInstallationAuthProvider struct {
-	mux             sync.Mutex
-	appAuthProvider *AppAuthProvider
-	installationID  int64
-	requestBody     *apps.CreateInstallationAccessTokenReqBody
-	opts            []requests.Option
-	tkn             string
-	expiry          time.Time
+	mux            sync.Mutex
+	installationID int64
+	requestBody    *apps.CreateInstallationAccessTokenReqBody
+	client         Client
+	tkn            string
+	expiry         time.Time
 }
 
 // Apply implements requests.Option
@@ -96,13 +95,7 @@ func (p *AppInstallationAuthProvider) AuthorizationHeader(ctx context.Context) (
 	if p.requestBody != nil {
 		req.RequestBody = *p.requestBody
 	}
-	opts, err := requests.BuildOptions(p.opts...)
-	if err != nil {
-		return "", err
-	}
-	opts.SetAuthProvider(p.appAuthProvider)
-
-	resp, err := apps.CreateInstallationAccessToken(ctx, req, opts)
+	resp, err := p.client.Apps().CreateInstallationAccessToken(ctx, req)
 	if err != nil {
 		return "", fmt.Errorf("error creating installation token: %v", err)
 	}

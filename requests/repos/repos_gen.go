@@ -25,17 +25,6 @@ func NewClient(opt ...requests.Option) Client {
 	return opt
 }
 
-// Apply implements options.Option
-func (c Client) Apply(opts *requests.Options) error {
-	for _, o := range c {
-		err := o.Apply(opts)
-		if err != nil {
-			return err
-		}
-	}
-	return nil
-}
-
 /*
 AcceptInvitation performs requests for "repos/accept-invitation"
 

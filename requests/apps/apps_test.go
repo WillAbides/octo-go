@@ -12,7 +12,7 @@ import (
 )
 
 func vcrClient(t *testing.T, cas string, opts ...requests.Option) apps.Client {
-	return apps.NewClient(testutil.VCRClient(t, cas, opts...))
+	return testutil.VCRClient(t, cas, opts...).Apps()
 }
 
 func TestCreateInstallationAccessToken(t *testing.T) {

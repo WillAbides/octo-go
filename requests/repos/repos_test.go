@@ -17,7 +17,7 @@ import (
 )
 
 func vcrClient(t *testing.T, cas string, opts ...requests.Option) repos.Client {
-	return repos.NewClient(testutil.VCRClient(t, cas, opts...))
+	return testutil.VCRClient(t, cas, opts...).Repos()
 }
 
 func TestGetContent(t *testing.T) {

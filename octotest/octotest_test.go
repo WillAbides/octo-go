@@ -56,7 +56,7 @@ func TestPaging(t *testing.T) {
 	req := req1
 	var got []int64
 	for ok {
-		resp, err := issues.ListForRepo(ctx, req, client)
+		resp, err := client.Issues().ListForRepo(ctx, req)
 		require.NoError(t, err)
 		for _, data := range resp.Data {
 			got = append(got, data.Id)
@@ -92,10 +92,10 @@ func TestDistinguishesBodies(t *testing.T) {
 	server.Expect(req2, JSONResponder(201, respBody2))
 	server.Expect(req1, JSONResponder(201, respBody1))
 	client := server.Client()
-	got1, err := checks.Create(ctx, req1, client)
+	got1, err := client.Checks().Create(ctx, req1)
 	require.NoError(t, err)
 	require.Equal(t, respBody1, got1.Data)
-	got2, err := checks.Create(ctx, req2, client)
+	got2, err := client.Checks().Create(ctx, req2)
 	require.NoError(t, err)
 	require.Equal(t, respBody2, got2.Data)
 }

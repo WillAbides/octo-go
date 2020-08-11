@@ -190,18 +190,6 @@ func addEndpointToRequestFiles(endpoint *model.Endpoint, requestFiles map[string
 		).Id("Client").Block(
 			jen.Return(jen.Id("opt")),
 		)
-		cf.Comment("Apply implements options.Option")
-		cf.Func().Id("(c Client) Apply").Params(
-			jen.Id("opts").Op("*").Qual(pq.pkgPath("requests"), "Options"),
-		).Id("error").Block(
-			jen.Id(`for _, o := range c {
-		err := o.Apply(opts)
-		if err != nil {
-			return err
-		}
-	}
-	return nil`),
-		)
 		requestFiles[reqPkg] = cf
 	}
 	file := requestFiles[reqPkg]
@@ -246,7 +234,7 @@ func concernClient(concern string, pq pkgQual) *jen.Statement {
 	stmt := jen.Commentf("%s returns a %s", toExportedName(concern), fmt.Sprintf("%s.Client", concernPkg))
 	stmt.Line()
 	stmt.Id("func (c Client)").Id(toExportedName(concern)).Params().Add(qualClient.jenType(pq)).Block(
-		jen.Return(qualNewClient.jenType(pq).Call(jen.Id("c"))),
+		jen.Return(qualNewClient.jenType(pq).Call(jen.Id("c..."))),
 	)
 	stmt.Line()
 	return stmt

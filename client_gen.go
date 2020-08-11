@@ -35,140 +35,140 @@ import (
 
 // Actions returns a actions.Client
 func (c Client) Actions() actions.Client {
-	return actions.NewClient(c)
+	return actions.NewClient(c...)
 }
 
 // Activity returns a activity.Client
 func (c Client) Activity() activity.Client {
-	return activity.NewClient(c)
+	return activity.NewClient(c...)
 }
 
 // Apps returns a apps.Client
 func (c Client) Apps() apps.Client {
-	return apps.NewClient(c)
+	return apps.NewClient(c...)
 }
 
 // Billing returns a billing.Client
 func (c Client) Billing() billing.Client {
-	return billing.NewClient(c)
+	return billing.NewClient(c...)
 }
 
 // Checks returns a checks.Client
 func (c Client) Checks() checks.Client {
-	return checks.NewClient(c)
+	return checks.NewClient(c...)
 }
 
 // CodeScanning returns a codescanning.Client
 func (c Client) CodeScanning() codescanning.Client {
-	return codescanning.NewClient(c)
+	return codescanning.NewClient(c...)
 }
 
 // CodesOfConduct returns a codesofconduct.Client
 func (c Client) CodesOfConduct() codesofconduct.Client {
-	return codesofconduct.NewClient(c)
+	return codesofconduct.NewClient(c...)
 }
 
 // Emojis returns a emojis.Client
 func (c Client) Emojis() emojis.Client {
-	return emojis.NewClient(c)
+	return emojis.NewClient(c...)
 }
 
 // Gists returns a gists.Client
 func (c Client) Gists() gists.Client {
-	return gists.NewClient(c)
+	return gists.NewClient(c...)
 }
 
 // Git returns a git.Client
 func (c Client) Git() git.Client {
-	return git.NewClient(c)
+	return git.NewClient(c...)
 }
 
 // Gitignore returns a gitignore.Client
 func (c Client) Gitignore() gitignore.Client {
-	return gitignore.NewClient(c)
+	return gitignore.NewClient(c...)
 }
 
 // Interactions returns a interactions.Client
 func (c Client) Interactions() interactions.Client {
-	return interactions.NewClient(c)
+	return interactions.NewClient(c...)
 }
 
 // Issues returns a issues.Client
 func (c Client) Issues() issues.Client {
-	return issues.NewClient(c)
+	return issues.NewClient(c...)
 }
 
 // Licenses returns a licenses.Client
 func (c Client) Licenses() licenses.Client {
-	return licenses.NewClient(c)
+	return licenses.NewClient(c...)
 }
 
 // Markdown returns a markdown.Client
 func (c Client) Markdown() markdown.Client {
-	return markdown.NewClient(c)
+	return markdown.NewClient(c...)
 }
 
 // Meta returns a meta.Client
 func (c Client) Meta() meta.Client {
-	return meta.NewClient(c)
+	return meta.NewClient(c...)
 }
 
 // Migrations returns a migrations.Client
 func (c Client) Migrations() migrations.Client {
-	return migrations.NewClient(c)
+	return migrations.NewClient(c...)
 }
 
 // OauthAuthorizations returns a oauthauthorizations.Client
 func (c Client) OauthAuthorizations() oauthauthorizations.Client {
-	return oauthauthorizations.NewClient(c)
+	return oauthauthorizations.NewClient(c...)
 }
 
 // Orgs returns a orgs.Client
 func (c Client) Orgs() orgs.Client {
-	return orgs.NewClient(c)
+	return orgs.NewClient(c...)
 }
 
 // Projects returns a projects.Client
 func (c Client) Projects() projects.Client {
-	return projects.NewClient(c)
+	return projects.NewClient(c...)
 }
 
 // Pulls returns a pulls.Client
 func (c Client) Pulls() pulls.Client {
-	return pulls.NewClient(c)
+	return pulls.NewClient(c...)
 }
 
 // RateLimit returns a ratelimit.Client
 func (c Client) RateLimit() ratelimit.Client {
-	return ratelimit.NewClient(c)
+	return ratelimit.NewClient(c...)
 }
 
 // Reactions returns a reactions.Client
 func (c Client) Reactions() reactions.Client {
-	return reactions.NewClient(c)
+	return reactions.NewClient(c...)
 }
 
 // Repos returns a repos.Client
 func (c Client) Repos() repos.Client {
-	return repos.NewClient(c)
+	return repos.NewClient(c...)
 }
 
 // Scim returns a scim.Client
 func (c Client) Scim() scim.Client {
-	return scim.NewClient(c)
+	return scim.NewClient(c...)
 }
 
 // Search returns a search.Client
 func (c Client) Search() search.Client {
-	return search.NewClient(c)
+	return search.NewClient(c...)
 }
 
 // Teams returns a teams.Client
 func (c Client) Teams() teams.Client {
-	return teams.NewClient(c)
+	return teams.NewClient(c...)
 }
 
 // Users returns a users.Client
 func (c Client) Users() users.Client {
-	return users.NewClient(c)
+	return users.NewClient(c...)
 }

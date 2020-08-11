@@ -12,9 +12,7 @@ type AuthProvider interface {
 }
 
 // Option is a request option
-type Option interface {
-	Apply(opts *Options) error
-}
+type Option func(opts *Options) error
 
 var defaultOptions = Options{
 	baseURL: url.URL{
@@ -32,7 +30,7 @@ func BuildOptions(opt ...Option) (*Options, error) {
 		if o == nil {
 			continue
 		}
-		err := o.Apply(&result)
+		err := o(&result)
 		if err != nil {
 			return nil, nil
 		}
@@ -49,12 +47,6 @@ type Options struct {
 	preserveResponseBody bool
 	authProvider         AuthProvider
 	httpClient           *http.Client
-}
-
-// Apply implements Option.Apply
-func (o *Options) Apply(opts *Options) error {
-	*opts = *o
-	return nil
 }
 
 // HttpClient return httpClient

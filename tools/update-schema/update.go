@@ -100,10 +100,10 @@ func setCurrentVersion(workingDir, version string) error {
 }
 
 func latestReleaseTag(ctx context.Context, client octo.Client) (string, error) {
-	resp, err := repos.GetLatestRelease(ctx, &repos.GetLatestReleaseReq{
+	resp, err := client.Repos().GetLatestRelease(ctx, &repos.GetLatestReleaseReq{
 		Owner: "github",
 		Repo:  "rest-api-description",
-	}, client)
+	})
 	if err != nil {
 		return "", err
 	}

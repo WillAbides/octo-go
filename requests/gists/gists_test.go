@@ -12,7 +12,7 @@ import (
 )
 
 func vcrClient(t *testing.T, cas string, opts ...requests.Option) gists.Client {
-	return gists.NewClient(testutil.VCRClient(t, cas, opts...))
+	return testutil.VCRClient(t, cas, opts...).Gists()
 }
 
 func TestCreate(t *testing.T) {

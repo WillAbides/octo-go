@@ -11,7 +11,7 @@ import (
 )
 
 func vcrClient(t *testing.T, cas string, opts ...requests.Option) issues.Client {
-	return issues.NewClient(testutil.VCRClient(t, cas, opts...))
+	return testutil.VCRClient(t, cas, opts...).Issues()
 }
 
 func TestAddLabels(t *testing.T) {

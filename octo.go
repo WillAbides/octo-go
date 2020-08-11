@@ -42,7 +42,7 @@ type Client []requests.Option
 // Apply implements options.Option
 func (c Client) Apply(opts *requests.Options) error {
 	for _, o := range c {
-		err := o.Apply(opts)
+		err := o(opts)
 		if err != nil {
 			return err
 		}

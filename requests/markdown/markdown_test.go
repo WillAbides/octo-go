@@ -14,7 +14,7 @@ import (
 )
 
 func vcrClient(t *testing.T, cas string, opts ...requests.Option) markdown.Client {
-	return markdown.NewClient(testutil.VCRClient(t, cas, opts...))
+	return testutil.VCRClient(t, cas, opts...).Markdown()
 }
 
 func TestRender(t *testing.T) {

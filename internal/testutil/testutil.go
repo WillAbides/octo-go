@@ -71,7 +71,7 @@ func PATAuth() requests.Option {
 }
 
 // AppAuth returns auth
-func AppAuth(t *testing.T) *octo.AppAuthProvider {
+func AppAuth(t *testing.T) requests.Option {
 	key := appPrivateKey(t)
 	if key == nil {
 		return nil
@@ -81,11 +81,9 @@ func AppAuth(t *testing.T) *octo.AppAuthProvider {
 
 // AppInstallationAuth returns auth
 func AppInstallationAuth(t *testing.T) requests.Option {
-	key := appPrivateKey(t)
-	if key == nil {
-		return nil
-	}
-	return octo.WithAppInstallationAuth(AppInstallationID, AppAuth(t), nil)
+	appClient := octo.NewClient(AppAuth(t))
+
+	return octo.WithAppInstallationAuth(AppInstallationID, appClient, nil)
 }
 
 // VCRClient returns a vcr client
