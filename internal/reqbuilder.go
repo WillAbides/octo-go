@@ -144,5 +144,16 @@ func (b *RequestBuilder) HTTPRequest(ctx context.Context, opts *requests.Options
 	}
 	req.Header = b.requestHeaders(*opts)
 	req.Header.Set("User-Agent", opts.UserAgent())
+
+	authProvider := opts.AuthProvider()
+	if authProvider != nil {
+		var authHeader string
+		authHeader, err = authProvider.AuthorizationHeader(ctx)
+		if err != nil {
+			return nil, fmt.Errorf("error setting authorization header: %v", err)
+		}
+		req.Header.Set("Authorization", authHeader)
+	}
+
 	return req, nil
 }

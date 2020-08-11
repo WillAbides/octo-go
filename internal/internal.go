@@ -2,7 +2,6 @@ package internal
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/willabides/octo-go/requests"
 )
@@ -17,16 +16,6 @@ func DoRequest(ctx context.Context, builder *RequestBuilder, opts *requests.Opti
 		return nil, err
 	}
 
-	// TODO: move this into builder.HTTPRequest
-	authProvider := opts.AuthProvider()
-	if authProvider != nil {
-		var authHeader string
-		authHeader, err = authProvider.AuthorizationHeader(ctx)
-		if err != nil {
-			return nil, fmt.Errorf("error setting authorization header: %v", err)
-		}
-		req.Header.Set("Authorization", authHeader)
-	}
 	httpResponse, err := opts.HttpClient().Do(req)
 	if err != nil {
 		return nil, err
