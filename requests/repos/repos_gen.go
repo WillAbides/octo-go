@@ -6,10 +6,9 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	common "github.com/willabides/octo-go/common"
 	components "github.com/willabides/octo-go/components"
 	internal "github.com/willabides/octo-go/internal"
-	options "github.com/willabides/octo-go/options"
+	requests "github.com/willabides/octo-go/requests"
 	"io"
 	"net/http"
 	"net/url"
@@ -19,15 +18,15 @@ import (
 func strPtr(s string) *string { return &s }
 
 // Client is a set of options to apply to requests
-type Client []options.Option
+type Client []requests.Option
 
 // NewClient returns a new Client
-func NewClient(opt ...options.Option) Client {
+func NewClient(opt ...requests.Option) Client {
 	return opt
 }
 
 // Apply implements options.Option
-func (c Client) Apply(opts *options.Options) error {
+func (c Client) Apply(opts *requests.Options) error {
 	for _, o := range c {
 		err := o.Apply(opts)
 		if err != nil {
@@ -46,8 +45,8 @@ Accept a repository invitation.
 
 https://developer.github.com/v3/repos/invitations/#accept-a-repository-invitation
 */
-func AcceptInvitation(ctx context.Context, req *AcceptInvitationReq, opt ...options.Option) (*AcceptInvitationResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func AcceptInvitation(ctx context.Context, req *AcceptInvitationReq, opt ...requests.Option) (*AcceptInvitationResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -81,7 +80,7 @@ Accept a repository invitation.
 
 https://developer.github.com/v3/repos/invitations/#accept-a-repository-invitation
 */
-func (c Client) AcceptInvitation(ctx context.Context, req *AcceptInvitationReq, opt ...options.Option) (*AcceptInvitationResponse, error) {
+func (c Client) AcceptInvitation(ctx context.Context, req *AcceptInvitationReq, opt ...requests.Option) (*AcceptInvitationResponse, error) {
 	return AcceptInvitation(ctx, req, append(c, opt...)...)
 }
 
@@ -98,8 +97,8 @@ type AcceptInvitationReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *AcceptInvitationReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *AcceptInvitationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -145,7 +144,7 @@ AcceptInvitationResponse is a response for AcceptInvitation
 https://developer.github.com/v3/repos/invitations/#accept-a-repository-invitation
 */
 type AcceptInvitationResponse struct {
-	common.Response
+	requests.Response
 	request *AcceptInvitationReq
 }
 
@@ -158,8 +157,8 @@ Add app access restrictions.
 
 https://developer.github.com/v3/repos/branches/#add-app-access-restrictions
 */
-func AddAppAccessRestrictions(ctx context.Context, req *AddAppAccessRestrictionsReq, opt ...options.Option) (*AddAppAccessRestrictionsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func AddAppAccessRestrictions(ctx context.Context, req *AddAppAccessRestrictionsReq, opt ...requests.Option) (*AddAppAccessRestrictionsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -194,7 +193,7 @@ Add app access restrictions.
 
 https://developer.github.com/v3/repos/branches/#add-app-access-restrictions
 */
-func (c Client) AddAppAccessRestrictions(ctx context.Context, req *AddAppAccessRestrictionsReq, opt ...options.Option) (*AddAppAccessRestrictionsResponse, error) {
+func (c Client) AddAppAccessRestrictions(ctx context.Context, req *AddAppAccessRestrictionsReq, opt ...requests.Option) (*AddAppAccessRestrictionsResponse, error) {
 	return AddAppAccessRestrictions(ctx, req, append(c, opt...)...)
 }
 
@@ -214,8 +213,8 @@ type AddAppAccessRestrictionsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *AddAppAccessRestrictionsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *AddAppAccessRestrictionsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -271,7 +270,7 @@ AddAppAccessRestrictionsResponse is a response for AddAppAccessRestrictions
 https://developer.github.com/v3/repos/branches/#add-app-access-restrictions
 */
 type AddAppAccessRestrictionsResponse struct {
-	common.Response
+	requests.Response
 	request *AddAppAccessRestrictionsReq
 	Data    []components.Integration
 }
@@ -285,8 +284,8 @@ Add a repository collaborator.
 
 https://developer.github.com/v3/repos/collaborators/#add-a-repository-collaborator
 */
-func AddCollaborator(ctx context.Context, req *AddCollaboratorReq, opt ...options.Option) (*AddCollaboratorResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func AddCollaborator(ctx context.Context, req *AddCollaboratorReq, opt ...requests.Option) (*AddCollaboratorResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -321,7 +320,7 @@ Add a repository collaborator.
 
 https://developer.github.com/v3/repos/collaborators/#add-a-repository-collaborator
 */
-func (c Client) AddCollaborator(ctx context.Context, req *AddCollaboratorReq, opt ...options.Option) (*AddCollaboratorResponse, error) {
+func (c Client) AddCollaborator(ctx context.Context, req *AddCollaboratorReq, opt ...requests.Option) (*AddCollaboratorResponse, error) {
 	return AddCollaborator(ctx, req, append(c, opt...)...)
 }
 
@@ -339,8 +338,8 @@ type AddCollaboratorReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *AddCollaboratorReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *AddCollaboratorReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -411,7 +410,7 @@ AddCollaboratorResponse is a response for AddCollaborator
 https://developer.github.com/v3/repos/collaborators/#add-a-repository-collaborator
 */
 type AddCollaboratorResponse struct {
-	common.Response
+	requests.Response
 	request *AddCollaboratorReq
 	Data    components.RepositoryInvitation
 }
@@ -425,8 +424,8 @@ Add status check contexts.
 
 https://developer.github.com/v3/repos/branches/#add-status-check-contexts
 */
-func AddStatusCheckContexts(ctx context.Context, req *AddStatusCheckContextsReq, opt ...options.Option) (*AddStatusCheckContextsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func AddStatusCheckContexts(ctx context.Context, req *AddStatusCheckContextsReq, opt ...requests.Option) (*AddStatusCheckContextsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -461,7 +460,7 @@ Add status check contexts.
 
 https://developer.github.com/v3/repos/branches/#add-status-check-contexts
 */
-func (c Client) AddStatusCheckContexts(ctx context.Context, req *AddStatusCheckContextsReq, opt ...options.Option) (*AddStatusCheckContextsResponse, error) {
+func (c Client) AddStatusCheckContexts(ctx context.Context, req *AddStatusCheckContextsReq, opt ...requests.Option) (*AddStatusCheckContextsResponse, error) {
 	return AddStatusCheckContexts(ctx, req, append(c, opt...)...)
 }
 
@@ -481,8 +480,8 @@ type AddStatusCheckContextsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *AddStatusCheckContextsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *AddStatusCheckContextsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -545,7 +544,7 @@ AddStatusCheckContextsResponse is a response for AddStatusCheckContexts
 https://developer.github.com/v3/repos/branches/#add-status-check-contexts
 */
 type AddStatusCheckContextsResponse struct {
-	common.Response
+	requests.Response
 	request *AddStatusCheckContextsReq
 	Data    AddStatusCheckContextsResponseBody
 }
@@ -559,8 +558,8 @@ Add team access restrictions.
 
 https://developer.github.com/v3/repos/branches/#add-team-access-restrictions
 */
-func AddTeamAccessRestrictions(ctx context.Context, req *AddTeamAccessRestrictionsReq, opt ...options.Option) (*AddTeamAccessRestrictionsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func AddTeamAccessRestrictions(ctx context.Context, req *AddTeamAccessRestrictionsReq, opt ...requests.Option) (*AddTeamAccessRestrictionsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -595,7 +594,7 @@ Add team access restrictions.
 
 https://developer.github.com/v3/repos/branches/#add-team-access-restrictions
 */
-func (c Client) AddTeamAccessRestrictions(ctx context.Context, req *AddTeamAccessRestrictionsReq, opt ...options.Option) (*AddTeamAccessRestrictionsResponse, error) {
+func (c Client) AddTeamAccessRestrictions(ctx context.Context, req *AddTeamAccessRestrictionsReq, opt ...requests.Option) (*AddTeamAccessRestrictionsResponse, error) {
 	return AddTeamAccessRestrictions(ctx, req, append(c, opt...)...)
 }
 
@@ -615,8 +614,8 @@ type AddTeamAccessRestrictionsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *AddTeamAccessRestrictionsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *AddTeamAccessRestrictionsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -672,7 +671,7 @@ AddTeamAccessRestrictionsResponse is a response for AddTeamAccessRestrictions
 https://developer.github.com/v3/repos/branches/#add-team-access-restrictions
 */
 type AddTeamAccessRestrictionsResponse struct {
-	common.Response
+	requests.Response
 	request *AddTeamAccessRestrictionsReq
 	Data    []components.Team
 }
@@ -686,8 +685,8 @@ Add user access restrictions.
 
 https://developer.github.com/v3/repos/branches/#add-user-access-restrictions
 */
-func AddUserAccessRestrictions(ctx context.Context, req *AddUserAccessRestrictionsReq, opt ...options.Option) (*AddUserAccessRestrictionsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func AddUserAccessRestrictions(ctx context.Context, req *AddUserAccessRestrictionsReq, opt ...requests.Option) (*AddUserAccessRestrictionsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -722,7 +721,7 @@ Add user access restrictions.
 
 https://developer.github.com/v3/repos/branches/#add-user-access-restrictions
 */
-func (c Client) AddUserAccessRestrictions(ctx context.Context, req *AddUserAccessRestrictionsReq, opt ...options.Option) (*AddUserAccessRestrictionsResponse, error) {
+func (c Client) AddUserAccessRestrictions(ctx context.Context, req *AddUserAccessRestrictionsReq, opt ...requests.Option) (*AddUserAccessRestrictionsResponse, error) {
 	return AddUserAccessRestrictions(ctx, req, append(c, opt...)...)
 }
 
@@ -742,8 +741,8 @@ type AddUserAccessRestrictionsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *AddUserAccessRestrictionsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *AddUserAccessRestrictionsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -799,7 +798,7 @@ AddUserAccessRestrictionsResponse is a response for AddUserAccessRestrictions
 https://developer.github.com/v3/repos/branches/#add-user-access-restrictions
 */
 type AddUserAccessRestrictionsResponse struct {
-	common.Response
+	requests.Response
 	request *AddUserAccessRestrictionsReq
 	Data    []components.SimpleUser
 }
@@ -813,8 +812,8 @@ Check if a user is a repository collaborator.
 
 https://developer.github.com/v3/repos/collaborators/#check-if-a-user-is-a-repository-collaborator
 */
-func CheckCollaborator(ctx context.Context, req *CheckCollaboratorReq, opt ...options.Option) (*CheckCollaboratorResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CheckCollaborator(ctx context.Context, req *CheckCollaboratorReq, opt ...requests.Option) (*CheckCollaboratorResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -852,7 +851,7 @@ Check if a user is a repository collaborator.
 
 https://developer.github.com/v3/repos/collaborators/#check-if-a-user-is-a-repository-collaborator
 */
-func (c Client) CheckCollaborator(ctx context.Context, req *CheckCollaboratorReq, opt ...options.Option) (*CheckCollaboratorResponse, error) {
+func (c Client) CheckCollaborator(ctx context.Context, req *CheckCollaboratorReq, opt ...requests.Option) (*CheckCollaboratorResponse, error) {
 	return CheckCollaborator(ctx, req, append(c, opt...)...)
 }
 
@@ -869,8 +868,8 @@ type CheckCollaboratorReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CheckCollaboratorReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CheckCollaboratorReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -916,7 +915,7 @@ CheckCollaboratorResponse is a response for CheckCollaborator
 https://developer.github.com/v3/repos/collaborators/#check-if-a-user-is-a-repository-collaborator
 */
 type CheckCollaboratorResponse struct {
-	common.Response
+	requests.Response
 	request *CheckCollaboratorReq
 	Data    bool
 }
@@ -930,8 +929,8 @@ Check if vulnerability alerts are enabled for a repository.
 
 https://developer.github.com/v3/repos/#check-if-vulnerability-alerts-are-enabled-for-a-repository
 */
-func CheckVulnerabilityAlerts(ctx context.Context, req *CheckVulnerabilityAlertsReq, opt ...options.Option) (*CheckVulnerabilityAlertsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CheckVulnerabilityAlerts(ctx context.Context, req *CheckVulnerabilityAlertsReq, opt ...requests.Option) (*CheckVulnerabilityAlertsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -969,7 +968,7 @@ Check if vulnerability alerts are enabled for a repository.
 
 https://developer.github.com/v3/repos/#check-if-vulnerability-alerts-are-enabled-for-a-repository
 */
-func (c Client) CheckVulnerabilityAlerts(ctx context.Context, req *CheckVulnerabilityAlertsReq, opt ...options.Option) (*CheckVulnerabilityAlertsResponse, error) {
+func (c Client) CheckVulnerabilityAlerts(ctx context.Context, req *CheckVulnerabilityAlertsReq, opt ...requests.Option) (*CheckVulnerabilityAlertsResponse, error) {
 	return CheckVulnerabilityAlerts(ctx, req, append(c, opt...)...)
 }
 
@@ -992,8 +991,8 @@ type CheckVulnerabilityAlertsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CheckVulnerabilityAlertsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CheckVulnerabilityAlertsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1039,7 +1038,7 @@ CheckVulnerabilityAlertsResponse is a response for CheckVulnerabilityAlerts
 https://developer.github.com/v3/repos/#check-if-vulnerability-alerts-are-enabled-for-a-repository
 */
 type CheckVulnerabilityAlertsResponse struct {
-	common.Response
+	requests.Response
 	request *CheckVulnerabilityAlertsReq
 	Data    bool
 }
@@ -1053,8 +1052,8 @@ Compare two commits.
 
 https://developer.github.com/v3/repos/commits/#compare-two-commits
 */
-func CompareCommits(ctx context.Context, req *CompareCommitsReq, opt ...options.Option) (*CompareCommitsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CompareCommits(ctx context.Context, req *CompareCommitsReq, opt ...requests.Option) (*CompareCommitsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1089,7 +1088,7 @@ Compare two commits.
 
 https://developer.github.com/v3/repos/commits/#compare-two-commits
 */
-func (c Client) CompareCommits(ctx context.Context, req *CompareCommitsReq, opt ...options.Option) (*CompareCommitsResponse, error) {
+func (c Client) CompareCommits(ctx context.Context, req *CompareCommitsReq, opt ...requests.Option) (*CompareCommitsResponse, error) {
 	return CompareCommits(ctx, req, append(c, opt...)...)
 }
 
@@ -1111,8 +1110,8 @@ type CompareCommitsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CompareCommitsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CompareCommitsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1158,7 +1157,7 @@ CompareCommitsResponse is a response for CompareCommits
 https://developer.github.com/v3/repos/commits/#compare-two-commits
 */
 type CompareCommitsResponse struct {
-	common.Response
+	requests.Response
 	request *CompareCommitsReq
 	Data    components.CommitComparison
 }
@@ -1172,8 +1171,8 @@ Create a commit comment.
 
 https://developer.github.com/v3/repos/comments/#create-a-commit-comment
 */
-func CreateCommitComment(ctx context.Context, req *CreateCommitCommentReq, opt ...options.Option) (*CreateCommitCommentResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateCommitComment(ctx context.Context, req *CreateCommitCommentReq, opt ...requests.Option) (*CreateCommitCommentResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1208,7 +1207,7 @@ Create a commit comment.
 
 https://developer.github.com/v3/repos/comments/#create-a-commit-comment
 */
-func (c Client) CreateCommitComment(ctx context.Context, req *CreateCommitCommentReq, opt ...options.Option) (*CreateCommitCommentResponse, error) {
+func (c Client) CreateCommitComment(ctx context.Context, req *CreateCommitCommentReq, opt ...requests.Option) (*CreateCommitCommentResponse, error) {
 	return CreateCommitComment(ctx, req, append(c, opt...)...)
 }
 
@@ -1228,8 +1227,8 @@ type CreateCommitCommentReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateCommitCommentReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateCommitCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1298,7 +1297,7 @@ CreateCommitCommentResponse is a response for CreateCommitComment
 https://developer.github.com/v3/repos/comments/#create-a-commit-comment
 */
 type CreateCommitCommentResponse struct {
-	common.Response
+	requests.Response
 	request *CreateCommitCommentReq
 	Data    components.CommitComment
 }
@@ -1312,8 +1311,8 @@ Create commit signature protection.
 
 https://developer.github.com/v3/repos/branches/#create-commit-signature-protection
 */
-func CreateCommitSignatureProtection(ctx context.Context, req *CreateCommitSignatureProtectionReq, opt ...options.Option) (*CreateCommitSignatureProtectionResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateCommitSignatureProtection(ctx context.Context, req *CreateCommitSignatureProtectionReq, opt ...requests.Option) (*CreateCommitSignatureProtectionResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1348,7 +1347,7 @@ Create commit signature protection.
 
 https://developer.github.com/v3/repos/branches/#create-commit-signature-protection
 */
-func (c Client) CreateCommitSignatureProtection(ctx context.Context, req *CreateCommitSignatureProtectionReq, opt ...options.Option) (*CreateCommitSignatureProtectionResponse, error) {
+func (c Client) CreateCommitSignatureProtection(ctx context.Context, req *CreateCommitSignatureProtectionReq, opt ...requests.Option) (*CreateCommitSignatureProtectionResponse, error) {
 	return CreateCommitSignatureProtection(ctx, req, append(c, opt...)...)
 }
 
@@ -1376,8 +1375,8 @@ type CreateCommitSignatureProtectionReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateCommitSignatureProtectionReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateCommitSignatureProtectionReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1423,7 +1422,7 @@ CreateCommitSignatureProtectionResponse is a response for CreateCommitSignatureP
 https://developer.github.com/v3/repos/branches/#create-commit-signature-protection
 */
 type CreateCommitSignatureProtectionResponse struct {
-	common.Response
+	requests.Response
 	request *CreateCommitSignatureProtectionReq
 	Data    components.ProtectedBranchAdminEnforced
 }
@@ -1437,8 +1436,8 @@ Create a commit status.
 
 https://developer.github.com/v3/repos/statuses/#create-a-commit-status
 */
-func CreateCommitStatus(ctx context.Context, req *CreateCommitStatusReq, opt ...options.Option) (*CreateCommitStatusResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateCommitStatus(ctx context.Context, req *CreateCommitStatusReq, opt ...requests.Option) (*CreateCommitStatusResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1473,7 +1472,7 @@ Create a commit status.
 
 https://developer.github.com/v3/repos/statuses/#create-a-commit-status
 */
-func (c Client) CreateCommitStatus(ctx context.Context, req *CreateCommitStatusReq, opt ...options.Option) (*CreateCommitStatusResponse, error) {
+func (c Client) CreateCommitStatus(ctx context.Context, req *CreateCommitStatusReq, opt ...requests.Option) (*CreateCommitStatusResponse, error) {
 	return CreateCommitStatus(ctx, req, append(c, opt...)...)
 }
 
@@ -1493,8 +1492,8 @@ type CreateCommitStatusReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateCommitStatusReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateCommitStatusReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1569,7 +1568,7 @@ CreateCommitStatusResponse is a response for CreateCommitStatus
 https://developer.github.com/v3/repos/statuses/#create-a-commit-status
 */
 type CreateCommitStatusResponse struct {
-	common.Response
+	requests.Response
 	request *CreateCommitStatusReq
 	Data    components.Status
 }
@@ -1583,8 +1582,8 @@ Create a deploy key.
 
 https://developer.github.com/v3/repos/keys/#create-a-deploy-key
 */
-func CreateDeployKey(ctx context.Context, req *CreateDeployKeyReq, opt ...options.Option) (*CreateDeployKeyResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateDeployKey(ctx context.Context, req *CreateDeployKeyReq, opt ...requests.Option) (*CreateDeployKeyResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1619,7 +1618,7 @@ Create a deploy key.
 
 https://developer.github.com/v3/repos/keys/#create-a-deploy-key
 */
-func (c Client) CreateDeployKey(ctx context.Context, req *CreateDeployKeyReq, opt ...options.Option) (*CreateDeployKeyResponse, error) {
+func (c Client) CreateDeployKey(ctx context.Context, req *CreateDeployKeyReq, opt ...requests.Option) (*CreateDeployKeyResponse, error) {
 	return CreateDeployKey(ctx, req, append(c, opt...)...)
 }
 
@@ -1636,8 +1635,8 @@ type CreateDeployKeyReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateDeployKeyReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateDeployKeyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1713,7 +1712,7 @@ CreateDeployKeyResponse is a response for CreateDeployKey
 https://developer.github.com/v3/repos/keys/#create-a-deploy-key
 */
 type CreateDeployKeyResponse struct {
-	common.Response
+	requests.Response
 	request *CreateDeployKeyReq
 	Data    components.DeployKey
 }
@@ -1727,8 +1726,8 @@ Create a deployment.
 
 https://developer.github.com/v3/repos/deployments/#create-a-deployment
 */
-func CreateDeployment(ctx context.Context, req *CreateDeploymentReq, opt ...options.Option) (*CreateDeploymentResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateDeployment(ctx context.Context, req *CreateDeploymentReq, opt ...requests.Option) (*CreateDeploymentResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1763,7 +1762,7 @@ Create a deployment.
 
 https://developer.github.com/v3/repos/deployments/#create-a-deployment
 */
-func (c Client) CreateDeployment(ctx context.Context, req *CreateDeploymentReq, opt ...options.Option) (*CreateDeploymentResponse, error) {
+func (c Client) CreateDeployment(ctx context.Context, req *CreateDeploymentReq, opt ...requests.Option) (*CreateDeploymentResponse, error) {
 	return CreateDeployment(ctx, req, append(c, opt...)...)
 }
 
@@ -1791,8 +1790,8 @@ type CreateDeploymentReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateDeploymentReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateDeploymentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1896,7 +1895,7 @@ CreateDeploymentResponse is a response for CreateDeployment
 https://developer.github.com/v3/repos/deployments/#create-a-deployment
 */
 type CreateDeploymentResponse struct {
-	common.Response
+	requests.Response
 	request *CreateDeploymentReq
 	Data    components.Deployment
 }
@@ -1910,8 +1909,8 @@ Create a deployment status.
 
 https://developer.github.com/v3/repos/deployments/#create-a-deployment-status
 */
-func CreateDeploymentStatus(ctx context.Context, req *CreateDeploymentStatusReq, opt ...options.Option) (*CreateDeploymentStatusResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateDeploymentStatus(ctx context.Context, req *CreateDeploymentStatusReq, opt ...requests.Option) (*CreateDeploymentStatusResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1946,7 +1945,7 @@ Create a deployment status.
 
 https://developer.github.com/v3/repos/deployments/#create-a-deployment-status
 */
-func (c Client) CreateDeploymentStatus(ctx context.Context, req *CreateDeploymentStatusReq, opt ...options.Option) (*CreateDeploymentStatusResponse, error) {
+func (c Client) CreateDeploymentStatus(ctx context.Context, req *CreateDeploymentStatusReq, opt ...requests.Option) (*CreateDeploymentStatusResponse, error) {
 	return CreateDeploymentStatus(ctx, req, append(c, opt...)...)
 }
 
@@ -1989,8 +1988,8 @@ type CreateDeploymentStatusReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateDeploymentStatusReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateDeploymentStatusReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2121,7 +2120,7 @@ CreateDeploymentStatusResponse is a response for CreateDeploymentStatus
 https://developer.github.com/v3/repos/deployments/#create-a-deployment-status
 */
 type CreateDeploymentStatusResponse struct {
-	common.Response
+	requests.Response
 	request *CreateDeploymentStatusReq
 	Data    components.DeploymentStatus
 }
@@ -2135,8 +2134,8 @@ Create a repository dispatch event.
 
 https://developer.github.com/v3/repos/#create-a-repository-dispatch-event
 */
-func CreateDispatchEvent(ctx context.Context, req *CreateDispatchEventReq, opt ...options.Option) (*CreateDispatchEventResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateDispatchEvent(ctx context.Context, req *CreateDispatchEventReq, opt ...requests.Option) (*CreateDispatchEventResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2170,7 +2169,7 @@ Create a repository dispatch event.
 
 https://developer.github.com/v3/repos/#create-a-repository-dispatch-event
 */
-func (c Client) CreateDispatchEvent(ctx context.Context, req *CreateDispatchEventReq, opt ...options.Option) (*CreateDispatchEventResponse, error) {
+func (c Client) CreateDispatchEvent(ctx context.Context, req *CreateDispatchEventReq, opt ...requests.Option) (*CreateDispatchEventResponse, error) {
 	return CreateDispatchEvent(ctx, req, append(c, opt...)...)
 }
 
@@ -2187,8 +2186,8 @@ type CreateDispatchEventReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateDispatchEventReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateDispatchEventReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2248,7 +2247,7 @@ CreateDispatchEventResponse is a response for CreateDispatchEvent
 https://developer.github.com/v3/repos/#create-a-repository-dispatch-event
 */
 type CreateDispatchEventResponse struct {
-	common.Response
+	requests.Response
 	request *CreateDispatchEventReq
 }
 
@@ -2261,8 +2260,8 @@ Create a repository for the authenticated user.
 
 https://developer.github.com/v3/repos/#create-a-repository-for-the-authenticated-user
 */
-func CreateForAuthenticatedUser(ctx context.Context, req *CreateForAuthenticatedUserReq, opt ...options.Option) (*CreateForAuthenticatedUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateForAuthenticatedUser(ctx context.Context, req *CreateForAuthenticatedUserReq, opt ...requests.Option) (*CreateForAuthenticatedUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2297,7 +2296,7 @@ Create a repository for the authenticated user.
 
 https://developer.github.com/v3/repos/#create-a-repository-for-the-authenticated-user
 */
-func (c Client) CreateForAuthenticatedUser(ctx context.Context, req *CreateForAuthenticatedUserReq, opt ...options.Option) (*CreateForAuthenticatedUserResponse, error) {
+func (c Client) CreateForAuthenticatedUser(ctx context.Context, req *CreateForAuthenticatedUserReq, opt ...requests.Option) (*CreateForAuthenticatedUserResponse, error) {
 	return CreateForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
@@ -2333,8 +2332,8 @@ type CreateForAuthenticatedUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2448,7 +2447,7 @@ CreateForAuthenticatedUserResponse is a response for CreateForAuthenticatedUser
 https://developer.github.com/v3/repos/#create-a-repository-for-the-authenticated-user
 */
 type CreateForAuthenticatedUserResponse struct {
-	common.Response
+	requests.Response
 	request *CreateForAuthenticatedUserReq
 	Data    components.Repository
 }
@@ -2462,8 +2461,8 @@ Create a fork.
 
 https://developer.github.com/v3/repos/forks/#create-a-fork
 */
-func CreateFork(ctx context.Context, req *CreateForkReq, opt ...options.Option) (*CreateForkResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateFork(ctx context.Context, req *CreateForkReq, opt ...requests.Option) (*CreateForkResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2498,7 +2497,7 @@ Create a fork.
 
 https://developer.github.com/v3/repos/forks/#create-a-fork
 */
-func (c Client) CreateFork(ctx context.Context, req *CreateForkReq, opt ...options.Option) (*CreateForkResponse, error) {
+func (c Client) CreateFork(ctx context.Context, req *CreateForkReq, opt ...requests.Option) (*CreateForkResponse, error) {
 	return CreateFork(ctx, req, append(c, opt...)...)
 }
 
@@ -2515,8 +2514,8 @@ type CreateForkReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateForkReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateForkReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2576,7 +2575,7 @@ CreateForkResponse is a response for CreateFork
 https://developer.github.com/v3/repos/forks/#create-a-fork
 */
 type CreateForkResponse struct {
-	common.Response
+	requests.Response
 	request *CreateForkReq
 	Data    components.Repository
 }
@@ -2590,8 +2589,8 @@ Create an organization repository.
 
 https://developer.github.com/v3/repos/#create-an-organization-repository
 */
-func CreateInOrg(ctx context.Context, req *CreateInOrgReq, opt ...options.Option) (*CreateInOrgResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateInOrg(ctx context.Context, req *CreateInOrgReq, opt ...requests.Option) (*CreateInOrgResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2626,7 +2625,7 @@ Create an organization repository.
 
 https://developer.github.com/v3/repos/#create-an-organization-repository
 */
-func (c Client) CreateInOrg(ctx context.Context, req *CreateInOrgReq, opt ...options.Option) (*CreateInOrgResponse, error) {
+func (c Client) CreateInOrg(ctx context.Context, req *CreateInOrgReq, opt ...requests.Option) (*CreateInOrgResponse, error) {
 	return CreateInOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -2663,8 +2662,8 @@ type CreateInOrgReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateInOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2807,7 +2806,7 @@ CreateInOrgResponse is a response for CreateInOrg
 https://developer.github.com/v3/repos/#create-an-organization-repository
 */
 type CreateInOrgResponse struct {
-	common.Response
+	requests.Response
 	request *CreateInOrgReq
 	Data    components.Repository
 }
@@ -2821,8 +2820,8 @@ Create or update file contents.
 
 https://developer.github.com/v3/repos/contents/#create-or-update-file-contents
 */
-func CreateOrUpdateFileContents(ctx context.Context, req *CreateOrUpdateFileContentsReq, opt ...options.Option) (*CreateOrUpdateFileContentsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateOrUpdateFileContents(ctx context.Context, req *CreateOrUpdateFileContentsReq, opt ...requests.Option) (*CreateOrUpdateFileContentsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2857,7 +2856,7 @@ Create or update file contents.
 
 https://developer.github.com/v3/repos/contents/#create-or-update-file-contents
 */
-func (c Client) CreateOrUpdateFileContents(ctx context.Context, req *CreateOrUpdateFileContentsReq, opt ...options.Option) (*CreateOrUpdateFileContentsResponse, error) {
+func (c Client) CreateOrUpdateFileContents(ctx context.Context, req *CreateOrUpdateFileContentsReq, opt ...requests.Option) (*CreateOrUpdateFileContentsResponse, error) {
 	return CreateOrUpdateFileContents(ctx, req, append(c, opt...)...)
 }
 
@@ -2877,8 +2876,8 @@ type CreateOrUpdateFileContentsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateOrUpdateFileContentsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateOrUpdateFileContentsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2975,7 +2974,7 @@ CreateOrUpdateFileContentsResponse is a response for CreateOrUpdateFileContents
 https://developer.github.com/v3/repos/contents/#create-or-update-file-contents
 */
 type CreateOrUpdateFileContentsResponse struct {
-	common.Response
+	requests.Response
 	request *CreateOrUpdateFileContentsReq
 	Data    components.FileCommit
 }
@@ -2989,8 +2988,8 @@ Create a GitHub Pages site.
 
 https://developer.github.com/v3/repos/pages/#create-a-github-pages-site
 */
-func CreatePagesSite(ctx context.Context, req *CreatePagesSiteReq, opt ...options.Option) (*CreatePagesSiteResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreatePagesSite(ctx context.Context, req *CreatePagesSiteReq, opt ...requests.Option) (*CreatePagesSiteResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3025,7 +3024,7 @@ Create a GitHub Pages site.
 
 https://developer.github.com/v3/repos/pages/#create-a-github-pages-site
 */
-func (c Client) CreatePagesSite(ctx context.Context, req *CreatePagesSiteReq, opt ...options.Option) (*CreatePagesSiteResponse, error) {
+func (c Client) CreatePagesSite(ctx context.Context, req *CreatePagesSiteReq, opt ...requests.Option) (*CreatePagesSiteResponse, error) {
 	return CreatePagesSite(ctx, req, append(c, opt...)...)
 }
 
@@ -3051,8 +3050,8 @@ type CreatePagesSiteReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreatePagesSiteReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreatePagesSiteReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3128,7 +3127,7 @@ CreatePagesSiteResponse is a response for CreatePagesSite
 https://developer.github.com/v3/repos/pages/#create-a-github-pages-site
 */
 type CreatePagesSiteResponse struct {
-	common.Response
+	requests.Response
 	request *CreatePagesSiteReq
 	Data    components.Page
 }
@@ -3142,8 +3141,8 @@ Create a release.
 
 https://developer.github.com/v3/repos/releases/#create-a-release
 */
-func CreateRelease(ctx context.Context, req *CreateReleaseReq, opt ...options.Option) (*CreateReleaseResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateRelease(ctx context.Context, req *CreateReleaseReq, opt ...requests.Option) (*CreateReleaseResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3178,7 +3177,7 @@ Create a release.
 
 https://developer.github.com/v3/repos/releases/#create-a-release
 */
-func (c Client) CreateRelease(ctx context.Context, req *CreateReleaseReq, opt ...options.Option) (*CreateReleaseResponse, error) {
+func (c Client) CreateRelease(ctx context.Context, req *CreateReleaseReq, opt ...requests.Option) (*CreateReleaseResponse, error) {
 	return CreateRelease(ctx, req, append(c, opt...)...)
 }
 
@@ -3195,8 +3194,8 @@ type CreateReleaseReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateReleaseReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateReleaseReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3275,7 +3274,7 @@ CreateReleaseResponse is a response for CreateRelease
 https://developer.github.com/v3/repos/releases/#create-a-release
 */
 type CreateReleaseResponse struct {
-	common.Response
+	requests.Response
 	request *CreateReleaseReq
 	Data    components.Release
 }
@@ -3289,8 +3288,8 @@ Create a repository using a template.
 
 https://developer.github.com/v3/repos/#create-a-repository-using-a-template
 */
-func CreateUsingTemplate(ctx context.Context, req *CreateUsingTemplateReq, opt ...options.Option) (*CreateUsingTemplateResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateUsingTemplate(ctx context.Context, req *CreateUsingTemplateReq, opt ...requests.Option) (*CreateUsingTemplateResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3325,7 +3324,7 @@ Create a repository using a template.
 
 https://developer.github.com/v3/repos/#create-a-repository-using-a-template
 */
-func (c Client) CreateUsingTemplate(ctx context.Context, req *CreateUsingTemplateReq, opt ...options.Option) (*CreateUsingTemplateResponse, error) {
+func (c Client) CreateUsingTemplate(ctx context.Context, req *CreateUsingTemplateReq, opt ...requests.Option) (*CreateUsingTemplateResponse, error) {
 	return CreateUsingTemplate(ctx, req, append(c, opt...)...)
 }
 
@@ -3355,8 +3354,8 @@ type CreateUsingTemplateReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateUsingTemplateReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateUsingTemplateReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3429,7 +3428,7 @@ CreateUsingTemplateResponse is a response for CreateUsingTemplate
 https://developer.github.com/v3/repos/#create-a-repository-using-a-template
 */
 type CreateUsingTemplateResponse struct {
-	common.Response
+	requests.Response
 	request *CreateUsingTemplateReq
 	Data    components.Repository
 }
@@ -3443,8 +3442,8 @@ Create a repository webhook.
 
 https://developer.github.com/v3/repos/hooks/#create-a-repository-webhook
 */
-func CreateWebhook(ctx context.Context, req *CreateWebhookReq, opt ...options.Option) (*CreateWebhookResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateWebhook(ctx context.Context, req *CreateWebhookReq, opt ...requests.Option) (*CreateWebhookResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3479,7 +3478,7 @@ Create a repository webhook.
 
 https://developer.github.com/v3/repos/hooks/#create-a-repository-webhook
 */
-func (c Client) CreateWebhook(ctx context.Context, req *CreateWebhookReq, opt ...options.Option) (*CreateWebhookResponse, error) {
+func (c Client) CreateWebhook(ctx context.Context, req *CreateWebhookReq, opt ...requests.Option) (*CreateWebhookResponse, error) {
 	return CreateWebhook(ctx, req, append(c, opt...)...)
 }
 
@@ -3496,8 +3495,8 @@ type CreateWebhookReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateWebhookReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateWebhookReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3598,7 +3597,7 @@ CreateWebhookResponse is a response for CreateWebhook
 https://developer.github.com/v3/repos/hooks/#create-a-repository-webhook
 */
 type CreateWebhookResponse struct {
-	common.Response
+	requests.Response
 	request *CreateWebhookReq
 	Data    components.Hook
 }
@@ -3612,8 +3611,8 @@ Decline a repository invitation.
 
 https://developer.github.com/v3/repos/invitations/#decline-a-repository-invitation
 */
-func DeclineInvitation(ctx context.Context, req *DeclineInvitationReq, opt ...options.Option) (*DeclineInvitationResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DeclineInvitation(ctx context.Context, req *DeclineInvitationReq, opt ...requests.Option) (*DeclineInvitationResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3647,7 +3646,7 @@ Decline a repository invitation.
 
 https://developer.github.com/v3/repos/invitations/#decline-a-repository-invitation
 */
-func (c Client) DeclineInvitation(ctx context.Context, req *DeclineInvitationReq, opt ...options.Option) (*DeclineInvitationResponse, error) {
+func (c Client) DeclineInvitation(ctx context.Context, req *DeclineInvitationReq, opt ...requests.Option) (*DeclineInvitationResponse, error) {
 	return DeclineInvitation(ctx, req, append(c, opt...)...)
 }
 
@@ -3664,8 +3663,8 @@ type DeclineInvitationReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeclineInvitationReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeclineInvitationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3711,7 +3710,7 @@ DeclineInvitationResponse is a response for DeclineInvitation
 https://developer.github.com/v3/repos/invitations/#decline-a-repository-invitation
 */
 type DeclineInvitationResponse struct {
-	common.Response
+	requests.Response
 	request *DeclineInvitationReq
 }
 
@@ -3724,8 +3723,8 @@ Delete a repository.
 
 https://developer.github.com/v3/repos/#delete-a-repository
 */
-func Delete(ctx context.Context, req *DeleteReq, opt ...options.Option) (*DeleteResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func Delete(ctx context.Context, req *DeleteReq, opt ...requests.Option) (*DeleteResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3759,7 +3758,7 @@ Delete a repository.
 
 https://developer.github.com/v3/repos/#delete-a-repository
 */
-func (c Client) Delete(ctx context.Context, req *DeleteReq, opt ...options.Option) (*DeleteResponse, error) {
+func (c Client) Delete(ctx context.Context, req *DeleteReq, opt ...requests.Option) (*DeleteResponse, error) {
 	return Delete(ctx, req, append(c, opt...)...)
 }
 
@@ -3775,8 +3774,8 @@ type DeleteReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeleteReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeleteReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3822,7 +3821,7 @@ DeleteResponse is a response for Delete
 https://developer.github.com/v3/repos/#delete-a-repository
 */
 type DeleteResponse struct {
-	common.Response
+	requests.Response
 	request *DeleteReq
 }
 
@@ -3835,8 +3834,8 @@ Delete access restrictions.
 
 https://developer.github.com/v3/repos/branches/#delete-access-restrictions
 */
-func DeleteAccessRestrictions(ctx context.Context, req *DeleteAccessRestrictionsReq, opt ...options.Option) (*DeleteAccessRestrictionsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DeleteAccessRestrictions(ctx context.Context, req *DeleteAccessRestrictionsReq, opt ...requests.Option) (*DeleteAccessRestrictionsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3870,7 +3869,7 @@ Delete access restrictions.
 
 https://developer.github.com/v3/repos/branches/#delete-access-restrictions
 */
-func (c Client) DeleteAccessRestrictions(ctx context.Context, req *DeleteAccessRestrictionsReq, opt ...options.Option) (*DeleteAccessRestrictionsResponse, error) {
+func (c Client) DeleteAccessRestrictions(ctx context.Context, req *DeleteAccessRestrictionsReq, opt ...requests.Option) (*DeleteAccessRestrictionsResponse, error) {
 	return DeleteAccessRestrictions(ctx, req, append(c, opt...)...)
 }
 
@@ -3889,8 +3888,8 @@ type DeleteAccessRestrictionsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeleteAccessRestrictionsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeleteAccessRestrictionsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3936,7 +3935,7 @@ DeleteAccessRestrictionsResponse is a response for DeleteAccessRestrictions
 https://developer.github.com/v3/repos/branches/#delete-access-restrictions
 */
 type DeleteAccessRestrictionsResponse struct {
-	common.Response
+	requests.Response
 	request *DeleteAccessRestrictionsReq
 }
 
@@ -3949,8 +3948,8 @@ Delete admin branch protection.
 
 https://developer.github.com/v3/repos/branches/#delete-admin-branch-protection
 */
-func DeleteAdminBranchProtection(ctx context.Context, req *DeleteAdminBranchProtectionReq, opt ...options.Option) (*DeleteAdminBranchProtectionResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DeleteAdminBranchProtection(ctx context.Context, req *DeleteAdminBranchProtectionReq, opt ...requests.Option) (*DeleteAdminBranchProtectionResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3988,7 +3987,7 @@ Delete admin branch protection.
 
 https://developer.github.com/v3/repos/branches/#delete-admin-branch-protection
 */
-func (c Client) DeleteAdminBranchProtection(ctx context.Context, req *DeleteAdminBranchProtectionReq, opt ...options.Option) (*DeleteAdminBranchProtectionResponse, error) {
+func (c Client) DeleteAdminBranchProtection(ctx context.Context, req *DeleteAdminBranchProtectionReq, opt ...requests.Option) (*DeleteAdminBranchProtectionResponse, error) {
 	return DeleteAdminBranchProtection(ctx, req, append(c, opt...)...)
 }
 
@@ -4007,8 +4006,8 @@ type DeleteAdminBranchProtectionReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeleteAdminBranchProtectionReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeleteAdminBranchProtectionReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4054,7 +4053,7 @@ DeleteAdminBranchProtectionResponse is a response for DeleteAdminBranchProtectio
 https://developer.github.com/v3/repos/branches/#delete-admin-branch-protection
 */
 type DeleteAdminBranchProtectionResponse struct {
-	common.Response
+	requests.Response
 	request *DeleteAdminBranchProtectionReq
 	Data    bool
 }
@@ -4068,8 +4067,8 @@ Delete branch protection.
 
 https://developer.github.com/v3/repos/branches/#delete-branch-protection
 */
-func DeleteBranchProtection(ctx context.Context, req *DeleteBranchProtectionReq, opt ...options.Option) (*DeleteBranchProtectionResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DeleteBranchProtection(ctx context.Context, req *DeleteBranchProtectionReq, opt ...requests.Option) (*DeleteBranchProtectionResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4103,7 +4102,7 @@ Delete branch protection.
 
 https://developer.github.com/v3/repos/branches/#delete-branch-protection
 */
-func (c Client) DeleteBranchProtection(ctx context.Context, req *DeleteBranchProtectionReq, opt ...options.Option) (*DeleteBranchProtectionResponse, error) {
+func (c Client) DeleteBranchProtection(ctx context.Context, req *DeleteBranchProtectionReq, opt ...requests.Option) (*DeleteBranchProtectionResponse, error) {
 	return DeleteBranchProtection(ctx, req, append(c, opt...)...)
 }
 
@@ -4122,8 +4121,8 @@ type DeleteBranchProtectionReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeleteBranchProtectionReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeleteBranchProtectionReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4169,7 +4168,7 @@ DeleteBranchProtectionResponse is a response for DeleteBranchProtection
 https://developer.github.com/v3/repos/branches/#delete-branch-protection
 */
 type DeleteBranchProtectionResponse struct {
-	common.Response
+	requests.Response
 	request *DeleteBranchProtectionReq
 }
 
@@ -4182,8 +4181,8 @@ Delete a commit comment.
 
 https://developer.github.com/v3/repos/comments/#delete-a-commit-comment
 */
-func DeleteCommitComment(ctx context.Context, req *DeleteCommitCommentReq, opt ...options.Option) (*DeleteCommitCommentResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DeleteCommitComment(ctx context.Context, req *DeleteCommitCommentReq, opt ...requests.Option) (*DeleteCommitCommentResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4221,7 +4220,7 @@ Delete a commit comment.
 
 https://developer.github.com/v3/repos/comments/#delete-a-commit-comment
 */
-func (c Client) DeleteCommitComment(ctx context.Context, req *DeleteCommitCommentReq, opt ...options.Option) (*DeleteCommitCommentResponse, error) {
+func (c Client) DeleteCommitComment(ctx context.Context, req *DeleteCommitCommentReq, opt ...requests.Option) (*DeleteCommitCommentResponse, error) {
 	return DeleteCommitComment(ctx, req, append(c, opt...)...)
 }
 
@@ -4240,8 +4239,8 @@ type DeleteCommitCommentReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeleteCommitCommentReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeleteCommitCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4287,7 +4286,7 @@ DeleteCommitCommentResponse is a response for DeleteCommitComment
 https://developer.github.com/v3/repos/comments/#delete-a-commit-comment
 */
 type DeleteCommitCommentResponse struct {
-	common.Response
+	requests.Response
 	request *DeleteCommitCommentReq
 	Data    bool
 }
@@ -4301,8 +4300,8 @@ Delete commit signature protection.
 
 https://developer.github.com/v3/repos/branches/#delete-commit-signature-protection
 */
-func DeleteCommitSignatureProtection(ctx context.Context, req *DeleteCommitSignatureProtectionReq, opt ...options.Option) (*DeleteCommitSignatureProtectionResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DeleteCommitSignatureProtection(ctx context.Context, req *DeleteCommitSignatureProtectionReq, opt ...requests.Option) (*DeleteCommitSignatureProtectionResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4340,7 +4339,7 @@ Delete commit signature protection.
 
 https://developer.github.com/v3/repos/branches/#delete-commit-signature-protection
 */
-func (c Client) DeleteCommitSignatureProtection(ctx context.Context, req *DeleteCommitSignatureProtectionReq, opt ...options.Option) (*DeleteCommitSignatureProtectionResponse, error) {
+func (c Client) DeleteCommitSignatureProtection(ctx context.Context, req *DeleteCommitSignatureProtectionReq, opt ...requests.Option) (*DeleteCommitSignatureProtectionResponse, error) {
 	return DeleteCommitSignatureProtection(ctx, req, append(c, opt...)...)
 }
 
@@ -4368,8 +4367,8 @@ type DeleteCommitSignatureProtectionReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeleteCommitSignatureProtectionReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeleteCommitSignatureProtectionReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4415,7 +4414,7 @@ DeleteCommitSignatureProtectionResponse is a response for DeleteCommitSignatureP
 https://developer.github.com/v3/repos/branches/#delete-commit-signature-protection
 */
 type DeleteCommitSignatureProtectionResponse struct {
-	common.Response
+	requests.Response
 	request *DeleteCommitSignatureProtectionReq
 	Data    bool
 }
@@ -4429,8 +4428,8 @@ Delete a deploy key.
 
 https://developer.github.com/v3/repos/keys/#delete-a-deploy-key
 */
-func DeleteDeployKey(ctx context.Context, req *DeleteDeployKeyReq, opt ...options.Option) (*DeleteDeployKeyResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DeleteDeployKey(ctx context.Context, req *DeleteDeployKeyReq, opt ...requests.Option) (*DeleteDeployKeyResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4464,7 +4463,7 @@ Delete a deploy key.
 
 https://developer.github.com/v3/repos/keys/#delete-a-deploy-key
 */
-func (c Client) DeleteDeployKey(ctx context.Context, req *DeleteDeployKeyReq, opt ...options.Option) (*DeleteDeployKeyResponse, error) {
+func (c Client) DeleteDeployKey(ctx context.Context, req *DeleteDeployKeyReq, opt ...requests.Option) (*DeleteDeployKeyResponse, error) {
 	return DeleteDeployKey(ctx, req, append(c, opt...)...)
 }
 
@@ -4483,8 +4482,8 @@ type DeleteDeployKeyReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeleteDeployKeyReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeleteDeployKeyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4530,7 +4529,7 @@ DeleteDeployKeyResponse is a response for DeleteDeployKey
 https://developer.github.com/v3/repos/keys/#delete-a-deploy-key
 */
 type DeleteDeployKeyResponse struct {
-	common.Response
+	requests.Response
 	request *DeleteDeployKeyReq
 }
 
@@ -4543,8 +4542,8 @@ Delete a deployment.
 
 https://developer.github.com/v3/repos/deployments/#delete-a-deployment
 */
-func DeleteDeployment(ctx context.Context, req *DeleteDeploymentReq, opt ...options.Option) (*DeleteDeploymentResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DeleteDeployment(ctx context.Context, req *DeleteDeploymentReq, opt ...requests.Option) (*DeleteDeploymentResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4578,7 +4577,7 @@ Delete a deployment.
 
 https://developer.github.com/v3/repos/deployments/#delete-a-deployment
 */
-func (c Client) DeleteDeployment(ctx context.Context, req *DeleteDeploymentReq, opt ...options.Option) (*DeleteDeploymentResponse, error) {
+func (c Client) DeleteDeployment(ctx context.Context, req *DeleteDeploymentReq, opt ...requests.Option) (*DeleteDeploymentResponse, error) {
 	return DeleteDeployment(ctx, req, append(c, opt...)...)
 }
 
@@ -4597,8 +4596,8 @@ type DeleteDeploymentReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeleteDeploymentReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeleteDeploymentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4644,7 +4643,7 @@ DeleteDeploymentResponse is a response for DeleteDeployment
 https://developer.github.com/v3/repos/deployments/#delete-a-deployment
 */
 type DeleteDeploymentResponse struct {
-	common.Response
+	requests.Response
 	request *DeleteDeploymentReq
 }
 
@@ -4657,8 +4656,8 @@ Delete a file.
 
 https://developer.github.com/v3/repos/contents/#delete-a-file
 */
-func DeleteFile(ctx context.Context, req *DeleteFileReq, opt ...options.Option) (*DeleteFileResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DeleteFile(ctx context.Context, req *DeleteFileReq, opt ...requests.Option) (*DeleteFileResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4693,7 +4692,7 @@ Delete a file.
 
 https://developer.github.com/v3/repos/contents/#delete-a-file
 */
-func (c Client) DeleteFile(ctx context.Context, req *DeleteFileReq, opt ...options.Option) (*DeleteFileResponse, error) {
+func (c Client) DeleteFile(ctx context.Context, req *DeleteFileReq, opt ...requests.Option) (*DeleteFileResponse, error) {
 	return DeleteFile(ctx, req, append(c, opt...)...)
 }
 
@@ -4713,8 +4712,8 @@ type DeleteFileReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeleteFileReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeleteFileReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4806,7 +4805,7 @@ DeleteFileResponse is a response for DeleteFile
 https://developer.github.com/v3/repos/contents/#delete-a-file
 */
 type DeleteFileResponse struct {
-	common.Response
+	requests.Response
 	request *DeleteFileReq
 	Data    components.FileCommit
 }
@@ -4820,8 +4819,8 @@ Delete a repository invitation.
 
 https://developer.github.com/v3/repos/invitations/#delete-a-repository-invitation
 */
-func DeleteInvitation(ctx context.Context, req *DeleteInvitationReq, opt ...options.Option) (*DeleteInvitationResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DeleteInvitation(ctx context.Context, req *DeleteInvitationReq, opt ...requests.Option) (*DeleteInvitationResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4855,7 +4854,7 @@ Delete a repository invitation.
 
 https://developer.github.com/v3/repos/invitations/#delete-a-repository-invitation
 */
-func (c Client) DeleteInvitation(ctx context.Context, req *DeleteInvitationReq, opt ...options.Option) (*DeleteInvitationResponse, error) {
+func (c Client) DeleteInvitation(ctx context.Context, req *DeleteInvitationReq, opt ...requests.Option) (*DeleteInvitationResponse, error) {
 	return DeleteInvitation(ctx, req, append(c, opt...)...)
 }
 
@@ -4874,8 +4873,8 @@ type DeleteInvitationReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeleteInvitationReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeleteInvitationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4921,7 +4920,7 @@ DeleteInvitationResponse is a response for DeleteInvitation
 https://developer.github.com/v3/repos/invitations/#delete-a-repository-invitation
 */
 type DeleteInvitationResponse struct {
-	common.Response
+	requests.Response
 	request *DeleteInvitationReq
 }
 
@@ -4934,8 +4933,8 @@ Delete a GitHub Pages site.
 
 https://developer.github.com/v3/repos/pages/#delete-a-github-pages-site
 */
-func DeletePagesSite(ctx context.Context, req *DeletePagesSiteReq, opt ...options.Option) (*DeletePagesSiteResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DeletePagesSite(ctx context.Context, req *DeletePagesSiteReq, opt ...requests.Option) (*DeletePagesSiteResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4969,7 +4968,7 @@ Delete a GitHub Pages site.
 
 https://developer.github.com/v3/repos/pages/#delete-a-github-pages-site
 */
-func (c Client) DeletePagesSite(ctx context.Context, req *DeletePagesSiteReq, opt ...options.Option) (*DeletePagesSiteResponse, error) {
+func (c Client) DeletePagesSite(ctx context.Context, req *DeletePagesSiteReq, opt ...requests.Option) (*DeletePagesSiteResponse, error) {
 	return DeletePagesSite(ctx, req, append(c, opt...)...)
 }
 
@@ -4994,8 +4993,8 @@ type DeletePagesSiteReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeletePagesSiteReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeletePagesSiteReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -5041,7 +5040,7 @@ DeletePagesSiteResponse is a response for DeletePagesSite
 https://developer.github.com/v3/repos/pages/#delete-a-github-pages-site
 */
 type DeletePagesSiteResponse struct {
-	common.Response
+	requests.Response
 	request *DeletePagesSiteReq
 }
 
@@ -5054,8 +5053,8 @@ Delete pull request review protection.
 
 https://developer.github.com/v3/repos/branches/#delete-pull-request-review-protection
 */
-func DeletePullRequestReviewProtection(ctx context.Context, req *DeletePullRequestReviewProtectionReq, opt ...options.Option) (*DeletePullRequestReviewProtectionResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DeletePullRequestReviewProtection(ctx context.Context, req *DeletePullRequestReviewProtectionReq, opt ...requests.Option) (*DeletePullRequestReviewProtectionResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -5093,7 +5092,7 @@ Delete pull request review protection.
 
 https://developer.github.com/v3/repos/branches/#delete-pull-request-review-protection
 */
-func (c Client) DeletePullRequestReviewProtection(ctx context.Context, req *DeletePullRequestReviewProtectionReq, opt ...options.Option) (*DeletePullRequestReviewProtectionResponse, error) {
+func (c Client) DeletePullRequestReviewProtection(ctx context.Context, req *DeletePullRequestReviewProtectionReq, opt ...requests.Option) (*DeletePullRequestReviewProtectionResponse, error) {
 	return DeletePullRequestReviewProtection(ctx, req, append(c, opt...)...)
 }
 
@@ -5112,8 +5111,8 @@ type DeletePullRequestReviewProtectionReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeletePullRequestReviewProtectionReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeletePullRequestReviewProtectionReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -5159,7 +5158,7 @@ DeletePullRequestReviewProtectionResponse is a response for DeletePullRequestRev
 https://developer.github.com/v3/repos/branches/#delete-pull-request-review-protection
 */
 type DeletePullRequestReviewProtectionResponse struct {
-	common.Response
+	requests.Response
 	request *DeletePullRequestReviewProtectionReq
 	Data    bool
 }
@@ -5173,8 +5172,8 @@ Delete a release.
 
 https://developer.github.com/v3/repos/releases/#delete-a-release
 */
-func DeleteRelease(ctx context.Context, req *DeleteReleaseReq, opt ...options.Option) (*DeleteReleaseResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DeleteRelease(ctx context.Context, req *DeleteReleaseReq, opt ...requests.Option) (*DeleteReleaseResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -5208,7 +5207,7 @@ Delete a release.
 
 https://developer.github.com/v3/repos/releases/#delete-a-release
 */
-func (c Client) DeleteRelease(ctx context.Context, req *DeleteReleaseReq, opt ...options.Option) (*DeleteReleaseResponse, error) {
+func (c Client) DeleteRelease(ctx context.Context, req *DeleteReleaseReq, opt ...requests.Option) (*DeleteReleaseResponse, error) {
 	return DeleteRelease(ctx, req, append(c, opt...)...)
 }
 
@@ -5227,8 +5226,8 @@ type DeleteReleaseReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeleteReleaseReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeleteReleaseReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -5274,7 +5273,7 @@ DeleteReleaseResponse is a response for DeleteRelease
 https://developer.github.com/v3/repos/releases/#delete-a-release
 */
 type DeleteReleaseResponse struct {
-	common.Response
+	requests.Response
 	request *DeleteReleaseReq
 }
 
@@ -5287,8 +5286,8 @@ Delete a release asset.
 
 https://developer.github.com/v3/repos/releases/#delete-a-release-asset
 */
-func DeleteReleaseAsset(ctx context.Context, req *DeleteReleaseAssetReq, opt ...options.Option) (*DeleteReleaseAssetResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DeleteReleaseAsset(ctx context.Context, req *DeleteReleaseAssetReq, opt ...requests.Option) (*DeleteReleaseAssetResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -5322,7 +5321,7 @@ Delete a release asset.
 
 https://developer.github.com/v3/repos/releases/#delete-a-release-asset
 */
-func (c Client) DeleteReleaseAsset(ctx context.Context, req *DeleteReleaseAssetReq, opt ...options.Option) (*DeleteReleaseAssetResponse, error) {
+func (c Client) DeleteReleaseAsset(ctx context.Context, req *DeleteReleaseAssetReq, opt ...requests.Option) (*DeleteReleaseAssetResponse, error) {
 	return DeleteReleaseAsset(ctx, req, append(c, opt...)...)
 }
 
@@ -5341,8 +5340,8 @@ type DeleteReleaseAssetReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeleteReleaseAssetReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeleteReleaseAssetReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -5388,7 +5387,7 @@ DeleteReleaseAssetResponse is a response for DeleteReleaseAsset
 https://developer.github.com/v3/repos/releases/#delete-a-release-asset
 */
 type DeleteReleaseAssetResponse struct {
-	common.Response
+	requests.Response
 	request *DeleteReleaseAssetReq
 }
 
@@ -5401,8 +5400,8 @@ Delete a repository webhook.
 
 https://developer.github.com/v3/repos/hooks/#delete-a-repository-webhook
 */
-func DeleteWebhook(ctx context.Context, req *DeleteWebhookReq, opt ...options.Option) (*DeleteWebhookResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DeleteWebhook(ctx context.Context, req *DeleteWebhookReq, opt ...requests.Option) (*DeleteWebhookResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -5440,7 +5439,7 @@ Delete a repository webhook.
 
 https://developer.github.com/v3/repos/hooks/#delete-a-repository-webhook
 */
-func (c Client) DeleteWebhook(ctx context.Context, req *DeleteWebhookReq, opt ...options.Option) (*DeleteWebhookResponse, error) {
+func (c Client) DeleteWebhook(ctx context.Context, req *DeleteWebhookReq, opt ...requests.Option) (*DeleteWebhookResponse, error) {
 	return DeleteWebhook(ctx, req, append(c, opt...)...)
 }
 
@@ -5457,8 +5456,8 @@ type DeleteWebhookReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeleteWebhookReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeleteWebhookReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -5504,7 +5503,7 @@ DeleteWebhookResponse is a response for DeleteWebhook
 https://developer.github.com/v3/repos/hooks/#delete-a-repository-webhook
 */
 type DeleteWebhookResponse struct {
-	common.Response
+	requests.Response
 	request *DeleteWebhookReq
 	Data    bool
 }
@@ -5518,8 +5517,8 @@ Disable automated security fixes.
 
 https://developer.github.com/v3/repos/#disable-automated-security-fixes
 */
-func DisableAutomatedSecurityFixes(ctx context.Context, req *DisableAutomatedSecurityFixesReq, opt ...options.Option) (*DisableAutomatedSecurityFixesResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DisableAutomatedSecurityFixes(ctx context.Context, req *DisableAutomatedSecurityFixesReq, opt ...requests.Option) (*DisableAutomatedSecurityFixesResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -5553,7 +5552,7 @@ Disable automated security fixes.
 
 https://developer.github.com/v3/repos/#disable-automated-security-fixes
 */
-func (c Client) DisableAutomatedSecurityFixes(ctx context.Context, req *DisableAutomatedSecurityFixesReq, opt ...options.Option) (*DisableAutomatedSecurityFixesResponse, error) {
+func (c Client) DisableAutomatedSecurityFixes(ctx context.Context, req *DisableAutomatedSecurityFixesReq, opt ...requests.Option) (*DisableAutomatedSecurityFixesResponse, error) {
 	return DisableAutomatedSecurityFixes(ctx, req, append(c, opt...)...)
 }
 
@@ -5576,8 +5575,8 @@ type DisableAutomatedSecurityFixesReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DisableAutomatedSecurityFixesReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DisableAutomatedSecurityFixesReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -5623,7 +5622,7 @@ DisableAutomatedSecurityFixesResponse is a response for DisableAutomatedSecurity
 https://developer.github.com/v3/repos/#disable-automated-security-fixes
 */
 type DisableAutomatedSecurityFixesResponse struct {
-	common.Response
+	requests.Response
 	request *DisableAutomatedSecurityFixesReq
 }
 
@@ -5636,8 +5635,8 @@ Disable vulnerability alerts.
 
 https://developer.github.com/v3/repos/#disable-vulnerability-alerts
 */
-func DisableVulnerabilityAlerts(ctx context.Context, req *DisableVulnerabilityAlertsReq, opt ...options.Option) (*DisableVulnerabilityAlertsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DisableVulnerabilityAlerts(ctx context.Context, req *DisableVulnerabilityAlertsReq, opt ...requests.Option) (*DisableVulnerabilityAlertsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -5671,7 +5670,7 @@ Disable vulnerability alerts.
 
 https://developer.github.com/v3/repos/#disable-vulnerability-alerts
 */
-func (c Client) DisableVulnerabilityAlerts(ctx context.Context, req *DisableVulnerabilityAlertsReq, opt ...options.Option) (*DisableVulnerabilityAlertsResponse, error) {
+func (c Client) DisableVulnerabilityAlerts(ctx context.Context, req *DisableVulnerabilityAlertsReq, opt ...requests.Option) (*DisableVulnerabilityAlertsResponse, error) {
 	return DisableVulnerabilityAlerts(ctx, req, append(c, opt...)...)
 }
 
@@ -5694,8 +5693,8 @@ type DisableVulnerabilityAlertsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DisableVulnerabilityAlertsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DisableVulnerabilityAlertsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -5741,7 +5740,7 @@ DisableVulnerabilityAlertsResponse is a response for DisableVulnerabilityAlerts
 https://developer.github.com/v3/repos/#disable-vulnerability-alerts
 */
 type DisableVulnerabilityAlertsResponse struct {
-	common.Response
+	requests.Response
 	request *DisableVulnerabilityAlertsReq
 }
 
@@ -5754,8 +5753,8 @@ Download a repository archive (tar).
 
 https://developer.github.com/v3/repos/contents/#download-a-repository-archive
 */
-func DownloadTarballArchive(ctx context.Context, req *DownloadTarballArchiveReq, opt ...options.Option) (*DownloadTarballArchiveResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DownloadTarballArchive(ctx context.Context, req *DownloadTarballArchiveReq, opt ...requests.Option) (*DownloadTarballArchiveResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -5789,7 +5788,7 @@ Download a repository archive (tar).
 
 https://developer.github.com/v3/repos/contents/#download-a-repository-archive
 */
-func (c Client) DownloadTarballArchive(ctx context.Context, req *DownloadTarballArchiveReq, opt ...options.Option) (*DownloadTarballArchiveResponse, error) {
+func (c Client) DownloadTarballArchive(ctx context.Context, req *DownloadTarballArchiveReq, opt ...requests.Option) (*DownloadTarballArchiveResponse, error) {
 	return DownloadTarballArchive(ctx, req, append(c, opt...)...)
 }
 
@@ -5808,8 +5807,8 @@ type DownloadTarballArchiveReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DownloadTarballArchiveReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DownloadTarballArchiveReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -5855,7 +5854,7 @@ DownloadTarballArchiveResponse is a response for DownloadTarballArchive
 https://developer.github.com/v3/repos/contents/#download-a-repository-archive
 */
 type DownloadTarballArchiveResponse struct {
-	common.Response
+	requests.Response
 	request *DownloadTarballArchiveReq
 }
 
@@ -5868,8 +5867,8 @@ Download a repository archive (zip).
 
 https://developer.github.com/v3/repos/contents/#download-a-repository-archive
 */
-func DownloadZipballArchive(ctx context.Context, req *DownloadZipballArchiveReq, opt ...options.Option) (*DownloadZipballArchiveResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DownloadZipballArchive(ctx context.Context, req *DownloadZipballArchiveReq, opt ...requests.Option) (*DownloadZipballArchiveResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -5903,7 +5902,7 @@ Download a repository archive (zip).
 
 https://developer.github.com/v3/repos/contents/#download-a-repository-archive
 */
-func (c Client) DownloadZipballArchive(ctx context.Context, req *DownloadZipballArchiveReq, opt ...options.Option) (*DownloadZipballArchiveResponse, error) {
+func (c Client) DownloadZipballArchive(ctx context.Context, req *DownloadZipballArchiveReq, opt ...requests.Option) (*DownloadZipballArchiveResponse, error) {
 	return DownloadZipballArchive(ctx, req, append(c, opt...)...)
 }
 
@@ -5922,8 +5921,8 @@ type DownloadZipballArchiveReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DownloadZipballArchiveReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DownloadZipballArchiveReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -5969,7 +5968,7 @@ DownloadZipballArchiveResponse is a response for DownloadZipballArchive
 https://developer.github.com/v3/repos/contents/#download-a-repository-archive
 */
 type DownloadZipballArchiveResponse struct {
-	common.Response
+	requests.Response
 	request *DownloadZipballArchiveReq
 }
 
@@ -5982,8 +5981,8 @@ Enable automated security fixes.
 
 https://developer.github.com/v3/repos/#enable-automated-security-fixes
 */
-func EnableAutomatedSecurityFixes(ctx context.Context, req *EnableAutomatedSecurityFixesReq, opt ...options.Option) (*EnableAutomatedSecurityFixesResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func EnableAutomatedSecurityFixes(ctx context.Context, req *EnableAutomatedSecurityFixesReq, opt ...requests.Option) (*EnableAutomatedSecurityFixesResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -6017,7 +6016,7 @@ Enable automated security fixes.
 
 https://developer.github.com/v3/repos/#enable-automated-security-fixes
 */
-func (c Client) EnableAutomatedSecurityFixes(ctx context.Context, req *EnableAutomatedSecurityFixesReq, opt ...options.Option) (*EnableAutomatedSecurityFixesResponse, error) {
+func (c Client) EnableAutomatedSecurityFixes(ctx context.Context, req *EnableAutomatedSecurityFixesReq, opt ...requests.Option) (*EnableAutomatedSecurityFixesResponse, error) {
 	return EnableAutomatedSecurityFixes(ctx, req, append(c, opt...)...)
 }
 
@@ -6040,8 +6039,8 @@ type EnableAutomatedSecurityFixesReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *EnableAutomatedSecurityFixesReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *EnableAutomatedSecurityFixesReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -6087,7 +6086,7 @@ EnableAutomatedSecurityFixesResponse is a response for EnableAutomatedSecurityFi
 https://developer.github.com/v3/repos/#enable-automated-security-fixes
 */
 type EnableAutomatedSecurityFixesResponse struct {
-	common.Response
+	requests.Response
 	request *EnableAutomatedSecurityFixesReq
 }
 
@@ -6100,8 +6099,8 @@ Enable vulnerability alerts.
 
 https://developer.github.com/v3/repos/#enable-vulnerability-alerts
 */
-func EnableVulnerabilityAlerts(ctx context.Context, req *EnableVulnerabilityAlertsReq, opt ...options.Option) (*EnableVulnerabilityAlertsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func EnableVulnerabilityAlerts(ctx context.Context, req *EnableVulnerabilityAlertsReq, opt ...requests.Option) (*EnableVulnerabilityAlertsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -6135,7 +6134,7 @@ Enable vulnerability alerts.
 
 https://developer.github.com/v3/repos/#enable-vulnerability-alerts
 */
-func (c Client) EnableVulnerabilityAlerts(ctx context.Context, req *EnableVulnerabilityAlertsReq, opt ...options.Option) (*EnableVulnerabilityAlertsResponse, error) {
+func (c Client) EnableVulnerabilityAlerts(ctx context.Context, req *EnableVulnerabilityAlertsReq, opt ...requests.Option) (*EnableVulnerabilityAlertsResponse, error) {
 	return EnableVulnerabilityAlerts(ctx, req, append(c, opt...)...)
 }
 
@@ -6158,8 +6157,8 @@ type EnableVulnerabilityAlertsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *EnableVulnerabilityAlertsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *EnableVulnerabilityAlertsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -6205,7 +6204,7 @@ EnableVulnerabilityAlertsResponse is a response for EnableVulnerabilityAlerts
 https://developer.github.com/v3/repos/#enable-vulnerability-alerts
 */
 type EnableVulnerabilityAlertsResponse struct {
-	common.Response
+	requests.Response
 	request *EnableVulnerabilityAlertsReq
 }
 
@@ -6218,8 +6217,8 @@ Get a repository.
 
 https://developer.github.com/v3/repos/#get-a-repository
 */
-func Get(ctx context.Context, req *GetReq, opt ...options.Option) (*GetResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func Get(ctx context.Context, req *GetReq, opt ...requests.Option) (*GetResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -6254,7 +6253,7 @@ Get a repository.
 
 https://developer.github.com/v3/repos/#get-a-repository
 */
-func (c Client) Get(ctx context.Context, req *GetReq, opt ...options.Option) (*GetResponse, error) {
+func (c Client) Get(ctx context.Context, req *GetReq, opt ...requests.Option) (*GetResponse, error) {
 	return Get(ctx, req, append(c, opt...)...)
 }
 
@@ -6289,8 +6288,8 @@ type GetReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -6339,7 +6338,7 @@ GetResponse is a response for Get
 https://developer.github.com/v3/repos/#get-a-repository
 */
 type GetResponse struct {
-	common.Response
+	requests.Response
 	request *GetReq
 	Data    components.FullRepository
 }
@@ -6353,8 +6352,8 @@ Get access restrictions.
 
 https://developer.github.com/v3/repos/branches/#get-access-restrictions
 */
-func GetAccessRestrictions(ctx context.Context, req *GetAccessRestrictionsReq, opt ...options.Option) (*GetAccessRestrictionsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetAccessRestrictions(ctx context.Context, req *GetAccessRestrictionsReq, opt ...requests.Option) (*GetAccessRestrictionsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -6389,7 +6388,7 @@ Get access restrictions.
 
 https://developer.github.com/v3/repos/branches/#get-access-restrictions
 */
-func (c Client) GetAccessRestrictions(ctx context.Context, req *GetAccessRestrictionsReq, opt ...options.Option) (*GetAccessRestrictionsResponse, error) {
+func (c Client) GetAccessRestrictions(ctx context.Context, req *GetAccessRestrictionsReq, opt ...requests.Option) (*GetAccessRestrictionsResponse, error) {
 	return GetAccessRestrictions(ctx, req, append(c, opt...)...)
 }
 
@@ -6408,8 +6407,8 @@ type GetAccessRestrictionsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetAccessRestrictionsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetAccessRestrictionsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -6455,7 +6454,7 @@ GetAccessRestrictionsResponse is a response for GetAccessRestrictions
 https://developer.github.com/v3/repos/branches/#get-access-restrictions
 */
 type GetAccessRestrictionsResponse struct {
-	common.Response
+	requests.Response
 	request *GetAccessRestrictionsReq
 	Data    components.BranchRestrictionPolicy
 }
@@ -6469,8 +6468,8 @@ Get admin branch protection.
 
 https://developer.github.com/v3/repos/branches/#get-admin-branch-protection
 */
-func GetAdminBranchProtection(ctx context.Context, req *GetAdminBranchProtectionReq, opt ...options.Option) (*GetAdminBranchProtectionResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetAdminBranchProtection(ctx context.Context, req *GetAdminBranchProtectionReq, opt ...requests.Option) (*GetAdminBranchProtectionResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -6505,7 +6504,7 @@ Get admin branch protection.
 
 https://developer.github.com/v3/repos/branches/#get-admin-branch-protection
 */
-func (c Client) GetAdminBranchProtection(ctx context.Context, req *GetAdminBranchProtectionReq, opt ...options.Option) (*GetAdminBranchProtectionResponse, error) {
+func (c Client) GetAdminBranchProtection(ctx context.Context, req *GetAdminBranchProtectionReq, opt ...requests.Option) (*GetAdminBranchProtectionResponse, error) {
 	return GetAdminBranchProtection(ctx, req, append(c, opt...)...)
 }
 
@@ -6524,8 +6523,8 @@ type GetAdminBranchProtectionReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetAdminBranchProtectionReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetAdminBranchProtectionReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -6571,7 +6570,7 @@ GetAdminBranchProtectionResponse is a response for GetAdminBranchProtection
 https://developer.github.com/v3/repos/branches/#get-admin-branch-protection
 */
 type GetAdminBranchProtectionResponse struct {
-	common.Response
+	requests.Response
 	request *GetAdminBranchProtectionReq
 	Data    components.ProtectedBranchAdminEnforced
 }
@@ -6585,8 +6584,8 @@ Get all status check contexts.
 
 https://developer.github.com/v3/repos/branches/#get-all-status-check-contexts
 */
-func GetAllStatusCheckContexts(ctx context.Context, req *GetAllStatusCheckContextsReq, opt ...options.Option) (*GetAllStatusCheckContextsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetAllStatusCheckContexts(ctx context.Context, req *GetAllStatusCheckContextsReq, opt ...requests.Option) (*GetAllStatusCheckContextsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -6621,7 +6620,7 @@ Get all status check contexts.
 
 https://developer.github.com/v3/repos/branches/#get-all-status-check-contexts
 */
-func (c Client) GetAllStatusCheckContexts(ctx context.Context, req *GetAllStatusCheckContextsReq, opt ...options.Option) (*GetAllStatusCheckContextsResponse, error) {
+func (c Client) GetAllStatusCheckContexts(ctx context.Context, req *GetAllStatusCheckContextsReq, opt ...requests.Option) (*GetAllStatusCheckContextsResponse, error) {
 	return GetAllStatusCheckContexts(ctx, req, append(c, opt...)...)
 }
 
@@ -6640,8 +6639,8 @@ type GetAllStatusCheckContextsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetAllStatusCheckContextsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetAllStatusCheckContextsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -6694,7 +6693,7 @@ GetAllStatusCheckContextsResponse is a response for GetAllStatusCheckContexts
 https://developer.github.com/v3/repos/branches/#get-all-status-check-contexts
 */
 type GetAllStatusCheckContextsResponse struct {
-	common.Response
+	requests.Response
 	request *GetAllStatusCheckContextsReq
 	Data    GetAllStatusCheckContextsResponseBody
 }
@@ -6708,8 +6707,8 @@ Get all repository topics.
 
 https://developer.github.com/v3/repos/#get-all-repository-topics
 */
-func GetAllTopics(ctx context.Context, req *GetAllTopicsReq, opt ...options.Option) (*GetAllTopicsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetAllTopics(ctx context.Context, req *GetAllTopicsReq, opt ...requests.Option) (*GetAllTopicsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -6744,7 +6743,7 @@ Get all repository topics.
 
 https://developer.github.com/v3/repos/#get-all-repository-topics
 */
-func (c Client) GetAllTopics(ctx context.Context, req *GetAllTopicsReq, opt ...options.Option) (*GetAllTopicsResponse, error) {
+func (c Client) GetAllTopics(ctx context.Context, req *GetAllTopicsReq, opt ...requests.Option) (*GetAllTopicsResponse, error) {
 	return GetAllTopics(ctx, req, append(c, opt...)...)
 }
 
@@ -6767,8 +6766,8 @@ type GetAllTopicsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetAllTopicsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetAllTopicsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -6814,7 +6813,7 @@ GetAllTopicsResponse is a response for GetAllTopics
 https://developer.github.com/v3/repos/#get-all-repository-topics
 */
 type GetAllTopicsResponse struct {
-	common.Response
+	requests.Response
 	request *GetAllTopicsReq
 	Data    components.Topic
 }
@@ -6828,8 +6827,8 @@ Get apps with access to the protected branch.
 
 https://developer.github.com/v3/repos/branches/#list-apps-with-access-to-the-protected-branch
 */
-func GetAppsWithAccessToProtectedBranch(ctx context.Context, req *GetAppsWithAccessToProtectedBranchReq, opt ...options.Option) (*GetAppsWithAccessToProtectedBranchResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetAppsWithAccessToProtectedBranch(ctx context.Context, req *GetAppsWithAccessToProtectedBranchReq, opt ...requests.Option) (*GetAppsWithAccessToProtectedBranchResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -6864,7 +6863,7 @@ Get apps with access to the protected branch.
 
 https://developer.github.com/v3/repos/branches/#list-apps-with-access-to-the-protected-branch
 */
-func (c Client) GetAppsWithAccessToProtectedBranch(ctx context.Context, req *GetAppsWithAccessToProtectedBranchReq, opt ...options.Option) (*GetAppsWithAccessToProtectedBranchResponse, error) {
+func (c Client) GetAppsWithAccessToProtectedBranch(ctx context.Context, req *GetAppsWithAccessToProtectedBranchReq, opt ...requests.Option) (*GetAppsWithAccessToProtectedBranchResponse, error) {
 	return GetAppsWithAccessToProtectedBranch(ctx, req, append(c, opt...)...)
 }
 
@@ -6883,8 +6882,8 @@ type GetAppsWithAccessToProtectedBranchReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetAppsWithAccessToProtectedBranchReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetAppsWithAccessToProtectedBranchReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -6930,7 +6929,7 @@ GetAppsWithAccessToProtectedBranchResponse is a response for GetAppsWithAccessTo
 https://developer.github.com/v3/repos/branches/#list-apps-with-access-to-the-protected-branch
 */
 type GetAppsWithAccessToProtectedBranchResponse struct {
-	common.Response
+	requests.Response
 	request *GetAppsWithAccessToProtectedBranchReq
 	Data    []components.Integration
 }
@@ -6944,8 +6943,8 @@ Get a branch.
 
 https://developer.github.com/v3/repos/branches/#get-a-branch
 */
-func GetBranch(ctx context.Context, req *GetBranchReq, opt ...options.Option) (*GetBranchResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetBranch(ctx context.Context, req *GetBranchReq, opt ...requests.Option) (*GetBranchResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -6980,7 +6979,7 @@ Get a branch.
 
 https://developer.github.com/v3/repos/branches/#get-a-branch
 */
-func (c Client) GetBranch(ctx context.Context, req *GetBranchReq, opt ...options.Option) (*GetBranchResponse, error) {
+func (c Client) GetBranch(ctx context.Context, req *GetBranchReq, opt ...requests.Option) (*GetBranchResponse, error) {
 	return GetBranch(ctx, req, append(c, opt...)...)
 }
 
@@ -6999,8 +6998,8 @@ type GetBranchReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetBranchReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetBranchReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -7046,7 +7045,7 @@ GetBranchResponse is a response for GetBranch
 https://developer.github.com/v3/repos/branches/#get-a-branch
 */
 type GetBranchResponse struct {
-	common.Response
+	requests.Response
 	request *GetBranchReq
 	Data    components.BranchWithProtection
 }
@@ -7060,8 +7059,8 @@ Get branch protection.
 
 https://developer.github.com/v3/repos/branches/#get-branch-protection
 */
-func GetBranchProtection(ctx context.Context, req *GetBranchProtectionReq, opt ...options.Option) (*GetBranchProtectionResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetBranchProtection(ctx context.Context, req *GetBranchProtectionReq, opt ...requests.Option) (*GetBranchProtectionResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -7096,7 +7095,7 @@ Get branch protection.
 
 https://developer.github.com/v3/repos/branches/#get-branch-protection
 */
-func (c Client) GetBranchProtection(ctx context.Context, req *GetBranchProtectionReq, opt ...options.Option) (*GetBranchProtectionResponse, error) {
+func (c Client) GetBranchProtection(ctx context.Context, req *GetBranchProtectionReq, opt ...requests.Option) (*GetBranchProtectionResponse, error) {
 	return GetBranchProtection(ctx, req, append(c, opt...)...)
 }
 
@@ -7125,8 +7124,8 @@ type GetBranchProtectionReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetBranchProtectionReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetBranchProtectionReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -7172,7 +7171,7 @@ GetBranchProtectionResponse is a response for GetBranchProtection
 https://developer.github.com/v3/repos/branches/#get-branch-protection
 */
 type GetBranchProtectionResponse struct {
-	common.Response
+	requests.Response
 	request *GetBranchProtectionReq
 	Data    components.BranchProtection
 }
@@ -7186,8 +7185,8 @@ Get repository clones.
 
 https://developer.github.com/v3/repos/traffic/#get-repository-clones
 */
-func GetClones(ctx context.Context, req *GetClonesReq, opt ...options.Option) (*GetClonesResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetClones(ctx context.Context, req *GetClonesReq, opt ...requests.Option) (*GetClonesResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -7222,7 +7221,7 @@ Get repository clones.
 
 https://developer.github.com/v3/repos/traffic/#get-repository-clones
 */
-func (c Client) GetClones(ctx context.Context, req *GetClonesReq, opt ...options.Option) (*GetClonesResponse, error) {
+func (c Client) GetClones(ctx context.Context, req *GetClonesReq, opt ...requests.Option) (*GetClonesResponse, error) {
 	return GetClones(ctx, req, append(c, opt...)...)
 }
 
@@ -7241,8 +7240,8 @@ type GetClonesReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetClonesReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetClonesReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -7291,7 +7290,7 @@ GetClonesResponse is a response for GetClones
 https://developer.github.com/v3/repos/traffic/#get-repository-clones
 */
 type GetClonesResponse struct {
-	common.Response
+	requests.Response
 	request *GetClonesReq
 	Data    components.CloneTraffic
 }
@@ -7305,8 +7304,8 @@ Get the weekly commit activity.
 
 https://developer.github.com/v3/repos/statistics/#get-the-weekly-commit-activity
 */
-func GetCodeFrequencyStats(ctx context.Context, req *GetCodeFrequencyStatsReq, opt ...options.Option) (*GetCodeFrequencyStatsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetCodeFrequencyStats(ctx context.Context, req *GetCodeFrequencyStatsReq, opt ...requests.Option) (*GetCodeFrequencyStatsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -7341,7 +7340,7 @@ Get the weekly commit activity.
 
 https://developer.github.com/v3/repos/statistics/#get-the-weekly-commit-activity
 */
-func (c Client) GetCodeFrequencyStats(ctx context.Context, req *GetCodeFrequencyStatsReq, opt ...options.Option) (*GetCodeFrequencyStatsResponse, error) {
+func (c Client) GetCodeFrequencyStats(ctx context.Context, req *GetCodeFrequencyStatsReq, opt ...requests.Option) (*GetCodeFrequencyStatsResponse, error) {
 	return GetCodeFrequencyStats(ctx, req, append(c, opt...)...)
 }
 
@@ -7357,8 +7356,8 @@ type GetCodeFrequencyStatsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetCodeFrequencyStatsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetCodeFrequencyStatsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -7404,7 +7403,7 @@ GetCodeFrequencyStatsResponse is a response for GetCodeFrequencyStats
 https://developer.github.com/v3/repos/statistics/#get-the-weekly-commit-activity
 */
 type GetCodeFrequencyStatsResponse struct {
-	common.Response
+	requests.Response
 	request *GetCodeFrequencyStatsReq
 	Data    []components.CodeFrequencyStat
 }
@@ -7418,8 +7417,8 @@ Get repository permissions for a user.
 
 https://developer.github.com/v3/repos/collaborators/#get-repository-permissions-for-a-user
 */
-func GetCollaboratorPermissionLevel(ctx context.Context, req *GetCollaboratorPermissionLevelReq, opt ...options.Option) (*GetCollaboratorPermissionLevelResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetCollaboratorPermissionLevel(ctx context.Context, req *GetCollaboratorPermissionLevelReq, opt ...requests.Option) (*GetCollaboratorPermissionLevelResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -7454,7 +7453,7 @@ Get repository permissions for a user.
 
 https://developer.github.com/v3/repos/collaborators/#get-repository-permissions-for-a-user
 */
-func (c Client) GetCollaboratorPermissionLevel(ctx context.Context, req *GetCollaboratorPermissionLevelReq, opt ...options.Option) (*GetCollaboratorPermissionLevelResponse, error) {
+func (c Client) GetCollaboratorPermissionLevel(ctx context.Context, req *GetCollaboratorPermissionLevelReq, opt ...requests.Option) (*GetCollaboratorPermissionLevelResponse, error) {
 	return GetCollaboratorPermissionLevel(ctx, req, append(c, opt...)...)
 }
 
@@ -7471,8 +7470,8 @@ type GetCollaboratorPermissionLevelReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetCollaboratorPermissionLevelReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetCollaboratorPermissionLevelReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -7518,7 +7517,7 @@ GetCollaboratorPermissionLevelResponse is a response for GetCollaboratorPermissi
 https://developer.github.com/v3/repos/collaborators/#get-repository-permissions-for-a-user
 */
 type GetCollaboratorPermissionLevelResponse struct {
-	common.Response
+	requests.Response
 	request *GetCollaboratorPermissionLevelReq
 	Data    components.RepositoryCollaboratorPermission
 }
@@ -7532,8 +7531,8 @@ Get the combined status for a specific reference.
 
 https://developer.github.com/v3/repos/statuses/#get-the-combined-status-for-a-specific-reference
 */
-func GetCombinedStatusForRef(ctx context.Context, req *GetCombinedStatusForRefReq, opt ...options.Option) (*GetCombinedStatusForRefResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetCombinedStatusForRef(ctx context.Context, req *GetCombinedStatusForRefReq, opt ...requests.Option) (*GetCombinedStatusForRefResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -7568,7 +7567,7 @@ Get the combined status for a specific reference.
 
 https://developer.github.com/v3/repos/statuses/#get-the-combined-status-for-a-specific-reference
 */
-func (c Client) GetCombinedStatusForRef(ctx context.Context, req *GetCombinedStatusForRefReq, opt ...options.Option) (*GetCombinedStatusForRefResponse, error) {
+func (c Client) GetCombinedStatusForRef(ctx context.Context, req *GetCombinedStatusForRefReq, opt ...requests.Option) (*GetCombinedStatusForRefResponse, error) {
 	return GetCombinedStatusForRef(ctx, req, append(c, opt...)...)
 }
 
@@ -7587,8 +7586,8 @@ type GetCombinedStatusForRefReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetCombinedStatusForRefReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetCombinedStatusForRefReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -7634,7 +7633,7 @@ GetCombinedStatusForRefResponse is a response for GetCombinedStatusForRef
 https://developer.github.com/v3/repos/statuses/#get-the-combined-status-for-a-specific-reference
 */
 type GetCombinedStatusForRefResponse struct {
-	common.Response
+	requests.Response
 	request *GetCombinedStatusForRefReq
 	Data    components.CombinedCommitStatus
 }
@@ -7648,8 +7647,8 @@ Get a commit.
 
 https://developer.github.com/v3/repos/commits/#get-a-commit
 */
-func GetCommit(ctx context.Context, req *GetCommitReq, opt ...options.Option) (*GetCommitResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetCommit(ctx context.Context, req *GetCommitReq, opt ...requests.Option) (*GetCommitResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -7684,7 +7683,7 @@ Get a commit.
 
 https://developer.github.com/v3/repos/commits/#get-a-commit
 */
-func (c Client) GetCommit(ctx context.Context, req *GetCommitReq, opt ...options.Option) (*GetCommitResponse, error) {
+func (c Client) GetCommit(ctx context.Context, req *GetCommitReq, opt ...requests.Option) (*GetCommitResponse, error) {
 	return GetCommit(ctx, req, append(c, opt...)...)
 }
 
@@ -7703,8 +7702,8 @@ type GetCommitReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetCommitReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetCommitReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -7750,7 +7749,7 @@ GetCommitResponse is a response for GetCommit
 https://developer.github.com/v3/repos/commits/#get-a-commit
 */
 type GetCommitResponse struct {
-	common.Response
+	requests.Response
 	request *GetCommitReq
 	Data    components.Commit
 }
@@ -7764,8 +7763,8 @@ Get the last year of commit activity.
 
 https://developer.github.com/v3/repos/statistics/#get-the-last-year-of-commit-activity
 */
-func GetCommitActivityStats(ctx context.Context, req *GetCommitActivityStatsReq, opt ...options.Option) (*GetCommitActivityStatsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetCommitActivityStats(ctx context.Context, req *GetCommitActivityStatsReq, opt ...requests.Option) (*GetCommitActivityStatsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -7800,7 +7799,7 @@ Get the last year of commit activity.
 
 https://developer.github.com/v3/repos/statistics/#get-the-last-year-of-commit-activity
 */
-func (c Client) GetCommitActivityStats(ctx context.Context, req *GetCommitActivityStatsReq, opt ...options.Option) (*GetCommitActivityStatsResponse, error) {
+func (c Client) GetCommitActivityStats(ctx context.Context, req *GetCommitActivityStatsReq, opt ...requests.Option) (*GetCommitActivityStatsResponse, error) {
 	return GetCommitActivityStats(ctx, req, append(c, opt...)...)
 }
 
@@ -7816,8 +7815,8 @@ type GetCommitActivityStatsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetCommitActivityStatsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetCommitActivityStatsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -7863,7 +7862,7 @@ GetCommitActivityStatsResponse is a response for GetCommitActivityStats
 https://developer.github.com/v3/repos/statistics/#get-the-last-year-of-commit-activity
 */
 type GetCommitActivityStatsResponse struct {
-	common.Response
+	requests.Response
 	request *GetCommitActivityStatsReq
 	Data    []components.CommitActivity
 }
@@ -7877,8 +7876,8 @@ Get a commit comment.
 
 https://developer.github.com/v3/repos/comments/#get-a-commit-comment
 */
-func GetCommitComment(ctx context.Context, req *GetCommitCommentReq, opt ...options.Option) (*GetCommitCommentResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetCommitComment(ctx context.Context, req *GetCommitCommentReq, opt ...requests.Option) (*GetCommitCommentResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -7913,7 +7912,7 @@ Get a commit comment.
 
 https://developer.github.com/v3/repos/comments/#get-a-commit-comment
 */
-func (c Client) GetCommitComment(ctx context.Context, req *GetCommitCommentReq, opt ...options.Option) (*GetCommitCommentResponse, error) {
+func (c Client) GetCommitComment(ctx context.Context, req *GetCommitCommentReq, opt ...requests.Option) (*GetCommitCommentResponse, error) {
 	return GetCommitComment(ctx, req, append(c, opt...)...)
 }
 
@@ -7943,8 +7942,8 @@ type GetCommitCommentReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetCommitCommentReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetCommitCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -7990,7 +7989,7 @@ GetCommitCommentResponse is a response for GetCommitComment
 https://developer.github.com/v3/repos/comments/#get-a-commit-comment
 */
 type GetCommitCommentResponse struct {
-	common.Response
+	requests.Response
 	request *GetCommitCommentReq
 	Data    components.CommitComment
 }
@@ -8004,8 +8003,8 @@ Get commit signature protection.
 
 https://developer.github.com/v3/repos/branches/#get-commit-signature-protection
 */
-func GetCommitSignatureProtection(ctx context.Context, req *GetCommitSignatureProtectionReq, opt ...options.Option) (*GetCommitSignatureProtectionResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetCommitSignatureProtection(ctx context.Context, req *GetCommitSignatureProtectionReq, opt ...requests.Option) (*GetCommitSignatureProtectionResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -8040,7 +8039,7 @@ Get commit signature protection.
 
 https://developer.github.com/v3/repos/branches/#get-commit-signature-protection
 */
-func (c Client) GetCommitSignatureProtection(ctx context.Context, req *GetCommitSignatureProtectionReq, opt ...options.Option) (*GetCommitSignatureProtectionResponse, error) {
+func (c Client) GetCommitSignatureProtection(ctx context.Context, req *GetCommitSignatureProtectionReq, opt ...requests.Option) (*GetCommitSignatureProtectionResponse, error) {
 	return GetCommitSignatureProtection(ctx, req, append(c, opt...)...)
 }
 
@@ -8068,8 +8067,8 @@ type GetCommitSignatureProtectionReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetCommitSignatureProtectionReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetCommitSignatureProtectionReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -8115,7 +8114,7 @@ GetCommitSignatureProtectionResponse is a response for GetCommitSignatureProtect
 https://developer.github.com/v3/repos/branches/#get-commit-signature-protection
 */
 type GetCommitSignatureProtectionResponse struct {
-	common.Response
+	requests.Response
 	request *GetCommitSignatureProtectionReq
 	Data    components.ProtectedBranchAdminEnforced
 }
@@ -8129,8 +8128,8 @@ Get community profile metrics.
 
 https://developer.github.com/v3/repos/community/#get-community-profile-metrics
 */
-func GetCommunityProfileMetrics(ctx context.Context, req *GetCommunityProfileMetricsReq, opt ...options.Option) (*GetCommunityProfileMetricsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetCommunityProfileMetrics(ctx context.Context, req *GetCommunityProfileMetricsReq, opt ...requests.Option) (*GetCommunityProfileMetricsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -8165,7 +8164,7 @@ Get community profile metrics.
 
 https://developer.github.com/v3/repos/community/#get-community-profile-metrics
 */
-func (c Client) GetCommunityProfileMetrics(ctx context.Context, req *GetCommunityProfileMetricsReq, opt ...options.Option) (*GetCommunityProfileMetricsResponse, error) {
+func (c Client) GetCommunityProfileMetrics(ctx context.Context, req *GetCommunityProfileMetricsReq, opt ...requests.Option) (*GetCommunityProfileMetricsResponse, error) {
 	return GetCommunityProfileMetrics(ctx, req, append(c, opt...)...)
 }
 
@@ -8188,8 +8187,8 @@ type GetCommunityProfileMetricsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetCommunityProfileMetricsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetCommunityProfileMetricsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -8235,7 +8234,7 @@ GetCommunityProfileMetricsResponse is a response for GetCommunityProfileMetrics
 https://developer.github.com/v3/repos/community/#get-community-profile-metrics
 */
 type GetCommunityProfileMetricsResponse struct {
-	common.Response
+	requests.Response
 	request *GetCommunityProfileMetricsReq
 	Data    components.CommunityProfile
 }
@@ -8249,8 +8248,8 @@ Get repository content.
 
 https://developer.github.com/v3/repos/contents/#get-repository-content
 */
-func GetContent(ctx context.Context, req *GetContentReq, opt ...options.Option) (*GetContentResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetContent(ctx context.Context, req *GetContentReq, opt ...requests.Option) (*GetContentResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -8285,7 +8284,7 @@ Get repository content.
 
 https://developer.github.com/v3/repos/contents/#get-repository-content
 */
-func (c Client) GetContent(ctx context.Context, req *GetContentReq, opt ...options.Option) (*GetContentResponse, error) {
+func (c Client) GetContent(ctx context.Context, req *GetContentReq, opt ...requests.Option) (*GetContentResponse, error) {
 	return GetContent(ctx, req, append(c, opt...)...)
 }
 
@@ -8310,8 +8309,8 @@ type GetContentReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetContentReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetContentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -8451,7 +8450,7 @@ GetContentResponse is a response for GetContent
 https://developer.github.com/v3/repos/contents/#get-repository-content
 */
 type GetContentResponse struct {
-	common.Response
+	requests.Response
 	request *GetContentReq
 	Data    GetContentResponseBody
 }
@@ -8465,8 +8464,8 @@ Get all contributor commit activity.
 
 https://developer.github.com/v3/repos/statistics/#get-all-contributor-commit-activity
 */
-func GetContributorsStats(ctx context.Context, req *GetContributorsStatsReq, opt ...options.Option) (*GetContributorsStatsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetContributorsStats(ctx context.Context, req *GetContributorsStatsReq, opt ...requests.Option) (*GetContributorsStatsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -8501,7 +8500,7 @@ Get all contributor commit activity.
 
 https://developer.github.com/v3/repos/statistics/#get-all-contributor-commit-activity
 */
-func (c Client) GetContributorsStats(ctx context.Context, req *GetContributorsStatsReq, opt ...options.Option) (*GetContributorsStatsResponse, error) {
+func (c Client) GetContributorsStats(ctx context.Context, req *GetContributorsStatsReq, opt ...requests.Option) (*GetContributorsStatsResponse, error) {
 	return GetContributorsStats(ctx, req, append(c, opt...)...)
 }
 
@@ -8517,8 +8516,8 @@ type GetContributorsStatsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetContributorsStatsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetContributorsStatsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -8564,7 +8563,7 @@ GetContributorsStatsResponse is a response for GetContributorsStats
 https://developer.github.com/v3/repos/statistics/#get-all-contributor-commit-activity
 */
 type GetContributorsStatsResponse struct {
-	common.Response
+	requests.Response
 	request *GetContributorsStatsReq
 	Data    []components.ContributorActivity
 }
@@ -8578,8 +8577,8 @@ Get a deploy key.
 
 https://developer.github.com/v3/repos/keys/#get-a-deploy-key
 */
-func GetDeployKey(ctx context.Context, req *GetDeployKeyReq, opt ...options.Option) (*GetDeployKeyResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetDeployKey(ctx context.Context, req *GetDeployKeyReq, opt ...requests.Option) (*GetDeployKeyResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -8614,7 +8613,7 @@ Get a deploy key.
 
 https://developer.github.com/v3/repos/keys/#get-a-deploy-key
 */
-func (c Client) GetDeployKey(ctx context.Context, req *GetDeployKeyReq, opt ...options.Option) (*GetDeployKeyResponse, error) {
+func (c Client) GetDeployKey(ctx context.Context, req *GetDeployKeyReq, opt ...requests.Option) (*GetDeployKeyResponse, error) {
 	return GetDeployKey(ctx, req, append(c, opt...)...)
 }
 
@@ -8633,8 +8632,8 @@ type GetDeployKeyReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetDeployKeyReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetDeployKeyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -8680,7 +8679,7 @@ GetDeployKeyResponse is a response for GetDeployKey
 https://developer.github.com/v3/repos/keys/#get-a-deploy-key
 */
 type GetDeployKeyResponse struct {
-	common.Response
+	requests.Response
 	request *GetDeployKeyReq
 	Data    components.DeployKey
 }
@@ -8694,8 +8693,8 @@ Get a deployment.
 
 https://developer.github.com/v3/repos/deployments/#get-a-deployment
 */
-func GetDeployment(ctx context.Context, req *GetDeploymentReq, opt ...options.Option) (*GetDeploymentResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetDeployment(ctx context.Context, req *GetDeploymentReq, opt ...requests.Option) (*GetDeploymentResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -8730,7 +8729,7 @@ Get a deployment.
 
 https://developer.github.com/v3/repos/deployments/#get-a-deployment
 */
-func (c Client) GetDeployment(ctx context.Context, req *GetDeploymentReq, opt ...options.Option) (*GetDeploymentResponse, error) {
+func (c Client) GetDeployment(ctx context.Context, req *GetDeploymentReq, opt ...requests.Option) (*GetDeploymentResponse, error) {
 	return GetDeployment(ctx, req, append(c, opt...)...)
 }
 
@@ -8766,8 +8765,8 @@ type GetDeploymentReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetDeploymentReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetDeploymentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -8816,7 +8815,7 @@ GetDeploymentResponse is a response for GetDeployment
 https://developer.github.com/v3/repos/deployments/#get-a-deployment
 */
 type GetDeploymentResponse struct {
-	common.Response
+	requests.Response
 	request *GetDeploymentReq
 	Data    components.Deployment
 }
@@ -8830,8 +8829,8 @@ Get a deployment status.
 
 https://developer.github.com/v3/repos/deployments/#get-a-deployment-status
 */
-func GetDeploymentStatus(ctx context.Context, req *GetDeploymentStatusReq, opt ...options.Option) (*GetDeploymentStatusResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetDeploymentStatus(ctx context.Context, req *GetDeploymentStatusReq, opt ...requests.Option) (*GetDeploymentStatusResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -8866,7 +8865,7 @@ Get a deployment status.
 
 https://developer.github.com/v3/repos/deployments/#get-a-deployment-status
 */
-func (c Client) GetDeploymentStatus(ctx context.Context, req *GetDeploymentStatusReq, opt ...options.Option) (*GetDeploymentStatusResponse, error) {
+func (c Client) GetDeploymentStatus(ctx context.Context, req *GetDeploymentStatusReq, opt ...requests.Option) (*GetDeploymentStatusResponse, error) {
 	return GetDeploymentStatus(ctx, req, append(c, opt...)...)
 }
 
@@ -8917,8 +8916,8 @@ type GetDeploymentStatusReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetDeploymentStatusReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetDeploymentStatusReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -8968,7 +8967,7 @@ GetDeploymentStatusResponse is a response for GetDeploymentStatus
 https://developer.github.com/v3/repos/deployments/#get-a-deployment-status
 */
 type GetDeploymentStatusResponse struct {
-	common.Response
+	requests.Response
 	request *GetDeploymentStatusReq
 	Data    components.DeploymentStatus
 }
@@ -8982,8 +8981,8 @@ Get latest Pages build.
 
 https://developer.github.com/v3/repos/pages/#get-latest-pages-build
 */
-func GetLatestPagesBuild(ctx context.Context, req *GetLatestPagesBuildReq, opt ...options.Option) (*GetLatestPagesBuildResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetLatestPagesBuild(ctx context.Context, req *GetLatestPagesBuildReq, opt ...requests.Option) (*GetLatestPagesBuildResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -9018,7 +9017,7 @@ Get latest Pages build.
 
 https://developer.github.com/v3/repos/pages/#get-latest-pages-build
 */
-func (c Client) GetLatestPagesBuild(ctx context.Context, req *GetLatestPagesBuildReq, opt ...options.Option) (*GetLatestPagesBuildResponse, error) {
+func (c Client) GetLatestPagesBuild(ctx context.Context, req *GetLatestPagesBuildReq, opt ...requests.Option) (*GetLatestPagesBuildResponse, error) {
 	return GetLatestPagesBuild(ctx, req, append(c, opt...)...)
 }
 
@@ -9034,8 +9033,8 @@ type GetLatestPagesBuildReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetLatestPagesBuildReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetLatestPagesBuildReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -9081,7 +9080,7 @@ GetLatestPagesBuildResponse is a response for GetLatestPagesBuild
 https://developer.github.com/v3/repos/pages/#get-latest-pages-build
 */
 type GetLatestPagesBuildResponse struct {
-	common.Response
+	requests.Response
 	request *GetLatestPagesBuildReq
 	Data    components.PageBuild
 }
@@ -9095,8 +9094,8 @@ Get the latest release.
 
 https://developer.github.com/v3/repos/releases/#get-the-latest-release
 */
-func GetLatestRelease(ctx context.Context, req *GetLatestReleaseReq, opt ...options.Option) (*GetLatestReleaseResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetLatestRelease(ctx context.Context, req *GetLatestReleaseReq, opt ...requests.Option) (*GetLatestReleaseResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -9131,7 +9130,7 @@ Get the latest release.
 
 https://developer.github.com/v3/repos/releases/#get-the-latest-release
 */
-func (c Client) GetLatestRelease(ctx context.Context, req *GetLatestReleaseReq, opt ...options.Option) (*GetLatestReleaseResponse, error) {
+func (c Client) GetLatestRelease(ctx context.Context, req *GetLatestReleaseReq, opt ...requests.Option) (*GetLatestReleaseResponse, error) {
 	return GetLatestRelease(ctx, req, append(c, opt...)...)
 }
 
@@ -9147,8 +9146,8 @@ type GetLatestReleaseReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetLatestReleaseReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetLatestReleaseReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -9194,7 +9193,7 @@ GetLatestReleaseResponse is a response for GetLatestRelease
 https://developer.github.com/v3/repos/releases/#get-the-latest-release
 */
 type GetLatestReleaseResponse struct {
-	common.Response
+	requests.Response
 	request *GetLatestReleaseReq
 	Data    components.Release
 }
@@ -9208,8 +9207,8 @@ Get a GitHub Pages site.
 
 https://developer.github.com/v3/repos/pages/#get-a-github-pages-site
 */
-func GetPages(ctx context.Context, req *GetPagesReq, opt ...options.Option) (*GetPagesResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetPages(ctx context.Context, req *GetPagesReq, opt ...requests.Option) (*GetPagesResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -9244,7 +9243,7 @@ Get a GitHub Pages site.
 
 https://developer.github.com/v3/repos/pages/#get-a-github-pages-site
 */
-func (c Client) GetPages(ctx context.Context, req *GetPagesReq, opt ...options.Option) (*GetPagesResponse, error) {
+func (c Client) GetPages(ctx context.Context, req *GetPagesReq, opt ...requests.Option) (*GetPagesResponse, error) {
 	return GetPages(ctx, req, append(c, opt...)...)
 }
 
@@ -9260,8 +9259,8 @@ type GetPagesReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetPagesReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetPagesReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -9307,7 +9306,7 @@ GetPagesResponse is a response for GetPages
 https://developer.github.com/v3/repos/pages/#get-a-github-pages-site
 */
 type GetPagesResponse struct {
-	common.Response
+	requests.Response
 	request *GetPagesReq
 	Data    components.Page
 }
@@ -9321,8 +9320,8 @@ Get GitHub Pages build.
 
 https://developer.github.com/v3/repos/pages/#get-github-pages-build
 */
-func GetPagesBuild(ctx context.Context, req *GetPagesBuildReq, opt ...options.Option) (*GetPagesBuildResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetPagesBuild(ctx context.Context, req *GetPagesBuildReq, opt ...requests.Option) (*GetPagesBuildResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -9357,7 +9356,7 @@ Get GitHub Pages build.
 
 https://developer.github.com/v3/repos/pages/#get-github-pages-build
 */
-func (c Client) GetPagesBuild(ctx context.Context, req *GetPagesBuildReq, opt ...options.Option) (*GetPagesBuildResponse, error) {
+func (c Client) GetPagesBuild(ctx context.Context, req *GetPagesBuildReq, opt ...requests.Option) (*GetPagesBuildResponse, error) {
 	return GetPagesBuild(ctx, req, append(c, opt...)...)
 }
 
@@ -9376,8 +9375,8 @@ type GetPagesBuildReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetPagesBuildReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetPagesBuildReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -9423,7 +9422,7 @@ GetPagesBuildResponse is a response for GetPagesBuild
 https://developer.github.com/v3/repos/pages/#get-github-pages-build
 */
 type GetPagesBuildResponse struct {
-	common.Response
+	requests.Response
 	request *GetPagesBuildReq
 	Data    components.PageBuild
 }
@@ -9437,8 +9436,8 @@ Get the weekly commit count.
 
 https://developer.github.com/v3/repos/statistics/#get-the-weekly-commit-count
 */
-func GetParticipationStats(ctx context.Context, req *GetParticipationStatsReq, opt ...options.Option) (*GetParticipationStatsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetParticipationStats(ctx context.Context, req *GetParticipationStatsReq, opt ...requests.Option) (*GetParticipationStatsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -9473,7 +9472,7 @@ Get the weekly commit count.
 
 https://developer.github.com/v3/repos/statistics/#get-the-weekly-commit-count
 */
-func (c Client) GetParticipationStats(ctx context.Context, req *GetParticipationStatsReq, opt ...options.Option) (*GetParticipationStatsResponse, error) {
+func (c Client) GetParticipationStats(ctx context.Context, req *GetParticipationStatsReq, opt ...requests.Option) (*GetParticipationStatsResponse, error) {
 	return GetParticipationStats(ctx, req, append(c, opt...)...)
 }
 
@@ -9489,8 +9488,8 @@ type GetParticipationStatsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetParticipationStatsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetParticipationStatsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -9536,7 +9535,7 @@ GetParticipationStatsResponse is a response for GetParticipationStats
 https://developer.github.com/v3/repos/statistics/#get-the-weekly-commit-count
 */
 type GetParticipationStatsResponse struct {
-	common.Response
+	requests.Response
 	request *GetParticipationStatsReq
 	Data    components.ParticipationStats
 }
@@ -9550,8 +9549,8 @@ Get pull request review protection.
 
 https://developer.github.com/v3/repos/branches/#get-pull-request-review-protection
 */
-func GetPullRequestReviewProtection(ctx context.Context, req *GetPullRequestReviewProtectionReq, opt ...options.Option) (*GetPullRequestReviewProtectionResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetPullRequestReviewProtection(ctx context.Context, req *GetPullRequestReviewProtectionReq, opt ...requests.Option) (*GetPullRequestReviewProtectionResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -9586,7 +9585,7 @@ Get pull request review protection.
 
 https://developer.github.com/v3/repos/branches/#get-pull-request-review-protection
 */
-func (c Client) GetPullRequestReviewProtection(ctx context.Context, req *GetPullRequestReviewProtectionReq, opt ...options.Option) (*GetPullRequestReviewProtectionResponse, error) {
+func (c Client) GetPullRequestReviewProtection(ctx context.Context, req *GetPullRequestReviewProtectionReq, opt ...requests.Option) (*GetPullRequestReviewProtectionResponse, error) {
 	return GetPullRequestReviewProtection(ctx, req, append(c, opt...)...)
 }
 
@@ -9615,8 +9614,8 @@ type GetPullRequestReviewProtectionReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetPullRequestReviewProtectionReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetPullRequestReviewProtectionReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -9662,7 +9661,7 @@ GetPullRequestReviewProtectionResponse is a response for GetPullRequestReviewPro
 https://developer.github.com/v3/repos/branches/#get-pull-request-review-protection
 */
 type GetPullRequestReviewProtectionResponse struct {
-	common.Response
+	requests.Response
 	request *GetPullRequestReviewProtectionReq
 	Data    components.ProtectedBranchPullRequestReview
 }
@@ -9676,8 +9675,8 @@ Get the hourly commit count for each day.
 
 https://developer.github.com/v3/repos/statistics/#get-the-hourly-commit-count-for-each-day
 */
-func GetPunchCardStats(ctx context.Context, req *GetPunchCardStatsReq, opt ...options.Option) (*GetPunchCardStatsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetPunchCardStats(ctx context.Context, req *GetPunchCardStatsReq, opt ...requests.Option) (*GetPunchCardStatsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -9712,7 +9711,7 @@ Get the hourly commit count for each day.
 
 https://developer.github.com/v3/repos/statistics/#get-the-hourly-commit-count-for-each-day
 */
-func (c Client) GetPunchCardStats(ctx context.Context, req *GetPunchCardStatsReq, opt ...options.Option) (*GetPunchCardStatsResponse, error) {
+func (c Client) GetPunchCardStats(ctx context.Context, req *GetPunchCardStatsReq, opt ...requests.Option) (*GetPunchCardStatsResponse, error) {
 	return GetPunchCardStats(ctx, req, append(c, opt...)...)
 }
 
@@ -9728,8 +9727,8 @@ type GetPunchCardStatsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetPunchCardStatsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetPunchCardStatsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -9775,7 +9774,7 @@ GetPunchCardStatsResponse is a response for GetPunchCardStats
 https://developer.github.com/v3/repos/statistics/#get-the-hourly-commit-count-for-each-day
 */
 type GetPunchCardStatsResponse struct {
-	common.Response
+	requests.Response
 	request *GetPunchCardStatsReq
 	Data    []components.CodeFrequencyStat
 }
@@ -9789,8 +9788,8 @@ Get a repository README.
 
 https://developer.github.com/v3/repos/contents/#get-a-repository-readme
 */
-func GetReadme(ctx context.Context, req *GetReadmeReq, opt ...options.Option) (*GetReadmeResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetReadme(ctx context.Context, req *GetReadmeReq, opt ...requests.Option) (*GetReadmeResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -9825,7 +9824,7 @@ Get a repository README.
 
 https://developer.github.com/v3/repos/contents/#get-a-repository-readme
 */
-func (c Client) GetReadme(ctx context.Context, req *GetReadmeReq, opt ...options.Option) (*GetReadmeResponse, error) {
+func (c Client) GetReadme(ctx context.Context, req *GetReadmeReq, opt ...requests.Option) (*GetReadmeResponse, error) {
 	return GetReadme(ctx, req, append(c, opt...)...)
 }
 
@@ -9847,8 +9846,8 @@ type GetReadmeReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetReadmeReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetReadmeReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -9897,7 +9896,7 @@ GetReadmeResponse is a response for GetReadme
 https://developer.github.com/v3/repos/contents/#get-a-repository-readme
 */
 type GetReadmeResponse struct {
-	common.Response
+	requests.Response
 	request *GetReadmeReq
 	Data    components.ContentFile
 }
@@ -9911,8 +9910,8 @@ Get a release.
 
 https://developer.github.com/v3/repos/releases/#get-a-release
 */
-func GetRelease(ctx context.Context, req *GetReleaseReq, opt ...options.Option) (*GetReleaseResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetRelease(ctx context.Context, req *GetReleaseReq, opt ...requests.Option) (*GetReleaseResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -9947,7 +9946,7 @@ Get a release.
 
 https://developer.github.com/v3/repos/releases/#get-a-release
 */
-func (c Client) GetRelease(ctx context.Context, req *GetReleaseReq, opt ...options.Option) (*GetReleaseResponse, error) {
+func (c Client) GetRelease(ctx context.Context, req *GetReleaseReq, opt ...requests.Option) (*GetReleaseResponse, error) {
 	return GetRelease(ctx, req, append(c, opt...)...)
 }
 
@@ -9966,8 +9965,8 @@ type GetReleaseReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetReleaseReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetReleaseReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -10013,7 +10012,7 @@ GetReleaseResponse is a response for GetRelease
 https://developer.github.com/v3/repos/releases/#get-a-release
 */
 type GetReleaseResponse struct {
-	common.Response
+	requests.Response
 	request *GetReleaseReq
 	Data    components.Release
 }
@@ -10027,8 +10026,8 @@ Get a release asset.
 
 https://developer.github.com/v3/repos/releases/#get-a-release-asset
 */
-func GetReleaseAsset(ctx context.Context, req *GetReleaseAssetReq, opt ...options.Option) (*GetReleaseAssetResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetReleaseAsset(ctx context.Context, req *GetReleaseAssetReq, opt ...requests.Option) (*GetReleaseAssetResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -10063,7 +10062,7 @@ Get a release asset.
 
 https://developer.github.com/v3/repos/releases/#get-a-release-asset
 */
-func (c Client) GetReleaseAsset(ctx context.Context, req *GetReleaseAssetReq, opt ...options.Option) (*GetReleaseAssetResponse, error) {
+func (c Client) GetReleaseAsset(ctx context.Context, req *GetReleaseAssetReq, opt ...requests.Option) (*GetReleaseAssetResponse, error) {
 	return GetReleaseAsset(ctx, req, append(c, opt...)...)
 }
 
@@ -10082,8 +10081,8 @@ type GetReleaseAssetReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetReleaseAssetReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetReleaseAssetReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -10129,7 +10128,7 @@ GetReleaseAssetResponse is a response for GetReleaseAsset
 https://developer.github.com/v3/repos/releases/#get-a-release-asset
 */
 type GetReleaseAssetResponse struct {
-	common.Response
+	requests.Response
 	request *GetReleaseAssetReq
 	Data    components.ReleaseAsset
 }
@@ -10143,8 +10142,8 @@ Get a release by tag name.
 
 https://developer.github.com/v3/repos/releases/#get-a-release-by-tag-name
 */
-func GetReleaseByTag(ctx context.Context, req *GetReleaseByTagReq, opt ...options.Option) (*GetReleaseByTagResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetReleaseByTag(ctx context.Context, req *GetReleaseByTagReq, opt ...requests.Option) (*GetReleaseByTagResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -10179,7 +10178,7 @@ Get a release by tag name.
 
 https://developer.github.com/v3/repos/releases/#get-a-release-by-tag-name
 */
-func (c Client) GetReleaseByTag(ctx context.Context, req *GetReleaseByTagReq, opt ...options.Option) (*GetReleaseByTagResponse, error) {
+func (c Client) GetReleaseByTag(ctx context.Context, req *GetReleaseByTagReq, opt ...requests.Option) (*GetReleaseByTagResponse, error) {
 	return GetReleaseByTag(ctx, req, append(c, opt...)...)
 }
 
@@ -10198,8 +10197,8 @@ type GetReleaseByTagReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetReleaseByTagReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetReleaseByTagReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -10245,7 +10244,7 @@ GetReleaseByTagResponse is a response for GetReleaseByTag
 https://developer.github.com/v3/repos/releases/#get-a-release-by-tag-name
 */
 type GetReleaseByTagResponse struct {
-	common.Response
+	requests.Response
 	request *GetReleaseByTagReq
 	Data    components.Release
 }
@@ -10259,8 +10258,8 @@ Get status checks protection.
 
 https://developer.github.com/v3/repos/branches/#get-status-checks-protection
 */
-func GetStatusChecksProtection(ctx context.Context, req *GetStatusChecksProtectionReq, opt ...options.Option) (*GetStatusChecksProtectionResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetStatusChecksProtection(ctx context.Context, req *GetStatusChecksProtectionReq, opt ...requests.Option) (*GetStatusChecksProtectionResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -10295,7 +10294,7 @@ Get status checks protection.
 
 https://developer.github.com/v3/repos/branches/#get-status-checks-protection
 */
-func (c Client) GetStatusChecksProtection(ctx context.Context, req *GetStatusChecksProtectionReq, opt ...options.Option) (*GetStatusChecksProtectionResponse, error) {
+func (c Client) GetStatusChecksProtection(ctx context.Context, req *GetStatusChecksProtectionReq, opt ...requests.Option) (*GetStatusChecksProtectionResponse, error) {
 	return GetStatusChecksProtection(ctx, req, append(c, opt...)...)
 }
 
@@ -10314,8 +10313,8 @@ type GetStatusChecksProtectionReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetStatusChecksProtectionReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetStatusChecksProtectionReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -10361,7 +10360,7 @@ GetStatusChecksProtectionResponse is a response for GetStatusChecksProtection
 https://developer.github.com/v3/repos/branches/#get-status-checks-protection
 */
 type GetStatusChecksProtectionResponse struct {
-	common.Response
+	requests.Response
 	request *GetStatusChecksProtectionReq
 	Data    components.StatusCheckPolicy
 }
@@ -10375,8 +10374,8 @@ Get teams with access to the protected branch.
 
 https://developer.github.com/v3/repos/branches/#list-teams-with-access-to-the-protected-branch
 */
-func GetTeamsWithAccessToProtectedBranch(ctx context.Context, req *GetTeamsWithAccessToProtectedBranchReq, opt ...options.Option) (*GetTeamsWithAccessToProtectedBranchResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetTeamsWithAccessToProtectedBranch(ctx context.Context, req *GetTeamsWithAccessToProtectedBranchReq, opt ...requests.Option) (*GetTeamsWithAccessToProtectedBranchResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -10411,7 +10410,7 @@ Get teams with access to the protected branch.
 
 https://developer.github.com/v3/repos/branches/#list-teams-with-access-to-the-protected-branch
 */
-func (c Client) GetTeamsWithAccessToProtectedBranch(ctx context.Context, req *GetTeamsWithAccessToProtectedBranchReq, opt ...options.Option) (*GetTeamsWithAccessToProtectedBranchResponse, error) {
+func (c Client) GetTeamsWithAccessToProtectedBranch(ctx context.Context, req *GetTeamsWithAccessToProtectedBranchReq, opt ...requests.Option) (*GetTeamsWithAccessToProtectedBranchResponse, error) {
 	return GetTeamsWithAccessToProtectedBranch(ctx, req, append(c, opt...)...)
 }
 
@@ -10430,8 +10429,8 @@ type GetTeamsWithAccessToProtectedBranchReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetTeamsWithAccessToProtectedBranchReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetTeamsWithAccessToProtectedBranchReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -10477,7 +10476,7 @@ GetTeamsWithAccessToProtectedBranchResponse is a response for GetTeamsWithAccess
 https://developer.github.com/v3/repos/branches/#list-teams-with-access-to-the-protected-branch
 */
 type GetTeamsWithAccessToProtectedBranchResponse struct {
-	common.Response
+	requests.Response
 	request *GetTeamsWithAccessToProtectedBranchReq
 	Data    []components.Team
 }
@@ -10491,8 +10490,8 @@ Get top referral paths.
 
 https://developer.github.com/v3/repos/traffic/#get-top-referral-paths
 */
-func GetTopPaths(ctx context.Context, req *GetTopPathsReq, opt ...options.Option) (*GetTopPathsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetTopPaths(ctx context.Context, req *GetTopPathsReq, opt ...requests.Option) (*GetTopPathsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -10527,7 +10526,7 @@ Get top referral paths.
 
 https://developer.github.com/v3/repos/traffic/#get-top-referral-paths
 */
-func (c Client) GetTopPaths(ctx context.Context, req *GetTopPathsReq, opt ...options.Option) (*GetTopPathsResponse, error) {
+func (c Client) GetTopPaths(ctx context.Context, req *GetTopPathsReq, opt ...requests.Option) (*GetTopPathsResponse, error) {
 	return GetTopPaths(ctx, req, append(c, opt...)...)
 }
 
@@ -10543,8 +10542,8 @@ type GetTopPathsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetTopPathsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetTopPathsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -10590,7 +10589,7 @@ GetTopPathsResponse is a response for GetTopPaths
 https://developer.github.com/v3/repos/traffic/#get-top-referral-paths
 */
 type GetTopPathsResponse struct {
-	common.Response
+	requests.Response
 	request *GetTopPathsReq
 	Data    []components.ContentTraffic
 }
@@ -10604,8 +10603,8 @@ Get top referral sources.
 
 https://developer.github.com/v3/repos/traffic/#get-top-referral-sources
 */
-func GetTopReferrers(ctx context.Context, req *GetTopReferrersReq, opt ...options.Option) (*GetTopReferrersResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetTopReferrers(ctx context.Context, req *GetTopReferrersReq, opt ...requests.Option) (*GetTopReferrersResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -10640,7 +10639,7 @@ Get top referral sources.
 
 https://developer.github.com/v3/repos/traffic/#get-top-referral-sources
 */
-func (c Client) GetTopReferrers(ctx context.Context, req *GetTopReferrersReq, opt ...options.Option) (*GetTopReferrersResponse, error) {
+func (c Client) GetTopReferrers(ctx context.Context, req *GetTopReferrersReq, opt ...requests.Option) (*GetTopReferrersResponse, error) {
 	return GetTopReferrers(ctx, req, append(c, opt...)...)
 }
 
@@ -10656,8 +10655,8 @@ type GetTopReferrersReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetTopReferrersReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetTopReferrersReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -10703,7 +10702,7 @@ GetTopReferrersResponse is a response for GetTopReferrers
 https://developer.github.com/v3/repos/traffic/#get-top-referral-sources
 */
 type GetTopReferrersResponse struct {
-	common.Response
+	requests.Response
 	request *GetTopReferrersReq
 	Data    []components.ReferrerTraffic
 }
@@ -10717,8 +10716,8 @@ Get users with access to the protected branch.
 
 https://developer.github.com/v3/repos/branches/#list-users-with-access-to-the-protected-branch
 */
-func GetUsersWithAccessToProtectedBranch(ctx context.Context, req *GetUsersWithAccessToProtectedBranchReq, opt ...options.Option) (*GetUsersWithAccessToProtectedBranchResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetUsersWithAccessToProtectedBranch(ctx context.Context, req *GetUsersWithAccessToProtectedBranchReq, opt ...requests.Option) (*GetUsersWithAccessToProtectedBranchResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -10753,7 +10752,7 @@ Get users with access to the protected branch.
 
 https://developer.github.com/v3/repos/branches/#list-users-with-access-to-the-protected-branch
 */
-func (c Client) GetUsersWithAccessToProtectedBranch(ctx context.Context, req *GetUsersWithAccessToProtectedBranchReq, opt ...options.Option) (*GetUsersWithAccessToProtectedBranchResponse, error) {
+func (c Client) GetUsersWithAccessToProtectedBranch(ctx context.Context, req *GetUsersWithAccessToProtectedBranchReq, opt ...requests.Option) (*GetUsersWithAccessToProtectedBranchResponse, error) {
 	return GetUsersWithAccessToProtectedBranch(ctx, req, append(c, opt...)...)
 }
 
@@ -10772,8 +10771,8 @@ type GetUsersWithAccessToProtectedBranchReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetUsersWithAccessToProtectedBranchReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetUsersWithAccessToProtectedBranchReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -10819,7 +10818,7 @@ GetUsersWithAccessToProtectedBranchResponse is a response for GetUsersWithAccess
 https://developer.github.com/v3/repos/branches/#list-users-with-access-to-the-protected-branch
 */
 type GetUsersWithAccessToProtectedBranchResponse struct {
-	common.Response
+	requests.Response
 	request *GetUsersWithAccessToProtectedBranchReq
 	Data    []components.SimpleUser
 }
@@ -10833,8 +10832,8 @@ Get page views.
 
 https://developer.github.com/v3/repos/traffic/#get-page-views
 */
-func GetViews(ctx context.Context, req *GetViewsReq, opt ...options.Option) (*GetViewsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetViews(ctx context.Context, req *GetViewsReq, opt ...requests.Option) (*GetViewsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -10869,7 +10868,7 @@ Get page views.
 
 https://developer.github.com/v3/repos/traffic/#get-page-views
 */
-func (c Client) GetViews(ctx context.Context, req *GetViewsReq, opt ...options.Option) (*GetViewsResponse, error) {
+func (c Client) GetViews(ctx context.Context, req *GetViewsReq, opt ...requests.Option) (*GetViewsResponse, error) {
 	return GetViews(ctx, req, append(c, opt...)...)
 }
 
@@ -10888,8 +10887,8 @@ type GetViewsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetViewsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetViewsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -10938,7 +10937,7 @@ GetViewsResponse is a response for GetViews
 https://developer.github.com/v3/repos/traffic/#get-page-views
 */
 type GetViewsResponse struct {
-	common.Response
+	requests.Response
 	request *GetViewsReq
 	Data    components.ViewTraffic
 }
@@ -10952,8 +10951,8 @@ Get a repository webhook.
 
 https://developer.github.com/v3/repos/hooks/#get-a-repository-webhook
 */
-func GetWebhook(ctx context.Context, req *GetWebhookReq, opt ...options.Option) (*GetWebhookResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetWebhook(ctx context.Context, req *GetWebhookReq, opt ...requests.Option) (*GetWebhookResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -10988,7 +10987,7 @@ Get a repository webhook.
 
 https://developer.github.com/v3/repos/hooks/#get-a-repository-webhook
 */
-func (c Client) GetWebhook(ctx context.Context, req *GetWebhookReq, opt ...options.Option) (*GetWebhookResponse, error) {
+func (c Client) GetWebhook(ctx context.Context, req *GetWebhookReq, opt ...requests.Option) (*GetWebhookResponse, error) {
 	return GetWebhook(ctx, req, append(c, opt...)...)
 }
 
@@ -11005,8 +11004,8 @@ type GetWebhookReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetWebhookReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetWebhookReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -11052,7 +11051,7 @@ GetWebhookResponse is a response for GetWebhook
 https://developer.github.com/v3/repos/hooks/#get-a-repository-webhook
 */
 type GetWebhookResponse struct {
-	common.Response
+	requests.Response
 	request *GetWebhookReq
 	Data    components.Hook
 }
@@ -11066,8 +11065,8 @@ List branches.
 
 https://developer.github.com/v3/repos/branches/#list-branches
 */
-func ListBranches(ctx context.Context, req *ListBranchesReq, opt ...options.Option) (*ListBranchesResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListBranches(ctx context.Context, req *ListBranchesReq, opt ...requests.Option) (*ListBranchesResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -11102,7 +11101,7 @@ List branches.
 
 https://developer.github.com/v3/repos/branches/#list-branches
 */
-func (c Client) ListBranches(ctx context.Context, req *ListBranchesReq, opt ...options.Option) (*ListBranchesResponse, error) {
+func (c Client) ListBranches(ctx context.Context, req *ListBranchesReq, opt ...requests.Option) (*ListBranchesResponse, error) {
 	return ListBranches(ctx, req, append(c, opt...)...)
 }
 
@@ -11130,8 +11129,8 @@ type ListBranchesReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListBranchesReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListBranchesReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -11186,7 +11185,7 @@ ListBranchesResponse is a response for ListBranches
 https://developer.github.com/v3/repos/branches/#list-branches
 */
 type ListBranchesResponse struct {
-	common.Response
+	requests.Response
 	request *ListBranchesReq
 	Data    []components.ShortBranch
 }
@@ -11200,8 +11199,8 @@ List branches for HEAD commit.
 
 https://developer.github.com/v3/repos/commits/#list-branches-for-head-commit
 */
-func ListBranchesForHeadCommit(ctx context.Context, req *ListBranchesForHeadCommitReq, opt ...options.Option) (*ListBranchesForHeadCommitResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListBranchesForHeadCommit(ctx context.Context, req *ListBranchesForHeadCommitReq, opt ...requests.Option) (*ListBranchesForHeadCommitResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -11236,7 +11235,7 @@ List branches for HEAD commit.
 
 https://developer.github.com/v3/repos/commits/#list-branches-for-head-commit
 */
-func (c Client) ListBranchesForHeadCommit(ctx context.Context, req *ListBranchesForHeadCommitReq, opt ...options.Option) (*ListBranchesForHeadCommitResponse, error) {
+func (c Client) ListBranchesForHeadCommit(ctx context.Context, req *ListBranchesForHeadCommitReq, opt ...requests.Option) (*ListBranchesForHeadCommitResponse, error) {
 	return ListBranchesForHeadCommit(ctx, req, append(c, opt...)...)
 }
 
@@ -11264,8 +11263,8 @@ type ListBranchesForHeadCommitReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListBranchesForHeadCommitReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListBranchesForHeadCommitReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -11311,7 +11310,7 @@ ListBranchesForHeadCommitResponse is a response for ListBranchesForHeadCommit
 https://developer.github.com/v3/repos/commits/#list-branches-for-head-commit
 */
 type ListBranchesForHeadCommitResponse struct {
-	common.Response
+	requests.Response
 	request *ListBranchesForHeadCommitReq
 	Data    []components.BranchShort
 }
@@ -11325,8 +11324,8 @@ List repository collaborators.
 
 https://developer.github.com/v3/repos/collaborators/#list-repository-collaborators
 */
-func ListCollaborators(ctx context.Context, req *ListCollaboratorsReq, opt ...options.Option) (*ListCollaboratorsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListCollaborators(ctx context.Context, req *ListCollaboratorsReq, opt ...requests.Option) (*ListCollaboratorsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -11361,7 +11360,7 @@ List repository collaborators.
 
 https://developer.github.com/v3/repos/collaborators/#list-repository-collaborators
 */
-func (c Client) ListCollaborators(ctx context.Context, req *ListCollaboratorsReq, opt ...options.Option) (*ListCollaboratorsResponse, error) {
+func (c Client) ListCollaborators(ctx context.Context, req *ListCollaboratorsReq, opt ...requests.Option) (*ListCollaboratorsResponse, error) {
 	return ListCollaborators(ctx, req, append(c, opt...)...)
 }
 
@@ -11392,8 +11391,8 @@ type ListCollaboratorsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListCollaboratorsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListCollaboratorsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -11448,7 +11447,7 @@ ListCollaboratorsResponse is a response for ListCollaborators
 https://developer.github.com/v3/repos/collaborators/#list-repository-collaborators
 */
 type ListCollaboratorsResponse struct {
-	common.Response
+	requests.Response
 	request *ListCollaboratorsReq
 	Data    []components.Collaborator
 }
@@ -11462,8 +11461,8 @@ List commit comments.
 
 https://developer.github.com/v3/repos/comments/#list-commit-comments
 */
-func ListCommentsForCommit(ctx context.Context, req *ListCommentsForCommitReq, opt ...options.Option) (*ListCommentsForCommitResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListCommentsForCommit(ctx context.Context, req *ListCommentsForCommitReq, opt ...requests.Option) (*ListCommentsForCommitResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -11498,7 +11497,7 @@ List commit comments.
 
 https://developer.github.com/v3/repos/comments/#list-commit-comments
 */
-func (c Client) ListCommentsForCommit(ctx context.Context, req *ListCommentsForCommitReq, opt ...options.Option) (*ListCommentsForCommitResponse, error) {
+func (c Client) ListCommentsForCommit(ctx context.Context, req *ListCommentsForCommitReq, opt ...requests.Option) (*ListCommentsForCommitResponse, error) {
 	return ListCommentsForCommit(ctx, req, append(c, opt...)...)
 }
 
@@ -11534,8 +11533,8 @@ type ListCommentsForCommitReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListCommentsForCommitReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListCommentsForCommitReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -11587,7 +11586,7 @@ ListCommentsForCommitResponse is a response for ListCommentsForCommit
 https://developer.github.com/v3/repos/comments/#list-commit-comments
 */
 type ListCommentsForCommitResponse struct {
-	common.Response
+	requests.Response
 	request *ListCommentsForCommitReq
 	Data    []components.CommitComment
 }
@@ -11601,8 +11600,8 @@ List commit comments for a repository.
 
 https://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repository
 */
-func ListCommitCommentsForRepo(ctx context.Context, req *ListCommitCommentsForRepoReq, opt ...options.Option) (*ListCommitCommentsForRepoResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListCommitCommentsForRepo(ctx context.Context, req *ListCommitCommentsForRepoReq, opt ...requests.Option) (*ListCommitCommentsForRepoResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -11637,7 +11636,7 @@ List commit comments for a repository.
 
 https://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repository
 */
-func (c Client) ListCommitCommentsForRepo(ctx context.Context, req *ListCommitCommentsForRepoReq, opt ...options.Option) (*ListCommitCommentsForRepoResponse, error) {
+func (c Client) ListCommitCommentsForRepo(ctx context.Context, req *ListCommitCommentsForRepoReq, opt ...requests.Option) (*ListCommitCommentsForRepoResponse, error) {
 	return ListCommitCommentsForRepo(ctx, req, append(c, opt...)...)
 }
 
@@ -11670,8 +11669,8 @@ type ListCommitCommentsForRepoReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListCommitCommentsForRepoReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListCommitCommentsForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -11723,7 +11722,7 @@ ListCommitCommentsForRepoResponse is a response for ListCommitCommentsForRepo
 https://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repository
 */
 type ListCommitCommentsForRepoResponse struct {
-	common.Response
+	requests.Response
 	request *ListCommitCommentsForRepoReq
 	Data    []components.CommitComment
 }
@@ -11737,8 +11736,8 @@ List commit statuses for a reference.
 
 https://developer.github.com/v3/repos/statuses/#list-commit-statuses-for-a-reference
 */
-func ListCommitStatusesForRef(ctx context.Context, req *ListCommitStatusesForRefReq, opt ...options.Option) (*ListCommitStatusesForRefResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListCommitStatusesForRef(ctx context.Context, req *ListCommitStatusesForRefReq, opt ...requests.Option) (*ListCommitStatusesForRefResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -11773,7 +11772,7 @@ List commit statuses for a reference.
 
 https://developer.github.com/v3/repos/statuses/#list-commit-statuses-for-a-reference
 */
-func (c Client) ListCommitStatusesForRef(ctx context.Context, req *ListCommitStatusesForRefReq, opt ...options.Option) (*ListCommitStatusesForRefResponse, error) {
+func (c Client) ListCommitStatusesForRef(ctx context.Context, req *ListCommitStatusesForRefReq, opt ...requests.Option) (*ListCommitStatusesForRefResponse, error) {
 	return ListCommitStatusesForRef(ctx, req, append(c, opt...)...)
 }
 
@@ -11798,8 +11797,8 @@ type ListCommitStatusesForRefReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListCommitStatusesForRefReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListCommitStatusesForRefReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -11851,7 +11850,7 @@ ListCommitStatusesForRefResponse is a response for ListCommitStatusesForRef
 https://developer.github.com/v3/repos/statuses/#list-commit-statuses-for-a-reference
 */
 type ListCommitStatusesForRefResponse struct {
-	common.Response
+	requests.Response
 	request *ListCommitStatusesForRefReq
 	Data    []components.Status
 }
@@ -11865,8 +11864,8 @@ List commits.
 
 https://developer.github.com/v3/repos/commits/#list-commits
 */
-func ListCommits(ctx context.Context, req *ListCommitsReq, opt ...options.Option) (*ListCommitsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListCommits(ctx context.Context, req *ListCommitsReq, opt ...requests.Option) (*ListCommitsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -11901,7 +11900,7 @@ List commits.
 
 https://developer.github.com/v3/repos/commits/#list-commits
 */
-func (c Client) ListCommits(ctx context.Context, req *ListCommitsReq, opt ...options.Option) (*ListCommitsResponse, error) {
+func (c Client) ListCommits(ctx context.Context, req *ListCommitsReq, opt ...requests.Option) (*ListCommitsResponse, error) {
 	return ListCommits(ctx, req, append(c, opt...)...)
 }
 
@@ -11948,8 +11947,8 @@ type ListCommitsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListCommitsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListCommitsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -12016,7 +12015,7 @@ ListCommitsResponse is a response for ListCommits
 https://developer.github.com/v3/repos/commits/#list-commits
 */
 type ListCommitsResponse struct {
-	common.Response
+	requests.Response
 	request *ListCommitsReq
 	Data    []components.SimpleCommit
 }
@@ -12030,8 +12029,8 @@ List repository contributors.
 
 https://developer.github.com/v3/repos/#list-repository-contributors
 */
-func ListContributors(ctx context.Context, req *ListContributorsReq, opt ...options.Option) (*ListContributorsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListContributors(ctx context.Context, req *ListContributorsReq, opt ...requests.Option) (*ListContributorsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -12066,7 +12065,7 @@ List repository contributors.
 
 https://developer.github.com/v3/repos/#list-repository-contributors
 */
-func (c Client) ListContributors(ctx context.Context, req *ListContributorsReq, opt ...options.Option) (*ListContributorsResponse, error) {
+func (c Client) ListContributors(ctx context.Context, req *ListContributorsReq, opt ...requests.Option) (*ListContributorsResponse, error) {
 	return ListContributors(ctx, req, append(c, opt...)...)
 }
 
@@ -12091,8 +12090,8 @@ type ListContributorsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListContributorsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListContributorsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -12147,7 +12146,7 @@ ListContributorsResponse is a response for ListContributors
 https://developer.github.com/v3/repos/#list-repository-contributors
 */
 type ListContributorsResponse struct {
-	common.Response
+	requests.Response
 	request *ListContributorsReq
 	Data    []components.Contributor
 }
@@ -12161,8 +12160,8 @@ List deploy keys.
 
 https://developer.github.com/v3/repos/keys/#list-deploy-keys
 */
-func ListDeployKeys(ctx context.Context, req *ListDeployKeysReq, opt ...options.Option) (*ListDeployKeysResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListDeployKeys(ctx context.Context, req *ListDeployKeysReq, opt ...requests.Option) (*ListDeployKeysResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -12197,7 +12196,7 @@ List deploy keys.
 
 https://developer.github.com/v3/repos/keys/#list-deploy-keys
 */
-func (c Client) ListDeployKeys(ctx context.Context, req *ListDeployKeysReq, opt ...options.Option) (*ListDeployKeysResponse, error) {
+func (c Client) ListDeployKeys(ctx context.Context, req *ListDeployKeysReq, opt ...requests.Option) (*ListDeployKeysResponse, error) {
 	return ListDeployKeys(ctx, req, append(c, opt...)...)
 }
 
@@ -12219,8 +12218,8 @@ type ListDeployKeysReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListDeployKeysReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListDeployKeysReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -12272,7 +12271,7 @@ ListDeployKeysResponse is a response for ListDeployKeys
 https://developer.github.com/v3/repos/keys/#list-deploy-keys
 */
 type ListDeployKeysResponse struct {
-	common.Response
+	requests.Response
 	request *ListDeployKeysReq
 	Data    []components.DeployKey
 }
@@ -12286,8 +12285,8 @@ List deployment statuses.
 
 https://developer.github.com/v3/repos/deployments/#list-deployment-statuses
 */
-func ListDeploymentStatuses(ctx context.Context, req *ListDeploymentStatusesReq, opt ...options.Option) (*ListDeploymentStatusesResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListDeploymentStatuses(ctx context.Context, req *ListDeploymentStatusesReq, opt ...requests.Option) (*ListDeploymentStatusesResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -12322,7 +12321,7 @@ List deployment statuses.
 
 https://developer.github.com/v3/repos/deployments/#list-deployment-statuses
 */
-func (c Client) ListDeploymentStatuses(ctx context.Context, req *ListDeploymentStatusesReq, opt ...options.Option) (*ListDeploymentStatusesResponse, error) {
+func (c Client) ListDeploymentStatuses(ctx context.Context, req *ListDeploymentStatusesReq, opt ...requests.Option) (*ListDeploymentStatusesResponse, error) {
 	return ListDeploymentStatuses(ctx, req, append(c, opt...)...)
 }
 
@@ -12370,8 +12369,8 @@ type ListDeploymentStatusesReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListDeploymentStatusesReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListDeploymentStatusesReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -12426,7 +12425,7 @@ ListDeploymentStatusesResponse is a response for ListDeploymentStatuses
 https://developer.github.com/v3/repos/deployments/#list-deployment-statuses
 */
 type ListDeploymentStatusesResponse struct {
-	common.Response
+	requests.Response
 	request *ListDeploymentStatusesReq
 	Data    []components.DeploymentStatus
 }
@@ -12440,8 +12439,8 @@ List deployments.
 
 https://developer.github.com/v3/repos/deployments/#list-deployments
 */
-func ListDeployments(ctx context.Context, req *ListDeploymentsReq, opt ...options.Option) (*ListDeploymentsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListDeployments(ctx context.Context, req *ListDeploymentsReq, opt ...requests.Option) (*ListDeploymentsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -12476,7 +12475,7 @@ List deployments.
 
 https://developer.github.com/v3/repos/deployments/#list-deployments
 */
-func (c Client) ListDeployments(ctx context.Context, req *ListDeploymentsReq, opt ...options.Option) (*ListDeploymentsResponse, error) {
+func (c Client) ListDeployments(ctx context.Context, req *ListDeploymentsReq, opt ...requests.Option) (*ListDeploymentsResponse, error) {
 	return ListDeployments(ctx, req, append(c, opt...)...)
 }
 
@@ -12524,8 +12523,8 @@ type ListDeploymentsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListDeploymentsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListDeploymentsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -12589,7 +12588,7 @@ ListDeploymentsResponse is a response for ListDeployments
 https://developer.github.com/v3/repos/deployments/#list-deployments
 */
 type ListDeploymentsResponse struct {
-	common.Response
+	requests.Response
 	request *ListDeploymentsReq
 	Data    []components.Deployment
 }
@@ -12603,8 +12602,8 @@ List repositories for the authenticated user.
 
 https://developer.github.com/v3/repos/#list-repositories-for-the-authenticated-user
 */
-func ListForAuthenticatedUser(ctx context.Context, req *ListForAuthenticatedUserReq, opt ...options.Option) (*ListForAuthenticatedUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListForAuthenticatedUser(ctx context.Context, req *ListForAuthenticatedUserReq, opt ...requests.Option) (*ListForAuthenticatedUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -12639,7 +12638,7 @@ List repositories for the authenticated user.
 
 https://developer.github.com/v3/repos/#list-repositories-for-the-authenticated-user
 */
-func (c Client) ListForAuthenticatedUser(ctx context.Context, req *ListForAuthenticatedUserReq, opt ...options.Option) (*ListForAuthenticatedUserResponse, error) {
+func (c Client) ListForAuthenticatedUser(ctx context.Context, req *ListForAuthenticatedUserReq, opt ...requests.Option) (*ListForAuthenticatedUserResponse, error) {
 	return ListForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
@@ -12705,8 +12704,8 @@ type ListForAuthenticatedUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -12779,7 +12778,7 @@ ListForAuthenticatedUserResponse is a response for ListForAuthenticatedUser
 https://developer.github.com/v3/repos/#list-repositories-for-the-authenticated-user
 */
 type ListForAuthenticatedUserResponse struct {
-	common.Response
+	requests.Response
 	request *ListForAuthenticatedUserReq
 	Data    []components.Repository
 }
@@ -12793,8 +12792,8 @@ List organization repositories.
 
 https://developer.github.com/v3/repos/#list-organization-repositories
 */
-func ListForOrg(ctx context.Context, req *ListForOrgReq, opt ...options.Option) (*ListForOrgResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListForOrg(ctx context.Context, req *ListForOrgReq, opt ...requests.Option) (*ListForOrgResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -12829,7 +12828,7 @@ List organization repositories.
 
 https://developer.github.com/v3/repos/#list-organization-repositories
 */
-func (c Client) ListForOrg(ctx context.Context, req *ListForOrgReq, opt ...options.Option) (*ListForOrgResponse, error) {
+func (c Client) ListForOrg(ctx context.Context, req *ListForOrgReq, opt ...requests.Option) (*ListForOrgResponse, error) {
 	return ListForOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -12889,8 +12888,8 @@ type ListForOrgReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListForOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -12954,7 +12953,7 @@ ListForOrgResponse is a response for ListForOrg
 https://developer.github.com/v3/repos/#list-organization-repositories
 */
 type ListForOrgResponse struct {
-	common.Response
+	requests.Response
 	request *ListForOrgReq
 	Data    []components.MinimalRepository
 }
@@ -12968,8 +12967,8 @@ List repositories for a user.
 
 https://developer.github.com/v3/repos/#list-repositories-for-a-user
 */
-func ListForUser(ctx context.Context, req *ListForUserReq, opt ...options.Option) (*ListForUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListForUser(ctx context.Context, req *ListForUserReq, opt ...requests.Option) (*ListForUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -13004,7 +13003,7 @@ List repositories for a user.
 
 https://developer.github.com/v3/repos/#list-repositories-for-a-user
 */
-func (c Client) ListForUser(ctx context.Context, req *ListForUserReq, opt ...options.Option) (*ListForUserResponse, error) {
+func (c Client) ListForUser(ctx context.Context, req *ListForUserReq, opt ...requests.Option) (*ListForUserResponse, error) {
 	return ListForUser(ctx, req, append(c, opt...)...)
 }
 
@@ -13049,8 +13048,8 @@ type ListForUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListForUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListForUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -13111,7 +13110,7 @@ ListForUserResponse is a response for ListForUser
 https://developer.github.com/v3/repos/#list-repositories-for-a-user
 */
 type ListForUserResponse struct {
-	common.Response
+	requests.Response
 	request *ListForUserReq
 	Data    []components.MinimalRepository
 }
@@ -13125,8 +13124,8 @@ List forks.
 
 https://developer.github.com/v3/repos/forks/#list-forks
 */
-func ListForks(ctx context.Context, req *ListForksReq, opt ...options.Option) (*ListForksResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListForks(ctx context.Context, req *ListForksReq, opt ...requests.Option) (*ListForksResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -13161,7 +13160,7 @@ List forks.
 
 https://developer.github.com/v3/repos/forks/#list-forks
 */
-func (c Client) ListForks(ctx context.Context, req *ListForksReq, opt ...options.Option) (*ListForksResponse, error) {
+func (c Client) ListForks(ctx context.Context, req *ListForksReq, opt ...requests.Option) (*ListForksResponse, error) {
 	return ListForks(ctx, req, append(c, opt...)...)
 }
 
@@ -13186,8 +13185,8 @@ type ListForksReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListForksReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListForksReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -13242,7 +13241,7 @@ ListForksResponse is a response for ListForks
 https://developer.github.com/v3/repos/forks/#list-forks
 */
 type ListForksResponse struct {
-	common.Response
+	requests.Response
 	request *ListForksReq
 	Data    []components.MinimalRepository
 }
@@ -13256,8 +13255,8 @@ List repository invitations.
 
 https://developer.github.com/v3/repos/invitations/#list-repository-invitations
 */
-func ListInvitations(ctx context.Context, req *ListInvitationsReq, opt ...options.Option) (*ListInvitationsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListInvitations(ctx context.Context, req *ListInvitationsReq, opt ...requests.Option) (*ListInvitationsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -13292,7 +13291,7 @@ List repository invitations.
 
 https://developer.github.com/v3/repos/invitations/#list-repository-invitations
 */
-func (c Client) ListInvitations(ctx context.Context, req *ListInvitationsReq, opt ...options.Option) (*ListInvitationsResponse, error) {
+func (c Client) ListInvitations(ctx context.Context, req *ListInvitationsReq, opt ...requests.Option) (*ListInvitationsResponse, error) {
 	return ListInvitations(ctx, req, append(c, opt...)...)
 }
 
@@ -13314,8 +13313,8 @@ type ListInvitationsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListInvitationsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListInvitationsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -13367,7 +13366,7 @@ ListInvitationsResponse is a response for ListInvitations
 https://developer.github.com/v3/repos/invitations/#list-repository-invitations
 */
 type ListInvitationsResponse struct {
-	common.Response
+	requests.Response
 	request *ListInvitationsReq
 	Data    []components.RepositoryInvitation
 }
@@ -13381,8 +13380,8 @@ List repository invitations for the authenticated user.
 
 https://developer.github.com/v3/repos/invitations/#list-repository-invitations-for-the-authenticated-user
 */
-func ListInvitationsForAuthenticatedUser(ctx context.Context, req *ListInvitationsForAuthenticatedUserReq, opt ...options.Option) (*ListInvitationsForAuthenticatedUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListInvitationsForAuthenticatedUser(ctx context.Context, req *ListInvitationsForAuthenticatedUserReq, opt ...requests.Option) (*ListInvitationsForAuthenticatedUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -13417,7 +13416,7 @@ List repository invitations for the authenticated user.
 
 https://developer.github.com/v3/repos/invitations/#list-repository-invitations-for-the-authenticated-user
 */
-func (c Client) ListInvitationsForAuthenticatedUser(ctx context.Context, req *ListInvitationsForAuthenticatedUserReq, opt ...options.Option) (*ListInvitationsForAuthenticatedUserResponse, error) {
+func (c Client) ListInvitationsForAuthenticatedUser(ctx context.Context, req *ListInvitationsForAuthenticatedUserReq, opt ...requests.Option) (*ListInvitationsForAuthenticatedUserResponse, error) {
 	return ListInvitationsForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
@@ -13437,8 +13436,8 @@ type ListInvitationsForAuthenticatedUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListInvitationsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListInvitationsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -13490,7 +13489,7 @@ ListInvitationsForAuthenticatedUserResponse is a response for ListInvitationsFor
 https://developer.github.com/v3/repos/invitations/#list-repository-invitations-for-the-authenticated-user
 */
 type ListInvitationsForAuthenticatedUserResponse struct {
-	common.Response
+	requests.Response
 	request *ListInvitationsForAuthenticatedUserReq
 	Data    []components.RepositoryInvitation
 }
@@ -13504,8 +13503,8 @@ List repository languages.
 
 https://developer.github.com/v3/repos/#list-repository-languages
 */
-func ListLanguages(ctx context.Context, req *ListLanguagesReq, opt ...options.Option) (*ListLanguagesResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListLanguages(ctx context.Context, req *ListLanguagesReq, opt ...requests.Option) (*ListLanguagesResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -13540,7 +13539,7 @@ List repository languages.
 
 https://developer.github.com/v3/repos/#list-repository-languages
 */
-func (c Client) ListLanguages(ctx context.Context, req *ListLanguagesReq, opt ...options.Option) (*ListLanguagesResponse, error) {
+func (c Client) ListLanguages(ctx context.Context, req *ListLanguagesReq, opt ...requests.Option) (*ListLanguagesResponse, error) {
 	return ListLanguages(ctx, req, append(c, opt...)...)
 }
 
@@ -13556,8 +13555,8 @@ type ListLanguagesReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListLanguagesReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListLanguagesReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -13603,7 +13602,7 @@ ListLanguagesResponse is a response for ListLanguages
 https://developer.github.com/v3/repos/#list-repository-languages
 */
 type ListLanguagesResponse struct {
-	common.Response
+	requests.Response
 	request *ListLanguagesReq
 	Data    components.Language
 }
@@ -13617,8 +13616,8 @@ List GitHub Pages builds.
 
 https://developer.github.com/v3/repos/pages/#list-github-pages-builds
 */
-func ListPagesBuilds(ctx context.Context, req *ListPagesBuildsReq, opt ...options.Option) (*ListPagesBuildsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListPagesBuilds(ctx context.Context, req *ListPagesBuildsReq, opt ...requests.Option) (*ListPagesBuildsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -13653,7 +13652,7 @@ List GitHub Pages builds.
 
 https://developer.github.com/v3/repos/pages/#list-github-pages-builds
 */
-func (c Client) ListPagesBuilds(ctx context.Context, req *ListPagesBuildsReq, opt ...options.Option) (*ListPagesBuildsResponse, error) {
+func (c Client) ListPagesBuilds(ctx context.Context, req *ListPagesBuildsReq, opt ...requests.Option) (*ListPagesBuildsResponse, error) {
 	return ListPagesBuilds(ctx, req, append(c, opt...)...)
 }
 
@@ -13675,8 +13674,8 @@ type ListPagesBuildsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListPagesBuildsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListPagesBuildsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -13728,7 +13727,7 @@ ListPagesBuildsResponse is a response for ListPagesBuilds
 https://developer.github.com/v3/repos/pages/#list-github-pages-builds
 */
 type ListPagesBuildsResponse struct {
-	common.Response
+	requests.Response
 	request *ListPagesBuildsReq
 	Data    []components.PageBuild
 }
@@ -13742,8 +13741,8 @@ List public repositories.
 
 https://developer.github.com/v3/repos/#list-public-repositories
 */
-func ListPublic(ctx context.Context, req *ListPublicReq, opt ...options.Option) (*ListPublicResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListPublic(ctx context.Context, req *ListPublicReq, opt ...requests.Option) (*ListPublicResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -13778,7 +13777,7 @@ List public repositories.
 
 https://developer.github.com/v3/repos/#list-public-repositories
 */
-func (c Client) ListPublic(ctx context.Context, req *ListPublicReq, opt ...options.Option) (*ListPublicResponse, error) {
+func (c Client) ListPublic(ctx context.Context, req *ListPublicReq, opt ...requests.Option) (*ListPublicResponse, error) {
 	return ListPublic(ctx, req, append(c, opt...)...)
 }
 
@@ -13803,8 +13802,8 @@ type ListPublicReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListPublicReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListPublicReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -13859,7 +13858,7 @@ ListPublicResponse is a response for ListPublic
 https://developer.github.com/v3/repos/#list-public-repositories
 */
 type ListPublicResponse struct {
-	common.Response
+	requests.Response
 	request *ListPublicReq
 	Data    []components.MinimalRepository
 }
@@ -13873,8 +13872,8 @@ List pull requests associated with a commit.
 
 https://developer.github.com/v3/repos/commits/#list-pull-requests-associated-with-a-commit
 */
-func ListPullRequestsAssociatedWithCommit(ctx context.Context, req *ListPullRequestsAssociatedWithCommitReq, opt ...options.Option) (*ListPullRequestsAssociatedWithCommitResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListPullRequestsAssociatedWithCommit(ctx context.Context, req *ListPullRequestsAssociatedWithCommitReq, opt ...requests.Option) (*ListPullRequestsAssociatedWithCommitResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -13909,7 +13908,7 @@ List pull requests associated with a commit.
 
 https://developer.github.com/v3/repos/commits/#list-pull-requests-associated-with-a-commit
 */
-func (c Client) ListPullRequestsAssociatedWithCommit(ctx context.Context, req *ListPullRequestsAssociatedWithCommitReq, opt ...options.Option) (*ListPullRequestsAssociatedWithCommitResponse, error) {
+func (c Client) ListPullRequestsAssociatedWithCommit(ctx context.Context, req *ListPullRequestsAssociatedWithCommitReq, opt ...requests.Option) (*ListPullRequestsAssociatedWithCommitResponse, error) {
 	return ListPullRequestsAssociatedWithCommit(ctx, req, append(c, opt...)...)
 }
 
@@ -13943,8 +13942,8 @@ type ListPullRequestsAssociatedWithCommitReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListPullRequestsAssociatedWithCommitReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListPullRequestsAssociatedWithCommitReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -13996,7 +13995,7 @@ ListPullRequestsAssociatedWithCommitResponse is a response for ListPullRequestsA
 https://developer.github.com/v3/repos/commits/#list-pull-requests-associated-with-a-commit
 */
 type ListPullRequestsAssociatedWithCommitResponse struct {
-	common.Response
+	requests.Response
 	request *ListPullRequestsAssociatedWithCommitReq
 	Data    []components.PullRequestSimple
 }
@@ -14010,8 +14009,8 @@ List release assets.
 
 https://developer.github.com/v3/repos/releases/#list-release-assets
 */
-func ListReleaseAssets(ctx context.Context, req *ListReleaseAssetsReq, opt ...options.Option) (*ListReleaseAssetsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListReleaseAssets(ctx context.Context, req *ListReleaseAssetsReq, opt ...requests.Option) (*ListReleaseAssetsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -14046,7 +14045,7 @@ List release assets.
 
 https://developer.github.com/v3/repos/releases/#list-release-assets
 */
-func (c Client) ListReleaseAssets(ctx context.Context, req *ListReleaseAssetsReq, opt ...options.Option) (*ListReleaseAssetsResponse, error) {
+func (c Client) ListReleaseAssets(ctx context.Context, req *ListReleaseAssetsReq, opt ...requests.Option) (*ListReleaseAssetsResponse, error) {
 	return ListReleaseAssets(ctx, req, append(c, opt...)...)
 }
 
@@ -14071,8 +14070,8 @@ type ListReleaseAssetsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListReleaseAssetsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListReleaseAssetsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -14124,7 +14123,7 @@ ListReleaseAssetsResponse is a response for ListReleaseAssets
 https://developer.github.com/v3/repos/releases/#list-release-assets
 */
 type ListReleaseAssetsResponse struct {
-	common.Response
+	requests.Response
 	request *ListReleaseAssetsReq
 	Data    []components.ReleaseAsset
 }
@@ -14138,8 +14137,8 @@ List releases.
 
 https://developer.github.com/v3/repos/releases/#list-releases
 */
-func ListReleases(ctx context.Context, req *ListReleasesReq, opt ...options.Option) (*ListReleasesResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListReleases(ctx context.Context, req *ListReleasesReq, opt ...requests.Option) (*ListReleasesResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -14174,7 +14173,7 @@ List releases.
 
 https://developer.github.com/v3/repos/releases/#list-releases
 */
-func (c Client) ListReleases(ctx context.Context, req *ListReleasesReq, opt ...options.Option) (*ListReleasesResponse, error) {
+func (c Client) ListReleases(ctx context.Context, req *ListReleasesReq, opt ...requests.Option) (*ListReleasesResponse, error) {
 	return ListReleases(ctx, req, append(c, opt...)...)
 }
 
@@ -14196,8 +14195,8 @@ type ListReleasesReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListReleasesReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListReleasesReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -14249,7 +14248,7 @@ ListReleasesResponse is a response for ListReleases
 https://developer.github.com/v3/repos/releases/#list-releases
 */
 type ListReleasesResponse struct {
-	common.Response
+	requests.Response
 	request *ListReleasesReq
 	Data    []components.Release
 }
@@ -14263,8 +14262,8 @@ List repository tags.
 
 https://developer.github.com/v3/repos/#list-repository-tags
 */
-func ListTags(ctx context.Context, req *ListTagsReq, opt ...options.Option) (*ListTagsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListTags(ctx context.Context, req *ListTagsReq, opt ...requests.Option) (*ListTagsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -14299,7 +14298,7 @@ List repository tags.
 
 https://developer.github.com/v3/repos/#list-repository-tags
 */
-func (c Client) ListTags(ctx context.Context, req *ListTagsReq, opt ...options.Option) (*ListTagsResponse, error) {
+func (c Client) ListTags(ctx context.Context, req *ListTagsReq, opt ...requests.Option) (*ListTagsResponse, error) {
 	return ListTags(ctx, req, append(c, opt...)...)
 }
 
@@ -14321,8 +14320,8 @@ type ListTagsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListTagsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListTagsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -14374,7 +14373,7 @@ ListTagsResponse is a response for ListTags
 https://developer.github.com/v3/repos/#list-repository-tags
 */
 type ListTagsResponse struct {
-	common.Response
+	requests.Response
 	request *ListTagsReq
 	Data    []components.Tag
 }
@@ -14388,8 +14387,8 @@ List repository teams.
 
 https://developer.github.com/v3/repos/#list-repository-teams
 */
-func ListTeams(ctx context.Context, req *ListTeamsReq, opt ...options.Option) (*ListTeamsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListTeams(ctx context.Context, req *ListTeamsReq, opt ...requests.Option) (*ListTeamsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -14424,7 +14423,7 @@ List repository teams.
 
 https://developer.github.com/v3/repos/#list-repository-teams
 */
-func (c Client) ListTeams(ctx context.Context, req *ListTeamsReq, opt ...options.Option) (*ListTeamsResponse, error) {
+func (c Client) ListTeams(ctx context.Context, req *ListTeamsReq, opt ...requests.Option) (*ListTeamsResponse, error) {
 	return ListTeams(ctx, req, append(c, opt...)...)
 }
 
@@ -14446,8 +14445,8 @@ type ListTeamsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListTeamsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListTeamsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -14499,7 +14498,7 @@ ListTeamsResponse is a response for ListTeams
 https://developer.github.com/v3/repos/#list-repository-teams
 */
 type ListTeamsResponse struct {
-	common.Response
+	requests.Response
 	request *ListTeamsReq
 	Data    []components.Team
 }
@@ -14513,8 +14512,8 @@ List repository webhooks.
 
 https://developer.github.com/v3/repos/hooks/#list-repository-webhooks
 */
-func ListWebhooks(ctx context.Context, req *ListWebhooksReq, opt ...options.Option) (*ListWebhooksResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListWebhooks(ctx context.Context, req *ListWebhooksReq, opt ...requests.Option) (*ListWebhooksResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -14549,7 +14548,7 @@ List repository webhooks.
 
 https://developer.github.com/v3/repos/hooks/#list-repository-webhooks
 */
-func (c Client) ListWebhooks(ctx context.Context, req *ListWebhooksReq, opt ...options.Option) (*ListWebhooksResponse, error) {
+func (c Client) ListWebhooks(ctx context.Context, req *ListWebhooksReq, opt ...requests.Option) (*ListWebhooksResponse, error) {
 	return ListWebhooks(ctx, req, append(c, opt...)...)
 }
 
@@ -14571,8 +14570,8 @@ type ListWebhooksReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListWebhooksReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListWebhooksReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -14624,7 +14623,7 @@ ListWebhooksResponse is a response for ListWebhooks
 https://developer.github.com/v3/repos/hooks/#list-repository-webhooks
 */
 type ListWebhooksResponse struct {
-	common.Response
+	requests.Response
 	request *ListWebhooksReq
 	Data    []components.Hook
 }
@@ -14638,8 +14637,8 @@ Merge a branch.
 
 https://developer.github.com/v3/repos/merging/#merge-a-branch
 */
-func Merge(ctx context.Context, req *MergeReq, opt ...options.Option) (*MergeResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func Merge(ctx context.Context, req *MergeReq, opt ...requests.Option) (*MergeResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -14674,7 +14673,7 @@ Merge a branch.
 
 https://developer.github.com/v3/repos/merging/#merge-a-branch
 */
-func (c Client) Merge(ctx context.Context, req *MergeReq, opt ...options.Option) (*MergeResponse, error) {
+func (c Client) Merge(ctx context.Context, req *MergeReq, opt ...requests.Option) (*MergeResponse, error) {
 	return Merge(ctx, req, append(c, opt...)...)
 }
 
@@ -14691,8 +14690,8 @@ type MergeReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *MergeReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *MergeReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -14758,7 +14757,7 @@ MergeResponse is a response for Merge
 https://developer.github.com/v3/repos/merging/#merge-a-branch
 */
 type MergeResponse struct {
-	common.Response
+	requests.Response
 	request *MergeReq
 	Data    components.Commit
 }
@@ -14772,8 +14771,8 @@ Ping a repository webhook.
 
 https://developer.github.com/v3/repos/hooks/#ping-a-repository-webhook
 */
-func PingWebhook(ctx context.Context, req *PingWebhookReq, opt ...options.Option) (*PingWebhookResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func PingWebhook(ctx context.Context, req *PingWebhookReq, opt ...requests.Option) (*PingWebhookResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -14811,7 +14810,7 @@ Ping a repository webhook.
 
 https://developer.github.com/v3/repos/hooks/#ping-a-repository-webhook
 */
-func (c Client) PingWebhook(ctx context.Context, req *PingWebhookReq, opt ...options.Option) (*PingWebhookResponse, error) {
+func (c Client) PingWebhook(ctx context.Context, req *PingWebhookReq, opt ...requests.Option) (*PingWebhookResponse, error) {
 	return PingWebhook(ctx, req, append(c, opt...)...)
 }
 
@@ -14828,8 +14827,8 @@ type PingWebhookReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *PingWebhookReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *PingWebhookReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -14875,7 +14874,7 @@ PingWebhookResponse is a response for PingWebhook
 https://developer.github.com/v3/repos/hooks/#ping-a-repository-webhook
 */
 type PingWebhookResponse struct {
-	common.Response
+	requests.Response
 	request *PingWebhookReq
 	Data    bool
 }
@@ -14889,8 +14888,8 @@ Remove app access restrictions.
 
 https://developer.github.com/v3/repos/branches/#remove-app-access-restrictions
 */
-func RemoveAppAccessRestrictions(ctx context.Context, req *RemoveAppAccessRestrictionsReq, opt ...options.Option) (*RemoveAppAccessRestrictionsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func RemoveAppAccessRestrictions(ctx context.Context, req *RemoveAppAccessRestrictionsReq, opt ...requests.Option) (*RemoveAppAccessRestrictionsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -14925,7 +14924,7 @@ Remove app access restrictions.
 
 https://developer.github.com/v3/repos/branches/#remove-app-access-restrictions
 */
-func (c Client) RemoveAppAccessRestrictions(ctx context.Context, req *RemoveAppAccessRestrictionsReq, opt ...options.Option) (*RemoveAppAccessRestrictionsResponse, error) {
+func (c Client) RemoveAppAccessRestrictions(ctx context.Context, req *RemoveAppAccessRestrictionsReq, opt ...requests.Option) (*RemoveAppAccessRestrictionsResponse, error) {
 	return RemoveAppAccessRestrictions(ctx, req, append(c, opt...)...)
 }
 
@@ -14945,8 +14944,8 @@ type RemoveAppAccessRestrictionsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *RemoveAppAccessRestrictionsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *RemoveAppAccessRestrictionsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -15002,7 +15001,7 @@ RemoveAppAccessRestrictionsResponse is a response for RemoveAppAccessRestriction
 https://developer.github.com/v3/repos/branches/#remove-app-access-restrictions
 */
 type RemoveAppAccessRestrictionsResponse struct {
-	common.Response
+	requests.Response
 	request *RemoveAppAccessRestrictionsReq
 	Data    []components.Integration
 }
@@ -15016,8 +15015,8 @@ Remove a repository collaborator.
 
 https://developer.github.com/v3/repos/collaborators/#remove-a-repository-collaborator
 */
-func RemoveCollaborator(ctx context.Context, req *RemoveCollaboratorReq, opt ...options.Option) (*RemoveCollaboratorResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func RemoveCollaborator(ctx context.Context, req *RemoveCollaboratorReq, opt ...requests.Option) (*RemoveCollaboratorResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -15051,7 +15050,7 @@ Remove a repository collaborator.
 
 https://developer.github.com/v3/repos/collaborators/#remove-a-repository-collaborator
 */
-func (c Client) RemoveCollaborator(ctx context.Context, req *RemoveCollaboratorReq, opt ...options.Option) (*RemoveCollaboratorResponse, error) {
+func (c Client) RemoveCollaborator(ctx context.Context, req *RemoveCollaboratorReq, opt ...requests.Option) (*RemoveCollaboratorResponse, error) {
 	return RemoveCollaborator(ctx, req, append(c, opt...)...)
 }
 
@@ -15068,8 +15067,8 @@ type RemoveCollaboratorReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *RemoveCollaboratorReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *RemoveCollaboratorReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -15115,7 +15114,7 @@ RemoveCollaboratorResponse is a response for RemoveCollaborator
 https://developer.github.com/v3/repos/collaborators/#remove-a-repository-collaborator
 */
 type RemoveCollaboratorResponse struct {
-	common.Response
+	requests.Response
 	request *RemoveCollaboratorReq
 }
 
@@ -15128,8 +15127,8 @@ Remove status check contexts.
 
 https://developer.github.com/v3/repos/branches/#remove-status-check-contexts
 */
-func RemoveStatusCheckContexts(ctx context.Context, req *RemoveStatusCheckContextsReq, opt ...options.Option) (*RemoveStatusCheckContextsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func RemoveStatusCheckContexts(ctx context.Context, req *RemoveStatusCheckContextsReq, opt ...requests.Option) (*RemoveStatusCheckContextsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -15164,7 +15163,7 @@ Remove status check contexts.
 
 https://developer.github.com/v3/repos/branches/#remove-status-check-contexts
 */
-func (c Client) RemoveStatusCheckContexts(ctx context.Context, req *RemoveStatusCheckContextsReq, opt ...options.Option) (*RemoveStatusCheckContextsResponse, error) {
+func (c Client) RemoveStatusCheckContexts(ctx context.Context, req *RemoveStatusCheckContextsReq, opt ...requests.Option) (*RemoveStatusCheckContextsResponse, error) {
 	return RemoveStatusCheckContexts(ctx, req, append(c, opt...)...)
 }
 
@@ -15184,8 +15183,8 @@ type RemoveStatusCheckContextsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *RemoveStatusCheckContextsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *RemoveStatusCheckContextsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -15248,7 +15247,7 @@ RemoveStatusCheckContextsResponse is a response for RemoveStatusCheckContexts
 https://developer.github.com/v3/repos/branches/#remove-status-check-contexts
 */
 type RemoveStatusCheckContextsResponse struct {
-	common.Response
+	requests.Response
 	request *RemoveStatusCheckContextsReq
 	Data    RemoveStatusCheckContextsResponseBody
 }
@@ -15262,8 +15261,8 @@ Remove status check protection.
 
 https://developer.github.com/v3/repos/branches/#remove-status-check-protection
 */
-func RemoveStatusCheckProtection(ctx context.Context, req *RemoveStatusCheckProtectionReq, opt ...options.Option) (*RemoveStatusCheckProtectionResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func RemoveStatusCheckProtection(ctx context.Context, req *RemoveStatusCheckProtectionReq, opt ...requests.Option) (*RemoveStatusCheckProtectionResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -15297,7 +15296,7 @@ Remove status check protection.
 
 https://developer.github.com/v3/repos/branches/#remove-status-check-protection
 */
-func (c Client) RemoveStatusCheckProtection(ctx context.Context, req *RemoveStatusCheckProtectionReq, opt ...options.Option) (*RemoveStatusCheckProtectionResponse, error) {
+func (c Client) RemoveStatusCheckProtection(ctx context.Context, req *RemoveStatusCheckProtectionReq, opt ...requests.Option) (*RemoveStatusCheckProtectionResponse, error) {
 	return RemoveStatusCheckProtection(ctx, req, append(c, opt...)...)
 }
 
@@ -15316,8 +15315,8 @@ type RemoveStatusCheckProtectionReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *RemoveStatusCheckProtectionReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *RemoveStatusCheckProtectionReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -15363,7 +15362,7 @@ RemoveStatusCheckProtectionResponse is a response for RemoveStatusCheckProtectio
 https://developer.github.com/v3/repos/branches/#remove-status-check-protection
 */
 type RemoveStatusCheckProtectionResponse struct {
-	common.Response
+	requests.Response
 	request *RemoveStatusCheckProtectionReq
 }
 
@@ -15376,8 +15375,8 @@ Remove team access restrictions.
 
 https://developer.github.com/v3/repos/branches/#remove-team-access-restrictions
 */
-func RemoveTeamAccessRestrictions(ctx context.Context, req *RemoveTeamAccessRestrictionsReq, opt ...options.Option) (*RemoveTeamAccessRestrictionsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func RemoveTeamAccessRestrictions(ctx context.Context, req *RemoveTeamAccessRestrictionsReq, opt ...requests.Option) (*RemoveTeamAccessRestrictionsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -15412,7 +15411,7 @@ Remove team access restrictions.
 
 https://developer.github.com/v3/repos/branches/#remove-team-access-restrictions
 */
-func (c Client) RemoveTeamAccessRestrictions(ctx context.Context, req *RemoveTeamAccessRestrictionsReq, opt ...options.Option) (*RemoveTeamAccessRestrictionsResponse, error) {
+func (c Client) RemoveTeamAccessRestrictions(ctx context.Context, req *RemoveTeamAccessRestrictionsReq, opt ...requests.Option) (*RemoveTeamAccessRestrictionsResponse, error) {
 	return RemoveTeamAccessRestrictions(ctx, req, append(c, opt...)...)
 }
 
@@ -15432,8 +15431,8 @@ type RemoveTeamAccessRestrictionsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *RemoveTeamAccessRestrictionsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *RemoveTeamAccessRestrictionsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -15489,7 +15488,7 @@ RemoveTeamAccessRestrictionsResponse is a response for RemoveTeamAccessRestricti
 https://developer.github.com/v3/repos/branches/#remove-team-access-restrictions
 */
 type RemoveTeamAccessRestrictionsResponse struct {
-	common.Response
+	requests.Response
 	request *RemoveTeamAccessRestrictionsReq
 	Data    []components.Team
 }
@@ -15503,8 +15502,8 @@ Remove user access restrictions.
 
 https://developer.github.com/v3/repos/branches/#remove-user-access-restrictions
 */
-func RemoveUserAccessRestrictions(ctx context.Context, req *RemoveUserAccessRestrictionsReq, opt ...options.Option) (*RemoveUserAccessRestrictionsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func RemoveUserAccessRestrictions(ctx context.Context, req *RemoveUserAccessRestrictionsReq, opt ...requests.Option) (*RemoveUserAccessRestrictionsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -15539,7 +15538,7 @@ Remove user access restrictions.
 
 https://developer.github.com/v3/repos/branches/#remove-user-access-restrictions
 */
-func (c Client) RemoveUserAccessRestrictions(ctx context.Context, req *RemoveUserAccessRestrictionsReq, opt ...options.Option) (*RemoveUserAccessRestrictionsResponse, error) {
+func (c Client) RemoveUserAccessRestrictions(ctx context.Context, req *RemoveUserAccessRestrictionsReq, opt ...requests.Option) (*RemoveUserAccessRestrictionsResponse, error) {
 	return RemoveUserAccessRestrictions(ctx, req, append(c, opt...)...)
 }
 
@@ -15559,8 +15558,8 @@ type RemoveUserAccessRestrictionsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *RemoveUserAccessRestrictionsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *RemoveUserAccessRestrictionsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -15616,7 +15615,7 @@ RemoveUserAccessRestrictionsResponse is a response for RemoveUserAccessRestricti
 https://developer.github.com/v3/repos/branches/#remove-user-access-restrictions
 */
 type RemoveUserAccessRestrictionsResponse struct {
-	common.Response
+	requests.Response
 	request *RemoveUserAccessRestrictionsReq
 	Data    []components.SimpleUser
 }
@@ -15630,8 +15629,8 @@ Replace all repository topics.
 
 https://developer.github.com/v3/repos/#replace-all-repository-topics
 */
-func ReplaceAllTopics(ctx context.Context, req *ReplaceAllTopicsReq, opt ...options.Option) (*ReplaceAllTopicsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ReplaceAllTopics(ctx context.Context, req *ReplaceAllTopicsReq, opt ...requests.Option) (*ReplaceAllTopicsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -15666,7 +15665,7 @@ Replace all repository topics.
 
 https://developer.github.com/v3/repos/#replace-all-repository-topics
 */
-func (c Client) ReplaceAllTopics(ctx context.Context, req *ReplaceAllTopicsReq, opt ...options.Option) (*ReplaceAllTopicsResponse, error) {
+func (c Client) ReplaceAllTopics(ctx context.Context, req *ReplaceAllTopicsReq, opt ...requests.Option) (*ReplaceAllTopicsResponse, error) {
 	return ReplaceAllTopics(ctx, req, append(c, opt...)...)
 }
 
@@ -15690,8 +15689,8 @@ type ReplaceAllTopicsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ReplaceAllTopicsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ReplaceAllTopicsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -15756,7 +15755,7 @@ ReplaceAllTopicsResponse is a response for ReplaceAllTopics
 https://developer.github.com/v3/repos/#replace-all-repository-topics
 */
 type ReplaceAllTopicsResponse struct {
-	common.Response
+	requests.Response
 	request *ReplaceAllTopicsReq
 	Data    components.Topic
 }
@@ -15770,8 +15769,8 @@ Request a GitHub Pages build.
 
 https://developer.github.com/v3/repos/pages/#request-a-github-pages-build
 */
-func RequestPagesBuild(ctx context.Context, req *RequestPagesBuildReq, opt ...options.Option) (*RequestPagesBuildResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func RequestPagesBuild(ctx context.Context, req *RequestPagesBuildReq, opt ...requests.Option) (*RequestPagesBuildResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -15806,7 +15805,7 @@ Request a GitHub Pages build.
 
 https://developer.github.com/v3/repos/pages/#request-a-github-pages-build
 */
-func (c Client) RequestPagesBuild(ctx context.Context, req *RequestPagesBuildReq, opt ...options.Option) (*RequestPagesBuildResponse, error) {
+func (c Client) RequestPagesBuild(ctx context.Context, req *RequestPagesBuildReq, opt ...requests.Option) (*RequestPagesBuildResponse, error) {
 	return RequestPagesBuild(ctx, req, append(c, opt...)...)
 }
 
@@ -15822,8 +15821,8 @@ type RequestPagesBuildReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *RequestPagesBuildReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *RequestPagesBuildReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -15869,7 +15868,7 @@ RequestPagesBuildResponse is a response for RequestPagesBuild
 https://developer.github.com/v3/repos/pages/#request-a-github-pages-build
 */
 type RequestPagesBuildResponse struct {
-	common.Response
+	requests.Response
 	request *RequestPagesBuildReq
 	Data    components.PageBuildStatus
 }
@@ -15883,8 +15882,8 @@ Set admin branch protection.
 
 https://developer.github.com/v3/repos/branches/#set-admin-branch-protection
 */
-func SetAdminBranchProtection(ctx context.Context, req *SetAdminBranchProtectionReq, opt ...options.Option) (*SetAdminBranchProtectionResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func SetAdminBranchProtection(ctx context.Context, req *SetAdminBranchProtectionReq, opt ...requests.Option) (*SetAdminBranchProtectionResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -15919,7 +15918,7 @@ Set admin branch protection.
 
 https://developer.github.com/v3/repos/branches/#set-admin-branch-protection
 */
-func (c Client) SetAdminBranchProtection(ctx context.Context, req *SetAdminBranchProtectionReq, opt ...options.Option) (*SetAdminBranchProtectionResponse, error) {
+func (c Client) SetAdminBranchProtection(ctx context.Context, req *SetAdminBranchProtectionReq, opt ...requests.Option) (*SetAdminBranchProtectionResponse, error) {
 	return SetAdminBranchProtection(ctx, req, append(c, opt...)...)
 }
 
@@ -15938,8 +15937,8 @@ type SetAdminBranchProtectionReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *SetAdminBranchProtectionReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *SetAdminBranchProtectionReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -15985,7 +15984,7 @@ SetAdminBranchProtectionResponse is a response for SetAdminBranchProtection
 https://developer.github.com/v3/repos/branches/#set-admin-branch-protection
 */
 type SetAdminBranchProtectionResponse struct {
-	common.Response
+	requests.Response
 	request *SetAdminBranchProtectionReq
 	Data    components.ProtectedBranchAdminEnforced
 }
@@ -15999,8 +15998,8 @@ Set app access restrictions.
 
 https://developer.github.com/v3/repos/branches/#set-app-access-restrictions
 */
-func SetAppAccessRestrictions(ctx context.Context, req *SetAppAccessRestrictionsReq, opt ...options.Option) (*SetAppAccessRestrictionsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func SetAppAccessRestrictions(ctx context.Context, req *SetAppAccessRestrictionsReq, opt ...requests.Option) (*SetAppAccessRestrictionsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -16035,7 +16034,7 @@ Set app access restrictions.
 
 https://developer.github.com/v3/repos/branches/#set-app-access-restrictions
 */
-func (c Client) SetAppAccessRestrictions(ctx context.Context, req *SetAppAccessRestrictionsReq, opt ...options.Option) (*SetAppAccessRestrictionsResponse, error) {
+func (c Client) SetAppAccessRestrictions(ctx context.Context, req *SetAppAccessRestrictionsReq, opt ...requests.Option) (*SetAppAccessRestrictionsResponse, error) {
 	return SetAppAccessRestrictions(ctx, req, append(c, opt...)...)
 }
 
@@ -16055,8 +16054,8 @@ type SetAppAccessRestrictionsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *SetAppAccessRestrictionsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *SetAppAccessRestrictionsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -16112,7 +16111,7 @@ SetAppAccessRestrictionsResponse is a response for SetAppAccessRestrictions
 https://developer.github.com/v3/repos/branches/#set-app-access-restrictions
 */
 type SetAppAccessRestrictionsResponse struct {
-	common.Response
+	requests.Response
 	request *SetAppAccessRestrictionsReq
 	Data    []components.Integration
 }
@@ -16126,8 +16125,8 @@ Set status check contexts.
 
 https://developer.github.com/v3/repos/branches/#set-status-check-contexts
 */
-func SetStatusCheckContexts(ctx context.Context, req *SetStatusCheckContextsReq, opt ...options.Option) (*SetStatusCheckContextsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func SetStatusCheckContexts(ctx context.Context, req *SetStatusCheckContextsReq, opt ...requests.Option) (*SetStatusCheckContextsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -16162,7 +16161,7 @@ Set status check contexts.
 
 https://developer.github.com/v3/repos/branches/#set-status-check-contexts
 */
-func (c Client) SetStatusCheckContexts(ctx context.Context, req *SetStatusCheckContextsReq, opt ...options.Option) (*SetStatusCheckContextsResponse, error) {
+func (c Client) SetStatusCheckContexts(ctx context.Context, req *SetStatusCheckContextsReq, opt ...requests.Option) (*SetStatusCheckContextsResponse, error) {
 	return SetStatusCheckContexts(ctx, req, append(c, opt...)...)
 }
 
@@ -16182,8 +16181,8 @@ type SetStatusCheckContextsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *SetStatusCheckContextsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *SetStatusCheckContextsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -16246,7 +16245,7 @@ SetStatusCheckContextsResponse is a response for SetStatusCheckContexts
 https://developer.github.com/v3/repos/branches/#set-status-check-contexts
 */
 type SetStatusCheckContextsResponse struct {
-	common.Response
+	requests.Response
 	request *SetStatusCheckContextsReq
 	Data    SetStatusCheckContextsResponseBody
 }
@@ -16260,8 +16259,8 @@ Set team access restrictions.
 
 https://developer.github.com/v3/repos/branches/#set-team-access-restrictions
 */
-func SetTeamAccessRestrictions(ctx context.Context, req *SetTeamAccessRestrictionsReq, opt ...options.Option) (*SetTeamAccessRestrictionsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func SetTeamAccessRestrictions(ctx context.Context, req *SetTeamAccessRestrictionsReq, opt ...requests.Option) (*SetTeamAccessRestrictionsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -16296,7 +16295,7 @@ Set team access restrictions.
 
 https://developer.github.com/v3/repos/branches/#set-team-access-restrictions
 */
-func (c Client) SetTeamAccessRestrictions(ctx context.Context, req *SetTeamAccessRestrictionsReq, opt ...options.Option) (*SetTeamAccessRestrictionsResponse, error) {
+func (c Client) SetTeamAccessRestrictions(ctx context.Context, req *SetTeamAccessRestrictionsReq, opt ...requests.Option) (*SetTeamAccessRestrictionsResponse, error) {
 	return SetTeamAccessRestrictions(ctx, req, append(c, opt...)...)
 }
 
@@ -16316,8 +16315,8 @@ type SetTeamAccessRestrictionsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *SetTeamAccessRestrictionsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *SetTeamAccessRestrictionsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -16373,7 +16372,7 @@ SetTeamAccessRestrictionsResponse is a response for SetTeamAccessRestrictions
 https://developer.github.com/v3/repos/branches/#set-team-access-restrictions
 */
 type SetTeamAccessRestrictionsResponse struct {
-	common.Response
+	requests.Response
 	request *SetTeamAccessRestrictionsReq
 	Data    []components.Team
 }
@@ -16387,8 +16386,8 @@ Set user access restrictions.
 
 https://developer.github.com/v3/repos/branches/#set-user-access-restrictions
 */
-func SetUserAccessRestrictions(ctx context.Context, req *SetUserAccessRestrictionsReq, opt ...options.Option) (*SetUserAccessRestrictionsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func SetUserAccessRestrictions(ctx context.Context, req *SetUserAccessRestrictionsReq, opt ...requests.Option) (*SetUserAccessRestrictionsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -16423,7 +16422,7 @@ Set user access restrictions.
 
 https://developer.github.com/v3/repos/branches/#set-user-access-restrictions
 */
-func (c Client) SetUserAccessRestrictions(ctx context.Context, req *SetUserAccessRestrictionsReq, opt ...options.Option) (*SetUserAccessRestrictionsResponse, error) {
+func (c Client) SetUserAccessRestrictions(ctx context.Context, req *SetUserAccessRestrictionsReq, opt ...requests.Option) (*SetUserAccessRestrictionsResponse, error) {
 	return SetUserAccessRestrictions(ctx, req, append(c, opt...)...)
 }
 
@@ -16443,8 +16442,8 @@ type SetUserAccessRestrictionsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *SetUserAccessRestrictionsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *SetUserAccessRestrictionsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -16500,7 +16499,7 @@ SetUserAccessRestrictionsResponse is a response for SetUserAccessRestrictions
 https://developer.github.com/v3/repos/branches/#set-user-access-restrictions
 */
 type SetUserAccessRestrictionsResponse struct {
-	common.Response
+	requests.Response
 	request *SetUserAccessRestrictionsReq
 	Data    []components.SimpleUser
 }
@@ -16514,8 +16513,8 @@ Test the push repository webhook.
 
 https://developer.github.com/v3/repos/hooks/#test-the-push-repository-webhook
 */
-func TestPushWebhook(ctx context.Context, req *TestPushWebhookReq, opt ...options.Option) (*TestPushWebhookResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func TestPushWebhook(ctx context.Context, req *TestPushWebhookReq, opt ...requests.Option) (*TestPushWebhookResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -16553,7 +16552,7 @@ Test the push repository webhook.
 
 https://developer.github.com/v3/repos/hooks/#test-the-push-repository-webhook
 */
-func (c Client) TestPushWebhook(ctx context.Context, req *TestPushWebhookReq, opt ...options.Option) (*TestPushWebhookResponse, error) {
+func (c Client) TestPushWebhook(ctx context.Context, req *TestPushWebhookReq, opt ...requests.Option) (*TestPushWebhookResponse, error) {
 	return TestPushWebhook(ctx, req, append(c, opt...)...)
 }
 
@@ -16570,8 +16569,8 @@ type TestPushWebhookReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *TestPushWebhookReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *TestPushWebhookReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -16617,7 +16616,7 @@ TestPushWebhookResponse is a response for TestPushWebhook
 https://developer.github.com/v3/repos/hooks/#test-the-push-repository-webhook
 */
 type TestPushWebhookResponse struct {
-	common.Response
+	requests.Response
 	request *TestPushWebhookReq
 	Data    bool
 }
@@ -16631,8 +16630,8 @@ Transfer a repository.
 
 https://developer.github.com/v3/repos/#transfer-a-repository
 */
-func Transfer(ctx context.Context, req *TransferReq, opt ...options.Option) (*TransferResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func Transfer(ctx context.Context, req *TransferReq, opt ...requests.Option) (*TransferResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -16667,7 +16666,7 @@ Transfer a repository.
 
 https://developer.github.com/v3/repos/#transfer-a-repository
 */
-func (c Client) Transfer(ctx context.Context, req *TransferReq, opt ...options.Option) (*TransferResponse, error) {
+func (c Client) Transfer(ctx context.Context, req *TransferReq, opt ...requests.Option) (*TransferResponse, error) {
 	return Transfer(ctx, req, append(c, opt...)...)
 }
 
@@ -16684,8 +16683,8 @@ type TransferReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *TransferReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *TransferReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -16748,7 +16747,7 @@ TransferResponse is a response for Transfer
 https://developer.github.com/v3/repos/#transfer-a-repository
 */
 type TransferResponse struct {
-	common.Response
+	requests.Response
 	request *TransferReq
 	Data    components.Repository
 }
@@ -16762,8 +16761,8 @@ Update a repository.
 
 https://developer.github.com/v3/repos/#update-a-repository
 */
-func Update(ctx context.Context, req *UpdateReq, opt ...options.Option) (*UpdateResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func Update(ctx context.Context, req *UpdateReq, opt ...requests.Option) (*UpdateResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -16798,7 +16797,7 @@ Update a repository.
 
 https://developer.github.com/v3/repos/#update-a-repository
 */
-func (c Client) Update(ctx context.Context, req *UpdateReq, opt ...options.Option) (*UpdateResponse, error) {
+func (c Client) Update(ctx context.Context, req *UpdateReq, opt ...requests.Option) (*UpdateResponse, error) {
 	return Update(ctx, req, append(c, opt...)...)
 }
 
@@ -16836,8 +16835,8 @@ type UpdateReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UpdateReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *UpdateReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -16970,7 +16969,7 @@ UpdateResponse is a response for Update
 https://developer.github.com/v3/repos/#update-a-repository
 */
 type UpdateResponse struct {
-	common.Response
+	requests.Response
 	request *UpdateReq
 	Data    components.FullRepository
 }
@@ -16984,8 +16983,8 @@ Update branch protection.
 
 https://developer.github.com/v3/repos/branches/#update-branch-protection
 */
-func UpdateBranchProtection(ctx context.Context, req *UpdateBranchProtectionReq, opt ...options.Option) (*UpdateBranchProtectionResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func UpdateBranchProtection(ctx context.Context, req *UpdateBranchProtectionReq, opt ...requests.Option) (*UpdateBranchProtectionResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -17020,7 +17019,7 @@ Update branch protection.
 
 https://developer.github.com/v3/repos/branches/#update-branch-protection
 */
-func (c Client) UpdateBranchProtection(ctx context.Context, req *UpdateBranchProtectionReq, opt ...options.Option) (*UpdateBranchProtectionResponse, error) {
+func (c Client) UpdateBranchProtection(ctx context.Context, req *UpdateBranchProtectionReq, opt ...requests.Option) (*UpdateBranchProtectionResponse, error) {
 	return UpdateBranchProtection(ctx, req, append(c, opt...)...)
 }
 
@@ -17050,8 +17049,8 @@ type UpdateBranchProtectionReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UpdateBranchProtectionReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *UpdateBranchProtectionReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -17211,7 +17210,7 @@ UpdateBranchProtectionResponse is a response for UpdateBranchProtection
 https://developer.github.com/v3/repos/branches/#update-branch-protection
 */
 type UpdateBranchProtectionResponse struct {
-	common.Response
+	requests.Response
 	request *UpdateBranchProtectionReq
 	Data    components.ProtectedBranch
 }
@@ -17225,8 +17224,8 @@ Update a commit comment.
 
 https://developer.github.com/v3/repos/comments/#update-a-commit-comment
 */
-func UpdateCommitComment(ctx context.Context, req *UpdateCommitCommentReq, opt ...options.Option) (*UpdateCommitCommentResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func UpdateCommitComment(ctx context.Context, req *UpdateCommitCommentReq, opt ...requests.Option) (*UpdateCommitCommentResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -17261,7 +17260,7 @@ Update a commit comment.
 
 https://developer.github.com/v3/repos/comments/#update-a-commit-comment
 */
-func (c Client) UpdateCommitComment(ctx context.Context, req *UpdateCommitCommentReq, opt ...options.Option) (*UpdateCommitCommentResponse, error) {
+func (c Client) UpdateCommitComment(ctx context.Context, req *UpdateCommitCommentReq, opt ...requests.Option) (*UpdateCommitCommentResponse, error) {
 	return UpdateCommitComment(ctx, req, append(c, opt...)...)
 }
 
@@ -17281,8 +17280,8 @@ type UpdateCommitCommentReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UpdateCommitCommentReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *UpdateCommitCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -17342,7 +17341,7 @@ UpdateCommitCommentResponse is a response for UpdateCommitComment
 https://developer.github.com/v3/repos/comments/#update-a-commit-comment
 */
 type UpdateCommitCommentResponse struct {
-	common.Response
+	requests.Response
 	request *UpdateCommitCommentReq
 	Data    components.CommitComment
 }
@@ -17356,8 +17355,8 @@ Update information about a GitHub Pages site.
 
 https://developer.github.com/v3/repos/pages/#update-information-about-a-github-pages-site
 */
-func UpdateInformationAboutPagesSite(ctx context.Context, req *UpdateInformationAboutPagesSiteReq, opt ...options.Option) (*UpdateInformationAboutPagesSiteResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func UpdateInformationAboutPagesSite(ctx context.Context, req *UpdateInformationAboutPagesSiteReq, opt ...requests.Option) (*UpdateInformationAboutPagesSiteResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -17391,7 +17390,7 @@ Update information about a GitHub Pages site.
 
 https://developer.github.com/v3/repos/pages/#update-information-about-a-github-pages-site
 */
-func (c Client) UpdateInformationAboutPagesSite(ctx context.Context, req *UpdateInformationAboutPagesSiteReq, opt ...options.Option) (*UpdateInformationAboutPagesSiteResponse, error) {
+func (c Client) UpdateInformationAboutPagesSite(ctx context.Context, req *UpdateInformationAboutPagesSiteReq, opt ...requests.Option) (*UpdateInformationAboutPagesSiteResponse, error) {
 	return UpdateInformationAboutPagesSite(ctx, req, append(c, opt...)...)
 }
 
@@ -17408,8 +17407,8 @@ type UpdateInformationAboutPagesSiteReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UpdateInformationAboutPagesSiteReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *UpdateInformationAboutPagesSiteReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -17472,7 +17471,7 @@ UpdateInformationAboutPagesSiteResponse is a response for UpdateInformationAbout
 https://developer.github.com/v3/repos/pages/#update-information-about-a-github-pages-site
 */
 type UpdateInformationAboutPagesSiteResponse struct {
-	common.Response
+	requests.Response
 	request *UpdateInformationAboutPagesSiteReq
 }
 
@@ -17485,8 +17484,8 @@ Update a repository invitation.
 
 https://developer.github.com/v3/repos/invitations/#update-a-repository-invitation
 */
-func UpdateInvitation(ctx context.Context, req *UpdateInvitationReq, opt ...options.Option) (*UpdateInvitationResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func UpdateInvitation(ctx context.Context, req *UpdateInvitationReq, opt ...requests.Option) (*UpdateInvitationResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -17521,7 +17520,7 @@ Update a repository invitation.
 
 https://developer.github.com/v3/repos/invitations/#update-a-repository-invitation
 */
-func (c Client) UpdateInvitation(ctx context.Context, req *UpdateInvitationReq, opt ...options.Option) (*UpdateInvitationResponse, error) {
+func (c Client) UpdateInvitation(ctx context.Context, req *UpdateInvitationReq, opt ...requests.Option) (*UpdateInvitationResponse, error) {
 	return UpdateInvitation(ctx, req, append(c, opt...)...)
 }
 
@@ -17541,8 +17540,8 @@ type UpdateInvitationReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UpdateInvitationReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *UpdateInvitationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -17605,7 +17604,7 @@ UpdateInvitationResponse is a response for UpdateInvitation
 https://developer.github.com/v3/repos/invitations/#update-a-repository-invitation
 */
 type UpdateInvitationResponse struct {
-	common.Response
+	requests.Response
 	request *UpdateInvitationReq
 	Data    components.RepositoryInvitation
 }
@@ -17619,8 +17618,8 @@ Update pull request review protection.
 
 https://developer.github.com/v3/repos/branches/#update-pull-request-review-protection
 */
-func UpdatePullRequestReviewProtection(ctx context.Context, req *UpdatePullRequestReviewProtectionReq, opt ...options.Option) (*UpdatePullRequestReviewProtectionResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func UpdatePullRequestReviewProtection(ctx context.Context, req *UpdatePullRequestReviewProtectionReq, opt ...requests.Option) (*UpdatePullRequestReviewProtectionResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -17655,7 +17654,7 @@ Update pull request review protection.
 
 https://developer.github.com/v3/repos/branches/#update-pull-request-review-protection
 */
-func (c Client) UpdatePullRequestReviewProtection(ctx context.Context, req *UpdatePullRequestReviewProtectionReq, opt ...options.Option) (*UpdatePullRequestReviewProtectionResponse, error) {
+func (c Client) UpdatePullRequestReviewProtection(ctx context.Context, req *UpdatePullRequestReviewProtectionReq, opt ...requests.Option) (*UpdatePullRequestReviewProtectionResponse, error) {
 	return UpdatePullRequestReviewProtection(ctx, req, append(c, opt...)...)
 }
 
@@ -17685,8 +17684,8 @@ type UpdatePullRequestReviewProtectionReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UpdatePullRequestReviewProtectionReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *UpdatePullRequestReviewProtectionReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -17770,7 +17769,7 @@ UpdatePullRequestReviewProtectionResponse is a response for UpdatePullRequestRev
 https://developer.github.com/v3/repos/branches/#update-pull-request-review-protection
 */
 type UpdatePullRequestReviewProtectionResponse struct {
-	common.Response
+	requests.Response
 	request *UpdatePullRequestReviewProtectionReq
 	Data    components.ProtectedBranchPullRequestReview
 }
@@ -17784,8 +17783,8 @@ Update a release.
 
 https://developer.github.com/v3/repos/releases/#update-a-release
 */
-func UpdateRelease(ctx context.Context, req *UpdateReleaseReq, opt ...options.Option) (*UpdateReleaseResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func UpdateRelease(ctx context.Context, req *UpdateReleaseReq, opt ...requests.Option) (*UpdateReleaseResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -17820,7 +17819,7 @@ Update a release.
 
 https://developer.github.com/v3/repos/releases/#update-a-release
 */
-func (c Client) UpdateRelease(ctx context.Context, req *UpdateReleaseReq, opt ...options.Option) (*UpdateReleaseResponse, error) {
+func (c Client) UpdateRelease(ctx context.Context, req *UpdateReleaseReq, opt ...requests.Option) (*UpdateReleaseResponse, error) {
 	return UpdateRelease(ctx, req, append(c, opt...)...)
 }
 
@@ -17840,8 +17839,8 @@ type UpdateReleaseReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UpdateReleaseReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *UpdateReleaseReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -17920,7 +17919,7 @@ UpdateReleaseResponse is a response for UpdateRelease
 https://developer.github.com/v3/repos/releases/#update-a-release
 */
 type UpdateReleaseResponse struct {
-	common.Response
+	requests.Response
 	request *UpdateReleaseReq
 	Data    components.Release
 }
@@ -17934,8 +17933,8 @@ Update a release asset.
 
 https://developer.github.com/v3/repos/releases/#update-a-release-asset
 */
-func UpdateReleaseAsset(ctx context.Context, req *UpdateReleaseAssetReq, opt ...options.Option) (*UpdateReleaseAssetResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func UpdateReleaseAsset(ctx context.Context, req *UpdateReleaseAssetReq, opt ...requests.Option) (*UpdateReleaseAssetResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -17970,7 +17969,7 @@ Update a release asset.
 
 https://developer.github.com/v3/repos/releases/#update-a-release-asset
 */
-func (c Client) UpdateReleaseAsset(ctx context.Context, req *UpdateReleaseAssetReq, opt ...options.Option) (*UpdateReleaseAssetResponse, error) {
+func (c Client) UpdateReleaseAsset(ctx context.Context, req *UpdateReleaseAssetReq, opt ...requests.Option) (*UpdateReleaseAssetResponse, error) {
 	return UpdateReleaseAsset(ctx, req, append(c, opt...)...)
 }
 
@@ -17990,8 +17989,8 @@ type UpdateReleaseAssetReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UpdateReleaseAssetReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *UpdateReleaseAssetReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -18055,7 +18054,7 @@ UpdateReleaseAssetResponse is a response for UpdateReleaseAsset
 https://developer.github.com/v3/repos/releases/#update-a-release-asset
 */
 type UpdateReleaseAssetResponse struct {
-	common.Response
+	requests.Response
 	request *UpdateReleaseAssetReq
 	Data    components.ReleaseAsset
 }
@@ -18069,8 +18068,8 @@ Update status check protection.
 
 https://developer.github.com/v3/repos/branches/#update-status-check-potection
 */
-func UpdateStatusCheckProtection(ctx context.Context, req *UpdateStatusCheckProtectionReq, opt ...options.Option) (*UpdateStatusCheckProtectionResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func UpdateStatusCheckProtection(ctx context.Context, req *UpdateStatusCheckProtectionReq, opt ...requests.Option) (*UpdateStatusCheckProtectionResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -18105,7 +18104,7 @@ Update status check protection.
 
 https://developer.github.com/v3/repos/branches/#update-status-check-potection
 */
-func (c Client) UpdateStatusCheckProtection(ctx context.Context, req *UpdateStatusCheckProtectionReq, opt ...options.Option) (*UpdateStatusCheckProtectionResponse, error) {
+func (c Client) UpdateStatusCheckProtection(ctx context.Context, req *UpdateStatusCheckProtectionReq, opt ...requests.Option) (*UpdateStatusCheckProtectionResponse, error) {
 	return UpdateStatusCheckProtection(ctx, req, append(c, opt...)...)
 }
 
@@ -18125,8 +18124,8 @@ type UpdateStatusCheckProtectionReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UpdateStatusCheckProtectionReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *UpdateStatusCheckProtectionReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -18189,7 +18188,7 @@ UpdateStatusCheckProtectionResponse is a response for UpdateStatusCheckProtectio
 https://developer.github.com/v3/repos/branches/#update-status-check-potection
 */
 type UpdateStatusCheckProtectionResponse struct {
-	common.Response
+	requests.Response
 	request *UpdateStatusCheckProtectionReq
 	Data    components.StatusCheckPolicy
 }
@@ -18203,8 +18202,8 @@ Update a repository webhook.
 
 https://developer.github.com/v3/repos/hooks/#update-a-repository-webhook
 */
-func UpdateWebhook(ctx context.Context, req *UpdateWebhookReq, opt ...options.Option) (*UpdateWebhookResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func UpdateWebhook(ctx context.Context, req *UpdateWebhookReq, opt ...requests.Option) (*UpdateWebhookResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -18239,7 +18238,7 @@ Update a repository webhook.
 
 https://developer.github.com/v3/repos/hooks/#update-a-repository-webhook
 */
-func (c Client) UpdateWebhook(ctx context.Context, req *UpdateWebhookReq, opt ...options.Option) (*UpdateWebhookResponse, error) {
+func (c Client) UpdateWebhook(ctx context.Context, req *UpdateWebhookReq, opt ...requests.Option) (*UpdateWebhookResponse, error) {
 	return UpdateWebhook(ctx, req, append(c, opt...)...)
 }
 
@@ -18257,8 +18256,8 @@ type UpdateWebhookReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UpdateWebhookReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *UpdateWebhookReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -18365,7 +18364,7 @@ UpdateWebhookResponse is a response for UpdateWebhook
 https://developer.github.com/v3/repos/hooks/#update-a-repository-webhook
 */
 type UpdateWebhookResponse struct {
-	common.Response
+	requests.Response
 	request *UpdateWebhookReq
 	Data    components.Hook
 }
@@ -18379,8 +18378,8 @@ Upload a release asset.
 
 https://developer.github.com/v3/repos/releases/#upload-a-release-asset
 */
-func UploadReleaseAsset(ctx context.Context, req *UploadReleaseAssetReq, opt ...options.Option) (*UploadReleaseAssetResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func UploadReleaseAsset(ctx context.Context, req *UploadReleaseAssetReq, opt ...requests.Option) (*UploadReleaseAssetResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -18415,7 +18414,7 @@ Upload a release asset.
 
 https://developer.github.com/v3/repos/releases/#upload-a-release-asset
 */
-func (c Client) UploadReleaseAsset(ctx context.Context, req *UploadReleaseAssetReq, opt ...options.Option) (*UploadReleaseAssetResponse, error) {
+func (c Client) UploadReleaseAsset(ctx context.Context, req *UploadReleaseAssetReq, opt ...requests.Option) (*UploadReleaseAssetResponse, error) {
 	return UploadReleaseAsset(ctx, req, append(c, opt...)...)
 }
 
@@ -18444,8 +18443,8 @@ type UploadReleaseAssetReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UploadReleaseAssetReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *UploadReleaseAssetReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -18500,7 +18499,7 @@ UploadReleaseAssetResponse is a response for UploadReleaseAsset
 https://developer.github.com/v3/repos/releases/#upload-a-release-asset
 */
 type UploadReleaseAssetResponse struct {
-	common.Response
+	requests.Response
 	request *UploadReleaseAssetReq
 	Data    components.ReleaseAsset
 }

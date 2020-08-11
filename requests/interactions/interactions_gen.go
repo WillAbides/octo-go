@@ -5,10 +5,9 @@ package interactions
 import (
 	"context"
 	"fmt"
-	common "github.com/willabides/octo-go/common"
 	components "github.com/willabides/octo-go/components"
 	internal "github.com/willabides/octo-go/internal"
-	options "github.com/willabides/octo-go/options"
+	requests "github.com/willabides/octo-go/requests"
 	"net/http"
 	"net/url"
 )
@@ -16,15 +15,15 @@ import (
 func strPtr(s string) *string { return &s }
 
 // Client is a set of options to apply to requests
-type Client []options.Option
+type Client []requests.Option
 
 // NewClient returns a new Client
-func NewClient(opt ...options.Option) Client {
+func NewClient(opt ...requests.Option) Client {
 	return opt
 }
 
 // Apply implements options.Option
-func (c Client) Apply(opts *options.Options) error {
+func (c Client) Apply(opts *requests.Options) error {
 	for _, o := range c {
 		err := o.Apply(opts)
 		if err != nil {
@@ -43,8 +42,8 @@ Get interaction restrictions for an organization.
 
 https://developer.github.com/v3/interactions/orgs/#get-interaction-restrictions-for-an-organization
 */
-func GetRestrictionsForOrg(ctx context.Context, req *GetRestrictionsForOrgReq, opt ...options.Option) (*GetRestrictionsForOrgResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetRestrictionsForOrg(ctx context.Context, req *GetRestrictionsForOrgReq, opt ...requests.Option) (*GetRestrictionsForOrgResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -79,7 +78,7 @@ Get interaction restrictions for an organization.
 
 https://developer.github.com/v3/interactions/orgs/#get-interaction-restrictions-for-an-organization
 */
-func (c Client) GetRestrictionsForOrg(ctx context.Context, req *GetRestrictionsForOrgReq, opt ...options.Option) (*GetRestrictionsForOrgResponse, error) {
+func (c Client) GetRestrictionsForOrg(ctx context.Context, req *GetRestrictionsForOrgReq, opt ...requests.Option) (*GetRestrictionsForOrgResponse, error) {
 	return GetRestrictionsForOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -102,8 +101,8 @@ type GetRestrictionsForOrgReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetRestrictionsForOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetRestrictionsForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -149,7 +148,7 @@ GetRestrictionsForOrgResponse is a response for GetRestrictionsForOrg
 https://developer.github.com/v3/interactions/orgs/#get-interaction-restrictions-for-an-organization
 */
 type GetRestrictionsForOrgResponse struct {
-	common.Response
+	requests.Response
 	request *GetRestrictionsForOrgReq
 	Data    components.InteractionLimit
 }
@@ -163,8 +162,8 @@ Get interaction restrictions for a repository.
 
 https://developer.github.com/v3/interactions/repos/#get-interaction-restrictions-for-a-repository
 */
-func GetRestrictionsForRepo(ctx context.Context, req *GetRestrictionsForRepoReq, opt ...options.Option) (*GetRestrictionsForRepoResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetRestrictionsForRepo(ctx context.Context, req *GetRestrictionsForRepoReq, opt ...requests.Option) (*GetRestrictionsForRepoResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -199,7 +198,7 @@ Get interaction restrictions for a repository.
 
 https://developer.github.com/v3/interactions/repos/#get-interaction-restrictions-for-a-repository
 */
-func (c Client) GetRestrictionsForRepo(ctx context.Context, req *GetRestrictionsForRepoReq, opt ...options.Option) (*GetRestrictionsForRepoResponse, error) {
+func (c Client) GetRestrictionsForRepo(ctx context.Context, req *GetRestrictionsForRepoReq, opt ...requests.Option) (*GetRestrictionsForRepoResponse, error) {
 	return GetRestrictionsForRepo(ctx, req, append(c, opt...)...)
 }
 
@@ -223,8 +222,8 @@ type GetRestrictionsForRepoReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetRestrictionsForRepoReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetRestrictionsForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -270,7 +269,7 @@ GetRestrictionsForRepoResponse is a response for GetRestrictionsForRepo
 https://developer.github.com/v3/interactions/repos/#get-interaction-restrictions-for-a-repository
 */
 type GetRestrictionsForRepoResponse struct {
-	common.Response
+	requests.Response
 	request *GetRestrictionsForRepoReq
 	Data    components.InteractionLimit
 }
@@ -284,8 +283,8 @@ Remove interaction restrictions for an organization.
 
 https://developer.github.com/v3/interactions/orgs/#remove-interaction-restrictions-for-an-organization
 */
-func RemoveRestrictionsForOrg(ctx context.Context, req *RemoveRestrictionsForOrgReq, opt ...options.Option) (*RemoveRestrictionsForOrgResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func RemoveRestrictionsForOrg(ctx context.Context, req *RemoveRestrictionsForOrgReq, opt ...requests.Option) (*RemoveRestrictionsForOrgResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -319,7 +318,7 @@ Remove interaction restrictions for an organization.
 
 https://developer.github.com/v3/interactions/orgs/#remove-interaction-restrictions-for-an-organization
 */
-func (c Client) RemoveRestrictionsForOrg(ctx context.Context, req *RemoveRestrictionsForOrgReq, opt ...options.Option) (*RemoveRestrictionsForOrgResponse, error) {
+func (c Client) RemoveRestrictionsForOrg(ctx context.Context, req *RemoveRestrictionsForOrgReq, opt ...requests.Option) (*RemoveRestrictionsForOrgResponse, error) {
 	return RemoveRestrictionsForOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -342,8 +341,8 @@ type RemoveRestrictionsForOrgReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *RemoveRestrictionsForOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *RemoveRestrictionsForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -389,7 +388,7 @@ RemoveRestrictionsForOrgResponse is a response for RemoveRestrictionsForOrg
 https://developer.github.com/v3/interactions/orgs/#remove-interaction-restrictions-for-an-organization
 */
 type RemoveRestrictionsForOrgResponse struct {
-	common.Response
+	requests.Response
 	request *RemoveRestrictionsForOrgReq
 }
 
@@ -402,8 +401,8 @@ Remove interaction restrictions for a repository.
 
 https://developer.github.com/v3/interactions/repos/#remove-interaction-restrictions-for-a-repository
 */
-func RemoveRestrictionsForRepo(ctx context.Context, req *RemoveRestrictionsForRepoReq, opt ...options.Option) (*RemoveRestrictionsForRepoResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func RemoveRestrictionsForRepo(ctx context.Context, req *RemoveRestrictionsForRepoReq, opt ...requests.Option) (*RemoveRestrictionsForRepoResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -437,7 +436,7 @@ Remove interaction restrictions for a repository.
 
 https://developer.github.com/v3/interactions/repos/#remove-interaction-restrictions-for-a-repository
 */
-func (c Client) RemoveRestrictionsForRepo(ctx context.Context, req *RemoveRestrictionsForRepoReq, opt ...options.Option) (*RemoveRestrictionsForRepoResponse, error) {
+func (c Client) RemoveRestrictionsForRepo(ctx context.Context, req *RemoveRestrictionsForRepoReq, opt ...requests.Option) (*RemoveRestrictionsForRepoResponse, error) {
 	return RemoveRestrictionsForRepo(ctx, req, append(c, opt...)...)
 }
 
@@ -461,8 +460,8 @@ type RemoveRestrictionsForRepoReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *RemoveRestrictionsForRepoReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *RemoveRestrictionsForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -508,7 +507,7 @@ RemoveRestrictionsForRepoResponse is a response for RemoveRestrictionsForRepo
 https://developer.github.com/v3/interactions/repos/#remove-interaction-restrictions-for-a-repository
 */
 type RemoveRestrictionsForRepoResponse struct {
-	common.Response
+	requests.Response
 	request *RemoveRestrictionsForRepoReq
 }
 
@@ -521,8 +520,8 @@ Set interaction restrictions for an organization.
 
 https://developer.github.com/v3/interactions/orgs/#set-interaction-restrictions-for-an-organization
 */
-func SetRestrictionsForOrg(ctx context.Context, req *SetRestrictionsForOrgReq, opt ...options.Option) (*SetRestrictionsForOrgResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func SetRestrictionsForOrg(ctx context.Context, req *SetRestrictionsForOrgReq, opt ...requests.Option) (*SetRestrictionsForOrgResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -557,7 +556,7 @@ Set interaction restrictions for an organization.
 
 https://developer.github.com/v3/interactions/orgs/#set-interaction-restrictions-for-an-organization
 */
-func (c Client) SetRestrictionsForOrg(ctx context.Context, req *SetRestrictionsForOrgReq, opt ...options.Option) (*SetRestrictionsForOrgResponse, error) {
+func (c Client) SetRestrictionsForOrg(ctx context.Context, req *SetRestrictionsForOrgReq, opt ...requests.Option) (*SetRestrictionsForOrgResponse, error) {
 	return SetRestrictionsForOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -581,8 +580,8 @@ type SetRestrictionsForOrgReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *SetRestrictionsForOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *SetRestrictionsForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -646,7 +645,7 @@ SetRestrictionsForOrgResponse is a response for SetRestrictionsForOrg
 https://developer.github.com/v3/interactions/orgs/#set-interaction-restrictions-for-an-organization
 */
 type SetRestrictionsForOrgResponse struct {
-	common.Response
+	requests.Response
 	request *SetRestrictionsForOrgReq
 	Data    components.InteractionLimit
 }
@@ -660,8 +659,8 @@ Set interaction restrictions for a repository.
 
 https://developer.github.com/v3/interactions/repos/#set-interaction-restrictions-for-a-repository
 */
-func SetRestrictionsForRepo(ctx context.Context, req *SetRestrictionsForRepoReq, opt ...options.Option) (*SetRestrictionsForRepoResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func SetRestrictionsForRepo(ctx context.Context, req *SetRestrictionsForRepoReq, opt ...requests.Option) (*SetRestrictionsForRepoResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -696,7 +695,7 @@ Set interaction restrictions for a repository.
 
 https://developer.github.com/v3/interactions/repos/#set-interaction-restrictions-for-a-repository
 */
-func (c Client) SetRestrictionsForRepo(ctx context.Context, req *SetRestrictionsForRepoReq, opt ...options.Option) (*SetRestrictionsForRepoResponse, error) {
+func (c Client) SetRestrictionsForRepo(ctx context.Context, req *SetRestrictionsForRepoReq, opt ...requests.Option) (*SetRestrictionsForRepoResponse, error) {
 	return SetRestrictionsForRepo(ctx, req, append(c, opt...)...)
 }
 
@@ -721,8 +720,8 @@ type SetRestrictionsForRepoReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *SetRestrictionsForRepoReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *SetRestrictionsForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -786,7 +785,7 @@ SetRestrictionsForRepoResponse is a response for SetRestrictionsForRepo
 https://developer.github.com/v3/interactions/repos/#set-interaction-restrictions-for-a-repository
 */
 type SetRestrictionsForRepoResponse struct {
-	common.Response
+	requests.Response
 	request *SetRestrictionsForRepoReq
 	Data    components.InteractionLimit
 }

@@ -8,7 +8,6 @@ import (
 	"os"
 
 	"github.com/willabides/octo-go"
-	"github.com/willabides/octo-go/options/auth"
 	"github.com/willabides/octo-go/requests/gists"
 )
 
@@ -16,7 +15,7 @@ func main() {
 	ctx := context.Background()
 
 	client := octo.NewClient(
-		auth.WithPATAuth(os.Getenv("GITHUB_TOKEN")),
+		octo.WithPATAuth(os.Getenv("GITHUB_TOKEN")),
 		octo.WithUserAgent("octo-go examples"),
 	)
 

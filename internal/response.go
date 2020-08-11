@@ -7,12 +7,11 @@ import (
 	"io"
 	"io/ioutil"
 
-	"github.com/willabides/octo-go/common"
-	"github.com/willabides/octo-go/options"
+	"github.com/willabides/octo-go/requests"
 )
 
 // DecodeResponseBody unmarshals a common body onto target
-func DecodeResponseBody(r *common.Response, builder *RequestBuilder, opts *options.Options, target interface{}) error {
+func DecodeResponseBody(r *requests.Response, builder *RequestBuilder, opts *requests.Options, target interface{}) error {
 	if builder.HasAttribute(AttrRedirectOnly) {
 		return nil
 	}
@@ -37,7 +36,7 @@ func DecodeResponseBody(r *common.Response, builder *RequestBuilder, opts *optio
 	return json.NewDecoder(bodyReader).Decode(target)
 }
 
-func statusCodeInList(r *common.Response, codes []int) bool {
+func statusCodeInList(r *requests.Response, codes []int) bool {
 	if r.HTTPResponse() == nil {
 		return false
 	}
@@ -51,7 +50,7 @@ func statusCodeInList(r *common.Response, codes []int) bool {
 
 // SetBoolResult sets the value of ptr to true if r has a 204 status code to true or false if the status code is 404
 //  returns an error if the common is any other value
-func SetBoolResult(r *common.Response, ptr *bool) error {
+func SetBoolResult(r *requests.Response, ptr *bool) error {
 	switch r.HTTPResponse().StatusCode {
 	case 204:
 		*ptr = true

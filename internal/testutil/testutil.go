@@ -17,8 +17,8 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"github.com/willabides/octo-go"
-	"github.com/willabides/octo-go/options"
-	"github.com/willabides/octo-go/options/auth"
+	"github.com/willabides/octo-go/requests"
+	"github.com/willabides/octo-go/requests/apps"
 )
 
 const (
@@ -67,30 +67,31 @@ func ProjectRoot(t *testing.T) string {
 }
 
 // PATAuth returns auth
-func PATAuth() options.Option {
-	return auth.WithPATAuth(os.Getenv("GITHUB_TOKEN"))
+func PATAuth() requests.Option {
+	return octo.WithPATAuth(os.Getenv("GITHUB_TOKEN"))
 }
 
 // AppAuth returns auth
-func AppAuth(t *testing.T) options.Option {
+func AppAuth(t *testing.T) requests.Option {
 	key := appPrivateKey(t)
 	if key == nil {
 		return nil
 	}
-	return auth.WithAppAuth(AppID, key)
+	return octo.WithAppAuth(AppID, key)
 }
 
 // AppInstallationAuth returns auth
-func AppInstallationAuth(t *testing.T) options.Option {
+func AppInstallationAuth(t *testing.T) requests.Option {
 	key := appPrivateKey(t)
 	if key == nil {
 		return nil
 	}
-	return auth.WithAppInstallationAuth(AppID, AppInstallationID, key, nil)
+	helper := apps.NewInstallationAuthHelper(AppInstallationID, apps.NewClient(AppAuth(t)), nil)
+	return octo.WithAppInstallationAuth(helper.GetInstallationToken)
 }
 
 // VCRClient returns a vcr client
-func VCRClient(t *testing.T, cas string, opts ...options.Option) octo.Client {
+func VCRClient(t *testing.T, cas string, opts ...requests.Option) octo.Client {
 	t.Helper()
 	cas = strings.ReplaceAll(cas, "/", "_")
 	cas = filepath.Join(filepath.FromSlash("testdata/vcr/"), cas)

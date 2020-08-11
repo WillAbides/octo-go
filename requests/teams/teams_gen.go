@@ -5,10 +5,9 @@ package teams
 import (
 	"context"
 	"fmt"
-	common "github.com/willabides/octo-go/common"
 	components "github.com/willabides/octo-go/components"
 	internal "github.com/willabides/octo-go/internal"
-	options "github.com/willabides/octo-go/options"
+	requests "github.com/willabides/octo-go/requests"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -17,15 +16,15 @@ import (
 func strPtr(s string) *string { return &s }
 
 // Client is a set of options to apply to requests
-type Client []options.Option
+type Client []requests.Option
 
 // NewClient returns a new Client
-func NewClient(opt ...options.Option) Client {
+func NewClient(opt ...requests.Option) Client {
 	return opt
 }
 
 // Apply implements options.Option
-func (c Client) Apply(opts *options.Options) error {
+func (c Client) Apply(opts *requests.Options) error {
 	for _, o := range c {
 		err := o.Apply(opts)
 		if err != nil {
@@ -44,8 +43,8 @@ Add team member (Legacy).
 
 https://developer.github.com/v3/teams/members/#add-team-member-legacy
 */
-func AddMemberLegacy(ctx context.Context, req *AddMemberLegacyReq, opt ...options.Option) (*AddMemberLegacyResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func AddMemberLegacy(ctx context.Context, req *AddMemberLegacyReq, opt ...requests.Option) (*AddMemberLegacyResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -79,7 +78,7 @@ Add team member (Legacy).
 
 https://developer.github.com/v3/teams/members/#add-team-member-legacy
 */
-func (c Client) AddMemberLegacy(ctx context.Context, req *AddMemberLegacyReq, opt ...options.Option) (*AddMemberLegacyResponse, error) {
+func (c Client) AddMemberLegacy(ctx context.Context, req *AddMemberLegacyReq, opt ...requests.Option) (*AddMemberLegacyResponse, error) {
 	return AddMemberLegacy(ctx, req, append(c, opt...)...)
 }
 
@@ -95,8 +94,8 @@ type AddMemberLegacyReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *AddMemberLegacyReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *AddMemberLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -142,7 +141,7 @@ AddMemberLegacyResponse is a response for AddMemberLegacy
 https://developer.github.com/v3/teams/members/#add-team-member-legacy
 */
 type AddMemberLegacyResponse struct {
-	common.Response
+	requests.Response
 	request *AddMemberLegacyReq
 }
 
@@ -155,8 +154,8 @@ Add or update team membership for a user.
 
 https://developer.github.com/v3/teams/members/#add-or-update-team-membership-for-a-user
 */
-func AddOrUpdateMembershipForUserInOrg(ctx context.Context, req *AddOrUpdateMembershipForUserInOrgReq, opt ...options.Option) (*AddOrUpdateMembershipForUserInOrgResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func AddOrUpdateMembershipForUserInOrg(ctx context.Context, req *AddOrUpdateMembershipForUserInOrgReq, opt ...requests.Option) (*AddOrUpdateMembershipForUserInOrgResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -191,7 +190,7 @@ Add or update team membership for a user.
 
 https://developer.github.com/v3/teams/members/#add-or-update-team-membership-for-a-user
 */
-func (c Client) AddOrUpdateMembershipForUserInOrg(ctx context.Context, req *AddOrUpdateMembershipForUserInOrgReq, opt ...options.Option) (*AddOrUpdateMembershipForUserInOrgResponse, error) {
+func (c Client) AddOrUpdateMembershipForUserInOrg(ctx context.Context, req *AddOrUpdateMembershipForUserInOrgReq, opt ...requests.Option) (*AddOrUpdateMembershipForUserInOrgResponse, error) {
 	return AddOrUpdateMembershipForUserInOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -211,8 +210,8 @@ type AddOrUpdateMembershipForUserInOrgReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *AddOrUpdateMembershipForUserInOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *AddOrUpdateMembershipForUserInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -278,7 +277,7 @@ AddOrUpdateMembershipForUserInOrgResponse is a response for AddOrUpdateMembershi
 https://developer.github.com/v3/teams/members/#add-or-update-team-membership-for-a-user
 */
 type AddOrUpdateMembershipForUserInOrgResponse struct {
-	common.Response
+	requests.Response
 	request *AddOrUpdateMembershipForUserInOrgReq
 	Data    components.TeamMembership
 }
@@ -292,8 +291,8 @@ Add or update team membership for a user (Legacy).
 
 https://developer.github.com/v3/teams/members/#add-or-update-team-membership-for-a-user-legacy
 */
-func AddOrUpdateMembershipForUserLegacy(ctx context.Context, req *AddOrUpdateMembershipForUserLegacyReq, opt ...options.Option) (*AddOrUpdateMembershipForUserLegacyResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func AddOrUpdateMembershipForUserLegacy(ctx context.Context, req *AddOrUpdateMembershipForUserLegacyReq, opt ...requests.Option) (*AddOrUpdateMembershipForUserLegacyResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -328,7 +327,7 @@ Add or update team membership for a user (Legacy).
 
 https://developer.github.com/v3/teams/members/#add-or-update-team-membership-for-a-user-legacy
 */
-func (c Client) AddOrUpdateMembershipForUserLegacy(ctx context.Context, req *AddOrUpdateMembershipForUserLegacyReq, opt ...options.Option) (*AddOrUpdateMembershipForUserLegacyResponse, error) {
+func (c Client) AddOrUpdateMembershipForUserLegacy(ctx context.Context, req *AddOrUpdateMembershipForUserLegacyReq, opt ...requests.Option) (*AddOrUpdateMembershipForUserLegacyResponse, error) {
 	return AddOrUpdateMembershipForUserLegacy(ctx, req, append(c, opt...)...)
 }
 
@@ -345,8 +344,8 @@ type AddOrUpdateMembershipForUserLegacyReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *AddOrUpdateMembershipForUserLegacyReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *AddOrUpdateMembershipForUserLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -412,7 +411,7 @@ AddOrUpdateMembershipForUserLegacyResponse is a response for AddOrUpdateMembersh
 https://developer.github.com/v3/teams/members/#add-or-update-team-membership-for-a-user-legacy
 */
 type AddOrUpdateMembershipForUserLegacyResponse struct {
-	common.Response
+	requests.Response
 	request *AddOrUpdateMembershipForUserLegacyReq
 	Data    components.TeamMembership
 }
@@ -426,8 +425,8 @@ Add or update team project permissions.
 
 https://developer.github.com/v3/teams/#add-or-update-team-project-permissions
 */
-func AddOrUpdateProjectPermissionsInOrg(ctx context.Context, req *AddOrUpdateProjectPermissionsInOrgReq, opt ...options.Option) (*AddOrUpdateProjectPermissionsInOrgResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func AddOrUpdateProjectPermissionsInOrg(ctx context.Context, req *AddOrUpdateProjectPermissionsInOrgReq, opt ...requests.Option) (*AddOrUpdateProjectPermissionsInOrgResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -461,7 +460,7 @@ Add or update team project permissions.
 
 https://developer.github.com/v3/teams/#add-or-update-team-project-permissions
 */
-func (c Client) AddOrUpdateProjectPermissionsInOrg(ctx context.Context, req *AddOrUpdateProjectPermissionsInOrgReq, opt ...options.Option) (*AddOrUpdateProjectPermissionsInOrgResponse, error) {
+func (c Client) AddOrUpdateProjectPermissionsInOrg(ctx context.Context, req *AddOrUpdateProjectPermissionsInOrgReq, opt ...requests.Option) (*AddOrUpdateProjectPermissionsInOrgResponse, error) {
 	return AddOrUpdateProjectPermissionsInOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -490,8 +489,8 @@ type AddOrUpdateProjectPermissionsInOrgReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *AddOrUpdateProjectPermissionsInOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *AddOrUpdateProjectPermissionsInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -558,7 +557,7 @@ AddOrUpdateProjectPermissionsInOrgResponse is a response for AddOrUpdateProjectP
 https://developer.github.com/v3/teams/#add-or-update-team-project-permissions
 */
 type AddOrUpdateProjectPermissionsInOrgResponse struct {
-	common.Response
+	requests.Response
 	request *AddOrUpdateProjectPermissionsInOrgReq
 }
 
@@ -571,8 +570,8 @@ Add or update team project permissions (Legacy).
 
 https://developer.github.com/v3/teams/#add-or-update-team-project-permissions-legacy
 */
-func AddOrUpdateProjectPermissionsLegacy(ctx context.Context, req *AddOrUpdateProjectPermissionsLegacyReq, opt ...options.Option) (*AddOrUpdateProjectPermissionsLegacyResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func AddOrUpdateProjectPermissionsLegacy(ctx context.Context, req *AddOrUpdateProjectPermissionsLegacyReq, opt ...requests.Option) (*AddOrUpdateProjectPermissionsLegacyResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -606,7 +605,7 @@ Add or update team project permissions (Legacy).
 
 https://developer.github.com/v3/teams/#add-or-update-team-project-permissions-legacy
 */
-func (c Client) AddOrUpdateProjectPermissionsLegacy(ctx context.Context, req *AddOrUpdateProjectPermissionsLegacyReq, opt ...options.Option) (*AddOrUpdateProjectPermissionsLegacyResponse, error) {
+func (c Client) AddOrUpdateProjectPermissionsLegacy(ctx context.Context, req *AddOrUpdateProjectPermissionsLegacyReq, opt ...requests.Option) (*AddOrUpdateProjectPermissionsLegacyResponse, error) {
 	return AddOrUpdateProjectPermissionsLegacy(ctx, req, append(c, opt...)...)
 }
 
@@ -632,8 +631,8 @@ type AddOrUpdateProjectPermissionsLegacyReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *AddOrUpdateProjectPermissionsLegacyReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *AddOrUpdateProjectPermissionsLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -700,7 +699,7 @@ AddOrUpdateProjectPermissionsLegacyResponse is a response for AddOrUpdateProject
 https://developer.github.com/v3/teams/#add-or-update-team-project-permissions-legacy
 */
 type AddOrUpdateProjectPermissionsLegacyResponse struct {
-	common.Response
+	requests.Response
 	request *AddOrUpdateProjectPermissionsLegacyReq
 }
 
@@ -713,8 +712,8 @@ Add or update team repository permissions.
 
 https://developer.github.com/v3/teams/#add-or-update-team-repository-permissions
 */
-func AddOrUpdateRepoPermissionsInOrg(ctx context.Context, req *AddOrUpdateRepoPermissionsInOrgReq, opt ...options.Option) (*AddOrUpdateRepoPermissionsInOrgResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func AddOrUpdateRepoPermissionsInOrg(ctx context.Context, req *AddOrUpdateRepoPermissionsInOrgReq, opt ...requests.Option) (*AddOrUpdateRepoPermissionsInOrgResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -748,7 +747,7 @@ Add or update team repository permissions.
 
 https://developer.github.com/v3/teams/#add-or-update-team-repository-permissions
 */
-func (c Client) AddOrUpdateRepoPermissionsInOrg(ctx context.Context, req *AddOrUpdateRepoPermissionsInOrgReq, opt ...options.Option) (*AddOrUpdateRepoPermissionsInOrgResponse, error) {
+func (c Client) AddOrUpdateRepoPermissionsInOrg(ctx context.Context, req *AddOrUpdateRepoPermissionsInOrgReq, opt ...requests.Option) (*AddOrUpdateRepoPermissionsInOrgResponse, error) {
 	return AddOrUpdateRepoPermissionsInOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -769,8 +768,8 @@ type AddOrUpdateRepoPermissionsInOrgReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *AddOrUpdateRepoPermissionsInOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *AddOrUpdateRepoPermissionsInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -842,7 +841,7 @@ AddOrUpdateRepoPermissionsInOrgResponse is a response for AddOrUpdateRepoPermiss
 https://developer.github.com/v3/teams/#add-or-update-team-repository-permissions
 */
 type AddOrUpdateRepoPermissionsInOrgResponse struct {
-	common.Response
+	requests.Response
 	request *AddOrUpdateRepoPermissionsInOrgReq
 }
 
@@ -855,8 +854,8 @@ Add or update team repository permissions (Legacy).
 
 https://developer.github.com/v3/teams/#add-or-update-team-repository-permissions-legacy
 */
-func AddOrUpdateRepoPermissionsLegacy(ctx context.Context, req *AddOrUpdateRepoPermissionsLegacyReq, opt ...options.Option) (*AddOrUpdateRepoPermissionsLegacyResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func AddOrUpdateRepoPermissionsLegacy(ctx context.Context, req *AddOrUpdateRepoPermissionsLegacyReq, opt ...requests.Option) (*AddOrUpdateRepoPermissionsLegacyResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -890,7 +889,7 @@ Add or update team repository permissions (Legacy).
 
 https://developer.github.com/v3/teams/#add-or-update-team-repository-permissions-legacy
 */
-func (c Client) AddOrUpdateRepoPermissionsLegacy(ctx context.Context, req *AddOrUpdateRepoPermissionsLegacyReq, opt ...options.Option) (*AddOrUpdateRepoPermissionsLegacyResponse, error) {
+func (c Client) AddOrUpdateRepoPermissionsLegacy(ctx context.Context, req *AddOrUpdateRepoPermissionsLegacyReq, opt ...requests.Option) (*AddOrUpdateRepoPermissionsLegacyResponse, error) {
 	return AddOrUpdateRepoPermissionsLegacy(ctx, req, append(c, opt...)...)
 }
 
@@ -908,8 +907,8 @@ type AddOrUpdateRepoPermissionsLegacyReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *AddOrUpdateRepoPermissionsLegacyReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *AddOrUpdateRepoPermissionsLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -975,7 +974,7 @@ AddOrUpdateRepoPermissionsLegacyResponse is a response for AddOrUpdateRepoPermis
 https://developer.github.com/v3/teams/#add-or-update-team-repository-permissions-legacy
 */
 type AddOrUpdateRepoPermissionsLegacyResponse struct {
-	common.Response
+	requests.Response
 	request *AddOrUpdateRepoPermissionsLegacyReq
 }
 
@@ -988,8 +987,8 @@ Check team permissions for a project.
 
 https://developer.github.com/v3/teams/#check-team-permissions-for-a-project
 */
-func CheckPermissionsForProjectInOrg(ctx context.Context, req *CheckPermissionsForProjectInOrgReq, opt ...options.Option) (*CheckPermissionsForProjectInOrgResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CheckPermissionsForProjectInOrg(ctx context.Context, req *CheckPermissionsForProjectInOrgReq, opt ...requests.Option) (*CheckPermissionsForProjectInOrgResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1024,7 +1023,7 @@ Check team permissions for a project.
 
 https://developer.github.com/v3/teams/#check-team-permissions-for-a-project
 */
-func (c Client) CheckPermissionsForProjectInOrg(ctx context.Context, req *CheckPermissionsForProjectInOrgReq, opt ...options.Option) (*CheckPermissionsForProjectInOrgResponse, error) {
+func (c Client) CheckPermissionsForProjectInOrg(ctx context.Context, req *CheckPermissionsForProjectInOrgReq, opt ...requests.Option) (*CheckPermissionsForProjectInOrgResponse, error) {
 	return CheckPermissionsForProjectInOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -1052,8 +1051,8 @@ type CheckPermissionsForProjectInOrgReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CheckPermissionsForProjectInOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CheckPermissionsForProjectInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1099,7 +1098,7 @@ CheckPermissionsForProjectInOrgResponse is a response for CheckPermissionsForPro
 https://developer.github.com/v3/teams/#check-team-permissions-for-a-project
 */
 type CheckPermissionsForProjectInOrgResponse struct {
-	common.Response
+	requests.Response
 	request *CheckPermissionsForProjectInOrgReq
 	Data    components.TeamProject
 }
@@ -1113,8 +1112,8 @@ Check team permissions for a project (Legacy).
 
 https://developer.github.com/v3/teams/#check-team-permissions-for-a-project-legacy
 */
-func CheckPermissionsForProjectLegacy(ctx context.Context, req *CheckPermissionsForProjectLegacyReq, opt ...options.Option) (*CheckPermissionsForProjectLegacyResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CheckPermissionsForProjectLegacy(ctx context.Context, req *CheckPermissionsForProjectLegacyReq, opt ...requests.Option) (*CheckPermissionsForProjectLegacyResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1149,7 +1148,7 @@ Check team permissions for a project (Legacy).
 
 https://developer.github.com/v3/teams/#check-team-permissions-for-a-project-legacy
 */
-func (c Client) CheckPermissionsForProjectLegacy(ctx context.Context, req *CheckPermissionsForProjectLegacyReq, opt ...options.Option) (*CheckPermissionsForProjectLegacyResponse, error) {
+func (c Client) CheckPermissionsForProjectLegacy(ctx context.Context, req *CheckPermissionsForProjectLegacyReq, opt ...requests.Option) (*CheckPermissionsForProjectLegacyResponse, error) {
 	return CheckPermissionsForProjectLegacy(ctx, req, append(c, opt...)...)
 }
 
@@ -1174,8 +1173,8 @@ type CheckPermissionsForProjectLegacyReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CheckPermissionsForProjectLegacyReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CheckPermissionsForProjectLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1221,7 +1220,7 @@ CheckPermissionsForProjectLegacyResponse is a response for CheckPermissionsForPr
 https://developer.github.com/v3/teams/#check-team-permissions-for-a-project-legacy
 */
 type CheckPermissionsForProjectLegacyResponse struct {
-	common.Response
+	requests.Response
 	request *CheckPermissionsForProjectLegacyReq
 	Data    components.TeamProject
 }
@@ -1235,8 +1234,8 @@ Check team permissions for a repository.
 
 https://developer.github.com/v3/teams/#check-team-permissions-for-a-repository
 */
-func CheckPermissionsForRepoInOrg(ctx context.Context, req *CheckPermissionsForRepoInOrgReq, opt ...options.Option) (*CheckPermissionsForRepoInOrgResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CheckPermissionsForRepoInOrg(ctx context.Context, req *CheckPermissionsForRepoInOrgReq, opt ...requests.Option) (*CheckPermissionsForRepoInOrgResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1271,7 +1270,7 @@ Check team permissions for a repository.
 
 https://developer.github.com/v3/teams/#check-team-permissions-for-a-repository
 */
-func (c Client) CheckPermissionsForRepoInOrg(ctx context.Context, req *CheckPermissionsForRepoInOrgReq, opt ...options.Option) (*CheckPermissionsForRepoInOrgResponse, error) {
+func (c Client) CheckPermissionsForRepoInOrg(ctx context.Context, req *CheckPermissionsForRepoInOrgReq, opt ...requests.Option) (*CheckPermissionsForRepoInOrgResponse, error) {
 	return CheckPermissionsForRepoInOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -1291,8 +1290,8 @@ type CheckPermissionsForRepoInOrgReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CheckPermissionsForRepoInOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CheckPermissionsForRepoInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1338,7 +1337,7 @@ CheckPermissionsForRepoInOrgResponse is a response for CheckPermissionsForRepoIn
 https://developer.github.com/v3/teams/#check-team-permissions-for-a-repository
 */
 type CheckPermissionsForRepoInOrgResponse struct {
-	common.Response
+	requests.Response
 	request *CheckPermissionsForRepoInOrgReq
 	Data    components.TeamRepository
 }
@@ -1352,8 +1351,8 @@ Check team permissions for a repository (Legacy).
 
 https://developer.github.com/v3/teams/#check-team-permissions-for-a-repository-legacy
 */
-func CheckPermissionsForRepoLegacy(ctx context.Context, req *CheckPermissionsForRepoLegacyReq, opt ...options.Option) (*CheckPermissionsForRepoLegacyResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CheckPermissionsForRepoLegacy(ctx context.Context, req *CheckPermissionsForRepoLegacyReq, opt ...requests.Option) (*CheckPermissionsForRepoLegacyResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1388,7 +1387,7 @@ Check team permissions for a repository (Legacy).
 
 https://developer.github.com/v3/teams/#check-team-permissions-for-a-repository-legacy
 */
-func (c Client) CheckPermissionsForRepoLegacy(ctx context.Context, req *CheckPermissionsForRepoLegacyReq, opt ...options.Option) (*CheckPermissionsForRepoLegacyResponse, error) {
+func (c Client) CheckPermissionsForRepoLegacy(ctx context.Context, req *CheckPermissionsForRepoLegacyReq, opt ...requests.Option) (*CheckPermissionsForRepoLegacyResponse, error) {
 	return CheckPermissionsForRepoLegacy(ctx, req, append(c, opt...)...)
 }
 
@@ -1405,8 +1404,8 @@ type CheckPermissionsForRepoLegacyReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CheckPermissionsForRepoLegacyReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CheckPermissionsForRepoLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1452,7 +1451,7 @@ CheckPermissionsForRepoLegacyResponse is a response for CheckPermissionsForRepoL
 https://developer.github.com/v3/teams/#check-team-permissions-for-a-repository-legacy
 */
 type CheckPermissionsForRepoLegacyResponse struct {
-	common.Response
+	requests.Response
 	request *CheckPermissionsForRepoLegacyReq
 	Data    components.TeamRepository
 }
@@ -1466,8 +1465,8 @@ Create a team.
 
 https://developer.github.com/v3/teams/#create-a-team
 */
-func Create(ctx context.Context, req *CreateReq, opt ...options.Option) (*CreateResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func Create(ctx context.Context, req *CreateReq, opt ...requests.Option) (*CreateResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1502,7 +1501,7 @@ Create a team.
 
 https://developer.github.com/v3/teams/#create-a-team
 */
-func (c Client) Create(ctx context.Context, req *CreateReq, opt ...options.Option) (*CreateResponse, error) {
+func (c Client) Create(ctx context.Context, req *CreateReq, opt ...requests.Option) (*CreateResponse, error) {
 	return Create(ctx, req, append(c, opt...)...)
 }
 
@@ -1518,8 +1517,8 @@ type CreateReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1615,7 +1614,7 @@ CreateResponse is a response for Create
 https://developer.github.com/v3/teams/#create-a-team
 */
 type CreateResponse struct {
-	common.Response
+	requests.Response
 	request *CreateReq
 	Data    components.TeamFull
 }
@@ -1629,8 +1628,8 @@ Create a discussion comment.
 
 https://developer.github.com/v3/teams/discussion_comments/#create-a-discussion-comment
 */
-func CreateDiscussionCommentInOrg(ctx context.Context, req *CreateDiscussionCommentInOrgReq, opt ...options.Option) (*CreateDiscussionCommentInOrgResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateDiscussionCommentInOrg(ctx context.Context, req *CreateDiscussionCommentInOrgReq, opt ...requests.Option) (*CreateDiscussionCommentInOrgResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1665,7 +1664,7 @@ Create a discussion comment.
 
 https://developer.github.com/v3/teams/discussion_comments/#create-a-discussion-comment
 */
-func (c Client) CreateDiscussionCommentInOrg(ctx context.Context, req *CreateDiscussionCommentInOrgReq, opt ...options.Option) (*CreateDiscussionCommentInOrgResponse, error) {
+func (c Client) CreateDiscussionCommentInOrg(ctx context.Context, req *CreateDiscussionCommentInOrgReq, opt ...requests.Option) (*CreateDiscussionCommentInOrgResponse, error) {
 	return CreateDiscussionCommentInOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -1696,8 +1695,8 @@ type CreateDiscussionCommentInOrgReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1757,7 +1756,7 @@ CreateDiscussionCommentInOrgResponse is a response for CreateDiscussionCommentIn
 https://developer.github.com/v3/teams/discussion_comments/#create-a-discussion-comment
 */
 type CreateDiscussionCommentInOrgResponse struct {
-	common.Response
+	requests.Response
 	request *CreateDiscussionCommentInOrgReq
 	Data    components.TeamDiscussionComment
 }
@@ -1771,8 +1770,8 @@ Create a discussion comment (Legacy).
 
 https://developer.github.com/v3/teams/discussion_comments/#create-a-discussion-comment-legacy
 */
-func CreateDiscussionCommentLegacy(ctx context.Context, req *CreateDiscussionCommentLegacyReq, opt ...options.Option) (*CreateDiscussionCommentLegacyResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateDiscussionCommentLegacy(ctx context.Context, req *CreateDiscussionCommentLegacyReq, opt ...requests.Option) (*CreateDiscussionCommentLegacyResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1807,7 +1806,7 @@ Create a discussion comment (Legacy).
 
 https://developer.github.com/v3/teams/discussion_comments/#create-a-discussion-comment-legacy
 */
-func (c Client) CreateDiscussionCommentLegacy(ctx context.Context, req *CreateDiscussionCommentLegacyReq, opt ...options.Option) (*CreateDiscussionCommentLegacyResponse, error) {
+func (c Client) CreateDiscussionCommentLegacy(ctx context.Context, req *CreateDiscussionCommentLegacyReq, opt ...requests.Option) (*CreateDiscussionCommentLegacyResponse, error) {
 	return CreateDiscussionCommentLegacy(ctx, req, append(c, opt...)...)
 }
 
@@ -1835,8 +1834,8 @@ type CreateDiscussionCommentLegacyReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1896,7 +1895,7 @@ CreateDiscussionCommentLegacyResponse is a response for CreateDiscussionCommentL
 https://developer.github.com/v3/teams/discussion_comments/#create-a-discussion-comment-legacy
 */
 type CreateDiscussionCommentLegacyResponse struct {
-	common.Response
+	requests.Response
 	request *CreateDiscussionCommentLegacyReq
 	Data    components.TeamDiscussionComment
 }
@@ -1910,8 +1909,8 @@ Create a discussion.
 
 https://developer.github.com/v3/teams/discussions/#create-a-discussion
 */
-func CreateDiscussionInOrg(ctx context.Context, req *CreateDiscussionInOrgReq, opt ...options.Option) (*CreateDiscussionInOrgResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateDiscussionInOrg(ctx context.Context, req *CreateDiscussionInOrgReq, opt ...requests.Option) (*CreateDiscussionInOrgResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1946,7 +1945,7 @@ Create a discussion.
 
 https://developer.github.com/v3/teams/discussions/#create-a-discussion
 */
-func (c Client) CreateDiscussionInOrg(ctx context.Context, req *CreateDiscussionInOrgReq, opt ...options.Option) (*CreateDiscussionInOrgResponse, error) {
+func (c Client) CreateDiscussionInOrg(ctx context.Context, req *CreateDiscussionInOrgReq, opt ...requests.Option) (*CreateDiscussionInOrgResponse, error) {
 	return CreateDiscussionInOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -1976,8 +1975,8 @@ type CreateDiscussionInOrgReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2047,7 +2046,7 @@ CreateDiscussionInOrgResponse is a response for CreateDiscussionInOrg
 https://developer.github.com/v3/teams/discussions/#create-a-discussion
 */
 type CreateDiscussionInOrgResponse struct {
-	common.Response
+	requests.Response
 	request *CreateDiscussionInOrgReq
 	Data    components.TeamDiscussion
 }
@@ -2061,8 +2060,8 @@ Create a discussion (Legacy).
 
 https://developer.github.com/v3/teams/discussions/#create-a-discussion-legacy
 */
-func CreateDiscussionLegacy(ctx context.Context, req *CreateDiscussionLegacyReq, opt ...options.Option) (*CreateDiscussionLegacyResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateDiscussionLegacy(ctx context.Context, req *CreateDiscussionLegacyReq, opt ...requests.Option) (*CreateDiscussionLegacyResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2097,7 +2096,7 @@ Create a discussion (Legacy).
 
 https://developer.github.com/v3/teams/discussions/#create-a-discussion-legacy
 */
-func (c Client) CreateDiscussionLegacy(ctx context.Context, req *CreateDiscussionLegacyReq, opt ...options.Option) (*CreateDiscussionLegacyResponse, error) {
+func (c Client) CreateDiscussionLegacy(ctx context.Context, req *CreateDiscussionLegacyReq, opt ...requests.Option) (*CreateDiscussionLegacyResponse, error) {
 	return CreateDiscussionLegacy(ctx, req, append(c, opt...)...)
 }
 
@@ -2124,8 +2123,8 @@ type CreateDiscussionLegacyReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2195,7 +2194,7 @@ CreateDiscussionLegacyResponse is a response for CreateDiscussionLegacy
 https://developer.github.com/v3/teams/discussions/#create-a-discussion-legacy
 */
 type CreateDiscussionLegacyResponse struct {
-	common.Response
+	requests.Response
 	request *CreateDiscussionLegacyReq
 	Data    components.TeamDiscussion
 }
@@ -2209,8 +2208,8 @@ Create or update IdP group connections.
 
 https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections
 */
-func CreateOrUpdateIdpGroupConnectionsInOrg(ctx context.Context, req *CreateOrUpdateIdpGroupConnectionsInOrgReq, opt ...options.Option) (*CreateOrUpdateIdpGroupConnectionsInOrgResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateOrUpdateIdpGroupConnectionsInOrg(ctx context.Context, req *CreateOrUpdateIdpGroupConnectionsInOrgReq, opt ...requests.Option) (*CreateOrUpdateIdpGroupConnectionsInOrgResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2245,7 +2244,7 @@ Create or update IdP group connections.
 
 https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections
 */
-func (c Client) CreateOrUpdateIdpGroupConnectionsInOrg(ctx context.Context, req *CreateOrUpdateIdpGroupConnectionsInOrgReq, opt ...options.Option) (*CreateOrUpdateIdpGroupConnectionsInOrgResponse, error) {
+func (c Client) CreateOrUpdateIdpGroupConnectionsInOrg(ctx context.Context, req *CreateOrUpdateIdpGroupConnectionsInOrgReq, opt ...requests.Option) (*CreateOrUpdateIdpGroupConnectionsInOrgResponse, error) {
 	return CreateOrUpdateIdpGroupConnectionsInOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -2264,8 +2263,8 @@ type CreateOrUpdateIdpGroupConnectionsInOrgReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateOrUpdateIdpGroupConnectionsInOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateOrUpdateIdpGroupConnectionsInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2342,7 +2341,7 @@ CreateOrUpdateIdpGroupConnectionsInOrgResponse is a response for CreateOrUpdateI
 https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections
 */
 type CreateOrUpdateIdpGroupConnectionsInOrgResponse struct {
-	common.Response
+	requests.Response
 	request *CreateOrUpdateIdpGroupConnectionsInOrgReq
 	Data    components.GroupMapping
 }
@@ -2356,8 +2355,8 @@ Create or update IdP group connections (Legacy).
 
 https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections-legacy
 */
-func CreateOrUpdateIdpGroupConnectionsLegacy(ctx context.Context, req *CreateOrUpdateIdpGroupConnectionsLegacyReq, opt ...options.Option) (*CreateOrUpdateIdpGroupConnectionsLegacyResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateOrUpdateIdpGroupConnectionsLegacy(ctx context.Context, req *CreateOrUpdateIdpGroupConnectionsLegacyReq, opt ...requests.Option) (*CreateOrUpdateIdpGroupConnectionsLegacyResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2392,7 +2391,7 @@ Create or update IdP group connections (Legacy).
 
 https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections-legacy
 */
-func (c Client) CreateOrUpdateIdpGroupConnectionsLegacy(ctx context.Context, req *CreateOrUpdateIdpGroupConnectionsLegacyReq, opt ...options.Option) (*CreateOrUpdateIdpGroupConnectionsLegacyResponse, error) {
+func (c Client) CreateOrUpdateIdpGroupConnectionsLegacy(ctx context.Context, req *CreateOrUpdateIdpGroupConnectionsLegacyReq, opt ...requests.Option) (*CreateOrUpdateIdpGroupConnectionsLegacyResponse, error) {
 	return CreateOrUpdateIdpGroupConnectionsLegacy(ctx, req, append(c, opt...)...)
 }
 
@@ -2408,8 +2407,8 @@ type CreateOrUpdateIdpGroupConnectionsLegacyReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateOrUpdateIdpGroupConnectionsLegacyReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateOrUpdateIdpGroupConnectionsLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2490,7 +2489,7 @@ CreateOrUpdateIdpGroupConnectionsLegacyResponse is a response for CreateOrUpdate
 https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections-legacy
 */
 type CreateOrUpdateIdpGroupConnectionsLegacyResponse struct {
-	common.Response
+	requests.Response
 	request *CreateOrUpdateIdpGroupConnectionsLegacyReq
 	Data    components.GroupMapping
 }
@@ -2504,8 +2503,8 @@ Delete a discussion comment.
 
 https://developer.github.com/v3/teams/discussion_comments/#delete-a-discussion-comment
 */
-func DeleteDiscussionCommentInOrg(ctx context.Context, req *DeleteDiscussionCommentInOrgReq, opt ...options.Option) (*DeleteDiscussionCommentInOrgResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DeleteDiscussionCommentInOrg(ctx context.Context, req *DeleteDiscussionCommentInOrgReq, opt ...requests.Option) (*DeleteDiscussionCommentInOrgResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2539,7 +2538,7 @@ Delete a discussion comment.
 
 https://developer.github.com/v3/teams/discussion_comments/#delete-a-discussion-comment
 */
-func (c Client) DeleteDiscussionCommentInOrg(ctx context.Context, req *DeleteDiscussionCommentInOrgReq, opt ...options.Option) (*DeleteDiscussionCommentInOrgResponse, error) {
+func (c Client) DeleteDiscussionCommentInOrg(ctx context.Context, req *DeleteDiscussionCommentInOrgReq, opt ...requests.Option) (*DeleteDiscussionCommentInOrgResponse, error) {
 	return DeleteDiscussionCommentInOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -2559,8 +2558,8 @@ type DeleteDiscussionCommentInOrgReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeleteDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeleteDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2606,7 +2605,7 @@ DeleteDiscussionCommentInOrgResponse is a response for DeleteDiscussionCommentIn
 https://developer.github.com/v3/teams/discussion_comments/#delete-a-discussion-comment
 */
 type DeleteDiscussionCommentInOrgResponse struct {
-	common.Response
+	requests.Response
 	request *DeleteDiscussionCommentInOrgReq
 }
 
@@ -2619,8 +2618,8 @@ Delete a discussion comment (Legacy).
 
 https://developer.github.com/v3/teams/discussion_comments/#delete-a-discussion-comment-legacy
 */
-func DeleteDiscussionCommentLegacy(ctx context.Context, req *DeleteDiscussionCommentLegacyReq, opt ...options.Option) (*DeleteDiscussionCommentLegacyResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DeleteDiscussionCommentLegacy(ctx context.Context, req *DeleteDiscussionCommentLegacyReq, opt ...requests.Option) (*DeleteDiscussionCommentLegacyResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2654,7 +2653,7 @@ Delete a discussion comment (Legacy).
 
 https://developer.github.com/v3/teams/discussion_comments/#delete-a-discussion-comment-legacy
 */
-func (c Client) DeleteDiscussionCommentLegacy(ctx context.Context, req *DeleteDiscussionCommentLegacyReq, opt ...options.Option) (*DeleteDiscussionCommentLegacyResponse, error) {
+func (c Client) DeleteDiscussionCommentLegacy(ctx context.Context, req *DeleteDiscussionCommentLegacyReq, opt ...requests.Option) (*DeleteDiscussionCommentLegacyResponse, error) {
 	return DeleteDiscussionCommentLegacy(ctx, req, append(c, opt...)...)
 }
 
@@ -2671,8 +2670,8 @@ type DeleteDiscussionCommentLegacyReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeleteDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeleteDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2718,7 +2717,7 @@ DeleteDiscussionCommentLegacyResponse is a response for DeleteDiscussionCommentL
 https://developer.github.com/v3/teams/discussion_comments/#delete-a-discussion-comment-legacy
 */
 type DeleteDiscussionCommentLegacyResponse struct {
-	common.Response
+	requests.Response
 	request *DeleteDiscussionCommentLegacyReq
 }
 
@@ -2731,8 +2730,8 @@ Delete a discussion.
 
 https://developer.github.com/v3/teams/discussions/#delete-a-discussion
 */
-func DeleteDiscussionInOrg(ctx context.Context, req *DeleteDiscussionInOrgReq, opt ...options.Option) (*DeleteDiscussionInOrgResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DeleteDiscussionInOrg(ctx context.Context, req *DeleteDiscussionInOrgReq, opt ...requests.Option) (*DeleteDiscussionInOrgResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2766,7 +2765,7 @@ Delete a discussion.
 
 https://developer.github.com/v3/teams/discussions/#delete-a-discussion
 */
-func (c Client) DeleteDiscussionInOrg(ctx context.Context, req *DeleteDiscussionInOrgReq, opt ...options.Option) (*DeleteDiscussionInOrgResponse, error) {
+func (c Client) DeleteDiscussionInOrg(ctx context.Context, req *DeleteDiscussionInOrgReq, opt ...requests.Option) (*DeleteDiscussionInOrgResponse, error) {
 	return DeleteDiscussionInOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -2785,8 +2784,8 @@ type DeleteDiscussionInOrgReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeleteDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeleteDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2832,7 +2831,7 @@ DeleteDiscussionInOrgResponse is a response for DeleteDiscussionInOrg
 https://developer.github.com/v3/teams/discussions/#delete-a-discussion
 */
 type DeleteDiscussionInOrgResponse struct {
-	common.Response
+	requests.Response
 	request *DeleteDiscussionInOrgReq
 }
 
@@ -2845,8 +2844,8 @@ Delete a discussion (Legacy).
 
 https://developer.github.com/v3/teams/discussions/#delete-a-discussion-legacy
 */
-func DeleteDiscussionLegacy(ctx context.Context, req *DeleteDiscussionLegacyReq, opt ...options.Option) (*DeleteDiscussionLegacyResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DeleteDiscussionLegacy(ctx context.Context, req *DeleteDiscussionLegacyReq, opt ...requests.Option) (*DeleteDiscussionLegacyResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2880,7 +2879,7 @@ Delete a discussion (Legacy).
 
 https://developer.github.com/v3/teams/discussions/#delete-a-discussion-legacy
 */
-func (c Client) DeleteDiscussionLegacy(ctx context.Context, req *DeleteDiscussionLegacyReq, opt ...options.Option) (*DeleteDiscussionLegacyResponse, error) {
+func (c Client) DeleteDiscussionLegacy(ctx context.Context, req *DeleteDiscussionLegacyReq, opt ...requests.Option) (*DeleteDiscussionLegacyResponse, error) {
 	return DeleteDiscussionLegacy(ctx, req, append(c, opt...)...)
 }
 
@@ -2896,8 +2895,8 @@ type DeleteDiscussionLegacyReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeleteDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeleteDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2943,7 +2942,7 @@ DeleteDiscussionLegacyResponse is a response for DeleteDiscussionLegacy
 https://developer.github.com/v3/teams/discussions/#delete-a-discussion-legacy
 */
 type DeleteDiscussionLegacyResponse struct {
-	common.Response
+	requests.Response
 	request *DeleteDiscussionLegacyReq
 }
 
@@ -2956,8 +2955,8 @@ Delete a team.
 
 https://developer.github.com/v3/teams/#delete-a-team
 */
-func DeleteInOrg(ctx context.Context, req *DeleteInOrgReq, opt ...options.Option) (*DeleteInOrgResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DeleteInOrg(ctx context.Context, req *DeleteInOrgReq, opt ...requests.Option) (*DeleteInOrgResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2991,7 +2990,7 @@ Delete a team.
 
 https://developer.github.com/v3/teams/#delete-a-team
 */
-func (c Client) DeleteInOrg(ctx context.Context, req *DeleteInOrgReq, opt ...options.Option) (*DeleteInOrgResponse, error) {
+func (c Client) DeleteInOrg(ctx context.Context, req *DeleteInOrgReq, opt ...requests.Option) (*DeleteInOrgResponse, error) {
 	return DeleteInOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -3009,8 +3008,8 @@ type DeleteInOrgReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeleteInOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeleteInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3056,7 +3055,7 @@ DeleteInOrgResponse is a response for DeleteInOrg
 https://developer.github.com/v3/teams/#delete-a-team
 */
 type DeleteInOrgResponse struct {
-	common.Response
+	requests.Response
 	request *DeleteInOrgReq
 }
 
@@ -3069,8 +3068,8 @@ Delete a team (Legacy).
 
 https://developer.github.com/v3/teams/#delete-a-team-legacy
 */
-func DeleteLegacy(ctx context.Context, req *DeleteLegacyReq, opt ...options.Option) (*DeleteLegacyResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DeleteLegacy(ctx context.Context, req *DeleteLegacyReq, opt ...requests.Option) (*DeleteLegacyResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3104,7 +3103,7 @@ Delete a team (Legacy).
 
 https://developer.github.com/v3/teams/#delete-a-team-legacy
 */
-func (c Client) DeleteLegacy(ctx context.Context, req *DeleteLegacyReq, opt ...options.Option) (*DeleteLegacyResponse, error) {
+func (c Client) DeleteLegacy(ctx context.Context, req *DeleteLegacyReq, opt ...requests.Option) (*DeleteLegacyResponse, error) {
 	return DeleteLegacy(ctx, req, append(c, opt...)...)
 }
 
@@ -3119,8 +3118,8 @@ type DeleteLegacyReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeleteLegacyReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeleteLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3166,7 +3165,7 @@ DeleteLegacyResponse is a response for DeleteLegacy
 https://developer.github.com/v3/teams/#delete-a-team-legacy
 */
 type DeleteLegacyResponse struct {
-	common.Response
+	requests.Response
 	request *DeleteLegacyReq
 }
 
@@ -3179,8 +3178,8 @@ Get a team by name.
 
 https://developer.github.com/v3/teams/#get-a-team-by-name
 */
-func GetByName(ctx context.Context, req *GetByNameReq, opt ...options.Option) (*GetByNameResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetByName(ctx context.Context, req *GetByNameReq, opt ...requests.Option) (*GetByNameResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3215,7 +3214,7 @@ Get a team by name.
 
 https://developer.github.com/v3/teams/#get-a-team-by-name
 */
-func (c Client) GetByName(ctx context.Context, req *GetByNameReq, opt ...options.Option) (*GetByNameResponse, error) {
+func (c Client) GetByName(ctx context.Context, req *GetByNameReq, opt ...requests.Option) (*GetByNameResponse, error) {
 	return GetByName(ctx, req, append(c, opt...)...)
 }
 
@@ -3233,8 +3232,8 @@ type GetByNameReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetByNameReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetByNameReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3280,7 +3279,7 @@ GetByNameResponse is a response for GetByName
 https://developer.github.com/v3/teams/#get-a-team-by-name
 */
 type GetByNameResponse struct {
-	common.Response
+	requests.Response
 	request *GetByNameReq
 	Data    components.TeamFull
 }
@@ -3294,8 +3293,8 @@ Get a discussion comment.
 
 https://developer.github.com/v3/teams/discussion_comments/#get-a-discussion-comment
 */
-func GetDiscussionCommentInOrg(ctx context.Context, req *GetDiscussionCommentInOrgReq, opt ...options.Option) (*GetDiscussionCommentInOrgResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetDiscussionCommentInOrg(ctx context.Context, req *GetDiscussionCommentInOrgReq, opt ...requests.Option) (*GetDiscussionCommentInOrgResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3330,7 +3329,7 @@ Get a discussion comment.
 
 https://developer.github.com/v3/teams/discussion_comments/#get-a-discussion-comment
 */
-func (c Client) GetDiscussionCommentInOrg(ctx context.Context, req *GetDiscussionCommentInOrgReq, opt ...options.Option) (*GetDiscussionCommentInOrgResponse, error) {
+func (c Client) GetDiscussionCommentInOrg(ctx context.Context, req *GetDiscussionCommentInOrgReq, opt ...requests.Option) (*GetDiscussionCommentInOrgResponse, error) {
 	return GetDiscussionCommentInOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -3361,8 +3360,8 @@ type GetDiscussionCommentInOrgReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3408,7 +3407,7 @@ GetDiscussionCommentInOrgResponse is a response for GetDiscussionCommentInOrg
 https://developer.github.com/v3/teams/discussion_comments/#get-a-discussion-comment
 */
 type GetDiscussionCommentInOrgResponse struct {
-	common.Response
+	requests.Response
 	request *GetDiscussionCommentInOrgReq
 	Data    components.TeamDiscussionComment
 }
@@ -3422,8 +3421,8 @@ Get a discussion comment (Legacy).
 
 https://developer.github.com/v3/teams/discussion_comments/#get-a-discussion-comment-legacy
 */
-func GetDiscussionCommentLegacy(ctx context.Context, req *GetDiscussionCommentLegacyReq, opt ...options.Option) (*GetDiscussionCommentLegacyResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetDiscussionCommentLegacy(ctx context.Context, req *GetDiscussionCommentLegacyReq, opt ...requests.Option) (*GetDiscussionCommentLegacyResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3458,7 +3457,7 @@ Get a discussion comment (Legacy).
 
 https://developer.github.com/v3/teams/discussion_comments/#get-a-discussion-comment-legacy
 */
-func (c Client) GetDiscussionCommentLegacy(ctx context.Context, req *GetDiscussionCommentLegacyReq, opt ...options.Option) (*GetDiscussionCommentLegacyResponse, error) {
+func (c Client) GetDiscussionCommentLegacy(ctx context.Context, req *GetDiscussionCommentLegacyReq, opt ...requests.Option) (*GetDiscussionCommentLegacyResponse, error) {
 	return GetDiscussionCommentLegacy(ctx, req, append(c, opt...)...)
 }
 
@@ -3486,8 +3485,8 @@ type GetDiscussionCommentLegacyReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3533,7 +3532,7 @@ GetDiscussionCommentLegacyResponse is a response for GetDiscussionCommentLegacy
 https://developer.github.com/v3/teams/discussion_comments/#get-a-discussion-comment-legacy
 */
 type GetDiscussionCommentLegacyResponse struct {
-	common.Response
+	requests.Response
 	request *GetDiscussionCommentLegacyReq
 	Data    components.TeamDiscussionComment
 }
@@ -3547,8 +3546,8 @@ Get a discussion.
 
 https://developer.github.com/v3/teams/discussions/#get-a-discussion
 */
-func GetDiscussionInOrg(ctx context.Context, req *GetDiscussionInOrgReq, opt ...options.Option) (*GetDiscussionInOrgResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetDiscussionInOrg(ctx context.Context, req *GetDiscussionInOrgReq, opt ...requests.Option) (*GetDiscussionInOrgResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3583,7 +3582,7 @@ Get a discussion.
 
 https://developer.github.com/v3/teams/discussions/#get-a-discussion
 */
-func (c Client) GetDiscussionInOrg(ctx context.Context, req *GetDiscussionInOrgReq, opt ...options.Option) (*GetDiscussionInOrgResponse, error) {
+func (c Client) GetDiscussionInOrg(ctx context.Context, req *GetDiscussionInOrgReq, opt ...requests.Option) (*GetDiscussionInOrgResponse, error) {
 	return GetDiscussionInOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -3613,8 +3612,8 @@ type GetDiscussionInOrgReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3660,7 +3659,7 @@ GetDiscussionInOrgResponse is a response for GetDiscussionInOrg
 https://developer.github.com/v3/teams/discussions/#get-a-discussion
 */
 type GetDiscussionInOrgResponse struct {
-	common.Response
+	requests.Response
 	request *GetDiscussionInOrgReq
 	Data    components.TeamDiscussion
 }
@@ -3674,8 +3673,8 @@ Get a discussion (Legacy).
 
 https://developer.github.com/v3/teams/discussions/#get-a-discussion-legacy
 */
-func GetDiscussionLegacy(ctx context.Context, req *GetDiscussionLegacyReq, opt ...options.Option) (*GetDiscussionLegacyResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetDiscussionLegacy(ctx context.Context, req *GetDiscussionLegacyReq, opt ...requests.Option) (*GetDiscussionLegacyResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3710,7 +3709,7 @@ Get a discussion (Legacy).
 
 https://developer.github.com/v3/teams/discussions/#get-a-discussion-legacy
 */
-func (c Client) GetDiscussionLegacy(ctx context.Context, req *GetDiscussionLegacyReq, opt ...options.Option) (*GetDiscussionLegacyResponse, error) {
+func (c Client) GetDiscussionLegacy(ctx context.Context, req *GetDiscussionLegacyReq, opt ...requests.Option) (*GetDiscussionLegacyResponse, error) {
 	return GetDiscussionLegacy(ctx, req, append(c, opt...)...)
 }
 
@@ -3737,8 +3736,8 @@ type GetDiscussionLegacyReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3784,7 +3783,7 @@ GetDiscussionLegacyResponse is a response for GetDiscussionLegacy
 https://developer.github.com/v3/teams/discussions/#get-a-discussion-legacy
 */
 type GetDiscussionLegacyResponse struct {
-	common.Response
+	requests.Response
 	request *GetDiscussionLegacyReq
 	Data    components.TeamDiscussion
 }
@@ -3798,8 +3797,8 @@ Get a team (Legacy).
 
 https://developer.github.com/v3/teams/#get-a-team-legacy
 */
-func GetLegacy(ctx context.Context, req *GetLegacyReq, opt ...options.Option) (*GetLegacyResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetLegacy(ctx context.Context, req *GetLegacyReq, opt ...requests.Option) (*GetLegacyResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3834,7 +3833,7 @@ Get a team (Legacy).
 
 https://developer.github.com/v3/teams/#get-a-team-legacy
 */
-func (c Client) GetLegacy(ctx context.Context, req *GetLegacyReq, opt ...options.Option) (*GetLegacyResponse, error) {
+func (c Client) GetLegacy(ctx context.Context, req *GetLegacyReq, opt ...requests.Option) (*GetLegacyResponse, error) {
 	return GetLegacy(ctx, req, append(c, opt...)...)
 }
 
@@ -3849,8 +3848,8 @@ type GetLegacyReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetLegacyReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3896,7 +3895,7 @@ GetLegacyResponse is a response for GetLegacy
 https://developer.github.com/v3/teams/#get-a-team-legacy
 */
 type GetLegacyResponse struct {
-	common.Response
+	requests.Response
 	request *GetLegacyReq
 	Data    components.TeamFull
 }
@@ -3910,8 +3909,8 @@ Get team member (Legacy).
 
 https://developer.github.com/v3/teams/members/#get-team-member-legacy
 */
-func GetMemberLegacy(ctx context.Context, req *GetMemberLegacyReq, opt ...options.Option) (*GetMemberLegacyResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetMemberLegacy(ctx context.Context, req *GetMemberLegacyReq, opt ...requests.Option) (*GetMemberLegacyResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3949,7 +3948,7 @@ Get team member (Legacy).
 
 https://developer.github.com/v3/teams/members/#get-team-member-legacy
 */
-func (c Client) GetMemberLegacy(ctx context.Context, req *GetMemberLegacyReq, opt ...options.Option) (*GetMemberLegacyResponse, error) {
+func (c Client) GetMemberLegacy(ctx context.Context, req *GetMemberLegacyReq, opt ...requests.Option) (*GetMemberLegacyResponse, error) {
 	return GetMemberLegacy(ctx, req, append(c, opt...)...)
 }
 
@@ -3965,8 +3964,8 @@ type GetMemberLegacyReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetMemberLegacyReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetMemberLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4012,7 +4011,7 @@ GetMemberLegacyResponse is a response for GetMemberLegacy
 https://developer.github.com/v3/teams/members/#get-team-member-legacy
 */
 type GetMemberLegacyResponse struct {
-	common.Response
+	requests.Response
 	request *GetMemberLegacyReq
 	Data    bool
 }
@@ -4026,8 +4025,8 @@ Get team membership for a user.
 
 https://developer.github.com/v3/teams/members/#get-team-membership-for-a-user
 */
-func GetMembershipForUserInOrg(ctx context.Context, req *GetMembershipForUserInOrgReq, opt ...options.Option) (*GetMembershipForUserInOrgResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetMembershipForUserInOrg(ctx context.Context, req *GetMembershipForUserInOrgReq, opt ...requests.Option) (*GetMembershipForUserInOrgResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4062,7 +4061,7 @@ Get team membership for a user.
 
 https://developer.github.com/v3/teams/members/#get-team-membership-for-a-user
 */
-func (c Client) GetMembershipForUserInOrg(ctx context.Context, req *GetMembershipForUserInOrgReq, opt ...options.Option) (*GetMembershipForUserInOrgResponse, error) {
+func (c Client) GetMembershipForUserInOrg(ctx context.Context, req *GetMembershipForUserInOrgReq, opt ...requests.Option) (*GetMembershipForUserInOrgResponse, error) {
 	return GetMembershipForUserInOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -4081,8 +4080,8 @@ type GetMembershipForUserInOrgReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetMembershipForUserInOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetMembershipForUserInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4128,7 +4127,7 @@ GetMembershipForUserInOrgResponse is a response for GetMembershipForUserInOrg
 https://developer.github.com/v3/teams/members/#get-team-membership-for-a-user
 */
 type GetMembershipForUserInOrgResponse struct {
-	common.Response
+	requests.Response
 	request *GetMembershipForUserInOrgReq
 	Data    components.TeamMembership
 }
@@ -4142,8 +4141,8 @@ Get team membership for a user (Legacy).
 
 https://developer.github.com/v3/teams/members/#get-team-membership-for-a-user-legacy
 */
-func GetMembershipForUserLegacy(ctx context.Context, req *GetMembershipForUserLegacyReq, opt ...options.Option) (*GetMembershipForUserLegacyResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetMembershipForUserLegacy(ctx context.Context, req *GetMembershipForUserLegacyReq, opt ...requests.Option) (*GetMembershipForUserLegacyResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4178,7 +4177,7 @@ Get team membership for a user (Legacy).
 
 https://developer.github.com/v3/teams/members/#get-team-membership-for-a-user-legacy
 */
-func (c Client) GetMembershipForUserLegacy(ctx context.Context, req *GetMembershipForUserLegacyReq, opt ...options.Option) (*GetMembershipForUserLegacyResponse, error) {
+func (c Client) GetMembershipForUserLegacy(ctx context.Context, req *GetMembershipForUserLegacyReq, opt ...requests.Option) (*GetMembershipForUserLegacyResponse, error) {
 	return GetMembershipForUserLegacy(ctx, req, append(c, opt...)...)
 }
 
@@ -4194,8 +4193,8 @@ type GetMembershipForUserLegacyReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetMembershipForUserLegacyReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetMembershipForUserLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4241,7 +4240,7 @@ GetMembershipForUserLegacyResponse is a response for GetMembershipForUserLegacy
 https://developer.github.com/v3/teams/members/#get-team-membership-for-a-user-legacy
 */
 type GetMembershipForUserLegacyResponse struct {
-	common.Response
+	requests.Response
 	request *GetMembershipForUserLegacyReq
 	Data    components.TeamMembership
 }
@@ -4255,8 +4254,8 @@ List teams.
 
 https://developer.github.com/v3/teams/#list-teams
 */
-func List(ctx context.Context, req *ListReq, opt ...options.Option) (*ListResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func List(ctx context.Context, req *ListReq, opt ...requests.Option) (*ListResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4291,7 +4290,7 @@ List teams.
 
 https://developer.github.com/v3/teams/#list-teams
 */
-func (c Client) List(ctx context.Context, req *ListReq, opt ...options.Option) (*ListResponse, error) {
+func (c Client) List(ctx context.Context, req *ListReq, opt ...requests.Option) (*ListResponse, error) {
 	return List(ctx, req, append(c, opt...)...)
 }
 
@@ -4312,8 +4311,8 @@ type ListReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4365,7 +4364,7 @@ ListResponse is a response for List
 https://developer.github.com/v3/teams/#list-teams
 */
 type ListResponse struct {
-	common.Response
+	requests.Response
 	request *ListReq
 	Data    []components.Team
 }
@@ -4379,8 +4378,8 @@ List child teams.
 
 https://developer.github.com/v3/teams/#list-child-teams
 */
-func ListChildInOrg(ctx context.Context, req *ListChildInOrgReq, opt ...options.Option) (*ListChildInOrgResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListChildInOrg(ctx context.Context, req *ListChildInOrgReq, opt ...requests.Option) (*ListChildInOrgResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4415,7 +4414,7 @@ List child teams.
 
 https://developer.github.com/v3/teams/#list-child-teams
 */
-func (c Client) ListChildInOrg(ctx context.Context, req *ListChildInOrgReq, opt ...options.Option) (*ListChildInOrgResponse, error) {
+func (c Client) ListChildInOrg(ctx context.Context, req *ListChildInOrgReq, opt ...requests.Option) (*ListChildInOrgResponse, error) {
 	return ListChildInOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -4439,8 +4438,8 @@ type ListChildInOrgReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListChildInOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListChildInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4492,7 +4491,7 @@ ListChildInOrgResponse is a response for ListChildInOrg
 https://developer.github.com/v3/teams/#list-child-teams
 */
 type ListChildInOrgResponse struct {
-	common.Response
+	requests.Response
 	request *ListChildInOrgReq
 	Data    []components.Team
 }
@@ -4506,8 +4505,8 @@ List child teams (Legacy).
 
 https://developer.github.com/v3/teams/#list-child-teams-legacy
 */
-func ListChildLegacy(ctx context.Context, req *ListChildLegacyReq, opt ...options.Option) (*ListChildLegacyResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListChildLegacy(ctx context.Context, req *ListChildLegacyReq, opt ...requests.Option) (*ListChildLegacyResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4542,7 +4541,7 @@ List child teams (Legacy).
 
 https://developer.github.com/v3/teams/#list-child-teams-legacy
 */
-func (c Client) ListChildLegacy(ctx context.Context, req *ListChildLegacyReq, opt ...options.Option) (*ListChildLegacyResponse, error) {
+func (c Client) ListChildLegacy(ctx context.Context, req *ListChildLegacyReq, opt ...requests.Option) (*ListChildLegacyResponse, error) {
 	return ListChildLegacy(ctx, req, append(c, opt...)...)
 }
 
@@ -4563,8 +4562,8 @@ type ListChildLegacyReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListChildLegacyReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListChildLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4616,7 +4615,7 @@ ListChildLegacyResponse is a response for ListChildLegacy
 https://developer.github.com/v3/teams/#list-child-teams-legacy
 */
 type ListChildLegacyResponse struct {
-	common.Response
+	requests.Response
 	request *ListChildLegacyReq
 	Data    []components.Team
 }
@@ -4630,8 +4629,8 @@ List discussion comments.
 
 https://developer.github.com/v3/teams/discussion_comments/#list-discussion-comments
 */
-func ListDiscussionCommentsInOrg(ctx context.Context, req *ListDiscussionCommentsInOrgReq, opt ...options.Option) (*ListDiscussionCommentsInOrgResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListDiscussionCommentsInOrg(ctx context.Context, req *ListDiscussionCommentsInOrgReq, opt ...requests.Option) (*ListDiscussionCommentsInOrgResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4666,7 +4665,7 @@ List discussion comments.
 
 https://developer.github.com/v3/teams/discussion_comments/#list-discussion-comments
 */
-func (c Client) ListDiscussionCommentsInOrg(ctx context.Context, req *ListDiscussionCommentsInOrgReq, opt ...options.Option) (*ListDiscussionCommentsInOrgResponse, error) {
+func (c Client) ListDiscussionCommentsInOrg(ctx context.Context, req *ListDiscussionCommentsInOrgReq, opt ...requests.Option) (*ListDiscussionCommentsInOrgResponse, error) {
 	return ListDiscussionCommentsInOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -4705,8 +4704,8 @@ type ListDiscussionCommentsInOrgReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListDiscussionCommentsInOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListDiscussionCommentsInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4761,7 +4760,7 @@ ListDiscussionCommentsInOrgResponse is a response for ListDiscussionCommentsInOr
 https://developer.github.com/v3/teams/discussion_comments/#list-discussion-comments
 */
 type ListDiscussionCommentsInOrgResponse struct {
-	common.Response
+	requests.Response
 	request *ListDiscussionCommentsInOrgReq
 	Data    []components.TeamDiscussionComment
 }
@@ -4775,8 +4774,8 @@ List discussion comments (Legacy).
 
 https://developer.github.com/v3/teams/discussion_comments/#list-discussion-comments-legacy
 */
-func ListDiscussionCommentsLegacy(ctx context.Context, req *ListDiscussionCommentsLegacyReq, opt ...options.Option) (*ListDiscussionCommentsLegacyResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListDiscussionCommentsLegacy(ctx context.Context, req *ListDiscussionCommentsLegacyReq, opt ...requests.Option) (*ListDiscussionCommentsLegacyResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4811,7 +4810,7 @@ List discussion comments (Legacy).
 
 https://developer.github.com/v3/teams/discussion_comments/#list-discussion-comments-legacy
 */
-func (c Client) ListDiscussionCommentsLegacy(ctx context.Context, req *ListDiscussionCommentsLegacyReq, opt ...options.Option) (*ListDiscussionCommentsLegacyResponse, error) {
+func (c Client) ListDiscussionCommentsLegacy(ctx context.Context, req *ListDiscussionCommentsLegacyReq, opt ...requests.Option) (*ListDiscussionCommentsLegacyResponse, error) {
 	return ListDiscussionCommentsLegacy(ctx, req, append(c, opt...)...)
 }
 
@@ -4847,8 +4846,8 @@ type ListDiscussionCommentsLegacyReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListDiscussionCommentsLegacyReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListDiscussionCommentsLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4903,7 +4902,7 @@ ListDiscussionCommentsLegacyResponse is a response for ListDiscussionCommentsLeg
 https://developer.github.com/v3/teams/discussion_comments/#list-discussion-comments-legacy
 */
 type ListDiscussionCommentsLegacyResponse struct {
-	common.Response
+	requests.Response
 	request *ListDiscussionCommentsLegacyReq
 	Data    []components.TeamDiscussionComment
 }
@@ -4917,8 +4916,8 @@ List discussions.
 
 https://developer.github.com/v3/teams/discussions/#list-discussions
 */
-func ListDiscussionsInOrg(ctx context.Context, req *ListDiscussionsInOrgReq, opt ...options.Option) (*ListDiscussionsInOrgResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListDiscussionsInOrg(ctx context.Context, req *ListDiscussionsInOrgReq, opt ...requests.Option) (*ListDiscussionsInOrgResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4953,7 +4952,7 @@ List discussions.
 
 https://developer.github.com/v3/teams/discussions/#list-discussions
 */
-func (c Client) ListDiscussionsInOrg(ctx context.Context, req *ListDiscussionsInOrgReq, opt ...options.Option) (*ListDiscussionsInOrgResponse, error) {
+func (c Client) ListDiscussionsInOrg(ctx context.Context, req *ListDiscussionsInOrgReq, opt ...requests.Option) (*ListDiscussionsInOrgResponse, error) {
 	return ListDiscussionsInOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -4991,8 +4990,8 @@ type ListDiscussionsInOrgReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListDiscussionsInOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListDiscussionsInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -5047,7 +5046,7 @@ ListDiscussionsInOrgResponse is a response for ListDiscussionsInOrg
 https://developer.github.com/v3/teams/discussions/#list-discussions
 */
 type ListDiscussionsInOrgResponse struct {
-	common.Response
+	requests.Response
 	request *ListDiscussionsInOrgReq
 	Data    []components.TeamDiscussion
 }
@@ -5061,8 +5060,8 @@ List discussions (Legacy).
 
 https://developer.github.com/v3/teams/discussions/#list-discussions-legacy
 */
-func ListDiscussionsLegacy(ctx context.Context, req *ListDiscussionsLegacyReq, opt ...options.Option) (*ListDiscussionsLegacyResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListDiscussionsLegacy(ctx context.Context, req *ListDiscussionsLegacyReq, opt ...requests.Option) (*ListDiscussionsLegacyResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -5097,7 +5096,7 @@ List discussions (Legacy).
 
 https://developer.github.com/v3/teams/discussions/#list-discussions-legacy
 */
-func (c Client) ListDiscussionsLegacy(ctx context.Context, req *ListDiscussionsLegacyReq, opt ...options.Option) (*ListDiscussionsLegacyResponse, error) {
+func (c Client) ListDiscussionsLegacy(ctx context.Context, req *ListDiscussionsLegacyReq, opt ...requests.Option) (*ListDiscussionsLegacyResponse, error) {
 	return ListDiscussionsLegacy(ctx, req, append(c, opt...)...)
 }
 
@@ -5132,8 +5131,8 @@ type ListDiscussionsLegacyReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListDiscussionsLegacyReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListDiscussionsLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -5188,7 +5187,7 @@ ListDiscussionsLegacyResponse is a response for ListDiscussionsLegacy
 https://developer.github.com/v3/teams/discussions/#list-discussions-legacy
 */
 type ListDiscussionsLegacyResponse struct {
-	common.Response
+	requests.Response
 	request *ListDiscussionsLegacyReq
 	Data    []components.TeamDiscussion
 }
@@ -5202,8 +5201,8 @@ List teams for the authenticated user.
 
 https://developer.github.com/v3/teams/#list-teams-for-the-authenticated-user
 */
-func ListForAuthenticatedUser(ctx context.Context, req *ListForAuthenticatedUserReq, opt ...options.Option) (*ListForAuthenticatedUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListForAuthenticatedUser(ctx context.Context, req *ListForAuthenticatedUserReq, opt ...requests.Option) (*ListForAuthenticatedUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -5238,7 +5237,7 @@ List teams for the authenticated user.
 
 https://developer.github.com/v3/teams/#list-teams-for-the-authenticated-user
 */
-func (c Client) ListForAuthenticatedUser(ctx context.Context, req *ListForAuthenticatedUserReq, opt ...options.Option) (*ListForAuthenticatedUserResponse, error) {
+func (c Client) ListForAuthenticatedUser(ctx context.Context, req *ListForAuthenticatedUserReq, opt ...requests.Option) (*ListForAuthenticatedUserResponse, error) {
 	return ListForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
@@ -5258,8 +5257,8 @@ type ListForAuthenticatedUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -5311,7 +5310,7 @@ ListForAuthenticatedUserResponse is a response for ListForAuthenticatedUser
 https://developer.github.com/v3/teams/#list-teams-for-the-authenticated-user
 */
 type ListForAuthenticatedUserResponse struct {
-	common.Response
+	requests.Response
 	request *ListForAuthenticatedUserReq
 	Data    []components.TeamFull
 }
@@ -5325,8 +5324,8 @@ List IdP groups for a team (Legacy).
 
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team-legacy
 */
-func ListIdpGroupsForLegacy(ctx context.Context, req *ListIdpGroupsForLegacyReq, opt ...options.Option) (*ListIdpGroupsForLegacyResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListIdpGroupsForLegacy(ctx context.Context, req *ListIdpGroupsForLegacyReq, opt ...requests.Option) (*ListIdpGroupsForLegacyResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -5361,7 +5360,7 @@ List IdP groups for a team (Legacy).
 
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team-legacy
 */
-func (c Client) ListIdpGroupsForLegacy(ctx context.Context, req *ListIdpGroupsForLegacyReq, opt ...options.Option) (*ListIdpGroupsForLegacyResponse, error) {
+func (c Client) ListIdpGroupsForLegacy(ctx context.Context, req *ListIdpGroupsForLegacyReq, opt ...requests.Option) (*ListIdpGroupsForLegacyResponse, error) {
 	return ListIdpGroupsForLegacy(ctx, req, append(c, opt...)...)
 }
 
@@ -5376,8 +5375,8 @@ type ListIdpGroupsForLegacyReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListIdpGroupsForLegacyReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListIdpGroupsForLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -5423,7 +5422,7 @@ ListIdpGroupsForLegacyResponse is a response for ListIdpGroupsForLegacy
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team-legacy
 */
 type ListIdpGroupsForLegacyResponse struct {
-	common.Response
+	requests.Response
 	request *ListIdpGroupsForLegacyReq
 	Data    components.GroupMapping
 }
@@ -5437,8 +5436,8 @@ List IdP groups for an organization.
 
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-an-organization
 */
-func ListIdpGroupsForOrg(ctx context.Context, req *ListIdpGroupsForOrgReq, opt ...options.Option) (*ListIdpGroupsForOrgResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListIdpGroupsForOrg(ctx context.Context, req *ListIdpGroupsForOrgReq, opt ...requests.Option) (*ListIdpGroupsForOrgResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -5473,7 +5472,7 @@ List IdP groups for an organization.
 
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-an-organization
 */
-func (c Client) ListIdpGroupsForOrg(ctx context.Context, req *ListIdpGroupsForOrgReq, opt ...options.Option) (*ListIdpGroupsForOrgResponse, error) {
+func (c Client) ListIdpGroupsForOrg(ctx context.Context, req *ListIdpGroupsForOrgReq, opt ...requests.Option) (*ListIdpGroupsForOrgResponse, error) {
 	return ListIdpGroupsForOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -5494,8 +5493,8 @@ type ListIdpGroupsForOrgReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListIdpGroupsForOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListIdpGroupsForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -5547,7 +5546,7 @@ ListIdpGroupsForOrgResponse is a response for ListIdpGroupsForOrg
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-an-organization
 */
 type ListIdpGroupsForOrgResponse struct {
-	common.Response
+	requests.Response
 	request *ListIdpGroupsForOrgReq
 	Data    components.GroupMapping
 }
@@ -5561,8 +5560,8 @@ List IdP groups for a team.
 
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team
 */
-func ListIdpGroupsInOrg(ctx context.Context, req *ListIdpGroupsInOrgReq, opt ...options.Option) (*ListIdpGroupsInOrgResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListIdpGroupsInOrg(ctx context.Context, req *ListIdpGroupsInOrgReq, opt ...requests.Option) (*ListIdpGroupsInOrgResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -5597,7 +5596,7 @@ List IdP groups for a team.
 
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team
 */
-func (c Client) ListIdpGroupsInOrg(ctx context.Context, req *ListIdpGroupsInOrgReq, opt ...options.Option) (*ListIdpGroupsInOrgResponse, error) {
+func (c Client) ListIdpGroupsInOrg(ctx context.Context, req *ListIdpGroupsInOrgReq, opt ...requests.Option) (*ListIdpGroupsInOrgResponse, error) {
 	return ListIdpGroupsInOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -5615,8 +5614,8 @@ type ListIdpGroupsInOrgReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListIdpGroupsInOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListIdpGroupsInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -5662,7 +5661,7 @@ ListIdpGroupsInOrgResponse is a response for ListIdpGroupsInOrg
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team
 */
 type ListIdpGroupsInOrgResponse struct {
-	common.Response
+	requests.Response
 	request *ListIdpGroupsInOrgReq
 	Data    components.GroupMapping
 }
@@ -5676,8 +5675,8 @@ List team members.
 
 https://developer.github.com/v3/teams/members/#list-team-members
 */
-func ListMembersInOrg(ctx context.Context, req *ListMembersInOrgReq, opt ...options.Option) (*ListMembersInOrgResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListMembersInOrg(ctx context.Context, req *ListMembersInOrgReq, opt ...requests.Option) (*ListMembersInOrgResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -5712,7 +5711,7 @@ List team members.
 
 https://developer.github.com/v3/teams/members/#list-team-members
 */
-func (c Client) ListMembersInOrg(ctx context.Context, req *ListMembersInOrgReq, opt ...options.Option) (*ListMembersInOrgResponse, error) {
+func (c Client) ListMembersInOrg(ctx context.Context, req *ListMembersInOrgReq, opt ...requests.Option) (*ListMembersInOrgResponse, error) {
 	return ListMembersInOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -5744,8 +5743,8 @@ type ListMembersInOrgReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListMembersInOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListMembersInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -5800,7 +5799,7 @@ ListMembersInOrgResponse is a response for ListMembersInOrg
 https://developer.github.com/v3/teams/members/#list-team-members
 */
 type ListMembersInOrgResponse struct {
-	common.Response
+	requests.Response
 	request *ListMembersInOrgReq
 	Data    []components.SimpleUser
 }
@@ -5814,8 +5813,8 @@ List team members (Legacy).
 
 https://developer.github.com/v3/teams/members/#list-team-members-legacy
 */
-func ListMembersLegacy(ctx context.Context, req *ListMembersLegacyReq, opt ...options.Option) (*ListMembersLegacyResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListMembersLegacy(ctx context.Context, req *ListMembersLegacyReq, opt ...requests.Option) (*ListMembersLegacyResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -5850,7 +5849,7 @@ List team members (Legacy).
 
 https://developer.github.com/v3/teams/members/#list-team-members-legacy
 */
-func (c Client) ListMembersLegacy(ctx context.Context, req *ListMembersLegacyReq, opt ...options.Option) (*ListMembersLegacyResponse, error) {
+func (c Client) ListMembersLegacy(ctx context.Context, req *ListMembersLegacyReq, opt ...requests.Option) (*ListMembersLegacyResponse, error) {
 	return ListMembersLegacy(ctx, req, append(c, opt...)...)
 }
 
@@ -5879,8 +5878,8 @@ type ListMembersLegacyReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListMembersLegacyReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListMembersLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -5935,7 +5934,7 @@ ListMembersLegacyResponse is a response for ListMembersLegacy
 https://developer.github.com/v3/teams/members/#list-team-members-legacy
 */
 type ListMembersLegacyResponse struct {
-	common.Response
+	requests.Response
 	request *ListMembersLegacyReq
 	Data    []components.SimpleUser
 }
@@ -5949,8 +5948,8 @@ List pending team invitations.
 
 https://developer.github.com/v3/teams/members/#list-pending-team-invitations
 */
-func ListPendingInvitationsInOrg(ctx context.Context, req *ListPendingInvitationsInOrgReq, opt ...options.Option) (*ListPendingInvitationsInOrgResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListPendingInvitationsInOrg(ctx context.Context, req *ListPendingInvitationsInOrgReq, opt ...requests.Option) (*ListPendingInvitationsInOrgResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -5985,7 +5984,7 @@ List pending team invitations.
 
 https://developer.github.com/v3/teams/members/#list-pending-team-invitations
 */
-func (c Client) ListPendingInvitationsInOrg(ctx context.Context, req *ListPendingInvitationsInOrgReq, opt ...options.Option) (*ListPendingInvitationsInOrgResponse, error) {
+func (c Client) ListPendingInvitationsInOrg(ctx context.Context, req *ListPendingInvitationsInOrgReq, opt ...requests.Option) (*ListPendingInvitationsInOrgResponse, error) {
 	return ListPendingInvitationsInOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -6009,8 +6008,8 @@ type ListPendingInvitationsInOrgReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListPendingInvitationsInOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListPendingInvitationsInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -6062,7 +6061,7 @@ ListPendingInvitationsInOrgResponse is a response for ListPendingInvitationsInOr
 https://developer.github.com/v3/teams/members/#list-pending-team-invitations
 */
 type ListPendingInvitationsInOrgResponse struct {
-	common.Response
+	requests.Response
 	request *ListPendingInvitationsInOrgReq
 	Data    []components.OrganizationInvitation
 }
@@ -6076,8 +6075,8 @@ List pending team invitations (Legacy).
 
 https://developer.github.com/v3/teams/members/#list-pending-team-invitations-legacy
 */
-func ListPendingInvitationsLegacy(ctx context.Context, req *ListPendingInvitationsLegacyReq, opt ...options.Option) (*ListPendingInvitationsLegacyResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListPendingInvitationsLegacy(ctx context.Context, req *ListPendingInvitationsLegacyReq, opt ...requests.Option) (*ListPendingInvitationsLegacyResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -6112,7 +6111,7 @@ List pending team invitations (Legacy).
 
 https://developer.github.com/v3/teams/members/#list-pending-team-invitations-legacy
 */
-func (c Client) ListPendingInvitationsLegacy(ctx context.Context, req *ListPendingInvitationsLegacyReq, opt ...options.Option) (*ListPendingInvitationsLegacyResponse, error) {
+func (c Client) ListPendingInvitationsLegacy(ctx context.Context, req *ListPendingInvitationsLegacyReq, opt ...requests.Option) (*ListPendingInvitationsLegacyResponse, error) {
 	return ListPendingInvitationsLegacy(ctx, req, append(c, opt...)...)
 }
 
@@ -6133,8 +6132,8 @@ type ListPendingInvitationsLegacyReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListPendingInvitationsLegacyReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListPendingInvitationsLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -6186,7 +6185,7 @@ ListPendingInvitationsLegacyResponse is a response for ListPendingInvitationsLeg
 https://developer.github.com/v3/teams/members/#list-pending-team-invitations-legacy
 */
 type ListPendingInvitationsLegacyResponse struct {
-	common.Response
+	requests.Response
 	request *ListPendingInvitationsLegacyReq
 	Data    []components.OrganizationInvitation
 }
@@ -6200,8 +6199,8 @@ List team projects.
 
 https://developer.github.com/v3/teams/#list-team-projects
 */
-func ListProjectsInOrg(ctx context.Context, req *ListProjectsInOrgReq, opt ...options.Option) (*ListProjectsInOrgResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListProjectsInOrg(ctx context.Context, req *ListProjectsInOrgReq, opt ...requests.Option) (*ListProjectsInOrgResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -6236,7 +6235,7 @@ List team projects.
 
 https://developer.github.com/v3/teams/#list-team-projects
 */
-func (c Client) ListProjectsInOrg(ctx context.Context, req *ListProjectsInOrgReq, opt ...options.Option) (*ListProjectsInOrgResponse, error) {
+func (c Client) ListProjectsInOrg(ctx context.Context, req *ListProjectsInOrgReq, opt ...requests.Option) (*ListProjectsInOrgResponse, error) {
 	return ListProjectsInOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -6269,8 +6268,8 @@ type ListProjectsInOrgReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListProjectsInOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListProjectsInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -6322,7 +6321,7 @@ ListProjectsInOrgResponse is a response for ListProjectsInOrg
 https://developer.github.com/v3/teams/#list-team-projects
 */
 type ListProjectsInOrgResponse struct {
-	common.Response
+	requests.Response
 	request *ListProjectsInOrgReq
 	Data    []components.TeamProject
 }
@@ -6336,8 +6335,8 @@ List team projects (Legacy).
 
 https://developer.github.com/v3/teams/#list-team-projects-legacy
 */
-func ListProjectsLegacy(ctx context.Context, req *ListProjectsLegacyReq, opt ...options.Option) (*ListProjectsLegacyResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListProjectsLegacy(ctx context.Context, req *ListProjectsLegacyReq, opt ...requests.Option) (*ListProjectsLegacyResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -6372,7 +6371,7 @@ List team projects (Legacy).
 
 https://developer.github.com/v3/teams/#list-team-projects-legacy
 */
-func (c Client) ListProjectsLegacy(ctx context.Context, req *ListProjectsLegacyReq, opt ...options.Option) (*ListProjectsLegacyResponse, error) {
+func (c Client) ListProjectsLegacy(ctx context.Context, req *ListProjectsLegacyReq, opt ...requests.Option) (*ListProjectsLegacyResponse, error) {
 	return ListProjectsLegacy(ctx, req, append(c, opt...)...)
 }
 
@@ -6402,8 +6401,8 @@ type ListProjectsLegacyReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListProjectsLegacyReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListProjectsLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -6455,7 +6454,7 @@ ListProjectsLegacyResponse is a response for ListProjectsLegacy
 https://developer.github.com/v3/teams/#list-team-projects-legacy
 */
 type ListProjectsLegacyResponse struct {
-	common.Response
+	requests.Response
 	request *ListProjectsLegacyReq
 	Data    []components.TeamProject
 }
@@ -6469,8 +6468,8 @@ List team repositories.
 
 https://developer.github.com/v3/teams/#list-team-repositories
 */
-func ListReposInOrg(ctx context.Context, req *ListReposInOrgReq, opt ...options.Option) (*ListReposInOrgResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListReposInOrg(ctx context.Context, req *ListReposInOrgReq, opt ...requests.Option) (*ListReposInOrgResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -6505,7 +6504,7 @@ List team repositories.
 
 https://developer.github.com/v3/teams/#list-team-repositories
 */
-func (c Client) ListReposInOrg(ctx context.Context, req *ListReposInOrgReq, opt ...options.Option) (*ListReposInOrgResponse, error) {
+func (c Client) ListReposInOrg(ctx context.Context, req *ListReposInOrgReq, opt ...requests.Option) (*ListReposInOrgResponse, error) {
 	return ListReposInOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -6529,8 +6528,8 @@ type ListReposInOrgReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListReposInOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListReposInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -6582,7 +6581,7 @@ ListReposInOrgResponse is a response for ListReposInOrg
 https://developer.github.com/v3/teams/#list-team-repositories
 */
 type ListReposInOrgResponse struct {
-	common.Response
+	requests.Response
 	request *ListReposInOrgReq
 	Data    []components.MinimalRepository
 }
@@ -6596,8 +6595,8 @@ List team repositories (Legacy).
 
 https://developer.github.com/v3/teams/#list-team-repositories-legacy
 */
-func ListReposLegacy(ctx context.Context, req *ListReposLegacyReq, opt ...options.Option) (*ListReposLegacyResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListReposLegacy(ctx context.Context, req *ListReposLegacyReq, opt ...requests.Option) (*ListReposLegacyResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -6632,7 +6631,7 @@ List team repositories (Legacy).
 
 https://developer.github.com/v3/teams/#list-team-repositories-legacy
 */
-func (c Client) ListReposLegacy(ctx context.Context, req *ListReposLegacyReq, opt ...options.Option) (*ListReposLegacyResponse, error) {
+func (c Client) ListReposLegacy(ctx context.Context, req *ListReposLegacyReq, opt ...requests.Option) (*ListReposLegacyResponse, error) {
 	return ListReposLegacy(ctx, req, append(c, opt...)...)
 }
 
@@ -6653,8 +6652,8 @@ type ListReposLegacyReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListReposLegacyReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListReposLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -6706,7 +6705,7 @@ ListReposLegacyResponse is a response for ListReposLegacy
 https://developer.github.com/v3/teams/#list-team-repositories-legacy
 */
 type ListReposLegacyResponse struct {
-	common.Response
+	requests.Response
 	request *ListReposLegacyReq
 	Data    []components.MinimalRepository
 }
@@ -6720,8 +6719,8 @@ Remove team member (Legacy).
 
 https://developer.github.com/v3/teams/members/#remove-team-member-legacy
 */
-func RemoveMemberLegacy(ctx context.Context, req *RemoveMemberLegacyReq, opt ...options.Option) (*RemoveMemberLegacyResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func RemoveMemberLegacy(ctx context.Context, req *RemoveMemberLegacyReq, opt ...requests.Option) (*RemoveMemberLegacyResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -6759,7 +6758,7 @@ Remove team member (Legacy).
 
 https://developer.github.com/v3/teams/members/#remove-team-member-legacy
 */
-func (c Client) RemoveMemberLegacy(ctx context.Context, req *RemoveMemberLegacyReq, opt ...options.Option) (*RemoveMemberLegacyResponse, error) {
+func (c Client) RemoveMemberLegacy(ctx context.Context, req *RemoveMemberLegacyReq, opt ...requests.Option) (*RemoveMemberLegacyResponse, error) {
 	return RemoveMemberLegacy(ctx, req, append(c, opt...)...)
 }
 
@@ -6775,8 +6774,8 @@ type RemoveMemberLegacyReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *RemoveMemberLegacyReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *RemoveMemberLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -6822,7 +6821,7 @@ RemoveMemberLegacyResponse is a response for RemoveMemberLegacy
 https://developer.github.com/v3/teams/members/#remove-team-member-legacy
 */
 type RemoveMemberLegacyResponse struct {
-	common.Response
+	requests.Response
 	request *RemoveMemberLegacyReq
 	Data    bool
 }
@@ -6836,8 +6835,8 @@ Remove team membership for a user.
 
 https://developer.github.com/v3/teams/members/#remove-team-membership-for-a-user
 */
-func RemoveMembershipForUserInOrg(ctx context.Context, req *RemoveMembershipForUserInOrgReq, opt ...options.Option) (*RemoveMembershipForUserInOrgResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func RemoveMembershipForUserInOrg(ctx context.Context, req *RemoveMembershipForUserInOrgReq, opt ...requests.Option) (*RemoveMembershipForUserInOrgResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -6871,7 +6870,7 @@ Remove team membership for a user.
 
 https://developer.github.com/v3/teams/members/#remove-team-membership-for-a-user
 */
-func (c Client) RemoveMembershipForUserInOrg(ctx context.Context, req *RemoveMembershipForUserInOrgReq, opt ...options.Option) (*RemoveMembershipForUserInOrgResponse, error) {
+func (c Client) RemoveMembershipForUserInOrg(ctx context.Context, req *RemoveMembershipForUserInOrgReq, opt ...requests.Option) (*RemoveMembershipForUserInOrgResponse, error) {
 	return RemoveMembershipForUserInOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -6890,8 +6889,8 @@ type RemoveMembershipForUserInOrgReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *RemoveMembershipForUserInOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *RemoveMembershipForUserInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -6937,7 +6936,7 @@ RemoveMembershipForUserInOrgResponse is a response for RemoveMembershipForUserIn
 https://developer.github.com/v3/teams/members/#remove-team-membership-for-a-user
 */
 type RemoveMembershipForUserInOrgResponse struct {
-	common.Response
+	requests.Response
 	request *RemoveMembershipForUserInOrgReq
 }
 
@@ -6950,8 +6949,8 @@ Remove team membership for a user (Legacy).
 
 https://developer.github.com/v3/teams/members/#remove-team-membership-for-a-user-legacy
 */
-func RemoveMembershipForUserLegacy(ctx context.Context, req *RemoveMembershipForUserLegacyReq, opt ...options.Option) (*RemoveMembershipForUserLegacyResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func RemoveMembershipForUserLegacy(ctx context.Context, req *RemoveMembershipForUserLegacyReq, opt ...requests.Option) (*RemoveMembershipForUserLegacyResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -6985,7 +6984,7 @@ Remove team membership for a user (Legacy).
 
 https://developer.github.com/v3/teams/members/#remove-team-membership-for-a-user-legacy
 */
-func (c Client) RemoveMembershipForUserLegacy(ctx context.Context, req *RemoveMembershipForUserLegacyReq, opt ...options.Option) (*RemoveMembershipForUserLegacyResponse, error) {
+func (c Client) RemoveMembershipForUserLegacy(ctx context.Context, req *RemoveMembershipForUserLegacyReq, opt ...requests.Option) (*RemoveMembershipForUserLegacyResponse, error) {
 	return RemoveMembershipForUserLegacy(ctx, req, append(c, opt...)...)
 }
 
@@ -7001,8 +7000,8 @@ type RemoveMembershipForUserLegacyReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *RemoveMembershipForUserLegacyReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *RemoveMembershipForUserLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -7048,7 +7047,7 @@ RemoveMembershipForUserLegacyResponse is a response for RemoveMembershipForUserL
 https://developer.github.com/v3/teams/members/#remove-team-membership-for-a-user-legacy
 */
 type RemoveMembershipForUserLegacyResponse struct {
-	common.Response
+	requests.Response
 	request *RemoveMembershipForUserLegacyReq
 }
 
@@ -7061,8 +7060,8 @@ Remove a project from a team.
 
 https://developer.github.com/v3/teams/#remove-a-project-from-a-team
 */
-func RemoveProjectInOrg(ctx context.Context, req *RemoveProjectInOrgReq, opt ...options.Option) (*RemoveProjectInOrgResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func RemoveProjectInOrg(ctx context.Context, req *RemoveProjectInOrgReq, opt ...requests.Option) (*RemoveProjectInOrgResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -7096,7 +7095,7 @@ Remove a project from a team.
 
 https://developer.github.com/v3/teams/#remove-a-project-from-a-team
 */
-func (c Client) RemoveProjectInOrg(ctx context.Context, req *RemoveProjectInOrgReq, opt ...options.Option) (*RemoveProjectInOrgResponse, error) {
+func (c Client) RemoveProjectInOrg(ctx context.Context, req *RemoveProjectInOrgReq, opt ...requests.Option) (*RemoveProjectInOrgResponse, error) {
 	return RemoveProjectInOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -7115,8 +7114,8 @@ type RemoveProjectInOrgReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *RemoveProjectInOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *RemoveProjectInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -7162,7 +7161,7 @@ RemoveProjectInOrgResponse is a response for RemoveProjectInOrg
 https://developer.github.com/v3/teams/#remove-a-project-from-a-team
 */
 type RemoveProjectInOrgResponse struct {
-	common.Response
+	requests.Response
 	request *RemoveProjectInOrgReq
 }
 
@@ -7175,8 +7174,8 @@ Remove a project from a team (Legacy).
 
 https://developer.github.com/v3/teams/#remove-a-project-from-a-team-legacy
 */
-func RemoveProjectLegacy(ctx context.Context, req *RemoveProjectLegacyReq, opt ...options.Option) (*RemoveProjectLegacyResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func RemoveProjectLegacy(ctx context.Context, req *RemoveProjectLegacyReq, opt ...requests.Option) (*RemoveProjectLegacyResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -7210,7 +7209,7 @@ Remove a project from a team (Legacy).
 
 https://developer.github.com/v3/teams/#remove-a-project-from-a-team-legacy
 */
-func (c Client) RemoveProjectLegacy(ctx context.Context, req *RemoveProjectLegacyReq, opt ...options.Option) (*RemoveProjectLegacyResponse, error) {
+func (c Client) RemoveProjectLegacy(ctx context.Context, req *RemoveProjectLegacyReq, opt ...requests.Option) (*RemoveProjectLegacyResponse, error) {
 	return RemoveProjectLegacy(ctx, req, append(c, opt...)...)
 }
 
@@ -7226,8 +7225,8 @@ type RemoveProjectLegacyReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *RemoveProjectLegacyReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *RemoveProjectLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -7273,7 +7272,7 @@ RemoveProjectLegacyResponse is a response for RemoveProjectLegacy
 https://developer.github.com/v3/teams/#remove-a-project-from-a-team-legacy
 */
 type RemoveProjectLegacyResponse struct {
-	common.Response
+	requests.Response
 	request *RemoveProjectLegacyReq
 }
 
@@ -7286,8 +7285,8 @@ Remove a repository from a team.
 
 https://developer.github.com/v3/teams/#remove-a-repository-from-a-team
 */
-func RemoveRepoInOrg(ctx context.Context, req *RemoveRepoInOrgReq, opt ...options.Option) (*RemoveRepoInOrgResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func RemoveRepoInOrg(ctx context.Context, req *RemoveRepoInOrgReq, opt ...requests.Option) (*RemoveRepoInOrgResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -7321,7 +7320,7 @@ Remove a repository from a team.
 
 https://developer.github.com/v3/teams/#remove-a-repository-from-a-team
 */
-func (c Client) RemoveRepoInOrg(ctx context.Context, req *RemoveRepoInOrgReq, opt ...options.Option) (*RemoveRepoInOrgResponse, error) {
+func (c Client) RemoveRepoInOrg(ctx context.Context, req *RemoveRepoInOrgReq, opt ...requests.Option) (*RemoveRepoInOrgResponse, error) {
 	return RemoveRepoInOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -7341,8 +7340,8 @@ type RemoveRepoInOrgReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *RemoveRepoInOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *RemoveRepoInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -7388,7 +7387,7 @@ RemoveRepoInOrgResponse is a response for RemoveRepoInOrg
 https://developer.github.com/v3/teams/#remove-a-repository-from-a-team
 */
 type RemoveRepoInOrgResponse struct {
-	common.Response
+	requests.Response
 	request *RemoveRepoInOrgReq
 }
 
@@ -7401,8 +7400,8 @@ Remove a repository from a team (Legacy).
 
 https://developer.github.com/v3/teams/#remove-a-repository-from-a-team-legacy
 */
-func RemoveRepoLegacy(ctx context.Context, req *RemoveRepoLegacyReq, opt ...options.Option) (*RemoveRepoLegacyResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func RemoveRepoLegacy(ctx context.Context, req *RemoveRepoLegacyReq, opt ...requests.Option) (*RemoveRepoLegacyResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -7436,7 +7435,7 @@ Remove a repository from a team (Legacy).
 
 https://developer.github.com/v3/teams/#remove-a-repository-from-a-team-legacy
 */
-func (c Client) RemoveRepoLegacy(ctx context.Context, req *RemoveRepoLegacyReq, opt ...options.Option) (*RemoveRepoLegacyResponse, error) {
+func (c Client) RemoveRepoLegacy(ctx context.Context, req *RemoveRepoLegacyReq, opt ...requests.Option) (*RemoveRepoLegacyResponse, error) {
 	return RemoveRepoLegacy(ctx, req, append(c, opt...)...)
 }
 
@@ -7453,8 +7452,8 @@ type RemoveRepoLegacyReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *RemoveRepoLegacyReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *RemoveRepoLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -7500,7 +7499,7 @@ RemoveRepoLegacyResponse is a response for RemoveRepoLegacy
 https://developer.github.com/v3/teams/#remove-a-repository-from-a-team-legacy
 */
 type RemoveRepoLegacyResponse struct {
-	common.Response
+	requests.Response
 	request *RemoveRepoLegacyReq
 }
 
@@ -7513,8 +7512,8 @@ Update a discussion comment.
 
 https://developer.github.com/v3/teams/discussion_comments/#update-a-discussion-comment
 */
-func UpdateDiscussionCommentInOrg(ctx context.Context, req *UpdateDiscussionCommentInOrgReq, opt ...options.Option) (*UpdateDiscussionCommentInOrgResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func UpdateDiscussionCommentInOrg(ctx context.Context, req *UpdateDiscussionCommentInOrgReq, opt ...requests.Option) (*UpdateDiscussionCommentInOrgResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -7549,7 +7548,7 @@ Update a discussion comment.
 
 https://developer.github.com/v3/teams/discussion_comments/#update-a-discussion-comment
 */
-func (c Client) UpdateDiscussionCommentInOrg(ctx context.Context, req *UpdateDiscussionCommentInOrgReq, opt ...options.Option) (*UpdateDiscussionCommentInOrgResponse, error) {
+func (c Client) UpdateDiscussionCommentInOrg(ctx context.Context, req *UpdateDiscussionCommentInOrgReq, opt ...requests.Option) (*UpdateDiscussionCommentInOrgResponse, error) {
 	return UpdateDiscussionCommentInOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -7581,8 +7580,8 @@ type UpdateDiscussionCommentInOrgReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UpdateDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *UpdateDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -7642,7 +7641,7 @@ UpdateDiscussionCommentInOrgResponse is a response for UpdateDiscussionCommentIn
 https://developer.github.com/v3/teams/discussion_comments/#update-a-discussion-comment
 */
 type UpdateDiscussionCommentInOrgResponse struct {
-	common.Response
+	requests.Response
 	request *UpdateDiscussionCommentInOrgReq
 	Data    components.TeamDiscussionComment
 }
@@ -7656,8 +7655,8 @@ Update a discussion comment (Legacy).
 
 https://developer.github.com/v3/teams/discussion_comments/#update-a-discussion-comment-legacy
 */
-func UpdateDiscussionCommentLegacy(ctx context.Context, req *UpdateDiscussionCommentLegacyReq, opt ...options.Option) (*UpdateDiscussionCommentLegacyResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func UpdateDiscussionCommentLegacy(ctx context.Context, req *UpdateDiscussionCommentLegacyReq, opt ...requests.Option) (*UpdateDiscussionCommentLegacyResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -7692,7 +7691,7 @@ Update a discussion comment (Legacy).
 
 https://developer.github.com/v3/teams/discussion_comments/#update-a-discussion-comment-legacy
 */
-func (c Client) UpdateDiscussionCommentLegacy(ctx context.Context, req *UpdateDiscussionCommentLegacyReq, opt ...options.Option) (*UpdateDiscussionCommentLegacyResponse, error) {
+func (c Client) UpdateDiscussionCommentLegacy(ctx context.Context, req *UpdateDiscussionCommentLegacyReq, opt ...requests.Option) (*UpdateDiscussionCommentLegacyResponse, error) {
 	return UpdateDiscussionCommentLegacy(ctx, req, append(c, opt...)...)
 }
 
@@ -7721,8 +7720,8 @@ type UpdateDiscussionCommentLegacyReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UpdateDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *UpdateDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -7782,7 +7781,7 @@ UpdateDiscussionCommentLegacyResponse is a response for UpdateDiscussionCommentL
 https://developer.github.com/v3/teams/discussion_comments/#update-a-discussion-comment-legacy
 */
 type UpdateDiscussionCommentLegacyResponse struct {
-	common.Response
+	requests.Response
 	request *UpdateDiscussionCommentLegacyReq
 	Data    components.TeamDiscussionComment
 }
@@ -7796,8 +7795,8 @@ Update a discussion.
 
 https://developer.github.com/v3/teams/discussions/#update-a-discussion
 */
-func UpdateDiscussionInOrg(ctx context.Context, req *UpdateDiscussionInOrgReq, opt ...options.Option) (*UpdateDiscussionInOrgResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func UpdateDiscussionInOrg(ctx context.Context, req *UpdateDiscussionInOrgReq, opt ...requests.Option) (*UpdateDiscussionInOrgResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -7832,7 +7831,7 @@ Update a discussion.
 
 https://developer.github.com/v3/teams/discussions/#update-a-discussion
 */
-func (c Client) UpdateDiscussionInOrg(ctx context.Context, req *UpdateDiscussionInOrgReq, opt ...options.Option) (*UpdateDiscussionInOrgResponse, error) {
+func (c Client) UpdateDiscussionInOrg(ctx context.Context, req *UpdateDiscussionInOrgReq, opt ...requests.Option) (*UpdateDiscussionInOrgResponse, error) {
 	return UpdateDiscussionInOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -7863,8 +7862,8 @@ type UpdateDiscussionInOrgReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UpdateDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *UpdateDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -7927,7 +7926,7 @@ UpdateDiscussionInOrgResponse is a response for UpdateDiscussionInOrg
 https://developer.github.com/v3/teams/discussions/#update-a-discussion
 */
 type UpdateDiscussionInOrgResponse struct {
-	common.Response
+	requests.Response
 	request *UpdateDiscussionInOrgReq
 	Data    components.TeamDiscussion
 }
@@ -7941,8 +7940,8 @@ Update a discussion (Legacy).
 
 https://developer.github.com/v3/teams/discussions/#update-a-discussion-legacy
 */
-func UpdateDiscussionLegacy(ctx context.Context, req *UpdateDiscussionLegacyReq, opt ...options.Option) (*UpdateDiscussionLegacyResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func UpdateDiscussionLegacy(ctx context.Context, req *UpdateDiscussionLegacyReq, opt ...requests.Option) (*UpdateDiscussionLegacyResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -7977,7 +7976,7 @@ Update a discussion (Legacy).
 
 https://developer.github.com/v3/teams/discussions/#update-a-discussion-legacy
 */
-func (c Client) UpdateDiscussionLegacy(ctx context.Context, req *UpdateDiscussionLegacyReq, opt ...options.Option) (*UpdateDiscussionLegacyResponse, error) {
+func (c Client) UpdateDiscussionLegacy(ctx context.Context, req *UpdateDiscussionLegacyReq, opt ...requests.Option) (*UpdateDiscussionLegacyResponse, error) {
 	return UpdateDiscussionLegacy(ctx, req, append(c, opt...)...)
 }
 
@@ -8005,8 +8004,8 @@ type UpdateDiscussionLegacyReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UpdateDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *UpdateDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -8069,7 +8068,7 @@ UpdateDiscussionLegacyResponse is a response for UpdateDiscussionLegacy
 https://developer.github.com/v3/teams/discussions/#update-a-discussion-legacy
 */
 type UpdateDiscussionLegacyResponse struct {
-	common.Response
+	requests.Response
 	request *UpdateDiscussionLegacyReq
 	Data    components.TeamDiscussion
 }
@@ -8083,8 +8082,8 @@ Update a team.
 
 https://developer.github.com/v3/teams/#update-a-team
 */
-func UpdateInOrg(ctx context.Context, req *UpdateInOrgReq, opt ...options.Option) (*UpdateInOrgResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func UpdateInOrg(ctx context.Context, req *UpdateInOrgReq, opt ...requests.Option) (*UpdateInOrgResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -8119,7 +8118,7 @@ Update a team.
 
 https://developer.github.com/v3/teams/#update-a-team
 */
-func (c Client) UpdateInOrg(ctx context.Context, req *UpdateInOrgReq, opt ...options.Option) (*UpdateInOrgResponse, error) {
+func (c Client) UpdateInOrg(ctx context.Context, req *UpdateInOrgReq, opt ...requests.Option) (*UpdateInOrgResponse, error) {
 	return UpdateInOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -8138,8 +8137,8 @@ type UpdateInOrgReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UpdateInOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *UpdateInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -8229,7 +8228,7 @@ UpdateInOrgResponse is a response for UpdateInOrg
 https://developer.github.com/v3/teams/#update-a-team
 */
 type UpdateInOrgResponse struct {
-	common.Response
+	requests.Response
 	request *UpdateInOrgReq
 	Data    components.TeamFull
 }
@@ -8243,8 +8242,8 @@ Update a team (Legacy).
 
 https://developer.github.com/v3/teams/#update-a-team-legacy
 */
-func UpdateLegacy(ctx context.Context, req *UpdateLegacyReq, opt ...options.Option) (*UpdateLegacyResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func UpdateLegacy(ctx context.Context, req *UpdateLegacyReq, opt ...requests.Option) (*UpdateLegacyResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -8279,7 +8278,7 @@ Update a team (Legacy).
 
 https://developer.github.com/v3/teams/#update-a-team-legacy
 */
-func (c Client) UpdateLegacy(ctx context.Context, req *UpdateLegacyReq, opt ...options.Option) (*UpdateLegacyResponse, error) {
+func (c Client) UpdateLegacy(ctx context.Context, req *UpdateLegacyReq, opt ...requests.Option) (*UpdateLegacyResponse, error) {
 	return UpdateLegacy(ctx, req, append(c, opt...)...)
 }
 
@@ -8295,8 +8294,8 @@ type UpdateLegacyReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UpdateLegacyReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *UpdateLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -8385,7 +8384,7 @@ UpdateLegacyResponse is a response for UpdateLegacy
 https://developer.github.com/v3/teams/#update-a-team-legacy
 */
 type UpdateLegacyResponse struct {
-	common.Response
+	requests.Response
 	request *UpdateLegacyReq
 	Data    components.TeamFull
 }

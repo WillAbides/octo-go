@@ -5,10 +5,9 @@ package migrations
 import (
 	"context"
 	"fmt"
-	common "github.com/willabides/octo-go/common"
 	components "github.com/willabides/octo-go/components"
 	internal "github.com/willabides/octo-go/internal"
-	options "github.com/willabides/octo-go/options"
+	requests "github.com/willabides/octo-go/requests"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -17,15 +16,15 @@ import (
 func strPtr(s string) *string { return &s }
 
 // Client is a set of options to apply to requests
-type Client []options.Option
+type Client []requests.Option
 
 // NewClient returns a new Client
-func NewClient(opt ...options.Option) Client {
+func NewClient(opt ...requests.Option) Client {
 	return opt
 }
 
 // Apply implements options.Option
-func (c Client) Apply(opts *options.Options) error {
+func (c Client) Apply(opts *requests.Options) error {
 	for _, o := range c {
 		err := o.Apply(opts)
 		if err != nil {
@@ -44,8 +43,8 @@ Cancel an import.
 
 https://developer.github.com/v3/migrations/source_imports/#cancel-an-import
 */
-func CancelImport(ctx context.Context, req *CancelImportReq, opt ...options.Option) (*CancelImportResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CancelImport(ctx context.Context, req *CancelImportReq, opt ...requests.Option) (*CancelImportResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -79,7 +78,7 @@ Cancel an import.
 
 https://developer.github.com/v3/migrations/source_imports/#cancel-an-import
 */
-func (c Client) CancelImport(ctx context.Context, req *CancelImportReq, opt ...options.Option) (*CancelImportResponse, error) {
+func (c Client) CancelImport(ctx context.Context, req *CancelImportReq, opt ...requests.Option) (*CancelImportResponse, error) {
 	return CancelImport(ctx, req, append(c, opt...)...)
 }
 
@@ -95,8 +94,8 @@ type CancelImportReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CancelImportReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CancelImportReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -142,7 +141,7 @@ CancelImportResponse is a response for CancelImport
 https://developer.github.com/v3/migrations/source_imports/#cancel-an-import
 */
 type CancelImportResponse struct {
-	common.Response
+	requests.Response
 	request *CancelImportReq
 }
 
@@ -155,8 +154,8 @@ Delete a user migration archive.
 
 https://developer.github.com/v3/migrations/users/#delete-a-user-migration-archive
 */
-func DeleteArchiveForAuthenticatedUser(ctx context.Context, req *DeleteArchiveForAuthenticatedUserReq, opt ...options.Option) (*DeleteArchiveForAuthenticatedUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DeleteArchiveForAuthenticatedUser(ctx context.Context, req *DeleteArchiveForAuthenticatedUserReq, opt ...requests.Option) (*DeleteArchiveForAuthenticatedUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -190,7 +189,7 @@ Delete a user migration archive.
 
 https://developer.github.com/v3/migrations/users/#delete-a-user-migration-archive
 */
-func (c Client) DeleteArchiveForAuthenticatedUser(ctx context.Context, req *DeleteArchiveForAuthenticatedUserReq, opt ...options.Option) (*DeleteArchiveForAuthenticatedUserResponse, error) {
+func (c Client) DeleteArchiveForAuthenticatedUser(ctx context.Context, req *DeleteArchiveForAuthenticatedUserReq, opt ...requests.Option) (*DeleteArchiveForAuthenticatedUserResponse, error) {
 	return DeleteArchiveForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
@@ -210,8 +209,8 @@ type DeleteArchiveForAuthenticatedUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeleteArchiveForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeleteArchiveForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -257,7 +256,7 @@ DeleteArchiveForAuthenticatedUserResponse is a response for DeleteArchiveForAuth
 https://developer.github.com/v3/migrations/users/#delete-a-user-migration-archive
 */
 type DeleteArchiveForAuthenticatedUserResponse struct {
-	common.Response
+	requests.Response
 	request *DeleteArchiveForAuthenticatedUserReq
 }
 
@@ -270,8 +269,8 @@ Delete an organization migration archive.
 
 https://developer.github.com/v3/migrations/orgs/#delete-an-organization-migration-archive
 */
-func DeleteArchiveForOrg(ctx context.Context, req *DeleteArchiveForOrgReq, opt ...options.Option) (*DeleteArchiveForOrgResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DeleteArchiveForOrg(ctx context.Context, req *DeleteArchiveForOrgReq, opt ...requests.Option) (*DeleteArchiveForOrgResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -309,7 +308,7 @@ Delete an organization migration archive.
 
 https://developer.github.com/v3/migrations/orgs/#delete-an-organization-migration-archive
 */
-func (c Client) DeleteArchiveForOrg(ctx context.Context, req *DeleteArchiveForOrgReq, opt ...options.Option) (*DeleteArchiveForOrgResponse, error) {
+func (c Client) DeleteArchiveForOrg(ctx context.Context, req *DeleteArchiveForOrgReq, opt ...requests.Option) (*DeleteArchiveForOrgResponse, error) {
 	return DeleteArchiveForOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -330,8 +329,8 @@ type DeleteArchiveForOrgReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeleteArchiveForOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeleteArchiveForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -377,7 +376,7 @@ DeleteArchiveForOrgResponse is a response for DeleteArchiveForOrg
 https://developer.github.com/v3/migrations/orgs/#delete-an-organization-migration-archive
 */
 type DeleteArchiveForOrgResponse struct {
-	common.Response
+	requests.Response
 	request *DeleteArchiveForOrgReq
 	Data    bool
 }
@@ -391,8 +390,8 @@ Download an organization migration archive.
 
 https://developer.github.com/v3/migrations/orgs/#download-an-organization-migration-archive
 */
-func DownloadArchiveForOrg(ctx context.Context, req *DownloadArchiveForOrgReq, opt ...options.Option) (*DownloadArchiveForOrgResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DownloadArchiveForOrg(ctx context.Context, req *DownloadArchiveForOrgReq, opt ...requests.Option) (*DownloadArchiveForOrgResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -426,7 +425,7 @@ Download an organization migration archive.
 
 https://developer.github.com/v3/migrations/orgs/#download-an-organization-migration-archive
 */
-func (c Client) DownloadArchiveForOrg(ctx context.Context, req *DownloadArchiveForOrgReq, opt ...options.Option) (*DownloadArchiveForOrgResponse, error) {
+func (c Client) DownloadArchiveForOrg(ctx context.Context, req *DownloadArchiveForOrgReq, opt ...requests.Option) (*DownloadArchiveForOrgResponse, error) {
 	return DownloadArchiveForOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -447,8 +446,8 @@ type DownloadArchiveForOrgReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DownloadArchiveForOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DownloadArchiveForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -494,7 +493,7 @@ DownloadArchiveForOrgResponse is a response for DownloadArchiveForOrg
 https://developer.github.com/v3/migrations/orgs/#download-an-organization-migration-archive
 */
 type DownloadArchiveForOrgResponse struct {
-	common.Response
+	requests.Response
 	request *DownloadArchiveForOrgReq
 }
 
@@ -507,8 +506,8 @@ Download a user migration archive.
 
 https://developer.github.com/v3/migrations/users/#download-a-user-migration-archive
 */
-func GetArchiveForAuthenticatedUser(ctx context.Context, req *GetArchiveForAuthenticatedUserReq, opt ...options.Option) (*GetArchiveForAuthenticatedUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetArchiveForAuthenticatedUser(ctx context.Context, req *GetArchiveForAuthenticatedUserReq, opt ...requests.Option) (*GetArchiveForAuthenticatedUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -542,7 +541,7 @@ Download a user migration archive.
 
 https://developer.github.com/v3/migrations/users/#download-a-user-migration-archive
 */
-func (c Client) GetArchiveForAuthenticatedUser(ctx context.Context, req *GetArchiveForAuthenticatedUserReq, opt ...options.Option) (*GetArchiveForAuthenticatedUserResponse, error) {
+func (c Client) GetArchiveForAuthenticatedUser(ctx context.Context, req *GetArchiveForAuthenticatedUserReq, opt ...requests.Option) (*GetArchiveForAuthenticatedUserResponse, error) {
 	return GetArchiveForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
@@ -562,8 +561,8 @@ type GetArchiveForAuthenticatedUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetArchiveForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetArchiveForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -609,7 +608,7 @@ GetArchiveForAuthenticatedUserResponse is a response for GetArchiveForAuthentica
 https://developer.github.com/v3/migrations/users/#download-a-user-migration-archive
 */
 type GetArchiveForAuthenticatedUserResponse struct {
-	common.Response
+	requests.Response
 	request *GetArchiveForAuthenticatedUserReq
 }
 
@@ -622,8 +621,8 @@ Get commit authors.
 
 https://developer.github.com/v3/migrations/source_imports/#get-commit-authors
 */
-func GetCommitAuthors(ctx context.Context, req *GetCommitAuthorsReq, opt ...options.Option) (*GetCommitAuthorsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetCommitAuthors(ctx context.Context, req *GetCommitAuthorsReq, opt ...requests.Option) (*GetCommitAuthorsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -658,7 +657,7 @@ Get commit authors.
 
 https://developer.github.com/v3/migrations/source_imports/#get-commit-authors
 */
-func (c Client) GetCommitAuthors(ctx context.Context, req *GetCommitAuthorsReq, opt ...options.Option) (*GetCommitAuthorsResponse, error) {
+func (c Client) GetCommitAuthors(ctx context.Context, req *GetCommitAuthorsReq, opt ...requests.Option) (*GetCommitAuthorsResponse, error) {
 	return GetCommitAuthors(ctx, req, append(c, opt...)...)
 }
 
@@ -681,8 +680,8 @@ type GetCommitAuthorsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetCommitAuthorsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetCommitAuthorsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -731,7 +730,7 @@ GetCommitAuthorsResponse is a response for GetCommitAuthors
 https://developer.github.com/v3/migrations/source_imports/#get-commit-authors
 */
 type GetCommitAuthorsResponse struct {
-	common.Response
+	requests.Response
 	request *GetCommitAuthorsReq
 	Data    []components.PorterAuthor
 }
@@ -745,8 +744,8 @@ Get an import status.
 
 https://developer.github.com/v3/migrations/source_imports/#get-an-import-status
 */
-func GetImportStatus(ctx context.Context, req *GetImportStatusReq, opt ...options.Option) (*GetImportStatusResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetImportStatus(ctx context.Context, req *GetImportStatusReq, opt ...requests.Option) (*GetImportStatusResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -781,7 +780,7 @@ Get an import status.
 
 https://developer.github.com/v3/migrations/source_imports/#get-an-import-status
 */
-func (c Client) GetImportStatus(ctx context.Context, req *GetImportStatusReq, opt ...options.Option) (*GetImportStatusResponse, error) {
+func (c Client) GetImportStatus(ctx context.Context, req *GetImportStatusReq, opt ...requests.Option) (*GetImportStatusResponse, error) {
 	return GetImportStatus(ctx, req, append(c, opt...)...)
 }
 
@@ -797,8 +796,8 @@ type GetImportStatusReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetImportStatusReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetImportStatusReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -844,7 +843,7 @@ GetImportStatusResponse is a response for GetImportStatus
 https://developer.github.com/v3/migrations/source_imports/#get-an-import-status
 */
 type GetImportStatusResponse struct {
-	common.Response
+	requests.Response
 	request *GetImportStatusReq
 	Data    components.Import
 }
@@ -858,8 +857,8 @@ Get large files.
 
 https://developer.github.com/v3/migrations/source_imports/#get-large-files
 */
-func GetLargeFiles(ctx context.Context, req *GetLargeFilesReq, opt ...options.Option) (*GetLargeFilesResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetLargeFiles(ctx context.Context, req *GetLargeFilesReq, opt ...requests.Option) (*GetLargeFilesResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -894,7 +893,7 @@ Get large files.
 
 https://developer.github.com/v3/migrations/source_imports/#get-large-files
 */
-func (c Client) GetLargeFiles(ctx context.Context, req *GetLargeFilesReq, opt ...options.Option) (*GetLargeFilesResponse, error) {
+func (c Client) GetLargeFiles(ctx context.Context, req *GetLargeFilesReq, opt ...requests.Option) (*GetLargeFilesResponse, error) {
 	return GetLargeFiles(ctx, req, append(c, opt...)...)
 }
 
@@ -910,8 +909,8 @@ type GetLargeFilesReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetLargeFilesReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetLargeFilesReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -957,7 +956,7 @@ GetLargeFilesResponse is a response for GetLargeFiles
 https://developer.github.com/v3/migrations/source_imports/#get-large-files
 */
 type GetLargeFilesResponse struct {
-	common.Response
+	requests.Response
 	request *GetLargeFilesReq
 	Data    []components.PorterLargeFile
 }
@@ -971,8 +970,8 @@ Get a user migration status.
 
 https://developer.github.com/v3/migrations/users/#get-a-user-migration-status
 */
-func GetStatusForAuthenticatedUser(ctx context.Context, req *GetStatusForAuthenticatedUserReq, opt ...options.Option) (*GetStatusForAuthenticatedUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetStatusForAuthenticatedUser(ctx context.Context, req *GetStatusForAuthenticatedUserReq, opt ...requests.Option) (*GetStatusForAuthenticatedUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1007,7 +1006,7 @@ Get a user migration status.
 
 https://developer.github.com/v3/migrations/users/#get-a-user-migration-status
 */
-func (c Client) GetStatusForAuthenticatedUser(ctx context.Context, req *GetStatusForAuthenticatedUserReq, opt ...options.Option) (*GetStatusForAuthenticatedUserResponse, error) {
+func (c Client) GetStatusForAuthenticatedUser(ctx context.Context, req *GetStatusForAuthenticatedUserReq, opt ...requests.Option) (*GetStatusForAuthenticatedUserResponse, error) {
 	return GetStatusForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
@@ -1027,8 +1026,8 @@ type GetStatusForAuthenticatedUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetStatusForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetStatusForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1074,7 +1073,7 @@ GetStatusForAuthenticatedUserResponse is a response for GetStatusForAuthenticate
 https://developer.github.com/v3/migrations/users/#get-a-user-migration-status
 */
 type GetStatusForAuthenticatedUserResponse struct {
-	common.Response
+	requests.Response
 	request *GetStatusForAuthenticatedUserReq
 	Data    components.Migration
 }
@@ -1088,8 +1087,8 @@ Get an organization migration status.
 
 https://developer.github.com/v3/migrations/orgs/#get-an-organization-migration-status
 */
-func GetStatusForOrg(ctx context.Context, req *GetStatusForOrgReq, opt ...options.Option) (*GetStatusForOrgResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetStatusForOrg(ctx context.Context, req *GetStatusForOrgReq, opt ...requests.Option) (*GetStatusForOrgResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1124,7 +1123,7 @@ Get an organization migration status.
 
 https://developer.github.com/v3/migrations/orgs/#get-an-organization-migration-status
 */
-func (c Client) GetStatusForOrg(ctx context.Context, req *GetStatusForOrgReq, opt ...options.Option) (*GetStatusForOrgResponse, error) {
+func (c Client) GetStatusForOrg(ctx context.Context, req *GetStatusForOrgReq, opt ...requests.Option) (*GetStatusForOrgResponse, error) {
 	return GetStatusForOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -1145,8 +1144,8 @@ type GetStatusForOrgReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetStatusForOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetStatusForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1192,7 +1191,7 @@ GetStatusForOrgResponse is a response for GetStatusForOrg
 https://developer.github.com/v3/migrations/orgs/#get-an-organization-migration-status
 */
 type GetStatusForOrgResponse struct {
-	common.Response
+	requests.Response
 	request *GetStatusForOrgReq
 	Data    components.Migration
 }
@@ -1206,8 +1205,8 @@ List user migrations.
 
 https://developer.github.com/v3/migrations/users/#list-user-migrations
 */
-func ListForAuthenticatedUser(ctx context.Context, req *ListForAuthenticatedUserReq, opt ...options.Option) (*ListForAuthenticatedUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListForAuthenticatedUser(ctx context.Context, req *ListForAuthenticatedUserReq, opt ...requests.Option) (*ListForAuthenticatedUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1242,7 +1241,7 @@ List user migrations.
 
 https://developer.github.com/v3/migrations/users/#list-user-migrations
 */
-func (c Client) ListForAuthenticatedUser(ctx context.Context, req *ListForAuthenticatedUserReq, opt ...options.Option) (*ListForAuthenticatedUserResponse, error) {
+func (c Client) ListForAuthenticatedUser(ctx context.Context, req *ListForAuthenticatedUserReq, opt ...requests.Option) (*ListForAuthenticatedUserResponse, error) {
 	return ListForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
@@ -1265,8 +1264,8 @@ type ListForAuthenticatedUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1318,7 +1317,7 @@ ListForAuthenticatedUserResponse is a response for ListForAuthenticatedUser
 https://developer.github.com/v3/migrations/users/#list-user-migrations
 */
 type ListForAuthenticatedUserResponse struct {
-	common.Response
+	requests.Response
 	request *ListForAuthenticatedUserReq
 	Data    []components.Migration
 }
@@ -1332,8 +1331,8 @@ List organization migrations.
 
 https://developer.github.com/v3/migrations/orgs/#list-organization-migrations
 */
-func ListForOrg(ctx context.Context, req *ListForOrgReq, opt ...options.Option) (*ListForOrgResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListForOrg(ctx context.Context, req *ListForOrgReq, opt ...requests.Option) (*ListForOrgResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1368,7 +1367,7 @@ List organization migrations.
 
 https://developer.github.com/v3/migrations/orgs/#list-organization-migrations
 */
-func (c Client) ListForOrg(ctx context.Context, req *ListForOrgReq, opt ...options.Option) (*ListForOrgResponse, error) {
+func (c Client) ListForOrg(ctx context.Context, req *ListForOrgReq, opt ...requests.Option) (*ListForOrgResponse, error) {
 	return ListForOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -1392,8 +1391,8 @@ type ListForOrgReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListForOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1445,7 +1444,7 @@ ListForOrgResponse is a response for ListForOrg
 https://developer.github.com/v3/migrations/orgs/#list-organization-migrations
 */
 type ListForOrgResponse struct {
-	common.Response
+	requests.Response
 	request *ListForOrgReq
 	Data    []components.Migration
 }
@@ -1459,8 +1458,8 @@ List repositories in an organization migration.
 
 https://developer.github.com/v3/migrations/orgs/#list-repositories-in-an-organization-migration
 */
-func ListReposForOrg(ctx context.Context, req *ListReposForOrgReq, opt ...options.Option) (*ListReposForOrgResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListReposForOrg(ctx context.Context, req *ListReposForOrgReq, opt ...requests.Option) (*ListReposForOrgResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1495,7 +1494,7 @@ List repositories in an organization migration.
 
 https://developer.github.com/v3/migrations/orgs/#list-repositories-in-an-organization-migration
 */
-func (c Client) ListReposForOrg(ctx context.Context, req *ListReposForOrgReq, opt ...options.Option) (*ListReposForOrgResponse, error) {
+func (c Client) ListReposForOrg(ctx context.Context, req *ListReposForOrgReq, opt ...requests.Option) (*ListReposForOrgResponse, error) {
 	return ListReposForOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -1522,8 +1521,8 @@ type ListReposForOrgReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListReposForOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListReposForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1575,7 +1574,7 @@ ListReposForOrgResponse is a response for ListReposForOrg
 https://developer.github.com/v3/migrations/orgs/#list-repositories-in-an-organization-migration
 */
 type ListReposForOrgResponse struct {
-	common.Response
+	requests.Response
 	request *ListReposForOrgReq
 	Data    []components.MinimalRepository
 }
@@ -1589,8 +1588,8 @@ List repositories for a user migration.
 
 https://developer.github.com/v3/migrations/users/#list-repositories-for-a-user-migration
 */
-func ListReposForUser(ctx context.Context, req *ListReposForUserReq, opt ...options.Option) (*ListReposForUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListReposForUser(ctx context.Context, req *ListReposForUserReq, opt ...requests.Option) (*ListReposForUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1625,7 +1624,7 @@ List repositories for a user migration.
 
 https://developer.github.com/v3/migrations/users/#list-repositories-for-a-user-migration
 */
-func (c Client) ListReposForUser(ctx context.Context, req *ListReposForUserReq, opt ...options.Option) (*ListReposForUserResponse, error) {
+func (c Client) ListReposForUser(ctx context.Context, req *ListReposForUserReq, opt ...requests.Option) (*ListReposForUserResponse, error) {
 	return ListReposForUser(ctx, req, append(c, opt...)...)
 }
 
@@ -1651,8 +1650,8 @@ type ListReposForUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListReposForUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListReposForUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1704,7 +1703,7 @@ ListReposForUserResponse is a response for ListReposForUser
 https://developer.github.com/v3/migrations/users/#list-repositories-for-a-user-migration
 */
 type ListReposForUserResponse struct {
-	common.Response
+	requests.Response
 	request *ListReposForUserReq
 	Data    []components.MinimalRepository
 }
@@ -1718,8 +1717,8 @@ Map a commit author.
 
 https://developer.github.com/v3/migrations/source_imports/#map-a-commit-author
 */
-func MapCommitAuthor(ctx context.Context, req *MapCommitAuthorReq, opt ...options.Option) (*MapCommitAuthorResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func MapCommitAuthor(ctx context.Context, req *MapCommitAuthorReq, opt ...requests.Option) (*MapCommitAuthorResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1754,7 +1753,7 @@ Map a commit author.
 
 https://developer.github.com/v3/migrations/source_imports/#map-a-commit-author
 */
-func (c Client) MapCommitAuthor(ctx context.Context, req *MapCommitAuthorReq, opt ...options.Option) (*MapCommitAuthorResponse, error) {
+func (c Client) MapCommitAuthor(ctx context.Context, req *MapCommitAuthorReq, opt ...requests.Option) (*MapCommitAuthorResponse, error) {
 	return MapCommitAuthor(ctx, req, append(c, opt...)...)
 }
 
@@ -1774,8 +1773,8 @@ type MapCommitAuthorReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *MapCommitAuthorReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *MapCommitAuthorReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1839,7 +1838,7 @@ MapCommitAuthorResponse is a response for MapCommitAuthor
 https://developer.github.com/v3/migrations/source_imports/#map-a-commit-author
 */
 type MapCommitAuthorResponse struct {
-	common.Response
+	requests.Response
 	request *MapCommitAuthorReq
 	Data    components.PorterAuthor
 }
@@ -1853,8 +1852,8 @@ Update Git LFS preference.
 
 https://developer.github.com/v3/migrations/source_imports/#update-git-lfs-preference
 */
-func SetLfsPreference(ctx context.Context, req *SetLfsPreferenceReq, opt ...options.Option) (*SetLfsPreferenceResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func SetLfsPreference(ctx context.Context, req *SetLfsPreferenceReq, opt ...requests.Option) (*SetLfsPreferenceResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1889,7 +1888,7 @@ Update Git LFS preference.
 
 https://developer.github.com/v3/migrations/source_imports/#update-git-lfs-preference
 */
-func (c Client) SetLfsPreference(ctx context.Context, req *SetLfsPreferenceReq, opt ...options.Option) (*SetLfsPreferenceResponse, error) {
+func (c Client) SetLfsPreference(ctx context.Context, req *SetLfsPreferenceReq, opt ...requests.Option) (*SetLfsPreferenceResponse, error) {
 	return SetLfsPreference(ctx, req, append(c, opt...)...)
 }
 
@@ -1906,8 +1905,8 @@ type SetLfsPreferenceReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *SetLfsPreferenceReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *SetLfsPreferenceReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1970,7 +1969,7 @@ SetLfsPreferenceResponse is a response for SetLfsPreference
 https://developer.github.com/v3/migrations/source_imports/#update-git-lfs-preference
 */
 type SetLfsPreferenceResponse struct {
-	common.Response
+	requests.Response
 	request *SetLfsPreferenceReq
 	Data    components.Import
 }
@@ -1984,8 +1983,8 @@ Start a user migration.
 
 https://developer.github.com/v3/migrations/users/#start-a-user-migration
 */
-func StartForAuthenticatedUser(ctx context.Context, req *StartForAuthenticatedUserReq, opt ...options.Option) (*StartForAuthenticatedUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func StartForAuthenticatedUser(ctx context.Context, req *StartForAuthenticatedUserReq, opt ...requests.Option) (*StartForAuthenticatedUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2020,7 +2019,7 @@ Start a user migration.
 
 https://developer.github.com/v3/migrations/users/#start-a-user-migration
 */
-func (c Client) StartForAuthenticatedUser(ctx context.Context, req *StartForAuthenticatedUserReq, opt ...options.Option) (*StartForAuthenticatedUserResponse, error) {
+func (c Client) StartForAuthenticatedUser(ctx context.Context, req *StartForAuthenticatedUserReq, opt ...requests.Option) (*StartForAuthenticatedUserResponse, error) {
 	return StartForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
@@ -2035,8 +2034,8 @@ type StartForAuthenticatedUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *StartForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *StartForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2103,7 +2102,7 @@ StartForAuthenticatedUserResponse is a response for StartForAuthenticatedUser
 https://developer.github.com/v3/migrations/users/#start-a-user-migration
 */
 type StartForAuthenticatedUserResponse struct {
-	common.Response
+	requests.Response
 	request *StartForAuthenticatedUserReq
 	Data    components.Migration
 }
@@ -2117,8 +2116,8 @@ Start an organization migration.
 
 https://developer.github.com/v3/migrations/orgs/#start-an-organization-migration
 */
-func StartForOrg(ctx context.Context, req *StartForOrgReq, opt ...options.Option) (*StartForOrgResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func StartForOrg(ctx context.Context, req *StartForOrgReq, opt ...requests.Option) (*StartForOrgResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2153,7 +2152,7 @@ Start an organization migration.
 
 https://developer.github.com/v3/migrations/orgs/#start-an-organization-migration
 */
-func (c Client) StartForOrg(ctx context.Context, req *StartForOrgReq, opt ...options.Option) (*StartForOrgResponse, error) {
+func (c Client) StartForOrg(ctx context.Context, req *StartForOrgReq, opt ...requests.Option) (*StartForOrgResponse, error) {
 	return StartForOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -2169,8 +2168,8 @@ type StartForOrgReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *StartForOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *StartForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2237,7 +2236,7 @@ StartForOrgResponse is a response for StartForOrg
 https://developer.github.com/v3/migrations/orgs/#start-an-organization-migration
 */
 type StartForOrgResponse struct {
-	common.Response
+	requests.Response
 	request *StartForOrgReq
 	Data    components.Migration
 }
@@ -2251,8 +2250,8 @@ Start an import.
 
 https://developer.github.com/v3/migrations/source_imports/#start-an-import
 */
-func StartImport(ctx context.Context, req *StartImportReq, opt ...options.Option) (*StartImportResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func StartImport(ctx context.Context, req *StartImportReq, opt ...requests.Option) (*StartImportResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2287,7 +2286,7 @@ Start an import.
 
 https://developer.github.com/v3/migrations/source_imports/#start-an-import
 */
-func (c Client) StartImport(ctx context.Context, req *StartImportReq, opt ...options.Option) (*StartImportResponse, error) {
+func (c Client) StartImport(ctx context.Context, req *StartImportReq, opt ...requests.Option) (*StartImportResponse, error) {
 	return StartImport(ctx, req, append(c, opt...)...)
 }
 
@@ -2304,8 +2303,8 @@ type StartImportReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *StartImportReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *StartImportReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2382,7 +2381,7 @@ StartImportResponse is a response for StartImport
 https://developer.github.com/v3/migrations/source_imports/#start-an-import
 */
 type StartImportResponse struct {
-	common.Response
+	requests.Response
 	request *StartImportReq
 	Data    components.Import
 }
@@ -2396,8 +2395,8 @@ Unlock a user repository.
 
 https://developer.github.com/v3/migrations/users/#unlock-a-user-repository
 */
-func UnlockRepoForAuthenticatedUser(ctx context.Context, req *UnlockRepoForAuthenticatedUserReq, opt ...options.Option) (*UnlockRepoForAuthenticatedUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func UnlockRepoForAuthenticatedUser(ctx context.Context, req *UnlockRepoForAuthenticatedUserReq, opt ...requests.Option) (*UnlockRepoForAuthenticatedUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2431,7 +2430,7 @@ Unlock a user repository.
 
 https://developer.github.com/v3/migrations/users/#unlock-a-user-repository
 */
-func (c Client) UnlockRepoForAuthenticatedUser(ctx context.Context, req *UnlockRepoForAuthenticatedUserReq, opt ...options.Option) (*UnlockRepoForAuthenticatedUserResponse, error) {
+func (c Client) UnlockRepoForAuthenticatedUser(ctx context.Context, req *UnlockRepoForAuthenticatedUserReq, opt ...requests.Option) (*UnlockRepoForAuthenticatedUserResponse, error) {
 	return UnlockRepoForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
@@ -2454,8 +2453,8 @@ type UnlockRepoForAuthenticatedUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UnlockRepoForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *UnlockRepoForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2501,7 +2500,7 @@ UnlockRepoForAuthenticatedUserResponse is a response for UnlockRepoForAuthentica
 https://developer.github.com/v3/migrations/users/#unlock-a-user-repository
 */
 type UnlockRepoForAuthenticatedUserResponse struct {
-	common.Response
+	requests.Response
 	request *UnlockRepoForAuthenticatedUserReq
 }
 
@@ -2514,8 +2513,8 @@ Unlock an organization repository.
 
 https://developer.github.com/v3/migrations/orgs/#unlock-an-organization-repository
 */
-func UnlockRepoForOrg(ctx context.Context, req *UnlockRepoForOrgReq, opt ...options.Option) (*UnlockRepoForOrgResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func UnlockRepoForOrg(ctx context.Context, req *UnlockRepoForOrgReq, opt ...requests.Option) (*UnlockRepoForOrgResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2553,7 +2552,7 @@ Unlock an organization repository.
 
 https://developer.github.com/v3/migrations/orgs/#unlock-an-organization-repository
 */
-func (c Client) UnlockRepoForOrg(ctx context.Context, req *UnlockRepoForOrgReq, opt ...options.Option) (*UnlockRepoForOrgResponse, error) {
+func (c Client) UnlockRepoForOrg(ctx context.Context, req *UnlockRepoForOrgReq, opt ...requests.Option) (*UnlockRepoForOrgResponse, error) {
 	return UnlockRepoForOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -2577,8 +2576,8 @@ type UnlockRepoForOrgReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UnlockRepoForOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *UnlockRepoForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2624,7 +2623,7 @@ UnlockRepoForOrgResponse is a response for UnlockRepoForOrg
 https://developer.github.com/v3/migrations/orgs/#unlock-an-organization-repository
 */
 type UnlockRepoForOrgResponse struct {
-	common.Response
+	requests.Response
 	request *UnlockRepoForOrgReq
 	Data    bool
 }
@@ -2638,8 +2637,8 @@ Update an import.
 
 https://developer.github.com/v3/migrations/source_imports/#update-an-import
 */
-func UpdateImport(ctx context.Context, req *UpdateImportReq, opt ...options.Option) (*UpdateImportResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func UpdateImport(ctx context.Context, req *UpdateImportReq, opt ...requests.Option) (*UpdateImportResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2674,7 +2673,7 @@ Update an import.
 
 https://developer.github.com/v3/migrations/source_imports/#update-an-import
 */
-func (c Client) UpdateImport(ctx context.Context, req *UpdateImportReq, opt ...options.Option) (*UpdateImportResponse, error) {
+func (c Client) UpdateImport(ctx context.Context, req *UpdateImportReq, opt ...requests.Option) (*UpdateImportResponse, error) {
 	return UpdateImport(ctx, req, append(c, opt...)...)
 }
 
@@ -2691,8 +2690,8 @@ type UpdateImportReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UpdateImportReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *UpdateImportReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2757,7 +2756,7 @@ UpdateImportResponse is a response for UpdateImport
 https://developer.github.com/v3/migrations/source_imports/#update-an-import
 */
 type UpdateImportResponse struct {
-	common.Response
+	requests.Response
 	request *UpdateImportReq
 	Data    components.Import
 }

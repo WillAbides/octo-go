@@ -5,10 +5,9 @@ package apps
 import (
 	"context"
 	"fmt"
-	common "github.com/willabides/octo-go/common"
 	components "github.com/willabides/octo-go/components"
 	internal "github.com/willabides/octo-go/internal"
-	options "github.com/willabides/octo-go/options"
+	requests "github.com/willabides/octo-go/requests"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -17,15 +16,15 @@ import (
 func strPtr(s string) *string { return &s }
 
 // Client is a set of options to apply to requests
-type Client []options.Option
+type Client []requests.Option
 
 // NewClient returns a new Client
-func NewClient(opt ...options.Option) Client {
+func NewClient(opt ...requests.Option) Client {
 	return opt
 }
 
 // Apply implements options.Option
-func (c Client) Apply(opts *options.Options) error {
+func (c Client) Apply(opts *requests.Options) error {
 	for _, o := range c {
 		err := o.Apply(opts)
 		if err != nil {
@@ -44,8 +43,8 @@ Add a repository to an app installation.
 
 https://developer.github.com/v3/apps/installations/#add-a-repository-to-an-app-installation
 */
-func AddRepoToInstallation(ctx context.Context, req *AddRepoToInstallationReq, opt ...options.Option) (*AddRepoToInstallationResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func AddRepoToInstallation(ctx context.Context, req *AddRepoToInstallationReq, opt ...requests.Option) (*AddRepoToInstallationResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -79,7 +78,7 @@ Add a repository to an app installation.
 
 https://developer.github.com/v3/apps/installations/#add-a-repository-to-an-app-installation
 */
-func (c Client) AddRepoToInstallation(ctx context.Context, req *AddRepoToInstallationReq, opt ...options.Option) (*AddRepoToInstallationResponse, error) {
+func (c Client) AddRepoToInstallation(ctx context.Context, req *AddRepoToInstallationReq, opt ...requests.Option) (*AddRepoToInstallationResponse, error) {
 	return AddRepoToInstallation(ctx, req, append(c, opt...)...)
 }
 
@@ -105,8 +104,8 @@ type AddRepoToInstallationReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *AddRepoToInstallationReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *AddRepoToInstallationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -152,7 +151,7 @@ AddRepoToInstallationResponse is a response for AddRepoToInstallation
 https://developer.github.com/v3/apps/installations/#add-a-repository-to-an-app-installation
 */
 type AddRepoToInstallationResponse struct {
-	common.Response
+	requests.Response
 	request *AddRepoToInstallationReq
 }
 
@@ -165,8 +164,8 @@ Check an authorization.
 
 https://developer.github.com/v3/apps/oauth_applications/#check-an-authorization
 */
-func CheckAuthorization(ctx context.Context, req *CheckAuthorizationReq, opt ...options.Option) (*CheckAuthorizationResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CheckAuthorization(ctx context.Context, req *CheckAuthorizationReq, opt ...requests.Option) (*CheckAuthorizationResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -201,7 +200,7 @@ Check an authorization.
 
 https://developer.github.com/v3/apps/oauth_applications/#check-an-authorization
 */
-func (c Client) CheckAuthorization(ctx context.Context, req *CheckAuthorizationReq, opt ...options.Option) (*CheckAuthorizationResponse, error) {
+func (c Client) CheckAuthorization(ctx context.Context, req *CheckAuthorizationReq, opt ...requests.Option) (*CheckAuthorizationResponse, error) {
 	return CheckAuthorization(ctx, req, append(c, opt...)...)
 }
 
@@ -217,8 +216,8 @@ type CheckAuthorizationReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CheckAuthorizationReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CheckAuthorizationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -322,7 +321,7 @@ CheckAuthorizationResponse is a response for CheckAuthorization
 https://developer.github.com/v3/apps/oauth_applications/#check-an-authorization
 */
 type CheckAuthorizationResponse struct {
-	common.Response
+	requests.Response
 	request *CheckAuthorizationReq
 	Data    CheckAuthorizationResponseBody
 }
@@ -336,8 +335,8 @@ Check a token.
 
 https://developer.github.com/v3/apps/oauth_applications/#check-a-token
 */
-func CheckToken(ctx context.Context, req *CheckTokenReq, opt ...options.Option) (*CheckTokenResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CheckToken(ctx context.Context, req *CheckTokenReq, opt ...requests.Option) (*CheckTokenResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -372,7 +371,7 @@ Check a token.
 
 https://developer.github.com/v3/apps/oauth_applications/#check-a-token
 */
-func (c Client) CheckToken(ctx context.Context, req *CheckTokenReq, opt ...options.Option) (*CheckTokenResponse, error) {
+func (c Client) CheckToken(ctx context.Context, req *CheckTokenReq, opt ...requests.Option) (*CheckTokenResponse, error) {
 	return CheckToken(ctx, req, append(c, opt...)...)
 }
 
@@ -388,8 +387,8 @@ type CheckTokenReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CheckTokenReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CheckTokenReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -449,7 +448,7 @@ CheckTokenResponse is a response for CheckToken
 https://developer.github.com/v3/apps/oauth_applications/#check-a-token
 */
 type CheckTokenResponse struct {
-	common.Response
+	requests.Response
 	request *CheckTokenReq
 	Data    components.Authorization
 }
@@ -463,8 +462,8 @@ Create a content attachment.
 
 https://developer.github.com/v3/apps/installations/#create-a-content-attachment
 */
-func CreateContentAttachment(ctx context.Context, req *CreateContentAttachmentReq, opt ...options.Option) (*CreateContentAttachmentResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateContentAttachment(ctx context.Context, req *CreateContentAttachmentReq, opt ...requests.Option) (*CreateContentAttachmentResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -499,7 +498,7 @@ Create a content attachment.
 
 https://developer.github.com/v3/apps/installations/#create-a-content-attachment
 */
-func (c Client) CreateContentAttachment(ctx context.Context, req *CreateContentAttachmentReq, opt ...options.Option) (*CreateContentAttachmentResponse, error) {
+func (c Client) CreateContentAttachment(ctx context.Context, req *CreateContentAttachmentReq, opt ...requests.Option) (*CreateContentAttachmentResponse, error) {
 	return CreateContentAttachment(ctx, req, append(c, opt...)...)
 }
 
@@ -523,8 +522,8 @@ type CreateContentAttachmentReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateContentAttachmentReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateContentAttachmentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -587,7 +586,7 @@ CreateContentAttachmentResponse is a response for CreateContentAttachment
 https://developer.github.com/v3/apps/installations/#create-a-content-attachment
 */
 type CreateContentAttachmentResponse struct {
-	common.Response
+	requests.Response
 	request *CreateContentAttachmentReq
 	Data    components.ContentReferenceAttachment
 }
@@ -601,8 +600,8 @@ Create a GitHub App from a manifest.
 
 https://developer.github.com/v3/apps/#create-a-github-app-from-a-manifest
 */
-func CreateFromManifest(ctx context.Context, req *CreateFromManifestReq, opt ...options.Option) (*CreateFromManifestResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateFromManifest(ctx context.Context, req *CreateFromManifestReq, opt ...requests.Option) (*CreateFromManifestResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -637,7 +636,7 @@ Create a GitHub App from a manifest.
 
 https://developer.github.com/v3/apps/#create-a-github-app-from-a-manifest
 */
-func (c Client) CreateFromManifest(ctx context.Context, req *CreateFromManifestReq, opt ...options.Option) (*CreateFromManifestResponse, error) {
+func (c Client) CreateFromManifest(ctx context.Context, req *CreateFromManifestReq, opt ...requests.Option) (*CreateFromManifestResponse, error) {
 	return CreateFromManifest(ctx, req, append(c, opt...)...)
 }
 
@@ -654,8 +653,8 @@ type CreateFromManifestReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateFromManifestReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateFromManifestReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -758,7 +757,7 @@ CreateFromManifestResponse is a response for CreateFromManifest
 https://developer.github.com/v3/apps/#create-a-github-app-from-a-manifest
 */
 type CreateFromManifestResponse struct {
-	common.Response
+	requests.Response
 	request *CreateFromManifestReq
 	Data    CreateFromManifestResponseBody
 }
@@ -772,8 +771,8 @@ Create an installation access token for an app.
 
 https://developer.github.com/v3/apps/#create-an-installation-access-token-for-an-app
 */
-func CreateInstallationAccessToken(ctx context.Context, req *CreateInstallationAccessTokenReq, opt ...options.Option) (*CreateInstallationAccessTokenResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateInstallationAccessToken(ctx context.Context, req *CreateInstallationAccessTokenReq, opt ...requests.Option) (*CreateInstallationAccessTokenResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -808,7 +807,7 @@ Create an installation access token for an app.
 
 https://developer.github.com/v3/apps/#create-an-installation-access-token-for-an-app
 */
-func (c Client) CreateInstallationAccessToken(ctx context.Context, req *CreateInstallationAccessTokenReq, opt ...options.Option) (*CreateInstallationAccessTokenResponse, error) {
+func (c Client) CreateInstallationAccessToken(ctx context.Context, req *CreateInstallationAccessTokenReq, opt ...requests.Option) (*CreateInstallationAccessTokenResponse, error) {
 	return CreateInstallationAccessToken(ctx, req, append(c, opt...)...)
 }
 
@@ -832,8 +831,8 @@ type CreateInstallationAccessTokenReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateInstallationAccessTokenReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateInstallationAccessTokenReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -900,7 +899,7 @@ CreateInstallationAccessTokenResponse is a response for CreateInstallationAccess
 https://developer.github.com/v3/apps/#create-an-installation-access-token-for-an-app
 */
 type CreateInstallationAccessTokenResponse struct {
-	common.Response
+	requests.Response
 	request *CreateInstallationAccessTokenReq
 	Data    components.InstallationToken
 }
@@ -914,8 +913,8 @@ Delete an app authorization.
 
 https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-authorization
 */
-func DeleteAuthorization(ctx context.Context, req *DeleteAuthorizationReq, opt ...options.Option) (*DeleteAuthorizationResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DeleteAuthorization(ctx context.Context, req *DeleteAuthorizationReq, opt ...requests.Option) (*DeleteAuthorizationResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -949,7 +948,7 @@ Delete an app authorization.
 
 https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-authorization
 */
-func (c Client) DeleteAuthorization(ctx context.Context, req *DeleteAuthorizationReq, opt ...options.Option) (*DeleteAuthorizationResponse, error) {
+func (c Client) DeleteAuthorization(ctx context.Context, req *DeleteAuthorizationReq, opt ...requests.Option) (*DeleteAuthorizationResponse, error) {
 	return DeleteAuthorization(ctx, req, append(c, opt...)...)
 }
 
@@ -965,8 +964,8 @@ type DeleteAuthorizationReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeleteAuthorizationReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeleteAuthorizationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1023,7 +1022,7 @@ DeleteAuthorizationResponse is a response for DeleteAuthorization
 https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-authorization
 */
 type DeleteAuthorizationResponse struct {
-	common.Response
+	requests.Response
 	request *DeleteAuthorizationReq
 }
 
@@ -1036,8 +1035,8 @@ Delete an installation for the authenticated app.
 
 https://developer.github.com/v3/apps/#delete-an-installation-for-the-authenticated-app
 */
-func DeleteInstallation(ctx context.Context, req *DeleteInstallationReq, opt ...options.Option) (*DeleteInstallationResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DeleteInstallation(ctx context.Context, req *DeleteInstallationReq, opt ...requests.Option) (*DeleteInstallationResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1075,7 +1074,7 @@ Delete an installation for the authenticated app.
 
 https://developer.github.com/v3/apps/#delete-an-installation-for-the-authenticated-app
 */
-func (c Client) DeleteInstallation(ctx context.Context, req *DeleteInstallationReq, opt ...options.Option) (*DeleteInstallationResponse, error) {
+func (c Client) DeleteInstallation(ctx context.Context, req *DeleteInstallationReq, opt ...requests.Option) (*DeleteInstallationResponse, error) {
 	return DeleteInstallation(ctx, req, append(c, opt...)...)
 }
 
@@ -1098,8 +1097,8 @@ type DeleteInstallationReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeleteInstallationReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeleteInstallationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1145,7 +1144,7 @@ DeleteInstallationResponse is a response for DeleteInstallation
 https://developer.github.com/v3/apps/#delete-an-installation-for-the-authenticated-app
 */
 type DeleteInstallationResponse struct {
-	common.Response
+	requests.Response
 	request *DeleteInstallationReq
 	Data    bool
 }
@@ -1159,8 +1158,8 @@ Delete an app token.
 
 https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-token
 */
-func DeleteToken(ctx context.Context, req *DeleteTokenReq, opt ...options.Option) (*DeleteTokenResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DeleteToken(ctx context.Context, req *DeleteTokenReq, opt ...requests.Option) (*DeleteTokenResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1194,7 +1193,7 @@ Delete an app token.
 
 https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-token
 */
-func (c Client) DeleteToken(ctx context.Context, req *DeleteTokenReq, opt ...options.Option) (*DeleteTokenResponse, error) {
+func (c Client) DeleteToken(ctx context.Context, req *DeleteTokenReq, opt ...requests.Option) (*DeleteTokenResponse, error) {
 	return DeleteToken(ctx, req, append(c, opt...)...)
 }
 
@@ -1210,8 +1209,8 @@ type DeleteTokenReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeleteTokenReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeleteTokenReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1268,7 +1267,7 @@ DeleteTokenResponse is a response for DeleteToken
 https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-token
 */
 type DeleteTokenResponse struct {
-	common.Response
+	requests.Response
 	request *DeleteTokenReq
 }
 
@@ -1281,8 +1280,8 @@ Get the authenticated app.
 
 https://developer.github.com/v3/apps/#get-the-authenticated-app
 */
-func GetAuthenticated(ctx context.Context, req *GetAuthenticatedReq, opt ...options.Option) (*GetAuthenticatedResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetAuthenticated(ctx context.Context, req *GetAuthenticatedReq, opt ...requests.Option) (*GetAuthenticatedResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1317,7 +1316,7 @@ Get the authenticated app.
 
 https://developer.github.com/v3/apps/#get-the-authenticated-app
 */
-func (c Client) GetAuthenticated(ctx context.Context, req *GetAuthenticatedReq, opt ...options.Option) (*GetAuthenticatedResponse, error) {
+func (c Client) GetAuthenticated(ctx context.Context, req *GetAuthenticatedReq, opt ...requests.Option) (*GetAuthenticatedResponse, error) {
 	return GetAuthenticated(ctx, req, append(c, opt...)...)
 }
 
@@ -1337,8 +1336,8 @@ type GetAuthenticatedReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1384,7 +1383,7 @@ GetAuthenticatedResponse is a response for GetAuthenticated
 https://developer.github.com/v3/apps/#get-the-authenticated-app
 */
 type GetAuthenticatedResponse struct {
-	common.Response
+	requests.Response
 	request *GetAuthenticatedReq
 	Data    components.Integration
 }
@@ -1398,8 +1397,8 @@ Get an app.
 
 https://developer.github.com/v3/apps/#get-an-app
 */
-func GetBySlug(ctx context.Context, req *GetBySlugReq, opt ...options.Option) (*GetBySlugResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetBySlug(ctx context.Context, req *GetBySlugReq, opt ...requests.Option) (*GetBySlugResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1434,7 +1433,7 @@ Get an app.
 
 https://developer.github.com/v3/apps/#get-an-app
 */
-func (c Client) GetBySlug(ctx context.Context, req *GetBySlugReq, opt ...options.Option) (*GetBySlugResponse, error) {
+func (c Client) GetBySlug(ctx context.Context, req *GetBySlugReq, opt ...requests.Option) (*GetBySlugResponse, error) {
 	return GetBySlug(ctx, req, append(c, opt...)...)
 }
 
@@ -1457,8 +1456,8 @@ type GetBySlugReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetBySlugReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetBySlugReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1504,7 +1503,7 @@ GetBySlugResponse is a response for GetBySlug
 https://developer.github.com/v3/apps/#get-an-app
 */
 type GetBySlugResponse struct {
-	common.Response
+	requests.Response
 	request *GetBySlugReq
 	Data    components.Integration
 }
@@ -1518,8 +1517,8 @@ Get an installation for the authenticated app.
 
 https://developer.github.com/v3/apps/#get-an-installation-for-the-authenticated-app
 */
-func GetInstallation(ctx context.Context, req *GetInstallationReq, opt ...options.Option) (*GetInstallationResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetInstallation(ctx context.Context, req *GetInstallationReq, opt ...requests.Option) (*GetInstallationResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1554,7 +1553,7 @@ Get an installation for the authenticated app.
 
 https://developer.github.com/v3/apps/#get-an-installation-for-the-authenticated-app
 */
-func (c Client) GetInstallation(ctx context.Context, req *GetInstallationReq, opt ...options.Option) (*GetInstallationResponse, error) {
+func (c Client) GetInstallation(ctx context.Context, req *GetInstallationReq, opt ...requests.Option) (*GetInstallationResponse, error) {
 	return GetInstallation(ctx, req, append(c, opt...)...)
 }
 
@@ -1577,8 +1576,8 @@ type GetInstallationReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetInstallationReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetInstallationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1624,7 +1623,7 @@ GetInstallationResponse is a response for GetInstallation
 https://developer.github.com/v3/apps/#get-an-installation-for-the-authenticated-app
 */
 type GetInstallationResponse struct {
-	common.Response
+	requests.Response
 	request *GetInstallationReq
 	Data    components.Installation
 }
@@ -1638,8 +1637,8 @@ Get an organization installation for the authenticated app.
 
 https://developer.github.com/v3/apps/#get-an-organization-installation-for-the-authenticated-app
 */
-func GetOrgInstallation(ctx context.Context, req *GetOrgInstallationReq, opt ...options.Option) (*GetOrgInstallationResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetOrgInstallation(ctx context.Context, req *GetOrgInstallationReq, opt ...requests.Option) (*GetOrgInstallationResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1674,7 +1673,7 @@ Get an organization installation for the authenticated app.
 
 https://developer.github.com/v3/apps/#get-an-organization-installation-for-the-authenticated-app
 */
-func (c Client) GetOrgInstallation(ctx context.Context, req *GetOrgInstallationReq, opt ...options.Option) (*GetOrgInstallationResponse, error) {
+func (c Client) GetOrgInstallation(ctx context.Context, req *GetOrgInstallationReq, opt ...requests.Option) (*GetOrgInstallationResponse, error) {
 	return GetOrgInstallation(ctx, req, append(c, opt...)...)
 }
 
@@ -1695,8 +1694,8 @@ type GetOrgInstallationReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetOrgInstallationReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetOrgInstallationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1742,7 +1741,7 @@ GetOrgInstallationResponse is a response for GetOrgInstallation
 https://developer.github.com/v3/apps/#get-an-organization-installation-for-the-authenticated-app
 */
 type GetOrgInstallationResponse struct {
-	common.Response
+	requests.Response
 	request *GetOrgInstallationReq
 	Data    components.Installation
 }
@@ -1756,8 +1755,8 @@ Get a repository installation for the authenticated app.
 
 https://developer.github.com/v3/apps/#get-a-repository-installation-for-the-authenticated-app
 */
-func GetRepoInstallation(ctx context.Context, req *GetRepoInstallationReq, opt ...options.Option) (*GetRepoInstallationResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetRepoInstallation(ctx context.Context, req *GetRepoInstallationReq, opt ...requests.Option) (*GetRepoInstallationResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1792,7 +1791,7 @@ Get a repository installation for the authenticated app.
 
 https://developer.github.com/v3/apps/#get-a-repository-installation-for-the-authenticated-app
 */
-func (c Client) GetRepoInstallation(ctx context.Context, req *GetRepoInstallationReq, opt ...options.Option) (*GetRepoInstallationResponse, error) {
+func (c Client) GetRepoInstallation(ctx context.Context, req *GetRepoInstallationReq, opt ...requests.Option) (*GetRepoInstallationResponse, error) {
 	return GetRepoInstallation(ctx, req, append(c, opt...)...)
 }
 
@@ -1814,8 +1813,8 @@ type GetRepoInstallationReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetRepoInstallationReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetRepoInstallationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1861,7 +1860,7 @@ GetRepoInstallationResponse is a response for GetRepoInstallation
 https://developer.github.com/v3/apps/#get-a-repository-installation-for-the-authenticated-app
 */
 type GetRepoInstallationResponse struct {
-	common.Response
+	requests.Response
 	request *GetRepoInstallationReq
 	Data    components.Installation
 }
@@ -1875,8 +1874,8 @@ Get a subscription plan for an account.
 
 https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account
 */
-func GetSubscriptionPlanForAccount(ctx context.Context, req *GetSubscriptionPlanForAccountReq, opt ...options.Option) (*GetSubscriptionPlanForAccountResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetSubscriptionPlanForAccount(ctx context.Context, req *GetSubscriptionPlanForAccountReq, opt ...requests.Option) (*GetSubscriptionPlanForAccountResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1911,7 +1910,7 @@ Get a subscription plan for an account.
 
 https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account
 */
-func (c Client) GetSubscriptionPlanForAccount(ctx context.Context, req *GetSubscriptionPlanForAccountReq, opt ...options.Option) (*GetSubscriptionPlanForAccountResponse, error) {
+func (c Client) GetSubscriptionPlanForAccount(ctx context.Context, req *GetSubscriptionPlanForAccountReq, opt ...requests.Option) (*GetSubscriptionPlanForAccountResponse, error) {
 	return GetSubscriptionPlanForAccount(ctx, req, append(c, opt...)...)
 }
 
@@ -1928,8 +1927,8 @@ type GetSubscriptionPlanForAccountReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetSubscriptionPlanForAccountReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetSubscriptionPlanForAccountReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1975,7 +1974,7 @@ GetSubscriptionPlanForAccountResponse is a response for GetSubscriptionPlanForAc
 https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account
 */
 type GetSubscriptionPlanForAccountResponse struct {
-	common.Response
+	requests.Response
 	request *GetSubscriptionPlanForAccountReq
 	Data    components.MarketplacePurchase
 }
@@ -1989,8 +1988,8 @@ Get a subscription plan for an account (stubbed).
 
 https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account-stubbed
 */
-func GetSubscriptionPlanForAccountStubbed(ctx context.Context, req *GetSubscriptionPlanForAccountStubbedReq, opt ...options.Option) (*GetSubscriptionPlanForAccountStubbedResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetSubscriptionPlanForAccountStubbed(ctx context.Context, req *GetSubscriptionPlanForAccountStubbedReq, opt ...requests.Option) (*GetSubscriptionPlanForAccountStubbedResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2025,7 +2024,7 @@ Get a subscription plan for an account (stubbed).
 
 https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account-stubbed
 */
-func (c Client) GetSubscriptionPlanForAccountStubbed(ctx context.Context, req *GetSubscriptionPlanForAccountStubbedReq, opt ...options.Option) (*GetSubscriptionPlanForAccountStubbedResponse, error) {
+func (c Client) GetSubscriptionPlanForAccountStubbed(ctx context.Context, req *GetSubscriptionPlanForAccountStubbedReq, opt ...requests.Option) (*GetSubscriptionPlanForAccountStubbedResponse, error) {
 	return GetSubscriptionPlanForAccountStubbed(ctx, req, append(c, opt...)...)
 }
 
@@ -2042,8 +2041,8 @@ type GetSubscriptionPlanForAccountStubbedReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetSubscriptionPlanForAccountStubbedReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetSubscriptionPlanForAccountStubbedReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2089,7 +2088,7 @@ GetSubscriptionPlanForAccountStubbedResponse is a response for GetSubscriptionPl
 https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account-stubbed
 */
 type GetSubscriptionPlanForAccountStubbedResponse struct {
-	common.Response
+	requests.Response
 	request *GetSubscriptionPlanForAccountStubbedReq
 	Data    components.MarketplacePurchase
 }
@@ -2103,8 +2102,8 @@ Get a user installation for the authenticated app.
 
 https://developer.github.com/v3/apps/#get-a-user-installation-for-the-authenticated-app
 */
-func GetUserInstallation(ctx context.Context, req *GetUserInstallationReq, opt ...options.Option) (*GetUserInstallationResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetUserInstallation(ctx context.Context, req *GetUserInstallationReq, opt ...requests.Option) (*GetUserInstallationResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2139,7 +2138,7 @@ Get a user installation for the authenticated app.
 
 https://developer.github.com/v3/apps/#get-a-user-installation-for-the-authenticated-app
 */
-func (c Client) GetUserInstallation(ctx context.Context, req *GetUserInstallationReq, opt ...options.Option) (*GetUserInstallationResponse, error) {
+func (c Client) GetUserInstallation(ctx context.Context, req *GetUserInstallationReq, opt ...requests.Option) (*GetUserInstallationResponse, error) {
 	return GetUserInstallation(ctx, req, append(c, opt...)...)
 }
 
@@ -2160,8 +2159,8 @@ type GetUserInstallationReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetUserInstallationReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetUserInstallationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2207,7 +2206,7 @@ GetUserInstallationResponse is a response for GetUserInstallation
 https://developer.github.com/v3/apps/#get-a-user-installation-for-the-authenticated-app
 */
 type GetUserInstallationResponse struct {
-	common.Response
+	requests.Response
 	request *GetUserInstallationReq
 	Data    components.Installation
 }
@@ -2221,8 +2220,8 @@ List accounts for a plan.
 
 https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan
 */
-func ListAccountsForPlan(ctx context.Context, req *ListAccountsForPlanReq, opt ...options.Option) (*ListAccountsForPlanResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListAccountsForPlan(ctx context.Context, req *ListAccountsForPlanReq, opt ...requests.Option) (*ListAccountsForPlanResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2257,7 +2256,7 @@ List accounts for a plan.
 
 https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan
 */
-func (c Client) ListAccountsForPlan(ctx context.Context, req *ListAccountsForPlanReq, opt ...options.Option) (*ListAccountsForPlanResponse, error) {
+func (c Client) ListAccountsForPlan(ctx context.Context, req *ListAccountsForPlanReq, opt ...requests.Option) (*ListAccountsForPlanResponse, error) {
 	return ListAccountsForPlan(ctx, req, append(c, opt...)...)
 }
 
@@ -2292,8 +2291,8 @@ type ListAccountsForPlanReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListAccountsForPlanReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListAccountsForPlanReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2351,7 +2350,7 @@ ListAccountsForPlanResponse is a response for ListAccountsForPlan
 https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan
 */
 type ListAccountsForPlanResponse struct {
-	common.Response
+	requests.Response
 	request *ListAccountsForPlanReq
 	Data    []components.MarketplacePurchase
 }
@@ -2365,8 +2364,8 @@ List accounts for a plan (stubbed).
 
 https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan-stubbed
 */
-func ListAccountsForPlanStubbed(ctx context.Context, req *ListAccountsForPlanStubbedReq, opt ...options.Option) (*ListAccountsForPlanStubbedResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListAccountsForPlanStubbed(ctx context.Context, req *ListAccountsForPlanStubbedReq, opt ...requests.Option) (*ListAccountsForPlanStubbedResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2401,7 +2400,7 @@ List accounts for a plan (stubbed).
 
 https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan-stubbed
 */
-func (c Client) ListAccountsForPlanStubbed(ctx context.Context, req *ListAccountsForPlanStubbedReq, opt ...options.Option) (*ListAccountsForPlanStubbedResponse, error) {
+func (c Client) ListAccountsForPlanStubbed(ctx context.Context, req *ListAccountsForPlanStubbedReq, opt ...requests.Option) (*ListAccountsForPlanStubbedResponse, error) {
 	return ListAccountsForPlanStubbed(ctx, req, append(c, opt...)...)
 }
 
@@ -2436,8 +2435,8 @@ type ListAccountsForPlanStubbedReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListAccountsForPlanStubbedReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListAccountsForPlanStubbedReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2495,7 +2494,7 @@ ListAccountsForPlanStubbedResponse is a response for ListAccountsForPlanStubbed
 https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan-stubbed
 */
 type ListAccountsForPlanStubbedResponse struct {
-	common.Response
+	requests.Response
 	request *ListAccountsForPlanStubbedReq
 	Data    []components.MarketplacePurchase
 }
@@ -2509,8 +2508,8 @@ List repositories accessible to the user access token.
 
 https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-access-token
 */
-func ListInstallationReposForAuthenticatedUser(ctx context.Context, req *ListInstallationReposForAuthenticatedUserReq, opt ...options.Option) (*ListInstallationReposForAuthenticatedUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListInstallationReposForAuthenticatedUser(ctx context.Context, req *ListInstallationReposForAuthenticatedUserReq, opt ...requests.Option) (*ListInstallationReposForAuthenticatedUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2545,7 +2544,7 @@ List repositories accessible to the user access token.
 
 https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-access-token
 */
-func (c Client) ListInstallationReposForAuthenticatedUser(ctx context.Context, req *ListInstallationReposForAuthenticatedUserReq, opt ...options.Option) (*ListInstallationReposForAuthenticatedUserResponse, error) {
+func (c Client) ListInstallationReposForAuthenticatedUser(ctx context.Context, req *ListInstallationReposForAuthenticatedUserReq, opt ...requests.Option) (*ListInstallationReposForAuthenticatedUserResponse, error) {
 	return ListInstallationReposForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
@@ -2581,8 +2580,8 @@ type ListInstallationReposForAuthenticatedUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListInstallationReposForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListInstallationReposForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2648,7 +2647,7 @@ ListInstallationReposForAuthenticatedUserResponse is a response for ListInstalla
 https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-access-token
 */
 type ListInstallationReposForAuthenticatedUserResponse struct {
-	common.Response
+	requests.Response
 	request *ListInstallationReposForAuthenticatedUserReq
 	Data    ListInstallationReposForAuthenticatedUserResponseBody
 }
@@ -2662,8 +2661,8 @@ List installations for the authenticated app.
 
 https://developer.github.com/v3/apps/#list-installations-for-the-authenticated-app
 */
-func ListInstallations(ctx context.Context, req *ListInstallationsReq, opt ...options.Option) (*ListInstallationsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListInstallations(ctx context.Context, req *ListInstallationsReq, opt ...requests.Option) (*ListInstallationsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2698,7 +2697,7 @@ List installations for the authenticated app.
 
 https://developer.github.com/v3/apps/#list-installations-for-the-authenticated-app
 */
-func (c Client) ListInstallations(ctx context.Context, req *ListInstallationsReq, opt ...options.Option) (*ListInstallationsResponse, error) {
+func (c Client) ListInstallations(ctx context.Context, req *ListInstallationsReq, opt ...requests.Option) (*ListInstallationsResponse, error) {
 	return ListInstallations(ctx, req, append(c, opt...)...)
 }
 
@@ -2732,8 +2731,8 @@ type ListInstallationsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListInstallationsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListInstallationsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2791,7 +2790,7 @@ ListInstallationsResponse is a response for ListInstallations
 https://developer.github.com/v3/apps/#list-installations-for-the-authenticated-app
 */
 type ListInstallationsResponse struct {
-	common.Response
+	requests.Response
 	request *ListInstallationsReq
 	Data    []components.Installation
 }
@@ -2805,8 +2804,8 @@ List app installations accessible to the user access token.
 
 https://developer.github.com/v3/apps/installations/#list-app-installations-accessible-to-the-user-access-token
 */
-func ListInstallationsForAuthenticatedUser(ctx context.Context, req *ListInstallationsForAuthenticatedUserReq, opt ...options.Option) (*ListInstallationsForAuthenticatedUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListInstallationsForAuthenticatedUser(ctx context.Context, req *ListInstallationsForAuthenticatedUserReq, opt ...requests.Option) (*ListInstallationsForAuthenticatedUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2841,7 +2840,7 @@ List app installations accessible to the user access token.
 
 https://developer.github.com/v3/apps/installations/#list-app-installations-accessible-to-the-user-access-token
 */
-func (c Client) ListInstallationsForAuthenticatedUser(ctx context.Context, req *ListInstallationsForAuthenticatedUserReq, opt ...options.Option) (*ListInstallationsForAuthenticatedUserResponse, error) {
+func (c Client) ListInstallationsForAuthenticatedUser(ctx context.Context, req *ListInstallationsForAuthenticatedUserReq, opt ...requests.Option) (*ListInstallationsForAuthenticatedUserResponse, error) {
 	return ListInstallationsForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
@@ -2867,8 +2866,8 @@ type ListInstallationsForAuthenticatedUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListInstallationsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListInstallationsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2930,7 +2929,7 @@ ListInstallationsForAuthenticatedUserResponse is a response for ListInstallation
 https://developer.github.com/v3/apps/installations/#list-app-installations-accessible-to-the-user-access-token
 */
 type ListInstallationsForAuthenticatedUserResponse struct {
-	common.Response
+	requests.Response
 	request *ListInstallationsForAuthenticatedUserReq
 	Data    ListInstallationsForAuthenticatedUserResponseBody
 }
@@ -2944,8 +2943,8 @@ List plans.
 
 https://developer.github.com/v3/apps/marketplace/#list-plans
 */
-func ListPlans(ctx context.Context, req *ListPlansReq, opt ...options.Option) (*ListPlansResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListPlans(ctx context.Context, req *ListPlansReq, opt ...requests.Option) (*ListPlansResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2980,7 +2979,7 @@ List plans.
 
 https://developer.github.com/v3/apps/marketplace/#list-plans
 */
-func (c Client) ListPlans(ctx context.Context, req *ListPlansReq, opt ...options.Option) (*ListPlansResponse, error) {
+func (c Client) ListPlans(ctx context.Context, req *ListPlansReq, opt ...requests.Option) (*ListPlansResponse, error) {
 	return ListPlans(ctx, req, append(c, opt...)...)
 }
 
@@ -3000,8 +2999,8 @@ type ListPlansReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListPlansReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListPlansReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3053,7 +3052,7 @@ ListPlansResponse is a response for ListPlans
 https://developer.github.com/v3/apps/marketplace/#list-plans
 */
 type ListPlansResponse struct {
-	common.Response
+	requests.Response
 	request *ListPlansReq
 	Data    []components.MarketplaceListingPlan
 }
@@ -3067,8 +3066,8 @@ List plans (stubbed).
 
 https://developer.github.com/v3/apps/marketplace/#list-plans-stubbed
 */
-func ListPlansStubbed(ctx context.Context, req *ListPlansStubbedReq, opt ...options.Option) (*ListPlansStubbedResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListPlansStubbed(ctx context.Context, req *ListPlansStubbedReq, opt ...requests.Option) (*ListPlansStubbedResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3103,7 +3102,7 @@ List plans (stubbed).
 
 https://developer.github.com/v3/apps/marketplace/#list-plans-stubbed
 */
-func (c Client) ListPlansStubbed(ctx context.Context, req *ListPlansStubbedReq, opt ...options.Option) (*ListPlansStubbedResponse, error) {
+func (c Client) ListPlansStubbed(ctx context.Context, req *ListPlansStubbedReq, opt ...requests.Option) (*ListPlansStubbedResponse, error) {
 	return ListPlansStubbed(ctx, req, append(c, opt...)...)
 }
 
@@ -3123,8 +3122,8 @@ type ListPlansStubbedReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListPlansStubbedReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListPlansStubbedReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3176,7 +3175,7 @@ ListPlansStubbedResponse is a response for ListPlansStubbed
 https://developer.github.com/v3/apps/marketplace/#list-plans-stubbed
 */
 type ListPlansStubbedResponse struct {
-	common.Response
+	requests.Response
 	request *ListPlansStubbedReq
 	Data    []components.MarketplaceListingPlan
 }
@@ -3190,8 +3189,8 @@ List repositories accessible to the app installation.
 
 https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-app-installation
 */
-func ListReposAccessibleToInstallation(ctx context.Context, req *ListReposAccessibleToInstallationReq, opt ...options.Option) (*ListReposAccessibleToInstallationResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListReposAccessibleToInstallation(ctx context.Context, req *ListReposAccessibleToInstallationReq, opt ...requests.Option) (*ListReposAccessibleToInstallationResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3226,7 +3225,7 @@ List repositories accessible to the app installation.
 
 https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-app-installation
 */
-func (c Client) ListReposAccessibleToInstallation(ctx context.Context, req *ListReposAccessibleToInstallationReq, opt ...options.Option) (*ListReposAccessibleToInstallationResponse, error) {
+func (c Client) ListReposAccessibleToInstallation(ctx context.Context, req *ListReposAccessibleToInstallationReq, opt ...requests.Option) (*ListReposAccessibleToInstallationResponse, error) {
 	return ListReposAccessibleToInstallation(ctx, req, append(c, opt...)...)
 }
 
@@ -3259,8 +3258,8 @@ type ListReposAccessibleToInstallationReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListReposAccessibleToInstallationReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListReposAccessibleToInstallationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3326,7 +3325,7 @@ ListReposAccessibleToInstallationResponse is a response for ListReposAccessibleT
 https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-app-installation
 */
 type ListReposAccessibleToInstallationResponse struct {
-	common.Response
+	requests.Response
 	request *ListReposAccessibleToInstallationReq
 	Data    ListReposAccessibleToInstallationResponseBody
 }
@@ -3340,8 +3339,8 @@ List subscriptions for the authenticated user.
 
 https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user
 */
-func ListSubscriptionsForAuthenticatedUser(ctx context.Context, req *ListSubscriptionsForAuthenticatedUserReq, opt ...options.Option) (*ListSubscriptionsForAuthenticatedUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListSubscriptionsForAuthenticatedUser(ctx context.Context, req *ListSubscriptionsForAuthenticatedUserReq, opt ...requests.Option) (*ListSubscriptionsForAuthenticatedUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3376,7 +3375,7 @@ List subscriptions for the authenticated user.
 
 https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user
 */
-func (c Client) ListSubscriptionsForAuthenticatedUser(ctx context.Context, req *ListSubscriptionsForAuthenticatedUserReq, opt ...options.Option) (*ListSubscriptionsForAuthenticatedUserResponse, error) {
+func (c Client) ListSubscriptionsForAuthenticatedUser(ctx context.Context, req *ListSubscriptionsForAuthenticatedUserReq, opt ...requests.Option) (*ListSubscriptionsForAuthenticatedUserResponse, error) {
 	return ListSubscriptionsForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
@@ -3396,8 +3395,8 @@ type ListSubscriptionsForAuthenticatedUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListSubscriptionsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListSubscriptionsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3449,7 +3448,7 @@ ListSubscriptionsForAuthenticatedUserResponse is a response for ListSubscription
 https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user
 */
 type ListSubscriptionsForAuthenticatedUserResponse struct {
-	common.Response
+	requests.Response
 	request *ListSubscriptionsForAuthenticatedUserReq
 	Data    []components.UserMarketplacePurchase
 }
@@ -3463,8 +3462,8 @@ List subscriptions for the authenticated user (stubbed).
 
 https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user-stubbed
 */
-func ListSubscriptionsForAuthenticatedUserStubbed(ctx context.Context, req *ListSubscriptionsForAuthenticatedUserStubbedReq, opt ...options.Option) (*ListSubscriptionsForAuthenticatedUserStubbedResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListSubscriptionsForAuthenticatedUserStubbed(ctx context.Context, req *ListSubscriptionsForAuthenticatedUserStubbedReq, opt ...requests.Option) (*ListSubscriptionsForAuthenticatedUserStubbedResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3499,7 +3498,7 @@ List subscriptions for the authenticated user (stubbed).
 
 https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user-stubbed
 */
-func (c Client) ListSubscriptionsForAuthenticatedUserStubbed(ctx context.Context, req *ListSubscriptionsForAuthenticatedUserStubbedReq, opt ...options.Option) (*ListSubscriptionsForAuthenticatedUserStubbedResponse, error) {
+func (c Client) ListSubscriptionsForAuthenticatedUserStubbed(ctx context.Context, req *ListSubscriptionsForAuthenticatedUserStubbedReq, opt ...requests.Option) (*ListSubscriptionsForAuthenticatedUserStubbedResponse, error) {
 	return ListSubscriptionsForAuthenticatedUserStubbed(ctx, req, append(c, opt...)...)
 }
 
@@ -3519,8 +3518,8 @@ type ListSubscriptionsForAuthenticatedUserStubbedReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListSubscriptionsForAuthenticatedUserStubbedReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListSubscriptionsForAuthenticatedUserStubbedReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3572,7 +3571,7 @@ ListSubscriptionsForAuthenticatedUserStubbedResponse is a response for ListSubsc
 https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user-stubbed
 */
 type ListSubscriptionsForAuthenticatedUserStubbedResponse struct {
-	common.Response
+	requests.Response
 	request *ListSubscriptionsForAuthenticatedUserStubbedReq
 	Data    []components.UserMarketplacePurchase
 }
@@ -3586,8 +3585,8 @@ Remove a repository from an app installation.
 
 https://developer.github.com/v3/apps/installations/#remove-a-repository-from-an-app-installation
 */
-func RemoveRepoFromInstallation(ctx context.Context, req *RemoveRepoFromInstallationReq, opt ...options.Option) (*RemoveRepoFromInstallationResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func RemoveRepoFromInstallation(ctx context.Context, req *RemoveRepoFromInstallationReq, opt ...requests.Option) (*RemoveRepoFromInstallationResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3621,7 +3620,7 @@ Remove a repository from an app installation.
 
 https://developer.github.com/v3/apps/installations/#remove-a-repository-from-an-app-installation
 */
-func (c Client) RemoveRepoFromInstallation(ctx context.Context, req *RemoveRepoFromInstallationReq, opt ...options.Option) (*RemoveRepoFromInstallationResponse, error) {
+func (c Client) RemoveRepoFromInstallation(ctx context.Context, req *RemoveRepoFromInstallationReq, opt ...requests.Option) (*RemoveRepoFromInstallationResponse, error) {
 	return RemoveRepoFromInstallation(ctx, req, append(c, opt...)...)
 }
 
@@ -3647,8 +3646,8 @@ type RemoveRepoFromInstallationReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *RemoveRepoFromInstallationReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *RemoveRepoFromInstallationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3694,7 +3693,7 @@ RemoveRepoFromInstallationResponse is a response for RemoveRepoFromInstallation
 https://developer.github.com/v3/apps/installations/#remove-a-repository-from-an-app-installation
 */
 type RemoveRepoFromInstallationResponse struct {
-	common.Response
+	requests.Response
 	request *RemoveRepoFromInstallationReq
 }
 
@@ -3707,8 +3706,8 @@ Reset an authorization.
 
 https://developer.github.com/v3/apps/oauth_applications/#reset-an-authorization
 */
-func ResetAuthorization(ctx context.Context, req *ResetAuthorizationReq, opt ...options.Option) (*ResetAuthorizationResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ResetAuthorization(ctx context.Context, req *ResetAuthorizationReq, opt ...requests.Option) (*ResetAuthorizationResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3743,7 +3742,7 @@ Reset an authorization.
 
 https://developer.github.com/v3/apps/oauth_applications/#reset-an-authorization
 */
-func (c Client) ResetAuthorization(ctx context.Context, req *ResetAuthorizationReq, opt ...options.Option) (*ResetAuthorizationResponse, error) {
+func (c Client) ResetAuthorization(ctx context.Context, req *ResetAuthorizationReq, opt ...requests.Option) (*ResetAuthorizationResponse, error) {
 	return ResetAuthorization(ctx, req, append(c, opt...)...)
 }
 
@@ -3759,8 +3758,8 @@ type ResetAuthorizationReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ResetAuthorizationReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ResetAuthorizationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3806,7 +3805,7 @@ ResetAuthorizationResponse is a response for ResetAuthorization
 https://developer.github.com/v3/apps/oauth_applications/#reset-an-authorization
 */
 type ResetAuthorizationResponse struct {
-	common.Response
+	requests.Response
 	request *ResetAuthorizationReq
 	Data    components.Authorization
 }
@@ -3820,8 +3819,8 @@ Reset a token.
 
 https://developer.github.com/v3/apps/oauth_applications/#reset-a-token
 */
-func ResetToken(ctx context.Context, req *ResetTokenReq, opt ...options.Option) (*ResetTokenResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ResetToken(ctx context.Context, req *ResetTokenReq, opt ...requests.Option) (*ResetTokenResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3856,7 +3855,7 @@ Reset a token.
 
 https://developer.github.com/v3/apps/oauth_applications/#reset-a-token
 */
-func (c Client) ResetToken(ctx context.Context, req *ResetTokenReq, opt ...options.Option) (*ResetTokenResponse, error) {
+func (c Client) ResetToken(ctx context.Context, req *ResetTokenReq, opt ...requests.Option) (*ResetTokenResponse, error) {
 	return ResetToken(ctx, req, append(c, opt...)...)
 }
 
@@ -3872,8 +3871,8 @@ type ResetTokenReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ResetTokenReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ResetTokenReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3933,7 +3932,7 @@ ResetTokenResponse is a response for ResetToken
 https://developer.github.com/v3/apps/oauth_applications/#reset-a-token
 */
 type ResetTokenResponse struct {
-	common.Response
+	requests.Response
 	request *ResetTokenReq
 	Data    components.Authorization
 }
@@ -3947,8 +3946,8 @@ Revoke an authorization for an application.
 
 https://developer.github.com/v3/apps/oauth_applications/#revoke-an-authorization-for-an-application
 */
-func RevokeAuthorizationForApplication(ctx context.Context, req *RevokeAuthorizationForApplicationReq, opt ...options.Option) (*RevokeAuthorizationForApplicationResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func RevokeAuthorizationForApplication(ctx context.Context, req *RevokeAuthorizationForApplicationReq, opt ...requests.Option) (*RevokeAuthorizationForApplicationResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3982,7 +3981,7 @@ Revoke an authorization for an application.
 
 https://developer.github.com/v3/apps/oauth_applications/#revoke-an-authorization-for-an-application
 */
-func (c Client) RevokeAuthorizationForApplication(ctx context.Context, req *RevokeAuthorizationForApplicationReq, opt ...options.Option) (*RevokeAuthorizationForApplicationResponse, error) {
+func (c Client) RevokeAuthorizationForApplication(ctx context.Context, req *RevokeAuthorizationForApplicationReq, opt ...requests.Option) (*RevokeAuthorizationForApplicationResponse, error) {
 	return RevokeAuthorizationForApplication(ctx, req, append(c, opt...)...)
 }
 
@@ -3998,8 +3997,8 @@ type RevokeAuthorizationForApplicationReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *RevokeAuthorizationForApplicationReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *RevokeAuthorizationForApplicationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4045,7 +4044,7 @@ RevokeAuthorizationForApplicationResponse is a response for RevokeAuthorizationF
 https://developer.github.com/v3/apps/oauth_applications/#revoke-an-authorization-for-an-application
 */
 type RevokeAuthorizationForApplicationResponse struct {
-	common.Response
+	requests.Response
 	request *RevokeAuthorizationForApplicationReq
 }
 
@@ -4058,8 +4057,8 @@ Revoke a grant for an application.
 
 https://developer.github.com/v3/apps/oauth_applications/#revoke-a-grant-for-an-application
 */
-func RevokeGrantForApplication(ctx context.Context, req *RevokeGrantForApplicationReq, opt ...options.Option) (*RevokeGrantForApplicationResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func RevokeGrantForApplication(ctx context.Context, req *RevokeGrantForApplicationReq, opt ...requests.Option) (*RevokeGrantForApplicationResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4093,7 +4092,7 @@ Revoke a grant for an application.
 
 https://developer.github.com/v3/apps/oauth_applications/#revoke-a-grant-for-an-application
 */
-func (c Client) RevokeGrantForApplication(ctx context.Context, req *RevokeGrantForApplicationReq, opt ...options.Option) (*RevokeGrantForApplicationResponse, error) {
+func (c Client) RevokeGrantForApplication(ctx context.Context, req *RevokeGrantForApplicationReq, opt ...requests.Option) (*RevokeGrantForApplicationResponse, error) {
 	return RevokeGrantForApplication(ctx, req, append(c, opt...)...)
 }
 
@@ -4109,8 +4108,8 @@ type RevokeGrantForApplicationReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *RevokeGrantForApplicationReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *RevokeGrantForApplicationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4156,7 +4155,7 @@ RevokeGrantForApplicationResponse is a response for RevokeGrantForApplication
 https://developer.github.com/v3/apps/oauth_applications/#revoke-a-grant-for-an-application
 */
 type RevokeGrantForApplicationResponse struct {
-	common.Response
+	requests.Response
 	request *RevokeGrantForApplicationReq
 }
 
@@ -4169,8 +4168,8 @@ Revoke an installation access token.
 
 https://developer.github.com/v3/apps/installations/#revoke-an-installation-access-token
 */
-func RevokeInstallationAccessToken(ctx context.Context, req *RevokeInstallationAccessTokenReq, opt ...options.Option) (*RevokeInstallationAccessTokenResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func RevokeInstallationAccessToken(ctx context.Context, req *RevokeInstallationAccessTokenReq, opt ...requests.Option) (*RevokeInstallationAccessTokenResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4204,7 +4203,7 @@ Revoke an installation access token.
 
 https://developer.github.com/v3/apps/installations/#revoke-an-installation-access-token
 */
-func (c Client) RevokeInstallationAccessToken(ctx context.Context, req *RevokeInstallationAccessTokenReq, opt ...options.Option) (*RevokeInstallationAccessTokenResponse, error) {
+func (c Client) RevokeInstallationAccessToken(ctx context.Context, req *RevokeInstallationAccessTokenReq, opt ...requests.Option) (*RevokeInstallationAccessTokenResponse, error) {
 	return RevokeInstallationAccessToken(ctx, req, append(c, opt...)...)
 }
 
@@ -4218,8 +4217,8 @@ type RevokeInstallationAccessTokenReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *RevokeInstallationAccessTokenReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *RevokeInstallationAccessTokenReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4265,7 +4264,7 @@ RevokeInstallationAccessTokenResponse is a response for RevokeInstallationAccess
 https://developer.github.com/v3/apps/installations/#revoke-an-installation-access-token
 */
 type RevokeInstallationAccessTokenResponse struct {
-	common.Response
+	requests.Response
 	request *RevokeInstallationAccessTokenReq
 }
 
@@ -4278,8 +4277,8 @@ Suspend an app installation.
 
 https://developer.github.com/v3/apps/#suspend-an-app-installation
 */
-func SuspendInstallation(ctx context.Context, req *SuspendInstallationReq, opt ...options.Option) (*SuspendInstallationResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func SuspendInstallation(ctx context.Context, req *SuspendInstallationReq, opt ...requests.Option) (*SuspendInstallationResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4317,7 +4316,7 @@ Suspend an app installation.
 
 https://developer.github.com/v3/apps/#suspend-an-app-installation
 */
-func (c Client) SuspendInstallation(ctx context.Context, req *SuspendInstallationReq, opt ...options.Option) (*SuspendInstallationResponse, error) {
+func (c Client) SuspendInstallation(ctx context.Context, req *SuspendInstallationReq, opt ...requests.Option) (*SuspendInstallationResponse, error) {
 	return SuspendInstallation(ctx, req, append(c, opt...)...)
 }
 
@@ -4334,8 +4333,8 @@ type SuspendInstallationReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *SuspendInstallationReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *SuspendInstallationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4381,7 +4380,7 @@ SuspendInstallationResponse is a response for SuspendInstallation
 https://developer.github.com/v3/apps/#suspend-an-app-installation
 */
 type SuspendInstallationResponse struct {
-	common.Response
+	requests.Response
 	request *SuspendInstallationReq
 	Data    bool
 }
@@ -4395,8 +4394,8 @@ Unsuspend an app installation.
 
 https://developer.github.com/v3/apps/#unsuspend-an-app-installation
 */
-func UnsuspendInstallation(ctx context.Context, req *UnsuspendInstallationReq, opt ...options.Option) (*UnsuspendInstallationResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func UnsuspendInstallation(ctx context.Context, req *UnsuspendInstallationReq, opt ...requests.Option) (*UnsuspendInstallationResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4434,7 +4433,7 @@ Unsuspend an app installation.
 
 https://developer.github.com/v3/apps/#unsuspend-an-app-installation
 */
-func (c Client) UnsuspendInstallation(ctx context.Context, req *UnsuspendInstallationReq, opt ...options.Option) (*UnsuspendInstallationResponse, error) {
+func (c Client) UnsuspendInstallation(ctx context.Context, req *UnsuspendInstallationReq, opt ...requests.Option) (*UnsuspendInstallationResponse, error) {
 	return UnsuspendInstallation(ctx, req, append(c, opt...)...)
 }
 
@@ -4451,8 +4450,8 @@ type UnsuspendInstallationReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UnsuspendInstallationReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *UnsuspendInstallationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4498,7 +4497,7 @@ UnsuspendInstallationResponse is a response for UnsuspendInstallation
 https://developer.github.com/v3/apps/#unsuspend-an-app-installation
 */
 type UnsuspendInstallationResponse struct {
-	common.Response
+	requests.Response
 	request *UnsuspendInstallationReq
 	Data    bool
 }

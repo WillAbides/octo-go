@@ -9,11 +9,11 @@ import (
 	"github.com/stretchr/testify/require"
 	"github.com/willabides/octo-go"
 	"github.com/willabides/octo-go/internal/testutil"
-	"github.com/willabides/octo-go/options"
+	"github.com/willabides/octo-go/requests"
 	"github.com/willabides/octo-go/requests/markdown"
 )
 
-func vcrClient(t *testing.T, cas string, opts ...options.Option) markdown.Client {
+func vcrClient(t *testing.T, cas string, opts ...requests.Option) markdown.Client {
 	return markdown.NewClient(testutil.VCRClient(t, cas, opts...))
 }
 

@@ -6,10 +6,9 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	common "github.com/willabides/octo-go/common"
 	components "github.com/willabides/octo-go/components"
 	internal "github.com/willabides/octo-go/internal"
-	options "github.com/willabides/octo-go/options"
+	requests "github.com/willabides/octo-go/requests"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -18,15 +17,15 @@ import (
 func strPtr(s string) *string { return &s }
 
 // Client is a set of options to apply to requests
-type Client []options.Option
+type Client []requests.Option
 
 // NewClient returns a new Client
-func NewClient(opt ...options.Option) Client {
+func NewClient(opt ...requests.Option) Client {
 	return opt
 }
 
 // Apply implements options.Option
-func (c Client) Apply(opts *options.Options) error {
+func (c Client) Apply(opts *requests.Options) error {
 	for _, o := range c {
 		err := o.Apply(opts)
 		if err != nil {
@@ -45,8 +44,8 @@ Add an email address for the authenticated user.
 
 https://developer.github.com/v3/users/emails/#add-an-email-address-for-the-authenticated-user
 */
-func AddEmailForAuthenticated(ctx context.Context, req *AddEmailForAuthenticatedReq, opt ...options.Option) (*AddEmailForAuthenticatedResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func AddEmailForAuthenticated(ctx context.Context, req *AddEmailForAuthenticatedReq, opt ...requests.Option) (*AddEmailForAuthenticatedResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -81,7 +80,7 @@ Add an email address for the authenticated user.
 
 https://developer.github.com/v3/users/emails/#add-an-email-address-for-the-authenticated-user
 */
-func (c Client) AddEmailForAuthenticated(ctx context.Context, req *AddEmailForAuthenticatedReq, opt ...options.Option) (*AddEmailForAuthenticatedResponse, error) {
+func (c Client) AddEmailForAuthenticated(ctx context.Context, req *AddEmailForAuthenticatedReq, opt ...requests.Option) (*AddEmailForAuthenticatedResponse, error) {
 	return AddEmailForAuthenticated(ctx, req, append(c, opt...)...)
 }
 
@@ -96,8 +95,8 @@ type AddEmailForAuthenticatedReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *AddEmailForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *AddEmailForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -162,7 +161,7 @@ AddEmailForAuthenticatedResponse is a response for AddEmailForAuthenticated
 https://developer.github.com/v3/users/emails/#add-an-email-address-for-the-authenticated-user
 */
 type AddEmailForAuthenticatedResponse struct {
-	common.Response
+	requests.Response
 	request *AddEmailForAuthenticatedReq
 	Data    []components.Email
 }
@@ -176,8 +175,8 @@ Block a user.
 
 https://developer.github.com/v3/users/blocking/#block-a-user
 */
-func Block(ctx context.Context, req *BlockReq, opt ...options.Option) (*BlockResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func Block(ctx context.Context, req *BlockReq, opt ...requests.Option) (*BlockResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -211,7 +210,7 @@ Block a user.
 
 https://developer.github.com/v3/users/blocking/#block-a-user
 */
-func (c Client) Block(ctx context.Context, req *BlockReq, opt ...options.Option) (*BlockResponse, error) {
+func (c Client) Block(ctx context.Context, req *BlockReq, opt ...requests.Option) (*BlockResponse, error) {
 	return Block(ctx, req, append(c, opt...)...)
 }
 
@@ -226,8 +225,8 @@ type BlockReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *BlockReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *BlockReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -273,7 +272,7 @@ BlockResponse is a response for Block
 https://developer.github.com/v3/users/blocking/#block-a-user
 */
 type BlockResponse struct {
-	common.Response
+	requests.Response
 	request *BlockReq
 }
 
@@ -286,8 +285,8 @@ Check if a user is blocked by the authenticated user.
 
 https://developer.github.com/v3/users/blocking/#check-if-a-user-is-blocked-by-the-authenticated-user
 */
-func CheckBlocked(ctx context.Context, req *CheckBlockedReq, opt ...options.Option) (*CheckBlockedResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CheckBlocked(ctx context.Context, req *CheckBlockedReq, opt ...requests.Option) (*CheckBlockedResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -321,7 +320,7 @@ Check if a user is blocked by the authenticated user.
 
 https://developer.github.com/v3/users/blocking/#check-if-a-user-is-blocked-by-the-authenticated-user
 */
-func (c Client) CheckBlocked(ctx context.Context, req *CheckBlockedReq, opt ...options.Option) (*CheckBlockedResponse, error) {
+func (c Client) CheckBlocked(ctx context.Context, req *CheckBlockedReq, opt ...requests.Option) (*CheckBlockedResponse, error) {
 	return CheckBlocked(ctx, req, append(c, opt...)...)
 }
 
@@ -336,8 +335,8 @@ type CheckBlockedReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CheckBlockedReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CheckBlockedReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -383,7 +382,7 @@ CheckBlockedResponse is a response for CheckBlocked
 https://developer.github.com/v3/users/blocking/#check-if-a-user-is-blocked-by-the-authenticated-user
 */
 type CheckBlockedResponse struct {
-	common.Response
+	requests.Response
 	request *CheckBlockedReq
 }
 
@@ -396,8 +395,8 @@ Check if a user follows another user.
 
 https://developer.github.com/v3/users/followers/#check-if-a-user-follows-another-user
 */
-func CheckFollowingForUser(ctx context.Context, req *CheckFollowingForUserReq, opt ...options.Option) (*CheckFollowingForUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CheckFollowingForUser(ctx context.Context, req *CheckFollowingForUserReq, opt ...requests.Option) (*CheckFollowingForUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -435,7 +434,7 @@ Check if a user follows another user.
 
 https://developer.github.com/v3/users/followers/#check-if-a-user-follows-another-user
 */
-func (c Client) CheckFollowingForUser(ctx context.Context, req *CheckFollowingForUserReq, opt ...options.Option) (*CheckFollowingForUserResponse, error) {
+func (c Client) CheckFollowingForUser(ctx context.Context, req *CheckFollowingForUserReq, opt ...requests.Option) (*CheckFollowingForUserResponse, error) {
 	return CheckFollowingForUser(ctx, req, append(c, opt...)...)
 }
 
@@ -453,8 +452,8 @@ type CheckFollowingForUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CheckFollowingForUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CheckFollowingForUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -500,7 +499,7 @@ CheckFollowingForUserResponse is a response for CheckFollowingForUser
 https://developer.github.com/v3/users/followers/#check-if-a-user-follows-another-user
 */
 type CheckFollowingForUserResponse struct {
-	common.Response
+	requests.Response
 	request *CheckFollowingForUserReq
 	Data    bool
 }
@@ -514,8 +513,8 @@ Check if a person is followed by the authenticated user.
 
 https://developer.github.com/v3/users/followers/#check-if-a-person-is-followed-by-the-authenticated-user
 */
-func CheckPersonIsFollowedByAuthenticated(ctx context.Context, req *CheckPersonIsFollowedByAuthenticatedReq, opt ...options.Option) (*CheckPersonIsFollowedByAuthenticatedResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CheckPersonIsFollowedByAuthenticated(ctx context.Context, req *CheckPersonIsFollowedByAuthenticatedReq, opt ...requests.Option) (*CheckPersonIsFollowedByAuthenticatedResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -549,7 +548,7 @@ Check if a person is followed by the authenticated user.
 
 https://developer.github.com/v3/users/followers/#check-if-a-person-is-followed-by-the-authenticated-user
 */
-func (c Client) CheckPersonIsFollowedByAuthenticated(ctx context.Context, req *CheckPersonIsFollowedByAuthenticatedReq, opt ...options.Option) (*CheckPersonIsFollowedByAuthenticatedResponse, error) {
+func (c Client) CheckPersonIsFollowedByAuthenticated(ctx context.Context, req *CheckPersonIsFollowedByAuthenticatedReq, opt ...requests.Option) (*CheckPersonIsFollowedByAuthenticatedResponse, error) {
 	return CheckPersonIsFollowedByAuthenticated(ctx, req, append(c, opt...)...)
 }
 
@@ -564,8 +563,8 @@ type CheckPersonIsFollowedByAuthenticatedReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CheckPersonIsFollowedByAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CheckPersonIsFollowedByAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -611,7 +610,7 @@ CheckPersonIsFollowedByAuthenticatedResponse is a response for CheckPersonIsFoll
 https://developer.github.com/v3/users/followers/#check-if-a-person-is-followed-by-the-authenticated-user
 */
 type CheckPersonIsFollowedByAuthenticatedResponse struct {
-	common.Response
+	requests.Response
 	request *CheckPersonIsFollowedByAuthenticatedReq
 }
 
@@ -624,8 +623,8 @@ Create a GPG key for the authenticated user.
 
 https://developer.github.com/v3/users/gpg_keys/#create-a-gpg-key-for-the-authenticated-user
 */
-func CreateGpgKeyForAuthenticated(ctx context.Context, req *CreateGpgKeyForAuthenticatedReq, opt ...options.Option) (*CreateGpgKeyForAuthenticatedResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateGpgKeyForAuthenticated(ctx context.Context, req *CreateGpgKeyForAuthenticatedReq, opt ...requests.Option) (*CreateGpgKeyForAuthenticatedResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -660,7 +659,7 @@ Create a GPG key for the authenticated user.
 
 https://developer.github.com/v3/users/gpg_keys/#create-a-gpg-key-for-the-authenticated-user
 */
-func (c Client) CreateGpgKeyForAuthenticated(ctx context.Context, req *CreateGpgKeyForAuthenticatedReq, opt ...options.Option) (*CreateGpgKeyForAuthenticatedResponse, error) {
+func (c Client) CreateGpgKeyForAuthenticated(ctx context.Context, req *CreateGpgKeyForAuthenticatedReq, opt ...requests.Option) (*CreateGpgKeyForAuthenticatedResponse, error) {
 	return CreateGpgKeyForAuthenticated(ctx, req, append(c, opt...)...)
 }
 
@@ -675,8 +674,8 @@ type CreateGpgKeyForAuthenticatedReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateGpgKeyForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateGpgKeyForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -736,7 +735,7 @@ CreateGpgKeyForAuthenticatedResponse is a response for CreateGpgKeyForAuthentica
 https://developer.github.com/v3/users/gpg_keys/#create-a-gpg-key-for-the-authenticated-user
 */
 type CreateGpgKeyForAuthenticatedResponse struct {
-	common.Response
+	requests.Response
 	request *CreateGpgKeyForAuthenticatedReq
 	Data    components.GpgKey
 }
@@ -750,8 +749,8 @@ Create a public SSH key for the authenticated user.
 
 https://developer.github.com/v3/users/keys/#create-a-public-ssh-key-for-the-authenticated-user
 */
-func CreatePublicSshKeyForAuthenticated(ctx context.Context, req *CreatePublicSshKeyForAuthenticatedReq, opt ...options.Option) (*CreatePublicSshKeyForAuthenticatedResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreatePublicSshKeyForAuthenticated(ctx context.Context, req *CreatePublicSshKeyForAuthenticatedReq, opt ...requests.Option) (*CreatePublicSshKeyForAuthenticatedResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -786,7 +785,7 @@ Create a public SSH key for the authenticated user.
 
 https://developer.github.com/v3/users/keys/#create-a-public-ssh-key-for-the-authenticated-user
 */
-func (c Client) CreatePublicSshKeyForAuthenticated(ctx context.Context, req *CreatePublicSshKeyForAuthenticatedReq, opt ...options.Option) (*CreatePublicSshKeyForAuthenticatedResponse, error) {
+func (c Client) CreatePublicSshKeyForAuthenticated(ctx context.Context, req *CreatePublicSshKeyForAuthenticatedReq, opt ...requests.Option) (*CreatePublicSshKeyForAuthenticatedResponse, error) {
 	return CreatePublicSshKeyForAuthenticated(ctx, req, append(c, opt...)...)
 }
 
@@ -801,8 +800,8 @@ type CreatePublicSshKeyForAuthenticatedReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreatePublicSshKeyForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreatePublicSshKeyForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -865,7 +864,7 @@ CreatePublicSshKeyForAuthenticatedResponse is a response for CreatePublicSshKeyF
 https://developer.github.com/v3/users/keys/#create-a-public-ssh-key-for-the-authenticated-user
 */
 type CreatePublicSshKeyForAuthenticatedResponse struct {
-	common.Response
+	requests.Response
 	request *CreatePublicSshKeyForAuthenticatedReq
 	Data    components.Key
 }
@@ -879,8 +878,8 @@ Delete an email address for the authenticated user.
 
 https://developer.github.com/v3/users/emails/#delete-an-email-address-for-the-authenticated-user
 */
-func DeleteEmailForAuthenticated(ctx context.Context, req *DeleteEmailForAuthenticatedReq, opt ...options.Option) (*DeleteEmailForAuthenticatedResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DeleteEmailForAuthenticated(ctx context.Context, req *DeleteEmailForAuthenticatedReq, opt ...requests.Option) (*DeleteEmailForAuthenticatedResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -914,7 +913,7 @@ Delete an email address for the authenticated user.
 
 https://developer.github.com/v3/users/emails/#delete-an-email-address-for-the-authenticated-user
 */
-func (c Client) DeleteEmailForAuthenticated(ctx context.Context, req *DeleteEmailForAuthenticatedReq, opt ...options.Option) (*DeleteEmailForAuthenticatedResponse, error) {
+func (c Client) DeleteEmailForAuthenticated(ctx context.Context, req *DeleteEmailForAuthenticatedReq, opt ...requests.Option) (*DeleteEmailForAuthenticatedResponse, error) {
 	return DeleteEmailForAuthenticated(ctx, req, append(c, opt...)...)
 }
 
@@ -929,8 +928,8 @@ type DeleteEmailForAuthenticatedReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeleteEmailForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeleteEmailForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -987,7 +986,7 @@ DeleteEmailForAuthenticatedResponse is a response for DeleteEmailForAuthenticate
 https://developer.github.com/v3/users/emails/#delete-an-email-address-for-the-authenticated-user
 */
 type DeleteEmailForAuthenticatedResponse struct {
-	common.Response
+	requests.Response
 	request *DeleteEmailForAuthenticatedReq
 }
 
@@ -1000,8 +999,8 @@ Delete a GPG key for the authenticated user.
 
 https://developer.github.com/v3/users/gpg_keys/#delete-a-gpg-key-for-the-authenticated-user
 */
-func DeleteGpgKeyForAuthenticated(ctx context.Context, req *DeleteGpgKeyForAuthenticatedReq, opt ...options.Option) (*DeleteGpgKeyForAuthenticatedResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DeleteGpgKeyForAuthenticated(ctx context.Context, req *DeleteGpgKeyForAuthenticatedReq, opt ...requests.Option) (*DeleteGpgKeyForAuthenticatedResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1035,7 +1034,7 @@ Delete a GPG key for the authenticated user.
 
 https://developer.github.com/v3/users/gpg_keys/#delete-a-gpg-key-for-the-authenticated-user
 */
-func (c Client) DeleteGpgKeyForAuthenticated(ctx context.Context, req *DeleteGpgKeyForAuthenticatedReq, opt ...options.Option) (*DeleteGpgKeyForAuthenticatedResponse, error) {
+func (c Client) DeleteGpgKeyForAuthenticated(ctx context.Context, req *DeleteGpgKeyForAuthenticatedReq, opt ...requests.Option) (*DeleteGpgKeyForAuthenticatedResponse, error) {
 	return DeleteGpgKeyForAuthenticated(ctx, req, append(c, opt...)...)
 }
 
@@ -1052,8 +1051,8 @@ type DeleteGpgKeyForAuthenticatedReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeleteGpgKeyForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeleteGpgKeyForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1099,7 +1098,7 @@ DeleteGpgKeyForAuthenticatedResponse is a response for DeleteGpgKeyForAuthentica
 https://developer.github.com/v3/users/gpg_keys/#delete-a-gpg-key-for-the-authenticated-user
 */
 type DeleteGpgKeyForAuthenticatedResponse struct {
-	common.Response
+	requests.Response
 	request *DeleteGpgKeyForAuthenticatedReq
 }
 
@@ -1112,8 +1111,8 @@ Delete a public SSH key for the authenticated user.
 
 https://developer.github.com/v3/users/keys/#delete-a-public-ssh-key-for-the-authenticated-user
 */
-func DeletePublicSshKeyForAuthenticated(ctx context.Context, req *DeletePublicSshKeyForAuthenticatedReq, opt ...options.Option) (*DeletePublicSshKeyForAuthenticatedResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DeletePublicSshKeyForAuthenticated(ctx context.Context, req *DeletePublicSshKeyForAuthenticatedReq, opt ...requests.Option) (*DeletePublicSshKeyForAuthenticatedResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1147,7 +1146,7 @@ Delete a public SSH key for the authenticated user.
 
 https://developer.github.com/v3/users/keys/#delete-a-public-ssh-key-for-the-authenticated-user
 */
-func (c Client) DeletePublicSshKeyForAuthenticated(ctx context.Context, req *DeletePublicSshKeyForAuthenticatedReq, opt ...options.Option) (*DeletePublicSshKeyForAuthenticatedResponse, error) {
+func (c Client) DeletePublicSshKeyForAuthenticated(ctx context.Context, req *DeletePublicSshKeyForAuthenticatedReq, opt ...requests.Option) (*DeletePublicSshKeyForAuthenticatedResponse, error) {
 	return DeletePublicSshKeyForAuthenticated(ctx, req, append(c, opt...)...)
 }
 
@@ -1164,8 +1163,8 @@ type DeletePublicSshKeyForAuthenticatedReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeletePublicSshKeyForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeletePublicSshKeyForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1211,7 +1210,7 @@ DeletePublicSshKeyForAuthenticatedResponse is a response for DeletePublicSshKeyF
 https://developer.github.com/v3/users/keys/#delete-a-public-ssh-key-for-the-authenticated-user
 */
 type DeletePublicSshKeyForAuthenticatedResponse struct {
-	common.Response
+	requests.Response
 	request *DeletePublicSshKeyForAuthenticatedReq
 }
 
@@ -1224,8 +1223,8 @@ Follow a user.
 
 https://developer.github.com/v3/users/followers/#follow-a-user
 */
-func Follow(ctx context.Context, req *FollowReq, opt ...options.Option) (*FollowResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func Follow(ctx context.Context, req *FollowReq, opt ...requests.Option) (*FollowResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1259,7 +1258,7 @@ Follow a user.
 
 https://developer.github.com/v3/users/followers/#follow-a-user
 */
-func (c Client) Follow(ctx context.Context, req *FollowReq, opt ...options.Option) (*FollowResponse, error) {
+func (c Client) Follow(ctx context.Context, req *FollowReq, opt ...requests.Option) (*FollowResponse, error) {
 	return Follow(ctx, req, append(c, opt...)...)
 }
 
@@ -1274,8 +1273,8 @@ type FollowReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *FollowReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *FollowReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1321,7 +1320,7 @@ FollowResponse is a response for Follow
 https://developer.github.com/v3/users/followers/#follow-a-user
 */
 type FollowResponse struct {
-	common.Response
+	requests.Response
 	request *FollowReq
 }
 
@@ -1334,8 +1333,8 @@ Get the authenticated user.
 
 https://developer.github.com/v3/users/#get-the-authenticated-user
 */
-func GetAuthenticated(ctx context.Context, req *GetAuthenticatedReq, opt ...options.Option) (*GetAuthenticatedResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetAuthenticated(ctx context.Context, req *GetAuthenticatedReq, opt ...requests.Option) (*GetAuthenticatedResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1370,7 +1369,7 @@ Get the authenticated user.
 
 https://developer.github.com/v3/users/#get-the-authenticated-user
 */
-func (c Client) GetAuthenticated(ctx context.Context, req *GetAuthenticatedReq, opt ...options.Option) (*GetAuthenticatedResponse, error) {
+func (c Client) GetAuthenticated(ctx context.Context, req *GetAuthenticatedReq, opt ...requests.Option) (*GetAuthenticatedResponse, error) {
 	return GetAuthenticated(ctx, req, append(c, opt...)...)
 }
 
@@ -1384,8 +1383,8 @@ type GetAuthenticatedReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1494,7 +1493,7 @@ GetAuthenticatedResponse is a response for GetAuthenticated
 https://developer.github.com/v3/users/#get-the-authenticated-user
 */
 type GetAuthenticatedResponse struct {
-	common.Response
+	requests.Response
 	request *GetAuthenticatedReq
 	Data    GetAuthenticatedResponseBody
 }
@@ -1508,8 +1507,8 @@ Get a user.
 
 https://developer.github.com/v3/users/#get-a-user
 */
-func GetByUsername(ctx context.Context, req *GetByUsernameReq, opt ...options.Option) (*GetByUsernameResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetByUsername(ctx context.Context, req *GetByUsernameReq, opt ...requests.Option) (*GetByUsernameResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1544,7 +1543,7 @@ Get a user.
 
 https://developer.github.com/v3/users/#get-a-user
 */
-func (c Client) GetByUsername(ctx context.Context, req *GetByUsernameReq, opt ...options.Option) (*GetByUsernameResponse, error) {
+func (c Client) GetByUsername(ctx context.Context, req *GetByUsernameReq, opt ...requests.Option) (*GetByUsernameResponse, error) {
 	return GetByUsername(ctx, req, append(c, opt...)...)
 }
 
@@ -1559,8 +1558,8 @@ type GetByUsernameReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetByUsernameReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetByUsernameReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1669,7 +1668,7 @@ GetByUsernameResponse is a response for GetByUsername
 https://developer.github.com/v3/users/#get-a-user
 */
 type GetByUsernameResponse struct {
-	common.Response
+	requests.Response
 	request *GetByUsernameReq
 	Data    GetByUsernameResponseBody
 }
@@ -1683,8 +1682,8 @@ Get contextual information for a user.
 
 https://developer.github.com/v3/users/#get-contextual-information-for-a-user
 */
-func GetContextForUser(ctx context.Context, req *GetContextForUserReq, opt ...options.Option) (*GetContextForUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetContextForUser(ctx context.Context, req *GetContextForUserReq, opt ...requests.Option) (*GetContextForUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1719,7 +1718,7 @@ Get contextual information for a user.
 
 https://developer.github.com/v3/users/#get-contextual-information-for-a-user
 */
-func (c Client) GetContextForUser(ctx context.Context, req *GetContextForUserReq, opt ...options.Option) (*GetContextForUserResponse, error) {
+func (c Client) GetContextForUser(ctx context.Context, req *GetContextForUserReq, opt ...requests.Option) (*GetContextForUserResponse, error) {
 	return GetContextForUser(ctx, req, append(c, opt...)...)
 }
 
@@ -1747,8 +1746,8 @@ type GetContextForUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetContextForUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetContextForUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1800,7 +1799,7 @@ GetContextForUserResponse is a response for GetContextForUser
 https://developer.github.com/v3/users/#get-contextual-information-for-a-user
 */
 type GetContextForUserResponse struct {
-	common.Response
+	requests.Response
 	request *GetContextForUserReq
 	Data    components.Hovercard
 }
@@ -1814,8 +1813,8 @@ Get a GPG key for the authenticated user.
 
 https://developer.github.com/v3/users/gpg_keys/#get-a-gpg-key-for-the-authenticated-user
 */
-func GetGpgKeyForAuthenticated(ctx context.Context, req *GetGpgKeyForAuthenticatedReq, opt ...options.Option) (*GetGpgKeyForAuthenticatedResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetGpgKeyForAuthenticated(ctx context.Context, req *GetGpgKeyForAuthenticatedReq, opt ...requests.Option) (*GetGpgKeyForAuthenticatedResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1850,7 +1849,7 @@ Get a GPG key for the authenticated user.
 
 https://developer.github.com/v3/users/gpg_keys/#get-a-gpg-key-for-the-authenticated-user
 */
-func (c Client) GetGpgKeyForAuthenticated(ctx context.Context, req *GetGpgKeyForAuthenticatedReq, opt ...options.Option) (*GetGpgKeyForAuthenticatedResponse, error) {
+func (c Client) GetGpgKeyForAuthenticated(ctx context.Context, req *GetGpgKeyForAuthenticatedReq, opt ...requests.Option) (*GetGpgKeyForAuthenticatedResponse, error) {
 	return GetGpgKeyForAuthenticated(ctx, req, append(c, opt...)...)
 }
 
@@ -1867,8 +1866,8 @@ type GetGpgKeyForAuthenticatedReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetGpgKeyForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetGpgKeyForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1914,7 +1913,7 @@ GetGpgKeyForAuthenticatedResponse is a response for GetGpgKeyForAuthenticated
 https://developer.github.com/v3/users/gpg_keys/#get-a-gpg-key-for-the-authenticated-user
 */
 type GetGpgKeyForAuthenticatedResponse struct {
-	common.Response
+	requests.Response
 	request *GetGpgKeyForAuthenticatedReq
 	Data    components.GpgKey
 }
@@ -1928,8 +1927,8 @@ Get a public SSH key for the authenticated user.
 
 https://developer.github.com/v3/users/keys/#get-a-public-ssh-key-for-the-authenticated-user
 */
-func GetPublicSshKeyForAuthenticated(ctx context.Context, req *GetPublicSshKeyForAuthenticatedReq, opt ...options.Option) (*GetPublicSshKeyForAuthenticatedResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetPublicSshKeyForAuthenticated(ctx context.Context, req *GetPublicSshKeyForAuthenticatedReq, opt ...requests.Option) (*GetPublicSshKeyForAuthenticatedResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1964,7 +1963,7 @@ Get a public SSH key for the authenticated user.
 
 https://developer.github.com/v3/users/keys/#get-a-public-ssh-key-for-the-authenticated-user
 */
-func (c Client) GetPublicSshKeyForAuthenticated(ctx context.Context, req *GetPublicSshKeyForAuthenticatedReq, opt ...options.Option) (*GetPublicSshKeyForAuthenticatedResponse, error) {
+func (c Client) GetPublicSshKeyForAuthenticated(ctx context.Context, req *GetPublicSshKeyForAuthenticatedReq, opt ...requests.Option) (*GetPublicSshKeyForAuthenticatedResponse, error) {
 	return GetPublicSshKeyForAuthenticated(ctx, req, append(c, opt...)...)
 }
 
@@ -1981,8 +1980,8 @@ type GetPublicSshKeyForAuthenticatedReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetPublicSshKeyForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetPublicSshKeyForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2028,7 +2027,7 @@ GetPublicSshKeyForAuthenticatedResponse is a response for GetPublicSshKeyForAuth
 https://developer.github.com/v3/users/keys/#get-a-public-ssh-key-for-the-authenticated-user
 */
 type GetPublicSshKeyForAuthenticatedResponse struct {
-	common.Response
+	requests.Response
 	request *GetPublicSshKeyForAuthenticatedReq
 	Data    components.Key
 }
@@ -2042,8 +2041,8 @@ List users.
 
 https://developer.github.com/v3/users/#list-users
 */
-func List(ctx context.Context, req *ListReq, opt ...options.Option) (*ListResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func List(ctx context.Context, req *ListReq, opt ...requests.Option) (*ListResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2078,7 +2077,7 @@ List users.
 
 https://developer.github.com/v3/users/#list-users
 */
-func (c Client) List(ctx context.Context, req *ListReq, opt ...options.Option) (*ListResponse, error) {
+func (c Client) List(ctx context.Context, req *ListReq, opt ...requests.Option) (*ListResponse, error) {
 	return List(ctx, req, append(c, opt...)...)
 }
 
@@ -2102,8 +2101,8 @@ type ListReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2155,7 +2154,7 @@ ListResponse is a response for List
 https://developer.github.com/v3/users/#list-users
 */
 type ListResponse struct {
-	common.Response
+	requests.Response
 	request *ListReq
 	Data    []components.SimpleUser
 }
@@ -2169,8 +2168,8 @@ List users blocked by the authenticated user.
 
 https://developer.github.com/v3/users/blocking/#list-users-blocked-by-the-authenticated-user
 */
-func ListBlockedByAuthenticated(ctx context.Context, req *ListBlockedByAuthenticatedReq, opt ...options.Option) (*ListBlockedByAuthenticatedResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListBlockedByAuthenticated(ctx context.Context, req *ListBlockedByAuthenticatedReq, opt ...requests.Option) (*ListBlockedByAuthenticatedResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2205,7 +2204,7 @@ List users blocked by the authenticated user.
 
 https://developer.github.com/v3/users/blocking/#list-users-blocked-by-the-authenticated-user
 */
-func (c Client) ListBlockedByAuthenticated(ctx context.Context, req *ListBlockedByAuthenticatedReq, opt ...options.Option) (*ListBlockedByAuthenticatedResponse, error) {
+func (c Client) ListBlockedByAuthenticated(ctx context.Context, req *ListBlockedByAuthenticatedReq, opt ...requests.Option) (*ListBlockedByAuthenticatedResponse, error) {
 	return ListBlockedByAuthenticated(ctx, req, append(c, opt...)...)
 }
 
@@ -2219,8 +2218,8 @@ type ListBlockedByAuthenticatedReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListBlockedByAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListBlockedByAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2266,7 +2265,7 @@ ListBlockedByAuthenticatedResponse is a response for ListBlockedByAuthenticated
 https://developer.github.com/v3/users/blocking/#list-users-blocked-by-the-authenticated-user
 */
 type ListBlockedByAuthenticatedResponse struct {
-	common.Response
+	requests.Response
 	request *ListBlockedByAuthenticatedReq
 	Data    []components.SimpleUser
 }
@@ -2280,8 +2279,8 @@ List email addresses for the authenticated user.
 
 https://developer.github.com/v3/users/emails/#list-email-addresses-for-the-authenticated-user
 */
-func ListEmailsForAuthenticated(ctx context.Context, req *ListEmailsForAuthenticatedReq, opt ...options.Option) (*ListEmailsForAuthenticatedResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListEmailsForAuthenticated(ctx context.Context, req *ListEmailsForAuthenticatedReq, opt ...requests.Option) (*ListEmailsForAuthenticatedResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2316,7 +2315,7 @@ List email addresses for the authenticated user.
 
 https://developer.github.com/v3/users/emails/#list-email-addresses-for-the-authenticated-user
 */
-func (c Client) ListEmailsForAuthenticated(ctx context.Context, req *ListEmailsForAuthenticatedReq, opt ...options.Option) (*ListEmailsForAuthenticatedResponse, error) {
+func (c Client) ListEmailsForAuthenticated(ctx context.Context, req *ListEmailsForAuthenticatedReq, opt ...requests.Option) (*ListEmailsForAuthenticatedResponse, error) {
 	return ListEmailsForAuthenticated(ctx, req, append(c, opt...)...)
 }
 
@@ -2336,8 +2335,8 @@ type ListEmailsForAuthenticatedReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListEmailsForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListEmailsForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2389,7 +2388,7 @@ ListEmailsForAuthenticatedResponse is a response for ListEmailsForAuthenticated
 https://developer.github.com/v3/users/emails/#list-email-addresses-for-the-authenticated-user
 */
 type ListEmailsForAuthenticatedResponse struct {
-	common.Response
+	requests.Response
 	request *ListEmailsForAuthenticatedReq
 	Data    []components.Email
 }
@@ -2403,8 +2402,8 @@ List the people the authenticated user follows.
 
 https://developer.github.com/v3/users/followers/#list-the-people-the-authenticated-user-follows
 */
-func ListFollowedByAuthenticated(ctx context.Context, req *ListFollowedByAuthenticatedReq, opt ...options.Option) (*ListFollowedByAuthenticatedResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListFollowedByAuthenticated(ctx context.Context, req *ListFollowedByAuthenticatedReq, opt ...requests.Option) (*ListFollowedByAuthenticatedResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2439,7 +2438,7 @@ List the people the authenticated user follows.
 
 https://developer.github.com/v3/users/followers/#list-the-people-the-authenticated-user-follows
 */
-func (c Client) ListFollowedByAuthenticated(ctx context.Context, req *ListFollowedByAuthenticatedReq, opt ...options.Option) (*ListFollowedByAuthenticatedResponse, error) {
+func (c Client) ListFollowedByAuthenticated(ctx context.Context, req *ListFollowedByAuthenticatedReq, opt ...requests.Option) (*ListFollowedByAuthenticatedResponse, error) {
 	return ListFollowedByAuthenticated(ctx, req, append(c, opt...)...)
 }
 
@@ -2459,8 +2458,8 @@ type ListFollowedByAuthenticatedReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListFollowedByAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListFollowedByAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2512,7 +2511,7 @@ ListFollowedByAuthenticatedResponse is a response for ListFollowedByAuthenticate
 https://developer.github.com/v3/users/followers/#list-the-people-the-authenticated-user-follows
 */
 type ListFollowedByAuthenticatedResponse struct {
-	common.Response
+	requests.Response
 	request *ListFollowedByAuthenticatedReq
 	Data    []components.SimpleUser
 }
@@ -2526,8 +2525,8 @@ List followers of the authenticated user.
 
 https://developer.github.com/v3/users/followers/#list-followers-of-the-authenticated-user
 */
-func ListFollowersForAuthenticatedUser(ctx context.Context, req *ListFollowersForAuthenticatedUserReq, opt ...options.Option) (*ListFollowersForAuthenticatedUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListFollowersForAuthenticatedUser(ctx context.Context, req *ListFollowersForAuthenticatedUserReq, opt ...requests.Option) (*ListFollowersForAuthenticatedUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2562,7 +2561,7 @@ List followers of the authenticated user.
 
 https://developer.github.com/v3/users/followers/#list-followers-of-the-authenticated-user
 */
-func (c Client) ListFollowersForAuthenticatedUser(ctx context.Context, req *ListFollowersForAuthenticatedUserReq, opt ...options.Option) (*ListFollowersForAuthenticatedUserResponse, error) {
+func (c Client) ListFollowersForAuthenticatedUser(ctx context.Context, req *ListFollowersForAuthenticatedUserReq, opt ...requests.Option) (*ListFollowersForAuthenticatedUserResponse, error) {
 	return ListFollowersForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
@@ -2582,8 +2581,8 @@ type ListFollowersForAuthenticatedUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListFollowersForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListFollowersForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2635,7 +2634,7 @@ ListFollowersForAuthenticatedUserResponse is a response for ListFollowersForAuth
 https://developer.github.com/v3/users/followers/#list-followers-of-the-authenticated-user
 */
 type ListFollowersForAuthenticatedUserResponse struct {
-	common.Response
+	requests.Response
 	request *ListFollowersForAuthenticatedUserReq
 	Data    []components.SimpleUser
 }
@@ -2649,8 +2648,8 @@ List followers of a user.
 
 https://developer.github.com/v3/users/followers/#list-followers-of-a-user
 */
-func ListFollowersForUser(ctx context.Context, req *ListFollowersForUserReq, opt ...options.Option) (*ListFollowersForUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListFollowersForUser(ctx context.Context, req *ListFollowersForUserReq, opt ...requests.Option) (*ListFollowersForUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2685,7 +2684,7 @@ List followers of a user.
 
 https://developer.github.com/v3/users/followers/#list-followers-of-a-user
 */
-func (c Client) ListFollowersForUser(ctx context.Context, req *ListFollowersForUserReq, opt ...options.Option) (*ListFollowersForUserResponse, error) {
+func (c Client) ListFollowersForUser(ctx context.Context, req *ListFollowersForUserReq, opt ...requests.Option) (*ListFollowersForUserResponse, error) {
 	return ListFollowersForUser(ctx, req, append(c, opt...)...)
 }
 
@@ -2706,8 +2705,8 @@ type ListFollowersForUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListFollowersForUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListFollowersForUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2759,7 +2758,7 @@ ListFollowersForUserResponse is a response for ListFollowersForUser
 https://developer.github.com/v3/users/followers/#list-followers-of-a-user
 */
 type ListFollowersForUserResponse struct {
-	common.Response
+	requests.Response
 	request *ListFollowersForUserReq
 	Data    []components.SimpleUser
 }
@@ -2773,8 +2772,8 @@ List the people a user follows.
 
 https://developer.github.com/v3/users/followers/#list-the-people-a-user-follows
 */
-func ListFollowingForUser(ctx context.Context, req *ListFollowingForUserReq, opt ...options.Option) (*ListFollowingForUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListFollowingForUser(ctx context.Context, req *ListFollowingForUserReq, opt ...requests.Option) (*ListFollowingForUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2809,7 +2808,7 @@ List the people a user follows.
 
 https://developer.github.com/v3/users/followers/#list-the-people-a-user-follows
 */
-func (c Client) ListFollowingForUser(ctx context.Context, req *ListFollowingForUserReq, opt ...options.Option) (*ListFollowingForUserResponse, error) {
+func (c Client) ListFollowingForUser(ctx context.Context, req *ListFollowingForUserReq, opt ...requests.Option) (*ListFollowingForUserResponse, error) {
 	return ListFollowingForUser(ctx, req, append(c, opt...)...)
 }
 
@@ -2830,8 +2829,8 @@ type ListFollowingForUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListFollowingForUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListFollowingForUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2883,7 +2882,7 @@ ListFollowingForUserResponse is a response for ListFollowingForUser
 https://developer.github.com/v3/users/followers/#list-the-people-a-user-follows
 */
 type ListFollowingForUserResponse struct {
-	common.Response
+	requests.Response
 	request *ListFollowingForUserReq
 	Data    []components.SimpleUser
 }
@@ -2897,8 +2896,8 @@ List GPG keys for the authenticated user.
 
 https://developer.github.com/v3/users/gpg_keys/#list-gpg-keys-for-the-authenticated-user
 */
-func ListGpgKeysForAuthenticated(ctx context.Context, req *ListGpgKeysForAuthenticatedReq, opt ...options.Option) (*ListGpgKeysForAuthenticatedResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListGpgKeysForAuthenticated(ctx context.Context, req *ListGpgKeysForAuthenticatedReq, opt ...requests.Option) (*ListGpgKeysForAuthenticatedResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2933,7 +2932,7 @@ List GPG keys for the authenticated user.
 
 https://developer.github.com/v3/users/gpg_keys/#list-gpg-keys-for-the-authenticated-user
 */
-func (c Client) ListGpgKeysForAuthenticated(ctx context.Context, req *ListGpgKeysForAuthenticatedReq, opt ...options.Option) (*ListGpgKeysForAuthenticatedResponse, error) {
+func (c Client) ListGpgKeysForAuthenticated(ctx context.Context, req *ListGpgKeysForAuthenticatedReq, opt ...requests.Option) (*ListGpgKeysForAuthenticatedResponse, error) {
 	return ListGpgKeysForAuthenticated(ctx, req, append(c, opt...)...)
 }
 
@@ -2953,8 +2952,8 @@ type ListGpgKeysForAuthenticatedReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListGpgKeysForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListGpgKeysForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3006,7 +3005,7 @@ ListGpgKeysForAuthenticatedResponse is a response for ListGpgKeysForAuthenticate
 https://developer.github.com/v3/users/gpg_keys/#list-gpg-keys-for-the-authenticated-user
 */
 type ListGpgKeysForAuthenticatedResponse struct {
-	common.Response
+	requests.Response
 	request *ListGpgKeysForAuthenticatedReq
 	Data    []components.GpgKey
 }
@@ -3020,8 +3019,8 @@ List GPG keys for a user.
 
 https://developer.github.com/v3/users/gpg_keys/#list-gpg-keys-for-a-user
 */
-func ListGpgKeysForUser(ctx context.Context, req *ListGpgKeysForUserReq, opt ...options.Option) (*ListGpgKeysForUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListGpgKeysForUser(ctx context.Context, req *ListGpgKeysForUserReq, opt ...requests.Option) (*ListGpgKeysForUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3056,7 +3055,7 @@ List GPG keys for a user.
 
 https://developer.github.com/v3/users/gpg_keys/#list-gpg-keys-for-a-user
 */
-func (c Client) ListGpgKeysForUser(ctx context.Context, req *ListGpgKeysForUserReq, opt ...options.Option) (*ListGpgKeysForUserResponse, error) {
+func (c Client) ListGpgKeysForUser(ctx context.Context, req *ListGpgKeysForUserReq, opt ...requests.Option) (*ListGpgKeysForUserResponse, error) {
 	return ListGpgKeysForUser(ctx, req, append(c, opt...)...)
 }
 
@@ -3077,8 +3076,8 @@ type ListGpgKeysForUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListGpgKeysForUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListGpgKeysForUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3130,7 +3129,7 @@ ListGpgKeysForUserResponse is a response for ListGpgKeysForUser
 https://developer.github.com/v3/users/gpg_keys/#list-gpg-keys-for-a-user
 */
 type ListGpgKeysForUserResponse struct {
-	common.Response
+	requests.Response
 	request *ListGpgKeysForUserReq
 	Data    []components.GpgKey
 }
@@ -3144,8 +3143,8 @@ List public email addresses for the authenticated user.
 
 https://developer.github.com/v3/users/emails/#list-public-email-addresses-for-the-authenticated-user
 */
-func ListPublicEmailsForAuthenticated(ctx context.Context, req *ListPublicEmailsForAuthenticatedReq, opt ...options.Option) (*ListPublicEmailsForAuthenticatedResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListPublicEmailsForAuthenticated(ctx context.Context, req *ListPublicEmailsForAuthenticatedReq, opt ...requests.Option) (*ListPublicEmailsForAuthenticatedResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3180,7 +3179,7 @@ List public email addresses for the authenticated user.
 
 https://developer.github.com/v3/users/emails/#list-public-email-addresses-for-the-authenticated-user
 */
-func (c Client) ListPublicEmailsForAuthenticated(ctx context.Context, req *ListPublicEmailsForAuthenticatedReq, opt ...options.Option) (*ListPublicEmailsForAuthenticatedResponse, error) {
+func (c Client) ListPublicEmailsForAuthenticated(ctx context.Context, req *ListPublicEmailsForAuthenticatedReq, opt ...requests.Option) (*ListPublicEmailsForAuthenticatedResponse, error) {
 	return ListPublicEmailsForAuthenticated(ctx, req, append(c, opt...)...)
 }
 
@@ -3200,8 +3199,8 @@ type ListPublicEmailsForAuthenticatedReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListPublicEmailsForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListPublicEmailsForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3253,7 +3252,7 @@ ListPublicEmailsForAuthenticatedResponse is a response for ListPublicEmailsForAu
 https://developer.github.com/v3/users/emails/#list-public-email-addresses-for-the-authenticated-user
 */
 type ListPublicEmailsForAuthenticatedResponse struct {
-	common.Response
+	requests.Response
 	request *ListPublicEmailsForAuthenticatedReq
 	Data    []components.Email
 }
@@ -3267,8 +3266,8 @@ List public keys for a user.
 
 https://developer.github.com/v3/users/keys/#list-public-keys-for-a-user
 */
-func ListPublicKeysForUser(ctx context.Context, req *ListPublicKeysForUserReq, opt ...options.Option) (*ListPublicKeysForUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListPublicKeysForUser(ctx context.Context, req *ListPublicKeysForUserReq, opt ...requests.Option) (*ListPublicKeysForUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3303,7 +3302,7 @@ List public keys for a user.
 
 https://developer.github.com/v3/users/keys/#list-public-keys-for-a-user
 */
-func (c Client) ListPublicKeysForUser(ctx context.Context, req *ListPublicKeysForUserReq, opt ...options.Option) (*ListPublicKeysForUserResponse, error) {
+func (c Client) ListPublicKeysForUser(ctx context.Context, req *ListPublicKeysForUserReq, opt ...requests.Option) (*ListPublicKeysForUserResponse, error) {
 	return ListPublicKeysForUser(ctx, req, append(c, opt...)...)
 }
 
@@ -3324,8 +3323,8 @@ type ListPublicKeysForUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListPublicKeysForUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListPublicKeysForUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3377,7 +3376,7 @@ ListPublicKeysForUserResponse is a response for ListPublicKeysForUser
 https://developer.github.com/v3/users/keys/#list-public-keys-for-a-user
 */
 type ListPublicKeysForUserResponse struct {
-	common.Response
+	requests.Response
 	request *ListPublicKeysForUserReq
 	Data    []components.KeySimple
 }
@@ -3391,8 +3390,8 @@ List public SSH keys for the authenticated user.
 
 https://developer.github.com/v3/users/keys/#list-public-ssh-keys-for-the-authenticated-user
 */
-func ListPublicSshKeysForAuthenticated(ctx context.Context, req *ListPublicSshKeysForAuthenticatedReq, opt ...options.Option) (*ListPublicSshKeysForAuthenticatedResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListPublicSshKeysForAuthenticated(ctx context.Context, req *ListPublicSshKeysForAuthenticatedReq, opt ...requests.Option) (*ListPublicSshKeysForAuthenticatedResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3427,7 +3426,7 @@ List public SSH keys for the authenticated user.
 
 https://developer.github.com/v3/users/keys/#list-public-ssh-keys-for-the-authenticated-user
 */
-func (c Client) ListPublicSshKeysForAuthenticated(ctx context.Context, req *ListPublicSshKeysForAuthenticatedReq, opt ...options.Option) (*ListPublicSshKeysForAuthenticatedResponse, error) {
+func (c Client) ListPublicSshKeysForAuthenticated(ctx context.Context, req *ListPublicSshKeysForAuthenticatedReq, opt ...requests.Option) (*ListPublicSshKeysForAuthenticatedResponse, error) {
 	return ListPublicSshKeysForAuthenticated(ctx, req, append(c, opt...)...)
 }
 
@@ -3447,8 +3446,8 @@ type ListPublicSshKeysForAuthenticatedReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListPublicSshKeysForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListPublicSshKeysForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3500,7 +3499,7 @@ ListPublicSshKeysForAuthenticatedResponse is a response for ListPublicSshKeysFor
 https://developer.github.com/v3/users/keys/#list-public-ssh-keys-for-the-authenticated-user
 */
 type ListPublicSshKeysForAuthenticatedResponse struct {
-	common.Response
+	requests.Response
 	request *ListPublicSshKeysForAuthenticatedReq
 	Data    []components.Key
 }
@@ -3514,8 +3513,8 @@ Set primary email visibility for the authenticated user.
 
 https://developer.github.com/v3/users/emails/#set-primary-email-visibility-for-the-authenticated-user
 */
-func SetPrimaryEmailVisibilityForAuthenticated(ctx context.Context, req *SetPrimaryEmailVisibilityForAuthenticatedReq, opt ...options.Option) (*SetPrimaryEmailVisibilityForAuthenticatedResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func SetPrimaryEmailVisibilityForAuthenticated(ctx context.Context, req *SetPrimaryEmailVisibilityForAuthenticatedReq, opt ...requests.Option) (*SetPrimaryEmailVisibilityForAuthenticatedResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3550,7 +3549,7 @@ Set primary email visibility for the authenticated user.
 
 https://developer.github.com/v3/users/emails/#set-primary-email-visibility-for-the-authenticated-user
 */
-func (c Client) SetPrimaryEmailVisibilityForAuthenticated(ctx context.Context, req *SetPrimaryEmailVisibilityForAuthenticatedReq, opt ...options.Option) (*SetPrimaryEmailVisibilityForAuthenticatedResponse, error) {
+func (c Client) SetPrimaryEmailVisibilityForAuthenticated(ctx context.Context, req *SetPrimaryEmailVisibilityForAuthenticatedReq, opt ...requests.Option) (*SetPrimaryEmailVisibilityForAuthenticatedResponse, error) {
 	return SetPrimaryEmailVisibilityForAuthenticated(ctx, req, append(c, opt...)...)
 }
 
@@ -3565,8 +3564,8 @@ type SetPrimaryEmailVisibilityForAuthenticatedReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *SetPrimaryEmailVisibilityForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *SetPrimaryEmailVisibilityForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3629,7 +3628,7 @@ SetPrimaryEmailVisibilityForAuthenticatedResponse is a response for SetPrimaryEm
 https://developer.github.com/v3/users/emails/#set-primary-email-visibility-for-the-authenticated-user
 */
 type SetPrimaryEmailVisibilityForAuthenticatedResponse struct {
-	common.Response
+	requests.Response
 	request *SetPrimaryEmailVisibilityForAuthenticatedReq
 	Data    []components.Email
 }
@@ -3643,8 +3642,8 @@ Unblock a user.
 
 https://developer.github.com/v3/users/blocking/#unblock-a-user
 */
-func Unblock(ctx context.Context, req *UnblockReq, opt ...options.Option) (*UnblockResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func Unblock(ctx context.Context, req *UnblockReq, opt ...requests.Option) (*UnblockResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3678,7 +3677,7 @@ Unblock a user.
 
 https://developer.github.com/v3/users/blocking/#unblock-a-user
 */
-func (c Client) Unblock(ctx context.Context, req *UnblockReq, opt ...options.Option) (*UnblockResponse, error) {
+func (c Client) Unblock(ctx context.Context, req *UnblockReq, opt ...requests.Option) (*UnblockResponse, error) {
 	return Unblock(ctx, req, append(c, opt...)...)
 }
 
@@ -3693,8 +3692,8 @@ type UnblockReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UnblockReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *UnblockReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3740,7 +3739,7 @@ UnblockResponse is a response for Unblock
 https://developer.github.com/v3/users/blocking/#unblock-a-user
 */
 type UnblockResponse struct {
-	common.Response
+	requests.Response
 	request *UnblockReq
 }
 
@@ -3753,8 +3752,8 @@ Unfollow a user.
 
 https://developer.github.com/v3/users/followers/#unfollow-a-user
 */
-func Unfollow(ctx context.Context, req *UnfollowReq, opt ...options.Option) (*UnfollowResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func Unfollow(ctx context.Context, req *UnfollowReq, opt ...requests.Option) (*UnfollowResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3788,7 +3787,7 @@ Unfollow a user.
 
 https://developer.github.com/v3/users/followers/#unfollow-a-user
 */
-func (c Client) Unfollow(ctx context.Context, req *UnfollowReq, opt ...options.Option) (*UnfollowResponse, error) {
+func (c Client) Unfollow(ctx context.Context, req *UnfollowReq, opt ...requests.Option) (*UnfollowResponse, error) {
 	return Unfollow(ctx, req, append(c, opt...)...)
 }
 
@@ -3803,8 +3802,8 @@ type UnfollowReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UnfollowReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *UnfollowReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3850,7 +3849,7 @@ UnfollowResponse is a response for Unfollow
 https://developer.github.com/v3/users/followers/#unfollow-a-user
 */
 type UnfollowResponse struct {
-	common.Response
+	requests.Response
 	request *UnfollowReq
 }
 
@@ -3863,8 +3862,8 @@ Update the authenticated user.
 
 https://developer.github.com/v3/users/#update-the-authenticated-user
 */
-func UpdateAuthenticated(ctx context.Context, req *UpdateAuthenticatedReq, opt ...options.Option) (*UpdateAuthenticatedResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func UpdateAuthenticated(ctx context.Context, req *UpdateAuthenticatedReq, opt ...requests.Option) (*UpdateAuthenticatedResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3899,7 +3898,7 @@ Update the authenticated user.
 
 https://developer.github.com/v3/users/#update-the-authenticated-user
 */
-func (c Client) UpdateAuthenticated(ctx context.Context, req *UpdateAuthenticatedReq, opt ...options.Option) (*UpdateAuthenticatedResponse, error) {
+func (c Client) UpdateAuthenticated(ctx context.Context, req *UpdateAuthenticatedReq, opt ...requests.Option) (*UpdateAuthenticatedResponse, error) {
 	return UpdateAuthenticated(ctx, req, append(c, opt...)...)
 }
 
@@ -3914,8 +3913,8 @@ type UpdateAuthenticatedReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UpdateAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *UpdateAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3996,7 +3995,7 @@ UpdateAuthenticatedResponse is a response for UpdateAuthenticated
 https://developer.github.com/v3/users/#update-the-authenticated-user
 */
 type UpdateAuthenticatedResponse struct {
-	common.Response
+	requests.Response
 	request *UpdateAuthenticatedReq
 	Data    components.PrivateUser
 }

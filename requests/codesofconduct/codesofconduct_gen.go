@@ -5,10 +5,9 @@ package codesofconduct
 import (
 	"context"
 	"fmt"
-	common "github.com/willabides/octo-go/common"
 	components "github.com/willabides/octo-go/components"
 	internal "github.com/willabides/octo-go/internal"
-	options "github.com/willabides/octo-go/options"
+	requests "github.com/willabides/octo-go/requests"
 	"net/http"
 	"net/url"
 )
@@ -16,15 +15,15 @@ import (
 func strPtr(s string) *string { return &s }
 
 // Client is a set of options to apply to requests
-type Client []options.Option
+type Client []requests.Option
 
 // NewClient returns a new Client
-func NewClient(opt ...options.Option) Client {
+func NewClient(opt ...requests.Option) Client {
 	return opt
 }
 
 // Apply implements options.Option
-func (c Client) Apply(opts *options.Options) error {
+func (c Client) Apply(opts *requests.Options) error {
 	for _, o := range c {
 		err := o.Apply(opts)
 		if err != nil {
@@ -43,8 +42,8 @@ Get all codes of conduct.
 
 https://developer.github.com/v3/codes_of_conduct/#get-all-codes-of-conduct
 */
-func GetAllCodesOfConduct(ctx context.Context, req *GetAllCodesOfConductReq, opt ...options.Option) (*GetAllCodesOfConductResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetAllCodesOfConduct(ctx context.Context, req *GetAllCodesOfConductReq, opt ...requests.Option) (*GetAllCodesOfConductResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -79,7 +78,7 @@ Get all codes of conduct.
 
 https://developer.github.com/v3/codes_of_conduct/#get-all-codes-of-conduct
 */
-func (c Client) GetAllCodesOfConduct(ctx context.Context, req *GetAllCodesOfConductReq, opt ...options.Option) (*GetAllCodesOfConductResponse, error) {
+func (c Client) GetAllCodesOfConduct(ctx context.Context, req *GetAllCodesOfConductReq, opt ...requests.Option) (*GetAllCodesOfConductResponse, error) {
 	return GetAllCodesOfConduct(ctx, req, append(c, opt...)...)
 }
 
@@ -100,8 +99,8 @@ type GetAllCodesOfConductReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetAllCodesOfConductReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetAllCodesOfConductReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -147,7 +146,7 @@ GetAllCodesOfConductResponse is a response for GetAllCodesOfConduct
 https://developer.github.com/v3/codes_of_conduct/#get-all-codes-of-conduct
 */
 type GetAllCodesOfConductResponse struct {
-	common.Response
+	requests.Response
 	request *GetAllCodesOfConductReq
 	Data    []components.CodeOfConduct
 }
@@ -161,8 +160,8 @@ Get a code of conduct.
 
 https://developer.github.com/v3/codes_of_conduct/#get-a-code-of-conduct
 */
-func GetConductCode(ctx context.Context, req *GetConductCodeReq, opt ...options.Option) (*GetConductCodeResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetConductCode(ctx context.Context, req *GetConductCodeReq, opt ...requests.Option) (*GetConductCodeResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -197,7 +196,7 @@ Get a code of conduct.
 
 https://developer.github.com/v3/codes_of_conduct/#get-a-code-of-conduct
 */
-func (c Client) GetConductCode(ctx context.Context, req *GetConductCodeReq, opt ...options.Option) (*GetConductCodeResponse, error) {
+func (c Client) GetConductCode(ctx context.Context, req *GetConductCodeReq, opt ...requests.Option) (*GetConductCodeResponse, error) {
 	return GetConductCode(ctx, req, append(c, opt...)...)
 }
 
@@ -221,8 +220,8 @@ type GetConductCodeReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetConductCodeReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetConductCodeReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -268,7 +267,7 @@ GetConductCodeResponse is a response for GetConductCode
 https://developer.github.com/v3/codes_of_conduct/#get-a-code-of-conduct
 */
 type GetConductCodeResponse struct {
-	common.Response
+	requests.Response
 	request *GetConductCodeReq
 	Data    components.CodeOfConduct
 }
@@ -282,8 +281,8 @@ Get the code of conduct for a repository.
 
 https://developer.github.com/v3/codes_of_conduct/#get-the-code-of-conduct-for-a-repository
 */
-func GetForRepo(ctx context.Context, req *GetForRepoReq, opt ...options.Option) (*GetForRepoResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetForRepo(ctx context.Context, req *GetForRepoReq, opt ...requests.Option) (*GetForRepoResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -318,7 +317,7 @@ Get the code of conduct for a repository.
 
 https://developer.github.com/v3/codes_of_conduct/#get-the-code-of-conduct-for-a-repository
 */
-func (c Client) GetForRepo(ctx context.Context, req *GetForRepoReq, opt ...options.Option) (*GetForRepoResponse, error) {
+func (c Client) GetForRepo(ctx context.Context, req *GetForRepoReq, opt ...requests.Option) (*GetForRepoResponse, error) {
 	return GetForRepo(ctx, req, append(c, opt...)...)
 }
 
@@ -341,8 +340,8 @@ type GetForRepoReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetForRepoReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -388,7 +387,7 @@ GetForRepoResponse is a response for GetForRepo
 https://developer.github.com/v3/codes_of_conduct/#get-the-code-of-conduct-for-a-repository
 */
 type GetForRepoResponse struct {
-	common.Response
+	requests.Response
 	request *GetForRepoReq
 	Data    components.CodeOfConduct
 }

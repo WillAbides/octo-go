@@ -19,16 +19,14 @@ func (p pkgQual) pkgPath(pkgName string) string {
 	switch pkgName {
 	case "octo":
 		return pq
+	case "requests":
+		return path.Join(pq, "requests")
 	case "components":
 		return path.Join(pq, "components")
 	case "internal":
 		return path.Join(pq, "internal")
-	case "options":
-		return path.Join(pq, "options")
 	case "octo_test":
 		return pq + "_test"
-	case "common":
-		return path.Join(pq, "common")
 	default:
 		panic("unknown pkg " + pkgName)
 	}
@@ -46,12 +44,12 @@ func requestFunc(endpoint *model.Endpoint, pq pkgQual) jen.Code {
 	stmt.Func().Id(toExportedName(endpoint.ID)).Params(
 		jen.Id("ctx").Qual("context", "Context"),
 		jen.Id("req").Op("*").Id(reqStructName(endpoint)),
-		jen.Id("opt ...").Qual(pq.pkgPath("options"), "Option"),
+		jen.Id("opt ...").Qual(pq.pkgPath("requests"), "Option"),
 	).Params(
 		jen.Op("*").Id(respStructName(endpoint)),
 		jen.Id("error"),
 	).BlockFunc(func(group *jen.Group) {
-		group.Id("opts, err := ").Qual(pq.pkgPath("options"), "BuildOptions").Call(jen.Id("opt..."))
+		group.Id("opts, err := ").Qual(pq.pkgPath("requests"), "BuildOptions").Call(jen.Id("opt..."))
 		group.Id("if err != nil {return nil, err}")
 		group.If(jen.Id("req == nil")).Block(
 			jen.Id("req").Op("=").New(jen.Id(reqStructName(endpoint))),
@@ -111,7 +109,7 @@ func addClientMethod(file *jen.File, pq pkgQual, endpoint *model.Endpoint) {
 	file.Func().Params(jen.Id("c").Id("Client")).Id(toExportedName(endpoint.ID)).Params(
 		jen.Id("ctx").Qual("context", "Context"),
 		jen.Id("req").Op("*").Id(reqStructName(endpoint)),
-		jen.Id("opt ...").Qual(pq.pkgPath("options"), "Option"),
+		jen.Id("opt ...").Qual(pq.pkgPath("requests"), "Option"),
 	).Params(
 		jen.Op("*").Id(respStructName(endpoint)),
 		jen.Id("error"),

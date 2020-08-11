@@ -5,10 +5,9 @@ package codescanning
 import (
 	"context"
 	"fmt"
-	common "github.com/willabides/octo-go/common"
 	components "github.com/willabides/octo-go/components"
 	internal "github.com/willabides/octo-go/internal"
-	options "github.com/willabides/octo-go/options"
+	requests "github.com/willabides/octo-go/requests"
 	"net/http"
 	"net/url"
 )
@@ -16,15 +15,15 @@ import (
 func strPtr(s string) *string { return &s }
 
 // Client is a set of options to apply to requests
-type Client []options.Option
+type Client []requests.Option
 
 // NewClient returns a new Client
-func NewClient(opt ...options.Option) Client {
+func NewClient(opt ...requests.Option) Client {
 	return opt
 }
 
 // Apply implements options.Option
-func (c Client) Apply(opts *options.Options) error {
+func (c Client) Apply(opts *requests.Options) error {
 	for _, o := range c {
 		err := o.Apply(opts)
 		if err != nil {
@@ -43,8 +42,8 @@ Get a code scanning alert.
 
 https://developer.github.com/v3/code-scanning/#get-a-code-scanning-alert
 */
-func GetAlert(ctx context.Context, req *GetAlertReq, opt ...options.Option) (*GetAlertResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetAlert(ctx context.Context, req *GetAlertReq, opt ...requests.Option) (*GetAlertResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -79,7 +78,7 @@ Get a code scanning alert.
 
 https://developer.github.com/v3/code-scanning/#get-a-code-scanning-alert
 */
-func (c Client) GetAlert(ctx context.Context, req *GetAlertReq, opt ...options.Option) (*GetAlertResponse, error) {
+func (c Client) GetAlert(ctx context.Context, req *GetAlertReq, opt ...requests.Option) (*GetAlertResponse, error) {
 	return GetAlert(ctx, req, append(c, opt...)...)
 }
 
@@ -98,8 +97,8 @@ type GetAlertReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetAlertReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetAlertReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -145,7 +144,7 @@ GetAlertResponse is a response for GetAlert
 https://developer.github.com/v3/code-scanning/#get-a-code-scanning-alert
 */
 type GetAlertResponse struct {
-	common.Response
+	requests.Response
 	request *GetAlertReq
 	Data    components.CodeScanningAlert
 }
@@ -159,8 +158,8 @@ List code scanning alerts for a repository.
 
 https://developer.github.com/v3/code-scanning/#list-code-scanning-alerts-for-a-repository
 */
-func ListAlertsForRepo(ctx context.Context, req *ListAlertsForRepoReq, opt ...options.Option) (*ListAlertsForRepoResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListAlertsForRepo(ctx context.Context, req *ListAlertsForRepoReq, opt ...requests.Option) (*ListAlertsForRepoResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -195,7 +194,7 @@ List code scanning alerts for a repository.
 
 https://developer.github.com/v3/code-scanning/#list-code-scanning-alerts-for-a-repository
 */
-func (c Client) ListAlertsForRepo(ctx context.Context, req *ListAlertsForRepoReq, opt ...options.Option) (*ListAlertsForRepoResponse, error) {
+func (c Client) ListAlertsForRepo(ctx context.Context, req *ListAlertsForRepoReq, opt ...requests.Option) (*ListAlertsForRepoResponse, error) {
 	return ListAlertsForRepo(ctx, req, append(c, opt...)...)
 }
 
@@ -220,8 +219,8 @@ type ListAlertsForRepoReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListAlertsForRepoReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListAlertsForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -273,7 +272,7 @@ ListAlertsForRepoResponse is a response for ListAlertsForRepo
 https://developer.github.com/v3/code-scanning/#list-code-scanning-alerts-for-a-repository
 */
 type ListAlertsForRepoResponse struct {
-	common.Response
+	requests.Response
 	request *ListAlertsForRepoReq
 	Data    []components.CodeScanningAlert
 }

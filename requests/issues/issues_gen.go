@@ -5,10 +5,9 @@ package issues
 import (
 	"context"
 	"fmt"
-	common "github.com/willabides/octo-go/common"
 	components "github.com/willabides/octo-go/components"
 	internal "github.com/willabides/octo-go/internal"
-	options "github.com/willabides/octo-go/options"
+	requests "github.com/willabides/octo-go/requests"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -17,15 +16,15 @@ import (
 func strPtr(s string) *string { return &s }
 
 // Client is a set of options to apply to requests
-type Client []options.Option
+type Client []requests.Option
 
 // NewClient returns a new Client
-func NewClient(opt ...options.Option) Client {
+func NewClient(opt ...requests.Option) Client {
 	return opt
 }
 
 // Apply implements options.Option
-func (c Client) Apply(opts *options.Options) error {
+func (c Client) Apply(opts *requests.Options) error {
 	for _, o := range c {
 		err := o.Apply(opts)
 		if err != nil {
@@ -44,8 +43,8 @@ Add assignees to an issue.
 
 https://developer.github.com/v3/issues/assignees/#add-assignees-to-an-issue
 */
-func AddAssignees(ctx context.Context, req *AddAssigneesReq, opt ...options.Option) (*AddAssigneesResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func AddAssignees(ctx context.Context, req *AddAssigneesReq, opt ...requests.Option) (*AddAssigneesResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -80,7 +79,7 @@ Add assignees to an issue.
 
 https://developer.github.com/v3/issues/assignees/#add-assignees-to-an-issue
 */
-func (c Client) AddAssignees(ctx context.Context, req *AddAssigneesReq, opt ...options.Option) (*AddAssigneesResponse, error) {
+func (c Client) AddAssignees(ctx context.Context, req *AddAssigneesReq, opt ...requests.Option) (*AddAssigneesResponse, error) {
 	return AddAssignees(ctx, req, append(c, opt...)...)
 }
 
@@ -100,8 +99,8 @@ type AddAssigneesReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *AddAssigneesReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *AddAssigneesReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -164,7 +163,7 @@ AddAssigneesResponse is a response for AddAssignees
 https://developer.github.com/v3/issues/assignees/#add-assignees-to-an-issue
 */
 type AddAssigneesResponse struct {
-	common.Response
+	requests.Response
 	request *AddAssigneesReq
 	Data    components.IssueSimple
 }
@@ -178,8 +177,8 @@ Add labels to an issue.
 
 https://developer.github.com/v3/issues/labels/#add-labels-to-an-issue
 */
-func AddLabels(ctx context.Context, req *AddLabelsReq, opt ...options.Option) (*AddLabelsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func AddLabels(ctx context.Context, req *AddLabelsReq, opt ...requests.Option) (*AddLabelsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -214,7 +213,7 @@ Add labels to an issue.
 
 https://developer.github.com/v3/issues/labels/#add-labels-to-an-issue
 */
-func (c Client) AddLabels(ctx context.Context, req *AddLabelsReq, opt ...options.Option) (*AddLabelsResponse, error) {
+func (c Client) AddLabels(ctx context.Context, req *AddLabelsReq, opt ...requests.Option) (*AddLabelsResponse, error) {
 	return AddLabels(ctx, req, append(c, opt...)...)
 }
 
@@ -234,8 +233,8 @@ type AddLabelsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *AddLabelsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *AddLabelsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -300,7 +299,7 @@ AddLabelsResponse is a response for AddLabels
 https://developer.github.com/v3/issues/labels/#add-labels-to-an-issue
 */
 type AddLabelsResponse struct {
-	common.Response
+	requests.Response
 	request *AddLabelsReq
 	Data    []components.Label
 }
@@ -314,8 +313,8 @@ Check if a user can be assigned.
 
 https://developer.github.com/v3/issues/assignees/#check-if-a-user-can-be-assigned
 */
-func CheckUserCanBeAssigned(ctx context.Context, req *CheckUserCanBeAssignedReq, opt ...options.Option) (*CheckUserCanBeAssignedResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CheckUserCanBeAssigned(ctx context.Context, req *CheckUserCanBeAssignedReq, opt ...requests.Option) (*CheckUserCanBeAssignedResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -353,7 +352,7 @@ Check if a user can be assigned.
 
 https://developer.github.com/v3/issues/assignees/#check-if-a-user-can-be-assigned
 */
-func (c Client) CheckUserCanBeAssigned(ctx context.Context, req *CheckUserCanBeAssignedReq, opt ...options.Option) (*CheckUserCanBeAssignedResponse, error) {
+func (c Client) CheckUserCanBeAssigned(ctx context.Context, req *CheckUserCanBeAssignedReq, opt ...requests.Option) (*CheckUserCanBeAssignedResponse, error) {
 	return CheckUserCanBeAssigned(ctx, req, append(c, opt...)...)
 }
 
@@ -372,8 +371,8 @@ type CheckUserCanBeAssignedReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CheckUserCanBeAssignedReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CheckUserCanBeAssignedReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -419,7 +418,7 @@ CheckUserCanBeAssignedResponse is a response for CheckUserCanBeAssigned
 https://developer.github.com/v3/issues/assignees/#check-if-a-user-can-be-assigned
 */
 type CheckUserCanBeAssignedResponse struct {
-	common.Response
+	requests.Response
 	request *CheckUserCanBeAssignedReq
 	Data    bool
 }
@@ -433,8 +432,8 @@ Create an issue.
 
 https://developer.github.com/v3/issues/#create-an-issue
 */
-func Create(ctx context.Context, req *CreateReq, opt ...options.Option) (*CreateResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func Create(ctx context.Context, req *CreateReq, opt ...requests.Option) (*CreateResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -469,7 +468,7 @@ Create an issue.
 
 https://developer.github.com/v3/issues/#create-an-issue
 */
-func (c Client) Create(ctx context.Context, req *CreateReq, opt ...options.Option) (*CreateResponse, error) {
+func (c Client) Create(ctx context.Context, req *CreateReq, opt ...requests.Option) (*CreateResponse, error) {
 	return Create(ctx, req, append(c, opt...)...)
 }
 
@@ -486,8 +485,8 @@ type CreateReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -576,7 +575,7 @@ CreateResponse is a response for Create
 https://developer.github.com/v3/issues/#create-an-issue
 */
 type CreateResponse struct {
-	common.Response
+	requests.Response
 	request *CreateReq
 	Data    components.Issue
 }
@@ -590,8 +589,8 @@ Create an issue comment.
 
 https://developer.github.com/v3/issues/comments/#create-an-issue-comment
 */
-func CreateComment(ctx context.Context, req *CreateCommentReq, opt ...options.Option) (*CreateCommentResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateComment(ctx context.Context, req *CreateCommentReq, opt ...requests.Option) (*CreateCommentResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -626,7 +625,7 @@ Create an issue comment.
 
 https://developer.github.com/v3/issues/comments/#create-an-issue-comment
 */
-func (c Client) CreateComment(ctx context.Context, req *CreateCommentReq, opt ...options.Option) (*CreateCommentResponse, error) {
+func (c Client) CreateComment(ctx context.Context, req *CreateCommentReq, opt ...requests.Option) (*CreateCommentResponse, error) {
 	return CreateComment(ctx, req, append(c, opt...)...)
 }
 
@@ -646,8 +645,8 @@ type CreateCommentReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateCommentReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -707,7 +706,7 @@ CreateCommentResponse is a response for CreateComment
 https://developer.github.com/v3/issues/comments/#create-an-issue-comment
 */
 type CreateCommentResponse struct {
-	common.Response
+	requests.Response
 	request *CreateCommentReq
 	Data    components.IssueComment
 }
@@ -721,8 +720,8 @@ Create a label.
 
 https://developer.github.com/v3/issues/labels/#create-a-label
 */
-func CreateLabel(ctx context.Context, req *CreateLabelReq, opt ...options.Option) (*CreateLabelResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateLabel(ctx context.Context, req *CreateLabelReq, opt ...requests.Option) (*CreateLabelResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -757,7 +756,7 @@ Create a label.
 
 https://developer.github.com/v3/issues/labels/#create-a-label
 */
-func (c Client) CreateLabel(ctx context.Context, req *CreateLabelReq, opt ...options.Option) (*CreateLabelResponse, error) {
+func (c Client) CreateLabel(ctx context.Context, req *CreateLabelReq, opt ...requests.Option) (*CreateLabelResponse, error) {
 	return CreateLabel(ctx, req, append(c, opt...)...)
 }
 
@@ -774,8 +773,8 @@ type CreateLabelReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateLabelReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateLabelReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -848,7 +847,7 @@ CreateLabelResponse is a response for CreateLabel
 https://developer.github.com/v3/issues/labels/#create-a-label
 */
 type CreateLabelResponse struct {
-	common.Response
+	requests.Response
 	request *CreateLabelReq
 	Data    components.Label
 }
@@ -862,8 +861,8 @@ Create a milestone.
 
 https://developer.github.com/v3/issues/milestones/#create-a-milestone
 */
-func CreateMilestone(ctx context.Context, req *CreateMilestoneReq, opt ...options.Option) (*CreateMilestoneResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateMilestone(ctx context.Context, req *CreateMilestoneReq, opt ...requests.Option) (*CreateMilestoneResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -898,7 +897,7 @@ Create a milestone.
 
 https://developer.github.com/v3/issues/milestones/#create-a-milestone
 */
-func (c Client) CreateMilestone(ctx context.Context, req *CreateMilestoneReq, opt ...options.Option) (*CreateMilestoneResponse, error) {
+func (c Client) CreateMilestone(ctx context.Context, req *CreateMilestoneReq, opt ...requests.Option) (*CreateMilestoneResponse, error) {
 	return CreateMilestone(ctx, req, append(c, opt...)...)
 }
 
@@ -915,8 +914,8 @@ type CreateMilestoneReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateMilestoneReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateMilestoneReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -988,7 +987,7 @@ CreateMilestoneResponse is a response for CreateMilestone
 https://developer.github.com/v3/issues/milestones/#create-a-milestone
 */
 type CreateMilestoneResponse struct {
-	common.Response
+	requests.Response
 	request *CreateMilestoneReq
 	Data    components.Milestone
 }
@@ -1002,8 +1001,8 @@ Delete an issue comment.
 
 https://developer.github.com/v3/issues/comments/#delete-an-issue-comment
 */
-func DeleteComment(ctx context.Context, req *DeleteCommentReq, opt ...options.Option) (*DeleteCommentResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DeleteComment(ctx context.Context, req *DeleteCommentReq, opt ...requests.Option) (*DeleteCommentResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1037,7 +1036,7 @@ Delete an issue comment.
 
 https://developer.github.com/v3/issues/comments/#delete-an-issue-comment
 */
-func (c Client) DeleteComment(ctx context.Context, req *DeleteCommentReq, opt ...options.Option) (*DeleteCommentResponse, error) {
+func (c Client) DeleteComment(ctx context.Context, req *DeleteCommentReq, opt ...requests.Option) (*DeleteCommentResponse, error) {
 	return DeleteComment(ctx, req, append(c, opt...)...)
 }
 
@@ -1056,8 +1055,8 @@ type DeleteCommentReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeleteCommentReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeleteCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1103,7 +1102,7 @@ DeleteCommentResponse is a response for DeleteComment
 https://developer.github.com/v3/issues/comments/#delete-an-issue-comment
 */
 type DeleteCommentResponse struct {
-	common.Response
+	requests.Response
 	request *DeleteCommentReq
 }
 
@@ -1116,8 +1115,8 @@ Delete a label.
 
 https://developer.github.com/v3/issues/labels/#delete-a-label
 */
-func DeleteLabel(ctx context.Context, req *DeleteLabelReq, opt ...options.Option) (*DeleteLabelResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DeleteLabel(ctx context.Context, req *DeleteLabelReq, opt ...requests.Option) (*DeleteLabelResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1151,7 +1150,7 @@ Delete a label.
 
 https://developer.github.com/v3/issues/labels/#delete-a-label
 */
-func (c Client) DeleteLabel(ctx context.Context, req *DeleteLabelReq, opt ...options.Option) (*DeleteLabelResponse, error) {
+func (c Client) DeleteLabel(ctx context.Context, req *DeleteLabelReq, opt ...requests.Option) (*DeleteLabelResponse, error) {
 	return DeleteLabel(ctx, req, append(c, opt...)...)
 }
 
@@ -1170,8 +1169,8 @@ type DeleteLabelReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeleteLabelReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeleteLabelReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1217,7 +1216,7 @@ DeleteLabelResponse is a response for DeleteLabel
 https://developer.github.com/v3/issues/labels/#delete-a-label
 */
 type DeleteLabelResponse struct {
-	common.Response
+	requests.Response
 	request *DeleteLabelReq
 }
 
@@ -1230,8 +1229,8 @@ Delete a milestone.
 
 https://developer.github.com/v3/issues/milestones/#delete-a-milestone
 */
-func DeleteMilestone(ctx context.Context, req *DeleteMilestoneReq, opt ...options.Option) (*DeleteMilestoneResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DeleteMilestone(ctx context.Context, req *DeleteMilestoneReq, opt ...requests.Option) (*DeleteMilestoneResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1269,7 +1268,7 @@ Delete a milestone.
 
 https://developer.github.com/v3/issues/milestones/#delete-a-milestone
 */
-func (c Client) DeleteMilestone(ctx context.Context, req *DeleteMilestoneReq, opt ...options.Option) (*DeleteMilestoneResponse, error) {
+func (c Client) DeleteMilestone(ctx context.Context, req *DeleteMilestoneReq, opt ...requests.Option) (*DeleteMilestoneResponse, error) {
 	return DeleteMilestone(ctx, req, append(c, opt...)...)
 }
 
@@ -1288,8 +1287,8 @@ type DeleteMilestoneReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeleteMilestoneReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeleteMilestoneReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1335,7 +1334,7 @@ DeleteMilestoneResponse is a response for DeleteMilestone
 https://developer.github.com/v3/issues/milestones/#delete-a-milestone
 */
 type DeleteMilestoneResponse struct {
-	common.Response
+	requests.Response
 	request *DeleteMilestoneReq
 	Data    bool
 }
@@ -1349,8 +1348,8 @@ Get an issue.
 
 https://developer.github.com/v3/issues/#get-an-issue
 */
-func Get(ctx context.Context, req *GetReq, opt ...options.Option) (*GetResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func Get(ctx context.Context, req *GetReq, opt ...requests.Option) (*GetResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1385,7 +1384,7 @@ Get an issue.
 
 https://developer.github.com/v3/issues/#get-an-issue
 */
-func (c Client) Get(ctx context.Context, req *GetReq, opt ...options.Option) (*GetResponse, error) {
+func (c Client) Get(ctx context.Context, req *GetReq, opt ...requests.Option) (*GetResponse, error) {
 	return Get(ctx, req, append(c, opt...)...)
 }
 
@@ -1415,8 +1414,8 @@ type GetReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1462,7 +1461,7 @@ GetResponse is a response for Get
 https://developer.github.com/v3/issues/#get-an-issue
 */
 type GetResponse struct {
-	common.Response
+	requests.Response
 	request *GetReq
 	Data    components.Issue
 }
@@ -1476,8 +1475,8 @@ Get an issue comment.
 
 https://developer.github.com/v3/issues/comments/#get-an-issue-comment
 */
-func GetComment(ctx context.Context, req *GetCommentReq, opt ...options.Option) (*GetCommentResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetComment(ctx context.Context, req *GetCommentReq, opt ...requests.Option) (*GetCommentResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1512,7 +1511,7 @@ Get an issue comment.
 
 https://developer.github.com/v3/issues/comments/#get-an-issue-comment
 */
-func (c Client) GetComment(ctx context.Context, req *GetCommentReq, opt ...options.Option) (*GetCommentResponse, error) {
+func (c Client) GetComment(ctx context.Context, req *GetCommentReq, opt ...requests.Option) (*GetCommentResponse, error) {
 	return GetComment(ctx, req, append(c, opt...)...)
 }
 
@@ -1548,8 +1547,8 @@ type GetCommentReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetCommentReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1598,7 +1597,7 @@ GetCommentResponse is a response for GetComment
 https://developer.github.com/v3/issues/comments/#get-an-issue-comment
 */
 type GetCommentResponse struct {
-	common.Response
+	requests.Response
 	request *GetCommentReq
 	Data    components.IssueComment
 }
@@ -1612,8 +1611,8 @@ Get an issue event.
 
 https://developer.github.com/v3/issues/events/#get-an-issue-event
 */
-func GetEvent(ctx context.Context, req *GetEventReq, opt ...options.Option) (*GetEventResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetEvent(ctx context.Context, req *GetEventReq, opt ...requests.Option) (*GetEventResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1648,7 +1647,7 @@ Get an issue event.
 
 https://developer.github.com/v3/issues/events/#get-an-issue-event
 */
-func (c Client) GetEvent(ctx context.Context, req *GetEventReq, opt ...options.Option) (*GetEventResponse, error) {
+func (c Client) GetEvent(ctx context.Context, req *GetEventReq, opt ...requests.Option) (*GetEventResponse, error) {
 	return GetEvent(ctx, req, append(c, opt...)...)
 }
 
@@ -1695,8 +1694,8 @@ type GetEventReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetEventReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetEventReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1746,7 +1745,7 @@ GetEventResponse is a response for GetEvent
 https://developer.github.com/v3/issues/events/#get-an-issue-event
 */
 type GetEventResponse struct {
-	common.Response
+	requests.Response
 	request *GetEventReq
 	Data    components.IssueEvent
 }
@@ -1760,8 +1759,8 @@ Get a label.
 
 https://developer.github.com/v3/issues/labels/#get-a-label
 */
-func GetLabel(ctx context.Context, req *GetLabelReq, opt ...options.Option) (*GetLabelResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetLabel(ctx context.Context, req *GetLabelReq, opt ...requests.Option) (*GetLabelResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1796,7 +1795,7 @@ Get a label.
 
 https://developer.github.com/v3/issues/labels/#get-a-label
 */
-func (c Client) GetLabel(ctx context.Context, req *GetLabelReq, opt ...options.Option) (*GetLabelResponse, error) {
+func (c Client) GetLabel(ctx context.Context, req *GetLabelReq, opt ...requests.Option) (*GetLabelResponse, error) {
 	return GetLabel(ctx, req, append(c, opt...)...)
 }
 
@@ -1815,8 +1814,8 @@ type GetLabelReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetLabelReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetLabelReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1862,7 +1861,7 @@ GetLabelResponse is a response for GetLabel
 https://developer.github.com/v3/issues/labels/#get-a-label
 */
 type GetLabelResponse struct {
-	common.Response
+	requests.Response
 	request *GetLabelReq
 	Data    components.Label
 }
@@ -1876,8 +1875,8 @@ Get a milestone.
 
 https://developer.github.com/v3/issues/milestones/#get-a-milestone
 */
-func GetMilestone(ctx context.Context, req *GetMilestoneReq, opt ...options.Option) (*GetMilestoneResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetMilestone(ctx context.Context, req *GetMilestoneReq, opt ...requests.Option) (*GetMilestoneResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1912,7 +1911,7 @@ Get a milestone.
 
 https://developer.github.com/v3/issues/milestones/#get-a-milestone
 */
-func (c Client) GetMilestone(ctx context.Context, req *GetMilestoneReq, opt ...options.Option) (*GetMilestoneResponse, error) {
+func (c Client) GetMilestone(ctx context.Context, req *GetMilestoneReq, opt ...requests.Option) (*GetMilestoneResponse, error) {
 	return GetMilestone(ctx, req, append(c, opt...)...)
 }
 
@@ -1931,8 +1930,8 @@ type GetMilestoneReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetMilestoneReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetMilestoneReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1978,7 +1977,7 @@ GetMilestoneResponse is a response for GetMilestone
 https://developer.github.com/v3/issues/milestones/#get-a-milestone
 */
 type GetMilestoneResponse struct {
-	common.Response
+	requests.Response
 	request *GetMilestoneReq
 	Data    components.Milestone
 }
@@ -1992,8 +1991,8 @@ List issues assigned to the authenticated user.
 
 https://developer.github.com/v3/issues/#list-issues-assigned-to-the-authenticated-user
 */
-func List(ctx context.Context, req *ListReq, opt ...options.Option) (*ListResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func List(ctx context.Context, req *ListReq, opt ...requests.Option) (*ListResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2028,7 +2027,7 @@ List issues assigned to the authenticated user.
 
 https://developer.github.com/v3/issues/#list-issues-assigned-to-the-authenticated-user
 */
-func (c Client) List(ctx context.Context, req *ListReq, opt ...options.Option) (*ListResponse, error) {
+func (c Client) List(ctx context.Context, req *ListReq, opt ...requests.Option) (*ListResponse, error) {
 	return List(ctx, req, append(c, opt...)...)
 }
 
@@ -2102,8 +2101,8 @@ type ListReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2188,7 +2187,7 @@ ListResponse is a response for List
 https://developer.github.com/v3/issues/#list-issues-assigned-to-the-authenticated-user
 */
 type ListResponse struct {
-	common.Response
+	requests.Response
 	request *ListReq
 	Data    []components.Issue
 }
@@ -2202,8 +2201,8 @@ List assignees.
 
 https://developer.github.com/v3/issues/assignees/#list-assignees
 */
-func ListAssignees(ctx context.Context, req *ListAssigneesReq, opt ...options.Option) (*ListAssigneesResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListAssignees(ctx context.Context, req *ListAssigneesReq, opt ...requests.Option) (*ListAssigneesResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2238,7 +2237,7 @@ List assignees.
 
 https://developer.github.com/v3/issues/assignees/#list-assignees
 */
-func (c Client) ListAssignees(ctx context.Context, req *ListAssigneesReq, opt ...options.Option) (*ListAssigneesResponse, error) {
+func (c Client) ListAssignees(ctx context.Context, req *ListAssigneesReq, opt ...requests.Option) (*ListAssigneesResponse, error) {
 	return ListAssignees(ctx, req, append(c, opt...)...)
 }
 
@@ -2260,8 +2259,8 @@ type ListAssigneesReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListAssigneesReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListAssigneesReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2313,7 +2312,7 @@ ListAssigneesResponse is a response for ListAssignees
 https://developer.github.com/v3/issues/assignees/#list-assignees
 */
 type ListAssigneesResponse struct {
-	common.Response
+	requests.Response
 	request *ListAssigneesReq
 	Data    []components.SimpleUser
 }
@@ -2327,8 +2326,8 @@ List issue comments.
 
 https://developer.github.com/v3/issues/comments/#list-issue-comments
 */
-func ListComments(ctx context.Context, req *ListCommentsReq, opt ...options.Option) (*ListCommentsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListComments(ctx context.Context, req *ListCommentsReq, opt ...requests.Option) (*ListCommentsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2363,7 +2362,7 @@ List issue comments.
 
 https://developer.github.com/v3/issues/comments/#list-issue-comments
 */
-func (c Client) ListComments(ctx context.Context, req *ListCommentsReq, opt ...options.Option) (*ListCommentsResponse, error) {
+func (c Client) ListComments(ctx context.Context, req *ListCommentsReq, opt ...requests.Option) (*ListCommentsResponse, error) {
 	return ListComments(ctx, req, append(c, opt...)...)
 }
 
@@ -2406,8 +2405,8 @@ type ListCommentsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListCommentsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListCommentsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2462,7 +2461,7 @@ ListCommentsResponse is a response for ListComments
 https://developer.github.com/v3/issues/comments/#list-issue-comments
 */
 type ListCommentsResponse struct {
-	common.Response
+	requests.Response
 	request *ListCommentsReq
 	Data    []components.IssueComment
 }
@@ -2476,8 +2475,8 @@ List issue comments for a repository.
 
 https://developer.github.com/v3/issues/comments/#list-issue-comments-for-a-repository
 */
-func ListCommentsForRepo(ctx context.Context, req *ListCommentsForRepoReq, opt ...options.Option) (*ListCommentsForRepoResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListCommentsForRepo(ctx context.Context, req *ListCommentsForRepoReq, opt ...requests.Option) (*ListCommentsForRepoResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2512,7 +2511,7 @@ List issue comments for a repository.
 
 https://developer.github.com/v3/issues/comments/#list-issue-comments-for-a-repository
 */
-func (c Client) ListCommentsForRepo(ctx context.Context, req *ListCommentsForRepoReq, opt ...options.Option) (*ListCommentsForRepoResponse, error) {
+func (c Client) ListCommentsForRepo(ctx context.Context, req *ListCommentsForRepoReq, opt ...requests.Option) (*ListCommentsForRepoResponse, error) {
 	return ListCommentsForRepo(ctx, req, append(c, opt...)...)
 }
 
@@ -2561,8 +2560,8 @@ type ListCommentsForRepoReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListCommentsForRepoReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListCommentsForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2623,7 +2622,7 @@ ListCommentsForRepoResponse is a response for ListCommentsForRepo
 https://developer.github.com/v3/issues/comments/#list-issue-comments-for-a-repository
 */
 type ListCommentsForRepoResponse struct {
-	common.Response
+	requests.Response
 	request *ListCommentsForRepoReq
 	Data    []components.IssueComment
 }
@@ -2637,8 +2636,8 @@ List issue events.
 
 https://developer.github.com/v3/issues/events/#list-issue-events
 */
-func ListEvents(ctx context.Context, req *ListEventsReq, opt ...options.Option) (*ListEventsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListEvents(ctx context.Context, req *ListEventsReq, opt ...requests.Option) (*ListEventsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2673,7 +2672,7 @@ List issue events.
 
 https://developer.github.com/v3/issues/events/#list-issue-events
 */
-func (c Client) ListEvents(ctx context.Context, req *ListEventsReq, opt ...options.Option) (*ListEventsResponse, error) {
+func (c Client) ListEvents(ctx context.Context, req *ListEventsReq, opt ...requests.Option) (*ListEventsResponse, error) {
 	return ListEvents(ctx, req, append(c, opt...)...)
 }
 
@@ -2720,8 +2719,8 @@ type ListEventsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListEventsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListEventsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2776,7 +2775,7 @@ ListEventsResponse is a response for ListEvents
 https://developer.github.com/v3/issues/events/#list-issue-events
 */
 type ListEventsResponse struct {
-	common.Response
+	requests.Response
 	request *ListEventsReq
 	Data    []components.IssueEventForIssue
 }
@@ -2790,8 +2789,8 @@ List issue events for a repository.
 
 https://developer.github.com/v3/issues/events/#list-issue-events-for-a-repository
 */
-func ListEventsForRepo(ctx context.Context, req *ListEventsForRepoReq, opt ...options.Option) (*ListEventsForRepoResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListEventsForRepo(ctx context.Context, req *ListEventsForRepoReq, opt ...requests.Option) (*ListEventsForRepoResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2826,7 +2825,7 @@ List issue events for a repository.
 
 https://developer.github.com/v3/issues/events/#list-issue-events-for-a-repository
 */
-func (c Client) ListEventsForRepo(ctx context.Context, req *ListEventsForRepoReq, opt ...options.Option) (*ListEventsForRepoResponse, error) {
+func (c Client) ListEventsForRepo(ctx context.Context, req *ListEventsForRepoReq, opt ...requests.Option) (*ListEventsForRepoResponse, error) {
 	return ListEventsForRepo(ctx, req, append(c, opt...)...)
 }
 
@@ -2870,8 +2869,8 @@ type ListEventsForRepoReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListEventsForRepoReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListEventsForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2926,7 +2925,7 @@ ListEventsForRepoResponse is a response for ListEventsForRepo
 https://developer.github.com/v3/issues/events/#list-issue-events-for-a-repository
 */
 type ListEventsForRepoResponse struct {
-	common.Response
+	requests.Response
 	request *ListEventsForRepoReq
 	Data    []components.IssueEvent
 }
@@ -2940,8 +2939,8 @@ List timeline events for an issue.
 
 https://developer.github.com/v3/issues/timeline/#list-timeline-events-for-an-issue
 */
-func ListEventsForTimeline(ctx context.Context, req *ListEventsForTimelineReq, opt ...options.Option) (*ListEventsForTimelineResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListEventsForTimeline(ctx context.Context, req *ListEventsForTimelineReq, opt ...requests.Option) (*ListEventsForTimelineResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2976,7 +2975,7 @@ List timeline events for an issue.
 
 https://developer.github.com/v3/issues/timeline/#list-timeline-events-for-an-issue
 */
-func (c Client) ListEventsForTimeline(ctx context.Context, req *ListEventsForTimelineReq, opt ...options.Option) (*ListEventsForTimelineResponse, error) {
+func (c Client) ListEventsForTimeline(ctx context.Context, req *ListEventsForTimelineReq, opt ...requests.Option) (*ListEventsForTimelineResponse, error) {
 	return ListEventsForTimeline(ctx, req, append(c, opt...)...)
 }
 
@@ -3022,8 +3021,8 @@ type ListEventsForTimelineReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListEventsForTimelineReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListEventsForTimelineReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3078,7 +3077,7 @@ ListEventsForTimelineResponse is a response for ListEventsForTimeline
 https://developer.github.com/v3/issues/timeline/#list-timeline-events-for-an-issue
 */
 type ListEventsForTimelineResponse struct {
-	common.Response
+	requests.Response
 	request *ListEventsForTimelineReq
 	Data    []components.IssueEventForIssue
 }
@@ -3092,8 +3091,8 @@ List user account issues assigned to the authenticated user.
 
 https://developer.github.com/v3/issues/#list-user-account-issues-assigned-to-the-authenticated-user
 */
-func ListForAuthenticatedUser(ctx context.Context, req *ListForAuthenticatedUserReq, opt ...options.Option) (*ListForAuthenticatedUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListForAuthenticatedUser(ctx context.Context, req *ListForAuthenticatedUserReq, opt ...requests.Option) (*ListForAuthenticatedUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3128,7 +3127,7 @@ List user account issues assigned to the authenticated user.
 
 https://developer.github.com/v3/issues/#list-user-account-issues-assigned-to-the-authenticated-user
 */
-func (c Client) ListForAuthenticatedUser(ctx context.Context, req *ListForAuthenticatedUserReq, opt ...options.Option) (*ListForAuthenticatedUserResponse, error) {
+func (c Client) ListForAuthenticatedUser(ctx context.Context, req *ListForAuthenticatedUserReq, opt ...requests.Option) (*ListForAuthenticatedUserResponse, error) {
 	return ListForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
@@ -3198,8 +3197,8 @@ type ListForAuthenticatedUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3272,7 +3271,7 @@ ListForAuthenticatedUserResponse is a response for ListForAuthenticatedUser
 https://developer.github.com/v3/issues/#list-user-account-issues-assigned-to-the-authenticated-user
 */
 type ListForAuthenticatedUserResponse struct {
-	common.Response
+	requests.Response
 	request *ListForAuthenticatedUserReq
 	Data    []components.Issue
 }
@@ -3286,8 +3285,8 @@ List organization issues assigned to the authenticated user.
 
 https://developer.github.com/v3/issues/#list-organization-issues-assigned-to-the-authenticated-user
 */
-func ListForOrg(ctx context.Context, req *ListForOrgReq, opt ...options.Option) (*ListForOrgResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListForOrg(ctx context.Context, req *ListForOrgReq, opt ...requests.Option) (*ListForOrgResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3322,7 +3321,7 @@ List organization issues assigned to the authenticated user.
 
 https://developer.github.com/v3/issues/#list-organization-issues-assigned-to-the-authenticated-user
 */
-func (c Client) ListForOrg(ctx context.Context, req *ListForOrgReq, opt ...options.Option) (*ListForOrgResponse, error) {
+func (c Client) ListForOrg(ctx context.Context, req *ListForOrgReq, opt ...requests.Option) (*ListForOrgResponse, error) {
 	return ListForOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -3393,8 +3392,8 @@ type ListForOrgReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListForOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3467,7 +3466,7 @@ ListForOrgResponse is a response for ListForOrg
 https://developer.github.com/v3/issues/#list-organization-issues-assigned-to-the-authenticated-user
 */
 type ListForOrgResponse struct {
-	common.Response
+	requests.Response
 	request *ListForOrgReq
 	Data    []components.Issue
 }
@@ -3481,8 +3480,8 @@ List repository issues.
 
 https://developer.github.com/v3/issues/#list-repository-issues
 */
-func ListForRepo(ctx context.Context, req *ListForRepoReq, opt ...options.Option) (*ListForRepoResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListForRepo(ctx context.Context, req *ListForRepoReq, opt ...requests.Option) (*ListForRepoResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3517,7 +3516,7 @@ List repository issues.
 
 https://developer.github.com/v3/issues/#list-repository-issues
 */
-func (c Client) ListForRepo(ctx context.Context, req *ListForRepoReq, opt ...options.Option) (*ListForRepoResponse, error) {
+func (c Client) ListForRepo(ctx context.Context, req *ListForRepoReq, opt ...requests.Option) (*ListForRepoResponse, error) {
 	return ListForRepo(ctx, req, append(c, opt...)...)
 }
 
@@ -3597,8 +3596,8 @@ type ListForRepoReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListForRepoReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3680,7 +3679,7 @@ ListForRepoResponse is a response for ListForRepo
 https://developer.github.com/v3/issues/#list-repository-issues
 */
 type ListForRepoResponse struct {
-	common.Response
+	requests.Response
 	request *ListForRepoReq
 	Data    []components.IssueSimple
 }
@@ -3694,8 +3693,8 @@ List labels for issues in a milestone.
 
 https://developer.github.com/v3/issues/labels/#list-labels-for-issues-in-a-milestone
 */
-func ListLabelsForMilestone(ctx context.Context, req *ListLabelsForMilestoneReq, opt ...options.Option) (*ListLabelsForMilestoneResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListLabelsForMilestone(ctx context.Context, req *ListLabelsForMilestoneReq, opt ...requests.Option) (*ListLabelsForMilestoneResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3730,7 +3729,7 @@ List labels for issues in a milestone.
 
 https://developer.github.com/v3/issues/labels/#list-labels-for-issues-in-a-milestone
 */
-func (c Client) ListLabelsForMilestone(ctx context.Context, req *ListLabelsForMilestoneReq, opt ...options.Option) (*ListLabelsForMilestoneResponse, error) {
+func (c Client) ListLabelsForMilestone(ctx context.Context, req *ListLabelsForMilestoneReq, opt ...requests.Option) (*ListLabelsForMilestoneResponse, error) {
 	return ListLabelsForMilestone(ctx, req, append(c, opt...)...)
 }
 
@@ -3755,8 +3754,8 @@ type ListLabelsForMilestoneReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListLabelsForMilestoneReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListLabelsForMilestoneReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3808,7 +3807,7 @@ ListLabelsForMilestoneResponse is a response for ListLabelsForMilestone
 https://developer.github.com/v3/issues/labels/#list-labels-for-issues-in-a-milestone
 */
 type ListLabelsForMilestoneResponse struct {
-	common.Response
+	requests.Response
 	request *ListLabelsForMilestoneReq
 	Data    []components.Label
 }
@@ -3822,8 +3821,8 @@ List labels for a repository.
 
 https://developer.github.com/v3/issues/labels/#list-labels-for-a-repository
 */
-func ListLabelsForRepo(ctx context.Context, req *ListLabelsForRepoReq, opt ...options.Option) (*ListLabelsForRepoResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListLabelsForRepo(ctx context.Context, req *ListLabelsForRepoReq, opt ...requests.Option) (*ListLabelsForRepoResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3858,7 +3857,7 @@ List labels for a repository.
 
 https://developer.github.com/v3/issues/labels/#list-labels-for-a-repository
 */
-func (c Client) ListLabelsForRepo(ctx context.Context, req *ListLabelsForRepoReq, opt ...options.Option) (*ListLabelsForRepoResponse, error) {
+func (c Client) ListLabelsForRepo(ctx context.Context, req *ListLabelsForRepoReq, opt ...requests.Option) (*ListLabelsForRepoResponse, error) {
 	return ListLabelsForRepo(ctx, req, append(c, opt...)...)
 }
 
@@ -3880,8 +3879,8 @@ type ListLabelsForRepoReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListLabelsForRepoReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListLabelsForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3933,7 +3932,7 @@ ListLabelsForRepoResponse is a response for ListLabelsForRepo
 https://developer.github.com/v3/issues/labels/#list-labels-for-a-repository
 */
 type ListLabelsForRepoResponse struct {
-	common.Response
+	requests.Response
 	request *ListLabelsForRepoReq
 	Data    []components.Label
 }
@@ -3947,8 +3946,8 @@ List labels for an issue.
 
 https://developer.github.com/v3/issues/labels/#list-labels-for-an-issue
 */
-func ListLabelsOnIssue(ctx context.Context, req *ListLabelsOnIssueReq, opt ...options.Option) (*ListLabelsOnIssueResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListLabelsOnIssue(ctx context.Context, req *ListLabelsOnIssueReq, opt ...requests.Option) (*ListLabelsOnIssueResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3983,7 +3982,7 @@ List labels for an issue.
 
 https://developer.github.com/v3/issues/labels/#list-labels-for-an-issue
 */
-func (c Client) ListLabelsOnIssue(ctx context.Context, req *ListLabelsOnIssueReq, opt ...options.Option) (*ListLabelsOnIssueResponse, error) {
+func (c Client) ListLabelsOnIssue(ctx context.Context, req *ListLabelsOnIssueReq, opt ...requests.Option) (*ListLabelsOnIssueResponse, error) {
 	return ListLabelsOnIssue(ctx, req, append(c, opt...)...)
 }
 
@@ -4008,8 +4007,8 @@ type ListLabelsOnIssueReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListLabelsOnIssueReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListLabelsOnIssueReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4061,7 +4060,7 @@ ListLabelsOnIssueResponse is a response for ListLabelsOnIssue
 https://developer.github.com/v3/issues/labels/#list-labels-for-an-issue
 */
 type ListLabelsOnIssueResponse struct {
-	common.Response
+	requests.Response
 	request *ListLabelsOnIssueReq
 	Data    []components.Label
 }
@@ -4075,8 +4074,8 @@ List milestones.
 
 https://developer.github.com/v3/issues/milestones/#list-milestones
 */
-func ListMilestones(ctx context.Context, req *ListMilestonesReq, opt ...options.Option) (*ListMilestonesResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListMilestones(ctx context.Context, req *ListMilestonesReq, opt ...requests.Option) (*ListMilestonesResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4111,7 +4110,7 @@ List milestones.
 
 https://developer.github.com/v3/issues/milestones/#list-milestones
 */
-func (c Client) ListMilestones(ctx context.Context, req *ListMilestonesReq, opt ...options.Option) (*ListMilestonesResponse, error) {
+func (c Client) ListMilestones(ctx context.Context, req *ListMilestonesReq, opt ...requests.Option) (*ListMilestonesResponse, error) {
 	return ListMilestones(ctx, req, append(c, opt...)...)
 }
 
@@ -4142,8 +4141,8 @@ type ListMilestonesReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListMilestonesReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListMilestonesReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4204,7 +4203,7 @@ ListMilestonesResponse is a response for ListMilestones
 https://developer.github.com/v3/issues/milestones/#list-milestones
 */
 type ListMilestonesResponse struct {
-	common.Response
+	requests.Response
 	request *ListMilestonesReq
 	Data    []components.Milestone
 }
@@ -4218,8 +4217,8 @@ Lock an issue.
 
 https://developer.github.com/v3/issues/#lock-an-issue
 */
-func Lock(ctx context.Context, req *LockReq, opt ...options.Option) (*LockResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func Lock(ctx context.Context, req *LockReq, opt ...requests.Option) (*LockResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4253,7 +4252,7 @@ Lock an issue.
 
 https://developer.github.com/v3/issues/#lock-an-issue
 */
-func (c Client) Lock(ctx context.Context, req *LockReq, opt ...options.Option) (*LockResponse, error) {
+func (c Client) Lock(ctx context.Context, req *LockReq, opt ...requests.Option) (*LockResponse, error) {
 	return Lock(ctx, req, append(c, opt...)...)
 }
 
@@ -4283,8 +4282,8 @@ type LockReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *LockReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *LockReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4348,7 +4347,7 @@ LockResponse is a response for Lock
 https://developer.github.com/v3/issues/#lock-an-issue
 */
 type LockResponse struct {
-	common.Response
+	requests.Response
 	request *LockReq
 }
 
@@ -4361,8 +4360,8 @@ Remove all labels from an issue.
 
 https://developer.github.com/v3/issues/labels/#remove-all-labels-from-an-issue
 */
-func RemoveAllLabels(ctx context.Context, req *RemoveAllLabelsReq, opt ...options.Option) (*RemoveAllLabelsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func RemoveAllLabels(ctx context.Context, req *RemoveAllLabelsReq, opt ...requests.Option) (*RemoveAllLabelsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4396,7 +4395,7 @@ Remove all labels from an issue.
 
 https://developer.github.com/v3/issues/labels/#remove-all-labels-from-an-issue
 */
-func (c Client) RemoveAllLabels(ctx context.Context, req *RemoveAllLabelsReq, opt ...options.Option) (*RemoveAllLabelsResponse, error) {
+func (c Client) RemoveAllLabels(ctx context.Context, req *RemoveAllLabelsReq, opt ...requests.Option) (*RemoveAllLabelsResponse, error) {
 	return RemoveAllLabels(ctx, req, append(c, opt...)...)
 }
 
@@ -4415,8 +4414,8 @@ type RemoveAllLabelsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *RemoveAllLabelsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *RemoveAllLabelsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4462,7 +4461,7 @@ RemoveAllLabelsResponse is a response for RemoveAllLabels
 https://developer.github.com/v3/issues/labels/#remove-all-labels-from-an-issue
 */
 type RemoveAllLabelsResponse struct {
-	common.Response
+	requests.Response
 	request *RemoveAllLabelsReq
 }
 
@@ -4475,8 +4474,8 @@ Remove assignees from an issue.
 
 https://developer.github.com/v3/issues/assignees/#remove-assignees-from-an-issue
 */
-func RemoveAssignees(ctx context.Context, req *RemoveAssigneesReq, opt ...options.Option) (*RemoveAssigneesResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func RemoveAssignees(ctx context.Context, req *RemoveAssigneesReq, opt ...requests.Option) (*RemoveAssigneesResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4511,7 +4510,7 @@ Remove assignees from an issue.
 
 https://developer.github.com/v3/issues/assignees/#remove-assignees-from-an-issue
 */
-func (c Client) RemoveAssignees(ctx context.Context, req *RemoveAssigneesReq, opt ...options.Option) (*RemoveAssigneesResponse, error) {
+func (c Client) RemoveAssignees(ctx context.Context, req *RemoveAssigneesReq, opt ...requests.Option) (*RemoveAssigneesResponse, error) {
 	return RemoveAssignees(ctx, req, append(c, opt...)...)
 }
 
@@ -4531,8 +4530,8 @@ type RemoveAssigneesReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *RemoveAssigneesReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *RemoveAssigneesReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4596,7 +4595,7 @@ RemoveAssigneesResponse is a response for RemoveAssignees
 https://developer.github.com/v3/issues/assignees/#remove-assignees-from-an-issue
 */
 type RemoveAssigneesResponse struct {
-	common.Response
+	requests.Response
 	request *RemoveAssigneesReq
 	Data    components.IssueSimple
 }
@@ -4610,8 +4609,8 @@ Remove a label from an issue.
 
 https://developer.github.com/v3/issues/labels/#remove-a-label-from-an-issue
 */
-func RemoveLabel(ctx context.Context, req *RemoveLabelReq, opt ...options.Option) (*RemoveLabelResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func RemoveLabel(ctx context.Context, req *RemoveLabelReq, opt ...requests.Option) (*RemoveLabelResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4646,7 +4645,7 @@ Remove a label from an issue.
 
 https://developer.github.com/v3/issues/labels/#remove-a-label-from-an-issue
 */
-func (c Client) RemoveLabel(ctx context.Context, req *RemoveLabelReq, opt ...options.Option) (*RemoveLabelResponse, error) {
+func (c Client) RemoveLabel(ctx context.Context, req *RemoveLabelReq, opt ...requests.Option) (*RemoveLabelResponse, error) {
 	return RemoveLabel(ctx, req, append(c, opt...)...)
 }
 
@@ -4668,8 +4667,8 @@ type RemoveLabelReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *RemoveLabelReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *RemoveLabelReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4715,7 +4714,7 @@ RemoveLabelResponse is a response for RemoveLabel
 https://developer.github.com/v3/issues/labels/#remove-a-label-from-an-issue
 */
 type RemoveLabelResponse struct {
-	common.Response
+	requests.Response
 	request *RemoveLabelReq
 	Data    []components.Label
 }
@@ -4729,8 +4728,8 @@ Set labels for an issue.
 
 https://developer.github.com/v3/issues/labels/#set-labels-for-an-issue
 */
-func SetLabels(ctx context.Context, req *SetLabelsReq, opt ...options.Option) (*SetLabelsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func SetLabels(ctx context.Context, req *SetLabelsReq, opt ...requests.Option) (*SetLabelsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4765,7 +4764,7 @@ Set labels for an issue.
 
 https://developer.github.com/v3/issues/labels/#set-labels-for-an-issue
 */
-func (c Client) SetLabels(ctx context.Context, req *SetLabelsReq, opt ...options.Option) (*SetLabelsResponse, error) {
+func (c Client) SetLabels(ctx context.Context, req *SetLabelsReq, opt ...requests.Option) (*SetLabelsResponse, error) {
 	return SetLabels(ctx, req, append(c, opt...)...)
 }
 
@@ -4785,8 +4784,8 @@ type SetLabelsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *SetLabelsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *SetLabelsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4851,7 +4850,7 @@ SetLabelsResponse is a response for SetLabels
 https://developer.github.com/v3/issues/labels/#set-labels-for-an-issue
 */
 type SetLabelsResponse struct {
-	common.Response
+	requests.Response
 	request *SetLabelsReq
 	Data    []components.Label
 }
@@ -4865,8 +4864,8 @@ Unlock an issue.
 
 https://developer.github.com/v3/issues/#unlock-an-issue
 */
-func Unlock(ctx context.Context, req *UnlockReq, opt ...options.Option) (*UnlockResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func Unlock(ctx context.Context, req *UnlockReq, opt ...requests.Option) (*UnlockResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4900,7 +4899,7 @@ Unlock an issue.
 
 https://developer.github.com/v3/issues/#unlock-an-issue
 */
-func (c Client) Unlock(ctx context.Context, req *UnlockReq, opt ...options.Option) (*UnlockResponse, error) {
+func (c Client) Unlock(ctx context.Context, req *UnlockReq, opt ...requests.Option) (*UnlockResponse, error) {
 	return Unlock(ctx, req, append(c, opt...)...)
 }
 
@@ -4919,8 +4918,8 @@ type UnlockReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UnlockReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *UnlockReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4966,7 +4965,7 @@ UnlockResponse is a response for Unlock
 https://developer.github.com/v3/issues/#unlock-an-issue
 */
 type UnlockResponse struct {
-	common.Response
+	requests.Response
 	request *UnlockReq
 }
 
@@ -4979,8 +4978,8 @@ Update an issue.
 
 https://developer.github.com/v3/issues/#update-an-issue
 */
-func Update(ctx context.Context, req *UpdateReq, opt ...options.Option) (*UpdateResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func Update(ctx context.Context, req *UpdateReq, opt ...requests.Option) (*UpdateResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -5015,7 +5014,7 @@ Update an issue.
 
 https://developer.github.com/v3/issues/#update-an-issue
 */
-func (c Client) Update(ctx context.Context, req *UpdateReq, opt ...options.Option) (*UpdateResponse, error) {
+func (c Client) Update(ctx context.Context, req *UpdateReq, opt ...requests.Option) (*UpdateResponse, error) {
 	return Update(ctx, req, append(c, opt...)...)
 }
 
@@ -5035,8 +5034,8 @@ type UpdateReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UpdateReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *UpdateReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -5128,7 +5127,7 @@ UpdateResponse is a response for Update
 https://developer.github.com/v3/issues/#update-an-issue
 */
 type UpdateResponse struct {
-	common.Response
+	requests.Response
 	request *UpdateReq
 	Data    components.Issue
 }
@@ -5142,8 +5141,8 @@ Update an issue comment.
 
 https://developer.github.com/v3/issues/comments/#update-an-issue-comment
 */
-func UpdateComment(ctx context.Context, req *UpdateCommentReq, opt ...options.Option) (*UpdateCommentResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func UpdateComment(ctx context.Context, req *UpdateCommentReq, opt ...requests.Option) (*UpdateCommentResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -5178,7 +5177,7 @@ Update an issue comment.
 
 https://developer.github.com/v3/issues/comments/#update-an-issue-comment
 */
-func (c Client) UpdateComment(ctx context.Context, req *UpdateCommentReq, opt ...options.Option) (*UpdateCommentResponse, error) {
+func (c Client) UpdateComment(ctx context.Context, req *UpdateCommentReq, opt ...requests.Option) (*UpdateCommentResponse, error) {
 	return UpdateComment(ctx, req, append(c, opt...)...)
 }
 
@@ -5198,8 +5197,8 @@ type UpdateCommentReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UpdateCommentReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *UpdateCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -5259,7 +5258,7 @@ UpdateCommentResponse is a response for UpdateComment
 https://developer.github.com/v3/issues/comments/#update-an-issue-comment
 */
 type UpdateCommentResponse struct {
-	common.Response
+	requests.Response
 	request *UpdateCommentReq
 	Data    components.IssueComment
 }
@@ -5273,8 +5272,8 @@ Update a label.
 
 https://developer.github.com/v3/issues/labels/#update-a-label
 */
-func UpdateLabel(ctx context.Context, req *UpdateLabelReq, opt ...options.Option) (*UpdateLabelResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func UpdateLabel(ctx context.Context, req *UpdateLabelReq, opt ...requests.Option) (*UpdateLabelResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -5309,7 +5308,7 @@ Update a label.
 
 https://developer.github.com/v3/issues/labels/#update-a-label
 */
-func (c Client) UpdateLabel(ctx context.Context, req *UpdateLabelReq, opt ...options.Option) (*UpdateLabelResponse, error) {
+func (c Client) UpdateLabel(ctx context.Context, req *UpdateLabelReq, opt ...requests.Option) (*UpdateLabelResponse, error) {
 	return UpdateLabel(ctx, req, append(c, opt...)...)
 }
 
@@ -5329,8 +5328,8 @@ type UpdateLabelReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UpdateLabelReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *UpdateLabelReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -5403,7 +5402,7 @@ UpdateLabelResponse is a response for UpdateLabel
 https://developer.github.com/v3/issues/labels/#update-a-label
 */
 type UpdateLabelResponse struct {
-	common.Response
+	requests.Response
 	request *UpdateLabelReq
 	Data    components.Label
 }
@@ -5417,8 +5416,8 @@ Update a milestone.
 
 https://developer.github.com/v3/issues/milestones/#update-a-milestone
 */
-func UpdateMilestone(ctx context.Context, req *UpdateMilestoneReq, opt ...options.Option) (*UpdateMilestoneResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func UpdateMilestone(ctx context.Context, req *UpdateMilestoneReq, opt ...requests.Option) (*UpdateMilestoneResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -5453,7 +5452,7 @@ Update a milestone.
 
 https://developer.github.com/v3/issues/milestones/#update-a-milestone
 */
-func (c Client) UpdateMilestone(ctx context.Context, req *UpdateMilestoneReq, opt ...options.Option) (*UpdateMilestoneResponse, error) {
+func (c Client) UpdateMilestone(ctx context.Context, req *UpdateMilestoneReq, opt ...requests.Option) (*UpdateMilestoneResponse, error) {
 	return UpdateMilestone(ctx, req, append(c, opt...)...)
 }
 
@@ -5473,8 +5472,8 @@ type UpdateMilestoneReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UpdateMilestoneReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *UpdateMilestoneReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -5546,7 +5545,7 @@ UpdateMilestoneResponse is a response for UpdateMilestone
 https://developer.github.com/v3/issues/milestones/#update-a-milestone
 */
 type UpdateMilestoneResponse struct {
-	common.Response
+	requests.Response
 	request *UpdateMilestoneReq
 	Data    components.Milestone
 }

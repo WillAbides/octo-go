@@ -5,10 +5,9 @@ package meta
 import (
 	"context"
 	"fmt"
-	common "github.com/willabides/octo-go/common"
 	components "github.com/willabides/octo-go/components"
 	internal "github.com/willabides/octo-go/internal"
-	options "github.com/willabides/octo-go/options"
+	requests "github.com/willabides/octo-go/requests"
 	"net/http"
 	"net/url"
 )
@@ -16,15 +15,15 @@ import (
 func strPtr(s string) *string { return &s }
 
 // Client is a set of options to apply to requests
-type Client []options.Option
+type Client []requests.Option
 
 // NewClient returns a new Client
-func NewClient(opt ...options.Option) Client {
+func NewClient(opt ...requests.Option) Client {
 	return opt
 }
 
 // Apply implements options.Option
-func (c Client) Apply(opts *options.Options) error {
+func (c Client) Apply(opts *requests.Options) error {
 	for _, o := range c {
 		err := o.Apply(opts)
 		if err != nil {
@@ -43,8 +42,8 @@ Get GitHub meta information.
 
 https://developer.github.com/v3/meta/#get-github-meta-information
 */
-func Get(ctx context.Context, req *GetReq, opt ...options.Option) (*GetResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func Get(ctx context.Context, req *GetReq, opt ...requests.Option) (*GetResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -79,7 +78,7 @@ Get GitHub meta information.
 
 https://developer.github.com/v3/meta/#get-github-meta-information
 */
-func (c Client) Get(ctx context.Context, req *GetReq, opt ...options.Option) (*GetResponse, error) {
+func (c Client) Get(ctx context.Context, req *GetReq, opt ...requests.Option) (*GetResponse, error) {
 	return Get(ctx, req, append(c, opt...)...)
 }
 
@@ -93,8 +92,8 @@ type GetReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -140,7 +139,7 @@ GetResponse is a response for Get
 https://developer.github.com/v3/meta/#get-github-meta-information
 */
 type GetResponse struct {
-	common.Response
+	requests.Response
 	request *GetReq
 	Data    components.ApiOverview
 }
@@ -153,8 +152,8 @@ Get Octocat.
   GET /octocat
 
 */
-func GetOctocat(ctx context.Context, req *GetOctocatReq, opt ...options.Option) (*GetOctocatResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetOctocat(ctx context.Context, req *GetOctocatReq, opt ...requests.Option) (*GetOctocatResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -187,7 +186,7 @@ Get Octocat.
   GET /octocat
 
 */
-func (c Client) GetOctocat(ctx context.Context, req *GetOctocatReq, opt ...options.Option) (*GetOctocatResponse, error) {
+func (c Client) GetOctocat(ctx context.Context, req *GetOctocatReq, opt ...requests.Option) (*GetOctocatResponse, error) {
 	return GetOctocat(ctx, req, append(c, opt...)...)
 }
 
@@ -203,8 +202,8 @@ type GetOctocatReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetOctocatReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetOctocatReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -252,7 +251,7 @@ GetOctocatResponse is a response for GetOctocat
 
 */
 type GetOctocatResponse struct {
-	common.Response
+	requests.Response
 	request *GetOctocatReq
 }
 
@@ -264,8 +263,8 @@ Get the Zen of GitHub.
   GET /zen
 
 */
-func GetZen(ctx context.Context, req *GetZenReq, opt ...options.Option) (*GetZenResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetZen(ctx context.Context, req *GetZenReq, opt ...requests.Option) (*GetZenResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -298,7 +297,7 @@ Get the Zen of GitHub.
   GET /zen
 
 */
-func (c Client) GetZen(ctx context.Context, req *GetZenReq, opt ...options.Option) (*GetZenResponse, error) {
+func (c Client) GetZen(ctx context.Context, req *GetZenReq, opt ...requests.Option) (*GetZenResponse, error) {
 	return GetZen(ctx, req, append(c, opt...)...)
 }
 
@@ -311,8 +310,8 @@ type GetZenReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetZenReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetZenReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -357,7 +356,7 @@ GetZenResponse is a response for GetZen
 
 */
 type GetZenResponse struct {
-	common.Response
+	requests.Response
 	request *GetZenReq
 }
 
@@ -369,8 +368,8 @@ GitHub API Root.
   GET /
 
 */
-func Root(ctx context.Context, req *RootReq, opt ...options.Option) (*RootResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func Root(ctx context.Context, req *RootReq, opt ...requests.Option) (*RootResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -404,7 +403,7 @@ GitHub API Root.
   GET /
 
 */
-func (c Client) Root(ctx context.Context, req *RootReq, opt ...options.Option) (*RootResponse, error) {
+func (c Client) Root(ctx context.Context, req *RootReq, opt ...requests.Option) (*RootResponse, error) {
 	return Root(ctx, req, append(c, opt...)...)
 }
 
@@ -417,8 +416,8 @@ type RootReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *RootReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *RootReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -503,7 +502,7 @@ RootResponse is a response for Root
 
 */
 type RootResponse struct {
-	common.Response
+	requests.Response
 	request *RootReq
 	Data    RootResponseBody
 }

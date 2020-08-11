@@ -37,7 +37,7 @@ git checkout -b "$update_branch"
 
 script/generate
 
-git add "*.go" api.github.com.json current-schema-version.txt components/ internal/
+git add "*.go" api.github.com.json current-schema-version.txt components/ internal/ requests/
 
 [ -z "$(git config --get user.name)" ] && git config user.name "octo-cli bot"
 [ -z "$(git config --get user.email)" ] && git config user.email "octo-cli-bot@local"

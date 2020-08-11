@@ -5,10 +5,9 @@ package search
 import (
 	"context"
 	"fmt"
-	common "github.com/willabides/octo-go/common"
 	components "github.com/willabides/octo-go/components"
 	internal "github.com/willabides/octo-go/internal"
-	options "github.com/willabides/octo-go/options"
+	requests "github.com/willabides/octo-go/requests"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -17,15 +16,15 @@ import (
 func strPtr(s string) *string { return &s }
 
 // Client is a set of options to apply to requests
-type Client []options.Option
+type Client []requests.Option
 
 // NewClient returns a new Client
-func NewClient(opt ...options.Option) Client {
+func NewClient(opt ...requests.Option) Client {
 	return opt
 }
 
 // Apply implements options.Option
-func (c Client) Apply(opts *options.Options) error {
+func (c Client) Apply(opts *requests.Options) error {
 	for _, o := range c {
 		err := o.Apply(opts)
 		if err != nil {
@@ -44,8 +43,8 @@ Search code.
 
 https://developer.github.com/v3/search/#search-code
 */
-func Code(ctx context.Context, req *CodeReq, opt ...options.Option) (*CodeResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func Code(ctx context.Context, req *CodeReq, opt ...requests.Option) (*CodeResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -80,7 +79,7 @@ Search code.
 
 https://developer.github.com/v3/search/#search-code
 */
-func (c Client) Code(ctx context.Context, req *CodeReq, opt ...options.Option) (*CodeResponse, error) {
+func (c Client) Code(ctx context.Context, req *CodeReq, opt ...requests.Option) (*CodeResponse, error) {
 	return Code(ctx, req, append(c, opt...)...)
 }
 
@@ -125,8 +124,8 @@ type CodeReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CodeReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CodeReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -198,7 +197,7 @@ CodeResponse is a response for Code
 https://developer.github.com/v3/search/#search-code
 */
 type CodeResponse struct {
-	common.Response
+	requests.Response
 	request *CodeReq
 	Data    CodeResponseBody
 }
@@ -212,8 +211,8 @@ Search commits.
 
 https://developer.github.com/v3/search/#search-commits
 */
-func Commits(ctx context.Context, req *CommitsReq, opt ...options.Option) (*CommitsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func Commits(ctx context.Context, req *CommitsReq, opt ...requests.Option) (*CommitsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -248,7 +247,7 @@ Search commits.
 
 https://developer.github.com/v3/search/#search-commits
 */
-func (c Client) Commits(ctx context.Context, req *CommitsReq, opt ...options.Option) (*CommitsResponse, error) {
+func (c Client) Commits(ctx context.Context, req *CommitsReq, opt ...requests.Option) (*CommitsResponse, error) {
 	return Commits(ctx, req, append(c, opt...)...)
 }
 
@@ -302,8 +301,8 @@ type CommitsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CommitsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CommitsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -375,7 +374,7 @@ CommitsResponse is a response for Commits
 https://developer.github.com/v3/search/#search-commits
 */
 type CommitsResponse struct {
-	common.Response
+	requests.Response
 	request *CommitsReq
 	Data    CommitsResponseBody
 }
@@ -389,8 +388,8 @@ Search issues and pull requests.
 
 https://developer.github.com/v3/search/#search-issues-and-pull-requests
 */
-func IssuesAndPullRequests(ctx context.Context, req *IssuesAndPullRequestsReq, opt ...options.Option) (*IssuesAndPullRequestsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func IssuesAndPullRequests(ctx context.Context, req *IssuesAndPullRequestsReq, opt ...requests.Option) (*IssuesAndPullRequestsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -425,7 +424,7 @@ Search issues and pull requests.
 
 https://developer.github.com/v3/search/#search-issues-and-pull-requests
 */
-func (c Client) IssuesAndPullRequests(ctx context.Context, req *IssuesAndPullRequestsReq, opt ...options.Option) (*IssuesAndPullRequestsResponse, error) {
+func (c Client) IssuesAndPullRequests(ctx context.Context, req *IssuesAndPullRequestsReq, opt ...requests.Option) (*IssuesAndPullRequestsResponse, error) {
 	return IssuesAndPullRequests(ctx, req, append(c, opt...)...)
 }
 
@@ -473,8 +472,8 @@ type IssuesAndPullRequestsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *IssuesAndPullRequestsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *IssuesAndPullRequestsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -546,7 +545,7 @@ IssuesAndPullRequestsResponse is a response for IssuesAndPullRequests
 https://developer.github.com/v3/search/#search-issues-and-pull-requests
 */
 type IssuesAndPullRequestsResponse struct {
-	common.Response
+	requests.Response
 	request *IssuesAndPullRequestsReq
 	Data    IssuesAndPullRequestsResponseBody
 }
@@ -560,8 +559,8 @@ Search labels.
 
 https://developer.github.com/v3/search/#search-labels
 */
-func Labels(ctx context.Context, req *LabelsReq, opt ...options.Option) (*LabelsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func Labels(ctx context.Context, req *LabelsReq, opt ...requests.Option) (*LabelsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -596,7 +595,7 @@ Search labels.
 
 https://developer.github.com/v3/search/#search-labels
 */
-func (c Client) Labels(ctx context.Context, req *LabelsReq, opt ...options.Option) (*LabelsResponse, error) {
+func (c Client) Labels(ctx context.Context, req *LabelsReq, opt ...requests.Option) (*LabelsResponse, error) {
 	return Labels(ctx, req, append(c, opt...)...)
 }
 
@@ -634,8 +633,8 @@ type LabelsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *LabelsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *LabelsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -704,7 +703,7 @@ LabelsResponse is a response for Labels
 https://developer.github.com/v3/search/#search-labels
 */
 type LabelsResponse struct {
-	common.Response
+	requests.Response
 	request *LabelsReq
 	Data    LabelsResponseBody
 }
@@ -718,8 +717,8 @@ Search repositories.
 
 https://developer.github.com/v3/search/#search-repositories
 */
-func Repos(ctx context.Context, req *ReposReq, opt ...options.Option) (*ReposResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func Repos(ctx context.Context, req *ReposReq, opt ...requests.Option) (*ReposResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -754,7 +753,7 @@ Search repositories.
 
 https://developer.github.com/v3/search/#search-repositories
 */
-func (c Client) Repos(ctx context.Context, req *ReposReq, opt ...options.Option) (*ReposResponse, error) {
+func (c Client) Repos(ctx context.Context, req *ReposReq, opt ...requests.Option) (*ReposResponse, error) {
 	return Repos(ctx, req, append(c, opt...)...)
 }
 
@@ -807,8 +806,8 @@ type ReposReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ReposReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ReposReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -880,7 +879,7 @@ ReposResponse is a response for Repos
 https://developer.github.com/v3/search/#search-repositories
 */
 type ReposResponse struct {
-	common.Response
+	requests.Response
 	request *ReposReq
 	Data    ReposResponseBody
 }
@@ -894,8 +893,8 @@ Search topics.
 
 https://developer.github.com/v3/search/#search-topics
 */
-func Topics(ctx context.Context, req *TopicsReq, opt ...options.Option) (*TopicsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func Topics(ctx context.Context, req *TopicsReq, opt ...requests.Option) (*TopicsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -930,7 +929,7 @@ Search topics.
 
 https://developer.github.com/v3/search/#search-topics
 */
-func (c Client) Topics(ctx context.Context, req *TopicsReq, opt ...options.Option) (*TopicsResponse, error) {
+func (c Client) Topics(ctx context.Context, req *TopicsReq, opt ...requests.Option) (*TopicsResponse, error) {
 	return Topics(ctx, req, append(c, opt...)...)
 }
 
@@ -960,8 +959,8 @@ type TopicsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *TopicsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *TopicsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1021,7 +1020,7 @@ TopicsResponse is a response for Topics
 https://developer.github.com/v3/search/#search-topics
 */
 type TopicsResponse struct {
-	common.Response
+	requests.Response
 	request *TopicsReq
 	Data    TopicsResponseBody
 }
@@ -1035,8 +1034,8 @@ Search users.
 
 https://developer.github.com/v3/search/#search-users
 */
-func Users(ctx context.Context, req *UsersReq, opt ...options.Option) (*UsersResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func Users(ctx context.Context, req *UsersReq, opt ...requests.Option) (*UsersResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1071,7 +1070,7 @@ Search users.
 
 https://developer.github.com/v3/search/#search-users
 */
-func (c Client) Users(ctx context.Context, req *UsersReq, opt ...options.Option) (*UsersResponse, error) {
+func (c Client) Users(ctx context.Context, req *UsersReq, opt ...requests.Option) (*UsersResponse, error) {
 	return Users(ctx, req, append(c, opt...)...)
 }
 
@@ -1116,8 +1115,8 @@ type UsersReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UsersReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *UsersReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1189,7 +1188,7 @@ UsersResponse is a response for Users
 https://developer.github.com/v3/search/#search-users
 */
 type UsersResponse struct {
-	common.Response
+	requests.Response
 	request *UsersReq
 	Data    UsersResponseBody
 }

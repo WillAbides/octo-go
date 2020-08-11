@@ -5,10 +5,9 @@ package pulls
 import (
 	"context"
 	"fmt"
-	common "github.com/willabides/octo-go/common"
 	components "github.com/willabides/octo-go/components"
 	internal "github.com/willabides/octo-go/internal"
-	options "github.com/willabides/octo-go/options"
+	requests "github.com/willabides/octo-go/requests"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -17,15 +16,15 @@ import (
 func strPtr(s string) *string { return &s }
 
 // Client is a set of options to apply to requests
-type Client []options.Option
+type Client []requests.Option
 
 // NewClient returns a new Client
-func NewClient(opt ...options.Option) Client {
+func NewClient(opt ...requests.Option) Client {
 	return opt
 }
 
 // Apply implements options.Option
-func (c Client) Apply(opts *options.Options) error {
+func (c Client) Apply(opts *requests.Options) error {
 	for _, o := range c {
 		err := o.Apply(opts)
 		if err != nil {
@@ -44,8 +43,8 @@ Check if a pull request has been merged.
 
 https://developer.github.com/v3/pulls/#check-if-a-pull-request-has-been-merged
 */
-func CheckIfMerged(ctx context.Context, req *CheckIfMergedReq, opt ...options.Option) (*CheckIfMergedResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CheckIfMerged(ctx context.Context, req *CheckIfMergedReq, opt ...requests.Option) (*CheckIfMergedResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -83,7 +82,7 @@ Check if a pull request has been merged.
 
 https://developer.github.com/v3/pulls/#check-if-a-pull-request-has-been-merged
 */
-func (c Client) CheckIfMerged(ctx context.Context, req *CheckIfMergedReq, opt ...options.Option) (*CheckIfMergedResponse, error) {
+func (c Client) CheckIfMerged(ctx context.Context, req *CheckIfMergedReq, opt ...requests.Option) (*CheckIfMergedResponse, error) {
 	return CheckIfMerged(ctx, req, append(c, opt...)...)
 }
 
@@ -100,8 +99,8 @@ type CheckIfMergedReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CheckIfMergedReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CheckIfMergedReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -147,7 +146,7 @@ CheckIfMergedResponse is a response for CheckIfMerged
 https://developer.github.com/v3/pulls/#check-if-a-pull-request-has-been-merged
 */
 type CheckIfMergedResponse struct {
-	common.Response
+	requests.Response
 	request *CheckIfMergedReq
 	Data    bool
 }
@@ -161,8 +160,8 @@ Create a pull request.
 
 https://developer.github.com/v3/pulls/#create-a-pull-request
 */
-func Create(ctx context.Context, req *CreateReq, opt ...options.Option) (*CreateResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func Create(ctx context.Context, req *CreateReq, opt ...requests.Option) (*CreateResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -197,7 +196,7 @@ Create a pull request.
 
 https://developer.github.com/v3/pulls/#create-a-pull-request
 */
-func (c Client) Create(ctx context.Context, req *CreateReq, opt ...options.Option) (*CreateResponse, error) {
+func (c Client) Create(ctx context.Context, req *CreateReq, opt ...requests.Option) (*CreateResponse, error) {
 	return Create(ctx, req, append(c, opt...)...)
 }
 
@@ -224,8 +223,8 @@ type CreateReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -317,7 +316,7 @@ CreateResponse is a response for Create
 https://developer.github.com/v3/pulls/#create-a-pull-request
 */
 type CreateResponse struct {
-	common.Response
+	requests.Response
 	request *CreateReq
 	Data    components.PullRequest
 }
@@ -331,8 +330,8 @@ Create a reply for a review comment.
 
 https://developer.github.com/v3/pulls/comments/#create-a-reply-for-a-review-comment
 */
-func CreateReplyForReviewComment(ctx context.Context, req *CreateReplyForReviewCommentReq, opt ...options.Option) (*CreateReplyForReviewCommentResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateReplyForReviewComment(ctx context.Context, req *CreateReplyForReviewCommentReq, opt ...requests.Option) (*CreateReplyForReviewCommentResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -367,7 +366,7 @@ Create a reply for a review comment.
 
 https://developer.github.com/v3/pulls/comments/#create-a-reply-for-a-review-comment
 */
-func (c Client) CreateReplyForReviewComment(ctx context.Context, req *CreateReplyForReviewCommentReq, opt ...options.Option) (*CreateReplyForReviewCommentResponse, error) {
+func (c Client) CreateReplyForReviewComment(ctx context.Context, req *CreateReplyForReviewCommentReq, opt ...requests.Option) (*CreateReplyForReviewCommentResponse, error) {
 	return CreateReplyForReviewComment(ctx, req, append(c, opt...)...)
 }
 
@@ -388,8 +387,8 @@ type CreateReplyForReviewCommentReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateReplyForReviewCommentReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateReplyForReviewCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -449,7 +448,7 @@ CreateReplyForReviewCommentResponse is a response for CreateReplyForReviewCommen
 https://developer.github.com/v3/pulls/comments/#create-a-reply-for-a-review-comment
 */
 type CreateReplyForReviewCommentResponse struct {
-	common.Response
+	requests.Response
 	request *CreateReplyForReviewCommentReq
 	Data    components.PullRequestReviewComment
 }
@@ -463,8 +462,8 @@ Create a review for a pull request.
 
 https://developer.github.com/v3/pulls/reviews/#create-a-review-for-a-pull-request
 */
-func CreateReview(ctx context.Context, req *CreateReviewReq, opt ...options.Option) (*CreateReviewResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateReview(ctx context.Context, req *CreateReviewReq, opt ...requests.Option) (*CreateReviewResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -499,7 +498,7 @@ Create a review for a pull request.
 
 https://developer.github.com/v3/pulls/reviews/#create-a-review-for-a-pull-request
 */
-func (c Client) CreateReview(ctx context.Context, req *CreateReviewReq, opt ...options.Option) (*CreateReviewResponse, error) {
+func (c Client) CreateReview(ctx context.Context, req *CreateReviewReq, opt ...requests.Option) (*CreateReviewResponse, error) {
 	return CreateReview(ctx, req, append(c, opt...)...)
 }
 
@@ -517,8 +516,8 @@ type CreateReviewReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateReviewReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateReviewReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -622,7 +621,7 @@ CreateReviewResponse is a response for CreateReview
 https://developer.github.com/v3/pulls/reviews/#create-a-review-for-a-pull-request
 */
 type CreateReviewResponse struct {
-	common.Response
+	requests.Response
 	request *CreateReviewReq
 	Data    components.PullRequestReview
 }
@@ -636,8 +635,8 @@ Create a review comment for a pull request.
 
 https://developer.github.com/v3/pulls/comments/#create-a-review-comment-for-a-pull-request
 */
-func CreateReviewComment(ctx context.Context, req *CreateReviewCommentReq, opt ...options.Option) (*CreateReviewCommentResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateReviewComment(ctx context.Context, req *CreateReviewCommentReq, opt ...requests.Option) (*CreateReviewCommentResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -672,7 +671,7 @@ Create a review comment for a pull request.
 
 https://developer.github.com/v3/pulls/comments/#create-a-review-comment-for-a-pull-request
 */
-func (c Client) CreateReviewComment(ctx context.Context, req *CreateReviewCommentReq, opt ...options.Option) (*CreateReviewCommentResponse, error) {
+func (c Client) CreateReviewComment(ctx context.Context, req *CreateReviewCommentReq, opt ...requests.Option) (*CreateReviewCommentResponse, error) {
 	return CreateReviewComment(ctx, req, append(c, opt...)...)
 }
 
@@ -697,8 +696,8 @@ type CreateReviewCommentReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateReviewCommentReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateReviewCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -816,7 +815,7 @@ CreateReviewCommentResponse is a response for CreateReviewComment
 https://developer.github.com/v3/pulls/comments/#create-a-review-comment-for-a-pull-request
 */
 type CreateReviewCommentResponse struct {
-	common.Response
+	requests.Response
 	request *CreateReviewCommentReq
 	Data    components.PullRequestReviewComment
 }
@@ -830,8 +829,8 @@ Delete a pending review for a pull request.
 
 https://developer.github.com/v3/pulls/reviews/#delete-a-pending-review-for-a-pull-request
 */
-func DeletePendingReview(ctx context.Context, req *DeletePendingReviewReq, opt ...options.Option) (*DeletePendingReviewResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DeletePendingReview(ctx context.Context, req *DeletePendingReviewReq, opt ...requests.Option) (*DeletePendingReviewResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -866,7 +865,7 @@ Delete a pending review for a pull request.
 
 https://developer.github.com/v3/pulls/reviews/#delete-a-pending-review-for-a-pull-request
 */
-func (c Client) DeletePendingReview(ctx context.Context, req *DeletePendingReviewReq, opt ...options.Option) (*DeletePendingReviewResponse, error) {
+func (c Client) DeletePendingReview(ctx context.Context, req *DeletePendingReviewReq, opt ...requests.Option) (*DeletePendingReviewResponse, error) {
 	return DeletePendingReview(ctx, req, append(c, opt...)...)
 }
 
@@ -886,8 +885,8 @@ type DeletePendingReviewReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeletePendingReviewReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeletePendingReviewReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -933,7 +932,7 @@ DeletePendingReviewResponse is a response for DeletePendingReview
 https://developer.github.com/v3/pulls/reviews/#delete-a-pending-review-for-a-pull-request
 */
 type DeletePendingReviewResponse struct {
-	common.Response
+	requests.Response
 	request *DeletePendingReviewReq
 	Data    components.PullRequestReview
 }
@@ -947,8 +946,8 @@ Delete a review comment for a pull request.
 
 https://developer.github.com/v3/pulls/comments/#delete-a-review-comment-for-a-pull-request
 */
-func DeleteReviewComment(ctx context.Context, req *DeleteReviewCommentReq, opt ...options.Option) (*DeleteReviewCommentResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DeleteReviewComment(ctx context.Context, req *DeleteReviewCommentReq, opt ...requests.Option) (*DeleteReviewCommentResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -986,7 +985,7 @@ Delete a review comment for a pull request.
 
 https://developer.github.com/v3/pulls/comments/#delete-a-review-comment-for-a-pull-request
 */
-func (c Client) DeleteReviewComment(ctx context.Context, req *DeleteReviewCommentReq, opt ...options.Option) (*DeleteReviewCommentResponse, error) {
+func (c Client) DeleteReviewComment(ctx context.Context, req *DeleteReviewCommentReq, opt ...requests.Option) (*DeleteReviewCommentResponse, error) {
 	return DeleteReviewComment(ctx, req, append(c, opt...)...)
 }
 
@@ -1005,8 +1004,8 @@ type DeleteReviewCommentReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeleteReviewCommentReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeleteReviewCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1052,7 +1051,7 @@ DeleteReviewCommentResponse is a response for DeleteReviewComment
 https://developer.github.com/v3/pulls/comments/#delete-a-review-comment-for-a-pull-request
 */
 type DeleteReviewCommentResponse struct {
-	common.Response
+	requests.Response
 	request *DeleteReviewCommentReq
 	Data    bool
 }
@@ -1066,8 +1065,8 @@ Dismiss a review for a pull request.
 
 https://developer.github.com/v3/pulls/reviews/#dismiss-a-review-for-a-pull-request
 */
-func DismissReview(ctx context.Context, req *DismissReviewReq, opt ...options.Option) (*DismissReviewResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DismissReview(ctx context.Context, req *DismissReviewReq, opt ...requests.Option) (*DismissReviewResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1102,7 +1101,7 @@ Dismiss a review for a pull request.
 
 https://developer.github.com/v3/pulls/reviews/#dismiss-a-review-for-a-pull-request
 */
-func (c Client) DismissReview(ctx context.Context, req *DismissReviewReq, opt ...options.Option) (*DismissReviewResponse, error) {
+func (c Client) DismissReview(ctx context.Context, req *DismissReviewReq, opt ...requests.Option) (*DismissReviewResponse, error) {
 	return DismissReview(ctx, req, append(c, opt...)...)
 }
 
@@ -1123,8 +1122,8 @@ type DismissReviewReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DismissReviewReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DismissReviewReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1185,7 +1184,7 @@ DismissReviewResponse is a response for DismissReview
 https://developer.github.com/v3/pulls/reviews/#dismiss-a-review-for-a-pull-request
 */
 type DismissReviewResponse struct {
-	common.Response
+	requests.Response
 	request *DismissReviewReq
 	Data    components.PullRequestReview
 }
@@ -1199,8 +1198,8 @@ Get a pull request.
 
 https://developer.github.com/v3/pulls/#get-a-pull-request
 */
-func Get(ctx context.Context, req *GetReq, opt ...options.Option) (*GetResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func Get(ctx context.Context, req *GetReq, opt ...requests.Option) (*GetResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1235,7 +1234,7 @@ Get a pull request.
 
 https://developer.github.com/v3/pulls/#get-a-pull-request
 */
-func (c Client) Get(ctx context.Context, req *GetReq, opt ...options.Option) (*GetResponse, error) {
+func (c Client) Get(ctx context.Context, req *GetReq, opt ...requests.Option) (*GetResponse, error) {
 	return Get(ctx, req, append(c, opt...)...)
 }
 
@@ -1262,8 +1261,8 @@ type GetReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1309,7 +1308,7 @@ GetResponse is a response for Get
 https://developer.github.com/v3/pulls/#get-a-pull-request
 */
 type GetResponse struct {
-	common.Response
+	requests.Response
 	request *GetReq
 	Data    components.PullRequest
 }
@@ -1323,8 +1322,8 @@ Get a review for a pull request.
 
 https://developer.github.com/v3/pulls/reviews/#get-a-review-for-a-pull-request
 */
-func GetReview(ctx context.Context, req *GetReviewReq, opt ...options.Option) (*GetReviewResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetReview(ctx context.Context, req *GetReviewReq, opt ...requests.Option) (*GetReviewResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1359,7 +1358,7 @@ Get a review for a pull request.
 
 https://developer.github.com/v3/pulls/reviews/#get-a-review-for-a-pull-request
 */
-func (c Client) GetReview(ctx context.Context, req *GetReviewReq, opt ...options.Option) (*GetReviewResponse, error) {
+func (c Client) GetReview(ctx context.Context, req *GetReviewReq, opt ...requests.Option) (*GetReviewResponse, error) {
 	return GetReview(ctx, req, append(c, opt...)...)
 }
 
@@ -1379,8 +1378,8 @@ type GetReviewReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetReviewReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetReviewReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1426,7 +1425,7 @@ GetReviewResponse is a response for GetReview
 https://developer.github.com/v3/pulls/reviews/#get-a-review-for-a-pull-request
 */
 type GetReviewResponse struct {
-	common.Response
+	requests.Response
 	request *GetReviewReq
 	Data    components.PullRequestReview
 }
@@ -1440,8 +1439,8 @@ Get a review comment for a pull request.
 
 https://developer.github.com/v3/pulls/comments/#get-a-review-comment-for-a-pull-request
 */
-func GetReviewComment(ctx context.Context, req *GetReviewCommentReq, opt ...options.Option) (*GetReviewCommentResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetReviewComment(ctx context.Context, req *GetReviewCommentReq, opt ...requests.Option) (*GetReviewCommentResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1476,7 +1475,7 @@ Get a review comment for a pull request.
 
 https://developer.github.com/v3/pulls/comments/#get-a-review-comment-for-a-pull-request
 */
-func (c Client) GetReviewComment(ctx context.Context, req *GetReviewCommentReq, opt ...options.Option) (*GetReviewCommentResponse, error) {
+func (c Client) GetReviewComment(ctx context.Context, req *GetReviewCommentReq, opt ...requests.Option) (*GetReviewCommentResponse, error) {
 	return GetReviewComment(ctx, req, append(c, opt...)...)
 }
 
@@ -1513,8 +1512,8 @@ type GetReviewCommentReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetReviewCommentReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetReviewCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1563,7 +1562,7 @@ GetReviewCommentResponse is a response for GetReviewComment
 https://developer.github.com/v3/pulls/comments/#get-a-review-comment-for-a-pull-request
 */
 type GetReviewCommentResponse struct {
-	common.Response
+	requests.Response
 	request *GetReviewCommentReq
 	Data    components.PullRequestReviewComment
 }
@@ -1577,8 +1576,8 @@ List pull requests.
 
 https://developer.github.com/v3/pulls/#list-pull-requests
 */
-func List(ctx context.Context, req *ListReq, opt ...options.Option) (*ListResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func List(ctx context.Context, req *ListReq, opt ...requests.Option) (*ListResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1613,7 +1612,7 @@ List pull requests.
 
 https://developer.github.com/v3/pulls/#list-pull-requests
 */
-func (c Client) List(ctx context.Context, req *ListReq, opt ...options.Option) (*ListResponse, error) {
+func (c Client) List(ctx context.Context, req *ListReq, opt ...requests.Option) (*ListResponse, error) {
 	return List(ctx, req, append(c, opt...)...)
 }
 
@@ -1671,8 +1670,8 @@ type ListReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1739,7 +1738,7 @@ ListResponse is a response for List
 https://developer.github.com/v3/pulls/#list-pull-requests
 */
 type ListResponse struct {
-	common.Response
+	requests.Response
 	request *ListReq
 	Data    []components.PullRequestSimple
 }
@@ -1753,8 +1752,8 @@ List comments for a pull request review.
 
 https://developer.github.com/v3/pulls/reviews/#list-comments-for-a-pull-request-review
 */
-func ListCommentsForReview(ctx context.Context, req *ListCommentsForReviewReq, opt ...options.Option) (*ListCommentsForReviewResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListCommentsForReview(ctx context.Context, req *ListCommentsForReviewReq, opt ...requests.Option) (*ListCommentsForReviewResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1789,7 +1788,7 @@ List comments for a pull request review.
 
 https://developer.github.com/v3/pulls/reviews/#list-comments-for-a-pull-request-review
 */
-func (c Client) ListCommentsForReview(ctx context.Context, req *ListCommentsForReviewReq, opt ...options.Option) (*ListCommentsForReviewResponse, error) {
+func (c Client) ListCommentsForReview(ctx context.Context, req *ListCommentsForReviewReq, opt ...requests.Option) (*ListCommentsForReviewResponse, error) {
 	return ListCommentsForReview(ctx, req, append(c, opt...)...)
 }
 
@@ -1815,8 +1814,8 @@ type ListCommentsForReviewReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListCommentsForReviewReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListCommentsForReviewReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1868,7 +1867,7 @@ ListCommentsForReviewResponse is a response for ListCommentsForReview
 https://developer.github.com/v3/pulls/reviews/#list-comments-for-a-pull-request-review
 */
 type ListCommentsForReviewResponse struct {
-	common.Response
+	requests.Response
 	request *ListCommentsForReviewReq
 	Data    []components.ReviewComment
 }
@@ -1882,8 +1881,8 @@ List commits on a pull request.
 
 https://developer.github.com/v3/pulls/#list-commits-on-a-pull-request
 */
-func ListCommits(ctx context.Context, req *ListCommitsReq, opt ...options.Option) (*ListCommitsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListCommits(ctx context.Context, req *ListCommitsReq, opt ...requests.Option) (*ListCommitsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1918,7 +1917,7 @@ List commits on a pull request.
 
 https://developer.github.com/v3/pulls/#list-commits-on-a-pull-request
 */
-func (c Client) ListCommits(ctx context.Context, req *ListCommitsReq, opt ...options.Option) (*ListCommitsResponse, error) {
+func (c Client) ListCommits(ctx context.Context, req *ListCommitsReq, opt ...requests.Option) (*ListCommitsResponse, error) {
 	return ListCommits(ctx, req, append(c, opt...)...)
 }
 
@@ -1941,8 +1940,8 @@ type ListCommitsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListCommitsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListCommitsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1994,7 +1993,7 @@ ListCommitsResponse is a response for ListCommits
 https://developer.github.com/v3/pulls/#list-commits-on-a-pull-request
 */
 type ListCommitsResponse struct {
-	common.Response
+	requests.Response
 	request *ListCommitsReq
 	Data    []components.SimpleCommit
 }
@@ -2008,8 +2007,8 @@ List pull requests files.
 
 https://developer.github.com/v3/pulls/#list-pull-requests-files
 */
-func ListFiles(ctx context.Context, req *ListFilesReq, opt ...options.Option) (*ListFilesResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListFiles(ctx context.Context, req *ListFilesReq, opt ...requests.Option) (*ListFilesResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2044,7 +2043,7 @@ List pull requests files.
 
 https://developer.github.com/v3/pulls/#list-pull-requests-files
 */
-func (c Client) ListFiles(ctx context.Context, req *ListFilesReq, opt ...options.Option) (*ListFilesResponse, error) {
+func (c Client) ListFiles(ctx context.Context, req *ListFilesReq, opt ...requests.Option) (*ListFilesResponse, error) {
 	return ListFiles(ctx, req, append(c, opt...)...)
 }
 
@@ -2067,8 +2066,8 @@ type ListFilesReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListFilesReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListFilesReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2120,7 +2119,7 @@ ListFilesResponse is a response for ListFiles
 https://developer.github.com/v3/pulls/#list-pull-requests-files
 */
 type ListFilesResponse struct {
-	common.Response
+	requests.Response
 	request *ListFilesReq
 	Data    []components.DiffEntry
 }
@@ -2134,8 +2133,8 @@ List requested reviewers for a pull request.
 
 https://developer.github.com/v3/pulls/review_requests/#list-requested-reviewers-for-a-pull-request
 */
-func ListRequestedReviewers(ctx context.Context, req *ListRequestedReviewersReq, opt ...options.Option) (*ListRequestedReviewersResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListRequestedReviewers(ctx context.Context, req *ListRequestedReviewersReq, opt ...requests.Option) (*ListRequestedReviewersResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2170,7 +2169,7 @@ List requested reviewers for a pull request.
 
 https://developer.github.com/v3/pulls/review_requests/#list-requested-reviewers-for-a-pull-request
 */
-func (c Client) ListRequestedReviewers(ctx context.Context, req *ListRequestedReviewersReq, opt ...options.Option) (*ListRequestedReviewersResponse, error) {
+func (c Client) ListRequestedReviewers(ctx context.Context, req *ListRequestedReviewersReq, opt ...requests.Option) (*ListRequestedReviewersResponse, error) {
 	return ListRequestedReviewers(ctx, req, append(c, opt...)...)
 }
 
@@ -2193,8 +2192,8 @@ type ListRequestedReviewersReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListRequestedReviewersReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListRequestedReviewersReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2246,7 +2245,7 @@ ListRequestedReviewersResponse is a response for ListRequestedReviewers
 https://developer.github.com/v3/pulls/review_requests/#list-requested-reviewers-for-a-pull-request
 */
 type ListRequestedReviewersResponse struct {
-	common.Response
+	requests.Response
 	request *ListRequestedReviewersReq
 	Data    components.PullRequestReviewRequest
 }
@@ -2260,8 +2259,8 @@ List review comments on a pull request.
 
 https://developer.github.com/v3/pulls/comments/#list-review-comments-on-a-pull-request
 */
-func ListReviewComments(ctx context.Context, req *ListReviewCommentsReq, opt ...options.Option) (*ListReviewCommentsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListReviewComments(ctx context.Context, req *ListReviewCommentsReq, opt ...requests.Option) (*ListReviewCommentsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2296,7 +2295,7 @@ List review comments on a pull request.
 
 https://developer.github.com/v3/pulls/comments/#list-review-comments-on-a-pull-request
 */
-func (c Client) ListReviewComments(ctx context.Context, req *ListReviewCommentsReq, opt ...options.Option) (*ListReviewCommentsResponse, error) {
+func (c Client) ListReviewComments(ctx context.Context, req *ListReviewCommentsReq, opt ...requests.Option) (*ListReviewCommentsResponse, error) {
 	return ListReviewComments(ctx, req, append(c, opt...)...)
 }
 
@@ -2353,8 +2352,8 @@ type ListReviewCommentsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListReviewCommentsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListReviewCommentsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2418,7 +2417,7 @@ ListReviewCommentsResponse is a response for ListReviewComments
 https://developer.github.com/v3/pulls/comments/#list-review-comments-on-a-pull-request
 */
 type ListReviewCommentsResponse struct {
-	common.Response
+	requests.Response
 	request *ListReviewCommentsReq
 	Data    []components.PullRequestReviewComment
 }
@@ -2432,8 +2431,8 @@ List review comments in a repository.
 
 https://developer.github.com/v3/pulls/comments/#list-review-comments-in-a-repository
 */
-func ListReviewCommentsForRepo(ctx context.Context, req *ListReviewCommentsForRepoReq, opt ...options.Option) (*ListReviewCommentsForRepoResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListReviewCommentsForRepo(ctx context.Context, req *ListReviewCommentsForRepoReq, opt ...requests.Option) (*ListReviewCommentsForRepoResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2468,7 +2467,7 @@ List review comments in a repository.
 
 https://developer.github.com/v3/pulls/comments/#list-review-comments-in-a-repository
 */
-func (c Client) ListReviewCommentsForRepo(ctx context.Context, req *ListReviewCommentsForRepoReq, opt ...options.Option) (*ListReviewCommentsForRepoResponse, error) {
+func (c Client) ListReviewCommentsForRepo(ctx context.Context, req *ListReviewCommentsForRepoReq, opt ...requests.Option) (*ListReviewCommentsForRepoResponse, error) {
 	return ListReviewCommentsForRepo(ctx, req, append(c, opt...)...)
 }
 
@@ -2524,8 +2523,8 @@ type ListReviewCommentsForRepoReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListReviewCommentsForRepoReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListReviewCommentsForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2589,7 +2588,7 @@ ListReviewCommentsForRepoResponse is a response for ListReviewCommentsForRepo
 https://developer.github.com/v3/pulls/comments/#list-review-comments-in-a-repository
 */
 type ListReviewCommentsForRepoResponse struct {
-	common.Response
+	requests.Response
 	request *ListReviewCommentsForRepoReq
 	Data    []components.PullRequestReviewComment
 }
@@ -2603,8 +2602,8 @@ List reviews for a pull request.
 
 https://developer.github.com/v3/pulls/reviews/#list-reviews-for-a-pull-request
 */
-func ListReviews(ctx context.Context, req *ListReviewsReq, opt ...options.Option) (*ListReviewsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListReviews(ctx context.Context, req *ListReviewsReq, opt ...requests.Option) (*ListReviewsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2639,7 +2638,7 @@ List reviews for a pull request.
 
 https://developer.github.com/v3/pulls/reviews/#list-reviews-for-a-pull-request
 */
-func (c Client) ListReviews(ctx context.Context, req *ListReviewsReq, opt ...options.Option) (*ListReviewsResponse, error) {
+func (c Client) ListReviews(ctx context.Context, req *ListReviewsReq, opt ...requests.Option) (*ListReviewsResponse, error) {
 	return ListReviews(ctx, req, append(c, opt...)...)
 }
 
@@ -2662,8 +2661,8 @@ type ListReviewsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListReviewsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListReviewsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2715,7 +2714,7 @@ ListReviewsResponse is a response for ListReviews
 https://developer.github.com/v3/pulls/reviews/#list-reviews-for-a-pull-request
 */
 type ListReviewsResponse struct {
-	common.Response
+	requests.Response
 	request *ListReviewsReq
 	Data    []components.PullRequestReview
 }
@@ -2729,8 +2728,8 @@ Merge a pull request.
 
 https://developer.github.com/v3/pulls/#merge-a-pull-request
 */
-func Merge(ctx context.Context, req *MergeReq, opt ...options.Option) (*MergeResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func Merge(ctx context.Context, req *MergeReq, opt ...requests.Option) (*MergeResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2765,7 +2764,7 @@ Merge a pull request.
 
 https://developer.github.com/v3/pulls/#merge-a-pull-request
 */
-func (c Client) Merge(ctx context.Context, req *MergeReq, opt ...options.Option) (*MergeResponse, error) {
+func (c Client) Merge(ctx context.Context, req *MergeReq, opt ...requests.Option) (*MergeResponse, error) {
 	return Merge(ctx, req, append(c, opt...)...)
 }
 
@@ -2783,8 +2782,8 @@ type MergeReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *MergeReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *MergeReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2853,7 +2852,7 @@ MergeResponse is a response for Merge
 https://developer.github.com/v3/pulls/#merge-a-pull-request
 */
 type MergeResponse struct {
-	common.Response
+	requests.Response
 	request *MergeReq
 	Data    components.PullRequestMergeResult
 }
@@ -2867,8 +2866,8 @@ Remove requested reviewers from a pull request.
 
 https://developer.github.com/v3/pulls/review_requests/#remove-requested-reviewers-from-a-pull-request
 */
-func RemoveRequestedReviewers(ctx context.Context, req *RemoveRequestedReviewersReq, opt ...options.Option) (*RemoveRequestedReviewersResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func RemoveRequestedReviewers(ctx context.Context, req *RemoveRequestedReviewersReq, opt ...requests.Option) (*RemoveRequestedReviewersResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2902,7 +2901,7 @@ Remove requested reviewers from a pull request.
 
 https://developer.github.com/v3/pulls/review_requests/#remove-requested-reviewers-from-a-pull-request
 */
-func (c Client) RemoveRequestedReviewers(ctx context.Context, req *RemoveRequestedReviewersReq, opt ...options.Option) (*RemoveRequestedReviewersResponse, error) {
+func (c Client) RemoveRequestedReviewers(ctx context.Context, req *RemoveRequestedReviewersReq, opt ...requests.Option) (*RemoveRequestedReviewersResponse, error) {
 	return RemoveRequestedReviewers(ctx, req, append(c, opt...)...)
 }
 
@@ -2920,8 +2919,8 @@ type RemoveRequestedReviewersReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *RemoveRequestedReviewersReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *RemoveRequestedReviewersReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2981,7 +2980,7 @@ RemoveRequestedReviewersResponse is a response for RemoveRequestedReviewers
 https://developer.github.com/v3/pulls/review_requests/#remove-requested-reviewers-from-a-pull-request
 */
 type RemoveRequestedReviewersResponse struct {
-	common.Response
+	requests.Response
 	request *RemoveRequestedReviewersReq
 }
 
@@ -2994,8 +2993,8 @@ Request reviewers for a pull request.
 
 https://developer.github.com/v3/pulls/review_requests/#request-reviewers-for-a-pull-request
 */
-func RequestReviewers(ctx context.Context, req *RequestReviewersReq, opt ...options.Option) (*RequestReviewersResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func RequestReviewers(ctx context.Context, req *RequestReviewersReq, opt ...requests.Option) (*RequestReviewersResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3030,7 +3029,7 @@ Request reviewers for a pull request.
 
 https://developer.github.com/v3/pulls/review_requests/#request-reviewers-for-a-pull-request
 */
-func (c Client) RequestReviewers(ctx context.Context, req *RequestReviewersReq, opt ...options.Option) (*RequestReviewersResponse, error) {
+func (c Client) RequestReviewers(ctx context.Context, req *RequestReviewersReq, opt ...requests.Option) (*RequestReviewersResponse, error) {
 	return RequestReviewers(ctx, req, append(c, opt...)...)
 }
 
@@ -3048,8 +3047,8 @@ type RequestReviewersReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *RequestReviewersReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *RequestReviewersReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3112,7 +3111,7 @@ RequestReviewersResponse is a response for RequestReviewers
 https://developer.github.com/v3/pulls/review_requests/#request-reviewers-for-a-pull-request
 */
 type RequestReviewersResponse struct {
-	common.Response
+	requests.Response
 	request *RequestReviewersReq
 	Data    components.PullRequestSimple
 }
@@ -3126,8 +3125,8 @@ Submit a review for a pull request.
 
 https://developer.github.com/v3/pulls/reviews/#submit-a-review-for-a-pull-request
 */
-func SubmitReview(ctx context.Context, req *SubmitReviewReq, opt ...options.Option) (*SubmitReviewResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func SubmitReview(ctx context.Context, req *SubmitReviewReq, opt ...requests.Option) (*SubmitReviewResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3162,7 +3161,7 @@ Submit a review for a pull request.
 
 https://developer.github.com/v3/pulls/reviews/#submit-a-review-for-a-pull-request
 */
-func (c Client) SubmitReview(ctx context.Context, req *SubmitReviewReq, opt ...options.Option) (*SubmitReviewResponse, error) {
+func (c Client) SubmitReview(ctx context.Context, req *SubmitReviewReq, opt ...requests.Option) (*SubmitReviewResponse, error) {
 	return SubmitReview(ctx, req, append(c, opt...)...)
 }
 
@@ -3183,8 +3182,8 @@ type SubmitReviewReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *SubmitReviewReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *SubmitReviewReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3253,7 +3252,7 @@ SubmitReviewResponse is a response for SubmitReview
 https://developer.github.com/v3/pulls/reviews/#submit-a-review-for-a-pull-request
 */
 type SubmitReviewResponse struct {
-	common.Response
+	requests.Response
 	request *SubmitReviewReq
 	Data    components.PullRequestReview
 }
@@ -3267,8 +3266,8 @@ Update a pull request.
 
 https://developer.github.com/v3/pulls/#update-a-pull-request
 */
-func Update(ctx context.Context, req *UpdateReq, opt ...options.Option) (*UpdateResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func Update(ctx context.Context, req *UpdateReq, opt ...requests.Option) (*UpdateResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3303,7 +3302,7 @@ Update a pull request.
 
 https://developer.github.com/v3/pulls/#update-a-pull-request
 */
-func (c Client) Update(ctx context.Context, req *UpdateReq, opt ...options.Option) (*UpdateResponse, error) {
+func (c Client) Update(ctx context.Context, req *UpdateReq, opt ...requests.Option) (*UpdateResponse, error) {
 	return Update(ctx, req, append(c, opt...)...)
 }
 
@@ -3331,8 +3330,8 @@ type UpdateReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UpdateReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *UpdateReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3412,7 +3411,7 @@ UpdateResponse is a response for Update
 https://developer.github.com/v3/pulls/#update-a-pull-request
 */
 type UpdateResponse struct {
-	common.Response
+	requests.Response
 	request *UpdateReq
 	Data    components.PullRequest
 }
@@ -3426,8 +3425,8 @@ Update a pull request branch.
 
 https://developer.github.com/v3/pulls/#update-a-pull-request-branch
 */
-func UpdateBranch(ctx context.Context, req *UpdateBranchReq, opt ...options.Option) (*UpdateBranchResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func UpdateBranch(ctx context.Context, req *UpdateBranchReq, opt ...requests.Option) (*UpdateBranchResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3462,7 +3461,7 @@ Update a pull request branch.
 
 https://developer.github.com/v3/pulls/#update-a-pull-request-branch
 */
-func (c Client) UpdateBranch(ctx context.Context, req *UpdateBranchReq, opt ...options.Option) (*UpdateBranchResponse, error) {
+func (c Client) UpdateBranch(ctx context.Context, req *UpdateBranchReq, opt ...requests.Option) (*UpdateBranchResponse, error) {
 	return UpdateBranch(ctx, req, append(c, opt...)...)
 }
 
@@ -3487,8 +3486,8 @@ type UpdateBranchReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UpdateBranchReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *UpdateBranchReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3566,7 +3565,7 @@ UpdateBranchResponse is a response for UpdateBranch
 https://developer.github.com/v3/pulls/#update-a-pull-request-branch
 */
 type UpdateBranchResponse struct {
-	common.Response
+	requests.Response
 	request *UpdateBranchReq
 	Data    UpdateBranchResponseBody
 }
@@ -3580,8 +3579,8 @@ Update a review for a pull request.
 
 https://developer.github.com/v3/pulls/reviews/#update-a-review-for-a-pull-request
 */
-func UpdateReview(ctx context.Context, req *UpdateReviewReq, opt ...options.Option) (*UpdateReviewResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func UpdateReview(ctx context.Context, req *UpdateReviewReq, opt ...requests.Option) (*UpdateReviewResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3616,7 +3615,7 @@ Update a review for a pull request.
 
 https://developer.github.com/v3/pulls/reviews/#update-a-review-for-a-pull-request
 */
-func (c Client) UpdateReview(ctx context.Context, req *UpdateReviewReq, opt ...options.Option) (*UpdateReviewResponse, error) {
+func (c Client) UpdateReview(ctx context.Context, req *UpdateReviewReq, opt ...requests.Option) (*UpdateReviewResponse, error) {
 	return UpdateReview(ctx, req, append(c, opt...)...)
 }
 
@@ -3637,8 +3636,8 @@ type UpdateReviewReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UpdateReviewReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *UpdateReviewReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3698,7 +3697,7 @@ UpdateReviewResponse is a response for UpdateReview
 https://developer.github.com/v3/pulls/reviews/#update-a-review-for-a-pull-request
 */
 type UpdateReviewResponse struct {
-	common.Response
+	requests.Response
 	request *UpdateReviewReq
 	Data    components.PullRequestReview
 }
@@ -3712,8 +3711,8 @@ Update a review comment for a pull request.
 
 https://developer.github.com/v3/pulls/comments/#update-a-review-comment-for-a-pull-request
 */
-func UpdateReviewComment(ctx context.Context, req *UpdateReviewCommentReq, opt ...options.Option) (*UpdateReviewCommentResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func UpdateReviewComment(ctx context.Context, req *UpdateReviewCommentReq, opt ...requests.Option) (*UpdateReviewCommentResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3748,7 +3747,7 @@ Update a review comment for a pull request.
 
 https://developer.github.com/v3/pulls/comments/#update-a-review-comment-for-a-pull-request
 */
-func (c Client) UpdateReviewComment(ctx context.Context, req *UpdateReviewCommentReq, opt ...options.Option) (*UpdateReviewCommentResponse, error) {
+func (c Client) UpdateReviewComment(ctx context.Context, req *UpdateReviewCommentReq, opt ...requests.Option) (*UpdateReviewCommentResponse, error) {
 	return UpdateReviewComment(ctx, req, append(c, opt...)...)
 }
 
@@ -3775,8 +3774,8 @@ type UpdateReviewCommentReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UpdateReviewCommentReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *UpdateReviewCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3836,7 +3835,7 @@ UpdateReviewCommentResponse is a response for UpdateReviewComment
 https://developer.github.com/v3/pulls/comments/#update-a-review-comment-for-a-pull-request
 */
 type UpdateReviewCommentResponse struct {
-	common.Response
+	requests.Response
 	request *UpdateReviewCommentReq
 	Data    components.PullRequestReviewComment
 }

@@ -5,10 +5,9 @@ package activity
 import (
 	"context"
 	"fmt"
-	common "github.com/willabides/octo-go/common"
 	components "github.com/willabides/octo-go/components"
 	internal "github.com/willabides/octo-go/internal"
-	options "github.com/willabides/octo-go/options"
+	requests "github.com/willabides/octo-go/requests"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -17,15 +16,15 @@ import (
 func strPtr(s string) *string { return &s }
 
 // Client is a set of options to apply to requests
-type Client []options.Option
+type Client []requests.Option
 
 // NewClient returns a new Client
-func NewClient(opt ...options.Option) Client {
+func NewClient(opt ...requests.Option) Client {
 	return opt
 }
 
 // Apply implements options.Option
-func (c Client) Apply(opts *options.Options) error {
+func (c Client) Apply(opts *requests.Options) error {
 	for _, o := range c {
 		err := o.Apply(opts)
 		if err != nil {
@@ -44,8 +43,8 @@ Check if a repository is starred by the authenticated user.
 
 https://developer.github.com/v3/activity/starring/#check-if-a-repository-is-starred-by-the-authenticated-user
 */
-func CheckRepoIsStarredByAuthenticatedUser(ctx context.Context, req *CheckRepoIsStarredByAuthenticatedUserReq, opt ...options.Option) (*CheckRepoIsStarredByAuthenticatedUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CheckRepoIsStarredByAuthenticatedUser(ctx context.Context, req *CheckRepoIsStarredByAuthenticatedUserReq, opt ...requests.Option) (*CheckRepoIsStarredByAuthenticatedUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -79,7 +78,7 @@ Check if a repository is starred by the authenticated user.
 
 https://developer.github.com/v3/activity/starring/#check-if-a-repository-is-starred-by-the-authenticated-user
 */
-func (c Client) CheckRepoIsStarredByAuthenticatedUser(ctx context.Context, req *CheckRepoIsStarredByAuthenticatedUserReq, opt ...options.Option) (*CheckRepoIsStarredByAuthenticatedUserResponse, error) {
+func (c Client) CheckRepoIsStarredByAuthenticatedUser(ctx context.Context, req *CheckRepoIsStarredByAuthenticatedUserReq, opt ...requests.Option) (*CheckRepoIsStarredByAuthenticatedUserResponse, error) {
 	return CheckRepoIsStarredByAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
@@ -95,8 +94,8 @@ type CheckRepoIsStarredByAuthenticatedUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CheckRepoIsStarredByAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CheckRepoIsStarredByAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -142,7 +141,7 @@ CheckRepoIsStarredByAuthenticatedUserResponse is a response for CheckRepoIsStarr
 https://developer.github.com/v3/activity/starring/#check-if-a-repository-is-starred-by-the-authenticated-user
 */
 type CheckRepoIsStarredByAuthenticatedUserResponse struct {
-	common.Response
+	requests.Response
 	request *CheckRepoIsStarredByAuthenticatedUserReq
 }
 
@@ -155,8 +154,8 @@ Delete a repository subscription.
 
 https://developer.github.com/v3/activity/watching/#delete-a-repository-subscription
 */
-func DeleteRepoSubscription(ctx context.Context, req *DeleteRepoSubscriptionReq, opt ...options.Option) (*DeleteRepoSubscriptionResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DeleteRepoSubscription(ctx context.Context, req *DeleteRepoSubscriptionReq, opt ...requests.Option) (*DeleteRepoSubscriptionResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -190,7 +189,7 @@ Delete a repository subscription.
 
 https://developer.github.com/v3/activity/watching/#delete-a-repository-subscription
 */
-func (c Client) DeleteRepoSubscription(ctx context.Context, req *DeleteRepoSubscriptionReq, opt ...options.Option) (*DeleteRepoSubscriptionResponse, error) {
+func (c Client) DeleteRepoSubscription(ctx context.Context, req *DeleteRepoSubscriptionReq, opt ...requests.Option) (*DeleteRepoSubscriptionResponse, error) {
 	return DeleteRepoSubscription(ctx, req, append(c, opt...)...)
 }
 
@@ -206,8 +205,8 @@ type DeleteRepoSubscriptionReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeleteRepoSubscriptionReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeleteRepoSubscriptionReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -253,7 +252,7 @@ DeleteRepoSubscriptionResponse is a response for DeleteRepoSubscription
 https://developer.github.com/v3/activity/watching/#delete-a-repository-subscription
 */
 type DeleteRepoSubscriptionResponse struct {
-	common.Response
+	requests.Response
 	request *DeleteRepoSubscriptionReq
 }
 
@@ -266,8 +265,8 @@ Delete a thread subscription.
 
 https://developer.github.com/v3/activity/notifications/#delete-a-thread-subscription
 */
-func DeleteThreadSubscription(ctx context.Context, req *DeleteThreadSubscriptionReq, opt ...options.Option) (*DeleteThreadSubscriptionResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DeleteThreadSubscription(ctx context.Context, req *DeleteThreadSubscriptionReq, opt ...requests.Option) (*DeleteThreadSubscriptionResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -301,7 +300,7 @@ Delete a thread subscription.
 
 https://developer.github.com/v3/activity/notifications/#delete-a-thread-subscription
 */
-func (c Client) DeleteThreadSubscription(ctx context.Context, req *DeleteThreadSubscriptionReq, opt ...options.Option) (*DeleteThreadSubscriptionResponse, error) {
+func (c Client) DeleteThreadSubscription(ctx context.Context, req *DeleteThreadSubscriptionReq, opt ...requests.Option) (*DeleteThreadSubscriptionResponse, error) {
 	return DeleteThreadSubscription(ctx, req, append(c, opt...)...)
 }
 
@@ -318,8 +317,8 @@ type DeleteThreadSubscriptionReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeleteThreadSubscriptionReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeleteThreadSubscriptionReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -365,7 +364,7 @@ DeleteThreadSubscriptionResponse is a response for DeleteThreadSubscription
 https://developer.github.com/v3/activity/notifications/#delete-a-thread-subscription
 */
 type DeleteThreadSubscriptionResponse struct {
-	common.Response
+	requests.Response
 	request *DeleteThreadSubscriptionReq
 }
 
@@ -378,8 +377,8 @@ Get feeds.
 
 https://developer.github.com/v3/activity/feeds/#get-feeds
 */
-func GetFeeds(ctx context.Context, req *GetFeedsReq, opt ...options.Option) (*GetFeedsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetFeeds(ctx context.Context, req *GetFeedsReq, opt ...requests.Option) (*GetFeedsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -414,7 +413,7 @@ Get feeds.
 
 https://developer.github.com/v3/activity/feeds/#get-feeds
 */
-func (c Client) GetFeeds(ctx context.Context, req *GetFeedsReq, opt ...options.Option) (*GetFeedsResponse, error) {
+func (c Client) GetFeeds(ctx context.Context, req *GetFeedsReq, opt ...requests.Option) (*GetFeedsResponse, error) {
 	return GetFeeds(ctx, req, append(c, opt...)...)
 }
 
@@ -428,8 +427,8 @@ type GetFeedsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetFeedsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetFeedsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -475,7 +474,7 @@ GetFeedsResponse is a response for GetFeeds
 https://developer.github.com/v3/activity/feeds/#get-feeds
 */
 type GetFeedsResponse struct {
-	common.Response
+	requests.Response
 	request *GetFeedsReq
 	Data    components.Feed
 }
@@ -489,8 +488,8 @@ Get a repository subscription.
 
 https://developer.github.com/v3/activity/watching/#get-a-repository-subscription
 */
-func GetRepoSubscription(ctx context.Context, req *GetRepoSubscriptionReq, opt ...options.Option) (*GetRepoSubscriptionResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetRepoSubscription(ctx context.Context, req *GetRepoSubscriptionReq, opt ...requests.Option) (*GetRepoSubscriptionResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -525,7 +524,7 @@ Get a repository subscription.
 
 https://developer.github.com/v3/activity/watching/#get-a-repository-subscription
 */
-func (c Client) GetRepoSubscription(ctx context.Context, req *GetRepoSubscriptionReq, opt ...options.Option) (*GetRepoSubscriptionResponse, error) {
+func (c Client) GetRepoSubscription(ctx context.Context, req *GetRepoSubscriptionReq, opt ...requests.Option) (*GetRepoSubscriptionResponse, error) {
 	return GetRepoSubscription(ctx, req, append(c, opt...)...)
 }
 
@@ -541,8 +540,8 @@ type GetRepoSubscriptionReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetRepoSubscriptionReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetRepoSubscriptionReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -588,7 +587,7 @@ GetRepoSubscriptionResponse is a response for GetRepoSubscription
 https://developer.github.com/v3/activity/watching/#get-a-repository-subscription
 */
 type GetRepoSubscriptionResponse struct {
-	common.Response
+	requests.Response
 	request *GetRepoSubscriptionReq
 	Data    components.RepositorySubscription
 }
@@ -602,8 +601,8 @@ Get a thread.
 
 https://developer.github.com/v3/activity/notifications/#get-a-thread
 */
-func GetThread(ctx context.Context, req *GetThreadReq, opt ...options.Option) (*GetThreadResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetThread(ctx context.Context, req *GetThreadReq, opt ...requests.Option) (*GetThreadResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -638,7 +637,7 @@ Get a thread.
 
 https://developer.github.com/v3/activity/notifications/#get-a-thread
 */
-func (c Client) GetThread(ctx context.Context, req *GetThreadReq, opt ...options.Option) (*GetThreadResponse, error) {
+func (c Client) GetThread(ctx context.Context, req *GetThreadReq, opt ...requests.Option) (*GetThreadResponse, error) {
 	return GetThread(ctx, req, append(c, opt...)...)
 }
 
@@ -655,8 +654,8 @@ type GetThreadReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetThreadReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetThreadReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -702,7 +701,7 @@ GetThreadResponse is a response for GetThread
 https://developer.github.com/v3/activity/notifications/#get-a-thread
 */
 type GetThreadResponse struct {
-	common.Response
+	requests.Response
 	request *GetThreadReq
 	Data    components.Thread
 }
@@ -716,8 +715,8 @@ Get a thread subscription for the authenticated user.
 
 https://developer.github.com/v3/activity/notifications/#get-a-thread-subscription-for-the-authenticated-user
 */
-func GetThreadSubscriptionForAuthenticatedUser(ctx context.Context, req *GetThreadSubscriptionForAuthenticatedUserReq, opt ...options.Option) (*GetThreadSubscriptionForAuthenticatedUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetThreadSubscriptionForAuthenticatedUser(ctx context.Context, req *GetThreadSubscriptionForAuthenticatedUserReq, opt ...requests.Option) (*GetThreadSubscriptionForAuthenticatedUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -752,7 +751,7 @@ Get a thread subscription for the authenticated user.
 
 https://developer.github.com/v3/activity/notifications/#get-a-thread-subscription-for-the-authenticated-user
 */
-func (c Client) GetThreadSubscriptionForAuthenticatedUser(ctx context.Context, req *GetThreadSubscriptionForAuthenticatedUserReq, opt ...options.Option) (*GetThreadSubscriptionForAuthenticatedUserResponse, error) {
+func (c Client) GetThreadSubscriptionForAuthenticatedUser(ctx context.Context, req *GetThreadSubscriptionForAuthenticatedUserReq, opt ...requests.Option) (*GetThreadSubscriptionForAuthenticatedUserResponse, error) {
 	return GetThreadSubscriptionForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
@@ -769,8 +768,8 @@ type GetThreadSubscriptionForAuthenticatedUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetThreadSubscriptionForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetThreadSubscriptionForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -816,7 +815,7 @@ GetThreadSubscriptionForAuthenticatedUserResponse is a response for GetThreadSub
 https://developer.github.com/v3/activity/notifications/#get-a-thread-subscription-for-the-authenticated-user
 */
 type GetThreadSubscriptionForAuthenticatedUserResponse struct {
-	common.Response
+	requests.Response
 	request *GetThreadSubscriptionForAuthenticatedUserReq
 	Data    components.ThreadSubscription
 }
@@ -830,8 +829,8 @@ List events for the authenticated user.
 
 https://developer.github.com/v3/activity/events/#list-events-for-the-authenticated-user
 */
-func ListEventsForAuthenticatedUser(ctx context.Context, req *ListEventsForAuthenticatedUserReq, opt ...options.Option) (*ListEventsForAuthenticatedUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListEventsForAuthenticatedUser(ctx context.Context, req *ListEventsForAuthenticatedUserReq, opt ...requests.Option) (*ListEventsForAuthenticatedUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -866,7 +865,7 @@ List events for the authenticated user.
 
 https://developer.github.com/v3/activity/events/#list-events-for-the-authenticated-user
 */
-func (c Client) ListEventsForAuthenticatedUser(ctx context.Context, req *ListEventsForAuthenticatedUserReq, opt ...options.Option) (*ListEventsForAuthenticatedUserResponse, error) {
+func (c Client) ListEventsForAuthenticatedUser(ctx context.Context, req *ListEventsForAuthenticatedUserReq, opt ...requests.Option) (*ListEventsForAuthenticatedUserResponse, error) {
 	return ListEventsForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
@@ -887,8 +886,8 @@ type ListEventsForAuthenticatedUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListEventsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListEventsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -940,7 +939,7 @@ ListEventsForAuthenticatedUserResponse is a response for ListEventsForAuthentica
 https://developer.github.com/v3/activity/events/#list-events-for-the-authenticated-user
 */
 type ListEventsForAuthenticatedUserResponse struct {
-	common.Response
+	requests.Response
 	request *ListEventsForAuthenticatedUserReq
 	Data    []components.Event
 }
@@ -954,8 +953,8 @@ List notifications for the authenticated user.
 
 https://developer.github.com/v3/activity/notifications/#list-notifications-for-the-authenticated-user
 */
-func ListNotificationsForAuthenticatedUser(ctx context.Context, req *ListNotificationsForAuthenticatedUserReq, opt ...options.Option) (*ListNotificationsForAuthenticatedUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListNotificationsForAuthenticatedUser(ctx context.Context, req *ListNotificationsForAuthenticatedUserReq, opt ...requests.Option) (*ListNotificationsForAuthenticatedUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -990,7 +989,7 @@ List notifications for the authenticated user.
 
 https://developer.github.com/v3/activity/notifications/#list-notifications-for-the-authenticated-user
 */
-func (c Client) ListNotificationsForAuthenticatedUser(ctx context.Context, req *ListNotificationsForAuthenticatedUserReq, opt ...options.Option) (*ListNotificationsForAuthenticatedUserResponse, error) {
+func (c Client) ListNotificationsForAuthenticatedUser(ctx context.Context, req *ListNotificationsForAuthenticatedUserReq, opt ...requests.Option) (*ListNotificationsForAuthenticatedUserResponse, error) {
 	return ListNotificationsForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
@@ -1033,8 +1032,8 @@ type ListNotificationsForAuthenticatedUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListNotificationsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListNotificationsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1098,7 +1097,7 @@ ListNotificationsForAuthenticatedUserResponse is a response for ListNotification
 https://developer.github.com/v3/activity/notifications/#list-notifications-for-the-authenticated-user
 */
 type ListNotificationsForAuthenticatedUserResponse struct {
-	common.Response
+	requests.Response
 	request *ListNotificationsForAuthenticatedUserReq
 	Data    []components.Thread
 }
@@ -1112,8 +1111,8 @@ List organization events for the authenticated user.
 
 https://developer.github.com/v3/activity/events/#list-organization-events-for-the-authenticated-user
 */
-func ListOrgEventsForAuthenticatedUser(ctx context.Context, req *ListOrgEventsForAuthenticatedUserReq, opt ...options.Option) (*ListOrgEventsForAuthenticatedUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListOrgEventsForAuthenticatedUser(ctx context.Context, req *ListOrgEventsForAuthenticatedUserReq, opt ...requests.Option) (*ListOrgEventsForAuthenticatedUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1148,7 +1147,7 @@ List organization events for the authenticated user.
 
 https://developer.github.com/v3/activity/events/#list-organization-events-for-the-authenticated-user
 */
-func (c Client) ListOrgEventsForAuthenticatedUser(ctx context.Context, req *ListOrgEventsForAuthenticatedUserReq, opt ...options.Option) (*ListOrgEventsForAuthenticatedUserResponse, error) {
+func (c Client) ListOrgEventsForAuthenticatedUser(ctx context.Context, req *ListOrgEventsForAuthenticatedUserReq, opt ...requests.Option) (*ListOrgEventsForAuthenticatedUserResponse, error) {
 	return ListOrgEventsForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
@@ -1170,8 +1169,8 @@ type ListOrgEventsForAuthenticatedUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListOrgEventsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListOrgEventsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1223,7 +1222,7 @@ ListOrgEventsForAuthenticatedUserResponse is a response for ListOrgEventsForAuth
 https://developer.github.com/v3/activity/events/#list-organization-events-for-the-authenticated-user
 */
 type ListOrgEventsForAuthenticatedUserResponse struct {
-	common.Response
+	requests.Response
 	request *ListOrgEventsForAuthenticatedUserReq
 	Data    []components.Event
 }
@@ -1237,8 +1236,8 @@ List public events.
 
 https://developer.github.com/v3/activity/events/#list-public-events
 */
-func ListPublicEvents(ctx context.Context, req *ListPublicEventsReq, opt ...options.Option) (*ListPublicEventsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListPublicEvents(ctx context.Context, req *ListPublicEventsReq, opt ...requests.Option) (*ListPublicEventsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1273,7 +1272,7 @@ List public events.
 
 https://developer.github.com/v3/activity/events/#list-public-events
 */
-func (c Client) ListPublicEvents(ctx context.Context, req *ListPublicEventsReq, opt ...options.Option) (*ListPublicEventsResponse, error) {
+func (c Client) ListPublicEvents(ctx context.Context, req *ListPublicEventsReq, opt ...requests.Option) (*ListPublicEventsResponse, error) {
 	return ListPublicEvents(ctx, req, append(c, opt...)...)
 }
 
@@ -1293,8 +1292,8 @@ type ListPublicEventsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListPublicEventsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListPublicEventsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1346,7 +1345,7 @@ ListPublicEventsResponse is a response for ListPublicEvents
 https://developer.github.com/v3/activity/events/#list-public-events
 */
 type ListPublicEventsResponse struct {
-	common.Response
+	requests.Response
 	request *ListPublicEventsReq
 	Data    []components.Event
 }
@@ -1360,8 +1359,8 @@ List public events for a network of repositories.
 
 https://developer.github.com/v3/activity/events/#list-public-events-for-a-network-of-repositories
 */
-func ListPublicEventsForRepoNetwork(ctx context.Context, req *ListPublicEventsForRepoNetworkReq, opt ...options.Option) (*ListPublicEventsForRepoNetworkResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListPublicEventsForRepoNetwork(ctx context.Context, req *ListPublicEventsForRepoNetworkReq, opt ...requests.Option) (*ListPublicEventsForRepoNetworkResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1396,7 +1395,7 @@ List public events for a network of repositories.
 
 https://developer.github.com/v3/activity/events/#list-public-events-for-a-network-of-repositories
 */
-func (c Client) ListPublicEventsForRepoNetwork(ctx context.Context, req *ListPublicEventsForRepoNetworkReq, opt ...options.Option) (*ListPublicEventsForRepoNetworkResponse, error) {
+func (c Client) ListPublicEventsForRepoNetwork(ctx context.Context, req *ListPublicEventsForRepoNetworkReq, opt ...requests.Option) (*ListPublicEventsForRepoNetworkResponse, error) {
 	return ListPublicEventsForRepoNetwork(ctx, req, append(c, opt...)...)
 }
 
@@ -1418,8 +1417,8 @@ type ListPublicEventsForRepoNetworkReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListPublicEventsForRepoNetworkReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListPublicEventsForRepoNetworkReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1471,7 +1470,7 @@ ListPublicEventsForRepoNetworkResponse is a response for ListPublicEventsForRepo
 https://developer.github.com/v3/activity/events/#list-public-events-for-a-network-of-repositories
 */
 type ListPublicEventsForRepoNetworkResponse struct {
-	common.Response
+	requests.Response
 	request *ListPublicEventsForRepoNetworkReq
 	Data    []components.Event
 }
@@ -1485,8 +1484,8 @@ List public events for a user.
 
 https://developer.github.com/v3/activity/events/#list-public-events-for-a-user
 */
-func ListPublicEventsForUser(ctx context.Context, req *ListPublicEventsForUserReq, opt ...options.Option) (*ListPublicEventsForUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListPublicEventsForUser(ctx context.Context, req *ListPublicEventsForUserReq, opt ...requests.Option) (*ListPublicEventsForUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1521,7 +1520,7 @@ List public events for a user.
 
 https://developer.github.com/v3/activity/events/#list-public-events-for-a-user
 */
-func (c Client) ListPublicEventsForUser(ctx context.Context, req *ListPublicEventsForUserReq, opt ...options.Option) (*ListPublicEventsForUserResponse, error) {
+func (c Client) ListPublicEventsForUser(ctx context.Context, req *ListPublicEventsForUserReq, opt ...requests.Option) (*ListPublicEventsForUserResponse, error) {
 	return ListPublicEventsForUser(ctx, req, append(c, opt...)...)
 }
 
@@ -1542,8 +1541,8 @@ type ListPublicEventsForUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListPublicEventsForUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListPublicEventsForUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1595,7 +1594,7 @@ ListPublicEventsForUserResponse is a response for ListPublicEventsForUser
 https://developer.github.com/v3/activity/events/#list-public-events-for-a-user
 */
 type ListPublicEventsForUserResponse struct {
-	common.Response
+	requests.Response
 	request *ListPublicEventsForUserReq
 	Data    []components.Event
 }
@@ -1609,8 +1608,8 @@ List public organization events.
 
 https://developer.github.com/v3/activity/events/#list-public-organization-events
 */
-func ListPublicOrgEvents(ctx context.Context, req *ListPublicOrgEventsReq, opt ...options.Option) (*ListPublicOrgEventsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListPublicOrgEvents(ctx context.Context, req *ListPublicOrgEventsReq, opt ...requests.Option) (*ListPublicOrgEventsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1645,7 +1644,7 @@ List public organization events.
 
 https://developer.github.com/v3/activity/events/#list-public-organization-events
 */
-func (c Client) ListPublicOrgEvents(ctx context.Context, req *ListPublicOrgEventsReq, opt ...options.Option) (*ListPublicOrgEventsResponse, error) {
+func (c Client) ListPublicOrgEvents(ctx context.Context, req *ListPublicOrgEventsReq, opt ...requests.Option) (*ListPublicOrgEventsResponse, error) {
 	return ListPublicOrgEvents(ctx, req, append(c, opt...)...)
 }
 
@@ -1666,8 +1665,8 @@ type ListPublicOrgEventsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListPublicOrgEventsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListPublicOrgEventsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1719,7 +1718,7 @@ ListPublicOrgEventsResponse is a response for ListPublicOrgEvents
 https://developer.github.com/v3/activity/events/#list-public-organization-events
 */
 type ListPublicOrgEventsResponse struct {
-	common.Response
+	requests.Response
 	request *ListPublicOrgEventsReq
 	Data    []components.Event
 }
@@ -1733,8 +1732,8 @@ List events received by the authenticated user.
 
 https://developer.github.com/v3/activity/events/#list-events-received-by-the-authenticated-user
 */
-func ListReceivedEventsForUser(ctx context.Context, req *ListReceivedEventsForUserReq, opt ...options.Option) (*ListReceivedEventsForUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListReceivedEventsForUser(ctx context.Context, req *ListReceivedEventsForUserReq, opt ...requests.Option) (*ListReceivedEventsForUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1769,7 +1768,7 @@ List events received by the authenticated user.
 
 https://developer.github.com/v3/activity/events/#list-events-received-by-the-authenticated-user
 */
-func (c Client) ListReceivedEventsForUser(ctx context.Context, req *ListReceivedEventsForUserReq, opt ...options.Option) (*ListReceivedEventsForUserResponse, error) {
+func (c Client) ListReceivedEventsForUser(ctx context.Context, req *ListReceivedEventsForUserReq, opt ...requests.Option) (*ListReceivedEventsForUserResponse, error) {
 	return ListReceivedEventsForUser(ctx, req, append(c, opt...)...)
 }
 
@@ -1790,8 +1789,8 @@ type ListReceivedEventsForUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListReceivedEventsForUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListReceivedEventsForUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1843,7 +1842,7 @@ ListReceivedEventsForUserResponse is a response for ListReceivedEventsForUser
 https://developer.github.com/v3/activity/events/#list-events-received-by-the-authenticated-user
 */
 type ListReceivedEventsForUserResponse struct {
-	common.Response
+	requests.Response
 	request *ListReceivedEventsForUserReq
 	Data    []components.Event
 }
@@ -1857,8 +1856,8 @@ List public events received by a user.
 
 https://developer.github.com/v3/activity/events/#list-public-events-received-by-a-user
 */
-func ListReceivedPublicEventsForUser(ctx context.Context, req *ListReceivedPublicEventsForUserReq, opt ...options.Option) (*ListReceivedPublicEventsForUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListReceivedPublicEventsForUser(ctx context.Context, req *ListReceivedPublicEventsForUserReq, opt ...requests.Option) (*ListReceivedPublicEventsForUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1893,7 +1892,7 @@ List public events received by a user.
 
 https://developer.github.com/v3/activity/events/#list-public-events-received-by-a-user
 */
-func (c Client) ListReceivedPublicEventsForUser(ctx context.Context, req *ListReceivedPublicEventsForUserReq, opt ...options.Option) (*ListReceivedPublicEventsForUserResponse, error) {
+func (c Client) ListReceivedPublicEventsForUser(ctx context.Context, req *ListReceivedPublicEventsForUserReq, opt ...requests.Option) (*ListReceivedPublicEventsForUserResponse, error) {
 	return ListReceivedPublicEventsForUser(ctx, req, append(c, opt...)...)
 }
 
@@ -1914,8 +1913,8 @@ type ListReceivedPublicEventsForUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListReceivedPublicEventsForUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListReceivedPublicEventsForUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1967,7 +1966,7 @@ ListReceivedPublicEventsForUserResponse is a response for ListReceivedPublicEven
 https://developer.github.com/v3/activity/events/#list-public-events-received-by-a-user
 */
 type ListReceivedPublicEventsForUserResponse struct {
-	common.Response
+	requests.Response
 	request *ListReceivedPublicEventsForUserReq
 	Data    []components.Event
 }
@@ -1981,8 +1980,8 @@ List repository events.
 
 https://developer.github.com/v3/activity/events/#list-repository-events
 */
-func ListRepoEvents(ctx context.Context, req *ListRepoEventsReq, opt ...options.Option) (*ListRepoEventsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListRepoEvents(ctx context.Context, req *ListRepoEventsReq, opt ...requests.Option) (*ListRepoEventsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2017,7 +2016,7 @@ List repository events.
 
 https://developer.github.com/v3/activity/events/#list-repository-events
 */
-func (c Client) ListRepoEvents(ctx context.Context, req *ListRepoEventsReq, opt ...options.Option) (*ListRepoEventsResponse, error) {
+func (c Client) ListRepoEvents(ctx context.Context, req *ListRepoEventsReq, opt ...requests.Option) (*ListRepoEventsResponse, error) {
 	return ListRepoEvents(ctx, req, append(c, opt...)...)
 }
 
@@ -2039,8 +2038,8 @@ type ListRepoEventsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListRepoEventsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListRepoEventsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2092,7 +2091,7 @@ ListRepoEventsResponse is a response for ListRepoEvents
 https://developer.github.com/v3/activity/events/#list-repository-events
 */
 type ListRepoEventsResponse struct {
-	common.Response
+	requests.Response
 	request *ListRepoEventsReq
 	Data    []components.Event
 }
@@ -2106,8 +2105,8 @@ List repository notifications for the authenticated user.
 
 https://developer.github.com/v3/activity/notifications/#list-repository-notifications-for-the-authenticated-user
 */
-func ListRepoNotificationsForAuthenticatedUser(ctx context.Context, req *ListRepoNotificationsForAuthenticatedUserReq, opt ...options.Option) (*ListRepoNotificationsForAuthenticatedUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListRepoNotificationsForAuthenticatedUser(ctx context.Context, req *ListRepoNotificationsForAuthenticatedUserReq, opt ...requests.Option) (*ListRepoNotificationsForAuthenticatedUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2142,7 +2141,7 @@ List repository notifications for the authenticated user.
 
 https://developer.github.com/v3/activity/notifications/#list-repository-notifications-for-the-authenticated-user
 */
-func (c Client) ListRepoNotificationsForAuthenticatedUser(ctx context.Context, req *ListRepoNotificationsForAuthenticatedUserReq, opt ...options.Option) (*ListRepoNotificationsForAuthenticatedUserResponse, error) {
+func (c Client) ListRepoNotificationsForAuthenticatedUser(ctx context.Context, req *ListRepoNotificationsForAuthenticatedUserReq, opt ...requests.Option) (*ListRepoNotificationsForAuthenticatedUserResponse, error) {
 	return ListRepoNotificationsForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
@@ -2187,8 +2186,8 @@ type ListRepoNotificationsForAuthenticatedUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListRepoNotificationsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListRepoNotificationsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2252,7 +2251,7 @@ ListRepoNotificationsForAuthenticatedUserResponse is a response for ListRepoNoti
 https://developer.github.com/v3/activity/notifications/#list-repository-notifications-for-the-authenticated-user
 */
 type ListRepoNotificationsForAuthenticatedUserResponse struct {
-	common.Response
+	requests.Response
 	request *ListRepoNotificationsForAuthenticatedUserReq
 	Data    []components.Thread
 }
@@ -2266,8 +2265,8 @@ List repositories starred by the authenticated user.
 
 https://developer.github.com/v3/activity/starring/#list-repositories-starred-by-the-authenticated-user
 */
-func ListReposStarredByAuthenticatedUser(ctx context.Context, req *ListReposStarredByAuthenticatedUserReq, opt ...options.Option) (*ListReposStarredByAuthenticatedUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListReposStarredByAuthenticatedUser(ctx context.Context, req *ListReposStarredByAuthenticatedUserReq, opt ...requests.Option) (*ListReposStarredByAuthenticatedUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2302,7 +2301,7 @@ List repositories starred by the authenticated user.
 
 https://developer.github.com/v3/activity/starring/#list-repositories-starred-by-the-authenticated-user
 */
-func (c Client) ListReposStarredByAuthenticatedUser(ctx context.Context, req *ListReposStarredByAuthenticatedUserReq, opt ...options.Option) (*ListReposStarredByAuthenticatedUserResponse, error) {
+func (c Client) ListReposStarredByAuthenticatedUser(ctx context.Context, req *ListReposStarredByAuthenticatedUserReq, opt ...requests.Option) (*ListReposStarredByAuthenticatedUserResponse, error) {
 	return ListReposStarredByAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
@@ -2331,8 +2330,8 @@ type ListReposStarredByAuthenticatedUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListReposStarredByAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListReposStarredByAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2390,7 +2389,7 @@ ListReposStarredByAuthenticatedUserResponse is a response for ListReposStarredBy
 https://developer.github.com/v3/activity/starring/#list-repositories-starred-by-the-authenticated-user
 */
 type ListReposStarredByAuthenticatedUserResponse struct {
-	common.Response
+	requests.Response
 	request *ListReposStarredByAuthenticatedUserReq
 	Data    []components.StarredRepository
 }
@@ -2404,8 +2403,8 @@ List repositories starred by a user.
 
 https://developer.github.com/v3/activity/starring/#list-repositories-starred-by-a-user
 */
-func ListReposStarredByUser(ctx context.Context, req *ListReposStarredByUserReq, opt ...options.Option) (*ListReposStarredByUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListReposStarredByUser(ctx context.Context, req *ListReposStarredByUserReq, opt ...requests.Option) (*ListReposStarredByUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2440,7 +2439,7 @@ List repositories starred by a user.
 
 https://developer.github.com/v3/activity/starring/#list-repositories-starred-by-a-user
 */
-func (c Client) ListReposStarredByUser(ctx context.Context, req *ListReposStarredByUserReq, opt ...options.Option) (*ListReposStarredByUserResponse, error) {
+func (c Client) ListReposStarredByUser(ctx context.Context, req *ListReposStarredByUserReq, opt ...requests.Option) (*ListReposStarredByUserResponse, error) {
 	return ListReposStarredByUser(ctx, req, append(c, opt...)...)
 }
 
@@ -2470,8 +2469,8 @@ type ListReposStarredByUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListReposStarredByUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListReposStarredByUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2529,7 +2528,7 @@ ListReposStarredByUserResponse is a response for ListReposStarredByUser
 https://developer.github.com/v3/activity/starring/#list-repositories-starred-by-a-user
 */
 type ListReposStarredByUserResponse struct {
-	common.Response
+	requests.Response
 	request *ListReposStarredByUserReq
 	Data    []components.StarredRepository
 }
@@ -2543,8 +2542,8 @@ List repositories watched by a user.
 
 https://developer.github.com/v3/activity/watching/#list-repositories-watched-by-a-user
 */
-func ListReposWatchedByUser(ctx context.Context, req *ListReposWatchedByUserReq, opt ...options.Option) (*ListReposWatchedByUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListReposWatchedByUser(ctx context.Context, req *ListReposWatchedByUserReq, opt ...requests.Option) (*ListReposWatchedByUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2579,7 +2578,7 @@ List repositories watched by a user.
 
 https://developer.github.com/v3/activity/watching/#list-repositories-watched-by-a-user
 */
-func (c Client) ListReposWatchedByUser(ctx context.Context, req *ListReposWatchedByUserReq, opt ...options.Option) (*ListReposWatchedByUserResponse, error) {
+func (c Client) ListReposWatchedByUser(ctx context.Context, req *ListReposWatchedByUserReq, opt ...requests.Option) (*ListReposWatchedByUserResponse, error) {
 	return ListReposWatchedByUser(ctx, req, append(c, opt...)...)
 }
 
@@ -2600,8 +2599,8 @@ type ListReposWatchedByUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListReposWatchedByUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListReposWatchedByUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2653,7 +2652,7 @@ ListReposWatchedByUserResponse is a response for ListReposWatchedByUser
 https://developer.github.com/v3/activity/watching/#list-repositories-watched-by-a-user
 */
 type ListReposWatchedByUserResponse struct {
-	common.Response
+	requests.Response
 	request *ListReposWatchedByUserReq
 	Data    []components.MinimalRepository
 }
@@ -2667,8 +2666,8 @@ List stargazers.
 
 https://developer.github.com/v3/activity/starring/#list-stargazers
 */
-func ListStargazersForRepo(ctx context.Context, req *ListStargazersForRepoReq, opt ...options.Option) (*ListStargazersForRepoResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListStargazersForRepo(ctx context.Context, req *ListStargazersForRepoReq, opt ...requests.Option) (*ListStargazersForRepoResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2703,7 +2702,7 @@ List stargazers.
 
 https://developer.github.com/v3/activity/starring/#list-stargazers
 */
-func (c Client) ListStargazersForRepo(ctx context.Context, req *ListStargazersForRepoReq, opt ...options.Option) (*ListStargazersForRepoResponse, error) {
+func (c Client) ListStargazersForRepo(ctx context.Context, req *ListStargazersForRepoReq, opt ...requests.Option) (*ListStargazersForRepoResponse, error) {
 	return ListStargazersForRepo(ctx, req, append(c, opt...)...)
 }
 
@@ -2725,8 +2724,8 @@ type ListStargazersForRepoReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListStargazersForRepoReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListStargazersForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2778,7 +2777,7 @@ ListStargazersForRepoResponse is a response for ListStargazersForRepo
 https://developer.github.com/v3/activity/starring/#list-stargazers
 */
 type ListStargazersForRepoResponse struct {
-	common.Response
+	requests.Response
 	request *ListStargazersForRepoReq
 	Data    []components.Stargazer
 }
@@ -2792,8 +2791,8 @@ List repositories watched by the authenticated user.
 
 https://developer.github.com/v3/activity/watching/#list-repositories-watched-by-the-authenticated-user
 */
-func ListWatchedReposForAuthenticatedUser(ctx context.Context, req *ListWatchedReposForAuthenticatedUserReq, opt ...options.Option) (*ListWatchedReposForAuthenticatedUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListWatchedReposForAuthenticatedUser(ctx context.Context, req *ListWatchedReposForAuthenticatedUserReq, opt ...requests.Option) (*ListWatchedReposForAuthenticatedUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2828,7 +2827,7 @@ List repositories watched by the authenticated user.
 
 https://developer.github.com/v3/activity/watching/#list-repositories-watched-by-the-authenticated-user
 */
-func (c Client) ListWatchedReposForAuthenticatedUser(ctx context.Context, req *ListWatchedReposForAuthenticatedUserReq, opt ...options.Option) (*ListWatchedReposForAuthenticatedUserResponse, error) {
+func (c Client) ListWatchedReposForAuthenticatedUser(ctx context.Context, req *ListWatchedReposForAuthenticatedUserReq, opt ...requests.Option) (*ListWatchedReposForAuthenticatedUserResponse, error) {
 	return ListWatchedReposForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
@@ -2848,8 +2847,8 @@ type ListWatchedReposForAuthenticatedUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListWatchedReposForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListWatchedReposForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2901,7 +2900,7 @@ ListWatchedReposForAuthenticatedUserResponse is a response for ListWatchedReposF
 https://developer.github.com/v3/activity/watching/#list-repositories-watched-by-the-authenticated-user
 */
 type ListWatchedReposForAuthenticatedUserResponse struct {
-	common.Response
+	requests.Response
 	request *ListWatchedReposForAuthenticatedUserReq
 	Data    []components.MinimalRepository
 }
@@ -2915,8 +2914,8 @@ List watchers.
 
 https://developer.github.com/v3/activity/watching/#list-watchers
 */
-func ListWatchersForRepo(ctx context.Context, req *ListWatchersForRepoReq, opt ...options.Option) (*ListWatchersForRepoResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListWatchersForRepo(ctx context.Context, req *ListWatchersForRepoReq, opt ...requests.Option) (*ListWatchersForRepoResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2951,7 +2950,7 @@ List watchers.
 
 https://developer.github.com/v3/activity/watching/#list-watchers
 */
-func (c Client) ListWatchersForRepo(ctx context.Context, req *ListWatchersForRepoReq, opt ...options.Option) (*ListWatchersForRepoResponse, error) {
+func (c Client) ListWatchersForRepo(ctx context.Context, req *ListWatchersForRepoReq, opt ...requests.Option) (*ListWatchersForRepoResponse, error) {
 	return ListWatchersForRepo(ctx, req, append(c, opt...)...)
 }
 
@@ -2973,8 +2972,8 @@ type ListWatchersForRepoReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListWatchersForRepoReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListWatchersForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3026,7 +3025,7 @@ ListWatchersForRepoResponse is a response for ListWatchersForRepo
 https://developer.github.com/v3/activity/watching/#list-watchers
 */
 type ListWatchersForRepoResponse struct {
-	common.Response
+	requests.Response
 	request *ListWatchersForRepoReq
 	Data    []components.SimpleUser
 }
@@ -3040,8 +3039,8 @@ Mark notifications as read.
 
 https://developer.github.com/v3/activity/notifications/#mark-notifications-as-read
 */
-func MarkNotificationsAsRead(ctx context.Context, req *MarkNotificationsAsReadReq, opt ...options.Option) (*MarkNotificationsAsReadResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func MarkNotificationsAsRead(ctx context.Context, req *MarkNotificationsAsReadReq, opt ...requests.Option) (*MarkNotificationsAsReadResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3076,7 +3075,7 @@ Mark notifications as read.
 
 https://developer.github.com/v3/activity/notifications/#mark-notifications-as-read
 */
-func (c Client) MarkNotificationsAsRead(ctx context.Context, req *MarkNotificationsAsReadReq, opt ...options.Option) (*MarkNotificationsAsReadResponse, error) {
+func (c Client) MarkNotificationsAsRead(ctx context.Context, req *MarkNotificationsAsReadReq, opt ...requests.Option) (*MarkNotificationsAsReadResponse, error) {
 	return MarkNotificationsAsRead(ctx, req, append(c, opt...)...)
 }
 
@@ -3091,8 +3090,8 @@ type MarkNotificationsAsReadReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *MarkNotificationsAsReadReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *MarkNotificationsAsReadReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3164,7 +3163,7 @@ MarkNotificationsAsReadResponse is a response for MarkNotificationsAsRead
 https://developer.github.com/v3/activity/notifications/#mark-notifications-as-read
 */
 type MarkNotificationsAsReadResponse struct {
-	common.Response
+	requests.Response
 	request *MarkNotificationsAsReadReq
 	Data    MarkNotificationsAsReadResponseBody
 }
@@ -3178,8 +3177,8 @@ Mark repository notifications as read.
 
 https://developer.github.com/v3/activity/notifications/#mark-repository-notifications-as-read
 */
-func MarkRepoNotificationsAsRead(ctx context.Context, req *MarkRepoNotificationsAsReadReq, opt ...options.Option) (*MarkRepoNotificationsAsReadResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func MarkRepoNotificationsAsRead(ctx context.Context, req *MarkRepoNotificationsAsReadReq, opt ...requests.Option) (*MarkRepoNotificationsAsReadResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3213,7 +3212,7 @@ Mark repository notifications as read.
 
 https://developer.github.com/v3/activity/notifications/#mark-repository-notifications-as-read
 */
-func (c Client) MarkRepoNotificationsAsRead(ctx context.Context, req *MarkRepoNotificationsAsReadReq, opt ...options.Option) (*MarkRepoNotificationsAsReadResponse, error) {
+func (c Client) MarkRepoNotificationsAsRead(ctx context.Context, req *MarkRepoNotificationsAsReadReq, opt ...requests.Option) (*MarkRepoNotificationsAsReadResponse, error) {
 	return MarkRepoNotificationsAsRead(ctx, req, append(c, opt...)...)
 }
 
@@ -3230,8 +3229,8 @@ type MarkRepoNotificationsAsReadReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *MarkRepoNotificationsAsReadReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *MarkRepoNotificationsAsReadReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3294,7 +3293,7 @@ MarkRepoNotificationsAsReadResponse is a response for MarkRepoNotificationsAsRea
 https://developer.github.com/v3/activity/notifications/#mark-repository-notifications-as-read
 */
 type MarkRepoNotificationsAsReadResponse struct {
-	common.Response
+	requests.Response
 	request *MarkRepoNotificationsAsReadReq
 }
 
@@ -3307,8 +3306,8 @@ Mark a thread as read.
 
 https://developer.github.com/v3/activity/notifications/#mark-a-thread-as-read
 */
-func MarkThreadAsRead(ctx context.Context, req *MarkThreadAsReadReq, opt ...options.Option) (*MarkThreadAsReadResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func MarkThreadAsRead(ctx context.Context, req *MarkThreadAsReadReq, opt ...requests.Option) (*MarkThreadAsReadResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3342,7 +3341,7 @@ Mark a thread as read.
 
 https://developer.github.com/v3/activity/notifications/#mark-a-thread-as-read
 */
-func (c Client) MarkThreadAsRead(ctx context.Context, req *MarkThreadAsReadReq, opt ...options.Option) (*MarkThreadAsReadResponse, error) {
+func (c Client) MarkThreadAsRead(ctx context.Context, req *MarkThreadAsReadReq, opt ...requests.Option) (*MarkThreadAsReadResponse, error) {
 	return MarkThreadAsRead(ctx, req, append(c, opt...)...)
 }
 
@@ -3359,8 +3358,8 @@ type MarkThreadAsReadReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *MarkThreadAsReadReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *MarkThreadAsReadReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3406,7 +3405,7 @@ MarkThreadAsReadResponse is a response for MarkThreadAsRead
 https://developer.github.com/v3/activity/notifications/#mark-a-thread-as-read
 */
 type MarkThreadAsReadResponse struct {
-	common.Response
+	requests.Response
 	request *MarkThreadAsReadReq
 }
 
@@ -3419,8 +3418,8 @@ Set a repository subscription.
 
 https://developer.github.com/v3/activity/watching/#set-a-repository-subscription
 */
-func SetRepoSubscription(ctx context.Context, req *SetRepoSubscriptionReq, opt ...options.Option) (*SetRepoSubscriptionResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func SetRepoSubscription(ctx context.Context, req *SetRepoSubscriptionReq, opt ...requests.Option) (*SetRepoSubscriptionResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3455,7 +3454,7 @@ Set a repository subscription.
 
 https://developer.github.com/v3/activity/watching/#set-a-repository-subscription
 */
-func (c Client) SetRepoSubscription(ctx context.Context, req *SetRepoSubscriptionReq, opt ...options.Option) (*SetRepoSubscriptionResponse, error) {
+func (c Client) SetRepoSubscription(ctx context.Context, req *SetRepoSubscriptionReq, opt ...requests.Option) (*SetRepoSubscriptionResponse, error) {
 	return SetRepoSubscription(ctx, req, append(c, opt...)...)
 }
 
@@ -3472,8 +3471,8 @@ type SetRepoSubscriptionReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *SetRepoSubscriptionReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *SetRepoSubscriptionReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3536,7 +3535,7 @@ SetRepoSubscriptionResponse is a response for SetRepoSubscription
 https://developer.github.com/v3/activity/watching/#set-a-repository-subscription
 */
 type SetRepoSubscriptionResponse struct {
-	common.Response
+	requests.Response
 	request *SetRepoSubscriptionReq
 	Data    components.RepositorySubscription
 }
@@ -3550,8 +3549,8 @@ Set a thread subscription.
 
 https://developer.github.com/v3/activity/notifications/#set-a-thread-subscription
 */
-func SetThreadSubscription(ctx context.Context, req *SetThreadSubscriptionReq, opt ...options.Option) (*SetThreadSubscriptionResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func SetThreadSubscription(ctx context.Context, req *SetThreadSubscriptionReq, opt ...requests.Option) (*SetThreadSubscriptionResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3586,7 +3585,7 @@ Set a thread subscription.
 
 https://developer.github.com/v3/activity/notifications/#set-a-thread-subscription
 */
-func (c Client) SetThreadSubscription(ctx context.Context, req *SetThreadSubscriptionReq, opt ...options.Option) (*SetThreadSubscriptionResponse, error) {
+func (c Client) SetThreadSubscription(ctx context.Context, req *SetThreadSubscriptionReq, opt ...requests.Option) (*SetThreadSubscriptionResponse, error) {
 	return SetThreadSubscription(ctx, req, append(c, opt...)...)
 }
 
@@ -3604,8 +3603,8 @@ type SetThreadSubscriptionReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *SetThreadSubscriptionReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *SetThreadSubscriptionReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3665,7 +3664,7 @@ SetThreadSubscriptionResponse is a response for SetThreadSubscription
 https://developer.github.com/v3/activity/notifications/#set-a-thread-subscription
 */
 type SetThreadSubscriptionResponse struct {
-	common.Response
+	requests.Response
 	request *SetThreadSubscriptionReq
 	Data    components.ThreadSubscription
 }
@@ -3679,8 +3678,8 @@ Star a repository for the authenticated user.
 
 https://developer.github.com/v3/activity/starring/#star-a-repository-for-the-authenticated-user
 */
-func StarRepoForAuthenticatedUser(ctx context.Context, req *StarRepoForAuthenticatedUserReq, opt ...options.Option) (*StarRepoForAuthenticatedUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func StarRepoForAuthenticatedUser(ctx context.Context, req *StarRepoForAuthenticatedUserReq, opt ...requests.Option) (*StarRepoForAuthenticatedUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3714,7 +3713,7 @@ Star a repository for the authenticated user.
 
 https://developer.github.com/v3/activity/starring/#star-a-repository-for-the-authenticated-user
 */
-func (c Client) StarRepoForAuthenticatedUser(ctx context.Context, req *StarRepoForAuthenticatedUserReq, opt ...options.Option) (*StarRepoForAuthenticatedUserResponse, error) {
+func (c Client) StarRepoForAuthenticatedUser(ctx context.Context, req *StarRepoForAuthenticatedUserReq, opt ...requests.Option) (*StarRepoForAuthenticatedUserResponse, error) {
 	return StarRepoForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
@@ -3730,8 +3729,8 @@ type StarRepoForAuthenticatedUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *StarRepoForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *StarRepoForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3777,7 +3776,7 @@ StarRepoForAuthenticatedUserResponse is a response for StarRepoForAuthenticatedU
 https://developer.github.com/v3/activity/starring/#star-a-repository-for-the-authenticated-user
 */
 type StarRepoForAuthenticatedUserResponse struct {
-	common.Response
+	requests.Response
 	request *StarRepoForAuthenticatedUserReq
 }
 
@@ -3790,8 +3789,8 @@ Unstar a repository for the authenticated user.
 
 https://developer.github.com/v3/activity/starring/#unstar-a-repository-for-the-authenticated-user
 */
-func UnstarRepoForAuthenticatedUser(ctx context.Context, req *UnstarRepoForAuthenticatedUserReq, opt ...options.Option) (*UnstarRepoForAuthenticatedUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func UnstarRepoForAuthenticatedUser(ctx context.Context, req *UnstarRepoForAuthenticatedUserReq, opt ...requests.Option) (*UnstarRepoForAuthenticatedUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3825,7 +3824,7 @@ Unstar a repository for the authenticated user.
 
 https://developer.github.com/v3/activity/starring/#unstar-a-repository-for-the-authenticated-user
 */
-func (c Client) UnstarRepoForAuthenticatedUser(ctx context.Context, req *UnstarRepoForAuthenticatedUserReq, opt ...options.Option) (*UnstarRepoForAuthenticatedUserResponse, error) {
+func (c Client) UnstarRepoForAuthenticatedUser(ctx context.Context, req *UnstarRepoForAuthenticatedUserReq, opt ...requests.Option) (*UnstarRepoForAuthenticatedUserResponse, error) {
 	return UnstarRepoForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
@@ -3841,8 +3840,8 @@ type UnstarRepoForAuthenticatedUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UnstarRepoForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *UnstarRepoForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3888,6 +3887,6 @@ UnstarRepoForAuthenticatedUserResponse is a response for UnstarRepoForAuthentica
 https://developer.github.com/v3/activity/starring/#unstar-a-repository-for-the-authenticated-user
 */
 type UnstarRepoForAuthenticatedUserResponse struct {
-	common.Response
+	requests.Response
 	request *UnstarRepoForAuthenticatedUserReq
 }

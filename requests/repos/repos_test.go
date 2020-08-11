@@ -12,11 +12,11 @@ import (
 	"github.com/willabides/octo-go"
 	"github.com/willabides/octo-go/components"
 	"github.com/willabides/octo-go/internal/testutil"
-	"github.com/willabides/octo-go/options"
+	"github.com/willabides/octo-go/requests"
 	"github.com/willabides/octo-go/requests/repos"
 )
 
-func vcrClient(t *testing.T, cas string, opts ...options.Option) repos.Client {
+func vcrClient(t *testing.T, cas string, opts ...requests.Option) repos.Client {
 	return repos.NewClient(testutil.VCRClient(t, cas, opts...))
 }
 

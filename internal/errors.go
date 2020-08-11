@@ -8,11 +8,11 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"github.com/willabides/octo-go/common"
+	"github.com/willabides/octo-go/requests"
 )
 
 // ErrorCheck checks for errors in the common
-func ErrorCheck(resp *common.Response, builder *RequestBuilder) error {
+func ErrorCheck(resp *requests.Response, builder *RequestBuilder) error {
 	err := clientErrorCheck(resp, builder)
 	if err != nil {
 		return err
@@ -33,14 +33,14 @@ func ErrorCheck(resp *common.Response, builder *RequestBuilder) error {
 type UnexpectedStatusCodeError struct {
 	wantedCodes []int
 	gotCode     int
-	common.Response
+	requests.Response
 }
 
 func (e *UnexpectedStatusCodeError) Error() string {
 	return fmt.Sprintf("received unexpected http status code %d, expected codes are %v", e.gotCode, e.wantedCodes)
 }
 
-func unexpectedStatusCheck(resp *common.Response, builder *RequestBuilder) error {
+func unexpectedStatusCheck(resp *requests.Response, builder *RequestBuilder) error {
 	valid := make([]int, len(builder.ValidStatuses))
 	copy(valid, builder.ValidStatuses)
 	if builder.HasAttribute(AttrBoolean) {
@@ -62,7 +62,7 @@ func unexpectedStatusCheck(resp *common.Response, builder *RequestBuilder) error
 
 // ClientError is returned when the http status is in the 4xx range
 type ClientError struct {
-	common.Response
+	requests.Response
 	ErrorData *ErrorData
 }
 
@@ -73,7 +73,7 @@ func (e *ClientError) Error() string {
 	return fmt.Sprintf("client error %d: %s", e.Response.HTTPResponse().StatusCode, e.ErrorData.Message)
 }
 
-func clientErrorCheck(resp *common.Response, builder *RequestBuilder) error {
+func clientErrorCheck(resp *requests.Response, builder *RequestBuilder) error {
 	statusCode := resp.HTTPResponse().StatusCode
 	if statusCode < 400 || statusCode > 499 {
 		return nil
@@ -97,7 +97,7 @@ func clientErrorCheck(resp *common.Response, builder *RequestBuilder) error {
 
 // ServerError is returned when the http status is in the 5xx range
 type ServerError struct {
-	common.Response
+	requests.Response
 	ErrorData *ErrorData
 }
 
@@ -108,7 +108,7 @@ func (e *ServerError) Error() string {
 	return fmt.Sprintf("client error %d: %s", e.Response.HTTPResponse().StatusCode, e.ErrorData.Message)
 }
 
-func serverErrorCheck(resp *common.Response) error {
+func serverErrorCheck(resp *requests.Response) error {
 	statusCode := resp.HTTPResponse().StatusCode
 	if statusCode < 500 || statusCode > 599 {
 		return nil

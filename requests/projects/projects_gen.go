@@ -5,10 +5,9 @@ package projects
 import (
 	"context"
 	"fmt"
-	common "github.com/willabides/octo-go/common"
 	components "github.com/willabides/octo-go/components"
 	internal "github.com/willabides/octo-go/internal"
-	options "github.com/willabides/octo-go/options"
+	requests "github.com/willabides/octo-go/requests"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -17,15 +16,15 @@ import (
 func strPtr(s string) *string { return &s }
 
 // Client is a set of options to apply to requests
-type Client []options.Option
+type Client []requests.Option
 
 // NewClient returns a new Client
-func NewClient(opt ...options.Option) Client {
+func NewClient(opt ...requests.Option) Client {
 	return opt
 }
 
 // Apply implements options.Option
-func (c Client) Apply(opts *options.Options) error {
+func (c Client) Apply(opts *requests.Options) error {
 	for _, o := range c {
 		err := o.Apply(opts)
 		if err != nil {
@@ -44,8 +43,8 @@ Add project collaborator.
 
 https://developer.github.com/v3/projects/collaborators/#add-project-collaborator
 */
-func AddCollaborator(ctx context.Context, req *AddCollaboratorReq, opt ...options.Option) (*AddCollaboratorResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func AddCollaborator(ctx context.Context, req *AddCollaboratorReq, opt ...requests.Option) (*AddCollaboratorResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -79,7 +78,7 @@ Add project collaborator.
 
 https://developer.github.com/v3/projects/collaborators/#add-project-collaborator
 */
-func (c Client) AddCollaborator(ctx context.Context, req *AddCollaboratorReq, opt ...options.Option) (*AddCollaboratorResponse, error) {
+func (c Client) AddCollaborator(ctx context.Context, req *AddCollaboratorReq, opt ...requests.Option) (*AddCollaboratorResponse, error) {
 	return AddCollaborator(ctx, req, append(c, opt...)...)
 }
 
@@ -105,8 +104,8 @@ type AddCollaboratorReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *AddCollaboratorReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *AddCollaboratorReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -163,7 +162,7 @@ AddCollaboratorResponse is a response for AddCollaborator
 https://developer.github.com/v3/projects/collaborators/#add-project-collaborator
 */
 type AddCollaboratorResponse struct {
-	common.Response
+	requests.Response
 	request *AddCollaboratorReq
 }
 
@@ -176,8 +175,8 @@ Create a project card.
 
 https://developer.github.com/v3/projects/cards/#create-a-project-card
 */
-func CreateCard(ctx context.Context, req *CreateCardReq, opt ...options.Option) (*CreateCardResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateCard(ctx context.Context, req *CreateCardReq, opt ...requests.Option) (*CreateCardResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -212,7 +211,7 @@ Create a project card.
 
 https://developer.github.com/v3/projects/cards/#create-a-project-card
 */
-func (c Client) CreateCard(ctx context.Context, req *CreateCardReq, opt ...options.Option) (*CreateCardResponse, error) {
+func (c Client) CreateCard(ctx context.Context, req *CreateCardReq, opt ...requests.Option) (*CreateCardResponse, error) {
 	return CreateCard(ctx, req, append(c, opt...)...)
 }
 
@@ -239,8 +238,8 @@ type CreateCardReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateCardReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateCardReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -303,7 +302,7 @@ CreateCardResponse is a response for CreateCard
 https://developer.github.com/v3/projects/cards/#create-a-project-card
 */
 type CreateCardResponse struct {
-	common.Response
+	requests.Response
 	request *CreateCardReq
 	Data    components.ProjectCard
 }
@@ -317,8 +316,8 @@ Create a project column.
 
 https://developer.github.com/v3/projects/columns/#create-a-project-column
 */
-func CreateColumn(ctx context.Context, req *CreateColumnReq, opt ...options.Option) (*CreateColumnResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateColumn(ctx context.Context, req *CreateColumnReq, opt ...requests.Option) (*CreateColumnResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -353,7 +352,7 @@ Create a project column.
 
 https://developer.github.com/v3/projects/columns/#create-a-project-column
 */
-func (c Client) CreateColumn(ctx context.Context, req *CreateColumnReq, opt ...options.Option) (*CreateColumnResponse, error) {
+func (c Client) CreateColumn(ctx context.Context, req *CreateColumnReq, opt ...requests.Option) (*CreateColumnResponse, error) {
 	return CreateColumn(ctx, req, append(c, opt...)...)
 }
 
@@ -378,8 +377,8 @@ type CreateColumnReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateColumnReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateColumnReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -439,7 +438,7 @@ CreateColumnResponse is a response for CreateColumn
 https://developer.github.com/v3/projects/columns/#create-a-project-column
 */
 type CreateColumnResponse struct {
-	common.Response
+	requests.Response
 	request *CreateColumnReq
 	Data    components.ProjectColumn
 }
@@ -453,8 +452,8 @@ Create a user project.
 
 https://developer.github.com/v3/projects/#create-a-user-project
 */
-func CreateForAuthenticatedUser(ctx context.Context, req *CreateForAuthenticatedUserReq, opt ...options.Option) (*CreateForAuthenticatedUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateForAuthenticatedUser(ctx context.Context, req *CreateForAuthenticatedUserReq, opt ...requests.Option) (*CreateForAuthenticatedUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -489,7 +488,7 @@ Create a user project.
 
 https://developer.github.com/v3/projects/#create-a-user-project
 */
-func (c Client) CreateForAuthenticatedUser(ctx context.Context, req *CreateForAuthenticatedUserReq, opt ...options.Option) (*CreateForAuthenticatedUserResponse, error) {
+func (c Client) CreateForAuthenticatedUser(ctx context.Context, req *CreateForAuthenticatedUserReq, opt ...requests.Option) (*CreateForAuthenticatedUserResponse, error) {
 	return CreateForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
@@ -513,8 +512,8 @@ type CreateForAuthenticatedUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -577,7 +576,7 @@ CreateForAuthenticatedUserResponse is a response for CreateForAuthenticatedUser
 https://developer.github.com/v3/projects/#create-a-user-project
 */
 type CreateForAuthenticatedUserResponse struct {
-	common.Response
+	requests.Response
 	request *CreateForAuthenticatedUserReq
 	Data    components.Project
 }
@@ -591,8 +590,8 @@ Create an organization project.
 
 https://developer.github.com/v3/projects/#create-an-organization-project
 */
-func CreateForOrg(ctx context.Context, req *CreateForOrgReq, opt ...options.Option) (*CreateForOrgResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateForOrg(ctx context.Context, req *CreateForOrgReq, opt ...requests.Option) (*CreateForOrgResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -627,7 +626,7 @@ Create an organization project.
 
 https://developer.github.com/v3/projects/#create-an-organization-project
 */
-func (c Client) CreateForOrg(ctx context.Context, req *CreateForOrgReq, opt ...options.Option) (*CreateForOrgResponse, error) {
+func (c Client) CreateForOrg(ctx context.Context, req *CreateForOrgReq, opt ...requests.Option) (*CreateForOrgResponse, error) {
 	return CreateForOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -652,8 +651,8 @@ type CreateForOrgReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateForOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -716,7 +715,7 @@ CreateForOrgResponse is a response for CreateForOrg
 https://developer.github.com/v3/projects/#create-an-organization-project
 */
 type CreateForOrgResponse struct {
-	common.Response
+	requests.Response
 	request *CreateForOrgReq
 	Data    components.Project
 }
@@ -730,8 +729,8 @@ Create a repository project.
 
 https://developer.github.com/v3/projects/#create-a-repository-project
 */
-func CreateForRepo(ctx context.Context, req *CreateForRepoReq, opt ...options.Option) (*CreateForRepoResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateForRepo(ctx context.Context, req *CreateForRepoReq, opt ...requests.Option) (*CreateForRepoResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -766,7 +765,7 @@ Create a repository project.
 
 https://developer.github.com/v3/projects/#create-a-repository-project
 */
-func (c Client) CreateForRepo(ctx context.Context, req *CreateForRepoReq, opt ...options.Option) (*CreateForRepoResponse, error) {
+func (c Client) CreateForRepo(ctx context.Context, req *CreateForRepoReq, opt ...requests.Option) (*CreateForRepoResponse, error) {
 	return CreateForRepo(ctx, req, append(c, opt...)...)
 }
 
@@ -792,8 +791,8 @@ type CreateForRepoReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateForRepoReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -856,7 +855,7 @@ CreateForRepoResponse is a response for CreateForRepo
 https://developer.github.com/v3/projects/#create-a-repository-project
 */
 type CreateForRepoResponse struct {
-	common.Response
+	requests.Response
 	request *CreateForRepoReq
 	Data    components.Project
 }
@@ -870,8 +869,8 @@ Delete a project.
 
 https://developer.github.com/v3/projects/#delete-a-project
 */
-func Delete(ctx context.Context, req *DeleteReq, opt ...options.Option) (*DeleteResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func Delete(ctx context.Context, req *DeleteReq, opt ...requests.Option) (*DeleteResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -905,7 +904,7 @@ Delete a project.
 
 https://developer.github.com/v3/projects/#delete-a-project
 */
-func (c Client) Delete(ctx context.Context, req *DeleteReq, opt ...options.Option) (*DeleteResponse, error) {
+func (c Client) Delete(ctx context.Context, req *DeleteReq, opt ...requests.Option) (*DeleteResponse, error) {
 	return Delete(ctx, req, append(c, opt...)...)
 }
 
@@ -929,8 +928,8 @@ type DeleteReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeleteReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeleteReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -976,7 +975,7 @@ DeleteResponse is a response for Delete
 https://developer.github.com/v3/projects/#delete-a-project
 */
 type DeleteResponse struct {
-	common.Response
+	requests.Response
 	request *DeleteReq
 }
 
@@ -989,8 +988,8 @@ Delete a project card.
 
 https://developer.github.com/v3/projects/cards/#delete-a-project-card
 */
-func DeleteCard(ctx context.Context, req *DeleteCardReq, opt ...options.Option) (*DeleteCardResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DeleteCard(ctx context.Context, req *DeleteCardReq, opt ...requests.Option) (*DeleteCardResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1024,7 +1023,7 @@ Delete a project card.
 
 https://developer.github.com/v3/projects/cards/#delete-a-project-card
 */
-func (c Client) DeleteCard(ctx context.Context, req *DeleteCardReq, opt ...options.Option) (*DeleteCardResponse, error) {
+func (c Client) DeleteCard(ctx context.Context, req *DeleteCardReq, opt ...requests.Option) (*DeleteCardResponse, error) {
 	return DeleteCard(ctx, req, append(c, opt...)...)
 }
 
@@ -1050,8 +1049,8 @@ type DeleteCardReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeleteCardReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeleteCardReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1097,7 +1096,7 @@ DeleteCardResponse is a response for DeleteCard
 https://developer.github.com/v3/projects/cards/#delete-a-project-card
 */
 type DeleteCardResponse struct {
-	common.Response
+	requests.Response
 	request *DeleteCardReq
 }
 
@@ -1110,8 +1109,8 @@ Delete a project column.
 
 https://developer.github.com/v3/projects/columns/#delete-a-project-column
 */
-func DeleteColumn(ctx context.Context, req *DeleteColumnReq, opt ...options.Option) (*DeleteColumnResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DeleteColumn(ctx context.Context, req *DeleteColumnReq, opt ...requests.Option) (*DeleteColumnResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1145,7 +1144,7 @@ Delete a project column.
 
 https://developer.github.com/v3/projects/columns/#delete-a-project-column
 */
-func (c Client) DeleteColumn(ctx context.Context, req *DeleteColumnReq, opt ...options.Option) (*DeleteColumnResponse, error) {
+func (c Client) DeleteColumn(ctx context.Context, req *DeleteColumnReq, opt ...requests.Option) (*DeleteColumnResponse, error) {
 	return DeleteColumn(ctx, req, append(c, opt...)...)
 }
 
@@ -1171,8 +1170,8 @@ type DeleteColumnReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeleteColumnReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeleteColumnReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1218,7 +1217,7 @@ DeleteColumnResponse is a response for DeleteColumn
 https://developer.github.com/v3/projects/columns/#delete-a-project-column
 */
 type DeleteColumnResponse struct {
-	common.Response
+	requests.Response
 	request *DeleteColumnReq
 }
 
@@ -1231,8 +1230,8 @@ Get a project.
 
 https://developer.github.com/v3/projects/#get-a-project
 */
-func Get(ctx context.Context, req *GetReq, opt ...options.Option) (*GetResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func Get(ctx context.Context, req *GetReq, opt ...requests.Option) (*GetResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1267,7 +1266,7 @@ Get a project.
 
 https://developer.github.com/v3/projects/#get-a-project
 */
-func (c Client) Get(ctx context.Context, req *GetReq, opt ...options.Option) (*GetResponse, error) {
+func (c Client) Get(ctx context.Context, req *GetReq, opt ...requests.Option) (*GetResponse, error) {
 	return Get(ctx, req, append(c, opt...)...)
 }
 
@@ -1291,8 +1290,8 @@ type GetReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1338,7 +1337,7 @@ GetResponse is a response for Get
 https://developer.github.com/v3/projects/#get-a-project
 */
 type GetResponse struct {
-	common.Response
+	requests.Response
 	request *GetReq
 	Data    components.Project
 }
@@ -1352,8 +1351,8 @@ Get a project card.
 
 https://developer.github.com/v3/projects/cards/#get-a-project-card
 */
-func GetCard(ctx context.Context, req *GetCardReq, opt ...options.Option) (*GetCardResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetCard(ctx context.Context, req *GetCardReq, opt ...requests.Option) (*GetCardResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1388,7 +1387,7 @@ Get a project card.
 
 https://developer.github.com/v3/projects/cards/#get-a-project-card
 */
-func (c Client) GetCard(ctx context.Context, req *GetCardReq, opt ...options.Option) (*GetCardResponse, error) {
+func (c Client) GetCard(ctx context.Context, req *GetCardReq, opt ...requests.Option) (*GetCardResponse, error) {
 	return GetCard(ctx, req, append(c, opt...)...)
 }
 
@@ -1414,8 +1413,8 @@ type GetCardReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetCardReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetCardReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1461,7 +1460,7 @@ GetCardResponse is a response for GetCard
 https://developer.github.com/v3/projects/cards/#get-a-project-card
 */
 type GetCardResponse struct {
-	common.Response
+	requests.Response
 	request *GetCardReq
 	Data    components.ProjectCard
 }
@@ -1475,8 +1474,8 @@ Get a project column.
 
 https://developer.github.com/v3/projects/columns/#get-a-project-column
 */
-func GetColumn(ctx context.Context, req *GetColumnReq, opt ...options.Option) (*GetColumnResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetColumn(ctx context.Context, req *GetColumnReq, opt ...requests.Option) (*GetColumnResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1511,7 +1510,7 @@ Get a project column.
 
 https://developer.github.com/v3/projects/columns/#get-a-project-column
 */
-func (c Client) GetColumn(ctx context.Context, req *GetColumnReq, opt ...options.Option) (*GetColumnResponse, error) {
+func (c Client) GetColumn(ctx context.Context, req *GetColumnReq, opt ...requests.Option) (*GetColumnResponse, error) {
 	return GetColumn(ctx, req, append(c, opt...)...)
 }
 
@@ -1537,8 +1536,8 @@ type GetColumnReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetColumnReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetColumnReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1584,7 +1583,7 @@ GetColumnResponse is a response for GetColumn
 https://developer.github.com/v3/projects/columns/#get-a-project-column
 */
 type GetColumnResponse struct {
-	common.Response
+	requests.Response
 	request *GetColumnReq
 	Data    components.ProjectColumn
 }
@@ -1598,8 +1597,8 @@ Get project permission for a user.
 
 https://developer.github.com/v3/projects/collaborators/#get-project-permission-for-a-user
 */
-func GetPermissionForUser(ctx context.Context, req *GetPermissionForUserReq, opt ...options.Option) (*GetPermissionForUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetPermissionForUser(ctx context.Context, req *GetPermissionForUserReq, opt ...requests.Option) (*GetPermissionForUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1634,7 +1633,7 @@ Get project permission for a user.
 
 https://developer.github.com/v3/projects/collaborators/#get-project-permission-for-a-user
 */
-func (c Client) GetPermissionForUser(ctx context.Context, req *GetPermissionForUserReq, opt ...options.Option) (*GetPermissionForUserResponse, error) {
+func (c Client) GetPermissionForUser(ctx context.Context, req *GetPermissionForUserReq, opt ...requests.Option) (*GetPermissionForUserResponse, error) {
 	return GetPermissionForUser(ctx, req, append(c, opt...)...)
 }
 
@@ -1659,8 +1658,8 @@ type GetPermissionForUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetPermissionForUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetPermissionForUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1706,7 +1705,7 @@ GetPermissionForUserResponse is a response for GetPermissionForUser
 https://developer.github.com/v3/projects/collaborators/#get-project-permission-for-a-user
 */
 type GetPermissionForUserResponse struct {
-	common.Response
+	requests.Response
 	request *GetPermissionForUserReq
 	Data    components.RepositoryCollaboratorPermission
 }
@@ -1720,8 +1719,8 @@ List project cards.
 
 https://developer.github.com/v3/projects/cards/#list-project-cards
 */
-func ListCards(ctx context.Context, req *ListCardsReq, opt ...options.Option) (*ListCardsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListCards(ctx context.Context, req *ListCardsReq, opt ...requests.Option) (*ListCardsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1756,7 +1755,7 @@ List project cards.
 
 https://developer.github.com/v3/projects/cards/#list-project-cards
 */
-func (c Client) ListCards(ctx context.Context, req *ListCardsReq, opt ...options.Option) (*ListCardsResponse, error) {
+func (c Client) ListCards(ctx context.Context, req *ListCardsReq, opt ...requests.Option) (*ListCardsResponse, error) {
 	return ListCards(ctx, req, append(c, opt...)...)
 }
 
@@ -1794,8 +1793,8 @@ type ListCardsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListCardsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListCardsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1850,7 +1849,7 @@ ListCardsResponse is a response for ListCards
 https://developer.github.com/v3/projects/cards/#list-project-cards
 */
 type ListCardsResponse struct {
-	common.Response
+	requests.Response
 	request *ListCardsReq
 	Data    []components.ProjectCard
 }
@@ -1864,8 +1863,8 @@ List project collaborators.
 
 https://developer.github.com/v3/projects/collaborators/#list-project-collaborators
 */
-func ListCollaborators(ctx context.Context, req *ListCollaboratorsReq, opt ...options.Option) (*ListCollaboratorsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListCollaborators(ctx context.Context, req *ListCollaboratorsReq, opt ...requests.Option) (*ListCollaboratorsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1900,7 +1899,7 @@ List project collaborators.
 
 https://developer.github.com/v3/projects/collaborators/#list-project-collaborators
 */
-func (c Client) ListCollaborators(ctx context.Context, req *ListCollaboratorsReq, opt ...options.Option) (*ListCollaboratorsResponse, error) {
+func (c Client) ListCollaborators(ctx context.Context, req *ListCollaboratorsReq, opt ...requests.Option) (*ListCollaboratorsResponse, error) {
 	return ListCollaborators(ctx, req, append(c, opt...)...)
 }
 
@@ -1940,8 +1939,8 @@ type ListCollaboratorsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListCollaboratorsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListCollaboratorsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1996,7 +1995,7 @@ ListCollaboratorsResponse is a response for ListCollaborators
 https://developer.github.com/v3/projects/collaborators/#list-project-collaborators
 */
 type ListCollaboratorsResponse struct {
-	common.Response
+	requests.Response
 	request *ListCollaboratorsReq
 	Data    []components.SimpleUser
 }
@@ -2010,8 +2009,8 @@ List project columns.
 
 https://developer.github.com/v3/projects/columns/#list-project-columns
 */
-func ListColumns(ctx context.Context, req *ListColumnsReq, opt ...options.Option) (*ListColumnsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListColumns(ctx context.Context, req *ListColumnsReq, opt ...requests.Option) (*ListColumnsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2046,7 +2045,7 @@ List project columns.
 
 https://developer.github.com/v3/projects/columns/#list-project-columns
 */
-func (c Client) ListColumns(ctx context.Context, req *ListColumnsReq, opt ...options.Option) (*ListColumnsResponse, error) {
+func (c Client) ListColumns(ctx context.Context, req *ListColumnsReq, opt ...requests.Option) (*ListColumnsResponse, error) {
 	return ListColumns(ctx, req, append(c, opt...)...)
 }
 
@@ -2076,8 +2075,8 @@ type ListColumnsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListColumnsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListColumnsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2129,7 +2128,7 @@ ListColumnsResponse is a response for ListColumns
 https://developer.github.com/v3/projects/columns/#list-project-columns
 */
 type ListColumnsResponse struct {
-	common.Response
+	requests.Response
 	request *ListColumnsReq
 	Data    []components.ProjectColumn
 }
@@ -2143,8 +2142,8 @@ List organization projects.
 
 https://developer.github.com/v3/projects/#list-organization-projects
 */
-func ListForOrg(ctx context.Context, req *ListForOrgReq, opt ...options.Option) (*ListForOrgResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListForOrg(ctx context.Context, req *ListForOrgReq, opt ...requests.Option) (*ListForOrgResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2179,7 +2178,7 @@ List organization projects.
 
 https://developer.github.com/v3/projects/#list-organization-projects
 */
-func (c Client) ListForOrg(ctx context.Context, req *ListForOrgReq, opt ...options.Option) (*ListForOrgResponse, error) {
+func (c Client) ListForOrg(ctx context.Context, req *ListForOrgReq, opt ...requests.Option) (*ListForOrgResponse, error) {
 	return ListForOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -2215,8 +2214,8 @@ type ListForOrgReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListForOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2271,7 +2270,7 @@ ListForOrgResponse is a response for ListForOrg
 https://developer.github.com/v3/projects/#list-organization-projects
 */
 type ListForOrgResponse struct {
-	common.Response
+	requests.Response
 	request *ListForOrgReq
 	Data    []components.Project
 }
@@ -2285,8 +2284,8 @@ List repository projects.
 
 https://developer.github.com/v3/projects/#list-repository-projects
 */
-func ListForRepo(ctx context.Context, req *ListForRepoReq, opt ...options.Option) (*ListForRepoResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListForRepo(ctx context.Context, req *ListForRepoReq, opt ...requests.Option) (*ListForRepoResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2321,7 +2320,7 @@ List repository projects.
 
 https://developer.github.com/v3/projects/#list-repository-projects
 */
-func (c Client) ListForRepo(ctx context.Context, req *ListForRepoReq, opt ...options.Option) (*ListForRepoResponse, error) {
+func (c Client) ListForRepo(ctx context.Context, req *ListForRepoReq, opt ...requests.Option) (*ListForRepoResponse, error) {
 	return ListForRepo(ctx, req, append(c, opt...)...)
 }
 
@@ -2358,8 +2357,8 @@ type ListForRepoReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListForRepoReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2414,7 +2413,7 @@ ListForRepoResponse is a response for ListForRepo
 https://developer.github.com/v3/projects/#list-repository-projects
 */
 type ListForRepoResponse struct {
-	common.Response
+	requests.Response
 	request *ListForRepoReq
 	Data    []components.Project
 }
@@ -2428,8 +2427,8 @@ List user projects.
 
 https://developer.github.com/v3/projects/#list-user-projects
 */
-func ListForUser(ctx context.Context, req *ListForUserReq, opt ...options.Option) (*ListForUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListForUser(ctx context.Context, req *ListForUserReq, opt ...requests.Option) (*ListForUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2464,7 +2463,7 @@ List user projects.
 
 https://developer.github.com/v3/projects/#list-user-projects
 */
-func (c Client) ListForUser(ctx context.Context, req *ListForUserReq, opt ...options.Option) (*ListForUserResponse, error) {
+func (c Client) ListForUser(ctx context.Context, req *ListForUserReq, opt ...requests.Option) (*ListForUserResponse, error) {
 	return ListForUser(ctx, req, append(c, opt...)...)
 }
 
@@ -2500,8 +2499,8 @@ type ListForUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListForUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListForUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2556,7 +2555,7 @@ ListForUserResponse is a response for ListForUser
 https://developer.github.com/v3/projects/#list-user-projects
 */
 type ListForUserResponse struct {
-	common.Response
+	requests.Response
 	request *ListForUserReq
 	Data    []components.Project
 }
@@ -2570,8 +2569,8 @@ Move a project card.
 
 https://developer.github.com/v3/projects/cards/#move-a-project-card
 */
-func MoveCard(ctx context.Context, req *MoveCardReq, opt ...options.Option) (*MoveCardResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func MoveCard(ctx context.Context, req *MoveCardReq, opt ...requests.Option) (*MoveCardResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2605,7 +2604,7 @@ Move a project card.
 
 https://developer.github.com/v3/projects/cards/#move-a-project-card
 */
-func (c Client) MoveCard(ctx context.Context, req *MoveCardReq, opt ...options.Option) (*MoveCardResponse, error) {
+func (c Client) MoveCard(ctx context.Context, req *MoveCardReq, opt ...requests.Option) (*MoveCardResponse, error) {
 	return MoveCard(ctx, req, append(c, opt...)...)
 }
 
@@ -2632,8 +2631,8 @@ type MoveCardReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *MoveCardReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *MoveCardReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2696,7 +2695,7 @@ MoveCardResponse is a response for MoveCard
 https://developer.github.com/v3/projects/cards/#move-a-project-card
 */
 type MoveCardResponse struct {
-	common.Response
+	requests.Response
 	request *MoveCardReq
 }
 
@@ -2709,8 +2708,8 @@ Move a project column.
 
 https://developer.github.com/v3/projects/columns/#move-a-project-column
 */
-func MoveColumn(ctx context.Context, req *MoveColumnReq, opt ...options.Option) (*MoveColumnResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func MoveColumn(ctx context.Context, req *MoveColumnReq, opt ...requests.Option) (*MoveColumnResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2744,7 +2743,7 @@ Move a project column.
 
 https://developer.github.com/v3/projects/columns/#move-a-project-column
 */
-func (c Client) MoveColumn(ctx context.Context, req *MoveColumnReq, opt ...options.Option) (*MoveColumnResponse, error) {
+func (c Client) MoveColumn(ctx context.Context, req *MoveColumnReq, opt ...requests.Option) (*MoveColumnResponse, error) {
 	return MoveColumn(ctx, req, append(c, opt...)...)
 }
 
@@ -2771,8 +2770,8 @@ type MoveColumnReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *MoveColumnReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *MoveColumnReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2832,7 +2831,7 @@ MoveColumnResponse is a response for MoveColumn
 https://developer.github.com/v3/projects/columns/#move-a-project-column
 */
 type MoveColumnResponse struct {
-	common.Response
+	requests.Response
 	request *MoveColumnReq
 }
 
@@ -2845,8 +2844,8 @@ Remove user as a collaborator.
 
 https://developer.github.com/v3/projects/collaborators/#remove-project-collaborator
 */
-func RemoveCollaborator(ctx context.Context, req *RemoveCollaboratorReq, opt ...options.Option) (*RemoveCollaboratorResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func RemoveCollaborator(ctx context.Context, req *RemoveCollaboratorReq, opt ...requests.Option) (*RemoveCollaboratorResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2880,7 +2879,7 @@ Remove user as a collaborator.
 
 https://developer.github.com/v3/projects/collaborators/#remove-project-collaborator
 */
-func (c Client) RemoveCollaborator(ctx context.Context, req *RemoveCollaboratorReq, opt ...options.Option) (*RemoveCollaboratorResponse, error) {
+func (c Client) RemoveCollaborator(ctx context.Context, req *RemoveCollaboratorReq, opt ...requests.Option) (*RemoveCollaboratorResponse, error) {
 	return RemoveCollaborator(ctx, req, append(c, opt...)...)
 }
 
@@ -2905,8 +2904,8 @@ type RemoveCollaboratorReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *RemoveCollaboratorReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *RemoveCollaboratorReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2952,7 +2951,7 @@ RemoveCollaboratorResponse is a response for RemoveCollaborator
 https://developer.github.com/v3/projects/collaborators/#remove-project-collaborator
 */
 type RemoveCollaboratorResponse struct {
-	common.Response
+	requests.Response
 	request *RemoveCollaboratorReq
 }
 
@@ -2965,8 +2964,8 @@ Update a project.
 
 https://developer.github.com/v3/projects/#update-a-project
 */
-func Update(ctx context.Context, req *UpdateReq, opt ...options.Option) (*UpdateResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func Update(ctx context.Context, req *UpdateReq, opt ...requests.Option) (*UpdateResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3001,7 +3000,7 @@ Update a project.
 
 https://developer.github.com/v3/projects/#update-a-project
 */
-func (c Client) Update(ctx context.Context, req *UpdateReq, opt ...options.Option) (*UpdateResponse, error) {
+func (c Client) Update(ctx context.Context, req *UpdateReq, opt ...requests.Option) (*UpdateResponse, error) {
 	return Update(ctx, req, append(c, opt...)...)
 }
 
@@ -3026,8 +3025,8 @@ type UpdateReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UpdateReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *UpdateReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3099,7 +3098,7 @@ UpdateResponse is a response for Update
 https://developer.github.com/v3/projects/#update-a-project
 */
 type UpdateResponse struct {
-	common.Response
+	requests.Response
 	request *UpdateReq
 	Data    components.Project
 }
@@ -3113,8 +3112,8 @@ Update an existing project card.
 
 https://developer.github.com/v3/projects/cards/#update-a-project-card
 */
-func UpdateCard(ctx context.Context, req *UpdateCardReq, opt ...options.Option) (*UpdateCardResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func UpdateCard(ctx context.Context, req *UpdateCardReq, opt ...requests.Option) (*UpdateCardResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3149,7 +3148,7 @@ Update an existing project card.
 
 https://developer.github.com/v3/projects/cards/#update-a-project-card
 */
-func (c Client) UpdateCard(ctx context.Context, req *UpdateCardReq, opt ...options.Option) (*UpdateCardResponse, error) {
+func (c Client) UpdateCard(ctx context.Context, req *UpdateCardReq, opt ...requests.Option) (*UpdateCardResponse, error) {
 	return UpdateCard(ctx, req, append(c, opt...)...)
 }
 
@@ -3176,8 +3175,8 @@ type UpdateCardReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UpdateCardReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *UpdateCardReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3240,7 +3239,7 @@ UpdateCardResponse is a response for UpdateCard
 https://developer.github.com/v3/projects/cards/#update-a-project-card
 */
 type UpdateCardResponse struct {
-	common.Response
+	requests.Response
 	request *UpdateCardReq
 	Data    components.ProjectCard
 }
@@ -3254,8 +3253,8 @@ Update an existing project column.
 
 https://developer.github.com/v3/projects/columns/#update-a-project-column
 */
-func UpdateColumn(ctx context.Context, req *UpdateColumnReq, opt ...options.Option) (*UpdateColumnResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func UpdateColumn(ctx context.Context, req *UpdateColumnReq, opt ...requests.Option) (*UpdateColumnResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3290,7 +3289,7 @@ Update an existing project column.
 
 https://developer.github.com/v3/projects/columns/#update-a-project-column
 */
-func (c Client) UpdateColumn(ctx context.Context, req *UpdateColumnReq, opt ...options.Option) (*UpdateColumnResponse, error) {
+func (c Client) UpdateColumn(ctx context.Context, req *UpdateColumnReq, opt ...requests.Option) (*UpdateColumnResponse, error) {
 	return UpdateColumn(ctx, req, append(c, opt...)...)
 }
 
@@ -3317,8 +3316,8 @@ type UpdateColumnReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UpdateColumnReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *UpdateColumnReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3378,7 +3377,7 @@ UpdateColumnResponse is a response for UpdateColumn
 https://developer.github.com/v3/projects/columns/#update-a-project-column
 */
 type UpdateColumnResponse struct {
-	common.Response
+	requests.Response
 	request *UpdateColumnReq
 	Data    components.ProjectColumn
 }

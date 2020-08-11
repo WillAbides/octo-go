@@ -120,11 +120,11 @@ func reqHTTPRequestFunc(endpoint *model.Endpoint, pq pkgQual) jen.Code {
 	stmt.Line()
 	stmt.Func().Params(jen.Id("r").Id("*"+structName)).Id("HTTPRequest").Params(
 		jen.Id("ctx").Qual("context", "Context"),
-		jen.Id("opt ...").Qual(pq.pkgPath("options"), "Option"),
+		jen.Id("opt ...").Qual(pq.pkgPath("requests"), "Option"),
 	).Params(
 		jen.Op("*").Qual("net/http", "Request"), jen.Error(),
 	).Block(
-		jen.Id("opts, err := ").Qual(pq.pkgPath("options"), "BuildOptions").Call(jen.Id("opt...")),
+		jen.Id("opts, err := ").Qual(pq.pkgPath("requests"), "BuildOptions").Call(jen.Id("opt...")),
 		jen.Id("if err != nil {return nil, err}"),
 		jen.Id("return r.requestBuilder().HTTPRequest(ctx, opts)"),
 	)

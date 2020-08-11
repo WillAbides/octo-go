@@ -5,10 +5,9 @@ package checks
 import (
 	"context"
 	"fmt"
-	common "github.com/willabides/octo-go/common"
 	components "github.com/willabides/octo-go/components"
 	internal "github.com/willabides/octo-go/internal"
-	options "github.com/willabides/octo-go/options"
+	requests "github.com/willabides/octo-go/requests"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -17,15 +16,15 @@ import (
 func strPtr(s string) *string { return &s }
 
 // Client is a set of options to apply to requests
-type Client []options.Option
+type Client []requests.Option
 
 // NewClient returns a new Client
-func NewClient(opt ...options.Option) Client {
+func NewClient(opt ...requests.Option) Client {
 	return opt
 }
 
 // Apply implements options.Option
-func (c Client) Apply(opts *options.Options) error {
+func (c Client) Apply(opts *requests.Options) error {
 	for _, o := range c {
 		err := o.Apply(opts)
 		if err != nil {
@@ -44,8 +43,8 @@ Create a check run.
 
 https://developer.github.com/v3/checks/runs/#create-a-check-run
 */
-func Create(ctx context.Context, req *CreateReq, opt ...options.Option) (*CreateResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func Create(ctx context.Context, req *CreateReq, opt ...requests.Option) (*CreateResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -80,7 +79,7 @@ Create a check run.
 
 https://developer.github.com/v3/checks/runs/#create-a-check-run
 */
-func (c Client) Create(ctx context.Context, req *CreateReq, opt ...options.Option) (*CreateResponse, error) {
+func (c Client) Create(ctx context.Context, req *CreateReq, opt ...requests.Option) (*CreateResponse, error) {
 	return Create(ctx, req, append(c, opt...)...)
 }
 
@@ -106,8 +105,8 @@ type CreateReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -334,7 +333,7 @@ CreateResponse is a response for Create
 https://developer.github.com/v3/checks/runs/#create-a-check-run
 */
 type CreateResponse struct {
-	common.Response
+	requests.Response
 	request *CreateReq
 	Data    components.CheckRun
 }
@@ -348,8 +347,8 @@ Create a check suite.
 
 https://developer.github.com/v3/checks/suites/#create-a-check-suite
 */
-func CreateSuite(ctx context.Context, req *CreateSuiteReq, opt ...options.Option) (*CreateSuiteResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateSuite(ctx context.Context, req *CreateSuiteReq, opt ...requests.Option) (*CreateSuiteResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -384,7 +383,7 @@ Create a check suite.
 
 https://developer.github.com/v3/checks/suites/#create-a-check-suite
 */
-func (c Client) CreateSuite(ctx context.Context, req *CreateSuiteReq, opt ...options.Option) (*CreateSuiteResponse, error) {
+func (c Client) CreateSuite(ctx context.Context, req *CreateSuiteReq, opt ...requests.Option) (*CreateSuiteResponse, error) {
 	return CreateSuite(ctx, req, append(c, opt...)...)
 }
 
@@ -410,8 +409,8 @@ type CreateSuiteReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateSuiteReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateSuiteReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -471,7 +470,7 @@ CreateSuiteResponse is a response for CreateSuite
 https://developer.github.com/v3/checks/suites/#create-a-check-suite
 */
 type CreateSuiteResponse struct {
-	common.Response
+	requests.Response
 	request *CreateSuiteReq
 	Data    components.CheckSuite
 }
@@ -485,8 +484,8 @@ Get a check run.
 
 https://developer.github.com/v3/checks/runs/#get-a-check-run
 */
-func Get(ctx context.Context, req *GetReq, opt ...options.Option) (*GetResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func Get(ctx context.Context, req *GetReq, opt ...requests.Option) (*GetResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -521,7 +520,7 @@ Get a check run.
 
 https://developer.github.com/v3/checks/runs/#get-a-check-run
 */
-func (c Client) Get(ctx context.Context, req *GetReq, opt ...options.Option) (*GetResponse, error) {
+func (c Client) Get(ctx context.Context, req *GetReq, opt ...requests.Option) (*GetResponse, error) {
 	return Get(ctx, req, append(c, opt...)...)
 }
 
@@ -549,8 +548,8 @@ type GetReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -596,7 +595,7 @@ GetResponse is a response for Get
 https://developer.github.com/v3/checks/runs/#get-a-check-run
 */
 type GetResponse struct {
-	common.Response
+	requests.Response
 	request *GetReq
 	Data    components.CheckRun
 }
@@ -610,8 +609,8 @@ Get a check suite.
 
 https://developer.github.com/v3/checks/suites/#get-a-check-suite
 */
-func GetSuite(ctx context.Context, req *GetSuiteReq, opt ...options.Option) (*GetSuiteResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetSuite(ctx context.Context, req *GetSuiteReq, opt ...requests.Option) (*GetSuiteResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -646,7 +645,7 @@ Get a check suite.
 
 https://developer.github.com/v3/checks/suites/#get-a-check-suite
 */
-func (c Client) GetSuite(ctx context.Context, req *GetSuiteReq, opt ...options.Option) (*GetSuiteResponse, error) {
+func (c Client) GetSuite(ctx context.Context, req *GetSuiteReq, opt ...requests.Option) (*GetSuiteResponse, error) {
 	return GetSuite(ctx, req, append(c, opt...)...)
 }
 
@@ -674,8 +673,8 @@ type GetSuiteReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetSuiteReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetSuiteReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -721,7 +720,7 @@ GetSuiteResponse is a response for GetSuite
 https://developer.github.com/v3/checks/suites/#get-a-check-suite
 */
 type GetSuiteResponse struct {
-	common.Response
+	requests.Response
 	request *GetSuiteReq
 	Data    components.CheckSuite
 }
@@ -735,8 +734,8 @@ List check run annotations.
 
 https://developer.github.com/v3/checks/runs/#list-check-run-annotations
 */
-func ListAnnotations(ctx context.Context, req *ListAnnotationsReq, opt ...options.Option) (*ListAnnotationsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListAnnotations(ctx context.Context, req *ListAnnotationsReq, opt ...requests.Option) (*ListAnnotationsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -771,7 +770,7 @@ List check run annotations.
 
 https://developer.github.com/v3/checks/runs/#list-check-run-annotations
 */
-func (c Client) ListAnnotations(ctx context.Context, req *ListAnnotationsReq, opt ...options.Option) (*ListAnnotationsResponse, error) {
+func (c Client) ListAnnotations(ctx context.Context, req *ListAnnotationsReq, opt ...requests.Option) (*ListAnnotationsResponse, error) {
 	return ListAnnotations(ctx, req, append(c, opt...)...)
 }
 
@@ -805,8 +804,8 @@ type ListAnnotationsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListAnnotationsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListAnnotationsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -858,7 +857,7 @@ ListAnnotationsResponse is a response for ListAnnotations
 https://developer.github.com/v3/checks/runs/#list-check-run-annotations
 */
 type ListAnnotationsResponse struct {
-	common.Response
+	requests.Response
 	request *ListAnnotationsReq
 	Data    []components.CheckAnnotation
 }
@@ -872,8 +871,8 @@ List check runs for a Git reference.
 
 https://developer.github.com/v3/checks/runs/#list-check-runs-for-a-git-reference
 */
-func ListForRef(ctx context.Context, req *ListForRefReq, opt ...options.Option) (*ListForRefResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListForRef(ctx context.Context, req *ListForRefReq, opt ...requests.Option) (*ListForRefResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -908,7 +907,7 @@ List check runs for a Git reference.
 
 https://developer.github.com/v3/checks/runs/#list-check-runs-for-a-git-reference
 */
-func (c Client) ListForRef(ctx context.Context, req *ListForRefReq, opt ...options.Option) (*ListForRefResponse, error) {
+func (c Client) ListForRef(ctx context.Context, req *ListForRefReq, opt ...requests.Option) (*ListForRefResponse, error) {
 	return ListForRef(ctx, req, append(c, opt...)...)
 }
 
@@ -957,8 +956,8 @@ type ListForRefReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListForRefReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListForRefReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1029,7 +1028,7 @@ ListForRefResponse is a response for ListForRef
 https://developer.github.com/v3/checks/runs/#list-check-runs-for-a-git-reference
 */
 type ListForRefResponse struct {
-	common.Response
+	requests.Response
 	request *ListForRefReq
 	Data    ListForRefResponseBody
 }
@@ -1043,8 +1042,8 @@ List check runs in a check suite.
 
 https://developer.github.com/v3/checks/runs/#list-check-runs-in-a-check-suite
 */
-func ListForSuite(ctx context.Context, req *ListForSuiteReq, opt ...options.Option) (*ListForSuiteResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListForSuite(ctx context.Context, req *ListForSuiteReq, opt ...requests.Option) (*ListForSuiteResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1079,7 +1078,7 @@ List check runs in a check suite.
 
 https://developer.github.com/v3/checks/runs/#list-check-runs-in-a-check-suite
 */
-func (c Client) ListForSuite(ctx context.Context, req *ListForSuiteReq, opt ...options.Option) (*ListForSuiteResponse, error) {
+func (c Client) ListForSuite(ctx context.Context, req *ListForSuiteReq, opt ...requests.Option) (*ListForSuiteResponse, error) {
 	return ListForSuite(ctx, req, append(c, opt...)...)
 }
 
@@ -1128,8 +1127,8 @@ type ListForSuiteReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListForSuiteReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListForSuiteReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1200,7 +1199,7 @@ ListForSuiteResponse is a response for ListForSuite
 https://developer.github.com/v3/checks/runs/#list-check-runs-in-a-check-suite
 */
 type ListForSuiteResponse struct {
-	common.Response
+	requests.Response
 	request *ListForSuiteReq
 	Data    ListForSuiteResponseBody
 }
@@ -1214,8 +1213,8 @@ List check suites for a Git reference.
 
 https://developer.github.com/v3/checks/suites/#list-check-suites-for-a-git-reference
 */
-func ListSuitesForRef(ctx context.Context, req *ListSuitesForRefReq, opt ...options.Option) (*ListSuitesForRefResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListSuitesForRef(ctx context.Context, req *ListSuitesForRefReq, opt ...requests.Option) (*ListSuitesForRefResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1250,7 +1249,7 @@ List check suites for a Git reference.
 
 https://developer.github.com/v3/checks/suites/#list-check-suites-for-a-git-reference
 */
-func (c Client) ListSuitesForRef(ctx context.Context, req *ListSuitesForRefReq, opt ...options.Option) (*ListSuitesForRefResponse, error) {
+func (c Client) ListSuitesForRef(ctx context.Context, req *ListSuitesForRefReq, opt ...requests.Option) (*ListSuitesForRefResponse, error) {
 	return ListSuitesForRef(ctx, req, append(c, opt...)...)
 }
 
@@ -1290,8 +1289,8 @@ type ListSuitesForRefReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListSuitesForRefReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListSuitesForRefReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1359,7 +1358,7 @@ ListSuitesForRefResponse is a response for ListSuitesForRef
 https://developer.github.com/v3/checks/suites/#list-check-suites-for-a-git-reference
 */
 type ListSuitesForRefResponse struct {
-	common.Response
+	requests.Response
 	request *ListSuitesForRefReq
 	Data    ListSuitesForRefResponseBody
 }
@@ -1373,8 +1372,8 @@ Rerequest a check suite.
 
 https://developer.github.com/v3/checks/suites/#rerequest-a-check-suite
 */
-func RerequestSuite(ctx context.Context, req *RerequestSuiteReq, opt ...options.Option) (*RerequestSuiteResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func RerequestSuite(ctx context.Context, req *RerequestSuiteReq, opt ...requests.Option) (*RerequestSuiteResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1408,7 +1407,7 @@ Rerequest a check suite.
 
 https://developer.github.com/v3/checks/suites/#rerequest-a-check-suite
 */
-func (c Client) RerequestSuite(ctx context.Context, req *RerequestSuiteReq, opt ...options.Option) (*RerequestSuiteResponse, error) {
+func (c Client) RerequestSuite(ctx context.Context, req *RerequestSuiteReq, opt ...requests.Option) (*RerequestSuiteResponse, error) {
 	return RerequestSuite(ctx, req, append(c, opt...)...)
 }
 
@@ -1436,8 +1435,8 @@ type RerequestSuiteReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *RerequestSuiteReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *RerequestSuiteReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1483,7 +1482,7 @@ RerequestSuiteResponse is a response for RerequestSuite
 https://developer.github.com/v3/checks/suites/#rerequest-a-check-suite
 */
 type RerequestSuiteResponse struct {
-	common.Response
+	requests.Response
 	request *RerequestSuiteReq
 }
 
@@ -1496,8 +1495,8 @@ Update repository preferences for check suites.
 
 https://developer.github.com/v3/checks/suites/#update-repository-preferences-for-check-suites
 */
-func SetSuitesPreferences(ctx context.Context, req *SetSuitesPreferencesReq, opt ...options.Option) (*SetSuitesPreferencesResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func SetSuitesPreferences(ctx context.Context, req *SetSuitesPreferencesReq, opt ...requests.Option) (*SetSuitesPreferencesResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1532,7 +1531,7 @@ Update repository preferences for check suites.
 
 https://developer.github.com/v3/checks/suites/#update-repository-preferences-for-check-suites
 */
-func (c Client) SetSuitesPreferences(ctx context.Context, req *SetSuitesPreferencesReq, opt ...options.Option) (*SetSuitesPreferencesResponse, error) {
+func (c Client) SetSuitesPreferences(ctx context.Context, req *SetSuitesPreferencesReq, opt ...requests.Option) (*SetSuitesPreferencesResponse, error) {
 	return SetSuitesPreferences(ctx, req, append(c, opt...)...)
 }
 
@@ -1558,8 +1557,8 @@ type SetSuitesPreferencesReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *SetSuitesPreferencesReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *SetSuitesPreferencesReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1637,7 +1636,7 @@ SetSuitesPreferencesResponse is a response for SetSuitesPreferences
 https://developer.github.com/v3/checks/suites/#update-repository-preferences-for-check-suites
 */
 type SetSuitesPreferencesResponse struct {
-	common.Response
+	requests.Response
 	request *SetSuitesPreferencesReq
 	Data    components.CheckSuitePreference
 }
@@ -1651,8 +1650,8 @@ Update a check run.
 
 https://developer.github.com/v3/checks/runs/#update-a-check-run
 */
-func Update(ctx context.Context, req *UpdateReq, opt ...options.Option) (*UpdateResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func Update(ctx context.Context, req *UpdateReq, opt ...requests.Option) (*UpdateResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1687,7 +1686,7 @@ Update a check run.
 
 https://developer.github.com/v3/checks/runs/#update-a-check-run
 */
-func (c Client) Update(ctx context.Context, req *UpdateReq, opt ...options.Option) (*UpdateResponse, error) {
+func (c Client) Update(ctx context.Context, req *UpdateReq, opt ...requests.Option) (*UpdateResponse, error) {
 	return Update(ctx, req, append(c, opt...)...)
 }
 
@@ -1716,8 +1715,8 @@ type UpdateReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UpdateReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *UpdateReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1927,7 +1926,7 @@ UpdateResponse is a response for Update
 https://developer.github.com/v3/checks/runs/#update-a-check-run
 */
 type UpdateResponse struct {
-	common.Response
+	requests.Response
 	request *UpdateReq
 	Data    components.CheckRun
 }

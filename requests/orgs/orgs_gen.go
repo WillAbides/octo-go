@@ -5,10 +5,9 @@ package orgs
 import (
 	"context"
 	"fmt"
-	common "github.com/willabides/octo-go/common"
 	components "github.com/willabides/octo-go/components"
 	internal "github.com/willabides/octo-go/internal"
-	options "github.com/willabides/octo-go/options"
+	requests "github.com/willabides/octo-go/requests"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -17,15 +16,15 @@ import (
 func strPtr(s string) *string { return &s }
 
 // Client is a set of options to apply to requests
-type Client []options.Option
+type Client []requests.Option
 
 // NewClient returns a new Client
-func NewClient(opt ...options.Option) Client {
+func NewClient(opt ...requests.Option) Client {
 	return opt
 }
 
 // Apply implements options.Option
-func (c Client) Apply(opts *options.Options) error {
+func (c Client) Apply(opts *requests.Options) error {
 	for _, o := range c {
 		err := o.Apply(opts)
 		if err != nil {
@@ -44,8 +43,8 @@ Block a user from an organization.
 
 https://developer.github.com/v3/orgs/blocking/#block-a-user-from-an-organization
 */
-func BlockUser(ctx context.Context, req *BlockUserReq, opt ...options.Option) (*BlockUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func BlockUser(ctx context.Context, req *BlockUserReq, opt ...requests.Option) (*BlockUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -79,7 +78,7 @@ Block a user from an organization.
 
 https://developer.github.com/v3/orgs/blocking/#block-a-user-from-an-organization
 */
-func (c Client) BlockUser(ctx context.Context, req *BlockUserReq, opt ...options.Option) (*BlockUserResponse, error) {
+func (c Client) BlockUser(ctx context.Context, req *BlockUserReq, opt ...requests.Option) (*BlockUserResponse, error) {
 	return BlockUser(ctx, req, append(c, opt...)...)
 }
 
@@ -95,8 +94,8 @@ type BlockUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *BlockUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *BlockUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -142,7 +141,7 @@ BlockUserResponse is a response for BlockUser
 https://developer.github.com/v3/orgs/blocking/#block-a-user-from-an-organization
 */
 type BlockUserResponse struct {
-	common.Response
+	requests.Response
 	request *BlockUserReq
 }
 
@@ -155,8 +154,8 @@ Check if a user is blocked by an organization.
 
 https://developer.github.com/v3/orgs/blocking/#check-if-a-user-is-blocked-by-an-organization
 */
-func CheckBlockedUser(ctx context.Context, req *CheckBlockedUserReq, opt ...options.Option) (*CheckBlockedUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CheckBlockedUser(ctx context.Context, req *CheckBlockedUserReq, opt ...requests.Option) (*CheckBlockedUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -194,7 +193,7 @@ Check if a user is blocked by an organization.
 
 https://developer.github.com/v3/orgs/blocking/#check-if-a-user-is-blocked-by-an-organization
 */
-func (c Client) CheckBlockedUser(ctx context.Context, req *CheckBlockedUserReq, opt ...options.Option) (*CheckBlockedUserResponse, error) {
+func (c Client) CheckBlockedUser(ctx context.Context, req *CheckBlockedUserReq, opt ...requests.Option) (*CheckBlockedUserResponse, error) {
 	return CheckBlockedUser(ctx, req, append(c, opt...)...)
 }
 
@@ -210,8 +209,8 @@ type CheckBlockedUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CheckBlockedUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CheckBlockedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -257,7 +256,7 @@ CheckBlockedUserResponse is a response for CheckBlockedUser
 https://developer.github.com/v3/orgs/blocking/#check-if-a-user-is-blocked-by-an-organization
 */
 type CheckBlockedUserResponse struct {
-	common.Response
+	requests.Response
 	request *CheckBlockedUserReq
 	Data    bool
 }
@@ -271,8 +270,8 @@ Check organization membership for a user.
 
 https://developer.github.com/v3/orgs/members/#check-organization-membership-for-a-user
 */
-func CheckMembershipForUser(ctx context.Context, req *CheckMembershipForUserReq, opt ...options.Option) (*CheckMembershipForUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CheckMembershipForUser(ctx context.Context, req *CheckMembershipForUserReq, opt ...requests.Option) (*CheckMembershipForUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -306,7 +305,7 @@ Check organization membership for a user.
 
 https://developer.github.com/v3/orgs/members/#check-organization-membership-for-a-user
 */
-func (c Client) CheckMembershipForUser(ctx context.Context, req *CheckMembershipForUserReq, opt ...options.Option) (*CheckMembershipForUserResponse, error) {
+func (c Client) CheckMembershipForUser(ctx context.Context, req *CheckMembershipForUserReq, opt ...requests.Option) (*CheckMembershipForUserResponse, error) {
 	return CheckMembershipForUser(ctx, req, append(c, opt...)...)
 }
 
@@ -322,8 +321,8 @@ type CheckMembershipForUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CheckMembershipForUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CheckMembershipForUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -369,7 +368,7 @@ CheckMembershipForUserResponse is a response for CheckMembershipForUser
 https://developer.github.com/v3/orgs/members/#check-organization-membership-for-a-user
 */
 type CheckMembershipForUserResponse struct {
-	common.Response
+	requests.Response
 	request *CheckMembershipForUserReq
 }
 
@@ -382,8 +381,8 @@ Check public organization membership for a user.
 
 https://developer.github.com/v3/orgs/members/#check-public-organization-membership-for-a-user
 */
-func CheckPublicMembershipForUser(ctx context.Context, req *CheckPublicMembershipForUserReq, opt ...options.Option) (*CheckPublicMembershipForUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CheckPublicMembershipForUser(ctx context.Context, req *CheckPublicMembershipForUserReq, opt ...requests.Option) (*CheckPublicMembershipForUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -421,7 +420,7 @@ Check public organization membership for a user.
 
 https://developer.github.com/v3/orgs/members/#check-public-organization-membership-for-a-user
 */
-func (c Client) CheckPublicMembershipForUser(ctx context.Context, req *CheckPublicMembershipForUserReq, opt ...options.Option) (*CheckPublicMembershipForUserResponse, error) {
+func (c Client) CheckPublicMembershipForUser(ctx context.Context, req *CheckPublicMembershipForUserReq, opt ...requests.Option) (*CheckPublicMembershipForUserResponse, error) {
 	return CheckPublicMembershipForUser(ctx, req, append(c, opt...)...)
 }
 
@@ -437,8 +436,8 @@ type CheckPublicMembershipForUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CheckPublicMembershipForUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CheckPublicMembershipForUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -484,7 +483,7 @@ CheckPublicMembershipForUserResponse is a response for CheckPublicMembershipForU
 https://developer.github.com/v3/orgs/members/#check-public-organization-membership-for-a-user
 */
 type CheckPublicMembershipForUserResponse struct {
-	common.Response
+	requests.Response
 	request *CheckPublicMembershipForUserReq
 	Data    bool
 }
@@ -498,8 +497,8 @@ Convert an organization member to outside collaborator.
 
 https://developer.github.com/v3/orgs/outside_collaborators/#convert-an-organization-member-to-outside-collaborator
 */
-func ConvertMemberToOutsideCollaborator(ctx context.Context, req *ConvertMemberToOutsideCollaboratorReq, opt ...options.Option) (*ConvertMemberToOutsideCollaboratorResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ConvertMemberToOutsideCollaborator(ctx context.Context, req *ConvertMemberToOutsideCollaboratorReq, opt ...requests.Option) (*ConvertMemberToOutsideCollaboratorResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -533,7 +532,7 @@ Convert an organization member to outside collaborator.
 
 https://developer.github.com/v3/orgs/outside_collaborators/#convert-an-organization-member-to-outside-collaborator
 */
-func (c Client) ConvertMemberToOutsideCollaborator(ctx context.Context, req *ConvertMemberToOutsideCollaboratorReq, opt ...options.Option) (*ConvertMemberToOutsideCollaboratorResponse, error) {
+func (c Client) ConvertMemberToOutsideCollaborator(ctx context.Context, req *ConvertMemberToOutsideCollaboratorReq, opt ...requests.Option) (*ConvertMemberToOutsideCollaboratorResponse, error) {
 	return ConvertMemberToOutsideCollaborator(ctx, req, append(c, opt...)...)
 }
 
@@ -549,8 +548,8 @@ type ConvertMemberToOutsideCollaboratorReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ConvertMemberToOutsideCollaboratorReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ConvertMemberToOutsideCollaboratorReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -596,7 +595,7 @@ ConvertMemberToOutsideCollaboratorResponse is a response for ConvertMemberToOuts
 https://developer.github.com/v3/orgs/outside_collaborators/#convert-an-organization-member-to-outside-collaborator
 */
 type ConvertMemberToOutsideCollaboratorResponse struct {
-	common.Response
+	requests.Response
 	request *ConvertMemberToOutsideCollaboratorReq
 }
 
@@ -609,8 +608,8 @@ Create an organization invitation.
 
 https://developer.github.com/v3/orgs/members/#create-an-organization-invitation
 */
-func CreateInvitation(ctx context.Context, req *CreateInvitationReq, opt ...options.Option) (*CreateInvitationResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateInvitation(ctx context.Context, req *CreateInvitationReq, opt ...requests.Option) (*CreateInvitationResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -645,7 +644,7 @@ Create an organization invitation.
 
 https://developer.github.com/v3/orgs/members/#create-an-organization-invitation
 */
-func (c Client) CreateInvitation(ctx context.Context, req *CreateInvitationReq, opt ...options.Option) (*CreateInvitationResponse, error) {
+func (c Client) CreateInvitation(ctx context.Context, req *CreateInvitationReq, opt ...requests.Option) (*CreateInvitationResponse, error) {
 	return CreateInvitation(ctx, req, append(c, opt...)...)
 }
 
@@ -661,8 +660,8 @@ type CreateInvitationReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateInvitationReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateInvitationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -742,7 +741,7 @@ CreateInvitationResponse is a response for CreateInvitation
 https://developer.github.com/v3/orgs/members/#create-an-organization-invitation
 */
 type CreateInvitationResponse struct {
-	common.Response
+	requests.Response
 	request *CreateInvitationReq
 	Data    components.OrganizationInvitation
 }
@@ -756,8 +755,8 @@ Create an organization webhook.
 
 https://developer.github.com/v3/orgs/hooks/#create-an-organization-webhook
 */
-func CreateWebhook(ctx context.Context, req *CreateWebhookReq, opt ...options.Option) (*CreateWebhookResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateWebhook(ctx context.Context, req *CreateWebhookReq, opt ...requests.Option) (*CreateWebhookResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -792,7 +791,7 @@ Create an organization webhook.
 
 https://developer.github.com/v3/orgs/hooks/#create-an-organization-webhook
 */
-func (c Client) CreateWebhook(ctx context.Context, req *CreateWebhookReq, opt ...options.Option) (*CreateWebhookResponse, error) {
+func (c Client) CreateWebhook(ctx context.Context, req *CreateWebhookReq, opt ...requests.Option) (*CreateWebhookResponse, error) {
 	return CreateWebhook(ctx, req, append(c, opt...)...)
 }
 
@@ -808,8 +807,8 @@ type CreateWebhookReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateWebhookReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateWebhookReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -910,7 +909,7 @@ CreateWebhookResponse is a response for CreateWebhook
 https://developer.github.com/v3/orgs/hooks/#create-an-organization-webhook
 */
 type CreateWebhookResponse struct {
-	common.Response
+	requests.Response
 	request *CreateWebhookReq
 	Data    components.OrgHook
 }
@@ -924,8 +923,8 @@ Delete an organization webhook.
 
 https://developer.github.com/v3/orgs/hooks/#delete-an-organization-webhook
 */
-func DeleteWebhook(ctx context.Context, req *DeleteWebhookReq, opt ...options.Option) (*DeleteWebhookResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DeleteWebhook(ctx context.Context, req *DeleteWebhookReq, opt ...requests.Option) (*DeleteWebhookResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -963,7 +962,7 @@ Delete an organization webhook.
 
 https://developer.github.com/v3/orgs/hooks/#delete-an-organization-webhook
 */
-func (c Client) DeleteWebhook(ctx context.Context, req *DeleteWebhookReq, opt ...options.Option) (*DeleteWebhookResponse, error) {
+func (c Client) DeleteWebhook(ctx context.Context, req *DeleteWebhookReq, opt ...requests.Option) (*DeleteWebhookResponse, error) {
 	return DeleteWebhook(ctx, req, append(c, opt...)...)
 }
 
@@ -979,8 +978,8 @@ type DeleteWebhookReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeleteWebhookReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeleteWebhookReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1026,7 +1025,7 @@ DeleteWebhookResponse is a response for DeleteWebhook
 https://developer.github.com/v3/orgs/hooks/#delete-an-organization-webhook
 */
 type DeleteWebhookResponse struct {
-	common.Response
+	requests.Response
 	request *DeleteWebhookReq
 	Data    bool
 }
@@ -1040,8 +1039,8 @@ Get an organization.
 
 https://developer.github.com/v3/orgs/#get-an-organization
 */
-func Get(ctx context.Context, req *GetReq, opt ...options.Option) (*GetResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func Get(ctx context.Context, req *GetReq, opt ...requests.Option) (*GetResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1076,7 +1075,7 @@ Get an organization.
 
 https://developer.github.com/v3/orgs/#get-an-organization
 */
-func (c Client) Get(ctx context.Context, req *GetReq, opt ...options.Option) (*GetResponse, error) {
+func (c Client) Get(ctx context.Context, req *GetReq, opt ...requests.Option) (*GetResponse, error) {
 	return Get(ctx, req, append(c, opt...)...)
 }
 
@@ -1106,8 +1105,8 @@ type GetReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1153,7 +1152,7 @@ GetResponse is a response for Get
 https://developer.github.com/v3/orgs/#get-an-organization
 */
 type GetResponse struct {
-	common.Response
+	requests.Response
 	request *GetReq
 	Data    components.OrganizationFull
 }
@@ -1167,8 +1166,8 @@ Get an organization membership for the authenticated user.
 
 https://developer.github.com/v3/orgs/members/#get-an-organization-membership-for-the-authenticated-user
 */
-func GetMembershipForAuthenticatedUser(ctx context.Context, req *GetMembershipForAuthenticatedUserReq, opt ...options.Option) (*GetMembershipForAuthenticatedUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetMembershipForAuthenticatedUser(ctx context.Context, req *GetMembershipForAuthenticatedUserReq, opt ...requests.Option) (*GetMembershipForAuthenticatedUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1203,7 +1202,7 @@ Get an organization membership for the authenticated user.
 
 https://developer.github.com/v3/orgs/members/#get-an-organization-membership-for-the-authenticated-user
 */
-func (c Client) GetMembershipForAuthenticatedUser(ctx context.Context, req *GetMembershipForAuthenticatedUserReq, opt ...options.Option) (*GetMembershipForAuthenticatedUserResponse, error) {
+func (c Client) GetMembershipForAuthenticatedUser(ctx context.Context, req *GetMembershipForAuthenticatedUserReq, opt ...requests.Option) (*GetMembershipForAuthenticatedUserResponse, error) {
 	return GetMembershipForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
@@ -1218,8 +1217,8 @@ type GetMembershipForAuthenticatedUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetMembershipForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetMembershipForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1265,7 +1264,7 @@ GetMembershipForAuthenticatedUserResponse is a response for GetMembershipForAuth
 https://developer.github.com/v3/orgs/members/#get-an-organization-membership-for-the-authenticated-user
 */
 type GetMembershipForAuthenticatedUserResponse struct {
-	common.Response
+	requests.Response
 	request *GetMembershipForAuthenticatedUserReq
 	Data    components.OrgMembership
 }
@@ -1279,8 +1278,8 @@ Get organization membership for a user.
 
 https://developer.github.com/v3/orgs/members/#get-organization-membership-for-a-user
 */
-func GetMembershipForUser(ctx context.Context, req *GetMembershipForUserReq, opt ...options.Option) (*GetMembershipForUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetMembershipForUser(ctx context.Context, req *GetMembershipForUserReq, opt ...requests.Option) (*GetMembershipForUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1315,7 +1314,7 @@ Get organization membership for a user.
 
 https://developer.github.com/v3/orgs/members/#get-organization-membership-for-a-user
 */
-func (c Client) GetMembershipForUser(ctx context.Context, req *GetMembershipForUserReq, opt ...options.Option) (*GetMembershipForUserResponse, error) {
+func (c Client) GetMembershipForUser(ctx context.Context, req *GetMembershipForUserReq, opt ...requests.Option) (*GetMembershipForUserResponse, error) {
 	return GetMembershipForUser(ctx, req, append(c, opt...)...)
 }
 
@@ -1331,8 +1330,8 @@ type GetMembershipForUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetMembershipForUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetMembershipForUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1378,7 +1377,7 @@ GetMembershipForUserResponse is a response for GetMembershipForUser
 https://developer.github.com/v3/orgs/members/#get-organization-membership-for-a-user
 */
 type GetMembershipForUserResponse struct {
-	common.Response
+	requests.Response
 	request *GetMembershipForUserReq
 	Data    components.OrgMembership
 }
@@ -1392,8 +1391,8 @@ Get an organization webhook.
 
 https://developer.github.com/v3/orgs/hooks/#get-an-organization-webhook
 */
-func GetWebhook(ctx context.Context, req *GetWebhookReq, opt ...options.Option) (*GetWebhookResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetWebhook(ctx context.Context, req *GetWebhookReq, opt ...requests.Option) (*GetWebhookResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1428,7 +1427,7 @@ Get an organization webhook.
 
 https://developer.github.com/v3/orgs/hooks/#get-an-organization-webhook
 */
-func (c Client) GetWebhook(ctx context.Context, req *GetWebhookReq, opt ...options.Option) (*GetWebhookResponse, error) {
+func (c Client) GetWebhook(ctx context.Context, req *GetWebhookReq, opt ...requests.Option) (*GetWebhookResponse, error) {
 	return GetWebhook(ctx, req, append(c, opt...)...)
 }
 
@@ -1444,8 +1443,8 @@ type GetWebhookReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetWebhookReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetWebhookReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1491,7 +1490,7 @@ GetWebhookResponse is a response for GetWebhook
 https://developer.github.com/v3/orgs/hooks/#get-an-organization-webhook
 */
 type GetWebhookResponse struct {
-	common.Response
+	requests.Response
 	request *GetWebhookReq
 	Data    components.OrgHook
 }
@@ -1505,8 +1504,8 @@ List organizations.
 
 https://developer.github.com/v3/orgs/#list-organizations
 */
-func List(ctx context.Context, req *ListReq, opt ...options.Option) (*ListResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func List(ctx context.Context, req *ListReq, opt ...requests.Option) (*ListResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1541,7 +1540,7 @@ List organizations.
 
 https://developer.github.com/v3/orgs/#list-organizations
 */
-func (c Client) List(ctx context.Context, req *ListReq, opt ...options.Option) (*ListResponse, error) {
+func (c Client) List(ctx context.Context, req *ListReq, opt ...requests.Option) (*ListResponse, error) {
 	return List(ctx, req, append(c, opt...)...)
 }
 
@@ -1565,8 +1564,8 @@ type ListReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1618,7 +1617,7 @@ ListResponse is a response for List
 https://developer.github.com/v3/orgs/#list-organizations
 */
 type ListResponse struct {
-	common.Response
+	requests.Response
 	request *ListReq
 	Data    []components.OrganizationSimple
 }
@@ -1632,8 +1631,8 @@ List app installations for an organization.
 
 https://developer.github.com/v3/orgs/#list-app-installations-for-an-organization
 */
-func ListAppInstallations(ctx context.Context, req *ListAppInstallationsReq, opt ...options.Option) (*ListAppInstallationsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListAppInstallations(ctx context.Context, req *ListAppInstallationsReq, opt ...requests.Option) (*ListAppInstallationsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1668,7 +1667,7 @@ List app installations for an organization.
 
 https://developer.github.com/v3/orgs/#list-app-installations-for-an-organization
 */
-func (c Client) ListAppInstallations(ctx context.Context, req *ListAppInstallationsReq, opt ...options.Option) (*ListAppInstallationsResponse, error) {
+func (c Client) ListAppInstallations(ctx context.Context, req *ListAppInstallationsReq, opt ...requests.Option) (*ListAppInstallationsResponse, error) {
 	return ListAppInstallations(ctx, req, append(c, opt...)...)
 }
 
@@ -1695,8 +1694,8 @@ type ListAppInstallationsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListAppInstallationsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListAppInstallationsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1758,7 +1757,7 @@ ListAppInstallationsResponse is a response for ListAppInstallations
 https://developer.github.com/v3/orgs/#list-app-installations-for-an-organization
 */
 type ListAppInstallationsResponse struct {
-	common.Response
+	requests.Response
 	request *ListAppInstallationsReq
 	Data    ListAppInstallationsResponseBody
 }
@@ -1772,8 +1771,8 @@ List users blocked by an organization.
 
 https://developer.github.com/v3/orgs/blocking/#list-users-blocked-by-an-organization
 */
-func ListBlockedUsers(ctx context.Context, req *ListBlockedUsersReq, opt ...options.Option) (*ListBlockedUsersResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListBlockedUsers(ctx context.Context, req *ListBlockedUsersReq, opt ...requests.Option) (*ListBlockedUsersResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1808,7 +1807,7 @@ List users blocked by an organization.
 
 https://developer.github.com/v3/orgs/blocking/#list-users-blocked-by-an-organization
 */
-func (c Client) ListBlockedUsers(ctx context.Context, req *ListBlockedUsersReq, opt ...options.Option) (*ListBlockedUsersResponse, error) {
+func (c Client) ListBlockedUsers(ctx context.Context, req *ListBlockedUsersReq, opt ...requests.Option) (*ListBlockedUsersResponse, error) {
 	return ListBlockedUsers(ctx, req, append(c, opt...)...)
 }
 
@@ -1823,8 +1822,8 @@ type ListBlockedUsersReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListBlockedUsersReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListBlockedUsersReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1870,7 +1869,7 @@ ListBlockedUsersResponse is a response for ListBlockedUsers
 https://developer.github.com/v3/orgs/blocking/#list-users-blocked-by-an-organization
 */
 type ListBlockedUsersResponse struct {
-	common.Response
+	requests.Response
 	request *ListBlockedUsersReq
 	Data    []components.SimpleUser
 }
@@ -1884,8 +1883,8 @@ List organizations for the authenticated user.
 
 https://developer.github.com/v3/orgs/#list-organizations-for-the-authenticated-user
 */
-func ListForAuthenticatedUser(ctx context.Context, req *ListForAuthenticatedUserReq, opt ...options.Option) (*ListForAuthenticatedUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListForAuthenticatedUser(ctx context.Context, req *ListForAuthenticatedUserReq, opt ...requests.Option) (*ListForAuthenticatedUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1920,7 +1919,7 @@ List organizations for the authenticated user.
 
 https://developer.github.com/v3/orgs/#list-organizations-for-the-authenticated-user
 */
-func (c Client) ListForAuthenticatedUser(ctx context.Context, req *ListForAuthenticatedUserReq, opt ...options.Option) (*ListForAuthenticatedUserResponse, error) {
+func (c Client) ListForAuthenticatedUser(ctx context.Context, req *ListForAuthenticatedUserReq, opt ...requests.Option) (*ListForAuthenticatedUserResponse, error) {
 	return ListForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
@@ -1940,8 +1939,8 @@ type ListForAuthenticatedUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1993,7 +1992,7 @@ ListForAuthenticatedUserResponse is a response for ListForAuthenticatedUser
 https://developer.github.com/v3/orgs/#list-organizations-for-the-authenticated-user
 */
 type ListForAuthenticatedUserResponse struct {
-	common.Response
+	requests.Response
 	request *ListForAuthenticatedUserReq
 	Data    []components.OrganizationSimple
 }
@@ -2007,8 +2006,8 @@ List organizations for a user.
 
 https://developer.github.com/v3/orgs/#list-organizations-for-a-user
 */
-func ListForUser(ctx context.Context, req *ListForUserReq, opt ...options.Option) (*ListForUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListForUser(ctx context.Context, req *ListForUserReq, opt ...requests.Option) (*ListForUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2043,7 +2042,7 @@ List organizations for a user.
 
 https://developer.github.com/v3/orgs/#list-organizations-for-a-user
 */
-func (c Client) ListForUser(ctx context.Context, req *ListForUserReq, opt ...options.Option) (*ListForUserResponse, error) {
+func (c Client) ListForUser(ctx context.Context, req *ListForUserReq, opt ...requests.Option) (*ListForUserResponse, error) {
 	return ListForUser(ctx, req, append(c, opt...)...)
 }
 
@@ -2064,8 +2063,8 @@ type ListForUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListForUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListForUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2117,7 +2116,7 @@ ListForUserResponse is a response for ListForUser
 https://developer.github.com/v3/orgs/#list-organizations-for-a-user
 */
 type ListForUserResponse struct {
-	common.Response
+	requests.Response
 	request *ListForUserReq
 	Data    []components.OrganizationSimple
 }
@@ -2131,8 +2130,8 @@ List organization invitation teams.
 
 https://developer.github.com/v3/orgs/members/#list-organization-invitation-teams
 */
-func ListInvitationTeams(ctx context.Context, req *ListInvitationTeamsReq, opt ...options.Option) (*ListInvitationTeamsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListInvitationTeams(ctx context.Context, req *ListInvitationTeamsReq, opt ...requests.Option) (*ListInvitationTeamsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2167,7 +2166,7 @@ List organization invitation teams.
 
 https://developer.github.com/v3/orgs/members/#list-organization-invitation-teams
 */
-func (c Client) ListInvitationTeams(ctx context.Context, req *ListInvitationTeamsReq, opt ...options.Option) (*ListInvitationTeamsResponse, error) {
+func (c Client) ListInvitationTeams(ctx context.Context, req *ListInvitationTeamsReq, opt ...requests.Option) (*ListInvitationTeamsResponse, error) {
 	return ListInvitationTeams(ctx, req, append(c, opt...)...)
 }
 
@@ -2191,8 +2190,8 @@ type ListInvitationTeamsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListInvitationTeamsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListInvitationTeamsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2244,7 +2243,7 @@ ListInvitationTeamsResponse is a response for ListInvitationTeams
 https://developer.github.com/v3/orgs/members/#list-organization-invitation-teams
 */
 type ListInvitationTeamsResponse struct {
-	common.Response
+	requests.Response
 	request *ListInvitationTeamsReq
 	Data    []components.Team
 }
@@ -2258,8 +2257,8 @@ List organization members.
 
 https://developer.github.com/v3/orgs/members/#list-organization-members
 */
-func ListMembers(ctx context.Context, req *ListMembersReq, opt ...options.Option) (*ListMembersResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListMembers(ctx context.Context, req *ListMembersReq, opt ...requests.Option) (*ListMembersResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2294,7 +2293,7 @@ List organization members.
 
 https://developer.github.com/v3/orgs/members/#list-organization-members
 */
-func (c Client) ListMembers(ctx context.Context, req *ListMembersReq, opt ...options.Option) (*ListMembersResponse, error) {
+func (c Client) ListMembers(ctx context.Context, req *ListMembersReq, opt ...requests.Option) (*ListMembersResponse, error) {
 	return ListMembers(ctx, req, append(c, opt...)...)
 }
 
@@ -2332,8 +2331,8 @@ type ListMembersReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListMembersReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListMembersReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2391,7 +2390,7 @@ ListMembersResponse is a response for ListMembers
 https://developer.github.com/v3/orgs/members/#list-organization-members
 */
 type ListMembersResponse struct {
-	common.Response
+	requests.Response
 	request *ListMembersReq
 	Data    []components.SimpleUser
 }
@@ -2405,8 +2404,8 @@ List organization memberships for the authenticated user.
 
 https://developer.github.com/v3/orgs/members/#list-organization-memberships-for-the-authenticated-user
 */
-func ListMembershipsForAuthenticatedUser(ctx context.Context, req *ListMembershipsForAuthenticatedUserReq, opt ...options.Option) (*ListMembershipsForAuthenticatedUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListMembershipsForAuthenticatedUser(ctx context.Context, req *ListMembershipsForAuthenticatedUserReq, opt ...requests.Option) (*ListMembershipsForAuthenticatedUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2441,7 +2440,7 @@ List organization memberships for the authenticated user.
 
 https://developer.github.com/v3/orgs/members/#list-organization-memberships-for-the-authenticated-user
 */
-func (c Client) ListMembershipsForAuthenticatedUser(ctx context.Context, req *ListMembershipsForAuthenticatedUserReq, opt ...options.Option) (*ListMembershipsForAuthenticatedUserResponse, error) {
+func (c Client) ListMembershipsForAuthenticatedUser(ctx context.Context, req *ListMembershipsForAuthenticatedUserReq, opt ...requests.Option) (*ListMembershipsForAuthenticatedUserResponse, error) {
 	return ListMembershipsForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
@@ -2468,8 +2467,8 @@ type ListMembershipsForAuthenticatedUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListMembershipsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListMembershipsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2524,7 +2523,7 @@ ListMembershipsForAuthenticatedUserResponse is a response for ListMembershipsFor
 https://developer.github.com/v3/orgs/members/#list-organization-memberships-for-the-authenticated-user
 */
 type ListMembershipsForAuthenticatedUserResponse struct {
-	common.Response
+	requests.Response
 	request *ListMembershipsForAuthenticatedUserReq
 	Data    []components.OrgMembership
 }
@@ -2538,8 +2537,8 @@ List outside collaborators for an organization.
 
 https://developer.github.com/v3/orgs/outside_collaborators/#list-outside-collaborators-for-an-organization
 */
-func ListOutsideCollaborators(ctx context.Context, req *ListOutsideCollaboratorsReq, opt ...options.Option) (*ListOutsideCollaboratorsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListOutsideCollaborators(ctx context.Context, req *ListOutsideCollaboratorsReq, opt ...requests.Option) (*ListOutsideCollaboratorsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2574,7 +2573,7 @@ List outside collaborators for an organization.
 
 https://developer.github.com/v3/orgs/outside_collaborators/#list-outside-collaborators-for-an-organization
 */
-func (c Client) ListOutsideCollaborators(ctx context.Context, req *ListOutsideCollaboratorsReq, opt ...options.Option) (*ListOutsideCollaboratorsResponse, error) {
+func (c Client) ListOutsideCollaborators(ctx context.Context, req *ListOutsideCollaboratorsReq, opt ...requests.Option) (*ListOutsideCollaboratorsResponse, error) {
 	return ListOutsideCollaborators(ctx, req, append(c, opt...)...)
 }
 
@@ -2603,8 +2602,8 @@ type ListOutsideCollaboratorsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListOutsideCollaboratorsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListOutsideCollaboratorsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2659,7 +2658,7 @@ ListOutsideCollaboratorsResponse is a response for ListOutsideCollaborators
 https://developer.github.com/v3/orgs/outside_collaborators/#list-outside-collaborators-for-an-organization
 */
 type ListOutsideCollaboratorsResponse struct {
-	common.Response
+	requests.Response
 	request *ListOutsideCollaboratorsReq
 	Data    []components.SimpleUser
 }
@@ -2673,8 +2672,8 @@ List pending organization invitations.
 
 https://developer.github.com/v3/orgs/members/#list-pending-organization-invitations
 */
-func ListPendingInvitations(ctx context.Context, req *ListPendingInvitationsReq, opt ...options.Option) (*ListPendingInvitationsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListPendingInvitations(ctx context.Context, req *ListPendingInvitationsReq, opt ...requests.Option) (*ListPendingInvitationsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2709,7 +2708,7 @@ List pending organization invitations.
 
 https://developer.github.com/v3/orgs/members/#list-pending-organization-invitations
 */
-func (c Client) ListPendingInvitations(ctx context.Context, req *ListPendingInvitationsReq, opt ...options.Option) (*ListPendingInvitationsResponse, error) {
+func (c Client) ListPendingInvitations(ctx context.Context, req *ListPendingInvitationsReq, opt ...requests.Option) (*ListPendingInvitationsResponse, error) {
 	return ListPendingInvitations(ctx, req, append(c, opt...)...)
 }
 
@@ -2730,8 +2729,8 @@ type ListPendingInvitationsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListPendingInvitationsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListPendingInvitationsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2783,7 +2782,7 @@ ListPendingInvitationsResponse is a response for ListPendingInvitations
 https://developer.github.com/v3/orgs/members/#list-pending-organization-invitations
 */
 type ListPendingInvitationsResponse struct {
-	common.Response
+	requests.Response
 	request *ListPendingInvitationsReq
 	Data    []components.OrganizationInvitation
 }
@@ -2797,8 +2796,8 @@ List public organization members.
 
 https://developer.github.com/v3/orgs/members/#list-public-organization-members
 */
-func ListPublicMembers(ctx context.Context, req *ListPublicMembersReq, opt ...options.Option) (*ListPublicMembersResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListPublicMembers(ctx context.Context, req *ListPublicMembersReq, opt ...requests.Option) (*ListPublicMembersResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2833,7 +2832,7 @@ List public organization members.
 
 https://developer.github.com/v3/orgs/members/#list-public-organization-members
 */
-func (c Client) ListPublicMembers(ctx context.Context, req *ListPublicMembersReq, opt ...options.Option) (*ListPublicMembersResponse, error) {
+func (c Client) ListPublicMembers(ctx context.Context, req *ListPublicMembersReq, opt ...requests.Option) (*ListPublicMembersResponse, error) {
 	return ListPublicMembers(ctx, req, append(c, opt...)...)
 }
 
@@ -2854,8 +2853,8 @@ type ListPublicMembersReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListPublicMembersReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListPublicMembersReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2907,7 +2906,7 @@ ListPublicMembersResponse is a response for ListPublicMembers
 https://developer.github.com/v3/orgs/members/#list-public-organization-members
 */
 type ListPublicMembersResponse struct {
-	common.Response
+	requests.Response
 	request *ListPublicMembersReq
 	Data    []components.SimpleUser
 }
@@ -2921,8 +2920,8 @@ List SAML SSO authorizations for an organization.
 
 https://developer.github.com/v3/orgs/#list-saml-sso-authorizations-for-an-organization
 */
-func ListSamlSsoAuthorizations(ctx context.Context, req *ListSamlSsoAuthorizationsReq, opt ...options.Option) (*ListSamlSsoAuthorizationsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListSamlSsoAuthorizations(ctx context.Context, req *ListSamlSsoAuthorizationsReq, opt ...requests.Option) (*ListSamlSsoAuthorizationsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2957,7 +2956,7 @@ List SAML SSO authorizations for an organization.
 
 https://developer.github.com/v3/orgs/#list-saml-sso-authorizations-for-an-organization
 */
-func (c Client) ListSamlSsoAuthorizations(ctx context.Context, req *ListSamlSsoAuthorizationsReq, opt ...options.Option) (*ListSamlSsoAuthorizationsResponse, error) {
+func (c Client) ListSamlSsoAuthorizations(ctx context.Context, req *ListSamlSsoAuthorizationsReq, opt ...requests.Option) (*ListSamlSsoAuthorizationsResponse, error) {
 	return ListSamlSsoAuthorizations(ctx, req, append(c, opt...)...)
 }
 
@@ -2972,8 +2971,8 @@ type ListSamlSsoAuthorizationsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListSamlSsoAuthorizationsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListSamlSsoAuthorizationsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3019,7 +3018,7 @@ ListSamlSsoAuthorizationsResponse is a response for ListSamlSsoAuthorizations
 https://developer.github.com/v3/orgs/#list-saml-sso-authorizations-for-an-organization
 */
 type ListSamlSsoAuthorizationsResponse struct {
-	common.Response
+	requests.Response
 	request *ListSamlSsoAuthorizationsReq
 	Data    []components.CredentialAuthorization
 }
@@ -3033,8 +3032,8 @@ List organization webhooks.
 
 https://developer.github.com/v3/orgs/hooks/#list-organization-webhooks
 */
-func ListWebhooks(ctx context.Context, req *ListWebhooksReq, opt ...options.Option) (*ListWebhooksResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListWebhooks(ctx context.Context, req *ListWebhooksReq, opt ...requests.Option) (*ListWebhooksResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3069,7 +3068,7 @@ List organization webhooks.
 
 https://developer.github.com/v3/orgs/hooks/#list-organization-webhooks
 */
-func (c Client) ListWebhooks(ctx context.Context, req *ListWebhooksReq, opt ...options.Option) (*ListWebhooksResponse, error) {
+func (c Client) ListWebhooks(ctx context.Context, req *ListWebhooksReq, opt ...requests.Option) (*ListWebhooksResponse, error) {
 	return ListWebhooks(ctx, req, append(c, opt...)...)
 }
 
@@ -3090,8 +3089,8 @@ type ListWebhooksReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListWebhooksReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListWebhooksReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3143,7 +3142,7 @@ ListWebhooksResponse is a response for ListWebhooks
 https://developer.github.com/v3/orgs/hooks/#list-organization-webhooks
 */
 type ListWebhooksResponse struct {
-	common.Response
+	requests.Response
 	request *ListWebhooksReq
 	Data    []components.OrgHook
 }
@@ -3157,8 +3156,8 @@ Ping an organization webhook.
 
 https://developer.github.com/v3/orgs/hooks/#ping-an-organization-webhook
 */
-func PingWebhook(ctx context.Context, req *PingWebhookReq, opt ...options.Option) (*PingWebhookResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func PingWebhook(ctx context.Context, req *PingWebhookReq, opt ...requests.Option) (*PingWebhookResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3196,7 +3195,7 @@ Ping an organization webhook.
 
 https://developer.github.com/v3/orgs/hooks/#ping-an-organization-webhook
 */
-func (c Client) PingWebhook(ctx context.Context, req *PingWebhookReq, opt ...options.Option) (*PingWebhookResponse, error) {
+func (c Client) PingWebhook(ctx context.Context, req *PingWebhookReq, opt ...requests.Option) (*PingWebhookResponse, error) {
 	return PingWebhook(ctx, req, append(c, opt...)...)
 }
 
@@ -3212,8 +3211,8 @@ type PingWebhookReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *PingWebhookReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *PingWebhookReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3259,7 +3258,7 @@ PingWebhookResponse is a response for PingWebhook
 https://developer.github.com/v3/orgs/hooks/#ping-an-organization-webhook
 */
 type PingWebhookResponse struct {
-	common.Response
+	requests.Response
 	request *PingWebhookReq
 	Data    bool
 }
@@ -3273,8 +3272,8 @@ Remove an organization member.
 
 https://developer.github.com/v3/orgs/members/#remove-an-organization-member
 */
-func RemoveMember(ctx context.Context, req *RemoveMemberReq, opt ...options.Option) (*RemoveMemberResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func RemoveMember(ctx context.Context, req *RemoveMemberReq, opt ...requests.Option) (*RemoveMemberResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3308,7 +3307,7 @@ Remove an organization member.
 
 https://developer.github.com/v3/orgs/members/#remove-an-organization-member
 */
-func (c Client) RemoveMember(ctx context.Context, req *RemoveMemberReq, opt ...options.Option) (*RemoveMemberResponse, error) {
+func (c Client) RemoveMember(ctx context.Context, req *RemoveMemberReq, opt ...requests.Option) (*RemoveMemberResponse, error) {
 	return RemoveMember(ctx, req, append(c, opt...)...)
 }
 
@@ -3324,8 +3323,8 @@ type RemoveMemberReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *RemoveMemberReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *RemoveMemberReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3371,7 +3370,7 @@ RemoveMemberResponse is a response for RemoveMember
 https://developer.github.com/v3/orgs/members/#remove-an-organization-member
 */
 type RemoveMemberResponse struct {
-	common.Response
+	requests.Response
 	request *RemoveMemberReq
 }
 
@@ -3384,8 +3383,8 @@ Remove organization membership for a user.
 
 https://developer.github.com/v3/orgs/members/#remove-organization-membership-for-a-user
 */
-func RemoveMembershipForUser(ctx context.Context, req *RemoveMembershipForUserReq, opt ...options.Option) (*RemoveMembershipForUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func RemoveMembershipForUser(ctx context.Context, req *RemoveMembershipForUserReq, opt ...requests.Option) (*RemoveMembershipForUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3419,7 +3418,7 @@ Remove organization membership for a user.
 
 https://developer.github.com/v3/orgs/members/#remove-organization-membership-for-a-user
 */
-func (c Client) RemoveMembershipForUser(ctx context.Context, req *RemoveMembershipForUserReq, opt ...options.Option) (*RemoveMembershipForUserResponse, error) {
+func (c Client) RemoveMembershipForUser(ctx context.Context, req *RemoveMembershipForUserReq, opt ...requests.Option) (*RemoveMembershipForUserResponse, error) {
 	return RemoveMembershipForUser(ctx, req, append(c, opt...)...)
 }
 
@@ -3435,8 +3434,8 @@ type RemoveMembershipForUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *RemoveMembershipForUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *RemoveMembershipForUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3482,7 +3481,7 @@ RemoveMembershipForUserResponse is a response for RemoveMembershipForUser
 https://developer.github.com/v3/orgs/members/#remove-organization-membership-for-a-user
 */
 type RemoveMembershipForUserResponse struct {
-	common.Response
+	requests.Response
 	request *RemoveMembershipForUserReq
 }
 
@@ -3495,8 +3494,8 @@ Remove outside collaborator from an organization.
 
 https://developer.github.com/v3/orgs/outside_collaborators/#remove-outside-collaborator-from-an-organization
 */
-func RemoveOutsideCollaborator(ctx context.Context, req *RemoveOutsideCollaboratorReq, opt ...options.Option) (*RemoveOutsideCollaboratorResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func RemoveOutsideCollaborator(ctx context.Context, req *RemoveOutsideCollaboratorReq, opt ...requests.Option) (*RemoveOutsideCollaboratorResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3530,7 +3529,7 @@ Remove outside collaborator from an organization.
 
 https://developer.github.com/v3/orgs/outside_collaborators/#remove-outside-collaborator-from-an-organization
 */
-func (c Client) RemoveOutsideCollaborator(ctx context.Context, req *RemoveOutsideCollaboratorReq, opt ...options.Option) (*RemoveOutsideCollaboratorResponse, error) {
+func (c Client) RemoveOutsideCollaborator(ctx context.Context, req *RemoveOutsideCollaboratorReq, opt ...requests.Option) (*RemoveOutsideCollaboratorResponse, error) {
 	return RemoveOutsideCollaborator(ctx, req, append(c, opt...)...)
 }
 
@@ -3546,8 +3545,8 @@ type RemoveOutsideCollaboratorReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *RemoveOutsideCollaboratorReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *RemoveOutsideCollaboratorReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3593,7 +3592,7 @@ RemoveOutsideCollaboratorResponse is a response for RemoveOutsideCollaborator
 https://developer.github.com/v3/orgs/outside_collaborators/#remove-outside-collaborator-from-an-organization
 */
 type RemoveOutsideCollaboratorResponse struct {
-	common.Response
+	requests.Response
 	request *RemoveOutsideCollaboratorReq
 }
 
@@ -3606,8 +3605,8 @@ Remove public organization membership for the authenticated user.
 
 https://developer.github.com/v3/orgs/members/#remove-public-organization-membership-for-the-authenticated-user
 */
-func RemovePublicMembershipForAuthenticatedUser(ctx context.Context, req *RemovePublicMembershipForAuthenticatedUserReq, opt ...options.Option) (*RemovePublicMembershipForAuthenticatedUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func RemovePublicMembershipForAuthenticatedUser(ctx context.Context, req *RemovePublicMembershipForAuthenticatedUserReq, opt ...requests.Option) (*RemovePublicMembershipForAuthenticatedUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3641,7 +3640,7 @@ Remove public organization membership for the authenticated user.
 
 https://developer.github.com/v3/orgs/members/#remove-public-organization-membership-for-the-authenticated-user
 */
-func (c Client) RemovePublicMembershipForAuthenticatedUser(ctx context.Context, req *RemovePublicMembershipForAuthenticatedUserReq, opt ...options.Option) (*RemovePublicMembershipForAuthenticatedUserResponse, error) {
+func (c Client) RemovePublicMembershipForAuthenticatedUser(ctx context.Context, req *RemovePublicMembershipForAuthenticatedUserReq, opt ...requests.Option) (*RemovePublicMembershipForAuthenticatedUserResponse, error) {
 	return RemovePublicMembershipForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
@@ -3657,8 +3656,8 @@ type RemovePublicMembershipForAuthenticatedUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *RemovePublicMembershipForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *RemovePublicMembershipForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3704,7 +3703,7 @@ RemovePublicMembershipForAuthenticatedUserResponse is a response for RemovePubli
 https://developer.github.com/v3/orgs/members/#remove-public-organization-membership-for-the-authenticated-user
 */
 type RemovePublicMembershipForAuthenticatedUserResponse struct {
-	common.Response
+	requests.Response
 	request *RemovePublicMembershipForAuthenticatedUserReq
 }
 
@@ -3717,8 +3716,8 @@ Remove a SAML SSO authorization for an organization.
 
 https://developer.github.com/v3/orgs/#remove-a-saml-sso-authorization-for-an-organization
 */
-func RemoveSamlSsoAuthorization(ctx context.Context, req *RemoveSamlSsoAuthorizationReq, opt ...options.Option) (*RemoveSamlSsoAuthorizationResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func RemoveSamlSsoAuthorization(ctx context.Context, req *RemoveSamlSsoAuthorizationReq, opt ...requests.Option) (*RemoveSamlSsoAuthorizationResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3756,7 +3755,7 @@ Remove a SAML SSO authorization for an organization.
 
 https://developer.github.com/v3/orgs/#remove-a-saml-sso-authorization-for-an-organization
 */
-func (c Client) RemoveSamlSsoAuthorization(ctx context.Context, req *RemoveSamlSsoAuthorizationReq, opt ...options.Option) (*RemoveSamlSsoAuthorizationResponse, error) {
+func (c Client) RemoveSamlSsoAuthorization(ctx context.Context, req *RemoveSamlSsoAuthorizationReq, opt ...requests.Option) (*RemoveSamlSsoAuthorizationResponse, error) {
 	return RemoveSamlSsoAuthorization(ctx, req, append(c, opt...)...)
 }
 
@@ -3774,8 +3773,8 @@ type RemoveSamlSsoAuthorizationReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *RemoveSamlSsoAuthorizationReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *RemoveSamlSsoAuthorizationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3821,7 +3820,7 @@ RemoveSamlSsoAuthorizationResponse is a response for RemoveSamlSsoAuthorization
 https://developer.github.com/v3/orgs/#remove-a-saml-sso-authorization-for-an-organization
 */
 type RemoveSamlSsoAuthorizationResponse struct {
-	common.Response
+	requests.Response
 	request *RemoveSamlSsoAuthorizationReq
 	Data    bool
 }
@@ -3835,8 +3834,8 @@ Set organization membership for a user.
 
 https://developer.github.com/v3/orgs/members/#set-organization-membership-for-a-user
 */
-func SetMembershipForUser(ctx context.Context, req *SetMembershipForUserReq, opt ...options.Option) (*SetMembershipForUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func SetMembershipForUser(ctx context.Context, req *SetMembershipForUserReq, opt ...requests.Option) (*SetMembershipForUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3871,7 +3870,7 @@ Set organization membership for a user.
 
 https://developer.github.com/v3/orgs/members/#set-organization-membership-for-a-user
 */
-func (c Client) SetMembershipForUser(ctx context.Context, req *SetMembershipForUserReq, opt ...options.Option) (*SetMembershipForUserResponse, error) {
+func (c Client) SetMembershipForUser(ctx context.Context, req *SetMembershipForUserReq, opt ...requests.Option) (*SetMembershipForUserResponse, error) {
 	return SetMembershipForUser(ctx, req, append(c, opt...)...)
 }
 
@@ -3888,8 +3887,8 @@ type SetMembershipForUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *SetMembershipForUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *SetMembershipForUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3953,7 +3952,7 @@ SetMembershipForUserResponse is a response for SetMembershipForUser
 https://developer.github.com/v3/orgs/members/#set-organization-membership-for-a-user
 */
 type SetMembershipForUserResponse struct {
-	common.Response
+	requests.Response
 	request *SetMembershipForUserReq
 	Data    components.OrgMembership
 }
@@ -3967,8 +3966,8 @@ Set public organization membership for the authenticated user.
 
 https://developer.github.com/v3/orgs/members/#set-public-organization-membership-for-the-authenticated-user
 */
-func SetPublicMembershipForAuthenticatedUser(ctx context.Context, req *SetPublicMembershipForAuthenticatedUserReq, opt ...options.Option) (*SetPublicMembershipForAuthenticatedUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func SetPublicMembershipForAuthenticatedUser(ctx context.Context, req *SetPublicMembershipForAuthenticatedUserReq, opt ...requests.Option) (*SetPublicMembershipForAuthenticatedUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4002,7 +4001,7 @@ Set public organization membership for the authenticated user.
 
 https://developer.github.com/v3/orgs/members/#set-public-organization-membership-for-the-authenticated-user
 */
-func (c Client) SetPublicMembershipForAuthenticatedUser(ctx context.Context, req *SetPublicMembershipForAuthenticatedUserReq, opt ...options.Option) (*SetPublicMembershipForAuthenticatedUserResponse, error) {
+func (c Client) SetPublicMembershipForAuthenticatedUser(ctx context.Context, req *SetPublicMembershipForAuthenticatedUserReq, opt ...requests.Option) (*SetPublicMembershipForAuthenticatedUserResponse, error) {
 	return SetPublicMembershipForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
@@ -4018,8 +4017,8 @@ type SetPublicMembershipForAuthenticatedUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *SetPublicMembershipForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *SetPublicMembershipForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4065,7 +4064,7 @@ SetPublicMembershipForAuthenticatedUserResponse is a response for SetPublicMembe
 https://developer.github.com/v3/orgs/members/#set-public-organization-membership-for-the-authenticated-user
 */
 type SetPublicMembershipForAuthenticatedUserResponse struct {
-	common.Response
+	requests.Response
 	request *SetPublicMembershipForAuthenticatedUserReq
 }
 
@@ -4078,8 +4077,8 @@ Unblock a user from an organization.
 
 https://developer.github.com/v3/orgs/blocking/#unblock-a-user-from-an-organization
 */
-func UnblockUser(ctx context.Context, req *UnblockUserReq, opt ...options.Option) (*UnblockUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func UnblockUser(ctx context.Context, req *UnblockUserReq, opt ...requests.Option) (*UnblockUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4113,7 +4112,7 @@ Unblock a user from an organization.
 
 https://developer.github.com/v3/orgs/blocking/#unblock-a-user-from-an-organization
 */
-func (c Client) UnblockUser(ctx context.Context, req *UnblockUserReq, opt ...options.Option) (*UnblockUserResponse, error) {
+func (c Client) UnblockUser(ctx context.Context, req *UnblockUserReq, opt ...requests.Option) (*UnblockUserResponse, error) {
 	return UnblockUser(ctx, req, append(c, opt...)...)
 }
 
@@ -4129,8 +4128,8 @@ type UnblockUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UnblockUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *UnblockUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4176,7 +4175,7 @@ UnblockUserResponse is a response for UnblockUser
 https://developer.github.com/v3/orgs/blocking/#unblock-a-user-from-an-organization
 */
 type UnblockUserResponse struct {
-	common.Response
+	requests.Response
 	request *UnblockUserReq
 }
 
@@ -4189,8 +4188,8 @@ Update an organization.
 
 https://developer.github.com/v3/orgs/#update-an-organization
 */
-func Update(ctx context.Context, req *UpdateReq, opt ...options.Option) (*UpdateResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func Update(ctx context.Context, req *UpdateReq, opt ...requests.Option) (*UpdateResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4225,7 +4224,7 @@ Update an organization.
 
 https://developer.github.com/v3/orgs/#update-an-organization
 */
-func (c Client) Update(ctx context.Context, req *UpdateReq, opt ...options.Option) (*UpdateResponse, error) {
+func (c Client) Update(ctx context.Context, req *UpdateReq, opt ...requests.Option) (*UpdateResponse, error) {
 	return Update(ctx, req, append(c, opt...)...)
 }
 
@@ -4256,8 +4255,8 @@ type UpdateReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UpdateReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *UpdateReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4418,7 +4417,7 @@ UpdateResponse is a response for Update
 https://developer.github.com/v3/orgs/#update-an-organization
 */
 type UpdateResponse struct {
-	common.Response
+	requests.Response
 	request *UpdateReq
 	Data    components.OrganizationFull
 }
@@ -4432,8 +4431,8 @@ Update an organization membership for the authenticated user.
 
 https://developer.github.com/v3/orgs/members/#update-an-organization-membership-for-the-authenticated-user
 */
-func UpdateMembershipForAuthenticatedUser(ctx context.Context, req *UpdateMembershipForAuthenticatedUserReq, opt ...options.Option) (*UpdateMembershipForAuthenticatedUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func UpdateMembershipForAuthenticatedUser(ctx context.Context, req *UpdateMembershipForAuthenticatedUserReq, opt ...requests.Option) (*UpdateMembershipForAuthenticatedUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4468,7 +4467,7 @@ Update an organization membership for the authenticated user.
 
 https://developer.github.com/v3/orgs/members/#update-an-organization-membership-for-the-authenticated-user
 */
-func (c Client) UpdateMembershipForAuthenticatedUser(ctx context.Context, req *UpdateMembershipForAuthenticatedUserReq, opt ...options.Option) (*UpdateMembershipForAuthenticatedUserResponse, error) {
+func (c Client) UpdateMembershipForAuthenticatedUser(ctx context.Context, req *UpdateMembershipForAuthenticatedUserReq, opt ...requests.Option) (*UpdateMembershipForAuthenticatedUserResponse, error) {
 	return UpdateMembershipForAuthenticatedUser(ctx, req, append(c, opt...)...)
 }
 
@@ -4484,8 +4483,8 @@ type UpdateMembershipForAuthenticatedUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UpdateMembershipForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *UpdateMembershipForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4545,7 +4544,7 @@ UpdateMembershipForAuthenticatedUserResponse is a response for UpdateMembershipF
 https://developer.github.com/v3/orgs/members/#update-an-organization-membership-for-the-authenticated-user
 */
 type UpdateMembershipForAuthenticatedUserResponse struct {
-	common.Response
+	requests.Response
 	request *UpdateMembershipForAuthenticatedUserReq
 	Data    components.OrgMembership
 }
@@ -4559,8 +4558,8 @@ Update an organization webhook.
 
 https://developer.github.com/v3/orgs/hooks/#update-an-organization-webhook
 */
-func UpdateWebhook(ctx context.Context, req *UpdateWebhookReq, opt ...options.Option) (*UpdateWebhookResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func UpdateWebhook(ctx context.Context, req *UpdateWebhookReq, opt ...requests.Option) (*UpdateWebhookResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4595,7 +4594,7 @@ Update an organization webhook.
 
 https://developer.github.com/v3/orgs/hooks/#update-an-organization-webhook
 */
-func (c Client) UpdateWebhook(ctx context.Context, req *UpdateWebhookReq, opt ...options.Option) (*UpdateWebhookResponse, error) {
+func (c Client) UpdateWebhook(ctx context.Context, req *UpdateWebhookReq, opt ...requests.Option) (*UpdateWebhookResponse, error) {
 	return UpdateWebhook(ctx, req, append(c, opt...)...)
 }
 
@@ -4612,8 +4611,8 @@ type UpdateWebhookReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UpdateWebhookReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *UpdateWebhookReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4710,7 +4709,7 @@ UpdateWebhookResponse is a response for UpdateWebhook
 https://developer.github.com/v3/orgs/hooks/#update-an-organization-webhook
 */
 type UpdateWebhookResponse struct {
-	common.Response
+	requests.Response
 	request *UpdateWebhookReq
 	Data    components.OrgHook
 }

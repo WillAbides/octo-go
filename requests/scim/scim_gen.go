@@ -5,10 +5,9 @@ package scim
 import (
 	"context"
 	"fmt"
-	common "github.com/willabides/octo-go/common"
 	components "github.com/willabides/octo-go/components"
 	internal "github.com/willabides/octo-go/internal"
-	options "github.com/willabides/octo-go/options"
+	requests "github.com/willabides/octo-go/requests"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -17,15 +16,15 @@ import (
 func strPtr(s string) *string { return &s }
 
 // Client is a set of options to apply to requests
-type Client []options.Option
+type Client []requests.Option
 
 // NewClient returns a new Client
-func NewClient(opt ...options.Option) Client {
+func NewClient(opt ...requests.Option) Client {
 	return opt
 }
 
 // Apply implements options.Option
-func (c Client) Apply(opts *options.Options) error {
+func (c Client) Apply(opts *requests.Options) error {
 	for _, o := range c {
 		err := o.Apply(opts)
 		if err != nil {
@@ -44,8 +43,8 @@ Delete a SCIM user from an organization.
 
 https://developer.github.com/v3/scim/#delete-a-scim-user-from-an-organization
 */
-func DeleteUserFromOrg(ctx context.Context, req *DeleteUserFromOrgReq, opt ...options.Option) (*DeleteUserFromOrgResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DeleteUserFromOrg(ctx context.Context, req *DeleteUserFromOrgReq, opt ...requests.Option) (*DeleteUserFromOrgResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -79,7 +78,7 @@ Delete a SCIM user from an organization.
 
 https://developer.github.com/v3/scim/#delete-a-scim-user-from-an-organization
 */
-func (c Client) DeleteUserFromOrg(ctx context.Context, req *DeleteUserFromOrgReq, opt ...options.Option) (*DeleteUserFromOrgResponse, error) {
+func (c Client) DeleteUserFromOrg(ctx context.Context, req *DeleteUserFromOrgReq, opt ...requests.Option) (*DeleteUserFromOrgResponse, error) {
 	return DeleteUserFromOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -97,8 +96,8 @@ type DeleteUserFromOrgReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeleteUserFromOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeleteUserFromOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -144,7 +143,7 @@ DeleteUserFromOrgResponse is a response for DeleteUserFromOrg
 https://developer.github.com/v3/scim/#delete-a-scim-user-from-an-organization
 */
 type DeleteUserFromOrgResponse struct {
-	common.Response
+	requests.Response
 	request *DeleteUserFromOrgReq
 }
 
@@ -157,8 +156,8 @@ Get SCIM provisioning information for a user.
 
 https://developer.github.com/v3/scim/#get-scim-provisioning-information-for-a-user
 */
-func GetProvisioningInformationForUser(ctx context.Context, req *GetProvisioningInformationForUserReq, opt ...options.Option) (*GetProvisioningInformationForUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetProvisioningInformationForUser(ctx context.Context, req *GetProvisioningInformationForUserReq, opt ...requests.Option) (*GetProvisioningInformationForUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -193,7 +192,7 @@ Get SCIM provisioning information for a user.
 
 https://developer.github.com/v3/scim/#get-scim-provisioning-information-for-a-user
 */
-func (c Client) GetProvisioningInformationForUser(ctx context.Context, req *GetProvisioningInformationForUserReq, opt ...options.Option) (*GetProvisioningInformationForUserResponse, error) {
+func (c Client) GetProvisioningInformationForUser(ctx context.Context, req *GetProvisioningInformationForUserReq, opt ...requests.Option) (*GetProvisioningInformationForUserResponse, error) {
 	return GetProvisioningInformationForUser(ctx, req, append(c, opt...)...)
 }
 
@@ -211,8 +210,8 @@ type GetProvisioningInformationForUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetProvisioningInformationForUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetProvisioningInformationForUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -258,7 +257,7 @@ GetProvisioningInformationForUserResponse is a response for GetProvisioningInfor
 https://developer.github.com/v3/scim/#get-scim-provisioning-information-for-a-user
 */
 type GetProvisioningInformationForUserResponse struct {
-	common.Response
+	requests.Response
 	request *GetProvisioningInformationForUserReq
 	Data    components.ScimUser
 }
@@ -272,8 +271,8 @@ List SCIM provisioned identities.
 
 https://developer.github.com/v3/scim/#list-scim-provisioned-identities
 */
-func ListProvisionedIdentities(ctx context.Context, req *ListProvisionedIdentitiesReq, opt ...options.Option) (*ListProvisionedIdentitiesResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListProvisionedIdentities(ctx context.Context, req *ListProvisionedIdentitiesReq, opt ...requests.Option) (*ListProvisionedIdentitiesResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -308,7 +307,7 @@ List SCIM provisioned identities.
 
 https://developer.github.com/v3/scim/#list-scim-provisioned-identities
 */
-func (c Client) ListProvisionedIdentities(ctx context.Context, req *ListProvisionedIdentitiesReq, opt ...options.Option) (*ListProvisionedIdentitiesResponse, error) {
+func (c Client) ListProvisionedIdentities(ctx context.Context, req *ListProvisionedIdentitiesReq, opt ...requests.Option) (*ListProvisionedIdentitiesResponse, error) {
 	return ListProvisionedIdentities(ctx, req, append(c, opt...)...)
 }
 
@@ -344,8 +343,8 @@ type ListProvisionedIdentitiesReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListProvisionedIdentitiesReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListProvisionedIdentitiesReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -400,7 +399,7 @@ ListProvisionedIdentitiesResponse is a response for ListProvisionedIdentities
 https://developer.github.com/v3/scim/#list-scim-provisioned-identities
 */
 type ListProvisionedIdentitiesResponse struct {
-	common.Response
+	requests.Response
 	request *ListProvisionedIdentitiesReq
 	Data    components.ScimUserList
 }
@@ -414,8 +413,8 @@ Provision and invite a SCIM user.
 
 https://developer.github.com/v3/scim/#provision-and-invite-a-scim-user
 */
-func ProvisionAndInviteUser(ctx context.Context, req *ProvisionAndInviteUserReq, opt ...options.Option) (*ProvisionAndInviteUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ProvisionAndInviteUser(ctx context.Context, req *ProvisionAndInviteUserReq, opt ...requests.Option) (*ProvisionAndInviteUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -450,7 +449,7 @@ Provision and invite a SCIM user.
 
 https://developer.github.com/v3/scim/#provision-and-invite-a-scim-user
 */
-func (c Client) ProvisionAndInviteUser(ctx context.Context, req *ProvisionAndInviteUserReq, opt ...options.Option) (*ProvisionAndInviteUserResponse, error) {
+func (c Client) ProvisionAndInviteUser(ctx context.Context, req *ProvisionAndInviteUserReq, opt ...requests.Option) (*ProvisionAndInviteUserResponse, error) {
 	return ProvisionAndInviteUser(ctx, req, append(c, opt...)...)
 }
 
@@ -466,8 +465,8 @@ type ProvisionAndInviteUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ProvisionAndInviteUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ProvisionAndInviteUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -549,7 +548,7 @@ ProvisionAndInviteUserResponse is a response for ProvisionAndInviteUser
 https://developer.github.com/v3/scim/#provision-and-invite-a-scim-user
 */
 type ProvisionAndInviteUserResponse struct {
-	common.Response
+	requests.Response
 	request *ProvisionAndInviteUserReq
 	Data    components.ScimUser
 }
@@ -563,8 +562,8 @@ Update a provisioned organization membership.
 
 https://developer.github.com/v3/scim/#set-scim-information-for-a-provisioned-user
 */
-func SetInformationForProvisionedUser(ctx context.Context, req *SetInformationForProvisionedUserReq, opt ...options.Option) (*SetInformationForProvisionedUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func SetInformationForProvisionedUser(ctx context.Context, req *SetInformationForProvisionedUserReq, opt ...requests.Option) (*SetInformationForProvisionedUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -599,7 +598,7 @@ Update a provisioned organization membership.
 
 https://developer.github.com/v3/scim/#set-scim-information-for-a-provisioned-user
 */
-func (c Client) SetInformationForProvisionedUser(ctx context.Context, req *SetInformationForProvisionedUserReq, opt ...options.Option) (*SetInformationForProvisionedUserResponse, error) {
+func (c Client) SetInformationForProvisionedUser(ctx context.Context, req *SetInformationForProvisionedUserReq, opt ...requests.Option) (*SetInformationForProvisionedUserResponse, error) {
 	return SetInformationForProvisionedUser(ctx, req, append(c, opt...)...)
 }
 
@@ -618,8 +617,8 @@ type SetInformationForProvisionedUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *SetInformationForProvisionedUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *SetInformationForProvisionedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -701,7 +700,7 @@ SetInformationForProvisionedUserResponse is a response for SetInformationForProv
 https://developer.github.com/v3/scim/#set-scim-information-for-a-provisioned-user
 */
 type SetInformationForProvisionedUserResponse struct {
-	common.Response
+	requests.Response
 	request *SetInformationForProvisionedUserReq
 	Data    components.ScimUser
 }
@@ -715,8 +714,8 @@ Update an attribute for a SCIM user.
 
 https://developer.github.com/v3/scim/#update-an-attribute-for-a-scim-user
 */
-func UpdateAttributeForUser(ctx context.Context, req *UpdateAttributeForUserReq, opt ...options.Option) (*UpdateAttributeForUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func UpdateAttributeForUser(ctx context.Context, req *UpdateAttributeForUserReq, opt ...requests.Option) (*UpdateAttributeForUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -751,7 +750,7 @@ Update an attribute for a SCIM user.
 
 https://developer.github.com/v3/scim/#update-an-attribute-for-a-scim-user
 */
-func (c Client) UpdateAttributeForUser(ctx context.Context, req *UpdateAttributeForUserReq, opt ...options.Option) (*UpdateAttributeForUserResponse, error) {
+func (c Client) UpdateAttributeForUser(ctx context.Context, req *UpdateAttributeForUserReq, opt ...requests.Option) (*UpdateAttributeForUserResponse, error) {
 	return UpdateAttributeForUser(ctx, req, append(c, opt...)...)
 }
 
@@ -770,8 +769,8 @@ type UpdateAttributeForUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UpdateAttributeForUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *UpdateAttributeForUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -848,7 +847,7 @@ UpdateAttributeForUserResponse is a response for UpdateAttributeForUser
 https://developer.github.com/v3/scim/#update-an-attribute-for-a-scim-user
 */
 type UpdateAttributeForUserResponse struct {
-	common.Response
+	requests.Response
 	request *UpdateAttributeForUserReq
 	Data    components.ScimUser
 }

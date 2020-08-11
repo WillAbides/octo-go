@@ -5,10 +5,9 @@ package reactions
 import (
 	"context"
 	"fmt"
-	common "github.com/willabides/octo-go/common"
 	components "github.com/willabides/octo-go/components"
 	internal "github.com/willabides/octo-go/internal"
-	options "github.com/willabides/octo-go/options"
+	requests "github.com/willabides/octo-go/requests"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -17,15 +16,15 @@ import (
 func strPtr(s string) *string { return &s }
 
 // Client is a set of options to apply to requests
-type Client []options.Option
+type Client []requests.Option
 
 // NewClient returns a new Client
-func NewClient(opt ...options.Option) Client {
+func NewClient(opt ...requests.Option) Client {
 	return opt
 }
 
 // Apply implements options.Option
-func (c Client) Apply(opts *options.Options) error {
+func (c Client) Apply(opts *requests.Options) error {
 	for _, o := range c {
 		err := o.Apply(opts)
 		if err != nil {
@@ -44,8 +43,8 @@ Create reaction for a commit comment.
 
 https://developer.github.com/v3/reactions/#create-reaction-for-a-commit-comment
 */
-func CreateForCommitComment(ctx context.Context, req *CreateForCommitCommentReq, opt ...options.Option) (*CreateForCommitCommentResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateForCommitComment(ctx context.Context, req *CreateForCommitCommentReq, opt ...requests.Option) (*CreateForCommitCommentResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -80,7 +79,7 @@ Create reaction for a commit comment.
 
 https://developer.github.com/v3/reactions/#create-reaction-for-a-commit-comment
 */
-func (c Client) CreateForCommitComment(ctx context.Context, req *CreateForCommitCommentReq, opt ...options.Option) (*CreateForCommitCommentResponse, error) {
+func (c Client) CreateForCommitComment(ctx context.Context, req *CreateForCommitCommentReq, opt ...requests.Option) (*CreateForCommitCommentResponse, error) {
 	return CreateForCommitComment(ctx, req, append(c, opt...)...)
 }
 
@@ -111,8 +110,8 @@ type CreateForCommitCommentReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateForCommitCommentReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateForCommitCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -172,7 +171,7 @@ CreateForCommitCommentResponse is a response for CreateForCommitComment
 https://developer.github.com/v3/reactions/#create-reaction-for-a-commit-comment
 */
 type CreateForCommitCommentResponse struct {
-	common.Response
+	requests.Response
 	request *CreateForCommitCommentReq
 	Data    components.Reaction
 }
@@ -186,8 +185,8 @@ Create reaction for an issue.
 
 https://developer.github.com/v3/reactions/#create-reaction-for-an-issue
 */
-func CreateForIssue(ctx context.Context, req *CreateForIssueReq, opt ...options.Option) (*CreateForIssueResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateForIssue(ctx context.Context, req *CreateForIssueReq, opt ...requests.Option) (*CreateForIssueResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -222,7 +221,7 @@ Create reaction for an issue.
 
 https://developer.github.com/v3/reactions/#create-reaction-for-an-issue
 */
-func (c Client) CreateForIssue(ctx context.Context, req *CreateForIssueReq, opt ...options.Option) (*CreateForIssueResponse, error) {
+func (c Client) CreateForIssue(ctx context.Context, req *CreateForIssueReq, opt ...requests.Option) (*CreateForIssueResponse, error) {
 	return CreateForIssue(ctx, req, append(c, opt...)...)
 }
 
@@ -253,8 +252,8 @@ type CreateForIssueReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateForIssueReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateForIssueReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -314,7 +313,7 @@ CreateForIssueResponse is a response for CreateForIssue
 https://developer.github.com/v3/reactions/#create-reaction-for-an-issue
 */
 type CreateForIssueResponse struct {
-	common.Response
+	requests.Response
 	request *CreateForIssueReq
 	Data    components.Reaction
 }
@@ -328,8 +327,8 @@ Create reaction for an issue comment.
 
 https://developer.github.com/v3/reactions/#create-reaction-for-an-issue-comment
 */
-func CreateForIssueComment(ctx context.Context, req *CreateForIssueCommentReq, opt ...options.Option) (*CreateForIssueCommentResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateForIssueComment(ctx context.Context, req *CreateForIssueCommentReq, opt ...requests.Option) (*CreateForIssueCommentResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -364,7 +363,7 @@ Create reaction for an issue comment.
 
 https://developer.github.com/v3/reactions/#create-reaction-for-an-issue-comment
 */
-func (c Client) CreateForIssueComment(ctx context.Context, req *CreateForIssueCommentReq, opt ...options.Option) (*CreateForIssueCommentResponse, error) {
+func (c Client) CreateForIssueComment(ctx context.Context, req *CreateForIssueCommentReq, opt ...requests.Option) (*CreateForIssueCommentResponse, error) {
 	return CreateForIssueComment(ctx, req, append(c, opt...)...)
 }
 
@@ -395,8 +394,8 @@ type CreateForIssueCommentReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateForIssueCommentReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateForIssueCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -456,7 +455,7 @@ CreateForIssueCommentResponse is a response for CreateForIssueComment
 https://developer.github.com/v3/reactions/#create-reaction-for-an-issue-comment
 */
 type CreateForIssueCommentResponse struct {
-	common.Response
+	requests.Response
 	request *CreateForIssueCommentReq
 	Data    components.Reaction
 }
@@ -470,8 +469,8 @@ Create reaction for a pull request review comment.
 
 https://developer.github.com/v3/reactions/#create-reaction-for-a-pull-request-review-comment
 */
-func CreateForPullRequestReviewComment(ctx context.Context, req *CreateForPullRequestReviewCommentReq, opt ...options.Option) (*CreateForPullRequestReviewCommentResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateForPullRequestReviewComment(ctx context.Context, req *CreateForPullRequestReviewCommentReq, opt ...requests.Option) (*CreateForPullRequestReviewCommentResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -506,7 +505,7 @@ Create reaction for a pull request review comment.
 
 https://developer.github.com/v3/reactions/#create-reaction-for-a-pull-request-review-comment
 */
-func (c Client) CreateForPullRequestReviewComment(ctx context.Context, req *CreateForPullRequestReviewCommentReq, opt ...options.Option) (*CreateForPullRequestReviewCommentResponse, error) {
+func (c Client) CreateForPullRequestReviewComment(ctx context.Context, req *CreateForPullRequestReviewCommentReq, opt ...requests.Option) (*CreateForPullRequestReviewCommentResponse, error) {
 	return CreateForPullRequestReviewComment(ctx, req, append(c, opt...)...)
 }
 
@@ -537,8 +536,8 @@ type CreateForPullRequestReviewCommentReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateForPullRequestReviewCommentReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateForPullRequestReviewCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -601,7 +600,7 @@ CreateForPullRequestReviewCommentResponse is a response for CreateForPullRequest
 https://developer.github.com/v3/reactions/#create-reaction-for-a-pull-request-review-comment
 */
 type CreateForPullRequestReviewCommentResponse struct {
-	common.Response
+	requests.Response
 	request *CreateForPullRequestReviewCommentReq
 	Data    components.Reaction
 }
@@ -615,8 +614,8 @@ Create reaction for a team discussion comment.
 
 https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-comment
 */
-func CreateForTeamDiscussionCommentInOrg(ctx context.Context, req *CreateForTeamDiscussionCommentInOrgReq, opt ...options.Option) (*CreateForTeamDiscussionCommentInOrgResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateForTeamDiscussionCommentInOrg(ctx context.Context, req *CreateForTeamDiscussionCommentInOrgReq, opt ...requests.Option) (*CreateForTeamDiscussionCommentInOrgResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -651,7 +650,7 @@ Create reaction for a team discussion comment.
 
 https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-comment
 */
-func (c Client) CreateForTeamDiscussionCommentInOrg(ctx context.Context, req *CreateForTeamDiscussionCommentInOrgReq, opt ...options.Option) (*CreateForTeamDiscussionCommentInOrgResponse, error) {
+func (c Client) CreateForTeamDiscussionCommentInOrg(ctx context.Context, req *CreateForTeamDiscussionCommentInOrgReq, opt ...requests.Option) (*CreateForTeamDiscussionCommentInOrgResponse, error) {
 	return CreateForTeamDiscussionCommentInOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -683,8 +682,8 @@ type CreateForTeamDiscussionCommentInOrgReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateForTeamDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateForTeamDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -744,7 +743,7 @@ CreateForTeamDiscussionCommentInOrgResponse is a response for CreateForTeamDiscu
 https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-comment
 */
 type CreateForTeamDiscussionCommentInOrgResponse struct {
-	common.Response
+	requests.Response
 	request *CreateForTeamDiscussionCommentInOrgReq
 	Data    components.Reaction
 }
@@ -758,8 +757,8 @@ Create reaction for a team discussion comment (Legacy).
 
 https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-comment-legacy
 */
-func CreateForTeamDiscussionCommentLegacy(ctx context.Context, req *CreateForTeamDiscussionCommentLegacyReq, opt ...options.Option) (*CreateForTeamDiscussionCommentLegacyResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateForTeamDiscussionCommentLegacy(ctx context.Context, req *CreateForTeamDiscussionCommentLegacyReq, opt ...requests.Option) (*CreateForTeamDiscussionCommentLegacyResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -794,7 +793,7 @@ Create reaction for a team discussion comment (Legacy).
 
 https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-comment-legacy
 */
-func (c Client) CreateForTeamDiscussionCommentLegacy(ctx context.Context, req *CreateForTeamDiscussionCommentLegacyReq, opt ...options.Option) (*CreateForTeamDiscussionCommentLegacyResponse, error) {
+func (c Client) CreateForTeamDiscussionCommentLegacy(ctx context.Context, req *CreateForTeamDiscussionCommentLegacyReq, opt ...requests.Option) (*CreateForTeamDiscussionCommentLegacyResponse, error) {
 	return CreateForTeamDiscussionCommentLegacy(ctx, req, append(c, opt...)...)
 }
 
@@ -823,8 +822,8 @@ type CreateForTeamDiscussionCommentLegacyReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateForTeamDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateForTeamDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -884,7 +883,7 @@ CreateForTeamDiscussionCommentLegacyResponse is a response for CreateForTeamDisc
 https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-comment-legacy
 */
 type CreateForTeamDiscussionCommentLegacyResponse struct {
-	common.Response
+	requests.Response
 	request *CreateForTeamDiscussionCommentLegacyReq
 	Data    components.Reaction
 }
@@ -898,8 +897,8 @@ Create reaction for a team discussion.
 
 https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion
 */
-func CreateForTeamDiscussionInOrg(ctx context.Context, req *CreateForTeamDiscussionInOrgReq, opt ...options.Option) (*CreateForTeamDiscussionInOrgResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateForTeamDiscussionInOrg(ctx context.Context, req *CreateForTeamDiscussionInOrgReq, opt ...requests.Option) (*CreateForTeamDiscussionInOrgResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -934,7 +933,7 @@ Create reaction for a team discussion.
 
 https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion
 */
-func (c Client) CreateForTeamDiscussionInOrg(ctx context.Context, req *CreateForTeamDiscussionInOrgReq, opt ...options.Option) (*CreateForTeamDiscussionInOrgResponse, error) {
+func (c Client) CreateForTeamDiscussionInOrg(ctx context.Context, req *CreateForTeamDiscussionInOrgReq, opt ...requests.Option) (*CreateForTeamDiscussionInOrgResponse, error) {
 	return CreateForTeamDiscussionInOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -965,8 +964,8 @@ type CreateForTeamDiscussionInOrgReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateForTeamDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateForTeamDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1026,7 +1025,7 @@ CreateForTeamDiscussionInOrgResponse is a response for CreateForTeamDiscussionIn
 https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion
 */
 type CreateForTeamDiscussionInOrgResponse struct {
-	common.Response
+	requests.Response
 	request *CreateForTeamDiscussionInOrgReq
 	Data    components.Reaction
 }
@@ -1040,8 +1039,8 @@ Create reaction for a team discussion (Legacy).
 
 https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-legacy
 */
-func CreateForTeamDiscussionLegacy(ctx context.Context, req *CreateForTeamDiscussionLegacyReq, opt ...options.Option) (*CreateForTeamDiscussionLegacyResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateForTeamDiscussionLegacy(ctx context.Context, req *CreateForTeamDiscussionLegacyReq, opt ...requests.Option) (*CreateForTeamDiscussionLegacyResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1076,7 +1075,7 @@ Create reaction for a team discussion (Legacy).
 
 https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-legacy
 */
-func (c Client) CreateForTeamDiscussionLegacy(ctx context.Context, req *CreateForTeamDiscussionLegacyReq, opt ...options.Option) (*CreateForTeamDiscussionLegacyResponse, error) {
+func (c Client) CreateForTeamDiscussionLegacy(ctx context.Context, req *CreateForTeamDiscussionLegacyReq, opt ...requests.Option) (*CreateForTeamDiscussionLegacyResponse, error) {
 	return CreateForTeamDiscussionLegacy(ctx, req, append(c, opt...)...)
 }
 
@@ -1104,8 +1103,8 @@ type CreateForTeamDiscussionLegacyReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateForTeamDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateForTeamDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1165,7 +1164,7 @@ CreateForTeamDiscussionLegacyResponse is a response for CreateForTeamDiscussionL
 https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-legacy
 */
 type CreateForTeamDiscussionLegacyResponse struct {
-	common.Response
+	requests.Response
 	request *CreateForTeamDiscussionLegacyReq
 	Data    components.Reaction
 }
@@ -1179,8 +1178,8 @@ Delete a commit comment reaction.
 
 https://developer.github.com/v3/reactions/#delete-a-commit-comment-reaction
 */
-func DeleteForCommitComment(ctx context.Context, req *DeleteForCommitCommentReq, opt ...options.Option) (*DeleteForCommitCommentResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DeleteForCommitComment(ctx context.Context, req *DeleteForCommitCommentReq, opt ...requests.Option) (*DeleteForCommitCommentResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1214,7 +1213,7 @@ Delete a commit comment reaction.
 
 https://developer.github.com/v3/reactions/#delete-a-commit-comment-reaction
 */
-func (c Client) DeleteForCommitComment(ctx context.Context, req *DeleteForCommitCommentReq, opt ...options.Option) (*DeleteForCommitCommentResponse, error) {
+func (c Client) DeleteForCommitComment(ctx context.Context, req *DeleteForCommitCommentReq, opt ...requests.Option) (*DeleteForCommitCommentResponse, error) {
 	return DeleteForCommitComment(ctx, req, append(c, opt...)...)
 }
 
@@ -1245,8 +1244,8 @@ type DeleteForCommitCommentReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeleteForCommitCommentReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeleteForCommitCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1292,7 +1291,7 @@ DeleteForCommitCommentResponse is a response for DeleteForCommitComment
 https://developer.github.com/v3/reactions/#delete-a-commit-comment-reaction
 */
 type DeleteForCommitCommentResponse struct {
-	common.Response
+	requests.Response
 	request *DeleteForCommitCommentReq
 }
 
@@ -1305,8 +1304,8 @@ Delete an issue reaction.
 
 https://developer.github.com/v3/reactions/#delete-an-issue-reaction
 */
-func DeleteForIssue(ctx context.Context, req *DeleteForIssueReq, opt ...options.Option) (*DeleteForIssueResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DeleteForIssue(ctx context.Context, req *DeleteForIssueReq, opt ...requests.Option) (*DeleteForIssueResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1340,7 +1339,7 @@ Delete an issue reaction.
 
 https://developer.github.com/v3/reactions/#delete-an-issue-reaction
 */
-func (c Client) DeleteForIssue(ctx context.Context, req *DeleteForIssueReq, opt ...options.Option) (*DeleteForIssueResponse, error) {
+func (c Client) DeleteForIssue(ctx context.Context, req *DeleteForIssueReq, opt ...requests.Option) (*DeleteForIssueResponse, error) {
 	return DeleteForIssue(ctx, req, append(c, opt...)...)
 }
 
@@ -1371,8 +1370,8 @@ type DeleteForIssueReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeleteForIssueReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeleteForIssueReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1418,7 +1417,7 @@ DeleteForIssueResponse is a response for DeleteForIssue
 https://developer.github.com/v3/reactions/#delete-an-issue-reaction
 */
 type DeleteForIssueResponse struct {
-	common.Response
+	requests.Response
 	request *DeleteForIssueReq
 }
 
@@ -1431,8 +1430,8 @@ Delete an issue comment reaction.
 
 https://developer.github.com/v3/reactions/#delete-an-issue-comment-reaction
 */
-func DeleteForIssueComment(ctx context.Context, req *DeleteForIssueCommentReq, opt ...options.Option) (*DeleteForIssueCommentResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DeleteForIssueComment(ctx context.Context, req *DeleteForIssueCommentReq, opt ...requests.Option) (*DeleteForIssueCommentResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1466,7 +1465,7 @@ Delete an issue comment reaction.
 
 https://developer.github.com/v3/reactions/#delete-an-issue-comment-reaction
 */
-func (c Client) DeleteForIssueComment(ctx context.Context, req *DeleteForIssueCommentReq, opt ...options.Option) (*DeleteForIssueCommentResponse, error) {
+func (c Client) DeleteForIssueComment(ctx context.Context, req *DeleteForIssueCommentReq, opt ...requests.Option) (*DeleteForIssueCommentResponse, error) {
 	return DeleteForIssueComment(ctx, req, append(c, opt...)...)
 }
 
@@ -1497,8 +1496,8 @@ type DeleteForIssueCommentReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeleteForIssueCommentReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeleteForIssueCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1544,7 +1543,7 @@ DeleteForIssueCommentResponse is a response for DeleteForIssueComment
 https://developer.github.com/v3/reactions/#delete-an-issue-comment-reaction
 */
 type DeleteForIssueCommentResponse struct {
-	common.Response
+	requests.Response
 	request *DeleteForIssueCommentReq
 }
 
@@ -1557,8 +1556,8 @@ Delete a pull request comment reaction.
 
 https://developer.github.com/v3/reactions/#delete-a-pull-request-comment-reaction
 */
-func DeleteForPullRequestComment(ctx context.Context, req *DeleteForPullRequestCommentReq, opt ...options.Option) (*DeleteForPullRequestCommentResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DeleteForPullRequestComment(ctx context.Context, req *DeleteForPullRequestCommentReq, opt ...requests.Option) (*DeleteForPullRequestCommentResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1592,7 +1591,7 @@ Delete a pull request comment reaction.
 
 https://developer.github.com/v3/reactions/#delete-a-pull-request-comment-reaction
 */
-func (c Client) DeleteForPullRequestComment(ctx context.Context, req *DeleteForPullRequestCommentReq, opt ...options.Option) (*DeleteForPullRequestCommentResponse, error) {
+func (c Client) DeleteForPullRequestComment(ctx context.Context, req *DeleteForPullRequestCommentReq, opt ...requests.Option) (*DeleteForPullRequestCommentResponse, error) {
 	return DeleteForPullRequestComment(ctx, req, append(c, opt...)...)
 }
 
@@ -1623,8 +1622,8 @@ type DeleteForPullRequestCommentReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeleteForPullRequestCommentReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeleteForPullRequestCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1670,7 +1669,7 @@ DeleteForPullRequestCommentResponse is a response for DeleteForPullRequestCommen
 https://developer.github.com/v3/reactions/#delete-a-pull-request-comment-reaction
 */
 type DeleteForPullRequestCommentResponse struct {
-	common.Response
+	requests.Response
 	request *DeleteForPullRequestCommentReq
 }
 
@@ -1683,8 +1682,8 @@ Delete team discussion reaction.
 
 https://developer.github.com/v3/reactions/#delete-team-discussion-reaction
 */
-func DeleteForTeamDiscussion(ctx context.Context, req *DeleteForTeamDiscussionReq, opt ...options.Option) (*DeleteForTeamDiscussionResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DeleteForTeamDiscussion(ctx context.Context, req *DeleteForTeamDiscussionReq, opt ...requests.Option) (*DeleteForTeamDiscussionResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1718,7 +1717,7 @@ Delete team discussion reaction.
 
 https://developer.github.com/v3/reactions/#delete-team-discussion-reaction
 */
-func (c Client) DeleteForTeamDiscussion(ctx context.Context, req *DeleteForTeamDiscussionReq, opt ...options.Option) (*DeleteForTeamDiscussionResponse, error) {
+func (c Client) DeleteForTeamDiscussion(ctx context.Context, req *DeleteForTeamDiscussionReq, opt ...requests.Option) (*DeleteForTeamDiscussionResponse, error) {
 	return DeleteForTeamDiscussion(ctx, req, append(c, opt...)...)
 }
 
@@ -1749,8 +1748,8 @@ type DeleteForTeamDiscussionReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeleteForTeamDiscussionReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeleteForTeamDiscussionReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1796,7 +1795,7 @@ DeleteForTeamDiscussionResponse is a response for DeleteForTeamDiscussion
 https://developer.github.com/v3/reactions/#delete-team-discussion-reaction
 */
 type DeleteForTeamDiscussionResponse struct {
-	common.Response
+	requests.Response
 	request *DeleteForTeamDiscussionReq
 }
 
@@ -1809,8 +1808,8 @@ Delete team discussion comment reaction.
 
 https://developer.github.com/v3/reactions/#delete-team-discussion-comment-reaction
 */
-func DeleteForTeamDiscussionComment(ctx context.Context, req *DeleteForTeamDiscussionCommentReq, opt ...options.Option) (*DeleteForTeamDiscussionCommentResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DeleteForTeamDiscussionComment(ctx context.Context, req *DeleteForTeamDiscussionCommentReq, opt ...requests.Option) (*DeleteForTeamDiscussionCommentResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1844,7 +1843,7 @@ Delete team discussion comment reaction.
 
 https://developer.github.com/v3/reactions/#delete-team-discussion-comment-reaction
 */
-func (c Client) DeleteForTeamDiscussionComment(ctx context.Context, req *DeleteForTeamDiscussionCommentReq, opt ...options.Option) (*DeleteForTeamDiscussionCommentResponse, error) {
+func (c Client) DeleteForTeamDiscussionComment(ctx context.Context, req *DeleteForTeamDiscussionCommentReq, opt ...requests.Option) (*DeleteForTeamDiscussionCommentResponse, error) {
 	return DeleteForTeamDiscussionComment(ctx, req, append(c, opt...)...)
 }
 
@@ -1876,8 +1875,8 @@ type DeleteForTeamDiscussionCommentReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeleteForTeamDiscussionCommentReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeleteForTeamDiscussionCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1923,7 +1922,7 @@ DeleteForTeamDiscussionCommentResponse is a response for DeleteForTeamDiscussion
 https://developer.github.com/v3/reactions/#delete-team-discussion-comment-reaction
 */
 type DeleteForTeamDiscussionCommentResponse struct {
-	common.Response
+	requests.Response
 	request *DeleteForTeamDiscussionCommentReq
 }
 
@@ -1936,8 +1935,8 @@ Delete a reaction (Legacy).
 
 https://developer.github.com/v3/reactions/#delete-a-reaction-legacy
 */
-func DeleteLegacy(ctx context.Context, req *DeleteLegacyReq, opt ...options.Option) (*DeleteLegacyResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DeleteLegacy(ctx context.Context, req *DeleteLegacyReq, opt ...requests.Option) (*DeleteLegacyResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1971,7 +1970,7 @@ Delete a reaction (Legacy).
 
 https://developer.github.com/v3/reactions/#delete-a-reaction-legacy
 */
-func (c Client) DeleteLegacy(ctx context.Context, req *DeleteLegacyReq, opt ...options.Option) (*DeleteLegacyResponse, error) {
+func (c Client) DeleteLegacy(ctx context.Context, req *DeleteLegacyReq, opt ...requests.Option) (*DeleteLegacyResponse, error) {
 	return DeleteLegacy(ctx, req, append(c, opt...)...)
 }
 
@@ -1997,8 +1996,8 @@ type DeleteLegacyReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeleteLegacyReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeleteLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2044,7 +2043,7 @@ DeleteLegacyResponse is a response for DeleteLegacy
 https://developer.github.com/v3/reactions/#delete-a-reaction-legacy
 */
 type DeleteLegacyResponse struct {
-	common.Response
+	requests.Response
 	request *DeleteLegacyReq
 }
 
@@ -2057,8 +2056,8 @@ List reactions for a commit comment.
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-commit-comment
 */
-func ListForCommitComment(ctx context.Context, req *ListForCommitCommentReq, opt ...options.Option) (*ListForCommitCommentResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListForCommitComment(ctx context.Context, req *ListForCommitCommentReq, opt ...requests.Option) (*ListForCommitCommentResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2093,7 +2092,7 @@ List reactions for a commit comment.
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-commit-comment
 */
-func (c Client) ListForCommitComment(ctx context.Context, req *ListForCommitCommentReq, opt ...options.Option) (*ListForCommitCommentResponse, error) {
+func (c Client) ListForCommitComment(ctx context.Context, req *ListForCommitCommentReq, opt ...requests.Option) (*ListForCommitCommentResponse, error) {
 	return ListForCommitComment(ctx, req, append(c, opt...)...)
 }
 
@@ -2136,8 +2135,8 @@ type ListForCommitCommentReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListForCommitCommentReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListForCommitCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2192,7 +2191,7 @@ ListForCommitCommentResponse is a response for ListForCommitComment
 https://developer.github.com/v3/reactions/#list-reactions-for-a-commit-comment
 */
 type ListForCommitCommentResponse struct {
-	common.Response
+	requests.Response
 	request *ListForCommitCommentReq
 	Data    []components.Reaction
 }
@@ -2206,8 +2205,8 @@ List reactions for an issue.
 
 https://developer.github.com/v3/reactions/#list-reactions-for-an-issue
 */
-func ListForIssue(ctx context.Context, req *ListForIssueReq, opt ...options.Option) (*ListForIssueResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListForIssue(ctx context.Context, req *ListForIssueReq, opt ...requests.Option) (*ListForIssueResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2242,7 +2241,7 @@ List reactions for an issue.
 
 https://developer.github.com/v3/reactions/#list-reactions-for-an-issue
 */
-func (c Client) ListForIssue(ctx context.Context, req *ListForIssueReq, opt ...options.Option) (*ListForIssueResponse, error) {
+func (c Client) ListForIssue(ctx context.Context, req *ListForIssueReq, opt ...requests.Option) (*ListForIssueResponse, error) {
 	return ListForIssue(ctx, req, append(c, opt...)...)
 }
 
@@ -2285,8 +2284,8 @@ type ListForIssueReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListForIssueReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListForIssueReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2341,7 +2340,7 @@ ListForIssueResponse is a response for ListForIssue
 https://developer.github.com/v3/reactions/#list-reactions-for-an-issue
 */
 type ListForIssueResponse struct {
-	common.Response
+	requests.Response
 	request *ListForIssueReq
 	Data    []components.Reaction
 }
@@ -2355,8 +2354,8 @@ List reactions for an issue comment.
 
 https://developer.github.com/v3/reactions/#list-reactions-for-an-issue-comment
 */
-func ListForIssueComment(ctx context.Context, req *ListForIssueCommentReq, opt ...options.Option) (*ListForIssueCommentResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListForIssueComment(ctx context.Context, req *ListForIssueCommentReq, opt ...requests.Option) (*ListForIssueCommentResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2391,7 +2390,7 @@ List reactions for an issue comment.
 
 https://developer.github.com/v3/reactions/#list-reactions-for-an-issue-comment
 */
-func (c Client) ListForIssueComment(ctx context.Context, req *ListForIssueCommentReq, opt ...options.Option) (*ListForIssueCommentResponse, error) {
+func (c Client) ListForIssueComment(ctx context.Context, req *ListForIssueCommentReq, opt ...requests.Option) (*ListForIssueCommentResponse, error) {
 	return ListForIssueComment(ctx, req, append(c, opt...)...)
 }
 
@@ -2434,8 +2433,8 @@ type ListForIssueCommentReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListForIssueCommentReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListForIssueCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2490,7 +2489,7 @@ ListForIssueCommentResponse is a response for ListForIssueComment
 https://developer.github.com/v3/reactions/#list-reactions-for-an-issue-comment
 */
 type ListForIssueCommentResponse struct {
-	common.Response
+	requests.Response
 	request *ListForIssueCommentReq
 	Data    []components.Reaction
 }
@@ -2504,8 +2503,8 @@ List reactions for a pull request review comment.
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-pull-request-review-comment
 */
-func ListForPullRequestReviewComment(ctx context.Context, req *ListForPullRequestReviewCommentReq, opt ...options.Option) (*ListForPullRequestReviewCommentResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListForPullRequestReviewComment(ctx context.Context, req *ListForPullRequestReviewCommentReq, opt ...requests.Option) (*ListForPullRequestReviewCommentResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2540,7 +2539,7 @@ List reactions for a pull request review comment.
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-pull-request-review-comment
 */
-func (c Client) ListForPullRequestReviewComment(ctx context.Context, req *ListForPullRequestReviewCommentReq, opt ...options.Option) (*ListForPullRequestReviewCommentResponse, error) {
+func (c Client) ListForPullRequestReviewComment(ctx context.Context, req *ListForPullRequestReviewCommentReq, opt ...requests.Option) (*ListForPullRequestReviewCommentResponse, error) {
 	return ListForPullRequestReviewComment(ctx, req, append(c, opt...)...)
 }
 
@@ -2583,8 +2582,8 @@ type ListForPullRequestReviewCommentReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListForPullRequestReviewCommentReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListForPullRequestReviewCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2639,7 +2638,7 @@ ListForPullRequestReviewCommentResponse is a response for ListForPullRequestRevi
 https://developer.github.com/v3/reactions/#list-reactions-for-a-pull-request-review-comment
 */
 type ListForPullRequestReviewCommentResponse struct {
-	common.Response
+	requests.Response
 	request *ListForPullRequestReviewCommentReq
 	Data    []components.Reaction
 }
@@ -2653,8 +2652,8 @@ List reactions for a team discussion comment.
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-comment
 */
-func ListForTeamDiscussionCommentInOrg(ctx context.Context, req *ListForTeamDiscussionCommentInOrgReq, opt ...options.Option) (*ListForTeamDiscussionCommentInOrgResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListForTeamDiscussionCommentInOrg(ctx context.Context, req *ListForTeamDiscussionCommentInOrgReq, opt ...requests.Option) (*ListForTeamDiscussionCommentInOrgResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2689,7 +2688,7 @@ List reactions for a team discussion comment.
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-comment
 */
-func (c Client) ListForTeamDiscussionCommentInOrg(ctx context.Context, req *ListForTeamDiscussionCommentInOrgReq, opt ...options.Option) (*ListForTeamDiscussionCommentInOrgResponse, error) {
+func (c Client) ListForTeamDiscussionCommentInOrg(ctx context.Context, req *ListForTeamDiscussionCommentInOrgReq, opt ...requests.Option) (*ListForTeamDiscussionCommentInOrgResponse, error) {
 	return ListForTeamDiscussionCommentInOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -2733,8 +2732,8 @@ type ListForTeamDiscussionCommentInOrgReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListForTeamDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListForTeamDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2789,7 +2788,7 @@ ListForTeamDiscussionCommentInOrgResponse is a response for ListForTeamDiscussio
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-comment
 */
 type ListForTeamDiscussionCommentInOrgResponse struct {
-	common.Response
+	requests.Response
 	request *ListForTeamDiscussionCommentInOrgReq
 	Data    []components.Reaction
 }
@@ -2803,8 +2802,8 @@ List reactions for a team discussion comment (Legacy).
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-comment-legacy
 */
-func ListForTeamDiscussionCommentLegacy(ctx context.Context, req *ListForTeamDiscussionCommentLegacyReq, opt ...options.Option) (*ListForTeamDiscussionCommentLegacyResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListForTeamDiscussionCommentLegacy(ctx context.Context, req *ListForTeamDiscussionCommentLegacyReq, opt ...requests.Option) (*ListForTeamDiscussionCommentLegacyResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2839,7 +2838,7 @@ List reactions for a team discussion comment (Legacy).
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-comment-legacy
 */
-func (c Client) ListForTeamDiscussionCommentLegacy(ctx context.Context, req *ListForTeamDiscussionCommentLegacyReq, opt ...options.Option) (*ListForTeamDiscussionCommentLegacyResponse, error) {
+func (c Client) ListForTeamDiscussionCommentLegacy(ctx context.Context, req *ListForTeamDiscussionCommentLegacyReq, opt ...requests.Option) (*ListForTeamDiscussionCommentLegacyResponse, error) {
 	return ListForTeamDiscussionCommentLegacy(ctx, req, append(c, opt...)...)
 }
 
@@ -2880,8 +2879,8 @@ type ListForTeamDiscussionCommentLegacyReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListForTeamDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListForTeamDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2936,7 +2935,7 @@ ListForTeamDiscussionCommentLegacyResponse is a response for ListForTeamDiscussi
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-comment-legacy
 */
 type ListForTeamDiscussionCommentLegacyResponse struct {
-	common.Response
+	requests.Response
 	request *ListForTeamDiscussionCommentLegacyReq
 	Data    []components.Reaction
 }
@@ -2950,8 +2949,8 @@ List reactions for a team discussion.
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion
 */
-func ListForTeamDiscussionInOrg(ctx context.Context, req *ListForTeamDiscussionInOrgReq, opt ...options.Option) (*ListForTeamDiscussionInOrgResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListForTeamDiscussionInOrg(ctx context.Context, req *ListForTeamDiscussionInOrgReq, opt ...requests.Option) (*ListForTeamDiscussionInOrgResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2986,7 +2985,7 @@ List reactions for a team discussion.
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion
 */
-func (c Client) ListForTeamDiscussionInOrg(ctx context.Context, req *ListForTeamDiscussionInOrgReq, opt ...options.Option) (*ListForTeamDiscussionInOrgResponse, error) {
+func (c Client) ListForTeamDiscussionInOrg(ctx context.Context, req *ListForTeamDiscussionInOrgReq, opt ...requests.Option) (*ListForTeamDiscussionInOrgResponse, error) {
 	return ListForTeamDiscussionInOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -3029,8 +3028,8 @@ type ListForTeamDiscussionInOrgReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListForTeamDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListForTeamDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3085,7 +3084,7 @@ ListForTeamDiscussionInOrgResponse is a response for ListForTeamDiscussionInOrg
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion
 */
 type ListForTeamDiscussionInOrgResponse struct {
-	common.Response
+	requests.Response
 	request *ListForTeamDiscussionInOrgReq
 	Data    []components.Reaction
 }
@@ -3099,8 +3098,8 @@ List reactions for a team discussion (Legacy).
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-legacy
 */
-func ListForTeamDiscussionLegacy(ctx context.Context, req *ListForTeamDiscussionLegacyReq, opt ...options.Option) (*ListForTeamDiscussionLegacyResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListForTeamDiscussionLegacy(ctx context.Context, req *ListForTeamDiscussionLegacyReq, opt ...requests.Option) (*ListForTeamDiscussionLegacyResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3135,7 +3134,7 @@ List reactions for a team discussion (Legacy).
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-legacy
 */
-func (c Client) ListForTeamDiscussionLegacy(ctx context.Context, req *ListForTeamDiscussionLegacyReq, opt ...options.Option) (*ListForTeamDiscussionLegacyResponse, error) {
+func (c Client) ListForTeamDiscussionLegacy(ctx context.Context, req *ListForTeamDiscussionLegacyReq, opt ...requests.Option) (*ListForTeamDiscussionLegacyResponse, error) {
 	return ListForTeamDiscussionLegacy(ctx, req, append(c, opt...)...)
 }
 
@@ -3175,8 +3174,8 @@ type ListForTeamDiscussionLegacyReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListForTeamDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListForTeamDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3231,7 +3230,7 @@ ListForTeamDiscussionLegacyResponse is a response for ListForTeamDiscussionLegac
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-legacy
 */
 type ListForTeamDiscussionLegacyResponse struct {
-	common.Response
+	requests.Response
 	request *ListForTeamDiscussionLegacyReq
 	Data    []components.Reaction
 }

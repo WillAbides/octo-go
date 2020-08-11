@@ -7,12 +7,11 @@ import (
 	"github.com/stretchr/testify/require"
 	"github.com/willabides/octo-go"
 	"github.com/willabides/octo-go/internal/testutil"
-	"github.com/willabides/octo-go/options"
-	"github.com/willabides/octo-go/options/auth"
+	"github.com/willabides/octo-go/requests"
 	"github.com/willabides/octo-go/requests/apps"
 )
 
-func vcrClient(t *testing.T, cas string, opts ...options.Option) apps.Client {
+func vcrClient(t *testing.T, cas string, opts ...requests.Option) apps.Client {
 	return apps.NewClient(testutil.VCRClient(t, cas, opts...))
 }
 
@@ -23,7 +22,7 @@ func TestCreateInstallationAccessToken(t *testing.T) {
 		InstallationId: testutil.AppInstallationID,
 	})
 	require.NoError(t, err)
-	_, err = client.RevokeInstallationAccessToken(ctx, nil, auth.WithPATAuth(token.Data.Token))
+	_, err = client.RevokeInstallationAccessToken(ctx, nil, octo.WithPATAuth(token.Data.Token))
 	require.NoError(t, err)
 }
 

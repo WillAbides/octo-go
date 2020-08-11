@@ -5,10 +5,9 @@ package actions
 import (
 	"context"
 	"fmt"
-	common "github.com/willabides/octo-go/common"
 	components "github.com/willabides/octo-go/components"
 	internal "github.com/willabides/octo-go/internal"
-	options "github.com/willabides/octo-go/options"
+	requests "github.com/willabides/octo-go/requests"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -17,15 +16,15 @@ import (
 func strPtr(s string) *string { return &s }
 
 // Client is a set of options to apply to requests
-type Client []options.Option
+type Client []requests.Option
 
 // NewClient returns a new Client
-func NewClient(opt ...options.Option) Client {
+func NewClient(opt ...requests.Option) Client {
 	return opt
 }
 
 // Apply implements options.Option
-func (c Client) Apply(opts *options.Options) error {
+func (c Client) Apply(opts *requests.Options) error {
 	for _, o := range c {
 		err := o.Apply(opts)
 		if err != nil {
@@ -44,8 +43,8 @@ Add selected repository to an organization secret.
 
 https://developer.github.com/v3/actions/secrets/#add-selected-repository-to-an-organization-secret
 */
-func AddSelectedRepoToOrgSecret(ctx context.Context, req *AddSelectedRepoToOrgSecretReq, opt ...options.Option) (*AddSelectedRepoToOrgSecretResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func AddSelectedRepoToOrgSecret(ctx context.Context, req *AddSelectedRepoToOrgSecretReq, opt ...requests.Option) (*AddSelectedRepoToOrgSecretResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -79,7 +78,7 @@ Add selected repository to an organization secret.
 
 https://developer.github.com/v3/actions/secrets/#add-selected-repository-to-an-organization-secret
 */
-func (c Client) AddSelectedRepoToOrgSecret(ctx context.Context, req *AddSelectedRepoToOrgSecretReq, opt ...options.Option) (*AddSelectedRepoToOrgSecretResponse, error) {
+func (c Client) AddSelectedRepoToOrgSecret(ctx context.Context, req *AddSelectedRepoToOrgSecretReq, opt ...requests.Option) (*AddSelectedRepoToOrgSecretResponse, error) {
 	return AddSelectedRepoToOrgSecret(ctx, req, append(c, opt...)...)
 }
 
@@ -100,8 +99,8 @@ type AddSelectedRepoToOrgSecretReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *AddSelectedRepoToOrgSecretReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *AddSelectedRepoToOrgSecretReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -147,7 +146,7 @@ AddSelectedRepoToOrgSecretResponse is a response for AddSelectedRepoToOrgSecret
 https://developer.github.com/v3/actions/secrets/#add-selected-repository-to-an-organization-secret
 */
 type AddSelectedRepoToOrgSecretResponse struct {
-	common.Response
+	requests.Response
 	request *AddSelectedRepoToOrgSecretReq
 }
 
@@ -160,8 +159,8 @@ Cancel a workflow run.
 
 https://developer.github.com/v3/actions/workflow-runs/#cancel-a-workflow-run
 */
-func CancelWorkflowRun(ctx context.Context, req *CancelWorkflowRunReq, opt ...options.Option) (*CancelWorkflowRunResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CancelWorkflowRun(ctx context.Context, req *CancelWorkflowRunReq, opt ...requests.Option) (*CancelWorkflowRunResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -195,7 +194,7 @@ Cancel a workflow run.
 
 https://developer.github.com/v3/actions/workflow-runs/#cancel-a-workflow-run
 */
-func (c Client) CancelWorkflowRun(ctx context.Context, req *CancelWorkflowRunReq, opt ...options.Option) (*CancelWorkflowRunResponse, error) {
+func (c Client) CancelWorkflowRun(ctx context.Context, req *CancelWorkflowRunReq, opt ...requests.Option) (*CancelWorkflowRunResponse, error) {
 	return CancelWorkflowRun(ctx, req, append(c, opt...)...)
 }
 
@@ -212,8 +211,8 @@ type CancelWorkflowRunReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CancelWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CancelWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -259,7 +258,7 @@ CancelWorkflowRunResponse is a response for CancelWorkflowRun
 https://developer.github.com/v3/actions/workflow-runs/#cancel-a-workflow-run
 */
 type CancelWorkflowRunResponse struct {
-	common.Response
+	requests.Response
 	request *CancelWorkflowRunReq
 }
 
@@ -272,8 +271,8 @@ Create or update an organization secret.
 
 https://developer.github.com/v3/actions/secrets/#create-or-update-an-organization-secret
 */
-func CreateOrUpdateOrgSecret(ctx context.Context, req *CreateOrUpdateOrgSecretReq, opt ...options.Option) (*CreateOrUpdateOrgSecretResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateOrUpdateOrgSecret(ctx context.Context, req *CreateOrUpdateOrgSecretReq, opt ...requests.Option) (*CreateOrUpdateOrgSecretResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -307,7 +306,7 @@ Create or update an organization secret.
 
 https://developer.github.com/v3/actions/secrets/#create-or-update-an-organization-secret
 */
-func (c Client) CreateOrUpdateOrgSecret(ctx context.Context, req *CreateOrUpdateOrgSecretReq, opt ...options.Option) (*CreateOrUpdateOrgSecretResponse, error) {
+func (c Client) CreateOrUpdateOrgSecret(ctx context.Context, req *CreateOrUpdateOrgSecretReq, opt ...requests.Option) (*CreateOrUpdateOrgSecretResponse, error) {
 	return CreateOrUpdateOrgSecret(ctx, req, append(c, opt...)...)
 }
 
@@ -326,8 +325,8 @@ type CreateOrUpdateOrgSecretReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateOrUpdateOrgSecretReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateOrUpdateOrgSecretReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -416,7 +415,7 @@ CreateOrUpdateOrgSecretResponse is a response for CreateOrUpdateOrgSecret
 https://developer.github.com/v3/actions/secrets/#create-or-update-an-organization-secret
 */
 type CreateOrUpdateOrgSecretResponse struct {
-	common.Response
+	requests.Response
 	request *CreateOrUpdateOrgSecretReq
 }
 
@@ -429,8 +428,8 @@ Create or update a repository secret.
 
 https://developer.github.com/v3/actions/secrets/#create-or-update-a-repository-secret
 */
-func CreateOrUpdateRepoSecret(ctx context.Context, req *CreateOrUpdateRepoSecretReq, opt ...options.Option) (*CreateOrUpdateRepoSecretResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateOrUpdateRepoSecret(ctx context.Context, req *CreateOrUpdateRepoSecretReq, opt ...requests.Option) (*CreateOrUpdateRepoSecretResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -464,7 +463,7 @@ Create or update a repository secret.
 
 https://developer.github.com/v3/actions/secrets/#create-or-update-a-repository-secret
 */
-func (c Client) CreateOrUpdateRepoSecret(ctx context.Context, req *CreateOrUpdateRepoSecretReq, opt ...options.Option) (*CreateOrUpdateRepoSecretResponse, error) {
+func (c Client) CreateOrUpdateRepoSecret(ctx context.Context, req *CreateOrUpdateRepoSecretReq, opt ...requests.Option) (*CreateOrUpdateRepoSecretResponse, error) {
 	return CreateOrUpdateRepoSecret(ctx, req, append(c, opt...)...)
 }
 
@@ -484,8 +483,8 @@ type CreateOrUpdateRepoSecretReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateOrUpdateRepoSecretReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateOrUpdateRepoSecretReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -551,7 +550,7 @@ CreateOrUpdateRepoSecretResponse is a response for CreateOrUpdateRepoSecret
 https://developer.github.com/v3/actions/secrets/#create-or-update-a-repository-secret
 */
 type CreateOrUpdateRepoSecretResponse struct {
-	common.Response
+	requests.Response
 	request *CreateOrUpdateRepoSecretReq
 }
 
@@ -564,8 +563,8 @@ Create a registration token for an organization.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-registration-token-for-an-organization
 */
-func CreateRegistrationTokenForOrg(ctx context.Context, req *CreateRegistrationTokenForOrgReq, opt ...options.Option) (*CreateRegistrationTokenForOrgResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateRegistrationTokenForOrg(ctx context.Context, req *CreateRegistrationTokenForOrgReq, opt ...requests.Option) (*CreateRegistrationTokenForOrgResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -600,7 +599,7 @@ Create a registration token for an organization.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-registration-token-for-an-organization
 */
-func (c Client) CreateRegistrationTokenForOrg(ctx context.Context, req *CreateRegistrationTokenForOrgReq, opt ...options.Option) (*CreateRegistrationTokenForOrgResponse, error) {
+func (c Client) CreateRegistrationTokenForOrg(ctx context.Context, req *CreateRegistrationTokenForOrgReq, opt ...requests.Option) (*CreateRegistrationTokenForOrgResponse, error) {
 	return CreateRegistrationTokenForOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -615,8 +614,8 @@ type CreateRegistrationTokenForOrgReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateRegistrationTokenForOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateRegistrationTokenForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -662,7 +661,7 @@ CreateRegistrationTokenForOrgResponse is a response for CreateRegistrationTokenF
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-registration-token-for-an-organization
 */
 type CreateRegistrationTokenForOrgResponse struct {
-	common.Response
+	requests.Response
 	request *CreateRegistrationTokenForOrgReq
 	Data    components.AuthenticationToken
 }
@@ -676,8 +675,8 @@ Create a registration token for a repository.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-registration-token-for-a-repository
 */
-func CreateRegistrationTokenForRepo(ctx context.Context, req *CreateRegistrationTokenForRepoReq, opt ...options.Option) (*CreateRegistrationTokenForRepoResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateRegistrationTokenForRepo(ctx context.Context, req *CreateRegistrationTokenForRepoReq, opt ...requests.Option) (*CreateRegistrationTokenForRepoResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -712,7 +711,7 @@ Create a registration token for a repository.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-registration-token-for-a-repository
 */
-func (c Client) CreateRegistrationTokenForRepo(ctx context.Context, req *CreateRegistrationTokenForRepoReq, opt ...options.Option) (*CreateRegistrationTokenForRepoResponse, error) {
+func (c Client) CreateRegistrationTokenForRepo(ctx context.Context, req *CreateRegistrationTokenForRepoReq, opt ...requests.Option) (*CreateRegistrationTokenForRepoResponse, error) {
 	return CreateRegistrationTokenForRepo(ctx, req, append(c, opt...)...)
 }
 
@@ -728,8 +727,8 @@ type CreateRegistrationTokenForRepoReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateRegistrationTokenForRepoReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateRegistrationTokenForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -775,7 +774,7 @@ CreateRegistrationTokenForRepoResponse is a response for CreateRegistrationToken
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-registration-token-for-a-repository
 */
 type CreateRegistrationTokenForRepoResponse struct {
-	common.Response
+	requests.Response
 	request *CreateRegistrationTokenForRepoReq
 	Data    components.AuthenticationToken
 }
@@ -789,8 +788,8 @@ Create a remove token for an organization.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-remove-token-for-an-organization
 */
-func CreateRemoveTokenForOrg(ctx context.Context, req *CreateRemoveTokenForOrgReq, opt ...options.Option) (*CreateRemoveTokenForOrgResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateRemoveTokenForOrg(ctx context.Context, req *CreateRemoveTokenForOrgReq, opt ...requests.Option) (*CreateRemoveTokenForOrgResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -825,7 +824,7 @@ Create a remove token for an organization.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-remove-token-for-an-organization
 */
-func (c Client) CreateRemoveTokenForOrg(ctx context.Context, req *CreateRemoveTokenForOrgReq, opt ...options.Option) (*CreateRemoveTokenForOrgResponse, error) {
+func (c Client) CreateRemoveTokenForOrg(ctx context.Context, req *CreateRemoveTokenForOrgReq, opt ...requests.Option) (*CreateRemoveTokenForOrgResponse, error) {
 	return CreateRemoveTokenForOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -840,8 +839,8 @@ type CreateRemoveTokenForOrgReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateRemoveTokenForOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateRemoveTokenForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -887,7 +886,7 @@ CreateRemoveTokenForOrgResponse is a response for CreateRemoveTokenForOrg
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-remove-token-for-an-organization
 */
 type CreateRemoveTokenForOrgResponse struct {
-	common.Response
+	requests.Response
 	request *CreateRemoveTokenForOrgReq
 	Data    components.AuthenticationToken
 }
@@ -901,8 +900,8 @@ Create a remove token for a repository.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-remove-token-for-a-repository
 */
-func CreateRemoveTokenForRepo(ctx context.Context, req *CreateRemoveTokenForRepoReq, opt ...options.Option) (*CreateRemoveTokenForRepoResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateRemoveTokenForRepo(ctx context.Context, req *CreateRemoveTokenForRepoReq, opt ...requests.Option) (*CreateRemoveTokenForRepoResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -937,7 +936,7 @@ Create a remove token for a repository.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-remove-token-for-a-repository
 */
-func (c Client) CreateRemoveTokenForRepo(ctx context.Context, req *CreateRemoveTokenForRepoReq, opt ...options.Option) (*CreateRemoveTokenForRepoResponse, error) {
+func (c Client) CreateRemoveTokenForRepo(ctx context.Context, req *CreateRemoveTokenForRepoReq, opt ...requests.Option) (*CreateRemoveTokenForRepoResponse, error) {
 	return CreateRemoveTokenForRepo(ctx, req, append(c, opt...)...)
 }
 
@@ -953,8 +952,8 @@ type CreateRemoveTokenForRepoReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateRemoveTokenForRepoReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateRemoveTokenForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1000,7 +999,7 @@ CreateRemoveTokenForRepoResponse is a response for CreateRemoveTokenForRepo
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-remove-token-for-a-repository
 */
 type CreateRemoveTokenForRepoResponse struct {
-	common.Response
+	requests.Response
 	request *CreateRemoveTokenForRepoReq
 	Data    components.AuthenticationToken
 }
@@ -1014,8 +1013,8 @@ Create a workflow dispatch event.
 
 https://developer.github.com/v3/actions/workflows/#create-a-workflow-dispatch-event
 */
-func CreateWorkflowDispatch(ctx context.Context, req *CreateWorkflowDispatchReq, opt ...options.Option) (*CreateWorkflowDispatchResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateWorkflowDispatch(ctx context.Context, req *CreateWorkflowDispatchReq, opt ...requests.Option) (*CreateWorkflowDispatchResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1049,7 +1048,7 @@ Create a workflow dispatch event.
 
 https://developer.github.com/v3/actions/workflows/#create-a-workflow-dispatch-event
 */
-func (c Client) CreateWorkflowDispatch(ctx context.Context, req *CreateWorkflowDispatchReq, opt ...options.Option) (*CreateWorkflowDispatchResponse, error) {
+func (c Client) CreateWorkflowDispatch(ctx context.Context, req *CreateWorkflowDispatchReq, opt ...requests.Option) (*CreateWorkflowDispatchResponse, error) {
 	return CreateWorkflowDispatch(ctx, req, append(c, opt...)...)
 }
 
@@ -1067,8 +1066,8 @@ type CreateWorkflowDispatchReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateWorkflowDispatchReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateWorkflowDispatchReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1132,7 +1131,7 @@ CreateWorkflowDispatchResponse is a response for CreateWorkflowDispatch
 https://developer.github.com/v3/actions/workflows/#create-a-workflow-dispatch-event
 */
 type CreateWorkflowDispatchResponse struct {
-	common.Response
+	requests.Response
 	request *CreateWorkflowDispatchReq
 }
 
@@ -1145,8 +1144,8 @@ Delete an artifact.
 
 https://developer.github.com/v3/actions/artifacts/#delete-an-artifact
 */
-func DeleteArtifact(ctx context.Context, req *DeleteArtifactReq, opt ...options.Option) (*DeleteArtifactResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DeleteArtifact(ctx context.Context, req *DeleteArtifactReq, opt ...requests.Option) (*DeleteArtifactResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1180,7 +1179,7 @@ Delete an artifact.
 
 https://developer.github.com/v3/actions/artifacts/#delete-an-artifact
 */
-func (c Client) DeleteArtifact(ctx context.Context, req *DeleteArtifactReq, opt ...options.Option) (*DeleteArtifactResponse, error) {
+func (c Client) DeleteArtifact(ctx context.Context, req *DeleteArtifactReq, opt ...requests.Option) (*DeleteArtifactResponse, error) {
 	return DeleteArtifact(ctx, req, append(c, opt...)...)
 }
 
@@ -1199,8 +1198,8 @@ type DeleteArtifactReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeleteArtifactReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeleteArtifactReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1246,7 +1245,7 @@ DeleteArtifactResponse is a response for DeleteArtifact
 https://developer.github.com/v3/actions/artifacts/#delete-an-artifact
 */
 type DeleteArtifactResponse struct {
-	common.Response
+	requests.Response
 	request *DeleteArtifactReq
 }
 
@@ -1259,8 +1258,8 @@ Delete an organization secret.
 
 https://developer.github.com/v3/actions/secrets/#delete-an-organization-secret
 */
-func DeleteOrgSecret(ctx context.Context, req *DeleteOrgSecretReq, opt ...options.Option) (*DeleteOrgSecretResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DeleteOrgSecret(ctx context.Context, req *DeleteOrgSecretReq, opt ...requests.Option) (*DeleteOrgSecretResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1294,7 +1293,7 @@ Delete an organization secret.
 
 https://developer.github.com/v3/actions/secrets/#delete-an-organization-secret
 */
-func (c Client) DeleteOrgSecret(ctx context.Context, req *DeleteOrgSecretReq, opt ...options.Option) (*DeleteOrgSecretResponse, error) {
+func (c Client) DeleteOrgSecret(ctx context.Context, req *DeleteOrgSecretReq, opt ...requests.Option) (*DeleteOrgSecretResponse, error) {
 	return DeleteOrgSecret(ctx, req, append(c, opt...)...)
 }
 
@@ -1312,8 +1311,8 @@ type DeleteOrgSecretReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeleteOrgSecretReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeleteOrgSecretReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1359,7 +1358,7 @@ DeleteOrgSecretResponse is a response for DeleteOrgSecret
 https://developer.github.com/v3/actions/secrets/#delete-an-organization-secret
 */
 type DeleteOrgSecretResponse struct {
-	common.Response
+	requests.Response
 	request *DeleteOrgSecretReq
 }
 
@@ -1372,8 +1371,8 @@ Delete a repository secret.
 
 https://developer.github.com/v3/actions/secrets/#delete-a-repository-secret
 */
-func DeleteRepoSecret(ctx context.Context, req *DeleteRepoSecretReq, opt ...options.Option) (*DeleteRepoSecretResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DeleteRepoSecret(ctx context.Context, req *DeleteRepoSecretReq, opt ...requests.Option) (*DeleteRepoSecretResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1407,7 +1406,7 @@ Delete a repository secret.
 
 https://developer.github.com/v3/actions/secrets/#delete-a-repository-secret
 */
-func (c Client) DeleteRepoSecret(ctx context.Context, req *DeleteRepoSecretReq, opt ...options.Option) (*DeleteRepoSecretResponse, error) {
+func (c Client) DeleteRepoSecret(ctx context.Context, req *DeleteRepoSecretReq, opt ...requests.Option) (*DeleteRepoSecretResponse, error) {
 	return DeleteRepoSecret(ctx, req, append(c, opt...)...)
 }
 
@@ -1426,8 +1425,8 @@ type DeleteRepoSecretReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeleteRepoSecretReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeleteRepoSecretReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1473,7 +1472,7 @@ DeleteRepoSecretResponse is a response for DeleteRepoSecret
 https://developer.github.com/v3/actions/secrets/#delete-a-repository-secret
 */
 type DeleteRepoSecretResponse struct {
-	common.Response
+	requests.Response
 	request *DeleteRepoSecretReq
 }
 
@@ -1486,8 +1485,8 @@ Delete a self-hosted runner from an organization.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#delete-a-self-hosted-runner-from-an-organization
 */
-func DeleteSelfHostedRunnerFromOrg(ctx context.Context, req *DeleteSelfHostedRunnerFromOrgReq, opt ...options.Option) (*DeleteSelfHostedRunnerFromOrgResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DeleteSelfHostedRunnerFromOrg(ctx context.Context, req *DeleteSelfHostedRunnerFromOrgReq, opt ...requests.Option) (*DeleteSelfHostedRunnerFromOrgResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1521,7 +1520,7 @@ Delete a self-hosted runner from an organization.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#delete-a-self-hosted-runner-from-an-organization
 */
-func (c Client) DeleteSelfHostedRunnerFromOrg(ctx context.Context, req *DeleteSelfHostedRunnerFromOrgReq, opt ...options.Option) (*DeleteSelfHostedRunnerFromOrgResponse, error) {
+func (c Client) DeleteSelfHostedRunnerFromOrg(ctx context.Context, req *DeleteSelfHostedRunnerFromOrgReq, opt ...requests.Option) (*DeleteSelfHostedRunnerFromOrgResponse, error) {
 	return DeleteSelfHostedRunnerFromOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -1539,8 +1538,8 @@ type DeleteSelfHostedRunnerFromOrgReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeleteSelfHostedRunnerFromOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeleteSelfHostedRunnerFromOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1586,7 +1585,7 @@ DeleteSelfHostedRunnerFromOrgResponse is a response for DeleteSelfHostedRunnerFr
 https://developer.github.com/v3/actions/self-hosted-runners/#delete-a-self-hosted-runner-from-an-organization
 */
 type DeleteSelfHostedRunnerFromOrgResponse struct {
-	common.Response
+	requests.Response
 	request *DeleteSelfHostedRunnerFromOrgReq
 }
 
@@ -1599,8 +1598,8 @@ Delete a self-hosted runner from a repository.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#delete-a-self-hosted-runner-from-a-repository
 */
-func DeleteSelfHostedRunnerFromRepo(ctx context.Context, req *DeleteSelfHostedRunnerFromRepoReq, opt ...options.Option) (*DeleteSelfHostedRunnerFromRepoResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DeleteSelfHostedRunnerFromRepo(ctx context.Context, req *DeleteSelfHostedRunnerFromRepoReq, opt ...requests.Option) (*DeleteSelfHostedRunnerFromRepoResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1634,7 +1633,7 @@ Delete a self-hosted runner from a repository.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#delete-a-self-hosted-runner-from-a-repository
 */
-func (c Client) DeleteSelfHostedRunnerFromRepo(ctx context.Context, req *DeleteSelfHostedRunnerFromRepoReq, opt ...options.Option) (*DeleteSelfHostedRunnerFromRepoResponse, error) {
+func (c Client) DeleteSelfHostedRunnerFromRepo(ctx context.Context, req *DeleteSelfHostedRunnerFromRepoReq, opt ...requests.Option) (*DeleteSelfHostedRunnerFromRepoResponse, error) {
 	return DeleteSelfHostedRunnerFromRepo(ctx, req, append(c, opt...)...)
 }
 
@@ -1653,8 +1652,8 @@ type DeleteSelfHostedRunnerFromRepoReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeleteSelfHostedRunnerFromRepoReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeleteSelfHostedRunnerFromRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1700,7 +1699,7 @@ DeleteSelfHostedRunnerFromRepoResponse is a response for DeleteSelfHostedRunnerF
 https://developer.github.com/v3/actions/self-hosted-runners/#delete-a-self-hosted-runner-from-a-repository
 */
 type DeleteSelfHostedRunnerFromRepoResponse struct {
-	common.Response
+	requests.Response
 	request *DeleteSelfHostedRunnerFromRepoReq
 }
 
@@ -1713,8 +1712,8 @@ Delete a workflow run.
 
 https://developer.github.com/v3/actions/workflow-runs/#delete-a-workflow-run
 */
-func DeleteWorkflowRun(ctx context.Context, req *DeleteWorkflowRunReq, opt ...options.Option) (*DeleteWorkflowRunResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DeleteWorkflowRun(ctx context.Context, req *DeleteWorkflowRunReq, opt ...requests.Option) (*DeleteWorkflowRunResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1748,7 +1747,7 @@ Delete a workflow run.
 
 https://developer.github.com/v3/actions/workflow-runs/#delete-a-workflow-run
 */
-func (c Client) DeleteWorkflowRun(ctx context.Context, req *DeleteWorkflowRunReq, opt ...options.Option) (*DeleteWorkflowRunResponse, error) {
+func (c Client) DeleteWorkflowRun(ctx context.Context, req *DeleteWorkflowRunReq, opt ...requests.Option) (*DeleteWorkflowRunResponse, error) {
 	return DeleteWorkflowRun(ctx, req, append(c, opt...)...)
 }
 
@@ -1765,8 +1764,8 @@ type DeleteWorkflowRunReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeleteWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeleteWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1812,7 +1811,7 @@ DeleteWorkflowRunResponse is a response for DeleteWorkflowRun
 https://developer.github.com/v3/actions/workflow-runs/#delete-a-workflow-run
 */
 type DeleteWorkflowRunResponse struct {
-	common.Response
+	requests.Response
 	request *DeleteWorkflowRunReq
 }
 
@@ -1825,8 +1824,8 @@ Delete workflow run logs.
 
 https://developer.github.com/v3/actions/workflow-runs/#delete-workflow-run-logs
 */
-func DeleteWorkflowRunLogs(ctx context.Context, req *DeleteWorkflowRunLogsReq, opt ...options.Option) (*DeleteWorkflowRunLogsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DeleteWorkflowRunLogs(ctx context.Context, req *DeleteWorkflowRunLogsReq, opt ...requests.Option) (*DeleteWorkflowRunLogsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1860,7 +1859,7 @@ Delete workflow run logs.
 
 https://developer.github.com/v3/actions/workflow-runs/#delete-workflow-run-logs
 */
-func (c Client) DeleteWorkflowRunLogs(ctx context.Context, req *DeleteWorkflowRunLogsReq, opt ...options.Option) (*DeleteWorkflowRunLogsResponse, error) {
+func (c Client) DeleteWorkflowRunLogs(ctx context.Context, req *DeleteWorkflowRunLogsReq, opt ...requests.Option) (*DeleteWorkflowRunLogsResponse, error) {
 	return DeleteWorkflowRunLogs(ctx, req, append(c, opt...)...)
 }
 
@@ -1877,8 +1876,8 @@ type DeleteWorkflowRunLogsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeleteWorkflowRunLogsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeleteWorkflowRunLogsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1924,7 +1923,7 @@ DeleteWorkflowRunLogsResponse is a response for DeleteWorkflowRunLogs
 https://developer.github.com/v3/actions/workflow-runs/#delete-workflow-run-logs
 */
 type DeleteWorkflowRunLogsResponse struct {
-	common.Response
+	requests.Response
 	request *DeleteWorkflowRunLogsReq
 }
 
@@ -1937,8 +1936,8 @@ Download an artifact.
 
 https://developer.github.com/v3/actions/artifacts/#download-an-artifact
 */
-func DownloadArtifact(ctx context.Context, req *DownloadArtifactReq, opt ...options.Option) (*DownloadArtifactResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DownloadArtifact(ctx context.Context, req *DownloadArtifactReq, opt ...requests.Option) (*DownloadArtifactResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1972,7 +1971,7 @@ Download an artifact.
 
 https://developer.github.com/v3/actions/artifacts/#download-an-artifact
 */
-func (c Client) DownloadArtifact(ctx context.Context, req *DownloadArtifactReq, opt ...options.Option) (*DownloadArtifactResponse, error) {
+func (c Client) DownloadArtifact(ctx context.Context, req *DownloadArtifactReq, opt ...requests.Option) (*DownloadArtifactResponse, error) {
 	return DownloadArtifact(ctx, req, append(c, opt...)...)
 }
 
@@ -1994,8 +1993,8 @@ type DownloadArtifactReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DownloadArtifactReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DownloadArtifactReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2041,7 +2040,7 @@ DownloadArtifactResponse is a response for DownloadArtifact
 https://developer.github.com/v3/actions/artifacts/#download-an-artifact
 */
 type DownloadArtifactResponse struct {
-	common.Response
+	requests.Response
 	request *DownloadArtifactReq
 }
 
@@ -2054,8 +2053,8 @@ Download job logs for a workflow run.
 
 https://developer.github.com/v3/actions/workflow-jobs/#download-job-logs-for-a-workflow-run
 */
-func DownloadJobLogsForWorkflowRun(ctx context.Context, req *DownloadJobLogsForWorkflowRunReq, opt ...options.Option) (*DownloadJobLogsForWorkflowRunResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DownloadJobLogsForWorkflowRun(ctx context.Context, req *DownloadJobLogsForWorkflowRunReq, opt ...requests.Option) (*DownloadJobLogsForWorkflowRunResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2089,7 +2088,7 @@ Download job logs for a workflow run.
 
 https://developer.github.com/v3/actions/workflow-jobs/#download-job-logs-for-a-workflow-run
 */
-func (c Client) DownloadJobLogsForWorkflowRun(ctx context.Context, req *DownloadJobLogsForWorkflowRunReq, opt ...options.Option) (*DownloadJobLogsForWorkflowRunResponse, error) {
+func (c Client) DownloadJobLogsForWorkflowRun(ctx context.Context, req *DownloadJobLogsForWorkflowRunReq, opt ...requests.Option) (*DownloadJobLogsForWorkflowRunResponse, error) {
 	return DownloadJobLogsForWorkflowRun(ctx, req, append(c, opt...)...)
 }
 
@@ -2108,8 +2107,8 @@ type DownloadJobLogsForWorkflowRunReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DownloadJobLogsForWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DownloadJobLogsForWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2155,7 +2154,7 @@ DownloadJobLogsForWorkflowRunResponse is a response for DownloadJobLogsForWorkfl
 https://developer.github.com/v3/actions/workflow-jobs/#download-job-logs-for-a-workflow-run
 */
 type DownloadJobLogsForWorkflowRunResponse struct {
-	common.Response
+	requests.Response
 	request *DownloadJobLogsForWorkflowRunReq
 }
 
@@ -2168,8 +2167,8 @@ Download workflow run logs.
 
 https://developer.github.com/v3/actions/workflow-runs/#download-workflow-run-logs
 */
-func DownloadWorkflowRunLogs(ctx context.Context, req *DownloadWorkflowRunLogsReq, opt ...options.Option) (*DownloadWorkflowRunLogsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DownloadWorkflowRunLogs(ctx context.Context, req *DownloadWorkflowRunLogsReq, opt ...requests.Option) (*DownloadWorkflowRunLogsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2203,7 +2202,7 @@ Download workflow run logs.
 
 https://developer.github.com/v3/actions/workflow-runs/#download-workflow-run-logs
 */
-func (c Client) DownloadWorkflowRunLogs(ctx context.Context, req *DownloadWorkflowRunLogsReq, opt ...options.Option) (*DownloadWorkflowRunLogsResponse, error) {
+func (c Client) DownloadWorkflowRunLogs(ctx context.Context, req *DownloadWorkflowRunLogsReq, opt ...requests.Option) (*DownloadWorkflowRunLogsResponse, error) {
 	return DownloadWorkflowRunLogs(ctx, req, append(c, opt...)...)
 }
 
@@ -2220,8 +2219,8 @@ type DownloadWorkflowRunLogsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DownloadWorkflowRunLogsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DownloadWorkflowRunLogsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2267,7 +2266,7 @@ DownloadWorkflowRunLogsResponse is a response for DownloadWorkflowRunLogs
 https://developer.github.com/v3/actions/workflow-runs/#download-workflow-run-logs
 */
 type DownloadWorkflowRunLogsResponse struct {
-	common.Response
+	requests.Response
 	request *DownloadWorkflowRunLogsReq
 }
 
@@ -2280,8 +2279,8 @@ Get an artifact.
 
 https://developer.github.com/v3/actions/artifacts/#get-an-artifact
 */
-func GetArtifact(ctx context.Context, req *GetArtifactReq, opt ...options.Option) (*GetArtifactResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetArtifact(ctx context.Context, req *GetArtifactReq, opt ...requests.Option) (*GetArtifactResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2316,7 +2315,7 @@ Get an artifact.
 
 https://developer.github.com/v3/actions/artifacts/#get-an-artifact
 */
-func (c Client) GetArtifact(ctx context.Context, req *GetArtifactReq, opt ...options.Option) (*GetArtifactResponse, error) {
+func (c Client) GetArtifact(ctx context.Context, req *GetArtifactReq, opt ...requests.Option) (*GetArtifactResponse, error) {
 	return GetArtifact(ctx, req, append(c, opt...)...)
 }
 
@@ -2335,8 +2334,8 @@ type GetArtifactReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetArtifactReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetArtifactReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2382,7 +2381,7 @@ GetArtifactResponse is a response for GetArtifact
 https://developer.github.com/v3/actions/artifacts/#get-an-artifact
 */
 type GetArtifactResponse struct {
-	common.Response
+	requests.Response
 	request *GetArtifactReq
 	Data    components.Artifact
 }
@@ -2396,8 +2395,8 @@ Get a job for a workflow run.
 
 https://developer.github.com/v3/actions/workflow-jobs/#get-a-job-for-a-workflow-run
 */
-func GetJobForWorkflowRun(ctx context.Context, req *GetJobForWorkflowRunReq, opt ...options.Option) (*GetJobForWorkflowRunResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetJobForWorkflowRun(ctx context.Context, req *GetJobForWorkflowRunReq, opt ...requests.Option) (*GetJobForWorkflowRunResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2432,7 +2431,7 @@ Get a job for a workflow run.
 
 https://developer.github.com/v3/actions/workflow-jobs/#get-a-job-for-a-workflow-run
 */
-func (c Client) GetJobForWorkflowRun(ctx context.Context, req *GetJobForWorkflowRunReq, opt ...options.Option) (*GetJobForWorkflowRunResponse, error) {
+func (c Client) GetJobForWorkflowRun(ctx context.Context, req *GetJobForWorkflowRunReq, opt ...requests.Option) (*GetJobForWorkflowRunResponse, error) {
 	return GetJobForWorkflowRun(ctx, req, append(c, opt...)...)
 }
 
@@ -2451,8 +2450,8 @@ type GetJobForWorkflowRunReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetJobForWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetJobForWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2498,7 +2497,7 @@ GetJobForWorkflowRunResponse is a response for GetJobForWorkflowRun
 https://developer.github.com/v3/actions/workflow-jobs/#get-a-job-for-a-workflow-run
 */
 type GetJobForWorkflowRunResponse struct {
-	common.Response
+	requests.Response
 	request *GetJobForWorkflowRunReq
 	Data    components.Job
 }
@@ -2512,8 +2511,8 @@ Get an organization public key.
 
 https://developer.github.com/v3/actions/secrets/#get-an-organization-public-key
 */
-func GetOrgPublicKey(ctx context.Context, req *GetOrgPublicKeyReq, opt ...options.Option) (*GetOrgPublicKeyResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetOrgPublicKey(ctx context.Context, req *GetOrgPublicKeyReq, opt ...requests.Option) (*GetOrgPublicKeyResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2548,7 +2547,7 @@ Get an organization public key.
 
 https://developer.github.com/v3/actions/secrets/#get-an-organization-public-key
 */
-func (c Client) GetOrgPublicKey(ctx context.Context, req *GetOrgPublicKeyReq, opt ...options.Option) (*GetOrgPublicKeyResponse, error) {
+func (c Client) GetOrgPublicKey(ctx context.Context, req *GetOrgPublicKeyReq, opt ...requests.Option) (*GetOrgPublicKeyResponse, error) {
 	return GetOrgPublicKey(ctx, req, append(c, opt...)...)
 }
 
@@ -2563,8 +2562,8 @@ type GetOrgPublicKeyReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetOrgPublicKeyReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetOrgPublicKeyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2610,7 +2609,7 @@ GetOrgPublicKeyResponse is a response for GetOrgPublicKey
 https://developer.github.com/v3/actions/secrets/#get-an-organization-public-key
 */
 type GetOrgPublicKeyResponse struct {
-	common.Response
+	requests.Response
 	request *GetOrgPublicKeyReq
 	Data    components.ActionsPublicKey
 }
@@ -2624,8 +2623,8 @@ Get an organization secret.
 
 https://developer.github.com/v3/actions/secrets/#get-an-organization-secret
 */
-func GetOrgSecret(ctx context.Context, req *GetOrgSecretReq, opt ...options.Option) (*GetOrgSecretResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetOrgSecret(ctx context.Context, req *GetOrgSecretReq, opt ...requests.Option) (*GetOrgSecretResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2660,7 +2659,7 @@ Get an organization secret.
 
 https://developer.github.com/v3/actions/secrets/#get-an-organization-secret
 */
-func (c Client) GetOrgSecret(ctx context.Context, req *GetOrgSecretReq, opt ...options.Option) (*GetOrgSecretResponse, error) {
+func (c Client) GetOrgSecret(ctx context.Context, req *GetOrgSecretReq, opt ...requests.Option) (*GetOrgSecretResponse, error) {
 	return GetOrgSecret(ctx, req, append(c, opt...)...)
 }
 
@@ -2678,8 +2677,8 @@ type GetOrgSecretReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetOrgSecretReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetOrgSecretReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2725,7 +2724,7 @@ GetOrgSecretResponse is a response for GetOrgSecret
 https://developer.github.com/v3/actions/secrets/#get-an-organization-secret
 */
 type GetOrgSecretResponse struct {
-	common.Response
+	requests.Response
 	request *GetOrgSecretReq
 	Data    components.OrganizationActionsSecret
 }
@@ -2739,8 +2738,8 @@ Get a repository public key.
 
 https://developer.github.com/v3/actions/secrets/#get-a-repository-public-key
 */
-func GetRepoPublicKey(ctx context.Context, req *GetRepoPublicKeyReq, opt ...options.Option) (*GetRepoPublicKeyResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetRepoPublicKey(ctx context.Context, req *GetRepoPublicKeyReq, opt ...requests.Option) (*GetRepoPublicKeyResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2775,7 +2774,7 @@ Get a repository public key.
 
 https://developer.github.com/v3/actions/secrets/#get-a-repository-public-key
 */
-func (c Client) GetRepoPublicKey(ctx context.Context, req *GetRepoPublicKeyReq, opt ...options.Option) (*GetRepoPublicKeyResponse, error) {
+func (c Client) GetRepoPublicKey(ctx context.Context, req *GetRepoPublicKeyReq, opt ...requests.Option) (*GetRepoPublicKeyResponse, error) {
 	return GetRepoPublicKey(ctx, req, append(c, opt...)...)
 }
 
@@ -2791,8 +2790,8 @@ type GetRepoPublicKeyReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetRepoPublicKeyReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetRepoPublicKeyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2838,7 +2837,7 @@ GetRepoPublicKeyResponse is a response for GetRepoPublicKey
 https://developer.github.com/v3/actions/secrets/#get-a-repository-public-key
 */
 type GetRepoPublicKeyResponse struct {
-	common.Response
+	requests.Response
 	request *GetRepoPublicKeyReq
 	Data    components.ActionsPublicKey
 }
@@ -2852,8 +2851,8 @@ Get a repository secret.
 
 https://developer.github.com/v3/actions/secrets/#get-a-repository-secret
 */
-func GetRepoSecret(ctx context.Context, req *GetRepoSecretReq, opt ...options.Option) (*GetRepoSecretResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetRepoSecret(ctx context.Context, req *GetRepoSecretReq, opt ...requests.Option) (*GetRepoSecretResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2888,7 +2887,7 @@ Get a repository secret.
 
 https://developer.github.com/v3/actions/secrets/#get-a-repository-secret
 */
-func (c Client) GetRepoSecret(ctx context.Context, req *GetRepoSecretReq, opt ...options.Option) (*GetRepoSecretResponse, error) {
+func (c Client) GetRepoSecret(ctx context.Context, req *GetRepoSecretReq, opt ...requests.Option) (*GetRepoSecretResponse, error) {
 	return GetRepoSecret(ctx, req, append(c, opt...)...)
 }
 
@@ -2907,8 +2906,8 @@ type GetRepoSecretReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetRepoSecretReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetRepoSecretReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2954,7 +2953,7 @@ GetRepoSecretResponse is a response for GetRepoSecret
 https://developer.github.com/v3/actions/secrets/#get-a-repository-secret
 */
 type GetRepoSecretResponse struct {
-	common.Response
+	requests.Response
 	request *GetRepoSecretReq
 	Data    components.ActionsSecret
 }
@@ -2968,8 +2967,8 @@ Get a self-hosted runner for an organization.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#get-a-self-hosted-runner-for-an-organization
 */
-func GetSelfHostedRunnerForOrg(ctx context.Context, req *GetSelfHostedRunnerForOrgReq, opt ...options.Option) (*GetSelfHostedRunnerForOrgResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetSelfHostedRunnerForOrg(ctx context.Context, req *GetSelfHostedRunnerForOrgReq, opt ...requests.Option) (*GetSelfHostedRunnerForOrgResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3004,7 +3003,7 @@ Get a self-hosted runner for an organization.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#get-a-self-hosted-runner-for-an-organization
 */
-func (c Client) GetSelfHostedRunnerForOrg(ctx context.Context, req *GetSelfHostedRunnerForOrgReq, opt ...options.Option) (*GetSelfHostedRunnerForOrgResponse, error) {
+func (c Client) GetSelfHostedRunnerForOrg(ctx context.Context, req *GetSelfHostedRunnerForOrgReq, opt ...requests.Option) (*GetSelfHostedRunnerForOrgResponse, error) {
 	return GetSelfHostedRunnerForOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -3022,8 +3021,8 @@ type GetSelfHostedRunnerForOrgReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetSelfHostedRunnerForOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetSelfHostedRunnerForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3069,7 +3068,7 @@ GetSelfHostedRunnerForOrgResponse is a response for GetSelfHostedRunnerForOrg
 https://developer.github.com/v3/actions/self-hosted-runners/#get-a-self-hosted-runner-for-an-organization
 */
 type GetSelfHostedRunnerForOrgResponse struct {
-	common.Response
+	requests.Response
 	request *GetSelfHostedRunnerForOrgReq
 	Data    components.Runner
 }
@@ -3083,8 +3082,8 @@ Get a self-hosted runner for a repository.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#get-a-self-hosted-runner-for-a-repository
 */
-func GetSelfHostedRunnerForRepo(ctx context.Context, req *GetSelfHostedRunnerForRepoReq, opt ...options.Option) (*GetSelfHostedRunnerForRepoResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetSelfHostedRunnerForRepo(ctx context.Context, req *GetSelfHostedRunnerForRepoReq, opt ...requests.Option) (*GetSelfHostedRunnerForRepoResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3119,7 +3118,7 @@ Get a self-hosted runner for a repository.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#get-a-self-hosted-runner-for-a-repository
 */
-func (c Client) GetSelfHostedRunnerForRepo(ctx context.Context, req *GetSelfHostedRunnerForRepoReq, opt ...options.Option) (*GetSelfHostedRunnerForRepoResponse, error) {
+func (c Client) GetSelfHostedRunnerForRepo(ctx context.Context, req *GetSelfHostedRunnerForRepoReq, opt ...requests.Option) (*GetSelfHostedRunnerForRepoResponse, error) {
 	return GetSelfHostedRunnerForRepo(ctx, req, append(c, opt...)...)
 }
 
@@ -3138,8 +3137,8 @@ type GetSelfHostedRunnerForRepoReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetSelfHostedRunnerForRepoReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetSelfHostedRunnerForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3185,7 +3184,7 @@ GetSelfHostedRunnerForRepoResponse is a response for GetSelfHostedRunnerForRepo
 https://developer.github.com/v3/actions/self-hosted-runners/#get-a-self-hosted-runner-for-a-repository
 */
 type GetSelfHostedRunnerForRepoResponse struct {
-	common.Response
+	requests.Response
 	request *GetSelfHostedRunnerForRepoReq
 	Data    components.Runner
 }
@@ -3199,8 +3198,8 @@ Get a workflow.
 
 https://developer.github.com/v3/actions/workflows/#get-a-workflow
 */
-func GetWorkflow(ctx context.Context, req *GetWorkflowReq, opt ...options.Option) (*GetWorkflowResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetWorkflow(ctx context.Context, req *GetWorkflowReq, opt ...requests.Option) (*GetWorkflowResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3235,7 +3234,7 @@ Get a workflow.
 
 https://developer.github.com/v3/actions/workflows/#get-a-workflow
 */
-func (c Client) GetWorkflow(ctx context.Context, req *GetWorkflowReq, opt ...options.Option) (*GetWorkflowResponse, error) {
+func (c Client) GetWorkflow(ctx context.Context, req *GetWorkflowReq, opt ...requests.Option) (*GetWorkflowResponse, error) {
 	return GetWorkflow(ctx, req, append(c, opt...)...)
 }
 
@@ -3252,8 +3251,8 @@ type GetWorkflowReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetWorkflowReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetWorkflowReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3299,7 +3298,7 @@ GetWorkflowResponse is a response for GetWorkflow
 https://developer.github.com/v3/actions/workflows/#get-a-workflow
 */
 type GetWorkflowResponse struct {
-	common.Response
+	requests.Response
 	request *GetWorkflowReq
 	Data    components.Workflow
 }
@@ -3313,8 +3312,8 @@ Get a workflow run.
 
 https://developer.github.com/v3/actions/workflow-runs/#get-a-workflow-run
 */
-func GetWorkflowRun(ctx context.Context, req *GetWorkflowRunReq, opt ...options.Option) (*GetWorkflowRunResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetWorkflowRun(ctx context.Context, req *GetWorkflowRunReq, opt ...requests.Option) (*GetWorkflowRunResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3349,7 +3348,7 @@ Get a workflow run.
 
 https://developer.github.com/v3/actions/workflow-runs/#get-a-workflow-run
 */
-func (c Client) GetWorkflowRun(ctx context.Context, req *GetWorkflowRunReq, opt ...options.Option) (*GetWorkflowRunResponse, error) {
+func (c Client) GetWorkflowRun(ctx context.Context, req *GetWorkflowRunReq, opt ...requests.Option) (*GetWorkflowRunResponse, error) {
 	return GetWorkflowRun(ctx, req, append(c, opt...)...)
 }
 
@@ -3366,8 +3365,8 @@ type GetWorkflowRunReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3413,7 +3412,7 @@ GetWorkflowRunResponse is a response for GetWorkflowRun
 https://developer.github.com/v3/actions/workflow-runs/#get-a-workflow-run
 */
 type GetWorkflowRunResponse struct {
-	common.Response
+	requests.Response
 	request *GetWorkflowRunReq
 	Data    components.WorkflowRun
 }
@@ -3427,8 +3426,8 @@ Get workflow run usage.
 
 https://developer.github.com/v3/actions/workflow-runs/#get-workflow-run-usage
 */
-func GetWorkflowRunUsage(ctx context.Context, req *GetWorkflowRunUsageReq, opt ...options.Option) (*GetWorkflowRunUsageResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetWorkflowRunUsage(ctx context.Context, req *GetWorkflowRunUsageReq, opt ...requests.Option) (*GetWorkflowRunUsageResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3463,7 +3462,7 @@ Get workflow run usage.
 
 https://developer.github.com/v3/actions/workflow-runs/#get-workflow-run-usage
 */
-func (c Client) GetWorkflowRunUsage(ctx context.Context, req *GetWorkflowRunUsageReq, opt ...options.Option) (*GetWorkflowRunUsageResponse, error) {
+func (c Client) GetWorkflowRunUsage(ctx context.Context, req *GetWorkflowRunUsageReq, opt ...requests.Option) (*GetWorkflowRunUsageResponse, error) {
 	return GetWorkflowRunUsage(ctx, req, append(c, opt...)...)
 }
 
@@ -3480,8 +3479,8 @@ type GetWorkflowRunUsageReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetWorkflowRunUsageReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetWorkflowRunUsageReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3527,7 +3526,7 @@ GetWorkflowRunUsageResponse is a response for GetWorkflowRunUsage
 https://developer.github.com/v3/actions/workflow-runs/#get-workflow-run-usage
 */
 type GetWorkflowRunUsageResponse struct {
-	common.Response
+	requests.Response
 	request *GetWorkflowRunUsageReq
 	Data    components.WorkflowRunUsage
 }
@@ -3541,8 +3540,8 @@ Get workflow usage.
 
 https://developer.github.com/v3/actions/workflows/#get-workflow-usage
 */
-func GetWorkflowUsage(ctx context.Context, req *GetWorkflowUsageReq, opt ...options.Option) (*GetWorkflowUsageResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetWorkflowUsage(ctx context.Context, req *GetWorkflowUsageReq, opt ...requests.Option) (*GetWorkflowUsageResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3577,7 +3576,7 @@ Get workflow usage.
 
 https://developer.github.com/v3/actions/workflows/#get-workflow-usage
 */
-func (c Client) GetWorkflowUsage(ctx context.Context, req *GetWorkflowUsageReq, opt ...options.Option) (*GetWorkflowUsageResponse, error) {
+func (c Client) GetWorkflowUsage(ctx context.Context, req *GetWorkflowUsageReq, opt ...requests.Option) (*GetWorkflowUsageResponse, error) {
 	return GetWorkflowUsage(ctx, req, append(c, opt...)...)
 }
 
@@ -3594,8 +3593,8 @@ type GetWorkflowUsageReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetWorkflowUsageReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetWorkflowUsageReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3641,7 +3640,7 @@ GetWorkflowUsageResponse is a response for GetWorkflowUsage
 https://developer.github.com/v3/actions/workflows/#get-workflow-usage
 */
 type GetWorkflowUsageResponse struct {
-	common.Response
+	requests.Response
 	request *GetWorkflowUsageReq
 	Data    components.WorkflowUsage
 }
@@ -3655,8 +3654,8 @@ List artifacts for a repository.
 
 https://developer.github.com/v3/actions/artifacts/#list-artifacts-for-a-repository
 */
-func ListArtifactsForRepo(ctx context.Context, req *ListArtifactsForRepoReq, opt ...options.Option) (*ListArtifactsForRepoResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListArtifactsForRepo(ctx context.Context, req *ListArtifactsForRepoReq, opt ...requests.Option) (*ListArtifactsForRepoResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3691,7 +3690,7 @@ List artifacts for a repository.
 
 https://developer.github.com/v3/actions/artifacts/#list-artifacts-for-a-repository
 */
-func (c Client) ListArtifactsForRepo(ctx context.Context, req *ListArtifactsForRepoReq, opt ...options.Option) (*ListArtifactsForRepoResponse, error) {
+func (c Client) ListArtifactsForRepo(ctx context.Context, req *ListArtifactsForRepoReq, opt ...requests.Option) (*ListArtifactsForRepoResponse, error) {
 	return ListArtifactsForRepo(ctx, req, append(c, opt...)...)
 }
 
@@ -3713,8 +3712,8 @@ type ListArtifactsForRepoReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListArtifactsForRepoReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListArtifactsForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3776,7 +3775,7 @@ ListArtifactsForRepoResponse is a response for ListArtifactsForRepo
 https://developer.github.com/v3/actions/artifacts/#list-artifacts-for-a-repository
 */
 type ListArtifactsForRepoResponse struct {
-	common.Response
+	requests.Response
 	request *ListArtifactsForRepoReq
 	Data    ListArtifactsForRepoResponseBody
 }
@@ -3790,8 +3789,8 @@ List jobs for a workflow run.
 
 https://developer.github.com/v3/actions/workflow-jobs/#list-jobs-for-a-workflow-run
 */
-func ListJobsForWorkflowRun(ctx context.Context, req *ListJobsForWorkflowRunReq, opt ...options.Option) (*ListJobsForWorkflowRunResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListJobsForWorkflowRun(ctx context.Context, req *ListJobsForWorkflowRunReq, opt ...requests.Option) (*ListJobsForWorkflowRunResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3826,7 +3825,7 @@ List jobs for a workflow run.
 
 https://developer.github.com/v3/actions/workflow-jobs/#list-jobs-for-a-workflow-run
 */
-func (c Client) ListJobsForWorkflowRun(ctx context.Context, req *ListJobsForWorkflowRunReq, opt ...options.Option) (*ListJobsForWorkflowRunResponse, error) {
+func (c Client) ListJobsForWorkflowRun(ctx context.Context, req *ListJobsForWorkflowRunReq, opt ...requests.Option) (*ListJobsForWorkflowRunResponse, error) {
 	return ListJobsForWorkflowRun(ctx, req, append(c, opt...)...)
 }
 
@@ -3857,8 +3856,8 @@ type ListJobsForWorkflowRunReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListJobsForWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListJobsForWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3923,7 +3922,7 @@ ListJobsForWorkflowRunResponse is a response for ListJobsForWorkflowRun
 https://developer.github.com/v3/actions/workflow-jobs/#list-jobs-for-a-workflow-run
 */
 type ListJobsForWorkflowRunResponse struct {
-	common.Response
+	requests.Response
 	request *ListJobsForWorkflowRunReq
 	Data    ListJobsForWorkflowRunResponseBody
 }
@@ -3937,8 +3936,8 @@ List organization secrets.
 
 https://developer.github.com/v3/actions/secrets/#list-organization-secrets
 */
-func ListOrgSecrets(ctx context.Context, req *ListOrgSecretsReq, opt ...options.Option) (*ListOrgSecretsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListOrgSecrets(ctx context.Context, req *ListOrgSecretsReq, opt ...requests.Option) (*ListOrgSecretsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -3973,7 +3972,7 @@ List organization secrets.
 
 https://developer.github.com/v3/actions/secrets/#list-organization-secrets
 */
-func (c Client) ListOrgSecrets(ctx context.Context, req *ListOrgSecretsReq, opt ...options.Option) (*ListOrgSecretsResponse, error) {
+func (c Client) ListOrgSecrets(ctx context.Context, req *ListOrgSecretsReq, opt ...requests.Option) (*ListOrgSecretsResponse, error) {
 	return ListOrgSecrets(ctx, req, append(c, opt...)...)
 }
 
@@ -3994,8 +3993,8 @@ type ListOrgSecretsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListOrgSecretsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListOrgSecretsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4057,7 +4056,7 @@ ListOrgSecretsResponse is a response for ListOrgSecrets
 https://developer.github.com/v3/actions/secrets/#list-organization-secrets
 */
 type ListOrgSecretsResponse struct {
-	common.Response
+	requests.Response
 	request *ListOrgSecretsReq
 	Data    ListOrgSecretsResponseBody
 }
@@ -4071,8 +4070,8 @@ List repository secrets.
 
 https://developer.github.com/v3/actions/secrets/#list-repository-secrets
 */
-func ListRepoSecrets(ctx context.Context, req *ListRepoSecretsReq, opt ...options.Option) (*ListRepoSecretsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListRepoSecrets(ctx context.Context, req *ListRepoSecretsReq, opt ...requests.Option) (*ListRepoSecretsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4107,7 +4106,7 @@ List repository secrets.
 
 https://developer.github.com/v3/actions/secrets/#list-repository-secrets
 */
-func (c Client) ListRepoSecrets(ctx context.Context, req *ListRepoSecretsReq, opt ...options.Option) (*ListRepoSecretsResponse, error) {
+func (c Client) ListRepoSecrets(ctx context.Context, req *ListRepoSecretsReq, opt ...requests.Option) (*ListRepoSecretsResponse, error) {
 	return ListRepoSecrets(ctx, req, append(c, opt...)...)
 }
 
@@ -4129,8 +4128,8 @@ type ListRepoSecretsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListRepoSecretsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListRepoSecretsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4192,7 +4191,7 @@ ListRepoSecretsResponse is a response for ListRepoSecrets
 https://developer.github.com/v3/actions/secrets/#list-repository-secrets
 */
 type ListRepoSecretsResponse struct {
-	common.Response
+	requests.Response
 	request *ListRepoSecretsReq
 	Data    ListRepoSecretsResponseBody
 }
@@ -4206,8 +4205,8 @@ List repository workflows.
 
 https://developer.github.com/v3/actions/workflows/#list-repository-workflows
 */
-func ListRepoWorkflows(ctx context.Context, req *ListRepoWorkflowsReq, opt ...options.Option) (*ListRepoWorkflowsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListRepoWorkflows(ctx context.Context, req *ListRepoWorkflowsReq, opt ...requests.Option) (*ListRepoWorkflowsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4242,7 +4241,7 @@ List repository workflows.
 
 https://developer.github.com/v3/actions/workflows/#list-repository-workflows
 */
-func (c Client) ListRepoWorkflows(ctx context.Context, req *ListRepoWorkflowsReq, opt ...options.Option) (*ListRepoWorkflowsResponse, error) {
+func (c Client) ListRepoWorkflows(ctx context.Context, req *ListRepoWorkflowsReq, opt ...requests.Option) (*ListRepoWorkflowsResponse, error) {
 	return ListRepoWorkflows(ctx, req, append(c, opt...)...)
 }
 
@@ -4264,8 +4263,8 @@ type ListRepoWorkflowsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListRepoWorkflowsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListRepoWorkflowsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4327,7 +4326,7 @@ ListRepoWorkflowsResponse is a response for ListRepoWorkflows
 https://developer.github.com/v3/actions/workflows/#list-repository-workflows
 */
 type ListRepoWorkflowsResponse struct {
-	common.Response
+	requests.Response
 	request *ListRepoWorkflowsReq
 	Data    ListRepoWorkflowsResponseBody
 }
@@ -4341,8 +4340,8 @@ List runner applications for an organization.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#list-runner-applications-for-an-organization
 */
-func ListRunnerApplicationsForOrg(ctx context.Context, req *ListRunnerApplicationsForOrgReq, opt ...options.Option) (*ListRunnerApplicationsForOrgResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListRunnerApplicationsForOrg(ctx context.Context, req *ListRunnerApplicationsForOrgReq, opt ...requests.Option) (*ListRunnerApplicationsForOrgResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4377,7 +4376,7 @@ List runner applications for an organization.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#list-runner-applications-for-an-organization
 */
-func (c Client) ListRunnerApplicationsForOrg(ctx context.Context, req *ListRunnerApplicationsForOrgReq, opt ...options.Option) (*ListRunnerApplicationsForOrgResponse, error) {
+func (c Client) ListRunnerApplicationsForOrg(ctx context.Context, req *ListRunnerApplicationsForOrgReq, opt ...requests.Option) (*ListRunnerApplicationsForOrgResponse, error) {
 	return ListRunnerApplicationsForOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -4392,8 +4391,8 @@ type ListRunnerApplicationsForOrgReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListRunnerApplicationsForOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListRunnerApplicationsForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4439,7 +4438,7 @@ ListRunnerApplicationsForOrgResponse is a response for ListRunnerApplicationsFor
 https://developer.github.com/v3/actions/self-hosted-runners/#list-runner-applications-for-an-organization
 */
 type ListRunnerApplicationsForOrgResponse struct {
-	common.Response
+	requests.Response
 	request *ListRunnerApplicationsForOrgReq
 	Data    []components.RunnerApplication
 }
@@ -4453,8 +4452,8 @@ List runner applications for a repository.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#list-runner-applications-for-a-repository
 */
-func ListRunnerApplicationsForRepo(ctx context.Context, req *ListRunnerApplicationsForRepoReq, opt ...options.Option) (*ListRunnerApplicationsForRepoResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListRunnerApplicationsForRepo(ctx context.Context, req *ListRunnerApplicationsForRepoReq, opt ...requests.Option) (*ListRunnerApplicationsForRepoResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4489,7 +4488,7 @@ List runner applications for a repository.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#list-runner-applications-for-a-repository
 */
-func (c Client) ListRunnerApplicationsForRepo(ctx context.Context, req *ListRunnerApplicationsForRepoReq, opt ...options.Option) (*ListRunnerApplicationsForRepoResponse, error) {
+func (c Client) ListRunnerApplicationsForRepo(ctx context.Context, req *ListRunnerApplicationsForRepoReq, opt ...requests.Option) (*ListRunnerApplicationsForRepoResponse, error) {
 	return ListRunnerApplicationsForRepo(ctx, req, append(c, opt...)...)
 }
 
@@ -4505,8 +4504,8 @@ type ListRunnerApplicationsForRepoReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListRunnerApplicationsForRepoReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListRunnerApplicationsForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4552,7 +4551,7 @@ ListRunnerApplicationsForRepoResponse is a response for ListRunnerApplicationsFo
 https://developer.github.com/v3/actions/self-hosted-runners/#list-runner-applications-for-a-repository
 */
 type ListRunnerApplicationsForRepoResponse struct {
-	common.Response
+	requests.Response
 	request *ListRunnerApplicationsForRepoReq
 	Data    []components.RunnerApplication
 }
@@ -4566,8 +4565,8 @@ List selected repositories for an organization secret.
 
 https://developer.github.com/v3/actions/secrets/#list-selected-repositories-for-an-organization-secret
 */
-func ListSelectedReposForOrgSecret(ctx context.Context, req *ListSelectedReposForOrgSecretReq, opt ...options.Option) (*ListSelectedReposForOrgSecretResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListSelectedReposForOrgSecret(ctx context.Context, req *ListSelectedReposForOrgSecretReq, opt ...requests.Option) (*ListSelectedReposForOrgSecretResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4602,7 +4601,7 @@ List selected repositories for an organization secret.
 
 https://developer.github.com/v3/actions/secrets/#list-selected-repositories-for-an-organization-secret
 */
-func (c Client) ListSelectedReposForOrgSecret(ctx context.Context, req *ListSelectedReposForOrgSecretReq, opt ...options.Option) (*ListSelectedReposForOrgSecretResponse, error) {
+func (c Client) ListSelectedReposForOrgSecret(ctx context.Context, req *ListSelectedReposForOrgSecretReq, opt ...requests.Option) (*ListSelectedReposForOrgSecretResponse, error) {
 	return ListSelectedReposForOrgSecret(ctx, req, append(c, opt...)...)
 }
 
@@ -4620,8 +4619,8 @@ type ListSelectedReposForOrgSecretReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListSelectedReposForOrgSecretReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListSelectedReposForOrgSecretReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4677,7 +4676,7 @@ ListSelectedReposForOrgSecretResponse is a response for ListSelectedReposForOrgS
 https://developer.github.com/v3/actions/secrets/#list-selected-repositories-for-an-organization-secret
 */
 type ListSelectedReposForOrgSecretResponse struct {
-	common.Response
+	requests.Response
 	request *ListSelectedReposForOrgSecretReq
 	Data    ListSelectedReposForOrgSecretResponseBody
 }
@@ -4691,8 +4690,8 @@ List self-hosted runners for an organization.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#list-self-hosted-runners-for-an-organization
 */
-func ListSelfHostedRunnersForOrg(ctx context.Context, req *ListSelfHostedRunnersForOrgReq, opt ...options.Option) (*ListSelfHostedRunnersForOrgResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListSelfHostedRunnersForOrg(ctx context.Context, req *ListSelfHostedRunnersForOrgReq, opt ...requests.Option) (*ListSelfHostedRunnersForOrgResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4727,7 +4726,7 @@ List self-hosted runners for an organization.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#list-self-hosted-runners-for-an-organization
 */
-func (c Client) ListSelfHostedRunnersForOrg(ctx context.Context, req *ListSelfHostedRunnersForOrgReq, opt ...options.Option) (*ListSelfHostedRunnersForOrgResponse, error) {
+func (c Client) ListSelfHostedRunnersForOrg(ctx context.Context, req *ListSelfHostedRunnersForOrgReq, opt ...requests.Option) (*ListSelfHostedRunnersForOrgResponse, error) {
 	return ListSelfHostedRunnersForOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -4748,8 +4747,8 @@ type ListSelfHostedRunnersForOrgReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListSelfHostedRunnersForOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListSelfHostedRunnersForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4811,7 +4810,7 @@ ListSelfHostedRunnersForOrgResponse is a response for ListSelfHostedRunnersForOr
 https://developer.github.com/v3/actions/self-hosted-runners/#list-self-hosted-runners-for-an-organization
 */
 type ListSelfHostedRunnersForOrgResponse struct {
-	common.Response
+	requests.Response
 	request *ListSelfHostedRunnersForOrgReq
 	Data    ListSelfHostedRunnersForOrgResponseBody
 }
@@ -4825,8 +4824,8 @@ List self-hosted runners for a repository.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#list-self-hosted-runners-for-a-repository
 */
-func ListSelfHostedRunnersForRepo(ctx context.Context, req *ListSelfHostedRunnersForRepoReq, opt ...options.Option) (*ListSelfHostedRunnersForRepoResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListSelfHostedRunnersForRepo(ctx context.Context, req *ListSelfHostedRunnersForRepoReq, opt ...requests.Option) (*ListSelfHostedRunnersForRepoResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4861,7 +4860,7 @@ List self-hosted runners for a repository.
 
 https://developer.github.com/v3/actions/self-hosted-runners/#list-self-hosted-runners-for-a-repository
 */
-func (c Client) ListSelfHostedRunnersForRepo(ctx context.Context, req *ListSelfHostedRunnersForRepoReq, opt ...options.Option) (*ListSelfHostedRunnersForRepoResponse, error) {
+func (c Client) ListSelfHostedRunnersForRepo(ctx context.Context, req *ListSelfHostedRunnersForRepoReq, opt ...requests.Option) (*ListSelfHostedRunnersForRepoResponse, error) {
 	return ListSelfHostedRunnersForRepo(ctx, req, append(c, opt...)...)
 }
 
@@ -4883,8 +4882,8 @@ type ListSelfHostedRunnersForRepoReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListSelfHostedRunnersForRepoReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListSelfHostedRunnersForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4946,7 +4945,7 @@ ListSelfHostedRunnersForRepoResponse is a response for ListSelfHostedRunnersForR
 https://developer.github.com/v3/actions/self-hosted-runners/#list-self-hosted-runners-for-a-repository
 */
 type ListSelfHostedRunnersForRepoResponse struct {
-	common.Response
+	requests.Response
 	request *ListSelfHostedRunnersForRepoReq
 	Data    ListSelfHostedRunnersForRepoResponseBody
 }
@@ -4960,8 +4959,8 @@ List workflow run artifacts.
 
 https://developer.github.com/v3/actions/artifacts/#list-workflow-run-artifacts
 */
-func ListWorkflowRunArtifacts(ctx context.Context, req *ListWorkflowRunArtifactsReq, opt ...options.Option) (*ListWorkflowRunArtifactsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListWorkflowRunArtifacts(ctx context.Context, req *ListWorkflowRunArtifactsReq, opt ...requests.Option) (*ListWorkflowRunArtifactsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -4996,7 +4995,7 @@ List workflow run artifacts.
 
 https://developer.github.com/v3/actions/artifacts/#list-workflow-run-artifacts
 */
-func (c Client) ListWorkflowRunArtifacts(ctx context.Context, req *ListWorkflowRunArtifactsReq, opt ...options.Option) (*ListWorkflowRunArtifactsResponse, error) {
+func (c Client) ListWorkflowRunArtifacts(ctx context.Context, req *ListWorkflowRunArtifactsReq, opt ...requests.Option) (*ListWorkflowRunArtifactsResponse, error) {
 	return ListWorkflowRunArtifacts(ctx, req, append(c, opt...)...)
 }
 
@@ -5019,8 +5018,8 @@ type ListWorkflowRunArtifactsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListWorkflowRunArtifactsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListWorkflowRunArtifactsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -5082,7 +5081,7 @@ ListWorkflowRunArtifactsResponse is a response for ListWorkflowRunArtifacts
 https://developer.github.com/v3/actions/artifacts/#list-workflow-run-artifacts
 */
 type ListWorkflowRunArtifactsResponse struct {
-	common.Response
+	requests.Response
 	request *ListWorkflowRunArtifactsReq
 	Data    ListWorkflowRunArtifactsResponseBody
 }
@@ -5096,8 +5095,8 @@ List workflow runs.
 
 https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs
 */
-func ListWorkflowRuns(ctx context.Context, req *ListWorkflowRunsReq, opt ...options.Option) (*ListWorkflowRunsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListWorkflowRuns(ctx context.Context, req *ListWorkflowRunsReq, opt ...requests.Option) (*ListWorkflowRunsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -5132,7 +5131,7 @@ List workflow runs.
 
 https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs
 */
-func (c Client) ListWorkflowRuns(ctx context.Context, req *ListWorkflowRunsReq, opt ...options.Option) (*ListWorkflowRunsResponse, error) {
+func (c Client) ListWorkflowRuns(ctx context.Context, req *ListWorkflowRunsReq, opt ...requests.Option) (*ListWorkflowRunsResponse, error) {
 	return ListWorkflowRuns(ctx, req, append(c, opt...)...)
 }
 
@@ -5183,8 +5182,8 @@ type ListWorkflowRunsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListWorkflowRunsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListWorkflowRunsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -5258,7 +5257,7 @@ ListWorkflowRunsResponse is a response for ListWorkflowRuns
 https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs
 */
 type ListWorkflowRunsResponse struct {
-	common.Response
+	requests.Response
 	request *ListWorkflowRunsReq
 	Data    ListWorkflowRunsResponseBody
 }
@@ -5272,8 +5271,8 @@ List workflow runs for a repository.
 
 https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs-for-a-repository
 */
-func ListWorkflowRunsForRepo(ctx context.Context, req *ListWorkflowRunsForRepoReq, opt ...options.Option) (*ListWorkflowRunsForRepoResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListWorkflowRunsForRepo(ctx context.Context, req *ListWorkflowRunsForRepoReq, opt ...requests.Option) (*ListWorkflowRunsForRepoResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -5308,7 +5307,7 @@ List workflow runs for a repository.
 
 https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs-for-a-repository
 */
-func (c Client) ListWorkflowRunsForRepo(ctx context.Context, req *ListWorkflowRunsForRepoReq, opt ...options.Option) (*ListWorkflowRunsForRepoResponse, error) {
+func (c Client) ListWorkflowRunsForRepo(ctx context.Context, req *ListWorkflowRunsForRepoReq, opt ...requests.Option) (*ListWorkflowRunsForRepoResponse, error) {
 	return ListWorkflowRunsForRepo(ctx, req, append(c, opt...)...)
 }
 
@@ -5358,8 +5357,8 @@ type ListWorkflowRunsForRepoReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListWorkflowRunsForRepoReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListWorkflowRunsForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -5433,7 +5432,7 @@ ListWorkflowRunsForRepoResponse is a response for ListWorkflowRunsForRepo
 https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs-for-a-repository
 */
 type ListWorkflowRunsForRepoResponse struct {
-	common.Response
+	requests.Response
 	request *ListWorkflowRunsForRepoReq
 	Data    ListWorkflowRunsForRepoResponseBody
 }
@@ -5447,8 +5446,8 @@ Re-run a workflow.
 
 https://developer.github.com/v3/actions/workflow-runs/#re-run-a-workflow
 */
-func ReRunWorkflow(ctx context.Context, req *ReRunWorkflowReq, opt ...options.Option) (*ReRunWorkflowResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ReRunWorkflow(ctx context.Context, req *ReRunWorkflowReq, opt ...requests.Option) (*ReRunWorkflowResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -5482,7 +5481,7 @@ Re-run a workflow.
 
 https://developer.github.com/v3/actions/workflow-runs/#re-run-a-workflow
 */
-func (c Client) ReRunWorkflow(ctx context.Context, req *ReRunWorkflowReq, opt ...options.Option) (*ReRunWorkflowResponse, error) {
+func (c Client) ReRunWorkflow(ctx context.Context, req *ReRunWorkflowReq, opt ...requests.Option) (*ReRunWorkflowResponse, error) {
 	return ReRunWorkflow(ctx, req, append(c, opt...)...)
 }
 
@@ -5499,8 +5498,8 @@ type ReRunWorkflowReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ReRunWorkflowReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ReRunWorkflowReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -5546,7 +5545,7 @@ ReRunWorkflowResponse is a response for ReRunWorkflow
 https://developer.github.com/v3/actions/workflow-runs/#re-run-a-workflow
 */
 type ReRunWorkflowResponse struct {
-	common.Response
+	requests.Response
 	request *ReRunWorkflowReq
 }
 
@@ -5559,8 +5558,8 @@ Remove selected repository from an organization secret.
 
 https://developer.github.com/v3/actions/secrets/#remove-selected-repository-from-an-organization-secret
 */
-func RemoveSelectedRepoFromOrgSecret(ctx context.Context, req *RemoveSelectedRepoFromOrgSecretReq, opt ...options.Option) (*RemoveSelectedRepoFromOrgSecretResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func RemoveSelectedRepoFromOrgSecret(ctx context.Context, req *RemoveSelectedRepoFromOrgSecretReq, opt ...requests.Option) (*RemoveSelectedRepoFromOrgSecretResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -5594,7 +5593,7 @@ Remove selected repository from an organization secret.
 
 https://developer.github.com/v3/actions/secrets/#remove-selected-repository-from-an-organization-secret
 */
-func (c Client) RemoveSelectedRepoFromOrgSecret(ctx context.Context, req *RemoveSelectedRepoFromOrgSecretReq, opt ...options.Option) (*RemoveSelectedRepoFromOrgSecretResponse, error) {
+func (c Client) RemoveSelectedRepoFromOrgSecret(ctx context.Context, req *RemoveSelectedRepoFromOrgSecretReq, opt ...requests.Option) (*RemoveSelectedRepoFromOrgSecretResponse, error) {
 	return RemoveSelectedRepoFromOrgSecret(ctx, req, append(c, opt...)...)
 }
 
@@ -5615,8 +5614,8 @@ type RemoveSelectedRepoFromOrgSecretReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *RemoveSelectedRepoFromOrgSecretReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *RemoveSelectedRepoFromOrgSecretReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -5662,7 +5661,7 @@ RemoveSelectedRepoFromOrgSecretResponse is a response for RemoveSelectedRepoFrom
 https://developer.github.com/v3/actions/secrets/#remove-selected-repository-from-an-organization-secret
 */
 type RemoveSelectedRepoFromOrgSecretResponse struct {
-	common.Response
+	requests.Response
 	request *RemoveSelectedRepoFromOrgSecretReq
 }
 
@@ -5675,8 +5674,8 @@ Set selected repositories for an organization secret.
 
 https://developer.github.com/v3/actions/secrets/#set-selected-repositories-for-an-organization-secret
 */
-func SetSelectedReposForOrgSecret(ctx context.Context, req *SetSelectedReposForOrgSecretReq, opt ...options.Option) (*SetSelectedReposForOrgSecretResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func SetSelectedReposForOrgSecret(ctx context.Context, req *SetSelectedReposForOrgSecretReq, opt ...requests.Option) (*SetSelectedReposForOrgSecretResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -5710,7 +5709,7 @@ Set selected repositories for an organization secret.
 
 https://developer.github.com/v3/actions/secrets/#set-selected-repositories-for-an-organization-secret
 */
-func (c Client) SetSelectedReposForOrgSecret(ctx context.Context, req *SetSelectedReposForOrgSecretReq, opt ...options.Option) (*SetSelectedReposForOrgSecretResponse, error) {
+func (c Client) SetSelectedReposForOrgSecret(ctx context.Context, req *SetSelectedReposForOrgSecretReq, opt ...requests.Option) (*SetSelectedReposForOrgSecretResponse, error) {
 	return SetSelectedReposForOrgSecret(ctx, req, append(c, opt...)...)
 }
 
@@ -5729,8 +5728,8 @@ type SetSelectedReposForOrgSecretReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *SetSelectedReposForOrgSecretReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *SetSelectedReposForOrgSecretReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -5796,6 +5795,6 @@ SetSelectedReposForOrgSecretResponse is a response for SetSelectedReposForOrgSec
 https://developer.github.com/v3/actions/secrets/#set-selected-repositories-for-an-organization-secret
 */
 type SetSelectedReposForOrgSecretResponse struct {
-	common.Response
+	requests.Response
 	request *SetSelectedReposForOrgSecretReq
 }

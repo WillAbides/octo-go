@@ -5,10 +5,9 @@ package licenses
 import (
 	"context"
 	"fmt"
-	common "github.com/willabides/octo-go/common"
 	components "github.com/willabides/octo-go/components"
 	internal "github.com/willabides/octo-go/internal"
-	options "github.com/willabides/octo-go/options"
+	requests "github.com/willabides/octo-go/requests"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -17,15 +16,15 @@ import (
 func strPtr(s string) *string { return &s }
 
 // Client is a set of options to apply to requests
-type Client []options.Option
+type Client []requests.Option
 
 // NewClient returns a new Client
-func NewClient(opt ...options.Option) Client {
+func NewClient(opt ...requests.Option) Client {
 	return opt
 }
 
 // Apply implements options.Option
-func (c Client) Apply(opts *options.Options) error {
+func (c Client) Apply(opts *requests.Options) error {
 	for _, o := range c {
 		err := o.Apply(opts)
 		if err != nil {
@@ -44,8 +43,8 @@ Get a license.
 
 https://developer.github.com/v3/licenses/#get-a-license
 */
-func Get(ctx context.Context, req *GetReq, opt ...options.Option) (*GetResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func Get(ctx context.Context, req *GetReq, opt ...requests.Option) (*GetResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -80,7 +79,7 @@ Get a license.
 
 https://developer.github.com/v3/licenses/#get-a-license
 */
-func (c Client) Get(ctx context.Context, req *GetReq, opt ...options.Option) (*GetResponse, error) {
+func (c Client) Get(ctx context.Context, req *GetReq, opt ...requests.Option) (*GetResponse, error) {
 	return Get(ctx, req, append(c, opt...)...)
 }
 
@@ -97,8 +96,8 @@ type GetReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -144,7 +143,7 @@ GetResponse is a response for Get
 https://developer.github.com/v3/licenses/#get-a-license
 */
 type GetResponse struct {
-	common.Response
+	requests.Response
 	request *GetReq
 	Data    components.License
 }
@@ -158,8 +157,8 @@ Get all commonly used licenses.
 
 https://developer.github.com/v3/licenses/#get-all-commonly-used-licenses
 */
-func GetAllCommonlyUsed(ctx context.Context, req *GetAllCommonlyUsedReq, opt ...options.Option) (*GetAllCommonlyUsedResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetAllCommonlyUsed(ctx context.Context, req *GetAllCommonlyUsedReq, opt ...requests.Option) (*GetAllCommonlyUsedResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -194,7 +193,7 @@ Get all commonly used licenses.
 
 https://developer.github.com/v3/licenses/#get-all-commonly-used-licenses
 */
-func (c Client) GetAllCommonlyUsed(ctx context.Context, req *GetAllCommonlyUsedReq, opt ...options.Option) (*GetAllCommonlyUsedResponse, error) {
+func (c Client) GetAllCommonlyUsed(ctx context.Context, req *GetAllCommonlyUsedReq, opt ...requests.Option) (*GetAllCommonlyUsedResponse, error) {
 	return GetAllCommonlyUsed(ctx, req, append(c, opt...)...)
 }
 
@@ -212,8 +211,8 @@ type GetAllCommonlyUsedReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetAllCommonlyUsedReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetAllCommonlyUsedReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -265,7 +264,7 @@ GetAllCommonlyUsedResponse is a response for GetAllCommonlyUsed
 https://developer.github.com/v3/licenses/#get-all-commonly-used-licenses
 */
 type GetAllCommonlyUsedResponse struct {
-	common.Response
+	requests.Response
 	request *GetAllCommonlyUsedReq
 	Data    []components.LicenseSimple
 }
@@ -279,8 +278,8 @@ Get the license for a repository.
 
 https://developer.github.com/v3/licenses/#get-the-license-for-a-repository
 */
-func GetForRepo(ctx context.Context, req *GetForRepoReq, opt ...options.Option) (*GetForRepoResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetForRepo(ctx context.Context, req *GetForRepoReq, opt ...requests.Option) (*GetForRepoResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -315,7 +314,7 @@ Get the license for a repository.
 
 https://developer.github.com/v3/licenses/#get-the-license-for-a-repository
 */
-func (c Client) GetForRepo(ctx context.Context, req *GetForRepoReq, opt ...options.Option) (*GetForRepoResponse, error) {
+func (c Client) GetForRepo(ctx context.Context, req *GetForRepoReq, opt ...requests.Option) (*GetForRepoResponse, error) {
 	return GetForRepo(ctx, req, append(c, opt...)...)
 }
 
@@ -331,8 +330,8 @@ type GetForRepoReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetForRepoReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -378,7 +377,7 @@ GetForRepoResponse is a response for GetForRepo
 https://developer.github.com/v3/licenses/#get-the-license-for-a-repository
 */
 type GetForRepoResponse struct {
-	common.Response
+	requests.Response
 	request *GetForRepoReq
 	Data    components.LicenseContent
 }

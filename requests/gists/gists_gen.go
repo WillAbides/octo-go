@@ -5,10 +5,9 @@ package gists
 import (
 	"context"
 	"fmt"
-	common "github.com/willabides/octo-go/common"
 	components "github.com/willabides/octo-go/components"
 	internal "github.com/willabides/octo-go/internal"
-	options "github.com/willabides/octo-go/options"
+	requests "github.com/willabides/octo-go/requests"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -17,15 +16,15 @@ import (
 func strPtr(s string) *string { return &s }
 
 // Client is a set of options to apply to requests
-type Client []options.Option
+type Client []requests.Option
 
 // NewClient returns a new Client
-func NewClient(opt ...options.Option) Client {
+func NewClient(opt ...requests.Option) Client {
 	return opt
 }
 
 // Apply implements options.Option
-func (c Client) Apply(opts *options.Options) error {
+func (c Client) Apply(opts *requests.Options) error {
 	for _, o := range c {
 		err := o.Apply(opts)
 		if err != nil {
@@ -44,8 +43,8 @@ Check if a gist is starred.
 
 https://developer.github.com/v3/gists/#check-if-a-gist-is-starred
 */
-func CheckIsStarred(ctx context.Context, req *CheckIsStarredReq, opt ...options.Option) (*CheckIsStarredResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CheckIsStarred(ctx context.Context, req *CheckIsStarredReq, opt ...requests.Option) (*CheckIsStarredResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -79,7 +78,7 @@ Check if a gist is starred.
 
 https://developer.github.com/v3/gists/#check-if-a-gist-is-starred
 */
-func (c Client) CheckIsStarred(ctx context.Context, req *CheckIsStarredReq, opt ...options.Option) (*CheckIsStarredResponse, error) {
+func (c Client) CheckIsStarred(ctx context.Context, req *CheckIsStarredReq, opt ...requests.Option) (*CheckIsStarredResponse, error) {
 	return CheckIsStarred(ctx, req, append(c, opt...)...)
 }
 
@@ -96,8 +95,8 @@ type CheckIsStarredReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CheckIsStarredReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CheckIsStarredReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -143,7 +142,7 @@ CheckIsStarredResponse is a response for CheckIsStarred
 https://developer.github.com/v3/gists/#check-if-a-gist-is-starred
 */
 type CheckIsStarredResponse struct {
-	common.Response
+	requests.Response
 	request *CheckIsStarredReq
 }
 
@@ -156,8 +155,8 @@ Create a gist.
 
 https://developer.github.com/v3/gists/#create-a-gist
 */
-func Create(ctx context.Context, req *CreateReq, opt ...options.Option) (*CreateResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func Create(ctx context.Context, req *CreateReq, opt ...requests.Option) (*CreateResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -192,7 +191,7 @@ Create a gist.
 
 https://developer.github.com/v3/gists/#create-a-gist
 */
-func (c Client) Create(ctx context.Context, req *CreateReq, opt ...options.Option) (*CreateResponse, error) {
+func (c Client) Create(ctx context.Context, req *CreateReq, opt ...requests.Option) (*CreateResponse, error) {
 	return Create(ctx, req, append(c, opt...)...)
 }
 
@@ -207,8 +206,8 @@ type CreateReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -281,7 +280,7 @@ CreateResponse is a response for Create
 https://developer.github.com/v3/gists/#create-a-gist
 */
 type CreateResponse struct {
-	common.Response
+	requests.Response
 	request *CreateReq
 	Data    components.GistFull
 }
@@ -295,8 +294,8 @@ Create a gist comment.
 
 https://developer.github.com/v3/gists/comments/#create-a-gist-comment
 */
-func CreateComment(ctx context.Context, req *CreateCommentReq, opt ...options.Option) (*CreateCommentResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateComment(ctx context.Context, req *CreateCommentReq, opt ...requests.Option) (*CreateCommentResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -331,7 +330,7 @@ Create a gist comment.
 
 https://developer.github.com/v3/gists/comments/#create-a-gist-comment
 */
-func (c Client) CreateComment(ctx context.Context, req *CreateCommentReq, opt ...options.Option) (*CreateCommentResponse, error) {
+func (c Client) CreateComment(ctx context.Context, req *CreateCommentReq, opt ...requests.Option) (*CreateCommentResponse, error) {
 	return CreateComment(ctx, req, append(c, opt...)...)
 }
 
@@ -349,8 +348,8 @@ type CreateCommentReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateCommentReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -410,7 +409,7 @@ CreateCommentResponse is a response for CreateComment
 https://developer.github.com/v3/gists/comments/#create-a-gist-comment
 */
 type CreateCommentResponse struct {
-	common.Response
+	requests.Response
 	request *CreateCommentReq
 	Data    components.GistComment
 }
@@ -424,8 +423,8 @@ Delete a gist.
 
 https://developer.github.com/v3/gists/#delete-a-gist
 */
-func Delete(ctx context.Context, req *DeleteReq, opt ...options.Option) (*DeleteResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func Delete(ctx context.Context, req *DeleteReq, opt ...requests.Option) (*DeleteResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -459,7 +458,7 @@ Delete a gist.
 
 https://developer.github.com/v3/gists/#delete-a-gist
 */
-func (c Client) Delete(ctx context.Context, req *DeleteReq, opt ...options.Option) (*DeleteResponse, error) {
+func (c Client) Delete(ctx context.Context, req *DeleteReq, opt ...requests.Option) (*DeleteResponse, error) {
 	return Delete(ctx, req, append(c, opt...)...)
 }
 
@@ -476,8 +475,8 @@ type DeleteReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeleteReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeleteReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -523,7 +522,7 @@ DeleteResponse is a response for Delete
 https://developer.github.com/v3/gists/#delete-a-gist
 */
 type DeleteResponse struct {
-	common.Response
+	requests.Response
 	request *DeleteReq
 }
 
@@ -536,8 +535,8 @@ Delete a gist comment.
 
 https://developer.github.com/v3/gists/comments/#delete-a-gist-comment
 */
-func DeleteComment(ctx context.Context, req *DeleteCommentReq, opt ...options.Option) (*DeleteCommentResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DeleteComment(ctx context.Context, req *DeleteCommentReq, opt ...requests.Option) (*DeleteCommentResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -571,7 +570,7 @@ Delete a gist comment.
 
 https://developer.github.com/v3/gists/comments/#delete-a-gist-comment
 */
-func (c Client) DeleteComment(ctx context.Context, req *DeleteCommentReq, opt ...options.Option) (*DeleteCommentResponse, error) {
+func (c Client) DeleteComment(ctx context.Context, req *DeleteCommentReq, opt ...requests.Option) (*DeleteCommentResponse, error) {
 	return DeleteComment(ctx, req, append(c, opt...)...)
 }
 
@@ -591,8 +590,8 @@ type DeleteCommentReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeleteCommentReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeleteCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -638,7 +637,7 @@ DeleteCommentResponse is a response for DeleteComment
 https://developer.github.com/v3/gists/comments/#delete-a-gist-comment
 */
 type DeleteCommentResponse struct {
-	common.Response
+	requests.Response
 	request *DeleteCommentReq
 }
 
@@ -651,8 +650,8 @@ Fork a gist.
 
 https://developer.github.com/v3/gists/#fork-a-gist
 */
-func Fork(ctx context.Context, req *ForkReq, opt ...options.Option) (*ForkResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func Fork(ctx context.Context, req *ForkReq, opt ...requests.Option) (*ForkResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -687,7 +686,7 @@ Fork a gist.
 
 https://developer.github.com/v3/gists/#fork-a-gist
 */
-func (c Client) Fork(ctx context.Context, req *ForkReq, opt ...options.Option) (*ForkResponse, error) {
+func (c Client) Fork(ctx context.Context, req *ForkReq, opt ...requests.Option) (*ForkResponse, error) {
 	return Fork(ctx, req, append(c, opt...)...)
 }
 
@@ -704,8 +703,8 @@ type ForkReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ForkReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ForkReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -751,7 +750,7 @@ ForkResponse is a response for Fork
 https://developer.github.com/v3/gists/#fork-a-gist
 */
 type ForkResponse struct {
-	common.Response
+	requests.Response
 	request *ForkReq
 	Data    components.BaseGist
 }
@@ -765,8 +764,8 @@ Get a gist.
 
 https://developer.github.com/v3/gists/#get-a-gist
 */
-func Get(ctx context.Context, req *GetReq, opt ...options.Option) (*GetResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func Get(ctx context.Context, req *GetReq, opt ...requests.Option) (*GetResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -801,7 +800,7 @@ Get a gist.
 
 https://developer.github.com/v3/gists/#get-a-gist
 */
-func (c Client) Get(ctx context.Context, req *GetReq, opt ...options.Option) (*GetResponse, error) {
+func (c Client) Get(ctx context.Context, req *GetReq, opt ...requests.Option) (*GetResponse, error) {
 	return Get(ctx, req, append(c, opt...)...)
 }
 
@@ -818,8 +817,8 @@ type GetReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -865,7 +864,7 @@ GetResponse is a response for Get
 https://developer.github.com/v3/gists/#get-a-gist
 */
 type GetResponse struct {
-	common.Response
+	requests.Response
 	request *GetReq
 	Data    components.GistFull
 }
@@ -879,8 +878,8 @@ Get a gist comment.
 
 https://developer.github.com/v3/gists/comments/#get-a-gist-comment
 */
-func GetComment(ctx context.Context, req *GetCommentReq, opt ...options.Option) (*GetCommentResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetComment(ctx context.Context, req *GetCommentReq, opt ...requests.Option) (*GetCommentResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -915,7 +914,7 @@ Get a gist comment.
 
 https://developer.github.com/v3/gists/comments/#get-a-gist-comment
 */
-func (c Client) GetComment(ctx context.Context, req *GetCommentReq, opt ...options.Option) (*GetCommentResponse, error) {
+func (c Client) GetComment(ctx context.Context, req *GetCommentReq, opt ...requests.Option) (*GetCommentResponse, error) {
 	return GetComment(ctx, req, append(c, opt...)...)
 }
 
@@ -935,8 +934,8 @@ type GetCommentReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetCommentReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -982,7 +981,7 @@ GetCommentResponse is a response for GetComment
 https://developer.github.com/v3/gists/comments/#get-a-gist-comment
 */
 type GetCommentResponse struct {
-	common.Response
+	requests.Response
 	request *GetCommentReq
 	Data    components.GistComment
 }
@@ -996,8 +995,8 @@ Get a gist revision.
 
 https://developer.github.com/v3/gists/#get-a-gist-revision
 */
-func GetRevision(ctx context.Context, req *GetRevisionReq, opt ...options.Option) (*GetRevisionResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetRevision(ctx context.Context, req *GetRevisionReq, opt ...requests.Option) (*GetRevisionResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1032,7 +1031,7 @@ Get a gist revision.
 
 https://developer.github.com/v3/gists/#get-a-gist-revision
 */
-func (c Client) GetRevision(ctx context.Context, req *GetRevisionReq, opt ...options.Option) (*GetRevisionResponse, error) {
+func (c Client) GetRevision(ctx context.Context, req *GetRevisionReq, opt ...requests.Option) (*GetRevisionResponse, error) {
 	return GetRevision(ctx, req, append(c, opt...)...)
 }
 
@@ -1052,8 +1051,8 @@ type GetRevisionReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetRevisionReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetRevisionReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1099,7 +1098,7 @@ GetRevisionResponse is a response for GetRevision
 https://developer.github.com/v3/gists/#get-a-gist-revision
 */
 type GetRevisionResponse struct {
-	common.Response
+	requests.Response
 	request *GetRevisionReq
 	Data    components.GistFull
 }
@@ -1113,8 +1112,8 @@ List gists for the authenticated user.
 
 https://developer.github.com/v3/gists/#list-gists-for-the-authenticated-user
 */
-func List(ctx context.Context, req *ListReq, opt ...options.Option) (*ListResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func List(ctx context.Context, req *ListReq, opt ...requests.Option) (*ListResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1149,7 +1148,7 @@ List gists for the authenticated user.
 
 https://developer.github.com/v3/gists/#list-gists-for-the-authenticated-user
 */
-func (c Client) List(ctx context.Context, req *ListReq, opt ...options.Option) (*ListResponse, error) {
+func (c Client) List(ctx context.Context, req *ListReq, opt ...requests.Option) (*ListResponse, error) {
 	return List(ctx, req, append(c, opt...)...)
 }
 
@@ -1176,8 +1175,8 @@ type ListReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1232,7 +1231,7 @@ ListResponse is a response for List
 https://developer.github.com/v3/gists/#list-gists-for-the-authenticated-user
 */
 type ListResponse struct {
-	common.Response
+	requests.Response
 	request *ListReq
 	Data    []components.BaseGist
 }
@@ -1246,8 +1245,8 @@ List gist comments.
 
 https://developer.github.com/v3/gists/comments/#list-gist-comments
 */
-func ListComments(ctx context.Context, req *ListCommentsReq, opt ...options.Option) (*ListCommentsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListComments(ctx context.Context, req *ListCommentsReq, opt ...requests.Option) (*ListCommentsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1282,7 +1281,7 @@ List gist comments.
 
 https://developer.github.com/v3/gists/comments/#list-gist-comments
 */
-func (c Client) ListComments(ctx context.Context, req *ListCommentsReq, opt ...options.Option) (*ListCommentsResponse, error) {
+func (c Client) ListComments(ctx context.Context, req *ListCommentsReq, opt ...requests.Option) (*ListCommentsResponse, error) {
 	return ListComments(ctx, req, append(c, opt...)...)
 }
 
@@ -1305,8 +1304,8 @@ type ListCommentsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListCommentsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListCommentsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1358,7 +1357,7 @@ ListCommentsResponse is a response for ListComments
 https://developer.github.com/v3/gists/comments/#list-gist-comments
 */
 type ListCommentsResponse struct {
-	common.Response
+	requests.Response
 	request *ListCommentsReq
 	Data    []components.GistComment
 }
@@ -1372,8 +1371,8 @@ List gist commits.
 
 https://developer.github.com/v3/gists/#list-gist-commits
 */
-func ListCommits(ctx context.Context, req *ListCommitsReq, opt ...options.Option) (*ListCommitsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListCommits(ctx context.Context, req *ListCommitsReq, opt ...requests.Option) (*ListCommitsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1408,7 +1407,7 @@ List gist commits.
 
 https://developer.github.com/v3/gists/#list-gist-commits
 */
-func (c Client) ListCommits(ctx context.Context, req *ListCommitsReq, opt ...options.Option) (*ListCommitsResponse, error) {
+func (c Client) ListCommits(ctx context.Context, req *ListCommitsReq, opt ...requests.Option) (*ListCommitsResponse, error) {
 	return ListCommits(ctx, req, append(c, opt...)...)
 }
 
@@ -1431,8 +1430,8 @@ type ListCommitsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListCommitsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListCommitsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1484,7 +1483,7 @@ ListCommitsResponse is a response for ListCommits
 https://developer.github.com/v3/gists/#list-gist-commits
 */
 type ListCommitsResponse struct {
-	common.Response
+	requests.Response
 	request *ListCommitsReq
 	Data    []components.GistCommit
 }
@@ -1498,8 +1497,8 @@ List gists for a user.
 
 https://developer.github.com/v3/gists/#list-gists-for-a-user
 */
-func ListForUser(ctx context.Context, req *ListForUserReq, opt ...options.Option) (*ListForUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListForUser(ctx context.Context, req *ListForUserReq, opt ...requests.Option) (*ListForUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1534,7 +1533,7 @@ List gists for a user.
 
 https://developer.github.com/v3/gists/#list-gists-for-a-user
 */
-func (c Client) ListForUser(ctx context.Context, req *ListForUserReq, opt ...options.Option) (*ListForUserResponse, error) {
+func (c Client) ListForUser(ctx context.Context, req *ListForUserReq, opt ...requests.Option) (*ListForUserResponse, error) {
 	return ListForUser(ctx, req, append(c, opt...)...)
 }
 
@@ -1562,8 +1561,8 @@ type ListForUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListForUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListForUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1618,7 +1617,7 @@ ListForUserResponse is a response for ListForUser
 https://developer.github.com/v3/gists/#list-gists-for-a-user
 */
 type ListForUserResponse struct {
-	common.Response
+	requests.Response
 	request *ListForUserReq
 	Data    []components.BaseGist
 }
@@ -1632,8 +1631,8 @@ List gist forks.
 
 https://developer.github.com/v3/gists/#list-gist-forks
 */
-func ListForks(ctx context.Context, req *ListForksReq, opt ...options.Option) (*ListForksResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListForks(ctx context.Context, req *ListForksReq, opt ...requests.Option) (*ListForksResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1668,7 +1667,7 @@ List gist forks.
 
 https://developer.github.com/v3/gists/#list-gist-forks
 */
-func (c Client) ListForks(ctx context.Context, req *ListForksReq, opt ...options.Option) (*ListForksResponse, error) {
+func (c Client) ListForks(ctx context.Context, req *ListForksReq, opt ...requests.Option) (*ListForksResponse, error) {
 	return ListForks(ctx, req, append(c, opt...)...)
 }
 
@@ -1691,8 +1690,8 @@ type ListForksReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListForksReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListForksReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1744,7 +1743,7 @@ ListForksResponse is a response for ListForks
 https://developer.github.com/v3/gists/#list-gist-forks
 */
 type ListForksResponse struct {
-	common.Response
+	requests.Response
 	request *ListForksReq
 	Data    []components.GistFull
 }
@@ -1758,8 +1757,8 @@ List public gists.
 
 https://developer.github.com/v3/gists/#list-public-gists
 */
-func ListPublic(ctx context.Context, req *ListPublicReq, opt ...options.Option) (*ListPublicResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListPublic(ctx context.Context, req *ListPublicReq, opt ...requests.Option) (*ListPublicResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1794,7 +1793,7 @@ List public gists.
 
 https://developer.github.com/v3/gists/#list-public-gists
 */
-func (c Client) ListPublic(ctx context.Context, req *ListPublicReq, opt ...options.Option) (*ListPublicResponse, error) {
+func (c Client) ListPublic(ctx context.Context, req *ListPublicReq, opt ...requests.Option) (*ListPublicResponse, error) {
 	return ListPublic(ctx, req, append(c, opt...)...)
 }
 
@@ -1821,8 +1820,8 @@ type ListPublicReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListPublicReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListPublicReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1877,7 +1876,7 @@ ListPublicResponse is a response for ListPublic
 https://developer.github.com/v3/gists/#list-public-gists
 */
 type ListPublicResponse struct {
-	common.Response
+	requests.Response
 	request *ListPublicReq
 	Data    []components.BaseGist
 }
@@ -1891,8 +1890,8 @@ List starred gists.
 
 https://developer.github.com/v3/gists/#list-starred-gists
 */
-func ListStarred(ctx context.Context, req *ListStarredReq, opt ...options.Option) (*ListStarredResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListStarred(ctx context.Context, req *ListStarredReq, opt ...requests.Option) (*ListStarredResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1927,7 +1926,7 @@ List starred gists.
 
 https://developer.github.com/v3/gists/#list-starred-gists
 */
-func (c Client) ListStarred(ctx context.Context, req *ListStarredReq, opt ...options.Option) (*ListStarredResponse, error) {
+func (c Client) ListStarred(ctx context.Context, req *ListStarredReq, opt ...requests.Option) (*ListStarredResponse, error) {
 	return ListStarred(ctx, req, append(c, opt...)...)
 }
 
@@ -1954,8 +1953,8 @@ type ListStarredReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListStarredReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListStarredReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2010,7 +2009,7 @@ ListStarredResponse is a response for ListStarred
 https://developer.github.com/v3/gists/#list-starred-gists
 */
 type ListStarredResponse struct {
-	common.Response
+	requests.Response
 	request *ListStarredReq
 	Data    []components.BaseGist
 }
@@ -2024,8 +2023,8 @@ Star a gist.
 
 https://developer.github.com/v3/gists/#star-a-gist
 */
-func Star(ctx context.Context, req *StarReq, opt ...options.Option) (*StarResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func Star(ctx context.Context, req *StarReq, opt ...requests.Option) (*StarResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2059,7 +2058,7 @@ Star a gist.
 
 https://developer.github.com/v3/gists/#star-a-gist
 */
-func (c Client) Star(ctx context.Context, req *StarReq, opt ...options.Option) (*StarResponse, error) {
+func (c Client) Star(ctx context.Context, req *StarReq, opt ...requests.Option) (*StarResponse, error) {
 	return Star(ctx, req, append(c, opt...)...)
 }
 
@@ -2076,8 +2075,8 @@ type StarReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *StarReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *StarReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2123,7 +2122,7 @@ StarResponse is a response for Star
 https://developer.github.com/v3/gists/#star-a-gist
 */
 type StarResponse struct {
-	common.Response
+	requests.Response
 	request *StarReq
 }
 
@@ -2136,8 +2135,8 @@ Unstar a gist.
 
 https://developer.github.com/v3/gists/#unstar-a-gist
 */
-func Unstar(ctx context.Context, req *UnstarReq, opt ...options.Option) (*UnstarResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func Unstar(ctx context.Context, req *UnstarReq, opt ...requests.Option) (*UnstarResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2171,7 +2170,7 @@ Unstar a gist.
 
 https://developer.github.com/v3/gists/#unstar-a-gist
 */
-func (c Client) Unstar(ctx context.Context, req *UnstarReq, opt ...options.Option) (*UnstarResponse, error) {
+func (c Client) Unstar(ctx context.Context, req *UnstarReq, opt ...requests.Option) (*UnstarResponse, error) {
 	return Unstar(ctx, req, append(c, opt...)...)
 }
 
@@ -2188,8 +2187,8 @@ type UnstarReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UnstarReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *UnstarReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2235,7 +2234,7 @@ UnstarResponse is a response for Unstar
 https://developer.github.com/v3/gists/#unstar-a-gist
 */
 type UnstarResponse struct {
-	common.Response
+	requests.Response
 	request *UnstarReq
 }
 
@@ -2248,8 +2247,8 @@ Update a gist.
 
 https://developer.github.com/v3/gists/#update-a-gist
 */
-func Update(ctx context.Context, req *UpdateReq, opt ...options.Option) (*UpdateResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func Update(ctx context.Context, req *UpdateReq, opt ...requests.Option) (*UpdateResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2284,7 +2283,7 @@ Update a gist.
 
 https://developer.github.com/v3/gists/#update-a-gist
 */
-func (c Client) Update(ctx context.Context, req *UpdateReq, opt ...options.Option) (*UpdateResponse, error) {
+func (c Client) Update(ctx context.Context, req *UpdateReq, opt ...requests.Option) (*UpdateResponse, error) {
 	return Update(ctx, req, append(c, opt...)...)
 }
 
@@ -2302,8 +2301,8 @@ type UpdateReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UpdateReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *UpdateReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2376,7 +2375,7 @@ UpdateResponse is a response for Update
 https://developer.github.com/v3/gists/#update-a-gist
 */
 type UpdateResponse struct {
-	common.Response
+	requests.Response
 	request *UpdateReq
 	Data    components.GistFull
 }
@@ -2390,8 +2389,8 @@ Update a gist comment.
 
 https://developer.github.com/v3/gists/comments/#update-a-gist-comment
 */
-func UpdateComment(ctx context.Context, req *UpdateCommentReq, opt ...options.Option) (*UpdateCommentResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func UpdateComment(ctx context.Context, req *UpdateCommentReq, opt ...requests.Option) (*UpdateCommentResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2426,7 +2425,7 @@ Update a gist comment.
 
 https://developer.github.com/v3/gists/comments/#update-a-gist-comment
 */
-func (c Client) UpdateComment(ctx context.Context, req *UpdateCommentReq, opt ...options.Option) (*UpdateCommentResponse, error) {
+func (c Client) UpdateComment(ctx context.Context, req *UpdateCommentReq, opt ...requests.Option) (*UpdateCommentResponse, error) {
 	return UpdateComment(ctx, req, append(c, opt...)...)
 }
 
@@ -2447,8 +2446,8 @@ type UpdateCommentReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UpdateCommentReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *UpdateCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -2508,7 +2507,7 @@ UpdateCommentResponse is a response for UpdateComment
 https://developer.github.com/v3/gists/comments/#update-a-gist-comment
 */
 type UpdateCommentResponse struct {
-	common.Response
+	requests.Response
 	request *UpdateCommentReq
 	Data    components.GistComment
 }

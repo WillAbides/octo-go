@@ -6,11 +6,11 @@ import (
 
 	"github.com/stretchr/testify/require"
 	"github.com/willabides/octo-go/internal/testutil"
-	"github.com/willabides/octo-go/options"
+	"github.com/willabides/octo-go/requests"
 	"github.com/willabides/octo-go/requests/issues"
 )
 
-func vcrClient(t *testing.T, cas string, opts ...options.Option) issues.Client {
+func vcrClient(t *testing.T, cas string, opts ...requests.Option) issues.Client {
 	return issues.NewClient(testutil.VCRClient(t, cas, opts...))
 }
 

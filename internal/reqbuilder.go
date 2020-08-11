@@ -11,7 +11,7 @@ import (
 	"path"
 	"strings"
 
-	"github.com/willabides/octo-go/options"
+	"github.com/willabides/octo-go/requests"
 )
 
 // RequestBuilder builds http requests
@@ -30,7 +30,7 @@ type RequestBuilder struct {
 	URLPath          string
 }
 
-func (b *RequestBuilder) requestHeaders(opts options.Options) http.Header {
+func (b *RequestBuilder) requestHeaders(opts requests.Options) http.Header {
 	previews := b.Previews
 	headers := b.HeaderVals
 	if opts.RequiredPreviews() {
@@ -85,7 +85,7 @@ func (b *RequestBuilder) setURLQuery(u *url.URL) {
 	u.RawQuery = q.Encode()
 }
 
-func (b *RequestBuilder) requestURL(opts options.Options) (string, error) {
+func (b *RequestBuilder) requestURL(opts requests.Options) (string, error) {
 	expURL := b.ExplicitURL
 	if expURL != "" {
 		if !b.HasAttribute(AttrExplicitURL) {
@@ -113,7 +113,7 @@ func (b *RequestBuilder) requestURL(opts options.Options) (string, error) {
 }
 
 // HTTPRequest returns an http request
-func (b *RequestBuilder) HTTPRequest(ctx context.Context, opts *options.Options) (*http.Request, error) {
+func (b *RequestBuilder) HTTPRequest(ctx context.Context, opts *requests.Options) (*http.Request, error) {
 	var bodyReader io.Reader
 	var err error
 	switch {

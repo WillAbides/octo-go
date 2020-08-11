@@ -5,9 +5,8 @@ package markdown
 import (
 	"context"
 	"fmt"
-	common "github.com/willabides/octo-go/common"
 	internal "github.com/willabides/octo-go/internal"
-	options "github.com/willabides/octo-go/options"
+	requests "github.com/willabides/octo-go/requests"
 	"io"
 	"net/http"
 	"net/url"
@@ -16,15 +15,15 @@ import (
 func strPtr(s string) *string { return &s }
 
 // Client is a set of options to apply to requests
-type Client []options.Option
+type Client []requests.Option
 
 // NewClient returns a new Client
-func NewClient(opt ...options.Option) Client {
+func NewClient(opt ...requests.Option) Client {
 	return opt
 }
 
 // Apply implements options.Option
-func (c Client) Apply(opts *options.Options) error {
+func (c Client) Apply(opts *requests.Options) error {
 	for _, o := range c {
 		err := o.Apply(opts)
 		if err != nil {
@@ -43,8 +42,8 @@ Render a Markdown document.
 
 https://developer.github.com/v3/markdown/#render-a-markdown-document
 */
-func Render(ctx context.Context, req *RenderReq, opt ...options.Option) (*RenderResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func Render(ctx context.Context, req *RenderReq, opt ...requests.Option) (*RenderResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -78,7 +77,7 @@ Render a Markdown document.
 
 https://developer.github.com/v3/markdown/#render-a-markdown-document
 */
-func (c Client) Render(ctx context.Context, req *RenderReq, opt ...options.Option) (*RenderResponse, error) {
+func (c Client) Render(ctx context.Context, req *RenderReq, opt ...requests.Option) (*RenderResponse, error) {
 	return Render(ctx, req, append(c, opt...)...)
 }
 
@@ -93,8 +92,8 @@ type RenderReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *RenderReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *RenderReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -157,7 +156,7 @@ RenderResponse is a response for Render
 https://developer.github.com/v3/markdown/#render-a-markdown-document
 */
 type RenderResponse struct {
-	common.Response
+	requests.Response
 	request *RenderReq
 }
 
@@ -170,8 +169,8 @@ Render a Markdown document in raw mode.
 
 https://developer.github.com/v3/markdown/#render-a-markdown-document-in-raw-mode
 */
-func RenderRaw(ctx context.Context, req *RenderRawReq, opt ...options.Option) (*RenderRawResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func RenderRaw(ctx context.Context, req *RenderRawReq, opt ...requests.Option) (*RenderRawResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -205,7 +204,7 @@ Render a Markdown document in raw mode.
 
 https://developer.github.com/v3/markdown/#render-a-markdown-document-in-raw-mode
 */
-func (c Client) RenderRaw(ctx context.Context, req *RenderRawReq, opt ...options.Option) (*RenderRawResponse, error) {
+func (c Client) RenderRaw(ctx context.Context, req *RenderRawReq, opt ...requests.Option) (*RenderRawResponse, error) {
 	return RenderRaw(ctx, req, append(c, opt...)...)
 }
 
@@ -222,8 +221,8 @@ type RenderRawReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *RenderRawReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *RenderRawReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -269,6 +268,6 @@ RenderRawResponse is a response for RenderRaw
 https://developer.github.com/v3/markdown/#render-a-markdown-document-in-raw-mode
 */
 type RenderRawResponse struct {
-	common.Response
+	requests.Response
 	request *RenderRawReq
 }

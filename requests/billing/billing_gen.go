@@ -5,10 +5,9 @@ package billing
 import (
 	"context"
 	"fmt"
-	common "github.com/willabides/octo-go/common"
 	components "github.com/willabides/octo-go/components"
 	internal "github.com/willabides/octo-go/internal"
-	options "github.com/willabides/octo-go/options"
+	requests "github.com/willabides/octo-go/requests"
 	"net/http"
 	"net/url"
 )
@@ -16,15 +15,15 @@ import (
 func strPtr(s string) *string { return &s }
 
 // Client is a set of options to apply to requests
-type Client []options.Option
+type Client []requests.Option
 
 // NewClient returns a new Client
-func NewClient(opt ...options.Option) Client {
+func NewClient(opt ...requests.Option) Client {
 	return opt
 }
 
 // Apply implements options.Option
-func (c Client) Apply(opts *options.Options) error {
+func (c Client) Apply(opts *requests.Options) error {
 	for _, o := range c {
 		err := o.Apply(opts)
 		if err != nil {
@@ -43,8 +42,8 @@ Get GitHub Actions billing for an enterprise.
 
 https://developer.github.com/v3/billing/#get-github-actions-billing-for-an-enterprise
 */
-func GetGithubActionsBillingGhe(ctx context.Context, req *GetGithubActionsBillingGheReq, opt ...options.Option) (*GetGithubActionsBillingGheResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetGithubActionsBillingGhe(ctx context.Context, req *GetGithubActionsBillingGheReq, opt ...requests.Option) (*GetGithubActionsBillingGheResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -79,7 +78,7 @@ Get GitHub Actions billing for an enterprise.
 
 https://developer.github.com/v3/billing/#get-github-actions-billing-for-an-enterprise
 */
-func (c Client) GetGithubActionsBillingGhe(ctx context.Context, req *GetGithubActionsBillingGheReq, opt ...options.Option) (*GetGithubActionsBillingGheResponse, error) {
+func (c Client) GetGithubActionsBillingGhe(ctx context.Context, req *GetGithubActionsBillingGheReq, opt ...requests.Option) (*GetGithubActionsBillingGheResponse, error) {
 	return GetGithubActionsBillingGhe(ctx, req, append(c, opt...)...)
 }
 
@@ -96,8 +95,8 @@ type GetGithubActionsBillingGheReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetGithubActionsBillingGheReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetGithubActionsBillingGheReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -143,7 +142,7 @@ GetGithubActionsBillingGheResponse is a response for GetGithubActionsBillingGhe
 https://developer.github.com/v3/billing/#get-github-actions-billing-for-an-enterprise
 */
 type GetGithubActionsBillingGheResponse struct {
-	common.Response
+	requests.Response
 	request *GetGithubActionsBillingGheReq
 	Data    components.ActionsBillingUsage
 }
@@ -157,8 +156,8 @@ Get GitHub Actions billing for an organization.
 
 https://developer.github.com/v3/billing/#get-github-actions-billing-for-an-organization
 */
-func GetGithubActionsBillingOrg(ctx context.Context, req *GetGithubActionsBillingOrgReq, opt ...options.Option) (*GetGithubActionsBillingOrgResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetGithubActionsBillingOrg(ctx context.Context, req *GetGithubActionsBillingOrgReq, opt ...requests.Option) (*GetGithubActionsBillingOrgResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -193,7 +192,7 @@ Get GitHub Actions billing for an organization.
 
 https://developer.github.com/v3/billing/#get-github-actions-billing-for-an-organization
 */
-func (c Client) GetGithubActionsBillingOrg(ctx context.Context, req *GetGithubActionsBillingOrgReq, opt ...options.Option) (*GetGithubActionsBillingOrgResponse, error) {
+func (c Client) GetGithubActionsBillingOrg(ctx context.Context, req *GetGithubActionsBillingOrgReq, opt ...requests.Option) (*GetGithubActionsBillingOrgResponse, error) {
 	return GetGithubActionsBillingOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -208,8 +207,8 @@ type GetGithubActionsBillingOrgReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetGithubActionsBillingOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetGithubActionsBillingOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -255,7 +254,7 @@ GetGithubActionsBillingOrgResponse is a response for GetGithubActionsBillingOrg
 https://developer.github.com/v3/billing/#get-github-actions-billing-for-an-organization
 */
 type GetGithubActionsBillingOrgResponse struct {
-	common.Response
+	requests.Response
 	request *GetGithubActionsBillingOrgReq
 	Data    components.ActionsBillingUsage
 }
@@ -269,8 +268,8 @@ Get GitHub Actions billing for a user.
 
 https://developer.github.com/v3/billing/#get-github-actions-billing-for-a-user
 */
-func GetGithubActionsBillingUser(ctx context.Context, req *GetGithubActionsBillingUserReq, opt ...options.Option) (*GetGithubActionsBillingUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetGithubActionsBillingUser(ctx context.Context, req *GetGithubActionsBillingUserReq, opt ...requests.Option) (*GetGithubActionsBillingUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -305,7 +304,7 @@ Get GitHub Actions billing for a user.
 
 https://developer.github.com/v3/billing/#get-github-actions-billing-for-a-user
 */
-func (c Client) GetGithubActionsBillingUser(ctx context.Context, req *GetGithubActionsBillingUserReq, opt ...options.Option) (*GetGithubActionsBillingUserResponse, error) {
+func (c Client) GetGithubActionsBillingUser(ctx context.Context, req *GetGithubActionsBillingUserReq, opt ...requests.Option) (*GetGithubActionsBillingUserResponse, error) {
 	return GetGithubActionsBillingUser(ctx, req, append(c, opt...)...)
 }
 
@@ -320,8 +319,8 @@ type GetGithubActionsBillingUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetGithubActionsBillingUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetGithubActionsBillingUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -367,7 +366,7 @@ GetGithubActionsBillingUserResponse is a response for GetGithubActionsBillingUse
 https://developer.github.com/v3/billing/#get-github-actions-billing-for-a-user
 */
 type GetGithubActionsBillingUserResponse struct {
-	common.Response
+	requests.Response
 	request *GetGithubActionsBillingUserReq
 	Data    components.ActionsBillingUsage
 }
@@ -381,8 +380,8 @@ Get GitHub Packages billing for an enterprise.
 
 https://developer.github.com/v3/billing/#get-github-packages-billing-for-an-enterprise
 */
-func GetGithubPackagesBillingGhe(ctx context.Context, req *GetGithubPackagesBillingGheReq, opt ...options.Option) (*GetGithubPackagesBillingGheResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetGithubPackagesBillingGhe(ctx context.Context, req *GetGithubPackagesBillingGheReq, opt ...requests.Option) (*GetGithubPackagesBillingGheResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -417,7 +416,7 @@ Get GitHub Packages billing for an enterprise.
 
 https://developer.github.com/v3/billing/#get-github-packages-billing-for-an-enterprise
 */
-func (c Client) GetGithubPackagesBillingGhe(ctx context.Context, req *GetGithubPackagesBillingGheReq, opt ...options.Option) (*GetGithubPackagesBillingGheResponse, error) {
+func (c Client) GetGithubPackagesBillingGhe(ctx context.Context, req *GetGithubPackagesBillingGheReq, opt ...requests.Option) (*GetGithubPackagesBillingGheResponse, error) {
 	return GetGithubPackagesBillingGhe(ctx, req, append(c, opt...)...)
 }
 
@@ -434,8 +433,8 @@ type GetGithubPackagesBillingGheReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetGithubPackagesBillingGheReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetGithubPackagesBillingGheReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -481,7 +480,7 @@ GetGithubPackagesBillingGheResponse is a response for GetGithubPackagesBillingGh
 https://developer.github.com/v3/billing/#get-github-packages-billing-for-an-enterprise
 */
 type GetGithubPackagesBillingGheResponse struct {
-	common.Response
+	requests.Response
 	request *GetGithubPackagesBillingGheReq
 	Data    components.PackagesBillingUsage
 }
@@ -495,8 +494,8 @@ Get GitHub Packages billing for an organization.
 
 https://developer.github.com/v3/billing/#get-github-packages-billing-for-an-organization
 */
-func GetGithubPackagesBillingOrg(ctx context.Context, req *GetGithubPackagesBillingOrgReq, opt ...options.Option) (*GetGithubPackagesBillingOrgResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetGithubPackagesBillingOrg(ctx context.Context, req *GetGithubPackagesBillingOrgReq, opt ...requests.Option) (*GetGithubPackagesBillingOrgResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -531,7 +530,7 @@ Get GitHub Packages billing for an organization.
 
 https://developer.github.com/v3/billing/#get-github-packages-billing-for-an-organization
 */
-func (c Client) GetGithubPackagesBillingOrg(ctx context.Context, req *GetGithubPackagesBillingOrgReq, opt ...options.Option) (*GetGithubPackagesBillingOrgResponse, error) {
+func (c Client) GetGithubPackagesBillingOrg(ctx context.Context, req *GetGithubPackagesBillingOrgReq, opt ...requests.Option) (*GetGithubPackagesBillingOrgResponse, error) {
 	return GetGithubPackagesBillingOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -546,8 +545,8 @@ type GetGithubPackagesBillingOrgReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetGithubPackagesBillingOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetGithubPackagesBillingOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -593,7 +592,7 @@ GetGithubPackagesBillingOrgResponse is a response for GetGithubPackagesBillingOr
 https://developer.github.com/v3/billing/#get-github-packages-billing-for-an-organization
 */
 type GetGithubPackagesBillingOrgResponse struct {
-	common.Response
+	requests.Response
 	request *GetGithubPackagesBillingOrgReq
 	Data    components.PackagesBillingUsage
 }
@@ -607,8 +606,8 @@ Get GitHub Packages billing for a user.
 
 https://developer.github.com/v3/billing/#get-github-packages-billing-for-a-user
 */
-func GetGithubPackagesBillingUser(ctx context.Context, req *GetGithubPackagesBillingUserReq, opt ...options.Option) (*GetGithubPackagesBillingUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetGithubPackagesBillingUser(ctx context.Context, req *GetGithubPackagesBillingUserReq, opt ...requests.Option) (*GetGithubPackagesBillingUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -643,7 +642,7 @@ Get GitHub Packages billing for a user.
 
 https://developer.github.com/v3/billing/#get-github-packages-billing-for-a-user
 */
-func (c Client) GetGithubPackagesBillingUser(ctx context.Context, req *GetGithubPackagesBillingUserReq, opt ...options.Option) (*GetGithubPackagesBillingUserResponse, error) {
+func (c Client) GetGithubPackagesBillingUser(ctx context.Context, req *GetGithubPackagesBillingUserReq, opt ...requests.Option) (*GetGithubPackagesBillingUserResponse, error) {
 	return GetGithubPackagesBillingUser(ctx, req, append(c, opt...)...)
 }
 
@@ -658,8 +657,8 @@ type GetGithubPackagesBillingUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetGithubPackagesBillingUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetGithubPackagesBillingUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -705,7 +704,7 @@ GetGithubPackagesBillingUserResponse is a response for GetGithubPackagesBillingU
 https://developer.github.com/v3/billing/#get-github-packages-billing-for-a-user
 */
 type GetGithubPackagesBillingUserResponse struct {
-	common.Response
+	requests.Response
 	request *GetGithubPackagesBillingUserReq
 	Data    components.PackagesBillingUsage
 }
@@ -719,8 +718,8 @@ Get shared storage billing for an enterprise.
 
 https://developer.github.com/v3/billing/#get-shared-storage-billing-for-an-enterprise
 */
-func GetSharedStorageBillingGhe(ctx context.Context, req *GetSharedStorageBillingGheReq, opt ...options.Option) (*GetSharedStorageBillingGheResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetSharedStorageBillingGhe(ctx context.Context, req *GetSharedStorageBillingGheReq, opt ...requests.Option) (*GetSharedStorageBillingGheResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -755,7 +754,7 @@ Get shared storage billing for an enterprise.
 
 https://developer.github.com/v3/billing/#get-shared-storage-billing-for-an-enterprise
 */
-func (c Client) GetSharedStorageBillingGhe(ctx context.Context, req *GetSharedStorageBillingGheReq, opt ...options.Option) (*GetSharedStorageBillingGheResponse, error) {
+func (c Client) GetSharedStorageBillingGhe(ctx context.Context, req *GetSharedStorageBillingGheReq, opt ...requests.Option) (*GetSharedStorageBillingGheResponse, error) {
 	return GetSharedStorageBillingGhe(ctx, req, append(c, opt...)...)
 }
 
@@ -772,8 +771,8 @@ type GetSharedStorageBillingGheReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetSharedStorageBillingGheReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetSharedStorageBillingGheReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -819,7 +818,7 @@ GetSharedStorageBillingGheResponse is a response for GetSharedStorageBillingGhe
 https://developer.github.com/v3/billing/#get-shared-storage-billing-for-an-enterprise
 */
 type GetSharedStorageBillingGheResponse struct {
-	common.Response
+	requests.Response
 	request *GetSharedStorageBillingGheReq
 	Data    components.CombinedBillingUsage
 }
@@ -833,8 +832,8 @@ Get shared storage billing for an organization.
 
 https://developer.github.com/v3/billing/#get-shared-storage-billing-for-an-organization
 */
-func GetSharedStorageBillingOrg(ctx context.Context, req *GetSharedStorageBillingOrgReq, opt ...options.Option) (*GetSharedStorageBillingOrgResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetSharedStorageBillingOrg(ctx context.Context, req *GetSharedStorageBillingOrgReq, opt ...requests.Option) (*GetSharedStorageBillingOrgResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -869,7 +868,7 @@ Get shared storage billing for an organization.
 
 https://developer.github.com/v3/billing/#get-shared-storage-billing-for-an-organization
 */
-func (c Client) GetSharedStorageBillingOrg(ctx context.Context, req *GetSharedStorageBillingOrgReq, opt ...options.Option) (*GetSharedStorageBillingOrgResponse, error) {
+func (c Client) GetSharedStorageBillingOrg(ctx context.Context, req *GetSharedStorageBillingOrgReq, opt ...requests.Option) (*GetSharedStorageBillingOrgResponse, error) {
 	return GetSharedStorageBillingOrg(ctx, req, append(c, opt...)...)
 }
 
@@ -884,8 +883,8 @@ type GetSharedStorageBillingOrgReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetSharedStorageBillingOrgReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetSharedStorageBillingOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -931,7 +930,7 @@ GetSharedStorageBillingOrgResponse is a response for GetSharedStorageBillingOrg
 https://developer.github.com/v3/billing/#get-shared-storage-billing-for-an-organization
 */
 type GetSharedStorageBillingOrgResponse struct {
-	common.Response
+	requests.Response
 	request *GetSharedStorageBillingOrgReq
 	Data    components.CombinedBillingUsage
 }
@@ -945,8 +944,8 @@ Get shared storage billing for a user.
 
 https://developer.github.com/v3/billing/#get-shared-storage-billing-for-a-user
 */
-func GetSharedStorageBillingUser(ctx context.Context, req *GetSharedStorageBillingUserReq, opt ...options.Option) (*GetSharedStorageBillingUserResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetSharedStorageBillingUser(ctx context.Context, req *GetSharedStorageBillingUserReq, opt ...requests.Option) (*GetSharedStorageBillingUserResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -981,7 +980,7 @@ Get shared storage billing for a user.
 
 https://developer.github.com/v3/billing/#get-shared-storage-billing-for-a-user
 */
-func (c Client) GetSharedStorageBillingUser(ctx context.Context, req *GetSharedStorageBillingUserReq, opt ...options.Option) (*GetSharedStorageBillingUserResponse, error) {
+func (c Client) GetSharedStorageBillingUser(ctx context.Context, req *GetSharedStorageBillingUserReq, opt ...requests.Option) (*GetSharedStorageBillingUserResponse, error) {
 	return GetSharedStorageBillingUser(ctx, req, append(c, opt...)...)
 }
 
@@ -996,8 +995,8 @@ type GetSharedStorageBillingUserReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetSharedStorageBillingUserReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetSharedStorageBillingUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1043,7 +1042,7 @@ GetSharedStorageBillingUserResponse is a response for GetSharedStorageBillingUse
 https://developer.github.com/v3/billing/#get-shared-storage-billing-for-a-user
 */
 type GetSharedStorageBillingUserResponse struct {
-	common.Response
+	requests.Response
 	request *GetSharedStorageBillingUserReq
 	Data    components.CombinedBillingUsage
 }

@@ -5,10 +5,9 @@ package git
 import (
 	"context"
 	"fmt"
-	common "github.com/willabides/octo-go/common"
 	components "github.com/willabides/octo-go/components"
 	internal "github.com/willabides/octo-go/internal"
-	options "github.com/willabides/octo-go/options"
+	requests "github.com/willabides/octo-go/requests"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -17,15 +16,15 @@ import (
 func strPtr(s string) *string { return &s }
 
 // Client is a set of options to apply to requests
-type Client []options.Option
+type Client []requests.Option
 
 // NewClient returns a new Client
-func NewClient(opt ...options.Option) Client {
+func NewClient(opt ...requests.Option) Client {
 	return opt
 }
 
 // Apply implements options.Option
-func (c Client) Apply(opts *options.Options) error {
+func (c Client) Apply(opts *requests.Options) error {
 	for _, o := range c {
 		err := o.Apply(opts)
 		if err != nil {
@@ -44,8 +43,8 @@ Create a blob.
 
 https://developer.github.com/v3/git/blobs/#create-a-blob
 */
-func CreateBlob(ctx context.Context, req *CreateBlobReq, opt ...options.Option) (*CreateBlobResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateBlob(ctx context.Context, req *CreateBlobReq, opt ...requests.Option) (*CreateBlobResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -80,7 +79,7 @@ Create a blob.
 
 https://developer.github.com/v3/git/blobs/#create-a-blob
 */
-func (c Client) CreateBlob(ctx context.Context, req *CreateBlobReq, opt ...options.Option) (*CreateBlobResponse, error) {
+func (c Client) CreateBlob(ctx context.Context, req *CreateBlobReq, opt ...requests.Option) (*CreateBlobResponse, error) {
 	return CreateBlob(ctx, req, append(c, opt...)...)
 }
 
@@ -97,8 +96,8 @@ type CreateBlobReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateBlobReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateBlobReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -161,7 +160,7 @@ CreateBlobResponse is a response for CreateBlob
 https://developer.github.com/v3/git/blobs/#create-a-blob
 */
 type CreateBlobResponse struct {
-	common.Response
+	requests.Response
 	request *CreateBlobReq
 	Data    components.ShortBlob
 }
@@ -175,8 +174,8 @@ Create a commit.
 
 https://developer.github.com/v3/git/commits/#create-a-commit
 */
-func CreateCommit(ctx context.Context, req *CreateCommitReq, opt ...options.Option) (*CreateCommitResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateCommit(ctx context.Context, req *CreateCommitReq, opt ...requests.Option) (*CreateCommitResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -211,7 +210,7 @@ Create a commit.
 
 https://developer.github.com/v3/git/commits/#create-a-commit
 */
-func (c Client) CreateCommit(ctx context.Context, req *CreateCommitReq, opt ...options.Option) (*CreateCommitResponse, error) {
+func (c Client) CreateCommit(ctx context.Context, req *CreateCommitReq, opt ...requests.Option) (*CreateCommitResponse, error) {
 	return CreateCommit(ctx, req, append(c, opt...)...)
 }
 
@@ -228,8 +227,8 @@ type CreateCommitReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateCommitReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateCommitReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -361,7 +360,7 @@ CreateCommitResponse is a response for CreateCommit
 https://developer.github.com/v3/git/commits/#create-a-commit
 */
 type CreateCommitResponse struct {
-	common.Response
+	requests.Response
 	request *CreateCommitReq
 	Data    components.GitCommit
 }
@@ -375,8 +374,8 @@ Create a reference.
 
 https://developer.github.com/v3/git/refs/#create-a-reference
 */
-func CreateRef(ctx context.Context, req *CreateRefReq, opt ...options.Option) (*CreateRefResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateRef(ctx context.Context, req *CreateRefReq, opt ...requests.Option) (*CreateRefResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -411,7 +410,7 @@ Create a reference.
 
 https://developer.github.com/v3/git/refs/#create-a-reference
 */
-func (c Client) CreateRef(ctx context.Context, req *CreateRefReq, opt ...options.Option) (*CreateRefResponse, error) {
+func (c Client) CreateRef(ctx context.Context, req *CreateRefReq, opt ...requests.Option) (*CreateRefResponse, error) {
 	return CreateRef(ctx, req, append(c, opt...)...)
 }
 
@@ -428,8 +427,8 @@ type CreateRefReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateRefReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateRefReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -496,7 +495,7 @@ CreateRefResponse is a response for CreateRef
 https://developer.github.com/v3/git/refs/#create-a-reference
 */
 type CreateRefResponse struct {
-	common.Response
+	requests.Response
 	request *CreateRefReq
 	Data    components.GitRef
 }
@@ -510,8 +509,8 @@ Create a tag object.
 
 https://developer.github.com/v3/git/tags/#create-a-tag-object
 */
-func CreateTag(ctx context.Context, req *CreateTagReq, opt ...options.Option) (*CreateTagResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateTag(ctx context.Context, req *CreateTagReq, opt ...requests.Option) (*CreateTagResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -546,7 +545,7 @@ Create a tag object.
 
 https://developer.github.com/v3/git/tags/#create-a-tag-object
 */
-func (c Client) CreateTag(ctx context.Context, req *CreateTagReq, opt ...options.Option) (*CreateTagResponse, error) {
+func (c Client) CreateTag(ctx context.Context, req *CreateTagReq, opt ...requests.Option) (*CreateTagResponse, error) {
 	return CreateTag(ctx, req, append(c, opt...)...)
 }
 
@@ -563,8 +562,8 @@ type CreateTagReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateTagReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateTagReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -652,7 +651,7 @@ CreateTagResponse is a response for CreateTag
 https://developer.github.com/v3/git/tags/#create-a-tag-object
 */
 type CreateTagResponse struct {
-	common.Response
+	requests.Response
 	request *CreateTagReq
 	Data    components.GitTag
 }
@@ -666,8 +665,8 @@ Create a tree.
 
 https://developer.github.com/v3/git/trees/#create-a-tree
 */
-func CreateTree(ctx context.Context, req *CreateTreeReq, opt ...options.Option) (*CreateTreeResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateTree(ctx context.Context, req *CreateTreeReq, opt ...requests.Option) (*CreateTreeResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -702,7 +701,7 @@ Create a tree.
 
 https://developer.github.com/v3/git/trees/#create-a-tree
 */
-func (c Client) CreateTree(ctx context.Context, req *CreateTreeReq, opt ...options.Option) (*CreateTreeResponse, error) {
+func (c Client) CreateTree(ctx context.Context, req *CreateTreeReq, opt ...requests.Option) (*CreateTreeResponse, error) {
 	return CreateTree(ctx, req, append(c, opt...)...)
 }
 
@@ -719,8 +718,8 @@ type CreateTreeReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateTreeReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateTreeReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -822,7 +821,7 @@ CreateTreeResponse is a response for CreateTree
 https://developer.github.com/v3/git/trees/#create-a-tree
 */
 type CreateTreeResponse struct {
-	common.Response
+	requests.Response
 	request *CreateTreeReq
 	Data    components.GitTree
 }
@@ -836,8 +835,8 @@ Delete a reference.
 
 https://developer.github.com/v3/git/refs/#delete-a-reference
 */
-func DeleteRef(ctx context.Context, req *DeleteRefReq, opt ...options.Option) (*DeleteRefResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DeleteRef(ctx context.Context, req *DeleteRefReq, opt ...requests.Option) (*DeleteRefResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -871,7 +870,7 @@ Delete a reference.
 
 https://developer.github.com/v3/git/refs/#delete-a-reference
 */
-func (c Client) DeleteRef(ctx context.Context, req *DeleteRefReq, opt ...options.Option) (*DeleteRefResponse, error) {
+func (c Client) DeleteRef(ctx context.Context, req *DeleteRefReq, opt ...requests.Option) (*DeleteRefResponse, error) {
 	return DeleteRef(ctx, req, append(c, opt...)...)
 }
 
@@ -890,8 +889,8 @@ type DeleteRefReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeleteRefReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeleteRefReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -937,7 +936,7 @@ DeleteRefResponse is a response for DeleteRef
 https://developer.github.com/v3/git/refs/#delete-a-reference
 */
 type DeleteRefResponse struct {
-	common.Response
+	requests.Response
 	request *DeleteRefReq
 }
 
@@ -950,8 +949,8 @@ Get a blob.
 
 https://developer.github.com/v3/git/blobs/#get-a-blob
 */
-func GetBlob(ctx context.Context, req *GetBlobReq, opt ...options.Option) (*GetBlobResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetBlob(ctx context.Context, req *GetBlobReq, opt ...requests.Option) (*GetBlobResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -986,7 +985,7 @@ Get a blob.
 
 https://developer.github.com/v3/git/blobs/#get-a-blob
 */
-func (c Client) GetBlob(ctx context.Context, req *GetBlobReq, opt ...options.Option) (*GetBlobResponse, error) {
+func (c Client) GetBlob(ctx context.Context, req *GetBlobReq, opt ...requests.Option) (*GetBlobResponse, error) {
 	return GetBlob(ctx, req, append(c, opt...)...)
 }
 
@@ -1005,8 +1004,8 @@ type GetBlobReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetBlobReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetBlobReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1052,7 +1051,7 @@ GetBlobResponse is a response for GetBlob
 https://developer.github.com/v3/git/blobs/#get-a-blob
 */
 type GetBlobResponse struct {
-	common.Response
+	requests.Response
 	request *GetBlobReq
 	Data    components.Blob
 }
@@ -1066,8 +1065,8 @@ Get a commit.
 
 https://developer.github.com/v3/git/commits/#get-a-commit
 */
-func GetCommit(ctx context.Context, req *GetCommitReq, opt ...options.Option) (*GetCommitResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetCommit(ctx context.Context, req *GetCommitReq, opt ...requests.Option) (*GetCommitResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1102,7 +1101,7 @@ Get a commit.
 
 https://developer.github.com/v3/git/commits/#get-a-commit
 */
-func (c Client) GetCommit(ctx context.Context, req *GetCommitReq, opt ...options.Option) (*GetCommitResponse, error) {
+func (c Client) GetCommit(ctx context.Context, req *GetCommitReq, opt ...requests.Option) (*GetCommitResponse, error) {
 	return GetCommit(ctx, req, append(c, opt...)...)
 }
 
@@ -1121,8 +1120,8 @@ type GetCommitReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetCommitReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetCommitReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1168,7 +1167,7 @@ GetCommitResponse is a response for GetCommit
 https://developer.github.com/v3/git/commits/#get-a-commit
 */
 type GetCommitResponse struct {
-	common.Response
+	requests.Response
 	request *GetCommitReq
 	Data    components.GitCommit
 }
@@ -1182,8 +1181,8 @@ Get a reference.
 
 https://developer.github.com/v3/git/refs/#get-a-reference
 */
-func GetRef(ctx context.Context, req *GetRefReq, opt ...options.Option) (*GetRefResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetRef(ctx context.Context, req *GetRefReq, opt ...requests.Option) (*GetRefResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1218,7 +1217,7 @@ Get a reference.
 
 https://developer.github.com/v3/git/refs/#get-a-reference
 */
-func (c Client) GetRef(ctx context.Context, req *GetRefReq, opt ...options.Option) (*GetRefResponse, error) {
+func (c Client) GetRef(ctx context.Context, req *GetRefReq, opt ...requests.Option) (*GetRefResponse, error) {
 	return GetRef(ctx, req, append(c, opt...)...)
 }
 
@@ -1237,8 +1236,8 @@ type GetRefReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetRefReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetRefReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1284,7 +1283,7 @@ GetRefResponse is a response for GetRef
 https://developer.github.com/v3/git/refs/#get-a-reference
 */
 type GetRefResponse struct {
-	common.Response
+	requests.Response
 	request *GetRefReq
 	Data    components.GitRef
 }
@@ -1298,8 +1297,8 @@ Get a tag.
 
 https://developer.github.com/v3/git/tags/#get-a-tag
 */
-func GetTag(ctx context.Context, req *GetTagReq, opt ...options.Option) (*GetTagResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetTag(ctx context.Context, req *GetTagReq, opt ...requests.Option) (*GetTagResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1334,7 +1333,7 @@ Get a tag.
 
 https://developer.github.com/v3/git/tags/#get-a-tag
 */
-func (c Client) GetTag(ctx context.Context, req *GetTagReq, opt ...options.Option) (*GetTagResponse, error) {
+func (c Client) GetTag(ctx context.Context, req *GetTagReq, opt ...requests.Option) (*GetTagResponse, error) {
 	return GetTag(ctx, req, append(c, opt...)...)
 }
 
@@ -1353,8 +1352,8 @@ type GetTagReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetTagReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetTagReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1400,7 +1399,7 @@ GetTagResponse is a response for GetTag
 https://developer.github.com/v3/git/tags/#get-a-tag
 */
 type GetTagResponse struct {
-	common.Response
+	requests.Response
 	request *GetTagReq
 	Data    components.GitTag
 }
@@ -1414,8 +1413,8 @@ Get a tree.
 
 https://developer.github.com/v3/git/trees/#get-a-tree
 */
-func GetTree(ctx context.Context, req *GetTreeReq, opt ...options.Option) (*GetTreeResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetTree(ctx context.Context, req *GetTreeReq, opt ...requests.Option) (*GetTreeResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1450,7 +1449,7 @@ Get a tree.
 
 https://developer.github.com/v3/git/trees/#get-a-tree
 */
-func (c Client) GetTree(ctx context.Context, req *GetTreeReq, opt ...options.Option) (*GetTreeResponse, error) {
+func (c Client) GetTree(ctx context.Context, req *GetTreeReq, opt ...requests.Option) (*GetTreeResponse, error) {
 	return GetTree(ctx, req, append(c, opt...)...)
 }
 
@@ -1478,8 +1477,8 @@ type GetTreeReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetTreeReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetTreeReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1528,7 +1527,7 @@ GetTreeResponse is a response for GetTree
 https://developer.github.com/v3/git/trees/#get-a-tree
 */
 type GetTreeResponse struct {
-	common.Response
+	requests.Response
 	request *GetTreeReq
 	Data    components.GitTree
 }
@@ -1542,8 +1541,8 @@ List matching references.
 
 https://developer.github.com/v3/git/refs/#list-matching-references
 */
-func ListMatchingRefs(ctx context.Context, req *ListMatchingRefsReq, opt ...options.Option) (*ListMatchingRefsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListMatchingRefs(ctx context.Context, req *ListMatchingRefsReq, opt ...requests.Option) (*ListMatchingRefsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1578,7 +1577,7 @@ List matching references.
 
 https://developer.github.com/v3/git/refs/#list-matching-references
 */
-func (c Client) ListMatchingRefs(ctx context.Context, req *ListMatchingRefsReq, opt ...options.Option) (*ListMatchingRefsResponse, error) {
+func (c Client) ListMatchingRefs(ctx context.Context, req *ListMatchingRefsReq, opt ...requests.Option) (*ListMatchingRefsResponse, error) {
 	return ListMatchingRefs(ctx, req, append(c, opt...)...)
 }
 
@@ -1603,8 +1602,8 @@ type ListMatchingRefsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListMatchingRefsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListMatchingRefsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1656,7 +1655,7 @@ ListMatchingRefsResponse is a response for ListMatchingRefs
 https://developer.github.com/v3/git/refs/#list-matching-references
 */
 type ListMatchingRefsResponse struct {
-	common.Response
+	requests.Response
 	request *ListMatchingRefsReq
 	Data    []components.GitRef
 }
@@ -1670,8 +1669,8 @@ Update a reference.
 
 https://developer.github.com/v3/git/refs/#update-a-reference
 */
-func UpdateRef(ctx context.Context, req *UpdateRefReq, opt ...options.Option) (*UpdateRefResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func UpdateRef(ctx context.Context, req *UpdateRefReq, opt ...requests.Option) (*UpdateRefResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1706,7 +1705,7 @@ Update a reference.
 
 https://developer.github.com/v3/git/refs/#update-a-reference
 */
-func (c Client) UpdateRef(ctx context.Context, req *UpdateRefReq, opt ...options.Option) (*UpdateRefResponse, error) {
+func (c Client) UpdateRef(ctx context.Context, req *UpdateRefReq, opt ...requests.Option) (*UpdateRefResponse, error) {
 	return UpdateRef(ctx, req, append(c, opt...)...)
 }
 
@@ -1726,8 +1725,8 @@ type UpdateRefReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UpdateRefReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *UpdateRefReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1794,7 +1793,7 @@ UpdateRefResponse is a response for UpdateRef
 https://developer.github.com/v3/git/refs/#update-a-reference
 */
 type UpdateRefResponse struct {
-	common.Response
+	requests.Response
 	request *UpdateRefReq
 	Data    components.GitRef
 }

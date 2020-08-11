@@ -5,10 +5,9 @@ package oauthauthorizations
 import (
 	"context"
 	"fmt"
-	common "github.com/willabides/octo-go/common"
 	components "github.com/willabides/octo-go/components"
 	internal "github.com/willabides/octo-go/internal"
-	options "github.com/willabides/octo-go/options"
+	requests "github.com/willabides/octo-go/requests"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -17,15 +16,15 @@ import (
 func strPtr(s string) *string { return &s }
 
 // Client is a set of options to apply to requests
-type Client []options.Option
+type Client []requests.Option
 
 // NewClient returns a new Client
-func NewClient(opt ...options.Option) Client {
+func NewClient(opt ...requests.Option) Client {
 	return opt
 }
 
 // Apply implements options.Option
-func (c Client) Apply(opts *options.Options) error {
+func (c Client) Apply(opts *requests.Options) error {
 	for _, o := range c {
 		err := o.Apply(opts)
 		if err != nil {
@@ -44,8 +43,8 @@ Create a new authorization.
 
 https://developer.github.com/v3/oauth_authorizations/#create-a-new-authorization
 */
-func CreateAuthorization(ctx context.Context, req *CreateAuthorizationReq, opt ...options.Option) (*CreateAuthorizationResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func CreateAuthorization(ctx context.Context, req *CreateAuthorizationReq, opt ...requests.Option) (*CreateAuthorizationResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -80,7 +79,7 @@ Create a new authorization.
 
 https://developer.github.com/v3/oauth_authorizations/#create-a-new-authorization
 */
-func (c Client) CreateAuthorization(ctx context.Context, req *CreateAuthorizationReq, opt ...options.Option) (*CreateAuthorizationResponse, error) {
+func (c Client) CreateAuthorization(ctx context.Context, req *CreateAuthorizationReq, opt ...requests.Option) (*CreateAuthorizationResponse, error) {
 	return CreateAuthorization(ctx, req, append(c, opt...)...)
 }
 
@@ -95,8 +94,8 @@ type CreateAuthorizationReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *CreateAuthorizationReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *CreateAuthorizationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -171,7 +170,7 @@ CreateAuthorizationResponse is a response for CreateAuthorization
 https://developer.github.com/v3/oauth_authorizations/#create-a-new-authorization
 */
 type CreateAuthorizationResponse struct {
-	common.Response
+	requests.Response
 	request *CreateAuthorizationReq
 	Data    components.Authorization
 }
@@ -185,8 +184,8 @@ Delete an authorization.
 
 https://developer.github.com/v3/oauth_authorizations/#delete-an-authorization
 */
-func DeleteAuthorization(ctx context.Context, req *DeleteAuthorizationReq, opt ...options.Option) (*DeleteAuthorizationResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DeleteAuthorization(ctx context.Context, req *DeleteAuthorizationReq, opt ...requests.Option) (*DeleteAuthorizationResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -220,7 +219,7 @@ Delete an authorization.
 
 https://developer.github.com/v3/oauth_authorizations/#delete-an-authorization
 */
-func (c Client) DeleteAuthorization(ctx context.Context, req *DeleteAuthorizationReq, opt ...options.Option) (*DeleteAuthorizationResponse, error) {
+func (c Client) DeleteAuthorization(ctx context.Context, req *DeleteAuthorizationReq, opt ...requests.Option) (*DeleteAuthorizationResponse, error) {
 	return DeleteAuthorization(ctx, req, append(c, opt...)...)
 }
 
@@ -237,8 +236,8 @@ type DeleteAuthorizationReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeleteAuthorizationReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeleteAuthorizationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -284,7 +283,7 @@ DeleteAuthorizationResponse is a response for DeleteAuthorization
 https://developer.github.com/v3/oauth_authorizations/#delete-an-authorization
 */
 type DeleteAuthorizationResponse struct {
-	common.Response
+	requests.Response
 	request *DeleteAuthorizationReq
 }
 
@@ -297,8 +296,8 @@ Delete a grant.
 
 https://developer.github.com/v3/oauth_authorizations/#delete-a-grant
 */
-func DeleteGrant(ctx context.Context, req *DeleteGrantReq, opt ...options.Option) (*DeleteGrantResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func DeleteGrant(ctx context.Context, req *DeleteGrantReq, opt ...requests.Option) (*DeleteGrantResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -332,7 +331,7 @@ Delete a grant.
 
 https://developer.github.com/v3/oauth_authorizations/#delete-a-grant
 */
-func (c Client) DeleteGrant(ctx context.Context, req *DeleteGrantReq, opt ...options.Option) (*DeleteGrantResponse, error) {
+func (c Client) DeleteGrant(ctx context.Context, req *DeleteGrantReq, opt ...requests.Option) (*DeleteGrantResponse, error) {
 	return DeleteGrant(ctx, req, append(c, opt...)...)
 }
 
@@ -349,8 +348,8 @@ type DeleteGrantReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *DeleteGrantReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *DeleteGrantReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -396,7 +395,7 @@ DeleteGrantResponse is a response for DeleteGrant
 https://developer.github.com/v3/oauth_authorizations/#delete-a-grant
 */
 type DeleteGrantResponse struct {
-	common.Response
+	requests.Response
 	request *DeleteGrantReq
 }
 
@@ -409,8 +408,8 @@ Get a single authorization.
 
 https://developer.github.com/v3/oauth_authorizations/#get-a-single-authorization
 */
-func GetAuthorization(ctx context.Context, req *GetAuthorizationReq, opt ...options.Option) (*GetAuthorizationResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetAuthorization(ctx context.Context, req *GetAuthorizationReq, opt ...requests.Option) (*GetAuthorizationResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -445,7 +444,7 @@ Get a single authorization.
 
 https://developer.github.com/v3/oauth_authorizations/#get-a-single-authorization
 */
-func (c Client) GetAuthorization(ctx context.Context, req *GetAuthorizationReq, opt ...options.Option) (*GetAuthorizationResponse, error) {
+func (c Client) GetAuthorization(ctx context.Context, req *GetAuthorizationReq, opt ...requests.Option) (*GetAuthorizationResponse, error) {
 	return GetAuthorization(ctx, req, append(c, opt...)...)
 }
 
@@ -462,8 +461,8 @@ type GetAuthorizationReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetAuthorizationReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetAuthorizationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -509,7 +508,7 @@ GetAuthorizationResponse is a response for GetAuthorization
 https://developer.github.com/v3/oauth_authorizations/#get-a-single-authorization
 */
 type GetAuthorizationResponse struct {
-	common.Response
+	requests.Response
 	request *GetAuthorizationReq
 	Data    components.Authorization
 }
@@ -523,8 +522,8 @@ Get a single grant.
 
 https://developer.github.com/v3/oauth_authorizations/#get-a-single-grant
 */
-func GetGrant(ctx context.Context, req *GetGrantReq, opt ...options.Option) (*GetGrantResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetGrant(ctx context.Context, req *GetGrantReq, opt ...requests.Option) (*GetGrantResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -559,7 +558,7 @@ Get a single grant.
 
 https://developer.github.com/v3/oauth_authorizations/#get-a-single-grant
 */
-func (c Client) GetGrant(ctx context.Context, req *GetGrantReq, opt ...options.Option) (*GetGrantResponse, error) {
+func (c Client) GetGrant(ctx context.Context, req *GetGrantReq, opt ...requests.Option) (*GetGrantResponse, error) {
 	return GetGrant(ctx, req, append(c, opt...)...)
 }
 
@@ -576,8 +575,8 @@ type GetGrantReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetGrantReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetGrantReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -623,7 +622,7 @@ GetGrantResponse is a response for GetGrant
 https://developer.github.com/v3/oauth_authorizations/#get-a-single-grant
 */
 type GetGrantResponse struct {
-	common.Response
+	requests.Response
 	request *GetGrantReq
 	Data    components.ApplicationGrant
 }
@@ -637,8 +636,8 @@ Get-or-create an authorization for a specific app.
 
 https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app
 */
-func GetOrCreateAuthorizationForApp(ctx context.Context, req *GetOrCreateAuthorizationForAppReq, opt ...options.Option) (*GetOrCreateAuthorizationForAppResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetOrCreateAuthorizationForApp(ctx context.Context, req *GetOrCreateAuthorizationForAppReq, opt ...requests.Option) (*GetOrCreateAuthorizationForAppResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -673,7 +672,7 @@ Get-or-create an authorization for a specific app.
 
 https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app
 */
-func (c Client) GetOrCreateAuthorizationForApp(ctx context.Context, req *GetOrCreateAuthorizationForAppReq, opt ...options.Option) (*GetOrCreateAuthorizationForAppResponse, error) {
+func (c Client) GetOrCreateAuthorizationForApp(ctx context.Context, req *GetOrCreateAuthorizationForAppReq, opt ...requests.Option) (*GetOrCreateAuthorizationForAppResponse, error) {
 	return GetOrCreateAuthorizationForApp(ctx, req, append(c, opt...)...)
 }
 
@@ -689,8 +688,8 @@ type GetOrCreateAuthorizationForAppReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetOrCreateAuthorizationForAppReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetOrCreateAuthorizationForAppReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -762,7 +761,7 @@ GetOrCreateAuthorizationForAppResponse is a response for GetOrCreateAuthorizatio
 https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app
 */
 type GetOrCreateAuthorizationForAppResponse struct {
-	common.Response
+	requests.Response
 	request *GetOrCreateAuthorizationForAppReq
 	Data    components.Authorization
 }
@@ -776,8 +775,8 @@ Get-or-create an authorization for a specific app and fingerprint.
 
 https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app-and-fingerprint
 */
-func GetOrCreateAuthorizationForAppAndFingerprint(ctx context.Context, req *GetOrCreateAuthorizationForAppAndFingerprintReq, opt ...options.Option) (*GetOrCreateAuthorizationForAppAndFingerprintResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func GetOrCreateAuthorizationForAppAndFingerprint(ctx context.Context, req *GetOrCreateAuthorizationForAppAndFingerprintReq, opt ...requests.Option) (*GetOrCreateAuthorizationForAppAndFingerprintResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -812,7 +811,7 @@ Get-or-create an authorization for a specific app and fingerprint.
 
 https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app-and-fingerprint
 */
-func (c Client) GetOrCreateAuthorizationForAppAndFingerprint(ctx context.Context, req *GetOrCreateAuthorizationForAppAndFingerprintReq, opt ...options.Option) (*GetOrCreateAuthorizationForAppAndFingerprintResponse, error) {
+func (c Client) GetOrCreateAuthorizationForAppAndFingerprint(ctx context.Context, req *GetOrCreateAuthorizationForAppAndFingerprintReq, opt ...requests.Option) (*GetOrCreateAuthorizationForAppAndFingerprintResponse, error) {
 	return GetOrCreateAuthorizationForAppAndFingerprint(ctx, req, append(c, opt...)...)
 }
 
@@ -831,8 +830,8 @@ type GetOrCreateAuthorizationForAppAndFingerprintReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *GetOrCreateAuthorizationForAppAndFingerprintReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *GetOrCreateAuthorizationForAppAndFingerprintReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -901,7 +900,7 @@ GetOrCreateAuthorizationForAppAndFingerprintResponse is a response for GetOrCrea
 https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app-and-fingerprint
 */
 type GetOrCreateAuthorizationForAppAndFingerprintResponse struct {
-	common.Response
+	requests.Response
 	request *GetOrCreateAuthorizationForAppAndFingerprintReq
 	Data    components.Authorization
 }
@@ -915,8 +914,8 @@ List your authorizations.
 
 https://developer.github.com/v3/oauth_authorizations/#list-your-authorizations
 */
-func ListAuthorizations(ctx context.Context, req *ListAuthorizationsReq, opt ...options.Option) (*ListAuthorizationsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListAuthorizations(ctx context.Context, req *ListAuthorizationsReq, opt ...requests.Option) (*ListAuthorizationsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -951,7 +950,7 @@ List your authorizations.
 
 https://developer.github.com/v3/oauth_authorizations/#list-your-authorizations
 */
-func (c Client) ListAuthorizations(ctx context.Context, req *ListAuthorizationsReq, opt ...options.Option) (*ListAuthorizationsResponse, error) {
+func (c Client) ListAuthorizations(ctx context.Context, req *ListAuthorizationsReq, opt ...requests.Option) (*ListAuthorizationsResponse, error) {
 	return ListAuthorizations(ctx, req, append(c, opt...)...)
 }
 
@@ -971,8 +970,8 @@ type ListAuthorizationsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListAuthorizationsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListAuthorizationsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1024,7 +1023,7 @@ ListAuthorizationsResponse is a response for ListAuthorizations
 https://developer.github.com/v3/oauth_authorizations/#list-your-authorizations
 */
 type ListAuthorizationsResponse struct {
-	common.Response
+	requests.Response
 	request *ListAuthorizationsReq
 	Data    []components.Authorization
 }
@@ -1038,8 +1037,8 @@ List your grants.
 
 https://developer.github.com/v3/oauth_authorizations/#list-your-grants
 */
-func ListGrants(ctx context.Context, req *ListGrantsReq, opt ...options.Option) (*ListGrantsResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func ListGrants(ctx context.Context, req *ListGrantsReq, opt ...requests.Option) (*ListGrantsResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1074,7 +1073,7 @@ List your grants.
 
 https://developer.github.com/v3/oauth_authorizations/#list-your-grants
 */
-func (c Client) ListGrants(ctx context.Context, req *ListGrantsReq, opt ...options.Option) (*ListGrantsResponse, error) {
+func (c Client) ListGrants(ctx context.Context, req *ListGrantsReq, opt ...requests.Option) (*ListGrantsResponse, error) {
 	return ListGrants(ctx, req, append(c, opt...)...)
 }
 
@@ -1094,8 +1093,8 @@ type ListGrantsReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *ListGrantsReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *ListGrantsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1147,7 +1146,7 @@ ListGrantsResponse is a response for ListGrants
 https://developer.github.com/v3/oauth_authorizations/#list-your-grants
 */
 type ListGrantsResponse struct {
-	common.Response
+	requests.Response
 	request *ListGrantsReq
 	Data    []components.ApplicationGrant
 }
@@ -1161,8 +1160,8 @@ Update an existing authorization.
 
 https://developer.github.com/v3/oauth_authorizations/#update-an-existing-authorization
 */
-func UpdateAuthorization(ctx context.Context, req *UpdateAuthorizationReq, opt ...options.Option) (*UpdateAuthorizationResponse, error) {
-	opts, err := options.BuildOptions(opt...)
+func UpdateAuthorization(ctx context.Context, req *UpdateAuthorizationReq, opt ...requests.Option) (*UpdateAuthorizationResponse, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1197,7 +1196,7 @@ Update an existing authorization.
 
 https://developer.github.com/v3/oauth_authorizations/#update-an-existing-authorization
 */
-func (c Client) UpdateAuthorization(ctx context.Context, req *UpdateAuthorizationReq, opt ...options.Option) (*UpdateAuthorizationResponse, error) {
+func (c Client) UpdateAuthorization(ctx context.Context, req *UpdateAuthorizationReq, opt ...requests.Option) (*UpdateAuthorizationResponse, error) {
 	return UpdateAuthorization(ctx, req, append(c, opt...)...)
 }
 
@@ -1215,8 +1214,8 @@ type UpdateAuthorizationReq struct {
 }
 
 // HTTPRequest builds an *http.Request
-func (r *UpdateAuthorizationReq) HTTPRequest(ctx context.Context, opt ...options.Option) (*http.Request, error) {
-	opts, err := options.BuildOptions(opt...)
+func (r *UpdateAuthorizationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	opts, err := requests.BuildOptions(opt...)
 	if err != nil {
 		return nil, err
 	}
@@ -1291,7 +1290,7 @@ UpdateAuthorizationResponse is a response for UpdateAuthorization
 https://developer.github.com/v3/oauth_authorizations/#update-an-existing-authorization
 */
 type UpdateAuthorizationResponse struct {
-	common.Response
+	requests.Response
 	request *UpdateAuthorizationReq
 	Data    components.Authorization
 }
