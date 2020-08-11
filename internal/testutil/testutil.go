@@ -80,10 +80,8 @@ func AppAuth(t *testing.T) requests.Option {
 }
 
 // AppInstallationAuth returns auth
-func AppInstallationAuth(t *testing.T) requests.Option {
-	appClient := octo.NewClient(AppAuth(t))
-
-	return octo.WithAppInstallationAuth(AppInstallationID, appClient, nil)
+func AppInstallationAuth(authClient []requests.Option) requests.Option {
+	return octo.WithAppInstallationAuth(AppInstallationID, authClient, nil)
 }
 
 // VCRClient returns a vcr client

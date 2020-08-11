@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/require"
+	"github.com/willabides/octo-go"
 	"github.com/willabides/octo-go/internal/testutil"
 	"github.com/willabides/octo-go/requests"
 	"github.com/willabides/octo-go/requests/issues"
@@ -17,9 +18,13 @@ func vcrClient(t *testing.T, cas string, opts ...requests.Option) issues.Client 
 func TestAddLabels(t *testing.T) {
 	t.Run("as_app", func(t *testing.T) {
 		ctx := context.Background()
-		client := vcrClient(t, t.Name(), testutil.AppInstallationAuth(t))
+		vc := vcrClient(t, t.Name())
+		authClient := octo.NewClient(vc...)
+		authClient = append(authClient, testutil.AppAuth(t))
+		client := octo.NewClient(vc...)
+		client = append(client, testutil.AppInstallationAuth(authClient))
 
-		_, err := client.AddLabels(ctx, &issues.AddLabelsReq{
+		_, err := client.Issues().AddLabels(ctx, &issues.AddLabelsReq{
 			Owner:       "WillAbides",
 			Repo:        "octo-go",
 			IssueNumber: 12,
