@@ -10,20 +10,20 @@ Project status: __BETA__
 
 ## Overview
 
-For every API endpoint, octo-cli provides a request struct and a reponse struct. The request struct is used to build 
+For every API endpoint, octo-cli provides a request struct and a response struct. The request struct is used to build 
 the http request, and the response struct is used to handle the api's response. You can use these structs as-is and 
 handle all the http details yourself, or you can let octo-go do the request for you as well. Each endpoint also has a 
 function that accepts the endpoints request struct and returns the response struct.
 
-Let's use the `issues/create` endpoint as an example. You would use `IssuesCreateReq` to build your request.
+Let's use the `issues/create` endpoint as an example. You would use `issues.CreateReq` to build your request.
 
 You can build a request like this:
 
 ```go
-req := octo.IssuesCreateReq{
+req := issues.CreateReq{
     Owner: "myorg",
     Repo:  "myrepo",
-    RequestBody: octo.IssuesCreateReqBody{
+    RequestBody: issues.CreateReqBody{
         Title: octo.String("hello world"),
         Body:  octo.String("greetings from octo-cli"),
         Labels: []string{"test", "hello-world"},
@@ -34,7 +34,7 @@ req := octo.IssuesCreateReq{
 Then you can perform the request with:
 
 ```go
-resp, err := octo.IssuesCreate(ctx, &req)
+resp, err := issues.Create(ctx, &req)
 ```
 
 And finally get the id of the newly created issue with:
@@ -60,7 +60,7 @@ This is the simplest and most common way to authenticate.
 ```go
 myToken := os.Getenv("GITHUB_TOKEN") // or however you want to provide your token
 
-client := octo.NewClient(auth.WithPATAuth(myToken))
+client := octo.NewClient(octo.WithPATAuth(myToken))
 ```
 
 ### GitHub App
@@ -74,7 +74,7 @@ key, err := ioutil.ReadFile("appsecretkey.pem")
 if err != nil {
     log.Fatal(err)
 }
-client := octo.NewClient(auth.WithAppAuth(appID, key))
+client := octo.NewClient(octo.WithAppAuth(appID, key))
 ```
 
 ### GitHub App Installation
@@ -89,7 +89,9 @@ if err != nil {
     log.Fatal(err)
 }
 
-auth := auth.WithAppInstallationAuth(appID, installationID, key, nil)
+instTokenClient := octo.NewClient(octo.WithAppAuth(appID, key))
+
+auth := octo.WithAppInstallationAuth(installationID, instTokenClient, nil)
 client := octo.NewClient(auth)
 ```
 
@@ -105,7 +107,9 @@ if err != nil {
     log.Fatal(err)
 }
 
-auth := octo.WithAppInstallationAuth(appID, installationID, key, &octo.AppsCreateInstallationAccessTokenReqBody{
+instTokenClient := octo.NewClient(octo.WithAppAuth(appID, key))
+
+auth := octo.WithAppInstallationAuth(installationID, instTokenClient, &apps.CreateInstallationAccessTokenReqBody{
     Permissions: map[string]string{
         "deployments": "write",
         "content":     "read",
@@ -133,16 +137,16 @@ func getReleaseBlockers(ctx context.Context, client octo.Client) ([]string, erro
 	var result []string
 
 	// Build the initial request.
-	req := &octo.IssuesListForRepoReq{
-		Owner:   "golang",
-		Repo:    "go",
-		Labels:  octo.String("release-blocker"),
+	req := &issues.ListForRepoReq{
+		Owner:  "golang",
+		Repo:   "go",
+		Labels: octo.String("release-blocker"),
 	}
 
 	// ok will be true as long as there is a next page.
 	for ok := true; ok; {
 		// Get a page of issues.
-		resp, err := client.IssuesListForRepo(ctx, req)
+		resp, err := client.Issues().ListForRepo(ctx, req)
 		if err != nil {
 			return nil, err
 		}

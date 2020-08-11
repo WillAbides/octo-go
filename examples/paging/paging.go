@@ -42,9 +42,7 @@ func getReleaseBlockers(ctx context.Context, client octo.Client) ([]string, erro
 	}
 
 	// ok will be true as long as there is a next page.
-	ok := true
-
-	for ok {
+	for ok := true; ok; {
 		// Get a page of issues.
 		resp, err := client.Issues().ListForRepo(ctx, req)
 		if err != nil {

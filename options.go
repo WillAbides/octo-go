@@ -81,7 +81,7 @@ func WithAppInstallationAuth(installationID int64, client Client, requestBody *a
 	return WithAuthProvider(&appInstallationAuthProvider{
 		installationID: installationID,
 		requestBody:    requestBody,
-		client:         client,
+		opts:           client,
 	})
 }
 

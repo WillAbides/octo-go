@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
+	"github.com/willabides/octo-go/requests"
 	"github.com/willabides/octo-go/requests/apps"
 )
 
@@ -55,7 +56,7 @@ type appInstallationAuthProvider struct {
 	mux            sync.Mutex
 	installationID int64
 	requestBody    *apps.CreateInstallationAccessTokenReqBody
-	client         Client
+	opts           []requests.Option
 	tkn            string
 	expiry         time.Time
 }
@@ -73,7 +74,7 @@ func (p *appInstallationAuthProvider) AuthorizationHeader(ctx context.Context) (
 	if p.requestBody != nil {
 		req.RequestBody = *p.requestBody
 	}
-	resp, err := p.client.Apps().CreateInstallationAccessToken(ctx, req)
+	resp, err := apps.CreateInstallationAccessToken(ctx, req, p.opts...)
 	if err != nil {
 		return "", fmt.Errorf("error creating installation token: %v", err)
 	}
