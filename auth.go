@@ -8,42 +8,27 @@ import (
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
-	"github.com/willabides/octo-go/requests"
 	"github.com/willabides/octo-go/requests/apps"
 )
 
-// PATAuthProvider is an auth provider that uses a Personal Access Token
-type PATAuthProvider struct {
+type patAuthProvider struct {
 	token string
 }
 
-// Apply implements requests.Option
-func (p *PATAuthProvider) Apply(opts *requests.Options) error {
-	opts.SetAuthProvider(p)
-	return nil
-}
-
 // AuthorizationHeader implements AuthProvider
-func (p *PATAuthProvider) AuthorizationHeader(_ context.Context) (string, error) {
+func (p *patAuthProvider) AuthorizationHeader(_ context.Context) (string, error) {
 	return "token " + p.token, nil
 }
 
-// AppAuthProvider provides authentication for a GitHub app
-type AppAuthProvider struct {
+type appAuthProvider struct {
 	mux        sync.Mutex
 	appID      int64
 	privateKey []byte
 	pk         *rsa.PrivateKey
 }
 
-// Apply implements requests.Option
-func (p *AppAuthProvider) Apply(opts *requests.Options) error {
-	opts.SetAuthProvider(p)
-	return nil
-}
-
 // AuthorizationHeader implements AuthProvider
-func (p *AppAuthProvider) AuthorizationHeader(_ context.Context) (string, error) {
+func (p *appAuthProvider) AuthorizationHeader(_ context.Context) (string, error) {
 	p.mux.Lock()
 	defer p.mux.Unlock()
 	if p.pk == nil {
@@ -66,8 +51,7 @@ func (p *AppAuthProvider) AuthorizationHeader(_ context.Context) (string, error)
 	return "bearer " + signed, nil
 }
 
-// AppInstallationAuthProvider provides authentication for a GitHub App installation
-type AppInstallationAuthProvider struct {
+type appInstallationAuthProvider struct {
 	mux            sync.Mutex
 	installationID int64
 	requestBody    *apps.CreateInstallationAccessTokenReqBody
@@ -76,14 +60,8 @@ type AppInstallationAuthProvider struct {
 	expiry         time.Time
 }
 
-// Apply implements requests.Option
-func (p *AppInstallationAuthProvider) Apply(opts *requests.Options) error {
-	opts.SetAuthProvider(p)
-	return nil
-}
-
 // AuthorizationHeader implements AuthProvider
-func (p *AppInstallationAuthProvider) AuthorizationHeader(ctx context.Context) (string, error) {
+func (p *appInstallationAuthProvider) AuthorizationHeader(ctx context.Context) (string, error) {
 	p.mux.Lock()
 	defer p.mux.Unlock()
 	if time.Now().Before(p.expiry.Add(-1 * time.Minute)) {

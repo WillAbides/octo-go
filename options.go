@@ -58,7 +58,7 @@ func WithUserAgent(userAgent string) requests.Option {
 
 // WithPATAuth authenticates requests with a Personal Access Token
 func WithPATAuth(token string) requests.Option {
-	return WithAuthProvider(&PATAuthProvider{
+	return WithAuthProvider(&patAuthProvider{
 		token: token,
 	})
 }
@@ -68,7 +68,7 @@ func WithPATAuth(token string) requests.Option {
 // appID is the GitHub App's id
 // privateKey is the app's private key. It should be the content of a PEM file
 func WithAppAuth(appID int64, privateKey []byte) requests.Option {
-	return WithAuthProvider(&AppAuthProvider{
+	return WithAuthProvider(&appAuthProvider{
 		appID:      appID,
 		privateKey: privateKey,
 	})
@@ -78,7 +78,7 @@ func WithAppAuth(appID int64, privateKey []byte) requests.Option {
 //  client is the client to use when fetching the installation token. It should use WithAppAuth.
 //  requestBody is used to restrict access to the installation token. Leave it nil if you don't want to restrict access.
 func WithAppInstallationAuth(installationID int64, client Client, requestBody *apps.CreateInstallationAccessTokenReqBody) requests.Option {
-	return WithAuthProvider(&AppInstallationAuthProvider{
+	return WithAuthProvider(&appInstallationAuthProvider{
 		installationID: installationID,
 		requestBody:    requestBody,
 		client:         client,
