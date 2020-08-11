@@ -18,7 +18,6 @@ import (
 	"github.com/stretchr/testify/require"
 	"github.com/willabides/octo-go"
 	"github.com/willabides/octo-go/requests"
-	"github.com/willabides/octo-go/requests/apps"
 )
 
 const (
@@ -72,7 +71,7 @@ func PATAuth() requests.Option {
 }
 
 // AppAuth returns auth
-func AppAuth(t *testing.T) requests.Option {
+func AppAuth(t *testing.T) *octo.AppAuthProvider {
 	key := appPrivateKey(t)
 	if key == nil {
 		return nil
@@ -86,8 +85,7 @@ func AppInstallationAuth(t *testing.T) requests.Option {
 	if key == nil {
 		return nil
 	}
-	helper := apps.NewInstallationAuthHelper(AppInstallationID, apps.NewClient(AppAuth(t)), nil)
-	return octo.WithAppInstallationAuth(helper.GetInstallationToken)
+	return octo.WithAppInstallationAuth(AppInstallationID, AppAuth(t), nil)
 }
 
 // VCRClient returns a vcr client

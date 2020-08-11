@@ -2,13 +2,12 @@ package octo
 
 import (
 	"context"
-	"fmt"
 	"net/http"
 	"net/url"
 	"time"
 
-	"github.com/dgrijalva/jwt-go"
 	"github.com/willabides/octo-go/requests"
+	"github.com/willabides/octo-go/requests/apps"
 )
 
 // WithBaseURL set the baseURL to use. Default is https://api.github.com
@@ -61,7 +60,7 @@ func WithUserAgent(userAgent string) requests.Option {
 
 // WithPATAuth authenticates requests with a Personal Access Token
 func WithPATAuth(token string) requests.Option {
-	return WithAuthProvider(&patProvider{
+	return WithAuthProvider(&PATAuthProvider{
 		token: token,
 	})
 }
@@ -70,15 +69,11 @@ func WithPATAuth(token string) requests.Option {
 //
 // appID is the GitHub App's id
 // privateKey is the app's private key. It should be the content of a PEM file
-func WithAppAuth(appID int64, privateKey []byte) requests.Option {
-	pk, err := jwt.ParseRSAPrivateKeyFromPEM(privateKey)
-	if err != nil {
-		return &errOption{err: fmt.Errorf("error parsing private key")}
-	}
-	return WithAuthProvider(&appProvider{
+func WithAppAuth(appID int64, privateKey []byte) *AppAuthProvider {
+	return &AppAuthProvider{
 		appID:      appID,
-		privateKey: pk,
-	})
+		privateKey: privateKey,
+	}
 }
 
 // GetInstallationToken is a function that provides an app installation token.
@@ -86,11 +81,17 @@ func WithAppAuth(appID int64, privateKey []byte) requests.Option {
 type GetInstallationToken func(ctx context.Context) (token string, expiry time.Time, err error)
 
 // WithAppInstallationAuth provides authentication for a GitHub App installation
-//  See apps.InstallationAuthHelper for tokenGetter
-func WithAppInstallationAuth(tokenGetter GetInstallationToken) requests.Option {
-	return WithAuthProvider(&appInstallationProvider{
-		tokenGetter: tokenGetter,
-	})
+//  appAuthProvider is the auth provider used to create the installation token.
+//  requestBody is used to restrict access to the installation token. Leave it nil if you don't want to restrict access.
+//  opt is additional request options for the installation token request.
+func WithAppInstallationAuth(installationID int64, appAuthProvider *AppAuthProvider,
+	requestBody *apps.CreateInstallationAccessTokenReqBody, opt ...requests.Option) *AppInstallationAuthProvider {
+	return &AppInstallationAuthProvider{
+		appAuthProvider: appAuthProvider,
+		installationID:  installationID,
+		requestBody:     requestBody,
+		opts:            opt,
+	}
 }
 
 // WithAuthProvider sets a provider to use in setting the Authentication header
@@ -108,12 +109,4 @@ type optionFunc func(opts *requests.Options) error
 
 func (fn optionFunc) Apply(opts *requests.Options) error {
 	return fn(opts)
-}
-
-type errOption struct {
-	err error
-}
-
-func (e *errOption) Apply(_ *requests.Options) error {
-	return e.err
 }
