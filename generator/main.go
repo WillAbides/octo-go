@@ -136,10 +136,6 @@ func writeAttrsFile(endpoints []*model.Endpoint, pkgPath, pkgName, outputPath st
 			statement.Line()
 		}
 	}))
-	file.Func().Id("init()").Block(
-		jen.Id("operationAttributes = operationAttributesGen"),
-	)
-	file.Id("var operationAttributesGen = map[string][]EndpointAttribute").Block(opIdAttributesDict(endpoints))
 	out, err := os.Create(filepath.Join(outputPath, "attributes_gen.go"))
 	if err != nil {
 		return err

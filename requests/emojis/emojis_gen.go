@@ -92,18 +92,19 @@ func (r *GetReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "emojis/get",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/emojis"),
-		URLQuery:         query,
-		ValidStatuses:    []int{200, 304},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "emojis/get",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/emojis"),
+		URLQuery:           query,
+		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }

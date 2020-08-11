@@ -95,18 +95,19 @@ func (r *BlockUserReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
-		Method:           "PUT",
-		OperationID:      "orgs/block-user",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/orgs/%v/blocks/%v", r.Org, r.Username),
-		URLQuery:         query,
-		ValidStatuses:    []int{204},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{},
+		Method:             "PUT",
+		OperationID:        "orgs/block-user",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/orgs/%v/blocks/%v", r.Org, r.Username),
+		URLQuery:           query,
+		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -210,18 +211,19 @@ func (r *CheckBlockedUserReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
-		Method:           "GET",
-		OperationID:      "orgs/check-blocked-user",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/orgs/%v/blocks/%v", r.Org, r.Username),
-		URLQuery:         query,
-		ValidStatuses:    []int{204},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{},
+		EndpointAttributes: []internal.EndpointAttribute{internal.AttrBoolean},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{},
+		Method:             "GET",
+		OperationID:        "orgs/check-blocked-user",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/orgs/%v/blocks/%v", r.Org, r.Username),
+		URLQuery:           query,
+		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -322,18 +324,19 @@ func (r *CheckMembershipForUserReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
-		Method:           "GET",
-		OperationID:      "orgs/check-membership-for-user",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/orgs/%v/members/%v", r.Org, r.Username),
-		URLQuery:         query,
-		ValidStatuses:    []int{204, 302},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{},
+		Method:             "GET",
+		OperationID:        "orgs/check-membership-for-user",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/orgs/%v/members/%v", r.Org, r.Username),
+		URLQuery:           query,
+		ValidStatuses:      []int{204, 302},
 	}
 	return builder
 }
@@ -437,18 +440,19 @@ func (r *CheckPublicMembershipForUserReq) requestBuilder() *internal.RequestBuil
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
-		Method:           "GET",
-		OperationID:      "orgs/check-public-membership-for-user",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/orgs/%v/public_members/%v", r.Org, r.Username),
-		URLQuery:         query,
-		ValidStatuses:    []int{204},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{},
+		EndpointAttributes: []internal.EndpointAttribute{internal.AttrBoolean},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{},
+		Method:             "GET",
+		OperationID:        "orgs/check-public-membership-for-user",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/orgs/%v/public_members/%v", r.Org, r.Username),
+		URLQuery:           query,
+		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -549,18 +553,19 @@ func (r *ConvertMemberToOutsideCollaboratorReq) requestBuilder() *internal.Reque
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
-		Method:           "PUT",
-		OperationID:      "orgs/convert-member-to-outside-collaborator",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/orgs/%v/outside_collaborators/%v", r.Org, r.Username),
-		URLQuery:         query,
-		ValidStatuses:    []int{202, 204},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{},
+		Method:             "PUT",
+		OperationID:        "orgs/convert-member-to-outside-collaborator",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/orgs/%v/outside_collaborators/%v", r.Org, r.Username),
+		URLQuery:           query,
+		ValidStatuses:      []int{202, 204},
 	}
 	return builder
 }
@@ -661,10 +666,11 @@ func (r *CreateInvitationReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:  []string{},
-		Body:         r.RequestBody,
-		DataStatuses: []int{201},
-		ExplicitURL:  r._url,
+		AllPreviews:        []string{},
+		Body:               r.RequestBody,
+		DataStatuses:       []int{201},
+		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
+		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
@@ -808,10 +814,11 @@ func (r *CreateWebhookReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:  []string{},
-		Body:         r.RequestBody,
-		DataStatuses: []int{201},
-		ExplicitURL:  r._url,
+		AllPreviews:        []string{},
+		Body:               r.RequestBody,
+		DataStatuses:       []int{201},
+		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
+		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
@@ -979,18 +986,19 @@ func (r *DeleteWebhookReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
-		Method:           "DELETE",
-		OperationID:      "orgs/delete-webhook",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/orgs/%v/hooks/%v", r.Org, r.HookId),
-		URLQuery:         query,
-		ValidStatuses:    []int{204},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{},
+		EndpointAttributes: []internal.EndpointAttribute{internal.AttrBoolean},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{},
+		Method:             "DELETE",
+		OperationID:        "orgs/delete-webhook",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/orgs/%v/hooks/%v", r.Org, r.HookId),
+		URLQuery:           query,
+		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -1106,18 +1114,19 @@ func (r *GetReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{"surtur"},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "orgs/get",
-		Previews:         map[string]bool{"surtur": r.SurturPreview},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/orgs/%v", r.Org),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{"surtur"},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "orgs/get",
+		Previews:           map[string]bool{"surtur": r.SurturPreview},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/orgs/%v", r.Org),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -1218,18 +1227,19 @@ func (r *GetMembershipForAuthenticatedUserReq) requestBuilder() *internal.Reques
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "orgs/get-membership-for-authenticated-user",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/user/memberships/orgs/%v", r.Org),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "orgs/get-membership-for-authenticated-user",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/user/memberships/orgs/%v", r.Org),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -1331,18 +1341,19 @@ func (r *GetMembershipForUserReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "orgs/get-membership-for-user",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/orgs/%v/memberships/%v", r.Org, r.Username),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "orgs/get-membership-for-user",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/orgs/%v/memberships/%v", r.Org, r.Username),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -1444,18 +1455,19 @@ func (r *GetWebhookReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "orgs/get-webhook",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/orgs/%v/hooks/%v", r.Org, r.HookId),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "orgs/get-webhook",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/orgs/%v/hooks/%v", r.Org, r.HookId),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -1571,18 +1583,19 @@ func (r *ListReq) requestBuilder() *internal.RequestBuilder {
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "orgs/list",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/organizations"),
-		URLQuery:         query,
-		ValidStatuses:    []int{200, 304},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "orgs/list",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/organizations"),
+		URLQuery:           query,
+		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -1701,18 +1714,19 @@ func (r *ListAppInstallationsReq) requestBuilder() *internal.RequestBuilder {
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{"machine-man"},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "orgs/list-app-installations",
-		Previews:         map[string]bool{"machine-man": r.MachineManPreview},
-		RequiredPreviews: []string{"machine-man"},
-		URLPath:          fmt.Sprintf("/orgs/%v/installations", r.Org),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{"machine-man"},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "orgs/list-app-installations",
+		Previews:           map[string]bool{"machine-man": r.MachineManPreview},
+		RequiredPreviews:   []string{"machine-man"},
+		URLPath:            fmt.Sprintf("/orgs/%v/installations", r.Org),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -1823,18 +1837,19 @@ func (r *ListBlockedUsersReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "orgs/list-blocked-users",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/orgs/%v/blocks", r.Org),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "orgs/list-blocked-users",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/orgs/%v/blocks", r.Org),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -1946,18 +1961,19 @@ func (r *ListForAuthenticatedUserReq) requestBuilder() *internal.RequestBuilder 
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "orgs/list-for-authenticated-user",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/user/orgs"),
-		URLQuery:         query,
-		ValidStatuses:    []int{200, 304},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "orgs/list-for-authenticated-user",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/user/orgs"),
+		URLQuery:           query,
+		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -2070,18 +2086,19 @@ func (r *ListForUserReq) requestBuilder() *internal.RequestBuilder {
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "orgs/list-for-user",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/users/%v/orgs", r.Username),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "orgs/list-for-user",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/users/%v/orgs", r.Username),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -2197,18 +2214,19 @@ func (r *ListInvitationTeamsReq) requestBuilder() *internal.RequestBuilder {
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "orgs/list-invitation-teams",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/orgs/%v/invitations/%v/teams", r.Org, r.InvitationId),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "orgs/list-invitation-teams",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/orgs/%v/invitations/%v/teams", r.Org, r.InvitationId),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -2344,18 +2362,19 @@ func (r *ListMembersReq) requestBuilder() *internal.RequestBuilder {
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "orgs/list-members",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/orgs/%v/members", r.Org),
-		URLQuery:         query,
-		ValidStatuses:    []int{200, 302},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "orgs/list-members",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/orgs/%v/members", r.Org),
+		URLQuery:           query,
+		ValidStatuses:      []int{200, 302},
 	}
 	return builder
 }
@@ -2477,18 +2496,19 @@ func (r *ListMembershipsForAuthenticatedUserReq) requestBuilder() *internal.Requ
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "orgs/list-memberships-for-authenticated-user",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/user/memberships/orgs"),
-		URLQuery:         query,
-		ValidStatuses:    []int{200, 304},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "orgs/list-memberships-for-authenticated-user",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/user/memberships/orgs"),
+		URLQuery:           query,
+		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -2612,18 +2632,19 @@ func (r *ListOutsideCollaboratorsReq) requestBuilder() *internal.RequestBuilder 
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "orgs/list-outside-collaborators",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/orgs/%v/outside_collaborators", r.Org),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "orgs/list-outside-collaborators",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/orgs/%v/outside_collaborators", r.Org),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -2736,18 +2757,19 @@ func (r *ListPendingInvitationsReq) requestBuilder() *internal.RequestBuilder {
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "orgs/list-pending-invitations",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/orgs/%v/invitations", r.Org),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "orgs/list-pending-invitations",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/orgs/%v/invitations", r.Org),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -2860,18 +2882,19 @@ func (r *ListPublicMembersReq) requestBuilder() *internal.RequestBuilder {
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "orgs/list-public-members",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/orgs/%v/public_members", r.Org),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "orgs/list-public-members",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/orgs/%v/public_members", r.Org),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -2972,18 +2995,19 @@ func (r *ListSamlSsoAuthorizationsReq) requestBuilder() *internal.RequestBuilder
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "orgs/list-saml-sso-authorizations",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/orgs/%v/credential-authorizations", r.Org),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "orgs/list-saml-sso-authorizations",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/orgs/%v/credential-authorizations", r.Org),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -3096,18 +3120,19 @@ func (r *ListWebhooksReq) requestBuilder() *internal.RequestBuilder {
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "orgs/list-webhooks",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/orgs/%v/hooks", r.Org),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "orgs/list-webhooks",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/orgs/%v/hooks", r.Org),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -3212,18 +3237,19 @@ func (r *PingWebhookReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
-		Method:           "POST",
-		OperationID:      "orgs/ping-webhook",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/orgs/%v/hooks/%v/pings", r.Org, r.HookId),
-		URLQuery:         query,
-		ValidStatuses:    []int{204},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{},
+		EndpointAttributes: []internal.EndpointAttribute{internal.AttrBoolean},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{},
+		Method:             "POST",
+		OperationID:        "orgs/ping-webhook",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/orgs/%v/hooks/%v/pings", r.Org, r.HookId),
+		URLQuery:           query,
+		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -3324,18 +3350,19 @@ func (r *RemoveMemberReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
-		Method:           "DELETE",
-		OperationID:      "orgs/remove-member",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/orgs/%v/members/%v", r.Org, r.Username),
-		URLQuery:         query,
-		ValidStatuses:    []int{204},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{},
+		Method:             "DELETE",
+		OperationID:        "orgs/remove-member",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/orgs/%v/members/%v", r.Org, r.Username),
+		URLQuery:           query,
+		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -3435,18 +3462,19 @@ func (r *RemoveMembershipForUserReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
-		Method:           "DELETE",
-		OperationID:      "orgs/remove-membership-for-user",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/orgs/%v/memberships/%v", r.Org, r.Username),
-		URLQuery:         query,
-		ValidStatuses:    []int{204},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{},
+		Method:             "DELETE",
+		OperationID:        "orgs/remove-membership-for-user",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/orgs/%v/memberships/%v", r.Org, r.Username),
+		URLQuery:           query,
+		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -3546,18 +3574,19 @@ func (r *RemoveOutsideCollaboratorReq) requestBuilder() *internal.RequestBuilder
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
-		Method:           "DELETE",
-		OperationID:      "orgs/remove-outside-collaborator",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/orgs/%v/outside_collaborators/%v", r.Org, r.Username),
-		URLQuery:         query,
-		ValidStatuses:    []int{204},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{},
+		Method:             "DELETE",
+		OperationID:        "orgs/remove-outside-collaborator",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/orgs/%v/outside_collaborators/%v", r.Org, r.Username),
+		URLQuery:           query,
+		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -3657,18 +3686,19 @@ func (r *RemovePublicMembershipForAuthenticatedUserReq) requestBuilder() *intern
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
-		Method:           "DELETE",
-		OperationID:      "orgs/remove-public-membership-for-authenticated-user",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/orgs/%v/public_members/%v", r.Org, r.Username),
-		URLQuery:         query,
-		ValidStatuses:    []int{204},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{},
+		Method:             "DELETE",
+		OperationID:        "orgs/remove-public-membership-for-authenticated-user",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/orgs/%v/public_members/%v", r.Org, r.Username),
+		URLQuery:           query,
+		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -3774,18 +3804,19 @@ func (r *RemoveSamlSsoAuthorizationReq) requestBuilder() *internal.RequestBuilde
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
-		Method:           "DELETE",
-		OperationID:      "orgs/remove-saml-sso-authorization",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/orgs/%v/credential-authorizations/%v", r.Org, r.CredentialId),
-		URLQuery:         query,
-		ValidStatuses:    []int{204},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{},
+		EndpointAttributes: []internal.EndpointAttribute{internal.AttrBoolean},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{},
+		Method:             "DELETE",
+		OperationID:        "orgs/remove-saml-sso-authorization",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/orgs/%v/credential-authorizations/%v", r.Org, r.CredentialId),
+		URLQuery:           query,
+		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -3888,10 +3919,11 @@ func (r *SetMembershipForUserReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:  []string{},
-		Body:         r.RequestBody,
-		DataStatuses: []int{200},
-		ExplicitURL:  r._url,
+		AllPreviews:        []string{},
+		Body:               r.RequestBody,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
+		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
@@ -4018,18 +4050,19 @@ func (r *SetPublicMembershipForAuthenticatedUserReq) requestBuilder() *internal.
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
-		Method:           "PUT",
-		OperationID:      "orgs/set-public-membership-for-authenticated-user",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/orgs/%v/public_members/%v", r.Org, r.Username),
-		URLQuery:         query,
-		ValidStatuses:    []int{204},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{},
+		Method:             "PUT",
+		OperationID:        "orgs/set-public-membership-for-authenticated-user",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/orgs/%v/public_members/%v", r.Org, r.Username),
+		URLQuery:           query,
+		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -4129,18 +4162,19 @@ func (r *UnblockUserReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
-		Method:           "DELETE",
-		OperationID:      "orgs/unblock-user",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/orgs/%v/blocks/%v", r.Org, r.Username),
-		URLQuery:         query,
-		ValidStatuses:    []int{204},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{},
+		Method:             "DELETE",
+		OperationID:        "orgs/unblock-user",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/orgs/%v/blocks/%v", r.Org, r.Username),
+		URLQuery:           query,
+		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -4256,10 +4290,11 @@ func (r *UpdateReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:  []string{"surtur"},
-		Body:         r.RequestBody,
-		DataStatuses: []int{200},
-		ExplicitURL:  r._url,
+		AllPreviews:        []string{"surtur"},
+		Body:               r.RequestBody,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
+		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
@@ -4484,10 +4519,11 @@ func (r *UpdateMembershipForAuthenticatedUserReq) requestBuilder() *internal.Req
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:  []string{},
-		Body:         r.RequestBody,
-		DataStatuses: []int{200},
-		ExplicitURL:  r._url,
+		AllPreviews:        []string{},
+		Body:               r.RequestBody,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
+		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
@@ -4612,10 +4648,11 @@ func (r *UpdateWebhookReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:  []string{},
-		Body:         r.RequestBody,
-		DataStatuses: []int{200},
-		ExplicitURL:  r._url,
+		AllPreviews:        []string{},
+		Body:               r.RequestBody,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
+		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),

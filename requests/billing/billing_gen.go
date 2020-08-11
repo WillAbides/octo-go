@@ -96,18 +96,19 @@ func (r *GetGithubActionsBillingGheReq) requestBuilder() *internal.RequestBuilde
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "billing/get-github-actions-billing-ghe",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/enterprises/%v/settings/billing/actions", r.EnterpriseId),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "billing/get-github-actions-billing-ghe",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/enterprises/%v/settings/billing/actions", r.EnterpriseId),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -208,18 +209,19 @@ func (r *GetGithubActionsBillingOrgReq) requestBuilder() *internal.RequestBuilde
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "billing/get-github-actions-billing-org",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/orgs/%v/settings/billing/actions", r.Org),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "billing/get-github-actions-billing-org",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/orgs/%v/settings/billing/actions", r.Org),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -320,18 +322,19 @@ func (r *GetGithubActionsBillingUserReq) requestBuilder() *internal.RequestBuild
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "billing/get-github-actions-billing-user",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/users/%v/settings/billing/actions", r.Username),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "billing/get-github-actions-billing-user",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/users/%v/settings/billing/actions", r.Username),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -434,18 +437,19 @@ func (r *GetGithubPackagesBillingGheReq) requestBuilder() *internal.RequestBuild
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "billing/get-github-packages-billing-ghe",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/enterprises/%v/settings/billing/packages", r.EnterpriseId),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "billing/get-github-packages-billing-ghe",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/enterprises/%v/settings/billing/packages", r.EnterpriseId),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -546,18 +550,19 @@ func (r *GetGithubPackagesBillingOrgReq) requestBuilder() *internal.RequestBuild
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "billing/get-github-packages-billing-org",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/orgs/%v/settings/billing/packages", r.Org),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "billing/get-github-packages-billing-org",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/orgs/%v/settings/billing/packages", r.Org),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -658,18 +663,19 @@ func (r *GetGithubPackagesBillingUserReq) requestBuilder() *internal.RequestBuil
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "billing/get-github-packages-billing-user",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/users/%v/settings/billing/packages", r.Username),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "billing/get-github-packages-billing-user",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/users/%v/settings/billing/packages", r.Username),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -772,18 +778,19 @@ func (r *GetSharedStorageBillingGheReq) requestBuilder() *internal.RequestBuilde
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "billing/get-shared-storage-billing-ghe",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/enterprises/%v/settings/billing/shared-storage", r.EnterpriseId),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "billing/get-shared-storage-billing-ghe",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/enterprises/%v/settings/billing/shared-storage", r.EnterpriseId),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -884,18 +891,19 @@ func (r *GetSharedStorageBillingOrgReq) requestBuilder() *internal.RequestBuilde
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "billing/get-shared-storage-billing-org",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/orgs/%v/settings/billing/shared-storage", r.Org),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "billing/get-shared-storage-billing-org",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/orgs/%v/settings/billing/shared-storage", r.Org),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -996,18 +1004,19 @@ func (r *GetSharedStorageBillingUserReq) requestBuilder() *internal.RequestBuild
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "billing/get-shared-storage-billing-user",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/users/%v/settings/billing/shared-storage", r.Username),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "billing/get-shared-storage-billing-user",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/users/%v/settings/billing/shared-storage", r.Username),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }

@@ -95,18 +95,19 @@ func (r *CheckRepoIsStarredByAuthenticatedUserReq) requestBuilder() *internal.Re
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
-		Method:           "GET",
-		OperationID:      "activity/check-repo-is-starred-by-authenticated-user",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/user/starred/%v/%v", r.Owner, r.Repo),
-		URLQuery:         query,
-		ValidStatuses:    []int{204, 304},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{},
+		Method:             "GET",
+		OperationID:        "activity/check-repo-is-starred-by-authenticated-user",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/user/starred/%v/%v", r.Owner, r.Repo),
+		URLQuery:           query,
+		ValidStatuses:      []int{204, 304},
 	}
 	return builder
 }
@@ -206,18 +207,19 @@ func (r *DeleteRepoSubscriptionReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
-		Method:           "DELETE",
-		OperationID:      "activity/delete-repo-subscription",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/subscription", r.Owner, r.Repo),
-		URLQuery:         query,
-		ValidStatuses:    []int{204},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{},
+		Method:             "DELETE",
+		OperationID:        "activity/delete-repo-subscription",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/repos/%v/%v/subscription", r.Owner, r.Repo),
+		URLQuery:           query,
+		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -318,18 +320,19 @@ func (r *DeleteThreadSubscriptionReq) requestBuilder() *internal.RequestBuilder 
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
-		Method:           "DELETE",
-		OperationID:      "activity/delete-thread-subscription",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/notifications/threads/%v/subscription", r.ThreadId),
-		URLQuery:         query,
-		ValidStatuses:    []int{204, 304},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{},
+		Method:             "DELETE",
+		OperationID:        "activity/delete-thread-subscription",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/notifications/threads/%v/subscription", r.ThreadId),
+		URLQuery:           query,
+		ValidStatuses:      []int{204, 304},
 	}
 	return builder
 }
@@ -428,18 +431,19 @@ func (r *GetFeedsReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "activity/get-feeds",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/feeds"),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "activity/get-feeds",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/feeds"),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -541,18 +545,19 @@ func (r *GetRepoSubscriptionReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "activity/get-repo-subscription",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/subscription", r.Owner, r.Repo),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "activity/get-repo-subscription",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/repos/%v/%v/subscription", r.Owner, r.Repo),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -655,18 +660,19 @@ func (r *GetThreadReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "activity/get-thread",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/notifications/threads/%v", r.ThreadId),
-		URLQuery:         query,
-		ValidStatuses:    []int{200, 304},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "activity/get-thread",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/notifications/threads/%v", r.ThreadId),
+		URLQuery:           query,
+		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -769,18 +775,19 @@ func (r *GetThreadSubscriptionForAuthenticatedUserReq) requestBuilder() *interna
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "activity/get-thread-subscription-for-authenticated-user",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/notifications/threads/%v/subscription", r.ThreadId),
-		URLQuery:         query,
-		ValidStatuses:    []int{200, 304},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "activity/get-thread-subscription-for-authenticated-user",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/notifications/threads/%v/subscription", r.ThreadId),
+		URLQuery:           query,
+		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -893,18 +900,19 @@ func (r *ListEventsForAuthenticatedUserReq) requestBuilder() *internal.RequestBu
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "activity/list-events-for-authenticated-user",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/users/%v/events", r.Username),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "activity/list-events-for-authenticated-user",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/users/%v/events", r.Username),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -1051,18 +1059,19 @@ func (r *ListNotificationsForAuthenticatedUserReq) requestBuilder() *internal.Re
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "activity/list-notifications-for-authenticated-user",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/notifications"),
-		URLQuery:         query,
-		ValidStatuses:    []int{200, 304},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "activity/list-notifications-for-authenticated-user",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/notifications"),
+		URLQuery:           query,
+		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -1176,18 +1185,19 @@ func (r *ListOrgEventsForAuthenticatedUserReq) requestBuilder() *internal.Reques
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "activity/list-org-events-for-authenticated-user",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/users/%v/events/orgs/%v", r.Username, r.Org),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "activity/list-org-events-for-authenticated-user",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/users/%v/events/orgs/%v", r.Username, r.Org),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -1299,18 +1309,19 @@ func (r *ListPublicEventsReq) requestBuilder() *internal.RequestBuilder {
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "activity/list-public-events",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/events"),
-		URLQuery:         query,
-		ValidStatuses:    []int{200, 304},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "activity/list-public-events",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/events"),
+		URLQuery:           query,
+		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -1424,18 +1435,19 @@ func (r *ListPublicEventsForRepoNetworkReq) requestBuilder() *internal.RequestBu
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "activity/list-public-events-for-repo-network",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/networks/%v/%v/events", r.Owner, r.Repo),
-		URLQuery:         query,
-		ValidStatuses:    []int{200, 301, 304},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "activity/list-public-events-for-repo-network",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/networks/%v/%v/events", r.Owner, r.Repo),
+		URLQuery:           query,
+		ValidStatuses:      []int{200, 301, 304},
 	}
 	return builder
 }
@@ -1548,18 +1560,19 @@ func (r *ListPublicEventsForUserReq) requestBuilder() *internal.RequestBuilder {
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "activity/list-public-events-for-user",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/users/%v/events/public", r.Username),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "activity/list-public-events-for-user",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/users/%v/events/public", r.Username),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -1672,18 +1685,19 @@ func (r *ListPublicOrgEventsReq) requestBuilder() *internal.RequestBuilder {
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "activity/list-public-org-events",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/orgs/%v/events", r.Org),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "activity/list-public-org-events",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/orgs/%v/events", r.Org),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -1796,18 +1810,19 @@ func (r *ListReceivedEventsForUserReq) requestBuilder() *internal.RequestBuilder
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "activity/list-received-events-for-user",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/users/%v/received_events", r.Username),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "activity/list-received-events-for-user",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/users/%v/received_events", r.Username),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -1920,18 +1935,19 @@ func (r *ListReceivedPublicEventsForUserReq) requestBuilder() *internal.RequestB
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "activity/list-received-public-events-for-user",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/users/%v/received_events/public", r.Username),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "activity/list-received-public-events-for-user",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/users/%v/received_events/public", r.Username),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -2045,18 +2061,19 @@ func (r *ListRepoEventsReq) requestBuilder() *internal.RequestBuilder {
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "activity/list-repo-events",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/events", r.Owner, r.Repo),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "activity/list-repo-events",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/repos/%v/%v/events", r.Owner, r.Repo),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -2205,18 +2222,19 @@ func (r *ListRepoNotificationsForAuthenticatedUserReq) requestBuilder() *interna
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "activity/list-repo-notifications-for-authenticated-user",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/notifications", r.Owner, r.Repo),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "activity/list-repo-notifications-for-authenticated-user",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/repos/%v/%v/notifications", r.Owner, r.Repo),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -2343,18 +2361,19 @@ func (r *ListReposStarredByAuthenticatedUserReq) requestBuilder() *internal.Requ
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/vnd.github.v3.star+json")},
-		Method:           "GET",
-		OperationID:      "activity/list-repos-starred-by-authenticated-user",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/user/starred"),
-		URLQuery:         query,
-		ValidStatuses:    []int{200, 304},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/vnd.github.v3.star+json")},
+		Method:             "GET",
+		OperationID:        "activity/list-repos-starred-by-authenticated-user",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/user/starred"),
+		URLQuery:           query,
+		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -2482,18 +2501,19 @@ func (r *ListReposStarredByUserReq) requestBuilder() *internal.RequestBuilder {
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/vnd.github.v3.star+json")},
-		Method:           "GET",
-		OperationID:      "activity/list-repos-starred-by-user",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/users/%v/starred", r.Username),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/vnd.github.v3.star+json")},
+		Method:             "GET",
+		OperationID:        "activity/list-repos-starred-by-user",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/users/%v/starred", r.Username),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -2606,18 +2626,19 @@ func (r *ListReposWatchedByUserReq) requestBuilder() *internal.RequestBuilder {
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "activity/list-repos-watched-by-user",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/users/%v/subscriptions", r.Username),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "activity/list-repos-watched-by-user",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/users/%v/subscriptions", r.Username),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -2731,18 +2752,19 @@ func (r *ListStargazersForRepoReq) requestBuilder() *internal.RequestBuilder {
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/vnd.github.v3.star+json")},
-		Method:           "GET",
-		OperationID:      "activity/list-stargazers-for-repo",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/stargazers", r.Owner, r.Repo),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/vnd.github.v3.star+json")},
+		Method:             "GET",
+		OperationID:        "activity/list-stargazers-for-repo",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/repos/%v/%v/stargazers", r.Owner, r.Repo),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -2854,18 +2876,19 @@ func (r *ListWatchedReposForAuthenticatedUserReq) requestBuilder() *internal.Req
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "activity/list-watched-repos-for-authenticated-user",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/user/subscriptions"),
-		URLQuery:         query,
-		ValidStatuses:    []int{200, 304},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "activity/list-watched-repos-for-authenticated-user",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/user/subscriptions"),
+		URLQuery:           query,
+		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -2979,18 +3002,19 @@ func (r *ListWatchersForRepoReq) requestBuilder() *internal.RequestBuilder {
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "activity/list-watchers-for-repo",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/subscribers", r.Owner, r.Repo),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "activity/list-watchers-for-repo",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/repos/%v/%v/subscribers", r.Owner, r.Repo),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -3091,10 +3115,11 @@ func (r *MarkNotificationsAsReadReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:  []string{},
-		Body:         r.RequestBody,
-		DataStatuses: []int{202},
-		ExplicitURL:  r._url,
+		AllPreviews:        []string{},
+		Body:               r.RequestBody,
+		DataStatuses:       []int{202},
+		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
+		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
@@ -3230,18 +3255,19 @@ func (r *MarkRepoNotificationsAsReadReq) requestBuilder() *internal.RequestBuild
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             r.RequestBody,
-		DataStatuses:     []int{},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"content-type": internal.String("application/json")},
-		Method:           "PUT",
-		OperationID:      "activity/mark-repo-notifications-as-read",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/notifications", r.Owner, r.Repo),
-		URLQuery:         query,
-		ValidStatuses:    []int{202},
+		AllPreviews:        []string{},
+		Body:               r.RequestBody,
+		DataStatuses:       []int{},
+		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"content-type": internal.String("application/json")},
+		Method:             "PUT",
+		OperationID:        "activity/mark-repo-notifications-as-read",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/repos/%v/%v/notifications", r.Owner, r.Repo),
+		URLQuery:           query,
+		ValidStatuses:      []int{202},
 	}
 	return builder
 }
@@ -3359,18 +3385,19 @@ func (r *MarkThreadAsReadReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
-		Method:           "PATCH",
-		OperationID:      "activity/mark-thread-as-read",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/notifications/threads/%v", r.ThreadId),
-		URLQuery:         query,
-		ValidStatuses:    []int{205, 304},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{},
+		Method:             "PATCH",
+		OperationID:        "activity/mark-thread-as-read",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/notifications/threads/%v", r.ThreadId),
+		URLQuery:           query,
+		ValidStatuses:      []int{205, 304},
 	}
 	return builder
 }
@@ -3472,10 +3499,11 @@ func (r *SetRepoSubscriptionReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:  []string{},
-		Body:         r.RequestBody,
-		DataStatuses: []int{200},
-		ExplicitURL:  r._url,
+		AllPreviews:        []string{},
+		Body:               r.RequestBody,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
+		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
@@ -3604,10 +3632,11 @@ func (r *SetThreadSubscriptionReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:  []string{},
-		Body:         r.RequestBody,
-		DataStatuses: []int{200},
-		ExplicitURL:  r._url,
+		AllPreviews:        []string{},
+		Body:               r.RequestBody,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
+		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
@@ -3730,18 +3759,19 @@ func (r *StarRepoForAuthenticatedUserReq) requestBuilder() *internal.RequestBuil
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
-		Method:           "PUT",
-		OperationID:      "activity/star-repo-for-authenticated-user",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/user/starred/%v/%v", r.Owner, r.Repo),
-		URLQuery:         query,
-		ValidStatuses:    []int{204, 304},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{},
+		Method:             "PUT",
+		OperationID:        "activity/star-repo-for-authenticated-user",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/user/starred/%v/%v", r.Owner, r.Repo),
+		URLQuery:           query,
+		ValidStatuses:      []int{204, 304},
 	}
 	return builder
 }
@@ -3841,18 +3871,19 @@ func (r *UnstarRepoForAuthenticatedUserReq) requestBuilder() *internal.RequestBu
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
-		Method:           "DELETE",
-		OperationID:      "activity/unstar-repo-for-authenticated-user",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/user/starred/%v/%v", r.Owner, r.Repo),
-		URLQuery:         query,
-		ValidStatuses:    []int{204, 304},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{},
+		Method:             "DELETE",
+		OperationID:        "activity/unstar-repo-for-authenticated-user",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/user/starred/%v/%v", r.Owner, r.Repo),
+		URLQuery:           query,
+		ValidStatuses:      []int{204, 304},
 	}
 	return builder
 }

@@ -4,7 +4,6 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/dave/jennifer/jen"
 	"github.com/willabides/octo-go/generator/internal/model"
 )
 
@@ -42,26 +41,6 @@ func (e endpointAttribute) pointer() *endpointAttribute {
 
 func (e endpointAttribute) String() string {
 	return attrNames[e]
-}
-
-func opIdAttributesDict(endpoints []*model.Endpoint) jen.Code {
-	return jen.DictFunc(func(dict jen.Dict) {
-		for _, endpoint := range endpoints {
-			attrs := getEndpointAttributes(endpoint)
-			if len(attrs) == 0 {
-				continue
-			}
-			attrNames := make([]string, len(attrs))
-			for i, attr := range attrs {
-				attrNames[i] = attr.String()
-			}
-			dict[jen.Lit(endpoint.ID)] = jen.ValuesFunc(func(group *jen.Group) {
-				for _, attr := range attrs {
-					group.Id(attr.String())
-				}
-			})
-		}
-	})
 }
 
 func endpointHasAttribute(endpoint *model.Endpoint, attribute endpointAttribute) bool {

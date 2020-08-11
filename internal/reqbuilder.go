@@ -16,18 +16,19 @@ import (
 
 // RequestBuilder builds http requests
 type RequestBuilder struct {
-	OperationID      string
-	ExplicitURL      string
-	Method           string
-	DataStatuses     []int
-	ValidStatuses    []int
-	RequiredPreviews []string
-	AllPreviews      []string
-	HeaderVals       map[string]*string
-	Previews         map[string]bool
-	Body             interface{}
-	URLQuery         url.Values
-	URLPath          string
+	OperationID        string
+	ExplicitURL        string
+	Method             string
+	DataStatuses       []int
+	ValidStatuses      []int
+	RequiredPreviews   []string
+	AllPreviews        []string
+	HeaderVals         map[string]*string
+	Previews           map[string]bool
+	Body               interface{}
+	URLQuery           url.Values
+	URLPath            string
+	EndpointAttributes []EndpointAttribute
 }
 
 func (b *RequestBuilder) requestHeaders(opts requests.Options) http.Header {
@@ -64,7 +65,12 @@ func (b *RequestBuilder) requestHeaders(opts requests.Options) http.Header {
 
 // HasAttribute return true if the endpoint has the attribute
 func (b *RequestBuilder) HasAttribute(attribute EndpointAttribute) bool {
-	return OperationHasAttribute(b.OperationID, attribute)
+	for _, endpointAttribute := range b.EndpointAttributes {
+		if endpointAttribute == attribute {
+			return true
+		}
+	}
+	return false
 }
 
 func (b *RequestBuilder) setURLQuery(u *url.URL) {

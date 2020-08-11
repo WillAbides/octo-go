@@ -96,10 +96,11 @@ func (r *AddEmailForAuthenticatedReq) requestBuilder() *internal.RequestBuilder 
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:  []string{},
-		Body:         r.RequestBody,
-		DataStatuses: []int{201},
-		ExplicitURL:  r._url,
+		AllPreviews:        []string{},
+		Body:               r.RequestBody,
+		DataStatuses:       []int{201},
+		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
+		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
@@ -226,18 +227,19 @@ func (r *BlockReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
-		Method:           "PUT",
-		OperationID:      "users/block",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/user/blocks/%v", r.Username),
-		URLQuery:         query,
-		ValidStatuses:    []int{204, 304},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{},
+		Method:             "PUT",
+		OperationID:        "users/block",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/user/blocks/%v", r.Username),
+		URLQuery:           query,
+		ValidStatuses:      []int{204, 304},
 	}
 	return builder
 }
@@ -336,18 +338,19 @@ func (r *CheckBlockedReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
-		Method:           "GET",
-		OperationID:      "users/check-blocked",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/user/blocks/%v", r.Username),
-		URLQuery:         query,
-		ValidStatuses:    []int{204, 304},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{},
+		Method:             "GET",
+		OperationID:        "users/check-blocked",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/user/blocks/%v", r.Username),
+		URLQuery:           query,
+		ValidStatuses:      []int{204, 304},
 	}
 	return builder
 }
@@ -453,18 +456,19 @@ func (r *CheckFollowingForUserReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
-		Method:           "GET",
-		OperationID:      "users/check-following-for-user",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/users/%v/following/%v", r.Username, r.TargetUser),
-		URLQuery:         query,
-		ValidStatuses:    []int{204},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{},
+		EndpointAttributes: []internal.EndpointAttribute{internal.AttrBoolean},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{},
+		Method:             "GET",
+		OperationID:        "users/check-following-for-user",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/users/%v/following/%v", r.Username, r.TargetUser),
+		URLQuery:           query,
+		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -564,18 +568,19 @@ func (r *CheckPersonIsFollowedByAuthenticatedReq) requestBuilder() *internal.Req
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
-		Method:           "GET",
-		OperationID:      "users/check-person-is-followed-by-authenticated",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/user/following/%v", r.Username),
-		URLQuery:         query,
-		ValidStatuses:    []int{204, 304},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{},
+		Method:             "GET",
+		OperationID:        "users/check-person-is-followed-by-authenticated",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/user/following/%v", r.Username),
+		URLQuery:           query,
+		ValidStatuses:      []int{204, 304},
 	}
 	return builder
 }
@@ -675,10 +680,11 @@ func (r *CreateGpgKeyForAuthenticatedReq) requestBuilder() *internal.RequestBuil
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:  []string{},
-		Body:         r.RequestBody,
-		DataStatuses: []int{201},
-		ExplicitURL:  r._url,
+		AllPreviews:        []string{},
+		Body:               r.RequestBody,
+		DataStatuses:       []int{201},
+		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
+		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
@@ -801,10 +807,11 @@ func (r *CreatePublicSshKeyForAuthenticatedReq) requestBuilder() *internal.Reque
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:  []string{},
-		Body:         r.RequestBody,
-		DataStatuses: []int{201},
-		ExplicitURL:  r._url,
+		AllPreviews:        []string{},
+		Body:               r.RequestBody,
+		DataStatuses:       []int{201},
+		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
+		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
@@ -929,18 +936,19 @@ func (r *DeleteEmailForAuthenticatedReq) requestBuilder() *internal.RequestBuild
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             r.RequestBody,
-		DataStatuses:     []int{},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"content-type": internal.String("application/json")},
-		Method:           "DELETE",
-		OperationID:      "users/delete-email-for-authenticated",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/user/emails"),
-		URLQuery:         query,
-		ValidStatuses:    []int{204, 304},
+		AllPreviews:        []string{},
+		Body:               r.RequestBody,
+		DataStatuses:       []int{},
+		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"content-type": internal.String("application/json")},
+		Method:             "DELETE",
+		OperationID:        "users/delete-email-for-authenticated",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/user/emails"),
+		URLQuery:           query,
+		ValidStatuses:      []int{204, 304},
 	}
 	return builder
 }
@@ -1052,18 +1060,19 @@ func (r *DeleteGpgKeyForAuthenticatedReq) requestBuilder() *internal.RequestBuil
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
-		Method:           "DELETE",
-		OperationID:      "users/delete-gpg-key-for-authenticated",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/user/gpg_keys/%v", r.GpgKeyId),
-		URLQuery:         query,
-		ValidStatuses:    []int{204, 304},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{},
+		Method:             "DELETE",
+		OperationID:        "users/delete-gpg-key-for-authenticated",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/user/gpg_keys/%v", r.GpgKeyId),
+		URLQuery:           query,
+		ValidStatuses:      []int{204, 304},
 	}
 	return builder
 }
@@ -1164,18 +1173,19 @@ func (r *DeletePublicSshKeyForAuthenticatedReq) requestBuilder() *internal.Reque
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
-		Method:           "DELETE",
-		OperationID:      "users/delete-public-ssh-key-for-authenticated",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/user/keys/%v", r.KeyId),
-		URLQuery:         query,
-		ValidStatuses:    []int{204, 304},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{},
+		Method:             "DELETE",
+		OperationID:        "users/delete-public-ssh-key-for-authenticated",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/user/keys/%v", r.KeyId),
+		URLQuery:           query,
+		ValidStatuses:      []int{204, 304},
 	}
 	return builder
 }
@@ -1274,18 +1284,19 @@ func (r *FollowReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
-		Method:           "PUT",
-		OperationID:      "users/follow",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/user/following/%v", r.Username),
-		URLQuery:         query,
-		ValidStatuses:    []int{204, 304},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{},
+		Method:             "PUT",
+		OperationID:        "users/follow",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/user/following/%v", r.Username),
+		URLQuery:           query,
+		ValidStatuses:      []int{204, 304},
 	}
 	return builder
 }
@@ -1384,18 +1395,19 @@ func (r *GetAuthenticatedReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "users/get-authenticated",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/user"),
-		URLQuery:         query,
-		ValidStatuses:    []int{200, 304},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "users/get-authenticated",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/user"),
+		URLQuery:           query,
+		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -1559,18 +1571,19 @@ func (r *GetByUsernameReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "users/get-by-username",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/users/%v", r.Username),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "users/get-by-username",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/users/%v", r.Username),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -1753,18 +1766,19 @@ func (r *GetContextForUserReq) requestBuilder() *internal.RequestBuilder {
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "users/get-context-for-user",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/users/%v/hovercard", r.Username),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "users/get-context-for-user",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/users/%v/hovercard", r.Username),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -1867,18 +1881,19 @@ func (r *GetGpgKeyForAuthenticatedReq) requestBuilder() *internal.RequestBuilder
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "users/get-gpg-key-for-authenticated",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/user/gpg_keys/%v", r.GpgKeyId),
-		URLQuery:         query,
-		ValidStatuses:    []int{200, 304},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "users/get-gpg-key-for-authenticated",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/user/gpg_keys/%v", r.GpgKeyId),
+		URLQuery:           query,
+		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -1981,18 +1996,19 @@ func (r *GetPublicSshKeyForAuthenticatedReq) requestBuilder() *internal.RequestB
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "users/get-public-ssh-key-for-authenticated",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/user/keys/%v", r.KeyId),
-		URLQuery:         query,
-		ValidStatuses:    []int{200, 304},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "users/get-public-ssh-key-for-authenticated",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/user/keys/%v", r.KeyId),
+		URLQuery:           query,
+		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -2108,18 +2124,19 @@ func (r *ListReq) requestBuilder() *internal.RequestBuilder {
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "users/list",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/users"),
-		URLQuery:         query,
-		ValidStatuses:    []int{200, 304},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "users/list",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/users"),
+		URLQuery:           query,
+		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -2219,18 +2236,19 @@ func (r *ListBlockedByAuthenticatedReq) requestBuilder() *internal.RequestBuilde
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "users/list-blocked-by-authenticated",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/user/blocks"),
-		URLQuery:         query,
-		ValidStatuses:    []int{200, 304},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "users/list-blocked-by-authenticated",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/user/blocks"),
+		URLQuery:           query,
+		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -2342,18 +2360,19 @@ func (r *ListEmailsForAuthenticatedReq) requestBuilder() *internal.RequestBuilde
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "users/list-emails-for-authenticated",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/user/emails"),
-		URLQuery:         query,
-		ValidStatuses:    []int{200, 304},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "users/list-emails-for-authenticated",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/user/emails"),
+		URLQuery:           query,
+		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -2465,18 +2484,19 @@ func (r *ListFollowedByAuthenticatedReq) requestBuilder() *internal.RequestBuild
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "users/list-followed-by-authenticated",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/user/following"),
-		URLQuery:         query,
-		ValidStatuses:    []int{200, 304},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "users/list-followed-by-authenticated",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/user/following"),
+		URLQuery:           query,
+		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -2588,18 +2608,19 @@ func (r *ListFollowersForAuthenticatedUserReq) requestBuilder() *internal.Reques
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "users/list-followers-for-authenticated-user",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/user/followers"),
-		URLQuery:         query,
-		ValidStatuses:    []int{200, 304},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "users/list-followers-for-authenticated-user",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/user/followers"),
+		URLQuery:           query,
+		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -2712,18 +2733,19 @@ func (r *ListFollowersForUserReq) requestBuilder() *internal.RequestBuilder {
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "users/list-followers-for-user",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/users/%v/followers", r.Username),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "users/list-followers-for-user",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/users/%v/followers", r.Username),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -2836,18 +2858,19 @@ func (r *ListFollowingForUserReq) requestBuilder() *internal.RequestBuilder {
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "users/list-following-for-user",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/users/%v/following", r.Username),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "users/list-following-for-user",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/users/%v/following", r.Username),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -2959,18 +2982,19 @@ func (r *ListGpgKeysForAuthenticatedReq) requestBuilder() *internal.RequestBuild
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "users/list-gpg-keys-for-authenticated",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/user/gpg_keys"),
-		URLQuery:         query,
-		ValidStatuses:    []int{200, 304},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "users/list-gpg-keys-for-authenticated",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/user/gpg_keys"),
+		URLQuery:           query,
+		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -3083,18 +3107,19 @@ func (r *ListGpgKeysForUserReq) requestBuilder() *internal.RequestBuilder {
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "users/list-gpg-keys-for-user",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/users/%v/gpg_keys", r.Username),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "users/list-gpg-keys-for-user",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/users/%v/gpg_keys", r.Username),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -3206,18 +3231,19 @@ func (r *ListPublicEmailsForAuthenticatedReq) requestBuilder() *internal.Request
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "users/list-public-emails-for-authenticated",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/user/public_emails"),
-		URLQuery:         query,
-		ValidStatuses:    []int{200, 304},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "users/list-public-emails-for-authenticated",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/user/public_emails"),
+		URLQuery:           query,
+		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -3330,18 +3356,19 @@ func (r *ListPublicKeysForUserReq) requestBuilder() *internal.RequestBuilder {
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "users/list-public-keys-for-user",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/users/%v/keys", r.Username),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "users/list-public-keys-for-user",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/users/%v/keys", r.Username),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -3453,18 +3480,19 @@ func (r *ListPublicSshKeysForAuthenticatedReq) requestBuilder() *internal.Reques
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "users/list-public-ssh-keys-for-authenticated",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/user/keys"),
-		URLQuery:         query,
-		ValidStatuses:    []int{200, 304},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "users/list-public-ssh-keys-for-authenticated",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/user/keys"),
+		URLQuery:           query,
+		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -3565,10 +3593,11 @@ func (r *SetPrimaryEmailVisibilityForAuthenticatedReq) requestBuilder() *interna
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:  []string{},
-		Body:         r.RequestBody,
-		DataStatuses: []int{200},
-		ExplicitURL:  r._url,
+		AllPreviews:        []string{},
+		Body:               r.RequestBody,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
+		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
@@ -3693,18 +3722,19 @@ func (r *UnblockReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
-		Method:           "DELETE",
-		OperationID:      "users/unblock",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/user/blocks/%v", r.Username),
-		URLQuery:         query,
-		ValidStatuses:    []int{204, 304},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{},
+		Method:             "DELETE",
+		OperationID:        "users/unblock",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/user/blocks/%v", r.Username),
+		URLQuery:           query,
+		ValidStatuses:      []int{204, 304},
 	}
 	return builder
 }
@@ -3803,18 +3833,19 @@ func (r *UnfollowReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
-		Method:           "DELETE",
-		OperationID:      "users/unfollow",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/user/following/%v", r.Username),
-		URLQuery:         query,
-		ValidStatuses:    []int{204, 304},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{},
+		Method:             "DELETE",
+		OperationID:        "users/unfollow",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/user/following/%v", r.Username),
+		URLQuery:           query,
+		ValidStatuses:      []int{204, 304},
 	}
 	return builder
 }
@@ -3914,10 +3945,11 @@ func (r *UpdateAuthenticatedReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:  []string{},
-		Body:         r.RequestBody,
-		DataStatuses: []int{200},
-		ExplicitURL:  r._url,
+		AllPreviews:        []string{},
+		Body:               r.RequestBody,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
+		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),

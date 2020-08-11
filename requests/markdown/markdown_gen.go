@@ -93,18 +93,19 @@ func (r *RenderReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             r.RequestBody,
-		DataStatuses:     []int{},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"content-type": internal.String("application/json")},
-		Method:           "POST",
-		OperationID:      "markdown/render",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/markdown"),
-		URLQuery:         query,
-		ValidStatuses:    []int{200, 304},
+		AllPreviews:        []string{},
+		Body:               r.RequestBody,
+		DataStatuses:       []int{},
+		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"content-type": internal.String("application/json")},
+		Method:             "POST",
+		OperationID:        "markdown/render",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/markdown"),
+		URLQuery:           query,
+		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -222,18 +223,19 @@ func (r *RenderRawReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             r.RequestBody,
-		DataStatuses:     []int{},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"content-type": internal.String("text/x-markdown")},
-		Method:           "POST",
-		OperationID:      "markdown/render-raw",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/markdown/raw"),
-		URLQuery:         query,
-		ValidStatuses:    []int{200, 304},
+		AllPreviews:        []string{},
+		Body:               r.RequestBody,
+		DataStatuses:       []int{},
+		EndpointAttributes: []internal.EndpointAttribute{internal.AttrBodyUploader},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"content-type": internal.String("text/x-markdown")},
+		Method:             "POST",
+		OperationID:        "markdown/render-raw",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/markdown/raw"),
+		URLQuery:           query,
+		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }

@@ -106,10 +106,11 @@ func (r *CreateReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:  []string{"antiope"},
-		Body:         r.RequestBody,
-		DataStatuses: []int{201},
-		ExplicitURL:  r._url,
+		AllPreviews:        []string{"antiope"},
+		Body:               r.RequestBody,
+		DataStatuses:       []int{201},
+		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
+		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
@@ -410,10 +411,11 @@ func (r *CreateSuiteReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:  []string{"antiope"},
-		Body:         r.RequestBody,
-		DataStatuses: []int{201},
-		ExplicitURL:  r._url,
+		AllPreviews:        []string{"antiope"},
+		Body:               r.RequestBody,
+		DataStatuses:       []int{201},
+		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
+		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
@@ -549,18 +551,19 @@ func (r *GetReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{"antiope"},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "checks/get",
-		Previews:         map[string]bool{"antiope": r.AntiopePreview},
-		RequiredPreviews: []string{"antiope"},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/check-runs/%v", r.Owner, r.Repo, r.CheckRunId),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{"antiope"},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "checks/get",
+		Previews:           map[string]bool{"antiope": r.AntiopePreview},
+		RequiredPreviews:   []string{"antiope"},
+		URLPath:            fmt.Sprintf("/repos/%v/%v/check-runs/%v", r.Owner, r.Repo, r.CheckRunId),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -674,18 +677,19 @@ func (r *GetSuiteReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{"antiope"},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "checks/get-suite",
-		Previews:         map[string]bool{"antiope": r.AntiopePreview},
-		RequiredPreviews: []string{"antiope"},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/check-suites/%v", r.Owner, r.Repo, r.CheckSuiteId),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{"antiope"},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "checks/get-suite",
+		Previews:           map[string]bool{"antiope": r.AntiopePreview},
+		RequiredPreviews:   []string{"antiope"},
+		URLPath:            fmt.Sprintf("/repos/%v/%v/check-suites/%v", r.Owner, r.Repo, r.CheckSuiteId),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -811,18 +815,19 @@ func (r *ListAnnotationsReq) requestBuilder() *internal.RequestBuilder {
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{"antiope"},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "checks/list-annotations",
-		Previews:         map[string]bool{"antiope": r.AntiopePreview},
-		RequiredPreviews: []string{"antiope"},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/check-runs/%v/annotations", r.Owner, r.Repo, r.CheckRunId),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{"antiope"},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "checks/list-annotations",
+		Previews:           map[string]bool{"antiope": r.AntiopePreview},
+		RequiredPreviews:   []string{"antiope"},
+		URLPath:            fmt.Sprintf("/repos/%v/%v/check-runs/%v/annotations", r.Owner, r.Repo, r.CheckRunId),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -972,18 +977,19 @@ func (r *ListForRefReq) requestBuilder() *internal.RequestBuilder {
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{"antiope"},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "checks/list-for-ref",
-		Previews:         map[string]bool{"antiope": r.AntiopePreview},
-		RequiredPreviews: []string{"antiope"},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/commits/%v/check-runs", r.Owner, r.Repo, r.Ref),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{"antiope"},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "checks/list-for-ref",
+		Previews:           map[string]bool{"antiope": r.AntiopePreview},
+		RequiredPreviews:   []string{"antiope"},
+		URLPath:            fmt.Sprintf("/repos/%v/%v/commits/%v/check-runs", r.Owner, r.Repo, r.Ref),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -1143,18 +1149,19 @@ func (r *ListForSuiteReq) requestBuilder() *internal.RequestBuilder {
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{"antiope"},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "checks/list-for-suite",
-		Previews:         map[string]bool{"antiope": r.AntiopePreview},
-		RequiredPreviews: []string{"antiope"},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/check-suites/%v/check-runs", r.Owner, r.Repo, r.CheckSuiteId),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{"antiope"},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "checks/list-for-suite",
+		Previews:           map[string]bool{"antiope": r.AntiopePreview},
+		RequiredPreviews:   []string{"antiope"},
+		URLPath:            fmt.Sprintf("/repos/%v/%v/check-suites/%v/check-runs", r.Owner, r.Repo, r.CheckSuiteId),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -1302,18 +1309,19 @@ func (r *ListSuitesForRefReq) requestBuilder() *internal.RequestBuilder {
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{"antiope"},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "checks/list-suites-for-ref",
-		Previews:         map[string]bool{"antiope": r.AntiopePreview},
-		RequiredPreviews: []string{"antiope"},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/commits/%v/check-suites", r.Owner, r.Repo, r.Ref),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{"antiope"},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "checks/list-suites-for-ref",
+		Previews:           map[string]bool{"antiope": r.AntiopePreview},
+		RequiredPreviews:   []string{"antiope"},
+		URLPath:            fmt.Sprintf("/repos/%v/%v/commits/%v/check-suites", r.Owner, r.Repo, r.Ref),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -1436,18 +1444,19 @@ func (r *RerequestSuiteReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{"antiope"},
-		Body:             nil,
-		DataStatuses:     []int{},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
-		Method:           "POST",
-		OperationID:      "checks/rerequest-suite",
-		Previews:         map[string]bool{"antiope": r.AntiopePreview},
-		RequiredPreviews: []string{"antiope"},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/check-suites/%v/rerequest", r.Owner, r.Repo, r.CheckSuiteId),
-		URLQuery:         query,
-		ValidStatuses:    []int{201},
+		AllPreviews:        []string{"antiope"},
+		Body:               nil,
+		DataStatuses:       []int{},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{},
+		Method:             "POST",
+		OperationID:        "checks/rerequest-suite",
+		Previews:           map[string]bool{"antiope": r.AntiopePreview},
+		RequiredPreviews:   []string{"antiope"},
+		URLPath:            fmt.Sprintf("/repos/%v/%v/check-suites/%v/rerequest", r.Owner, r.Repo, r.CheckSuiteId),
+		URLQuery:           query,
+		ValidStatuses:      []int{201},
 	}
 	return builder
 }
@@ -1558,10 +1567,11 @@ func (r *SetSuitesPreferencesReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:  []string{"antiope"},
-		Body:         r.RequestBody,
-		DataStatuses: []int{200},
-		ExplicitURL:  r._url,
+		AllPreviews:        []string{"antiope"},
+		Body:               r.RequestBody,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
+		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
@@ -1716,10 +1726,11 @@ func (r *UpdateReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:  []string{"antiope"},
-		Body:         r.RequestBody,
-		DataStatuses: []int{200},
-		ExplicitURL:  r._url,
+		AllPreviews:        []string{"antiope"},
+		Body:               r.RequestBody,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
+		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),

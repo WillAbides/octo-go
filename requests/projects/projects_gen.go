@@ -105,18 +105,19 @@ func (r *AddCollaboratorReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{"inertia"},
-		Body:             r.RequestBody,
-		DataStatuses:     []int{},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"content-type": internal.String("application/json")},
-		Method:           "PUT",
-		OperationID:      "projects/add-collaborator",
-		Previews:         map[string]bool{"inertia": r.InertiaPreview},
-		RequiredPreviews: []string{"inertia"},
-		URLPath:          fmt.Sprintf("/projects/%v/collaborators/%v", r.ProjectId, r.Username),
-		URLQuery:         query,
-		ValidStatuses:    []int{204, 304},
+		AllPreviews:        []string{"inertia"},
+		Body:               r.RequestBody,
+		DataStatuses:       []int{},
+		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"content-type": internal.String("application/json")},
+		Method:             "PUT",
+		OperationID:        "projects/add-collaborator",
+		Previews:           map[string]bool{"inertia": r.InertiaPreview},
+		RequiredPreviews:   []string{"inertia"},
+		URLPath:            fmt.Sprintf("/projects/%v/collaborators/%v", r.ProjectId, r.Username),
+		URLQuery:           query,
+		ValidStatuses:      []int{204, 304},
 	}
 	return builder
 }
@@ -239,10 +240,11 @@ func (r *CreateCardReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:  []string{"inertia"},
-		Body:         r.RequestBody,
-		DataStatuses: []int{201},
-		ExplicitURL:  r._url,
+		AllPreviews:        []string{"inertia"},
+		Body:               r.RequestBody,
+		DataStatuses:       []int{201},
+		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
+		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
@@ -378,10 +380,11 @@ func (r *CreateColumnReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:  []string{"inertia"},
-		Body:         r.RequestBody,
-		DataStatuses: []int{201},
-		ExplicitURL:  r._url,
+		AllPreviews:        []string{"inertia"},
+		Body:               r.RequestBody,
+		DataStatuses:       []int{201},
+		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
+		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
@@ -513,10 +516,11 @@ func (r *CreateForAuthenticatedUserReq) requestBuilder() *internal.RequestBuilde
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:  []string{"inertia"},
-		Body:         r.RequestBody,
-		DataStatuses: []int{201},
-		ExplicitURL:  r._url,
+		AllPreviews:        []string{"inertia"},
+		Body:               r.RequestBody,
+		DataStatuses:       []int{201},
+		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
+		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
@@ -652,10 +656,11 @@ func (r *CreateForOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:  []string{"inertia"},
-		Body:         r.RequestBody,
-		DataStatuses: []int{201},
-		ExplicitURL:  r._url,
+		AllPreviews:        []string{"inertia"},
+		Body:               r.RequestBody,
+		DataStatuses:       []int{201},
+		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
+		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
@@ -792,10 +797,11 @@ func (r *CreateForRepoReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:  []string{"inertia"},
-		Body:         r.RequestBody,
-		DataStatuses: []int{201},
-		ExplicitURL:  r._url,
+		AllPreviews:        []string{"inertia"},
+		Body:               r.RequestBody,
+		DataStatuses:       []int{201},
+		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
+		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
@@ -929,18 +935,19 @@ func (r *DeleteReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{"inertia"},
-		Body:             nil,
-		DataStatuses:     []int{},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
-		Method:           "DELETE",
-		OperationID:      "projects/delete",
-		Previews:         map[string]bool{"inertia": r.InertiaPreview},
-		RequiredPreviews: []string{"inertia"},
-		URLPath:          fmt.Sprintf("/projects/%v", r.ProjectId),
-		URLQuery:         query,
-		ValidStatuses:    []int{204, 304},
+		AllPreviews:        []string{"inertia"},
+		Body:               nil,
+		DataStatuses:       []int{},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{},
+		Method:             "DELETE",
+		OperationID:        "projects/delete",
+		Previews:           map[string]bool{"inertia": r.InertiaPreview},
+		RequiredPreviews:   []string{"inertia"},
+		URLPath:            fmt.Sprintf("/projects/%v", r.ProjectId),
+		URLQuery:           query,
+		ValidStatuses:      []int{204, 304},
 	}
 	return builder
 }
@@ -1050,18 +1057,19 @@ func (r *DeleteCardReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{"inertia"},
-		Body:             nil,
-		DataStatuses:     []int{},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
-		Method:           "DELETE",
-		OperationID:      "projects/delete-card",
-		Previews:         map[string]bool{"inertia": r.InertiaPreview},
-		RequiredPreviews: []string{"inertia"},
-		URLPath:          fmt.Sprintf("/projects/columns/cards/%v", r.CardId),
-		URLQuery:         query,
-		ValidStatuses:    []int{204, 304},
+		AllPreviews:        []string{"inertia"},
+		Body:               nil,
+		DataStatuses:       []int{},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{},
+		Method:             "DELETE",
+		OperationID:        "projects/delete-card",
+		Previews:           map[string]bool{"inertia": r.InertiaPreview},
+		RequiredPreviews:   []string{"inertia"},
+		URLPath:            fmt.Sprintf("/projects/columns/cards/%v", r.CardId),
+		URLQuery:           query,
+		ValidStatuses:      []int{204, 304},
 	}
 	return builder
 }
@@ -1171,18 +1179,19 @@ func (r *DeleteColumnReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{"inertia"},
-		Body:             nil,
-		DataStatuses:     []int{},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
-		Method:           "DELETE",
-		OperationID:      "projects/delete-column",
-		Previews:         map[string]bool{"inertia": r.InertiaPreview},
-		RequiredPreviews: []string{"inertia"},
-		URLPath:          fmt.Sprintf("/projects/columns/%v", r.ColumnId),
-		URLQuery:         query,
-		ValidStatuses:    []int{204, 304},
+		AllPreviews:        []string{"inertia"},
+		Body:               nil,
+		DataStatuses:       []int{},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{},
+		Method:             "DELETE",
+		OperationID:        "projects/delete-column",
+		Previews:           map[string]bool{"inertia": r.InertiaPreview},
+		RequiredPreviews:   []string{"inertia"},
+		URLPath:            fmt.Sprintf("/projects/columns/%v", r.ColumnId),
+		URLQuery:           query,
+		ValidStatuses:      []int{204, 304},
 	}
 	return builder
 }
@@ -1291,18 +1300,19 @@ func (r *GetReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{"inertia"},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "projects/get",
-		Previews:         map[string]bool{"inertia": r.InertiaPreview},
-		RequiredPreviews: []string{"inertia"},
-		URLPath:          fmt.Sprintf("/projects/%v", r.ProjectId),
-		URLQuery:         query,
-		ValidStatuses:    []int{200, 304},
+		AllPreviews:        []string{"inertia"},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "projects/get",
+		Previews:           map[string]bool{"inertia": r.InertiaPreview},
+		RequiredPreviews:   []string{"inertia"},
+		URLPath:            fmt.Sprintf("/projects/%v", r.ProjectId),
+		URLQuery:           query,
+		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -1414,18 +1424,19 @@ func (r *GetCardReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{"inertia"},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "projects/get-card",
-		Previews:         map[string]bool{"inertia": r.InertiaPreview},
-		RequiredPreviews: []string{"inertia"},
-		URLPath:          fmt.Sprintf("/projects/columns/cards/%v", r.CardId),
-		URLQuery:         query,
-		ValidStatuses:    []int{200, 304},
+		AllPreviews:        []string{"inertia"},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "projects/get-card",
+		Previews:           map[string]bool{"inertia": r.InertiaPreview},
+		RequiredPreviews:   []string{"inertia"},
+		URLPath:            fmt.Sprintf("/projects/columns/cards/%v", r.CardId),
+		URLQuery:           query,
+		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -1537,18 +1548,19 @@ func (r *GetColumnReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{"inertia"},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "projects/get-column",
-		Previews:         map[string]bool{"inertia": r.InertiaPreview},
-		RequiredPreviews: []string{"inertia"},
-		URLPath:          fmt.Sprintf("/projects/columns/%v", r.ColumnId),
-		URLQuery:         query,
-		ValidStatuses:    []int{200, 304},
+		AllPreviews:        []string{"inertia"},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "projects/get-column",
+		Previews:           map[string]bool{"inertia": r.InertiaPreview},
+		RequiredPreviews:   []string{"inertia"},
+		URLPath:            fmt.Sprintf("/projects/columns/%v", r.ColumnId),
+		URLQuery:           query,
+		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -1659,18 +1671,19 @@ func (r *GetPermissionForUserReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{"inertia"},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "projects/get-permission-for-user",
-		Previews:         map[string]bool{"inertia": r.InertiaPreview},
-		RequiredPreviews: []string{"inertia"},
-		URLPath:          fmt.Sprintf("/projects/%v/collaborators/%v/permission", r.ProjectId, r.Username),
-		URLQuery:         query,
-		ValidStatuses:    []int{200, 304},
+		AllPreviews:        []string{"inertia"},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "projects/get-permission-for-user",
+		Previews:           map[string]bool{"inertia": r.InertiaPreview},
+		RequiredPreviews:   []string{"inertia"},
+		URLPath:            fmt.Sprintf("/projects/%v/collaborators/%v/permission", r.ProjectId, r.Username),
+		URLQuery:           query,
+		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -1803,18 +1816,19 @@ func (r *ListCardsReq) requestBuilder() *internal.RequestBuilder {
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{"inertia"},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "projects/list-cards",
-		Previews:         map[string]bool{"inertia": r.InertiaPreview},
-		RequiredPreviews: []string{"inertia"},
-		URLPath:          fmt.Sprintf("/projects/columns/%v/cards", r.ColumnId),
-		URLQuery:         query,
-		ValidStatuses:    []int{200, 304},
+		AllPreviews:        []string{"inertia"},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "projects/list-cards",
+		Previews:           map[string]bool{"inertia": r.InertiaPreview},
+		RequiredPreviews:   []string{"inertia"},
+		URLPath:            fmt.Sprintf("/projects/columns/%v/cards", r.ColumnId),
+		URLQuery:           query,
+		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -1949,18 +1963,19 @@ func (r *ListCollaboratorsReq) requestBuilder() *internal.RequestBuilder {
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{"inertia"},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "projects/list-collaborators",
-		Previews:         map[string]bool{"inertia": r.InertiaPreview},
-		RequiredPreviews: []string{"inertia"},
-		URLPath:          fmt.Sprintf("/projects/%v/collaborators", r.ProjectId),
-		URLQuery:         query,
-		ValidStatuses:    []int{200, 304},
+		AllPreviews:        []string{"inertia"},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "projects/list-collaborators",
+		Previews:           map[string]bool{"inertia": r.InertiaPreview},
+		RequiredPreviews:   []string{"inertia"},
+		URLPath:            fmt.Sprintf("/projects/%v/collaborators", r.ProjectId),
+		URLQuery:           query,
+		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -2082,18 +2097,19 @@ func (r *ListColumnsReq) requestBuilder() *internal.RequestBuilder {
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{"inertia"},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "projects/list-columns",
-		Previews:         map[string]bool{"inertia": r.InertiaPreview},
-		RequiredPreviews: []string{"inertia"},
-		URLPath:          fmt.Sprintf("/projects/%v/columns", r.ProjectId),
-		URLQuery:         query,
-		ValidStatuses:    []int{200, 304},
+		AllPreviews:        []string{"inertia"},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "projects/list-columns",
+		Previews:           map[string]bool{"inertia": r.InertiaPreview},
+		RequiredPreviews:   []string{"inertia"},
+		URLPath:            fmt.Sprintf("/projects/%v/columns", r.ProjectId),
+		URLQuery:           query,
+		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -2224,18 +2240,19 @@ func (r *ListForOrgReq) requestBuilder() *internal.RequestBuilder {
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{"inertia"},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "projects/list-for-org",
-		Previews:         map[string]bool{"inertia": r.InertiaPreview},
-		RequiredPreviews: []string{"inertia"},
-		URLPath:          fmt.Sprintf("/orgs/%v/projects", r.Org),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{"inertia"},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "projects/list-for-org",
+		Previews:           map[string]bool{"inertia": r.InertiaPreview},
+		RequiredPreviews:   []string{"inertia"},
+		URLPath:            fmt.Sprintf("/orgs/%v/projects", r.Org),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -2367,18 +2384,19 @@ func (r *ListForRepoReq) requestBuilder() *internal.RequestBuilder {
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{"inertia"},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "projects/list-for-repo",
-		Previews:         map[string]bool{"inertia": r.InertiaPreview},
-		RequiredPreviews: []string{"inertia"},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/projects", r.Owner, r.Repo),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{"inertia"},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "projects/list-for-repo",
+		Previews:           map[string]bool{"inertia": r.InertiaPreview},
+		RequiredPreviews:   []string{"inertia"},
+		URLPath:            fmt.Sprintf("/repos/%v/%v/projects", r.Owner, r.Repo),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -2509,18 +2527,19 @@ func (r *ListForUserReq) requestBuilder() *internal.RequestBuilder {
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{"inertia"},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "projects/list-for-user",
-		Previews:         map[string]bool{"inertia": r.InertiaPreview},
-		RequiredPreviews: []string{"inertia"},
-		URLPath:          fmt.Sprintf("/users/%v/projects", r.Username),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{"inertia"},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "projects/list-for-user",
+		Previews:           map[string]bool{"inertia": r.InertiaPreview},
+		RequiredPreviews:   []string{"inertia"},
+		URLPath:            fmt.Sprintf("/users/%v/projects", r.Username),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -2632,10 +2651,11 @@ func (r *MoveCardReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:  []string{"inertia"},
-		Body:         r.RequestBody,
-		DataStatuses: []int{201},
-		ExplicitURL:  r._url,
+		AllPreviews:        []string{"inertia"},
+		Body:               r.RequestBody,
+		DataStatuses:       []int{201},
+		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody, internal.AttrNoResponseBody},
+		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
@@ -2771,10 +2791,11 @@ func (r *MoveColumnReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:  []string{"inertia"},
-		Body:         r.RequestBody,
-		DataStatuses: []int{201},
-		ExplicitURL:  r._url,
+		AllPreviews:        []string{"inertia"},
+		Body:               r.RequestBody,
+		DataStatuses:       []int{201},
+		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody, internal.AttrNoResponseBody},
+		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
@@ -2905,18 +2926,19 @@ func (r *RemoveCollaboratorReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{"inertia"},
-		Body:             nil,
-		DataStatuses:     []int{},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
-		Method:           "DELETE",
-		OperationID:      "projects/remove-collaborator",
-		Previews:         map[string]bool{"inertia": r.InertiaPreview},
-		RequiredPreviews: []string{"inertia"},
-		URLPath:          fmt.Sprintf("/projects/%v/collaborators/%v", r.ProjectId, r.Username),
-		URLQuery:         query,
-		ValidStatuses:    []int{204, 304},
+		AllPreviews:        []string{"inertia"},
+		Body:               nil,
+		DataStatuses:       []int{},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{},
+		Method:             "DELETE",
+		OperationID:        "projects/remove-collaborator",
+		Previews:           map[string]bool{"inertia": r.InertiaPreview},
+		RequiredPreviews:   []string{"inertia"},
+		URLPath:            fmt.Sprintf("/projects/%v/collaborators/%v", r.ProjectId, r.Username),
+		URLQuery:           query,
+		ValidStatuses:      []int{204, 304},
 	}
 	return builder
 }
@@ -3026,10 +3048,11 @@ func (r *UpdateReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:  []string{"inertia"},
-		Body:         r.RequestBody,
-		DataStatuses: []int{200},
-		ExplicitURL:  r._url,
+		AllPreviews:        []string{"inertia"},
+		Body:               r.RequestBody,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
+		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
@@ -3176,10 +3199,11 @@ func (r *UpdateCardReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:  []string{"inertia"},
-		Body:         r.RequestBody,
-		DataStatuses: []int{200},
-		ExplicitURL:  r._url,
+		AllPreviews:        []string{"inertia"},
+		Body:               r.RequestBody,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
+		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
@@ -3317,10 +3341,11 @@ func (r *UpdateColumnReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:  []string{"inertia"},
-		Body:         r.RequestBody,
-		DataStatuses: []int{200},
-		ExplicitURL:  r._url,
+		AllPreviews:        []string{"inertia"},
+		Body:               r.RequestBody,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
+		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),

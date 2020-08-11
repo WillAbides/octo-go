@@ -7,21 +7,8 @@ import (
 	"github.com/willabides/octo-go/requests"
 )
 
-var operationAttributes map[string][]EndpointAttribute
-
 // EndpointAttribute is an attribute for an endpoint
 type EndpointAttribute int
-
-// OperationHasAttribute returns true if the operation id the given attribute
-func OperationHasAttribute(id string, attr EndpointAttribute) bool {
-	attrs := operationAttributes[id]
-	for _, a := range attrs {
-		if attr == a {
-			return true
-		}
-	}
-	return false
-}
 
 // DoRequest performs an http request and returns a Response
 func DoRequest(ctx context.Context, builder *RequestBuilder, opts *requests.Options) (*requests.Response, error) {

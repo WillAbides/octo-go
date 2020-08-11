@@ -111,10 +111,11 @@ func (r *CreateForCommitCommentReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:  []string{"squirrel-girl"},
-		Body:         r.RequestBody,
-		DataStatuses: []int{200, 201},
-		ExplicitURL:  r._url,
+		AllPreviews:        []string{"squirrel-girl"},
+		Body:               r.RequestBody,
+		DataStatuses:       []int{200, 201},
+		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
+		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
@@ -253,10 +254,11 @@ func (r *CreateForIssueReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:  []string{"squirrel-girl"},
-		Body:         r.RequestBody,
-		DataStatuses: []int{201},
-		ExplicitURL:  r._url,
+		AllPreviews:        []string{"squirrel-girl"},
+		Body:               r.RequestBody,
+		DataStatuses:       []int{201},
+		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
+		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
@@ -395,10 +397,11 @@ func (r *CreateForIssueCommentReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:  []string{"squirrel-girl"},
-		Body:         r.RequestBody,
-		DataStatuses: []int{200, 201},
-		ExplicitURL:  r._url,
+		AllPreviews:        []string{"squirrel-girl"},
+		Body:               r.RequestBody,
+		DataStatuses:       []int{200, 201},
+		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
+		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
@@ -537,10 +540,11 @@ func (r *CreateForPullRequestReviewCommentReq) requestBuilder() *internal.Reques
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:  []string{"squirrel-girl"},
-		Body:         r.RequestBody,
-		DataStatuses: []int{200, 201},
-		ExplicitURL:  r._url,
+		AllPreviews:        []string{"squirrel-girl"},
+		Body:               r.RequestBody,
+		DataStatuses:       []int{200, 201},
+		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
+		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
@@ -683,10 +687,11 @@ func (r *CreateForTeamDiscussionCommentInOrgReq) requestBuilder() *internal.Requ
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:  []string{"squirrel-girl"},
-		Body:         r.RequestBody,
-		DataStatuses: []int{201},
-		ExplicitURL:  r._url,
+		AllPreviews:        []string{"squirrel-girl"},
+		Body:               r.RequestBody,
+		DataStatuses:       []int{201},
+		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
+		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
@@ -823,10 +828,11 @@ func (r *CreateForTeamDiscussionCommentLegacyReq) requestBuilder() *internal.Req
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:  []string{"squirrel-girl"},
-		Body:         r.RequestBody,
-		DataStatuses: []int{201},
-		ExplicitURL:  r._url,
+		AllPreviews:        []string{"squirrel-girl"},
+		Body:               r.RequestBody,
+		DataStatuses:       []int{201},
+		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
+		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
@@ -965,10 +971,11 @@ func (r *CreateForTeamDiscussionInOrgReq) requestBuilder() *internal.RequestBuil
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:  []string{"squirrel-girl"},
-		Body:         r.RequestBody,
-		DataStatuses: []int{201},
-		ExplicitURL:  r._url,
+		AllPreviews:        []string{"squirrel-girl"},
+		Body:               r.RequestBody,
+		DataStatuses:       []int{201},
+		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
+		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
@@ -1104,10 +1111,11 @@ func (r *CreateForTeamDiscussionLegacyReq) requestBuilder() *internal.RequestBui
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:  []string{"squirrel-girl"},
-		Body:         r.RequestBody,
-		DataStatuses: []int{201},
-		ExplicitURL:  r._url,
+		AllPreviews:        []string{"squirrel-girl"},
+		Body:               r.RequestBody,
+		DataStatuses:       []int{201},
+		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
+		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
@@ -1245,18 +1253,19 @@ func (r *DeleteForCommitCommentReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{"squirrel-girl"},
-		Body:             nil,
-		DataStatuses:     []int{},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
-		Method:           "DELETE",
-		OperationID:      "reactions/delete-for-commit-comment",
-		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
-		RequiredPreviews: []string{"squirrel-girl"},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/comments/%v/reactions/%v", r.Owner, r.Repo, r.CommentId, r.ReactionId),
-		URLQuery:         query,
-		ValidStatuses:    []int{204},
+		AllPreviews:        []string{"squirrel-girl"},
+		Body:               nil,
+		DataStatuses:       []int{},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{},
+		Method:             "DELETE",
+		OperationID:        "reactions/delete-for-commit-comment",
+		Previews:           map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		RequiredPreviews:   []string{"squirrel-girl"},
+		URLPath:            fmt.Sprintf("/repos/%v/%v/comments/%v/reactions/%v", r.Owner, r.Repo, r.CommentId, r.ReactionId),
+		URLQuery:           query,
+		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -1371,18 +1380,19 @@ func (r *DeleteForIssueReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{"squirrel-girl"},
-		Body:             nil,
-		DataStatuses:     []int{},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
-		Method:           "DELETE",
-		OperationID:      "reactions/delete-for-issue",
-		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
-		RequiredPreviews: []string{"squirrel-girl"},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/%v/reactions/%v", r.Owner, r.Repo, r.IssueNumber, r.ReactionId),
-		URLQuery:         query,
-		ValidStatuses:    []int{204},
+		AllPreviews:        []string{"squirrel-girl"},
+		Body:               nil,
+		DataStatuses:       []int{},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{},
+		Method:             "DELETE",
+		OperationID:        "reactions/delete-for-issue",
+		Previews:           map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		RequiredPreviews:   []string{"squirrel-girl"},
+		URLPath:            fmt.Sprintf("/repos/%v/%v/issues/%v/reactions/%v", r.Owner, r.Repo, r.IssueNumber, r.ReactionId),
+		URLQuery:           query,
+		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -1497,18 +1507,19 @@ func (r *DeleteForIssueCommentReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{"squirrel-girl"},
-		Body:             nil,
-		DataStatuses:     []int{},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
-		Method:           "DELETE",
-		OperationID:      "reactions/delete-for-issue-comment",
-		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
-		RequiredPreviews: []string{"squirrel-girl"},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/comments/%v/reactions/%v", r.Owner, r.Repo, r.CommentId, r.ReactionId),
-		URLQuery:         query,
-		ValidStatuses:    []int{204},
+		AllPreviews:        []string{"squirrel-girl"},
+		Body:               nil,
+		DataStatuses:       []int{},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{},
+		Method:             "DELETE",
+		OperationID:        "reactions/delete-for-issue-comment",
+		Previews:           map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		RequiredPreviews:   []string{"squirrel-girl"},
+		URLPath:            fmt.Sprintf("/repos/%v/%v/issues/comments/%v/reactions/%v", r.Owner, r.Repo, r.CommentId, r.ReactionId),
+		URLQuery:           query,
+		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -1623,18 +1634,19 @@ func (r *DeleteForPullRequestCommentReq) requestBuilder() *internal.RequestBuild
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{"squirrel-girl"},
-		Body:             nil,
-		DataStatuses:     []int{},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
-		Method:           "DELETE",
-		OperationID:      "reactions/delete-for-pull-request-comment",
-		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
-		RequiredPreviews: []string{"squirrel-girl"},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/pulls/comments/%v/reactions/%v", r.Owner, r.Repo, r.CommentId, r.ReactionId),
-		URLQuery:         query,
-		ValidStatuses:    []int{204},
+		AllPreviews:        []string{"squirrel-girl"},
+		Body:               nil,
+		DataStatuses:       []int{},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{},
+		Method:             "DELETE",
+		OperationID:        "reactions/delete-for-pull-request-comment",
+		Previews:           map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		RequiredPreviews:   []string{"squirrel-girl"},
+		URLPath:            fmt.Sprintf("/repos/%v/%v/pulls/comments/%v/reactions/%v", r.Owner, r.Repo, r.CommentId, r.ReactionId),
+		URLQuery:           query,
+		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -1749,18 +1761,19 @@ func (r *DeleteForTeamDiscussionReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{"squirrel-girl"},
-		Body:             nil,
-		DataStatuses:     []int{},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
-		Method:           "DELETE",
-		OperationID:      "reactions/delete-for-team-discussion",
-		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
-		RequiredPreviews: []string{"squirrel-girl"},
-		URLPath:          fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/reactions/%v", r.Org, r.TeamSlug, r.DiscussionNumber, r.ReactionId),
-		URLQuery:         query,
-		ValidStatuses:    []int{204},
+		AllPreviews:        []string{"squirrel-girl"},
+		Body:               nil,
+		DataStatuses:       []int{},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{},
+		Method:             "DELETE",
+		OperationID:        "reactions/delete-for-team-discussion",
+		Previews:           map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		RequiredPreviews:   []string{"squirrel-girl"},
+		URLPath:            fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/reactions/%v", r.Org, r.TeamSlug, r.DiscussionNumber, r.ReactionId),
+		URLQuery:           query,
+		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -1876,18 +1889,19 @@ func (r *DeleteForTeamDiscussionCommentReq) requestBuilder() *internal.RequestBu
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{"squirrel-girl"},
-		Body:             nil,
-		DataStatuses:     []int{},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
-		Method:           "DELETE",
-		OperationID:      "reactions/delete-for-team-discussion-comment",
-		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
-		RequiredPreviews: []string{"squirrel-girl"},
-		URLPath:          fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/comments/%v/reactions/%v", r.Org, r.TeamSlug, r.DiscussionNumber, r.CommentNumber, r.ReactionId),
-		URLQuery:         query,
-		ValidStatuses:    []int{204},
+		AllPreviews:        []string{"squirrel-girl"},
+		Body:               nil,
+		DataStatuses:       []int{},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{},
+		Method:             "DELETE",
+		OperationID:        "reactions/delete-for-team-discussion-comment",
+		Previews:           map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		RequiredPreviews:   []string{"squirrel-girl"},
+		URLPath:            fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/comments/%v/reactions/%v", r.Org, r.TeamSlug, r.DiscussionNumber, r.CommentNumber, r.ReactionId),
+		URLQuery:           query,
+		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -1997,18 +2011,19 @@ func (r *DeleteLegacyReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{"squirrel-girl"},
-		Body:             nil,
-		DataStatuses:     []int{},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
-		Method:           "DELETE",
-		OperationID:      "reactions/delete-legacy",
-		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
-		RequiredPreviews: []string{"squirrel-girl"},
-		URLPath:          fmt.Sprintf("/reactions/%v", r.ReactionId),
-		URLQuery:         query,
-		ValidStatuses:    []int{204, 304},
+		AllPreviews:        []string{"squirrel-girl"},
+		Body:               nil,
+		DataStatuses:       []int{},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{},
+		Method:             "DELETE",
+		OperationID:        "reactions/delete-legacy",
+		Previews:           map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		RequiredPreviews:   []string{"squirrel-girl"},
+		URLPath:            fmt.Sprintf("/reactions/%v", r.ReactionId),
+		URLQuery:           query,
+		ValidStatuses:      []int{204, 304},
 	}
 	return builder
 }
@@ -2145,18 +2160,19 @@ func (r *ListForCommitCommentReq) requestBuilder() *internal.RequestBuilder {
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{"squirrel-girl"},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "reactions/list-for-commit-comment",
-		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
-		RequiredPreviews: []string{"squirrel-girl"},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/comments/%v/reactions", r.Owner, r.Repo, r.CommentId),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{"squirrel-girl"},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "reactions/list-for-commit-comment",
+		Previews:           map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		RequiredPreviews:   []string{"squirrel-girl"},
+		URLPath:            fmt.Sprintf("/repos/%v/%v/comments/%v/reactions", r.Owner, r.Repo, r.CommentId),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -2294,18 +2310,19 @@ func (r *ListForIssueReq) requestBuilder() *internal.RequestBuilder {
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{"squirrel-girl"},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "reactions/list-for-issue",
-		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
-		RequiredPreviews: []string{"squirrel-girl"},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/%v/reactions", r.Owner, r.Repo, r.IssueNumber),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{"squirrel-girl"},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "reactions/list-for-issue",
+		Previews:           map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		RequiredPreviews:   []string{"squirrel-girl"},
+		URLPath:            fmt.Sprintf("/repos/%v/%v/issues/%v/reactions", r.Owner, r.Repo, r.IssueNumber),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -2443,18 +2460,19 @@ func (r *ListForIssueCommentReq) requestBuilder() *internal.RequestBuilder {
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{"squirrel-girl"},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "reactions/list-for-issue-comment",
-		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
-		RequiredPreviews: []string{"squirrel-girl"},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/comments/%v/reactions", r.Owner, r.Repo, r.CommentId),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{"squirrel-girl"},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "reactions/list-for-issue-comment",
+		Previews:           map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		RequiredPreviews:   []string{"squirrel-girl"},
+		URLPath:            fmt.Sprintf("/repos/%v/%v/issues/comments/%v/reactions", r.Owner, r.Repo, r.CommentId),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -2592,18 +2610,19 @@ func (r *ListForPullRequestReviewCommentReq) requestBuilder() *internal.RequestB
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{"squirrel-girl"},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "reactions/list-for-pull-request-review-comment",
-		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
-		RequiredPreviews: []string{"squirrel-girl"},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/pulls/comments/%v/reactions", r.Owner, r.Repo, r.CommentId),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{"squirrel-girl"},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "reactions/list-for-pull-request-review-comment",
+		Previews:           map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		RequiredPreviews:   []string{"squirrel-girl"},
+		URLPath:            fmt.Sprintf("/repos/%v/%v/pulls/comments/%v/reactions", r.Owner, r.Repo, r.CommentId),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -2742,18 +2761,19 @@ func (r *ListForTeamDiscussionCommentInOrgReq) requestBuilder() *internal.Reques
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{"squirrel-girl"},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "reactions/list-for-team-discussion-comment-in-org",
-		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
-		RequiredPreviews: []string{"squirrel-girl"},
-		URLPath:          fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/comments/%v/reactions", r.Org, r.TeamSlug, r.DiscussionNumber, r.CommentNumber),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{"squirrel-girl"},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "reactions/list-for-team-discussion-comment-in-org",
+		Previews:           map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		RequiredPreviews:   []string{"squirrel-girl"},
+		URLPath:            fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/comments/%v/reactions", r.Org, r.TeamSlug, r.DiscussionNumber, r.CommentNumber),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -2889,18 +2909,19 @@ func (r *ListForTeamDiscussionCommentLegacyReq) requestBuilder() *internal.Reque
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{"squirrel-girl"},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "reactions/list-for-team-discussion-comment-legacy",
-		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
-		RequiredPreviews: []string{"squirrel-girl"},
-		URLPath:          fmt.Sprintf("/teams/%v/discussions/%v/comments/%v/reactions", r.TeamId, r.DiscussionNumber, r.CommentNumber),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{"squirrel-girl"},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "reactions/list-for-team-discussion-comment-legacy",
+		Previews:           map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		RequiredPreviews:   []string{"squirrel-girl"},
+		URLPath:            fmt.Sprintf("/teams/%v/discussions/%v/comments/%v/reactions", r.TeamId, r.DiscussionNumber, r.CommentNumber),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -3038,18 +3059,19 @@ func (r *ListForTeamDiscussionInOrgReq) requestBuilder() *internal.RequestBuilde
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{"squirrel-girl"},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "reactions/list-for-team-discussion-in-org",
-		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
-		RequiredPreviews: []string{"squirrel-girl"},
-		URLPath:          fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/reactions", r.Org, r.TeamSlug, r.DiscussionNumber),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{"squirrel-girl"},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "reactions/list-for-team-discussion-in-org",
+		Previews:           map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		RequiredPreviews:   []string{"squirrel-girl"},
+		URLPath:            fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/reactions", r.Org, r.TeamSlug, r.DiscussionNumber),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -3184,18 +3206,19 @@ func (r *ListForTeamDiscussionLegacyReq) requestBuilder() *internal.RequestBuild
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{"squirrel-girl"},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "reactions/list-for-team-discussion-legacy",
-		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
-		RequiredPreviews: []string{"squirrel-girl"},
-		URLPath:          fmt.Sprintf("/teams/%v/discussions/%v/reactions", r.TeamId, r.DiscussionNumber),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{"squirrel-girl"},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "reactions/list-for-team-discussion-legacy",
+		Previews:           map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		RequiredPreviews:   []string{"squirrel-girl"},
+		URLPath:            fmt.Sprintf("/teams/%v/discussions/%v/reactions", r.TeamId, r.DiscussionNumber),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }

@@ -100,18 +100,19 @@ func (r *GetAllCodesOfConductReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{"scarlet-witch"},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "codes-of-conduct/get-all-codes-of-conduct",
-		Previews:         map[string]bool{"scarlet-witch": r.ScarletWitchPreview},
-		RequiredPreviews: []string{"scarlet-witch"},
-		URLPath:          fmt.Sprintf("/codes_of_conduct"),
-		URLQuery:         query,
-		ValidStatuses:    []int{200, 304},
+		AllPreviews:        []string{"scarlet-witch"},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "codes-of-conduct/get-all-codes-of-conduct",
+		Previews:           map[string]bool{"scarlet-witch": r.ScarletWitchPreview},
+		RequiredPreviews:   []string{"scarlet-witch"},
+		URLPath:            fmt.Sprintf("/codes_of_conduct"),
+		URLQuery:           query,
+		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -221,18 +222,19 @@ func (r *GetConductCodeReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{"scarlet-witch"},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "codes-of-conduct/get-conduct-code",
-		Previews:         map[string]bool{"scarlet-witch": r.ScarletWitchPreview},
-		RequiredPreviews: []string{"scarlet-witch"},
-		URLPath:          fmt.Sprintf("/codes_of_conduct/%v", r.Key),
-		URLQuery:         query,
-		ValidStatuses:    []int{200, 304},
+		AllPreviews:        []string{"scarlet-witch"},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "codes-of-conduct/get-conduct-code",
+		Previews:           map[string]bool{"scarlet-witch": r.ScarletWitchPreview},
+		RequiredPreviews:   []string{"scarlet-witch"},
+		URLPath:            fmt.Sprintf("/codes_of_conduct/%v", r.Key),
+		URLQuery:           query,
+		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -341,18 +343,19 @@ func (r *GetForRepoReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{"scarlet-witch"},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "codes-of-conduct/get-for-repo",
-		Previews:         map[string]bool{"scarlet-witch": r.ScarletWitchPreview},
-		RequiredPreviews: []string{"scarlet-witch"},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/community/code_of_conduct", r.Owner, r.Repo),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{"scarlet-witch"},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "codes-of-conduct/get-for-repo",
+		Previews:           map[string]bool{"scarlet-witch": r.ScarletWitchPreview},
+		RequiredPreviews:   []string{"scarlet-witch"},
+		URLPath:            fmt.Sprintf("/repos/%v/%v/community/code_of_conduct", r.Owner, r.Repo),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }

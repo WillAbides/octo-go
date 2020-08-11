@@ -102,18 +102,19 @@ func (r *GetRestrictionsForOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{"sombra"},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "interactions/get-restrictions-for-org",
-		Previews:         map[string]bool{"sombra": r.SombraPreview},
-		RequiredPreviews: []string{"sombra"},
-		URLPath:          fmt.Sprintf("/orgs/%v/interaction-limits", r.Org),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{"sombra"},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "interactions/get-restrictions-for-org",
+		Previews:           map[string]bool{"sombra": r.SombraPreview},
+		RequiredPreviews:   []string{"sombra"},
+		URLPath:            fmt.Sprintf("/orgs/%v/interaction-limits", r.Org),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -223,18 +224,19 @@ func (r *GetRestrictionsForRepoReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{"sombra"},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "interactions/get-restrictions-for-repo",
-		Previews:         map[string]bool{"sombra": r.SombraPreview},
-		RequiredPreviews: []string{"sombra"},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/interaction-limits", r.Owner, r.Repo),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{"sombra"},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "interactions/get-restrictions-for-repo",
+		Previews:           map[string]bool{"sombra": r.SombraPreview},
+		RequiredPreviews:   []string{"sombra"},
+		URLPath:            fmt.Sprintf("/repos/%v/%v/interaction-limits", r.Owner, r.Repo),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -342,18 +344,19 @@ func (r *RemoveRestrictionsForOrgReq) requestBuilder() *internal.RequestBuilder 
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{"sombra"},
-		Body:             nil,
-		DataStatuses:     []int{},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
-		Method:           "DELETE",
-		OperationID:      "interactions/remove-restrictions-for-org",
-		Previews:         map[string]bool{"sombra": r.SombraPreview},
-		RequiredPreviews: []string{"sombra"},
-		URLPath:          fmt.Sprintf("/orgs/%v/interaction-limits", r.Org),
-		URLQuery:         query,
-		ValidStatuses:    []int{204},
+		AllPreviews:        []string{"sombra"},
+		Body:               nil,
+		DataStatuses:       []int{},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{},
+		Method:             "DELETE",
+		OperationID:        "interactions/remove-restrictions-for-org",
+		Previews:           map[string]bool{"sombra": r.SombraPreview},
+		RequiredPreviews:   []string{"sombra"},
+		URLPath:            fmt.Sprintf("/orgs/%v/interaction-limits", r.Org),
+		URLQuery:           query,
+		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -461,18 +464,19 @@ func (r *RemoveRestrictionsForRepoReq) requestBuilder() *internal.RequestBuilder
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{"sombra"},
-		Body:             nil,
-		DataStatuses:     []int{},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
-		Method:           "DELETE",
-		OperationID:      "interactions/remove-restrictions-for-repo",
-		Previews:         map[string]bool{"sombra": r.SombraPreview},
-		RequiredPreviews: []string{"sombra"},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/interaction-limits", r.Owner, r.Repo),
-		URLQuery:         query,
-		ValidStatuses:    []int{204},
+		AllPreviews:        []string{"sombra"},
+		Body:               nil,
+		DataStatuses:       []int{},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{},
+		Method:             "DELETE",
+		OperationID:        "interactions/remove-restrictions-for-repo",
+		Previews:           map[string]bool{"sombra": r.SombraPreview},
+		RequiredPreviews:   []string{"sombra"},
+		URLPath:            fmt.Sprintf("/repos/%v/%v/interaction-limits", r.Owner, r.Repo),
+		URLQuery:           query,
+		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -581,10 +585,11 @@ func (r *SetRestrictionsForOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:  []string{"sombra"},
-		Body:         r.RequestBody,
-		DataStatuses: []int{200},
-		ExplicitURL:  r._url,
+		AllPreviews:        []string{"sombra"},
+		Body:               r.RequestBody,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
+		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
@@ -721,10 +726,11 @@ func (r *SetRestrictionsForRepoReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:  []string{"sombra"},
-		Body:         r.RequestBody,
-		DataStatuses: []int{200},
-		ExplicitURL:  r._url,
+		AllPreviews:        []string{"sombra"},
+		Body:               r.RequestBody,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
+		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),

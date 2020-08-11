@@ -95,18 +95,19 @@ func (r *CancelImportReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
-		Method:           "DELETE",
-		OperationID:      "migrations/cancel-import",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/import", r.Owner, r.Repo),
-		URLQuery:         query,
-		ValidStatuses:    []int{204},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{},
+		Method:             "DELETE",
+		OperationID:        "migrations/cancel-import",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/repos/%v/%v/import", r.Owner, r.Repo),
+		URLQuery:           query,
+		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -210,18 +211,19 @@ func (r *DeleteArchiveForAuthenticatedUserReq) requestBuilder() *internal.Reques
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{"wyandotte"},
-		Body:             nil,
-		DataStatuses:     []int{},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
-		Method:           "DELETE",
-		OperationID:      "migrations/delete-archive-for-authenticated-user",
-		Previews:         map[string]bool{"wyandotte": r.WyandottePreview},
-		RequiredPreviews: []string{"wyandotte"},
-		URLPath:          fmt.Sprintf("/user/migrations/%v/archive", r.MigrationId),
-		URLQuery:         query,
-		ValidStatuses:    []int{204, 304},
+		AllPreviews:        []string{"wyandotte"},
+		Body:               nil,
+		DataStatuses:       []int{},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{},
+		Method:             "DELETE",
+		OperationID:        "migrations/delete-archive-for-authenticated-user",
+		Previews:           map[string]bool{"wyandotte": r.WyandottePreview},
+		RequiredPreviews:   []string{"wyandotte"},
+		URLPath:            fmt.Sprintf("/user/migrations/%v/archive", r.MigrationId),
+		URLQuery:           query,
+		ValidStatuses:      []int{204, 304},
 	}
 	return builder
 }
@@ -330,18 +332,19 @@ func (r *DeleteArchiveForOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{"wyandotte"},
-		Body:             nil,
-		DataStatuses:     []int{},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
-		Method:           "DELETE",
-		OperationID:      "migrations/delete-archive-for-org",
-		Previews:         map[string]bool{"wyandotte": r.WyandottePreview},
-		RequiredPreviews: []string{"wyandotte"},
-		URLPath:          fmt.Sprintf("/orgs/%v/migrations/%v/archive", r.Org, r.MigrationId),
-		URLQuery:         query,
-		ValidStatuses:    []int{204},
+		AllPreviews:        []string{"wyandotte"},
+		Body:               nil,
+		DataStatuses:       []int{},
+		EndpointAttributes: []internal.EndpointAttribute{internal.AttrBoolean},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{},
+		Method:             "DELETE",
+		OperationID:        "migrations/delete-archive-for-org",
+		Previews:           map[string]bool{"wyandotte": r.WyandottePreview},
+		RequiredPreviews:   []string{"wyandotte"},
+		URLPath:            fmt.Sprintf("/orgs/%v/migrations/%v/archive", r.Org, r.MigrationId),
+		URLQuery:           query,
+		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -447,18 +450,19 @@ func (r *DownloadArchiveForOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{"wyandotte"},
-		Body:             nil,
-		DataStatuses:     []int{},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
-		Method:           "GET",
-		OperationID:      "migrations/download-archive-for-org",
-		Previews:         map[string]bool{"wyandotte": r.WyandottePreview},
-		RequiredPreviews: []string{"wyandotte"},
-		URLPath:          fmt.Sprintf("/orgs/%v/migrations/%v/archive", r.Org, r.MigrationId),
-		URLQuery:         query,
-		ValidStatuses:    []int{302},
+		AllPreviews:        []string{"wyandotte"},
+		Body:               nil,
+		DataStatuses:       []int{},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{},
+		Method:             "GET",
+		OperationID:        "migrations/download-archive-for-org",
+		Previews:           map[string]bool{"wyandotte": r.WyandottePreview},
+		RequiredPreviews:   []string{"wyandotte"},
+		URLPath:            fmt.Sprintf("/orgs/%v/migrations/%v/archive", r.Org, r.MigrationId),
+		URLQuery:           query,
+		ValidStatuses:      []int{302},
 	}
 	return builder
 }
@@ -562,18 +566,19 @@ func (r *GetArchiveForAuthenticatedUserReq) requestBuilder() *internal.RequestBu
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{"wyandotte"},
-		Body:             nil,
-		DataStatuses:     []int{},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
-		Method:           "GET",
-		OperationID:      "migrations/get-archive-for-authenticated-user",
-		Previews:         map[string]bool{"wyandotte": r.WyandottePreview},
-		RequiredPreviews: []string{"wyandotte"},
-		URLPath:          fmt.Sprintf("/user/migrations/%v/archive", r.MigrationId),
-		URLQuery:         query,
-		ValidStatuses:    []int{302, 304},
+		AllPreviews:        []string{"wyandotte"},
+		Body:               nil,
+		DataStatuses:       []int{},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{},
+		Method:             "GET",
+		OperationID:        "migrations/get-archive-for-authenticated-user",
+		Previews:           map[string]bool{"wyandotte": r.WyandottePreview},
+		RequiredPreviews:   []string{"wyandotte"},
+		URLPath:            fmt.Sprintf("/user/migrations/%v/archive", r.MigrationId),
+		URLQuery:           query,
+		ValidStatuses:      []int{302, 304},
 	}
 	return builder
 }
@@ -684,18 +689,19 @@ func (r *GetCommitAuthorsReq) requestBuilder() *internal.RequestBuilder {
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "migrations/get-commit-authors",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/import/authors", r.Owner, r.Repo),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "migrations/get-commit-authors",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/repos/%v/%v/import/authors", r.Owner, r.Repo),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -797,18 +803,19 @@ func (r *GetImportStatusReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "migrations/get-import-status",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/import", r.Owner, r.Repo),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "migrations/get-import-status",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/repos/%v/%v/import", r.Owner, r.Repo),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -910,18 +917,19 @@ func (r *GetLargeFilesReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "migrations/get-large-files",
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/import/large_files", r.Owner, r.Repo),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "migrations/get-large-files",
+		Previews:           map[string]bool{},
+		RequiredPreviews:   []string{},
+		URLPath:            fmt.Sprintf("/repos/%v/%v/import/large_files", r.Owner, r.Repo),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -1027,18 +1035,19 @@ func (r *GetStatusForAuthenticatedUserReq) requestBuilder() *internal.RequestBui
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{"wyandotte"},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "migrations/get-status-for-authenticated-user",
-		Previews:         map[string]bool{"wyandotte": r.WyandottePreview},
-		RequiredPreviews: []string{"wyandotte"},
-		URLPath:          fmt.Sprintf("/user/migrations/%v", r.MigrationId),
-		URLQuery:         query,
-		ValidStatuses:    []int{200, 304},
+		AllPreviews:        []string{"wyandotte"},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "migrations/get-status-for-authenticated-user",
+		Previews:           map[string]bool{"wyandotte": r.WyandottePreview},
+		RequiredPreviews:   []string{"wyandotte"},
+		URLPath:            fmt.Sprintf("/user/migrations/%v", r.MigrationId),
+		URLQuery:           query,
+		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -1145,18 +1154,19 @@ func (r *GetStatusForOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{"wyandotte"},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "migrations/get-status-for-org",
-		Previews:         map[string]bool{"wyandotte": r.WyandottePreview},
-		RequiredPreviews: []string{"wyandotte"},
-		URLPath:          fmt.Sprintf("/orgs/%v/migrations/%v", r.Org, r.MigrationId),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{"wyandotte"},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "migrations/get-status-for-org",
+		Previews:           map[string]bool{"wyandotte": r.WyandottePreview},
+		RequiredPreviews:   []string{"wyandotte"},
+		URLPath:            fmt.Sprintf("/orgs/%v/migrations/%v", r.Org, r.MigrationId),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -1271,18 +1281,19 @@ func (r *ListForAuthenticatedUserReq) requestBuilder() *internal.RequestBuilder 
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{"wyandotte"},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "migrations/list-for-authenticated-user",
-		Previews:         map[string]bool{"wyandotte": r.WyandottePreview},
-		RequiredPreviews: []string{"wyandotte"},
-		URLPath:          fmt.Sprintf("/user/migrations"),
-		URLQuery:         query,
-		ValidStatuses:    []int{200, 304},
+		AllPreviews:        []string{"wyandotte"},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "migrations/list-for-authenticated-user",
+		Previews:           map[string]bool{"wyandotte": r.WyandottePreview},
+		RequiredPreviews:   []string{"wyandotte"},
+		URLPath:            fmt.Sprintf("/user/migrations"),
+		URLQuery:           query,
+		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -1398,18 +1409,19 @@ func (r *ListForOrgReq) requestBuilder() *internal.RequestBuilder {
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{"wyandotte"},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "migrations/list-for-org",
-		Previews:         map[string]bool{"wyandotte": r.WyandottePreview},
-		RequiredPreviews: []string{"wyandotte"},
-		URLPath:          fmt.Sprintf("/orgs/%v/migrations", r.Org),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{"wyandotte"},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "migrations/list-for-org",
+		Previews:           map[string]bool{"wyandotte": r.WyandottePreview},
+		RequiredPreviews:   []string{"wyandotte"},
+		URLPath:            fmt.Sprintf("/orgs/%v/migrations", r.Org),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -1528,18 +1540,19 @@ func (r *ListReposForOrgReq) requestBuilder() *internal.RequestBuilder {
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{"wyandotte"},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "migrations/list-repos-for-org",
-		Previews:         map[string]bool{"wyandotte": r.WyandottePreview},
-		RequiredPreviews: []string{"wyandotte"},
-		URLPath:          fmt.Sprintf("/orgs/%v/migrations/%v/repositories", r.Org, r.MigrationId),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{"wyandotte"},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "migrations/list-repos-for-org",
+		Previews:           map[string]bool{"wyandotte": r.WyandottePreview},
+		RequiredPreviews:   []string{"wyandotte"},
+		URLPath:            fmt.Sprintf("/orgs/%v/migrations/%v/repositories", r.Org, r.MigrationId),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -1657,18 +1670,19 @@ func (r *ListReposForUserReq) requestBuilder() *internal.RequestBuilder {
 	}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{"wyandotte"},
-		Body:             nil,
-		DataStatuses:     []int{200},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
-		Method:           "GET",
-		OperationID:      "migrations/list-repos-for-user",
-		Previews:         map[string]bool{"wyandotte": r.WyandottePreview},
-		RequiredPreviews: []string{"wyandotte"},
-		URLPath:          fmt.Sprintf("/user/migrations/%v/repositories", r.MigrationId),
-		URLQuery:         query,
-		ValidStatuses:    []int{200},
+		AllPreviews:        []string{"wyandotte"},
+		Body:               nil,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
+		Method:             "GET",
+		OperationID:        "migrations/list-repos-for-user",
+		Previews:           map[string]bool{"wyandotte": r.WyandottePreview},
+		RequiredPreviews:   []string{"wyandotte"},
+		URLPath:            fmt.Sprintf("/user/migrations/%v/repositories", r.MigrationId),
+		URLQuery:           query,
+		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -1774,10 +1788,11 @@ func (r *MapCommitAuthorReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:  []string{},
-		Body:         r.RequestBody,
-		DataStatuses: []int{200},
-		ExplicitURL:  r._url,
+		AllPreviews:        []string{},
+		Body:               r.RequestBody,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
+		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
@@ -1906,10 +1921,11 @@ func (r *SetLfsPreferenceReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:  []string{},
-		Body:         r.RequestBody,
-		DataStatuses: []int{200},
-		ExplicitURL:  r._url,
+		AllPreviews:        []string{},
+		Body:               r.RequestBody,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
+		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
@@ -2035,10 +2051,11 @@ func (r *StartForAuthenticatedUserReq) requestBuilder() *internal.RequestBuilder
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:  []string{},
-		Body:         r.RequestBody,
-		DataStatuses: []int{201},
-		ExplicitURL:  r._url,
+		AllPreviews:        []string{},
+		Body:               r.RequestBody,
+		DataStatuses:       []int{201},
+		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
+		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
@@ -2169,10 +2186,11 @@ func (r *StartForOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:  []string{},
-		Body:         r.RequestBody,
-		DataStatuses: []int{201},
-		ExplicitURL:  r._url,
+		AllPreviews:        []string{},
+		Body:               r.RequestBody,
+		DataStatuses:       []int{201},
+		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
+		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
@@ -2304,10 +2322,11 @@ func (r *StartImportReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:  []string{},
-		Body:         r.RequestBody,
-		DataStatuses: []int{201},
-		ExplicitURL:  r._url,
+		AllPreviews:        []string{},
+		Body:               r.RequestBody,
+		DataStatuses:       []int{201},
+		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
+		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
@@ -2454,18 +2473,19 @@ func (r *UnlockRepoForAuthenticatedUserReq) requestBuilder() *internal.RequestBu
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{"wyandotte"},
-		Body:             nil,
-		DataStatuses:     []int{},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
-		Method:           "DELETE",
-		OperationID:      "migrations/unlock-repo-for-authenticated-user",
-		Previews:         map[string]bool{"wyandotte": r.WyandottePreview},
-		RequiredPreviews: []string{"wyandotte"},
-		URLPath:          fmt.Sprintf("/user/migrations/%v/repos/%v/lock", r.MigrationId, r.RepoName),
-		URLQuery:         query,
-		ValidStatuses:    []int{204, 304},
+		AllPreviews:        []string{"wyandotte"},
+		Body:               nil,
+		DataStatuses:       []int{},
+		EndpointAttributes: []internal.EndpointAttribute{},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{},
+		Method:             "DELETE",
+		OperationID:        "migrations/unlock-repo-for-authenticated-user",
+		Previews:           map[string]bool{"wyandotte": r.WyandottePreview},
+		RequiredPreviews:   []string{"wyandotte"},
+		URLPath:            fmt.Sprintf("/user/migrations/%v/repos/%v/lock", r.MigrationId, r.RepoName),
+		URLQuery:           query,
+		ValidStatuses:      []int{204, 304},
 	}
 	return builder
 }
@@ -2577,18 +2597,19 @@ func (r *UnlockRepoForOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:      []string{"wyandotte"},
-		Body:             nil,
-		DataStatuses:     []int{},
-		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
-		Method:           "DELETE",
-		OperationID:      "migrations/unlock-repo-for-org",
-		Previews:         map[string]bool{"wyandotte": r.WyandottePreview},
-		RequiredPreviews: []string{"wyandotte"},
-		URLPath:          fmt.Sprintf("/orgs/%v/migrations/%v/repos/%v/lock", r.Org, r.MigrationId, r.RepoName),
-		URLQuery:         query,
-		ValidStatuses:    []int{204},
+		AllPreviews:        []string{"wyandotte"},
+		Body:               nil,
+		DataStatuses:       []int{},
+		EndpointAttributes: []internal.EndpointAttribute{internal.AttrBoolean},
+		ExplicitURL:        r._url,
+		HeaderVals:         map[string]*string{},
+		Method:             "DELETE",
+		OperationID:        "migrations/unlock-repo-for-org",
+		Previews:           map[string]bool{"wyandotte": r.WyandottePreview},
+		RequiredPreviews:   []string{"wyandotte"},
+		URLPath:            fmt.Sprintf("/orgs/%v/migrations/%v/repos/%v/lock", r.Org, r.MigrationId, r.RepoName),
+		URLQuery:           query,
+		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -2691,10 +2712,11 @@ func (r *UpdateImportReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
 	builder := &internal.RequestBuilder{
-		AllPreviews:  []string{},
-		Body:         r.RequestBody,
-		DataStatuses: []int{200},
-		ExplicitURL:  r._url,
+		AllPreviews:        []string{},
+		Body:               r.RequestBody,
+		DataStatuses:       []int{200},
+		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
+		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),

@@ -175,13 +175,23 @@ func reqBuilderFunc(endpoint *model.Endpoint, pq pkgQual) jen.Code {
 						dict[jen.Lit(preview.Name)] = jen.Id("r").Dot(toExportedName(preview.Name + "-preview"))
 					}
 				})),
-				jen.Id("Body"):     reqBodyValue(endpoint),
-				jen.Id("URLQuery"): jen.Id("query"),
-				jen.Id("URLPath"):  reqURLPathVal(endpoint),
+				jen.Id("Body"):               reqBodyValue(endpoint),
+				jen.Id("URLQuery"):           jen.Id("query"),
+				jen.Id("URLPath"):            reqURLPathVal(endpoint),
+				jen.Id("EndpointAttributes"): reqEndpointAttributesValue(endpoint, pq),
 			},
 		),
 		jen.Return(jen.Id("builder")),
 	)
+}
+
+func reqEndpointAttributesValue(endpoint *model.Endpoint, pq pkgQual) *jen.Statement {
+	attrs := getEndpointAttributes(endpoint)
+	return jen.Op("[]").Qual(pq.pkgPath("internal"), "EndpointAttribute").ValuesFunc(func(group *jen.Group) {
+		for _, attr := range attrs {
+			group.Qual(pq.pkgPath("internal"), attr.String())
+		}
+	})
 }
 
 func validCodes(endpoint *model.Endpoint) []int {
