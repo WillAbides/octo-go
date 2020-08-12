@@ -39,22 +39,32 @@ func Render(ctx context.Context, req *RenderReq, opt ...requests.Option) (*Rende
 	if req == nil {
 		req = new(RenderReq)
 	}
-	resp := &RenderResponse{request: req}
+	resp := &RenderResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewRenderResponse(r, opts.PreserveResponseBody())
+}
+
+// NewRenderResponse builds a new *RenderResponse from an *http.Response
+func NewRenderResponse(resp *http.Response, preserveBody bool) (*RenderResponse, error) {
+	var result RenderResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -95,7 +105,6 @@ func (r *RenderReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"content-type": internal.String("application/json")},
@@ -105,7 +114,6 @@ func (r *RenderReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/markdown"),
 		URLQuery:           query,
-		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -115,7 +123,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *RenderReq) Rel(link string, resp *RenderResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -146,8 +154,11 @@ RenderResponse is a response for Render
 https://developer.github.com/v3/markdown/#render-a-markdown-document
 */
 type RenderResponse struct {
-	requests.Response
-	request *RenderReq
+	httpResponse *http.Response
+}
+
+func (r *RenderResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -167,22 +178,32 @@ func RenderRaw(ctx context.Context, req *RenderRawReq, opt ...requests.Option) (
 	if req == nil {
 		req = new(RenderRawReq)
 	}
-	resp := &RenderRawResponse{request: req}
+	resp := &RenderRawResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewRenderRawResponse(r, opts.PreserveResponseBody())
+}
+
+// NewRenderRawResponse builds a new *RenderRawResponse from an *http.Response
+func NewRenderRawResponse(resp *http.Response, preserveBody bool) (*RenderRawResponse, error) {
+	var result RenderRawResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -225,7 +246,6 @@ func (r *RenderRawReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrBodyUploader},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"content-type": internal.String("text/x-markdown")},
@@ -235,7 +255,6 @@ func (r *RenderRawReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/markdown/raw"),
 		URLQuery:           query,
-		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -245,7 +264,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *RenderRawReq) Rel(link string, resp *RenderRawResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -259,6 +278,9 @@ RenderRawResponse is a response for RenderRaw
 https://developer.github.com/v3/markdown/#render-a-markdown-document-in-raw-mode
 */
 type RenderRawResponse struct {
-	requests.Response
-	request *RenderRawReq
+	httpResponse *http.Response
+}
+
+func (r *RenderRawResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }

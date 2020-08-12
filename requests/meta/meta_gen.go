@@ -39,23 +39,38 @@ func Get(ctx context.Context, req *GetReq, opt ...requests.Option) (*GetResponse
 	if req == nil {
 		req = new(GetReq)
 	}
-	resp := &GetResponse{request: req}
+	resp := &GetResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.ApiOverview{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetResponse builds a new *GetResponse from an *http.Response
+func NewGetResponse(resp *http.Response, preserveBody bool) (*GetResponse, error) {
+	var result GetResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -95,7 +110,6 @@ func (r *GetReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -105,7 +119,6 @@ func (r *GetReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/meta"),
 		URLQuery:           query,
-		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -115,7 +128,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetReq) Rel(link string, resp *GetResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -129,9 +142,12 @@ GetResponse is a response for Get
 https://developer.github.com/v3/meta/#get-github-meta-information
 */
 type GetResponse struct {
-	requests.Response
-	request *GetReq
-	Data    components.ApiOverview
+	httpResponse *http.Response
+	Data         components.ApiOverview
+}
+
+func (r *GetResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -150,22 +166,32 @@ func GetOctocat(ctx context.Context, req *GetOctocatReq, opt ...requests.Option)
 	if req == nil {
 		req = new(GetOctocatReq)
 	}
-	resp := &GetOctocatResponse{request: req}
+	resp := &GetOctocatResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetOctocatResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetOctocatResponse builds a new *GetOctocatResponse from an *http.Response
+func NewGetOctocatResponse(resp *http.Response, preserveBody bool) (*GetOctocatResponse, error) {
+	var result GetOctocatResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -209,7 +235,6 @@ func (r *GetOctocatReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -219,7 +244,6 @@ func (r *GetOctocatReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/octocat"),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -229,7 +253,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetOctocatReq) Rel(link string, resp *GetOctocatResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -242,8 +266,11 @@ GetOctocatResponse is a response for GetOctocat
 
 */
 type GetOctocatResponse struct {
-	requests.Response
-	request *GetOctocatReq
+	httpResponse *http.Response
+}
+
+func (r *GetOctocatResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -262,22 +289,32 @@ func GetZen(ctx context.Context, req *GetZenReq, opt ...requests.Option) (*GetZe
 	if req == nil {
 		req = new(GetZenReq)
 	}
-	resp := &GetZenResponse{request: req}
+	resp := &GetZenResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetZenResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetZenResponse builds a new *GetZenResponse from an *http.Response
+func NewGetZenResponse(resp *http.Response, preserveBody bool) (*GetZenResponse, error) {
+	var result GetZenResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -315,7 +352,6 @@ func (r *GetZenReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -325,7 +361,6 @@ func (r *GetZenReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/zen"),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -335,7 +370,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetZenReq) Rel(link string, resp *GetZenResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -348,8 +383,11 @@ GetZenResponse is a response for GetZen
 
 */
 type GetZenResponse struct {
-	requests.Response
-	request *GetZenReq
+	httpResponse *http.Response
+}
+
+func (r *GetZenResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -368,23 +406,38 @@ func Root(ctx context.Context, req *RootReq, opt ...requests.Option) (*RootRespo
 	if req == nil {
 		req = new(RootReq)
 	}
-	resp := &RootResponse{request: req}
+	resp := &RootResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = RootResponseBody{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewRootResponse(r, opts.PreserveResponseBody())
+}
+
+// NewRootResponse builds a new *RootResponse from an *http.Response
+func NewRootResponse(resp *http.Response, preserveBody bool) (*RootResponse, error) {
+	var result RootResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -422,7 +475,6 @@ func (r *RootReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -432,7 +484,6 @@ func (r *RootReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/"),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -442,7 +493,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *RootReq) Rel(link string, resp *RootResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -495,7 +546,10 @@ RootResponse is a response for Root
 
 */
 type RootResponse struct {
-	requests.Response
-	request *RootReq
-	Data    RootResponseBody
+	httpResponse *http.Response
+	Data         RootResponseBody
+}
+
+func (r *RootResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }

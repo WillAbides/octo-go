@@ -39,23 +39,38 @@ func GetGithubActionsBillingGhe(ctx context.Context, req *GetGithubActionsBillin
 	if req == nil {
 		req = new(GetGithubActionsBillingGheReq)
 	}
-	resp := &GetGithubActionsBillingGheResponse{request: req}
+	resp := &GetGithubActionsBillingGheResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.ActionsBillingUsage{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetGithubActionsBillingGheResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetGithubActionsBillingGheResponse builds a new *GetGithubActionsBillingGheResponse from an *http.Response
+func NewGetGithubActionsBillingGheResponse(resp *http.Response, preserveBody bool) (*GetGithubActionsBillingGheResponse, error) {
+	var result GetGithubActionsBillingGheResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -98,7 +113,6 @@ func (r *GetGithubActionsBillingGheReq) requestBuilder() *internal.RequestBuilde
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -108,7 +122,6 @@ func (r *GetGithubActionsBillingGheReq) requestBuilder() *internal.RequestBuilde
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/enterprises/%v/settings/billing/actions", r.EnterpriseId),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -118,7 +131,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetGithubActionsBillingGheReq) Rel(link string, resp *GetGithubActionsBillingGheResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -132,9 +145,12 @@ GetGithubActionsBillingGheResponse is a response for GetGithubActionsBillingGhe
 https://developer.github.com/v3/billing/#get-github-actions-billing-for-an-enterprise
 */
 type GetGithubActionsBillingGheResponse struct {
-	requests.Response
-	request *GetGithubActionsBillingGheReq
-	Data    components.ActionsBillingUsage
+	httpResponse *http.Response
+	Data         components.ActionsBillingUsage
+}
+
+func (r *GetGithubActionsBillingGheResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -154,23 +170,38 @@ func GetGithubActionsBillingOrg(ctx context.Context, req *GetGithubActionsBillin
 	if req == nil {
 		req = new(GetGithubActionsBillingOrgReq)
 	}
-	resp := &GetGithubActionsBillingOrgResponse{request: req}
+	resp := &GetGithubActionsBillingOrgResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.ActionsBillingUsage{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetGithubActionsBillingOrgResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetGithubActionsBillingOrgResponse builds a new *GetGithubActionsBillingOrgResponse from an *http.Response
+func NewGetGithubActionsBillingOrgResponse(resp *http.Response, preserveBody bool) (*GetGithubActionsBillingOrgResponse, error) {
+	var result GetGithubActionsBillingOrgResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -211,7 +242,6 @@ func (r *GetGithubActionsBillingOrgReq) requestBuilder() *internal.RequestBuilde
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -221,7 +251,6 @@ func (r *GetGithubActionsBillingOrgReq) requestBuilder() *internal.RequestBuilde
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/settings/billing/actions", r.Org),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -231,7 +260,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetGithubActionsBillingOrgReq) Rel(link string, resp *GetGithubActionsBillingOrgResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -245,9 +274,12 @@ GetGithubActionsBillingOrgResponse is a response for GetGithubActionsBillingOrg
 https://developer.github.com/v3/billing/#get-github-actions-billing-for-an-organization
 */
 type GetGithubActionsBillingOrgResponse struct {
-	requests.Response
-	request *GetGithubActionsBillingOrgReq
-	Data    components.ActionsBillingUsage
+	httpResponse *http.Response
+	Data         components.ActionsBillingUsage
+}
+
+func (r *GetGithubActionsBillingOrgResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -267,23 +299,38 @@ func GetGithubActionsBillingUser(ctx context.Context, req *GetGithubActionsBilli
 	if req == nil {
 		req = new(GetGithubActionsBillingUserReq)
 	}
-	resp := &GetGithubActionsBillingUserResponse{request: req}
+	resp := &GetGithubActionsBillingUserResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.ActionsBillingUsage{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetGithubActionsBillingUserResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetGithubActionsBillingUserResponse builds a new *GetGithubActionsBillingUserResponse from an *http.Response
+func NewGetGithubActionsBillingUserResponse(resp *http.Response, preserveBody bool) (*GetGithubActionsBillingUserResponse, error) {
+	var result GetGithubActionsBillingUserResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -324,7 +371,6 @@ func (r *GetGithubActionsBillingUserReq) requestBuilder() *internal.RequestBuild
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -334,7 +380,6 @@ func (r *GetGithubActionsBillingUserReq) requestBuilder() *internal.RequestBuild
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/users/%v/settings/billing/actions", r.Username),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -344,7 +389,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetGithubActionsBillingUserReq) Rel(link string, resp *GetGithubActionsBillingUserResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -358,9 +403,12 @@ GetGithubActionsBillingUserResponse is a response for GetGithubActionsBillingUse
 https://developer.github.com/v3/billing/#get-github-actions-billing-for-a-user
 */
 type GetGithubActionsBillingUserResponse struct {
-	requests.Response
-	request *GetGithubActionsBillingUserReq
-	Data    components.ActionsBillingUsage
+	httpResponse *http.Response
+	Data         components.ActionsBillingUsage
+}
+
+func (r *GetGithubActionsBillingUserResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -380,23 +428,38 @@ func GetGithubPackagesBillingGhe(ctx context.Context, req *GetGithubPackagesBill
 	if req == nil {
 		req = new(GetGithubPackagesBillingGheReq)
 	}
-	resp := &GetGithubPackagesBillingGheResponse{request: req}
+	resp := &GetGithubPackagesBillingGheResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.PackagesBillingUsage{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetGithubPackagesBillingGheResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetGithubPackagesBillingGheResponse builds a new *GetGithubPackagesBillingGheResponse from an *http.Response
+func NewGetGithubPackagesBillingGheResponse(resp *http.Response, preserveBody bool) (*GetGithubPackagesBillingGheResponse, error) {
+	var result GetGithubPackagesBillingGheResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -439,7 +502,6 @@ func (r *GetGithubPackagesBillingGheReq) requestBuilder() *internal.RequestBuild
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -449,7 +511,6 @@ func (r *GetGithubPackagesBillingGheReq) requestBuilder() *internal.RequestBuild
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/enterprises/%v/settings/billing/packages", r.EnterpriseId),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -459,7 +520,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetGithubPackagesBillingGheReq) Rel(link string, resp *GetGithubPackagesBillingGheResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -473,9 +534,12 @@ GetGithubPackagesBillingGheResponse is a response for GetGithubPackagesBillingGh
 https://developer.github.com/v3/billing/#get-github-packages-billing-for-an-enterprise
 */
 type GetGithubPackagesBillingGheResponse struct {
-	requests.Response
-	request *GetGithubPackagesBillingGheReq
-	Data    components.PackagesBillingUsage
+	httpResponse *http.Response
+	Data         components.PackagesBillingUsage
+}
+
+func (r *GetGithubPackagesBillingGheResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -495,23 +559,38 @@ func GetGithubPackagesBillingOrg(ctx context.Context, req *GetGithubPackagesBill
 	if req == nil {
 		req = new(GetGithubPackagesBillingOrgReq)
 	}
-	resp := &GetGithubPackagesBillingOrgResponse{request: req}
+	resp := &GetGithubPackagesBillingOrgResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.PackagesBillingUsage{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetGithubPackagesBillingOrgResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetGithubPackagesBillingOrgResponse builds a new *GetGithubPackagesBillingOrgResponse from an *http.Response
+func NewGetGithubPackagesBillingOrgResponse(resp *http.Response, preserveBody bool) (*GetGithubPackagesBillingOrgResponse, error) {
+	var result GetGithubPackagesBillingOrgResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -552,7 +631,6 @@ func (r *GetGithubPackagesBillingOrgReq) requestBuilder() *internal.RequestBuild
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -562,7 +640,6 @@ func (r *GetGithubPackagesBillingOrgReq) requestBuilder() *internal.RequestBuild
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/settings/billing/packages", r.Org),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -572,7 +649,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetGithubPackagesBillingOrgReq) Rel(link string, resp *GetGithubPackagesBillingOrgResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -586,9 +663,12 @@ GetGithubPackagesBillingOrgResponse is a response for GetGithubPackagesBillingOr
 https://developer.github.com/v3/billing/#get-github-packages-billing-for-an-organization
 */
 type GetGithubPackagesBillingOrgResponse struct {
-	requests.Response
-	request *GetGithubPackagesBillingOrgReq
-	Data    components.PackagesBillingUsage
+	httpResponse *http.Response
+	Data         components.PackagesBillingUsage
+}
+
+func (r *GetGithubPackagesBillingOrgResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -608,23 +688,38 @@ func GetGithubPackagesBillingUser(ctx context.Context, req *GetGithubPackagesBil
 	if req == nil {
 		req = new(GetGithubPackagesBillingUserReq)
 	}
-	resp := &GetGithubPackagesBillingUserResponse{request: req}
+	resp := &GetGithubPackagesBillingUserResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.PackagesBillingUsage{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetGithubPackagesBillingUserResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetGithubPackagesBillingUserResponse builds a new *GetGithubPackagesBillingUserResponse from an *http.Response
+func NewGetGithubPackagesBillingUserResponse(resp *http.Response, preserveBody bool) (*GetGithubPackagesBillingUserResponse, error) {
+	var result GetGithubPackagesBillingUserResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -665,7 +760,6 @@ func (r *GetGithubPackagesBillingUserReq) requestBuilder() *internal.RequestBuil
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -675,7 +769,6 @@ func (r *GetGithubPackagesBillingUserReq) requestBuilder() *internal.RequestBuil
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/users/%v/settings/billing/packages", r.Username),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -685,7 +778,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetGithubPackagesBillingUserReq) Rel(link string, resp *GetGithubPackagesBillingUserResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -699,9 +792,12 @@ GetGithubPackagesBillingUserResponse is a response for GetGithubPackagesBillingU
 https://developer.github.com/v3/billing/#get-github-packages-billing-for-a-user
 */
 type GetGithubPackagesBillingUserResponse struct {
-	requests.Response
-	request *GetGithubPackagesBillingUserReq
-	Data    components.PackagesBillingUsage
+	httpResponse *http.Response
+	Data         components.PackagesBillingUsage
+}
+
+func (r *GetGithubPackagesBillingUserResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -721,23 +817,38 @@ func GetSharedStorageBillingGhe(ctx context.Context, req *GetSharedStorageBillin
 	if req == nil {
 		req = new(GetSharedStorageBillingGheReq)
 	}
-	resp := &GetSharedStorageBillingGheResponse{request: req}
+	resp := &GetSharedStorageBillingGheResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.CombinedBillingUsage{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetSharedStorageBillingGheResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetSharedStorageBillingGheResponse builds a new *GetSharedStorageBillingGheResponse from an *http.Response
+func NewGetSharedStorageBillingGheResponse(resp *http.Response, preserveBody bool) (*GetSharedStorageBillingGheResponse, error) {
+	var result GetSharedStorageBillingGheResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -780,7 +891,6 @@ func (r *GetSharedStorageBillingGheReq) requestBuilder() *internal.RequestBuilde
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -790,7 +900,6 @@ func (r *GetSharedStorageBillingGheReq) requestBuilder() *internal.RequestBuilde
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/enterprises/%v/settings/billing/shared-storage", r.EnterpriseId),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -800,7 +909,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetSharedStorageBillingGheReq) Rel(link string, resp *GetSharedStorageBillingGheResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -814,9 +923,12 @@ GetSharedStorageBillingGheResponse is a response for GetSharedStorageBillingGhe
 https://developer.github.com/v3/billing/#get-shared-storage-billing-for-an-enterprise
 */
 type GetSharedStorageBillingGheResponse struct {
-	requests.Response
-	request *GetSharedStorageBillingGheReq
-	Data    components.CombinedBillingUsage
+	httpResponse *http.Response
+	Data         components.CombinedBillingUsage
+}
+
+func (r *GetSharedStorageBillingGheResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -836,23 +948,38 @@ func GetSharedStorageBillingOrg(ctx context.Context, req *GetSharedStorageBillin
 	if req == nil {
 		req = new(GetSharedStorageBillingOrgReq)
 	}
-	resp := &GetSharedStorageBillingOrgResponse{request: req}
+	resp := &GetSharedStorageBillingOrgResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.CombinedBillingUsage{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetSharedStorageBillingOrgResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetSharedStorageBillingOrgResponse builds a new *GetSharedStorageBillingOrgResponse from an *http.Response
+func NewGetSharedStorageBillingOrgResponse(resp *http.Response, preserveBody bool) (*GetSharedStorageBillingOrgResponse, error) {
+	var result GetSharedStorageBillingOrgResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -893,7 +1020,6 @@ func (r *GetSharedStorageBillingOrgReq) requestBuilder() *internal.RequestBuilde
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -903,7 +1029,6 @@ func (r *GetSharedStorageBillingOrgReq) requestBuilder() *internal.RequestBuilde
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/settings/billing/shared-storage", r.Org),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -913,7 +1038,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetSharedStorageBillingOrgReq) Rel(link string, resp *GetSharedStorageBillingOrgResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -927,9 +1052,12 @@ GetSharedStorageBillingOrgResponse is a response for GetSharedStorageBillingOrg
 https://developer.github.com/v3/billing/#get-shared-storage-billing-for-an-organization
 */
 type GetSharedStorageBillingOrgResponse struct {
-	requests.Response
-	request *GetSharedStorageBillingOrgReq
-	Data    components.CombinedBillingUsage
+	httpResponse *http.Response
+	Data         components.CombinedBillingUsage
+}
+
+func (r *GetSharedStorageBillingOrgResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -949,23 +1077,38 @@ func GetSharedStorageBillingUser(ctx context.Context, req *GetSharedStorageBilli
 	if req == nil {
 		req = new(GetSharedStorageBillingUserReq)
 	}
-	resp := &GetSharedStorageBillingUserResponse{request: req}
+	resp := &GetSharedStorageBillingUserResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.CombinedBillingUsage{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetSharedStorageBillingUserResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetSharedStorageBillingUserResponse builds a new *GetSharedStorageBillingUserResponse from an *http.Response
+func NewGetSharedStorageBillingUserResponse(resp *http.Response, preserveBody bool) (*GetSharedStorageBillingUserResponse, error) {
+	var result GetSharedStorageBillingUserResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1006,7 +1149,6 @@ func (r *GetSharedStorageBillingUserReq) requestBuilder() *internal.RequestBuild
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -1016,7 +1158,6 @@ func (r *GetSharedStorageBillingUserReq) requestBuilder() *internal.RequestBuild
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/users/%v/settings/billing/shared-storage", r.Username),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -1026,7 +1167,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetSharedStorageBillingUserReq) Rel(link string, resp *GetSharedStorageBillingUserResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1040,7 +1181,10 @@ GetSharedStorageBillingUserResponse is a response for GetSharedStorageBillingUse
 https://developer.github.com/v3/billing/#get-shared-storage-billing-for-a-user
 */
 type GetSharedStorageBillingUserResponse struct {
-	requests.Response
-	request *GetSharedStorageBillingUserReq
-	Data    components.CombinedBillingUsage
+	httpResponse *http.Response
+	Data         components.CombinedBillingUsage
+}
+
+func (r *GetSharedStorageBillingUserResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }

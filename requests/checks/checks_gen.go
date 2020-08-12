@@ -40,23 +40,38 @@ func Create(ctx context.Context, req *CreateReq, opt ...requests.Option) (*Creat
 	if req == nil {
 		req = new(CreateReq)
 	}
-	resp := &CreateResponse{request: req}
+	resp := &CreateResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.CheckRun{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewCreateResponse(r, opts.PreserveResponseBody())
+}
+
+// NewCreateResponse builds a new *CreateResponse from an *http.Response
+func NewCreateResponse(resp *http.Response, preserveBody bool) (*CreateResponse, error) {
+	var result CreateResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{201})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -108,7 +123,6 @@ func (r *CreateReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"antiope"},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{201},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
@@ -121,7 +135,6 @@ func (r *CreateReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews: []string{"antiope"},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/check-runs", r.Owner, r.Repo),
 		URLQuery:         query,
-		ValidStatuses:    []int{201},
 	}
 	return builder
 }
@@ -131,7 +144,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *CreateReq) Rel(link string, resp *CreateResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -323,9 +336,12 @@ CreateResponse is a response for Create
 https://developer.github.com/v3/checks/runs/#create-a-check-run
 */
 type CreateResponse struct {
-	requests.Response
-	request *CreateReq
-	Data    components.CheckRun
+	httpResponse *http.Response
+	Data         components.CheckRun
+}
+
+func (r *CreateResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -345,23 +361,38 @@ func CreateSuite(ctx context.Context, req *CreateSuiteReq, opt ...requests.Optio
 	if req == nil {
 		req = new(CreateSuiteReq)
 	}
-	resp := &CreateSuiteResponse{request: req}
+	resp := &CreateSuiteResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.CheckSuite{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewCreateSuiteResponse(r, opts.PreserveResponseBody())
+}
+
+// NewCreateSuiteResponse builds a new *CreateSuiteResponse from an *http.Response
+func NewCreateSuiteResponse(resp *http.Response, preserveBody bool) (*CreateSuiteResponse, error) {
+	var result CreateSuiteResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{201})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -413,7 +444,6 @@ func (r *CreateSuiteReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"antiope"},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{201},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
@@ -426,7 +456,6 @@ func (r *CreateSuiteReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews: []string{"antiope"},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/check-suites", r.Owner, r.Repo),
 		URLQuery:         query,
-		ValidStatuses:    []int{201},
 	}
 	return builder
 }
@@ -436,7 +465,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *CreateSuiteReq) Rel(link string, resp *CreateSuiteResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -461,9 +490,12 @@ CreateSuiteResponse is a response for CreateSuite
 https://developer.github.com/v3/checks/suites/#create-a-check-suite
 */
 type CreateSuiteResponse struct {
-	requests.Response
-	request *CreateSuiteReq
-	Data    components.CheckSuite
+	httpResponse *http.Response
+	Data         components.CheckSuite
+}
+
+func (r *CreateSuiteResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -483,23 +515,38 @@ func Get(ctx context.Context, req *GetReq, opt ...requests.Option) (*GetResponse
 	if req == nil {
 		req = new(GetReq)
 	}
-	resp := &GetResponse{request: req}
+	resp := &GetResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.CheckRun{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetResponse builds a new *GetResponse from an *http.Response
+func NewGetResponse(resp *http.Response, preserveBody bool) (*GetResponse, error) {
+	var result GetResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -553,7 +600,6 @@ func (r *GetReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"antiope"},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -563,7 +609,6 @@ func (r *GetReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{"antiope"},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/check-runs/%v", r.Owner, r.Repo, r.CheckRunId),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -573,7 +618,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetReq) Rel(link string, resp *GetResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -587,9 +632,12 @@ GetResponse is a response for Get
 https://developer.github.com/v3/checks/runs/#get-a-check-run
 */
 type GetResponse struct {
-	requests.Response
-	request *GetReq
-	Data    components.CheckRun
+	httpResponse *http.Response
+	Data         components.CheckRun
+}
+
+func (r *GetResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -609,23 +657,38 @@ func GetSuite(ctx context.Context, req *GetSuiteReq, opt ...requests.Option) (*G
 	if req == nil {
 		req = new(GetSuiteReq)
 	}
-	resp := &GetSuiteResponse{request: req}
+	resp := &GetSuiteResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.CheckSuite{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetSuiteResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetSuiteResponse builds a new *GetSuiteResponse from an *http.Response
+func NewGetSuiteResponse(resp *http.Response, preserveBody bool) (*GetSuiteResponse, error) {
+	var result GetSuiteResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -679,7 +742,6 @@ func (r *GetSuiteReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"antiope"},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -689,7 +751,6 @@ func (r *GetSuiteReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{"antiope"},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/check-suites/%v", r.Owner, r.Repo, r.CheckSuiteId),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -699,7 +760,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetSuiteReq) Rel(link string, resp *GetSuiteResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -713,9 +774,12 @@ GetSuiteResponse is a response for GetSuite
 https://developer.github.com/v3/checks/suites/#get-a-check-suite
 */
 type GetSuiteResponse struct {
-	requests.Response
-	request *GetSuiteReq
-	Data    components.CheckSuite
+	httpResponse *http.Response
+	Data         components.CheckSuite
+}
+
+func (r *GetSuiteResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -735,23 +799,38 @@ func ListAnnotations(ctx context.Context, req *ListAnnotationsReq, opt ...reques
 	if req == nil {
 		req = new(ListAnnotationsReq)
 	}
-	resp := &ListAnnotationsResponse{request: req}
+	resp := &ListAnnotationsResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.CheckAnnotation{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListAnnotationsResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListAnnotationsResponse builds a new *ListAnnotationsResponse from an *http.Response
+func NewListAnnotationsResponse(resp *http.Response, preserveBody bool) (*ListAnnotationsResponse, error) {
+	var result ListAnnotationsResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -817,7 +896,6 @@ func (r *ListAnnotationsReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"antiope"},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -827,7 +905,6 @@ func (r *ListAnnotationsReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{"antiope"},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/check-runs/%v/annotations", r.Owner, r.Repo, r.CheckRunId),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -837,7 +914,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListAnnotationsReq) Rel(link string, resp *ListAnnotationsResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -851,9 +928,12 @@ ListAnnotationsResponse is a response for ListAnnotations
 https://developer.github.com/v3/checks/runs/#list-check-run-annotations
 */
 type ListAnnotationsResponse struct {
-	requests.Response
-	request *ListAnnotationsReq
-	Data    []components.CheckAnnotation
+	httpResponse *http.Response
+	Data         []components.CheckAnnotation
+}
+
+func (r *ListAnnotationsResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -873,23 +953,38 @@ func ListForRef(ctx context.Context, req *ListForRefReq, opt ...requests.Option)
 	if req == nil {
 		req = new(ListForRefReq)
 	}
-	resp := &ListForRefResponse{request: req}
+	resp := &ListForRefResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = ListForRefResponseBody{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListForRefResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListForRefResponse builds a new *ListForRefResponse from an *http.Response
+func NewListForRefResponse(resp *http.Response, preserveBody bool) (*ListForRefResponse, error) {
+	var result ListForRefResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -979,7 +1074,6 @@ func (r *ListForRefReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"antiope"},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -989,7 +1083,6 @@ func (r *ListForRefReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{"antiope"},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/commits/%v/check-runs", r.Owner, r.Repo, r.Ref),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -999,7 +1092,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListForRefReq) Rel(link string, resp *ListForRefResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1023,9 +1116,12 @@ ListForRefResponse is a response for ListForRef
 https://developer.github.com/v3/checks/runs/#list-check-runs-for-a-git-reference
 */
 type ListForRefResponse struct {
-	requests.Response
-	request *ListForRefReq
-	Data    ListForRefResponseBody
+	httpResponse *http.Response
+	Data         ListForRefResponseBody
+}
+
+func (r *ListForRefResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1045,23 +1141,38 @@ func ListForSuite(ctx context.Context, req *ListForSuiteReq, opt ...requests.Opt
 	if req == nil {
 		req = new(ListForSuiteReq)
 	}
-	resp := &ListForSuiteResponse{request: req}
+	resp := &ListForSuiteResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = ListForSuiteResponseBody{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListForSuiteResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListForSuiteResponse builds a new *ListForSuiteResponse from an *http.Response
+func NewListForSuiteResponse(resp *http.Response, preserveBody bool) (*ListForSuiteResponse, error) {
+	var result ListForSuiteResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1151,7 +1262,6 @@ func (r *ListForSuiteReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"antiope"},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -1161,7 +1271,6 @@ func (r *ListForSuiteReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{"antiope"},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/check-suites/%v/check-runs", r.Owner, r.Repo, r.CheckSuiteId),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -1171,7 +1280,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListForSuiteReq) Rel(link string, resp *ListForSuiteResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1195,9 +1304,12 @@ ListForSuiteResponse is a response for ListForSuite
 https://developer.github.com/v3/checks/runs/#list-check-runs-in-a-check-suite
 */
 type ListForSuiteResponse struct {
-	requests.Response
-	request *ListForSuiteReq
-	Data    ListForSuiteResponseBody
+	httpResponse *http.Response
+	Data         ListForSuiteResponseBody
+}
+
+func (r *ListForSuiteResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1217,23 +1329,38 @@ func ListSuitesForRef(ctx context.Context, req *ListSuitesForRefReq, opt ...requ
 	if req == nil {
 		req = new(ListSuitesForRefReq)
 	}
-	resp := &ListSuitesForRefResponse{request: req}
+	resp := &ListSuitesForRefResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = ListSuitesForRefResponseBody{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListSuitesForRefResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListSuitesForRefResponse builds a new *ListSuitesForRefResponse from an *http.Response
+func NewListSuitesForRefResponse(resp *http.Response, preserveBody bool) (*ListSuitesForRefResponse, error) {
+	var result ListSuitesForRefResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1311,7 +1438,6 @@ func (r *ListSuitesForRefReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"antiope"},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -1321,7 +1447,6 @@ func (r *ListSuitesForRefReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{"antiope"},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/commits/%v/check-suites", r.Owner, r.Repo, r.Ref),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -1331,7 +1456,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListSuitesForRefReq) Rel(link string, resp *ListSuitesForRefResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1355,9 +1480,12 @@ ListSuitesForRefResponse is a response for ListSuitesForRef
 https://developer.github.com/v3/checks/suites/#list-check-suites-for-a-git-reference
 */
 type ListSuitesForRefResponse struct {
-	requests.Response
-	request *ListSuitesForRefReq
-	Data    ListSuitesForRefResponseBody
+	httpResponse *http.Response
+	Data         ListSuitesForRefResponseBody
+}
+
+func (r *ListSuitesForRefResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1377,22 +1505,32 @@ func RerequestSuite(ctx context.Context, req *RerequestSuiteReq, opt ...requests
 	if req == nil {
 		req = new(RerequestSuiteReq)
 	}
-	resp := &RerequestSuiteResponse{request: req}
+	resp := &RerequestSuiteResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewRerequestSuiteResponse(r, opts.PreserveResponseBody())
+}
+
+// NewRerequestSuiteResponse builds a new *RerequestSuiteResponse from an *http.Response
+func NewRerequestSuiteResponse(resp *http.Response, preserveBody bool) (*RerequestSuiteResponse, error) {
+	var result RerequestSuiteResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{201})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -1446,7 +1584,6 @@ func (r *RerequestSuiteReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"antiope"},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -1456,7 +1593,6 @@ func (r *RerequestSuiteReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{"antiope"},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/check-suites/%v/rerequest", r.Owner, r.Repo, r.CheckSuiteId),
 		URLQuery:           query,
-		ValidStatuses:      []int{201},
 	}
 	return builder
 }
@@ -1466,7 +1602,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *RerequestSuiteReq) Rel(link string, resp *RerequestSuiteResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1480,8 +1616,11 @@ RerequestSuiteResponse is a response for RerequestSuite
 https://developer.github.com/v3/checks/suites/#rerequest-a-check-suite
 */
 type RerequestSuiteResponse struct {
-	requests.Response
-	request *RerequestSuiteReq
+	httpResponse *http.Response
+}
+
+func (r *RerequestSuiteResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1501,23 +1640,38 @@ func SetSuitesPreferences(ctx context.Context, req *SetSuitesPreferencesReq, opt
 	if req == nil {
 		req = new(SetSuitesPreferencesReq)
 	}
-	resp := &SetSuitesPreferencesResponse{request: req}
+	resp := &SetSuitesPreferencesResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.CheckSuitePreference{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewSetSuitesPreferencesResponse(r, opts.PreserveResponseBody())
+}
+
+// NewSetSuitesPreferencesResponse builds a new *SetSuitesPreferencesResponse from an *http.Response
+func NewSetSuitesPreferencesResponse(resp *http.Response, preserveBody bool) (*SetSuitesPreferencesResponse, error) {
+	var result SetSuitesPreferencesResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1569,7 +1723,6 @@ func (r *SetSuitesPreferencesReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"antiope"},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
@@ -1582,7 +1735,6 @@ func (r *SetSuitesPreferencesReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews: []string{"antiope"},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/check-suites/preferences", r.Owner, r.Repo),
 		URLQuery:         query,
-		ValidStatuses:    []int{200},
 	}
 	return builder
 }
@@ -1592,7 +1744,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *SetSuitesPreferencesReq) Rel(link string, resp *SetSuitesPreferencesResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1635,9 +1787,12 @@ SetSuitesPreferencesResponse is a response for SetSuitesPreferences
 https://developer.github.com/v3/checks/suites/#update-repository-preferences-for-check-suites
 */
 type SetSuitesPreferencesResponse struct {
-	requests.Response
-	request *SetSuitesPreferencesReq
-	Data    components.CheckSuitePreference
+	httpResponse *http.Response
+	Data         components.CheckSuitePreference
+}
+
+func (r *SetSuitesPreferencesResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1657,23 +1812,38 @@ func Update(ctx context.Context, req *UpdateReq, opt ...requests.Option) (*Updat
 	if req == nil {
 		req = new(UpdateReq)
 	}
-	resp := &UpdateResponse{request: req}
+	resp := &UpdateResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.CheckRun{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewUpdateResponse(r, opts.PreserveResponseBody())
+}
+
+// NewUpdateResponse builds a new *UpdateResponse from an *http.Response
+func NewUpdateResponse(resp *http.Response, preserveBody bool) (*UpdateResponse, error) {
+	var result UpdateResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1728,7 +1898,6 @@ func (r *UpdateReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"antiope"},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
@@ -1741,7 +1910,6 @@ func (r *UpdateReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews: []string{"antiope"},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/check-runs/%v", r.Owner, r.Repo, r.CheckRunId),
 		URLQuery:         query,
-		ValidStatuses:    []int{200},
 	}
 	return builder
 }
@@ -1751,7 +1919,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *UpdateReq) Rel(link string, resp *UpdateResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1926,7 +2094,10 @@ UpdateResponse is a response for Update
 https://developer.github.com/v3/checks/runs/#update-a-check-run
 */
 type UpdateResponse struct {
-	requests.Response
-	request *UpdateReq
-	Data    components.CheckRun
+	httpResponse *http.Response
+	Data         components.CheckRun
+}
+
+func (r *UpdateResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }

@@ -10,6 +10,9 @@ import (
 
 // This is a placeholder for ad-hoc debugging
 func TestOpenapi2Model(t *testing.T) {
+	if testing.Short() {
+		t.Skip("skipping test in short mode.")
+	}
 	swaggerFile, err := os.Open(filepath.FromSlash("../../../../api.github.com.json"))
 	require.NoError(t, err)
 	got, err := Openapi2Model(swaggerFile)

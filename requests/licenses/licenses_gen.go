@@ -40,23 +40,38 @@ func Get(ctx context.Context, req *GetReq, opt ...requests.Option) (*GetResponse
 	if req == nil {
 		req = new(GetReq)
 	}
-	resp := &GetResponse{request: req}
+	resp := &GetResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.License{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetResponse builds a new *GetResponse from an *http.Response
+func NewGetResponse(resp *http.Response, preserveBody bool) (*GetResponse, error) {
+	var result GetResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -99,7 +114,6 @@ func (r *GetReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -109,7 +123,6 @@ func (r *GetReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/licenses/%v", r.License),
 		URLQuery:           query,
-		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -119,7 +132,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetReq) Rel(link string, resp *GetResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -133,9 +146,12 @@ GetResponse is a response for Get
 https://developer.github.com/v3/licenses/#get-a-license
 */
 type GetResponse struct {
-	requests.Response
-	request *GetReq
-	Data    components.License
+	httpResponse *http.Response
+	Data         components.License
+}
+
+func (r *GetResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -155,23 +171,38 @@ func GetAllCommonlyUsed(ctx context.Context, req *GetAllCommonlyUsedReq, opt ...
 	if req == nil {
 		req = new(GetAllCommonlyUsedReq)
 	}
-	resp := &GetAllCommonlyUsedResponse{request: req}
+	resp := &GetAllCommonlyUsedResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.LicenseSimple{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetAllCommonlyUsedResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetAllCommonlyUsedResponse builds a new *GetAllCommonlyUsedResponse from an *http.Response
+func NewGetAllCommonlyUsedResponse(resp *http.Response, preserveBody bool) (*GetAllCommonlyUsedResponse, error) {
+	var result GetAllCommonlyUsedResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -221,7 +252,6 @@ func (r *GetAllCommonlyUsedReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -231,7 +261,6 @@ func (r *GetAllCommonlyUsedReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/licenses"),
 		URLQuery:           query,
-		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -241,7 +270,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetAllCommonlyUsedReq) Rel(link string, resp *GetAllCommonlyUsedResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -255,9 +284,12 @@ GetAllCommonlyUsedResponse is a response for GetAllCommonlyUsed
 https://developer.github.com/v3/licenses/#get-all-commonly-used-licenses
 */
 type GetAllCommonlyUsedResponse struct {
-	requests.Response
-	request *GetAllCommonlyUsedReq
-	Data    []components.LicenseSimple
+	httpResponse *http.Response
+	Data         []components.LicenseSimple
+}
+
+func (r *GetAllCommonlyUsedResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -277,23 +309,38 @@ func GetForRepo(ctx context.Context, req *GetForRepoReq, opt ...requests.Option)
 	if req == nil {
 		req = new(GetForRepoReq)
 	}
-	resp := &GetForRepoResponse{request: req}
+	resp := &GetForRepoResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.LicenseContent{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetForRepoResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetForRepoResponse builds a new *GetForRepoResponse from an *http.Response
+func NewGetForRepoResponse(resp *http.Response, preserveBody bool) (*GetForRepoResponse, error) {
+	var result GetForRepoResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -335,7 +382,6 @@ func (r *GetForRepoReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -345,7 +391,6 @@ func (r *GetForRepoReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/license", r.Owner, r.Repo),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -355,7 +400,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetForRepoReq) Rel(link string, resp *GetForRepoResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -369,7 +414,10 @@ GetForRepoResponse is a response for GetForRepo
 https://developer.github.com/v3/licenses/#get-the-license-for-a-repository
 */
 type GetForRepoResponse struct {
-	requests.Response
-	request *GetForRepoReq
-	Data    components.LicenseContent
+	httpResponse *http.Response
+	Data         components.LicenseContent
+}
+
+func (r *GetForRepoResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }

@@ -40,22 +40,32 @@ func AddRepoToInstallation(ctx context.Context, req *AddRepoToInstallationReq, o
 	if req == nil {
 		req = new(AddRepoToInstallationReq)
 	}
-	resp := &AddRepoToInstallationResponse{request: req}
+	resp := &AddRepoToInstallationResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewAddRepoToInstallationResponse(r, opts.PreserveResponseBody())
+}
+
+// NewAddRepoToInstallationResponse builds a new *AddRepoToInstallationResponse from an *http.Response
+func NewAddRepoToInstallationResponse(resp *http.Response, preserveBody bool) (*AddRepoToInstallationResponse, error) {
+	var result AddRepoToInstallationResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204, 304})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -107,7 +117,6 @@ func (r *AddRepoToInstallationReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"machine-man"},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -117,7 +126,6 @@ func (r *AddRepoToInstallationReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{"machine-man"},
 		URLPath:            fmt.Sprintf("/user/installations/%v/repositories/%v", r.InstallationId, r.RepositoryId),
 		URLQuery:           query,
-		ValidStatuses:      []int{204, 304},
 	}
 	return builder
 }
@@ -127,7 +135,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *AddRepoToInstallationReq) Rel(link string, resp *AddRepoToInstallationResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -141,8 +149,11 @@ AddRepoToInstallationResponse is a response for AddRepoToInstallation
 https://developer.github.com/v3/apps/installations/#add-a-repository-to-an-app-installation
 */
 type AddRepoToInstallationResponse struct {
-	requests.Response
-	request *AddRepoToInstallationReq
+	httpResponse *http.Response
+}
+
+func (r *AddRepoToInstallationResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -162,23 +173,38 @@ func CheckAuthorization(ctx context.Context, req *CheckAuthorizationReq, opt ...
 	if req == nil {
 		req = new(CheckAuthorizationReq)
 	}
-	resp := &CheckAuthorizationResponse{request: req}
+	resp := &CheckAuthorizationResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = CheckAuthorizationResponseBody{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewCheckAuthorizationResponse(r, opts.PreserveResponseBody())
+}
+
+// NewCheckAuthorizationResponse builds a new *CheckAuthorizationResponse from an *http.Response
+func NewCheckAuthorizationResponse(resp *http.Response, preserveBody bool) (*CheckAuthorizationResponse, error) {
+	var result CheckAuthorizationResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -220,7 +246,6 @@ func (r *CheckAuthorizationReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -230,7 +255,6 @@ func (r *CheckAuthorizationReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/applications/%v/tokens/%v", r.ClientId, r.AccessToken),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -240,7 +264,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *CheckAuthorizationReq) Rel(link string, resp *CheckAuthorizationResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -312,9 +336,12 @@ CheckAuthorizationResponse is a response for CheckAuthorization
 https://developer.github.com/v3/apps/oauth_applications/#check-an-authorization
 */
 type CheckAuthorizationResponse struct {
-	requests.Response
-	request *CheckAuthorizationReq
-	Data    CheckAuthorizationResponseBody
+	httpResponse *http.Response
+	Data         CheckAuthorizationResponseBody
+}
+
+func (r *CheckAuthorizationResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -334,23 +361,38 @@ func CheckToken(ctx context.Context, req *CheckTokenReq, opt ...requests.Option)
 	if req == nil {
 		req = new(CheckTokenReq)
 	}
-	resp := &CheckTokenResponse{request: req}
+	resp := &CheckTokenResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.Authorization{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewCheckTokenResponse(r, opts.PreserveResponseBody())
+}
+
+// NewCheckTokenResponse builds a new *CheckTokenResponse from an *http.Response
+func NewCheckTokenResponse(resp *http.Response, preserveBody bool) (*CheckTokenResponse, error) {
+	var result CheckTokenResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -392,7 +434,6 @@ func (r *CheckTokenReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
@@ -405,7 +446,6 @@ func (r *CheckTokenReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/applications/%v/token", r.ClientId),
 		URLQuery:         query,
-		ValidStatuses:    []int{200},
 	}
 	return builder
 }
@@ -415,7 +455,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *CheckTokenReq) Rel(link string, resp *CheckTokenResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -440,9 +480,12 @@ CheckTokenResponse is a response for CheckToken
 https://developer.github.com/v3/apps/oauth_applications/#check-a-token
 */
 type CheckTokenResponse struct {
-	requests.Response
-	request *CheckTokenReq
-	Data    components.Authorization
+	httpResponse *http.Response
+	Data         components.Authorization
+}
+
+func (r *CheckTokenResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -462,23 +505,38 @@ func CreateContentAttachment(ctx context.Context, req *CreateContentAttachmentRe
 	if req == nil {
 		req = new(CreateContentAttachmentReq)
 	}
-	resp := &CreateContentAttachmentResponse{request: req}
+	resp := &CreateContentAttachmentResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.ContentReferenceAttachment{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewCreateContentAttachmentResponse(r, opts.PreserveResponseBody())
+}
+
+// NewCreateContentAttachmentResponse builds a new *CreateContentAttachmentResponse from an *http.Response
+func NewCreateContentAttachmentResponse(resp *http.Response, preserveBody bool) (*CreateContentAttachmentResponse, error) {
+	var result CreateContentAttachmentResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -528,7 +586,6 @@ func (r *CreateContentAttachmentReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"corsair"},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
@@ -541,7 +598,6 @@ func (r *CreateContentAttachmentReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews: []string{"corsair"},
 		URLPath:          fmt.Sprintf("/content_references/%v/attachments", r.ContentReferenceId),
 		URLQuery:         query,
-		ValidStatuses:    []int{200, 304},
 	}
 	return builder
 }
@@ -551,7 +607,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *CreateContentAttachmentReq) Rel(link string, resp *CreateContentAttachmentResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -579,9 +635,12 @@ CreateContentAttachmentResponse is a response for CreateContentAttachment
 https://developer.github.com/v3/apps/installations/#create-a-content-attachment
 */
 type CreateContentAttachmentResponse struct {
-	requests.Response
-	request *CreateContentAttachmentReq
-	Data    components.ContentReferenceAttachment
+	httpResponse *http.Response
+	Data         components.ContentReferenceAttachment
+}
+
+func (r *CreateContentAttachmentResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -601,23 +660,38 @@ func CreateFromManifest(ctx context.Context, req *CreateFromManifestReq, opt ...
 	if req == nil {
 		req = new(CreateFromManifestReq)
 	}
-	resp := &CreateFromManifestResponse{request: req}
+	resp := &CreateFromManifestResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = CreateFromManifestResponseBody{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewCreateFromManifestResponse(r, opts.PreserveResponseBody())
+}
+
+// NewCreateFromManifestResponse builds a new *CreateFromManifestResponse from an *http.Response
+func NewCreateFromManifestResponse(resp *http.Response, preserveBody bool) (*CreateFromManifestResponse, error) {
+	var result CreateFromManifestResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{201})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -660,7 +734,6 @@ func (r *CreateFromManifestReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{201},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -670,7 +743,6 @@ func (r *CreateFromManifestReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/app-manifests/%v/conversions", r.Code),
 		URLQuery:           query,
-		ValidStatuses:      []int{201},
 	}
 	return builder
 }
@@ -680,7 +752,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *CreateFromManifestReq) Rel(link string, resp *CreateFromManifestResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -751,9 +823,12 @@ CreateFromManifestResponse is a response for CreateFromManifest
 https://developer.github.com/v3/apps/#create-a-github-app-from-a-manifest
 */
 type CreateFromManifestResponse struct {
-	requests.Response
-	request *CreateFromManifestReq
-	Data    CreateFromManifestResponseBody
+	httpResponse *http.Response
+	Data         CreateFromManifestResponseBody
+}
+
+func (r *CreateFromManifestResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -773,23 +848,38 @@ func CreateInstallationAccessToken(ctx context.Context, req *CreateInstallationA
 	if req == nil {
 		req = new(CreateInstallationAccessTokenReq)
 	}
-	resp := &CreateInstallationAccessTokenResponse{request: req}
+	resp := &CreateInstallationAccessTokenResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.InstallationToken{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewCreateInstallationAccessTokenResponse(r, opts.PreserveResponseBody())
+}
+
+// NewCreateInstallationAccessTokenResponse builds a new *CreateInstallationAccessTokenResponse from an *http.Response
+func NewCreateInstallationAccessTokenResponse(resp *http.Response, preserveBody bool) (*CreateInstallationAccessTokenResponse, error) {
+	var result CreateInstallationAccessTokenResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{201})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -839,7 +929,6 @@ func (r *CreateInstallationAccessTokenReq) requestBuilder() *internal.RequestBui
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"machine-man"},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{201},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
@@ -852,7 +941,6 @@ func (r *CreateInstallationAccessTokenReq) requestBuilder() *internal.RequestBui
 		RequiredPreviews: []string{"machine-man"},
 		URLPath:          fmt.Sprintf("/app/installations/%v/access_tokens", r.InstallationId),
 		URLQuery:         query,
-		ValidStatuses:    []int{201},
 	}
 	return builder
 }
@@ -862,7 +950,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *CreateInstallationAccessTokenReq) Rel(link string, resp *CreateInstallationAccessTokenResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -894,9 +982,12 @@ CreateInstallationAccessTokenResponse is a response for CreateInstallationAccess
 https://developer.github.com/v3/apps/#create-an-installation-access-token-for-an-app
 */
 type CreateInstallationAccessTokenResponse struct {
-	requests.Response
-	request *CreateInstallationAccessTokenReq
-	Data    components.InstallationToken
+	httpResponse *http.Response
+	Data         components.InstallationToken
+}
+
+func (r *CreateInstallationAccessTokenResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -916,22 +1007,32 @@ func DeleteAuthorization(ctx context.Context, req *DeleteAuthorizationReq, opt .
 	if req == nil {
 		req = new(DeleteAuthorizationReq)
 	}
-	resp := &DeleteAuthorizationResponse{request: req}
+	resp := &DeleteAuthorizationResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewDeleteAuthorizationResponse(r, opts.PreserveResponseBody())
+}
+
+// NewDeleteAuthorizationResponse builds a new *DeleteAuthorizationResponse from an *http.Response
+func NewDeleteAuthorizationResponse(resp *http.Response, preserveBody bool) (*DeleteAuthorizationResponse, error) {
+	var result DeleteAuthorizationResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -973,7 +1074,6 @@ func (r *DeleteAuthorizationReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"content-type": internal.String("application/json")},
@@ -983,7 +1083,6 @@ func (r *DeleteAuthorizationReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/applications/%v/grant", r.ClientId),
 		URLQuery:           query,
-		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -993,7 +1092,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *DeleteAuthorizationReq) Rel(link string, resp *DeleteAuthorizationResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1018,8 +1117,11 @@ DeleteAuthorizationResponse is a response for DeleteAuthorization
 https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-authorization
 */
 type DeleteAuthorizationResponse struct {
-	requests.Response
-	request *DeleteAuthorizationReq
+	httpResponse *http.Response
+}
+
+func (r *DeleteAuthorizationResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1039,26 +1141,36 @@ func DeleteInstallation(ctx context.Context, req *DeleteInstallationReq, opt ...
 	if req == nil {
 		req = new(DeleteInstallationReq)
 	}
-	resp := &DeleteInstallationResponse{request: req}
+	resp := &DeleteInstallationResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.SetBoolResult(r, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	resp.httpResponse = r
+
+	return NewDeleteInstallationResponse(r, opts.PreserveResponseBody())
+}
+
+// NewDeleteInstallationResponse builds a new *DeleteInstallationResponse from an *http.Response
+func NewDeleteInstallationResponse(resp *http.Response, preserveBody bool) (*DeleteInstallationResponse, error) {
+	var result DeleteInstallationResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204, 404})
 	if err != nil {
-		return nil, err
+		return &result, err
 	}
-	return resp, nil
+	err = internal.SetBoolResult(resp, &result.Data)
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -1107,7 +1219,6 @@ func (r *DeleteInstallationReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"machine-man"},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrBoolean},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -1117,7 +1228,6 @@ func (r *DeleteInstallationReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{"machine-man"},
 		URLPath:            fmt.Sprintf("/app/installations/%v", r.InstallationId),
 		URLQuery:           query,
-		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -1127,7 +1237,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *DeleteInstallationReq) Rel(link string, resp *DeleteInstallationResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1141,9 +1251,12 @@ DeleteInstallationResponse is a response for DeleteInstallation
 https://developer.github.com/v3/apps/#delete-an-installation-for-the-authenticated-app
 */
 type DeleteInstallationResponse struct {
-	requests.Response
-	request *DeleteInstallationReq
-	Data    bool
+	httpResponse *http.Response
+	Data         bool
+}
+
+func (r *DeleteInstallationResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1163,22 +1276,32 @@ func DeleteToken(ctx context.Context, req *DeleteTokenReq, opt ...requests.Optio
 	if req == nil {
 		req = new(DeleteTokenReq)
 	}
-	resp := &DeleteTokenResponse{request: req}
+	resp := &DeleteTokenResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewDeleteTokenResponse(r, opts.PreserveResponseBody())
+}
+
+// NewDeleteTokenResponse builds a new *DeleteTokenResponse from an *http.Response
+func NewDeleteTokenResponse(resp *http.Response, preserveBody bool) (*DeleteTokenResponse, error) {
+	var result DeleteTokenResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -1220,7 +1343,6 @@ func (r *DeleteTokenReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"content-type": internal.String("application/json")},
@@ -1230,7 +1352,6 @@ func (r *DeleteTokenReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/applications/%v/token", r.ClientId),
 		URLQuery:           query,
-		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -1240,7 +1361,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *DeleteTokenReq) Rel(link string, resp *DeleteTokenResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1265,8 +1386,11 @@ DeleteTokenResponse is a response for DeleteToken
 https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-token
 */
 type DeleteTokenResponse struct {
-	requests.Response
-	request *DeleteTokenReq
+	httpResponse *http.Response
+}
+
+func (r *DeleteTokenResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1286,23 +1410,38 @@ func GetAuthenticated(ctx context.Context, req *GetAuthenticatedReq, opt ...requ
 	if req == nil {
 		req = new(GetAuthenticatedReq)
 	}
-	resp := &GetAuthenticatedResponse{request: req}
+	resp := &GetAuthenticatedResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.Integration{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetAuthenticatedResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetAuthenticatedResponse builds a new *GetAuthenticatedResponse from an *http.Response
+func NewGetAuthenticatedResponse(resp *http.Response, preserveBody bool) (*GetAuthenticatedResponse, error) {
+	var result GetAuthenticatedResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1348,7 +1487,6 @@ func (r *GetAuthenticatedReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"machine-man"},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -1358,7 +1496,6 @@ func (r *GetAuthenticatedReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{"machine-man"},
 		URLPath:            fmt.Sprintf("/app"),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -1368,7 +1505,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetAuthenticatedReq) Rel(link string, resp *GetAuthenticatedResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1382,9 +1519,12 @@ GetAuthenticatedResponse is a response for GetAuthenticated
 https://developer.github.com/v3/apps/#get-the-authenticated-app
 */
 type GetAuthenticatedResponse struct {
-	requests.Response
-	request *GetAuthenticatedReq
-	Data    components.Integration
+	httpResponse *http.Response
+	Data         components.Integration
+}
+
+func (r *GetAuthenticatedResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1404,23 +1544,38 @@ func GetBySlug(ctx context.Context, req *GetBySlugReq, opt ...requests.Option) (
 	if req == nil {
 		req = new(GetBySlugReq)
 	}
-	resp := &GetBySlugResponse{request: req}
+	resp := &GetBySlugResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.Integration{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetBySlugResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetBySlugResponse builds a new *GetBySlugResponse from an *http.Response
+func NewGetBySlugResponse(resp *http.Response, preserveBody bool) (*GetBySlugResponse, error) {
+	var result GetBySlugResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1469,7 +1624,6 @@ func (r *GetBySlugReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"machine-man"},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -1479,7 +1633,6 @@ func (r *GetBySlugReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{"machine-man"},
 		URLPath:            fmt.Sprintf("/apps/%v", r.AppSlug),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -1489,7 +1642,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetBySlugReq) Rel(link string, resp *GetBySlugResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1503,9 +1656,12 @@ GetBySlugResponse is a response for GetBySlug
 https://developer.github.com/v3/apps/#get-an-app
 */
 type GetBySlugResponse struct {
-	requests.Response
-	request *GetBySlugReq
-	Data    components.Integration
+	httpResponse *http.Response
+	Data         components.Integration
+}
+
+func (r *GetBySlugResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1525,23 +1681,38 @@ func GetInstallation(ctx context.Context, req *GetInstallationReq, opt ...reques
 	if req == nil {
 		req = new(GetInstallationReq)
 	}
-	resp := &GetInstallationResponse{request: req}
+	resp := &GetInstallationResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.Installation{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetInstallationResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetInstallationResponse builds a new *GetInstallationResponse from an *http.Response
+func NewGetInstallationResponse(resp *http.Response, preserveBody bool) (*GetInstallationResponse, error) {
+	var result GetInstallationResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1590,7 +1761,6 @@ func (r *GetInstallationReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"machine-man"},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -1600,7 +1770,6 @@ func (r *GetInstallationReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{"machine-man"},
 		URLPath:            fmt.Sprintf("/app/installations/%v", r.InstallationId),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -1610,7 +1779,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetInstallationReq) Rel(link string, resp *GetInstallationResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1624,9 +1793,12 @@ GetInstallationResponse is a response for GetInstallation
 https://developer.github.com/v3/apps/#get-an-installation-for-the-authenticated-app
 */
 type GetInstallationResponse struct {
-	requests.Response
-	request *GetInstallationReq
-	Data    components.Installation
+	httpResponse *http.Response
+	Data         components.Installation
+}
+
+func (r *GetInstallationResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1646,23 +1818,38 @@ func GetOrgInstallation(ctx context.Context, req *GetOrgInstallationReq, opt ...
 	if req == nil {
 		req = new(GetOrgInstallationReq)
 	}
-	resp := &GetOrgInstallationResponse{request: req}
+	resp := &GetOrgInstallationResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.Installation{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetOrgInstallationResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetOrgInstallationResponse builds a new *GetOrgInstallationResponse from an *http.Response
+func NewGetOrgInstallationResponse(resp *http.Response, preserveBody bool) (*GetOrgInstallationResponse, error) {
+	var result GetOrgInstallationResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1709,7 +1896,6 @@ func (r *GetOrgInstallationReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"machine-man"},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -1719,7 +1905,6 @@ func (r *GetOrgInstallationReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{"machine-man"},
 		URLPath:            fmt.Sprintf("/orgs/%v/installation", r.Org),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -1729,7 +1914,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetOrgInstallationReq) Rel(link string, resp *GetOrgInstallationResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1743,9 +1928,12 @@ GetOrgInstallationResponse is a response for GetOrgInstallation
 https://developer.github.com/v3/apps/#get-an-organization-installation-for-the-authenticated-app
 */
 type GetOrgInstallationResponse struct {
-	requests.Response
-	request *GetOrgInstallationReq
-	Data    components.Installation
+	httpResponse *http.Response
+	Data         components.Installation
+}
+
+func (r *GetOrgInstallationResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1765,23 +1953,38 @@ func GetRepoInstallation(ctx context.Context, req *GetRepoInstallationReq, opt .
 	if req == nil {
 		req = new(GetRepoInstallationReq)
 	}
-	resp := &GetRepoInstallationResponse{request: req}
+	resp := &GetRepoInstallationResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.Installation{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetRepoInstallationResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetRepoInstallationResponse builds a new *GetRepoInstallationResponse from an *http.Response
+func NewGetRepoInstallationResponse(resp *http.Response, preserveBody bool) (*GetRepoInstallationResponse, error) {
+	var result GetRepoInstallationResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200, 301})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1829,7 +2032,6 @@ func (r *GetRepoInstallationReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"machine-man"},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -1839,7 +2041,6 @@ func (r *GetRepoInstallationReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{"machine-man"},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/installation", r.Owner, r.Repo),
 		URLQuery:           query,
-		ValidStatuses:      []int{200, 301},
 	}
 	return builder
 }
@@ -1849,7 +2050,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetRepoInstallationReq) Rel(link string, resp *GetRepoInstallationResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1863,9 +2064,12 @@ GetRepoInstallationResponse is a response for GetRepoInstallation
 https://developer.github.com/v3/apps/#get-a-repository-installation-for-the-authenticated-app
 */
 type GetRepoInstallationResponse struct {
-	requests.Response
-	request *GetRepoInstallationReq
-	Data    components.Installation
+	httpResponse *http.Response
+	Data         components.Installation
+}
+
+func (r *GetRepoInstallationResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1885,23 +2089,38 @@ func GetSubscriptionPlanForAccount(ctx context.Context, req *GetSubscriptionPlan
 	if req == nil {
 		req = new(GetSubscriptionPlanForAccountReq)
 	}
-	resp := &GetSubscriptionPlanForAccountResponse{request: req}
+	resp := &GetSubscriptionPlanForAccountResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.MarketplacePurchase{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetSubscriptionPlanForAccountResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetSubscriptionPlanForAccountResponse builds a new *GetSubscriptionPlanForAccountResponse from an *http.Response
+func NewGetSubscriptionPlanForAccountResponse(resp *http.Response, preserveBody bool) (*GetSubscriptionPlanForAccountResponse, error) {
+	var result GetSubscriptionPlanForAccountResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1944,7 +2163,6 @@ func (r *GetSubscriptionPlanForAccountReq) requestBuilder() *internal.RequestBui
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -1954,7 +2172,6 @@ func (r *GetSubscriptionPlanForAccountReq) requestBuilder() *internal.RequestBui
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/marketplace_listing/accounts/%v", r.AccountId),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -1964,7 +2181,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetSubscriptionPlanForAccountReq) Rel(link string, resp *GetSubscriptionPlanForAccountResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1978,9 +2195,12 @@ GetSubscriptionPlanForAccountResponse is a response for GetSubscriptionPlanForAc
 https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account
 */
 type GetSubscriptionPlanForAccountResponse struct {
-	requests.Response
-	request *GetSubscriptionPlanForAccountReq
-	Data    components.MarketplacePurchase
+	httpResponse *http.Response
+	Data         components.MarketplacePurchase
+}
+
+func (r *GetSubscriptionPlanForAccountResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -2000,23 +2220,38 @@ func GetSubscriptionPlanForAccountStubbed(ctx context.Context, req *GetSubscript
 	if req == nil {
 		req = new(GetSubscriptionPlanForAccountStubbedReq)
 	}
-	resp := &GetSubscriptionPlanForAccountStubbedResponse{request: req}
+	resp := &GetSubscriptionPlanForAccountStubbedResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.MarketplacePurchase{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetSubscriptionPlanForAccountStubbedResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetSubscriptionPlanForAccountStubbedResponse builds a new *GetSubscriptionPlanForAccountStubbedResponse from an *http.Response
+func NewGetSubscriptionPlanForAccountStubbedResponse(resp *http.Response, preserveBody bool) (*GetSubscriptionPlanForAccountStubbedResponse, error) {
+	var result GetSubscriptionPlanForAccountStubbedResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -2059,7 +2294,6 @@ func (r *GetSubscriptionPlanForAccountStubbedReq) requestBuilder() *internal.Req
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -2069,7 +2303,6 @@ func (r *GetSubscriptionPlanForAccountStubbedReq) requestBuilder() *internal.Req
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/marketplace_listing/stubbed/accounts/%v", r.AccountId),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -2079,7 +2312,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetSubscriptionPlanForAccountStubbedReq) Rel(link string, resp *GetSubscriptionPlanForAccountStubbedResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -2093,9 +2326,12 @@ GetSubscriptionPlanForAccountStubbedResponse is a response for GetSubscriptionPl
 https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account-stubbed
 */
 type GetSubscriptionPlanForAccountStubbedResponse struct {
-	requests.Response
-	request *GetSubscriptionPlanForAccountStubbedReq
-	Data    components.MarketplacePurchase
+	httpResponse *http.Response
+	Data         components.MarketplacePurchase
+}
+
+func (r *GetSubscriptionPlanForAccountStubbedResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -2115,23 +2351,38 @@ func GetUserInstallation(ctx context.Context, req *GetUserInstallationReq, opt .
 	if req == nil {
 		req = new(GetUserInstallationReq)
 	}
-	resp := &GetUserInstallationResponse{request: req}
+	resp := &GetUserInstallationResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.Installation{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetUserInstallationResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetUserInstallationResponse builds a new *GetUserInstallationResponse from an *http.Response
+func NewGetUserInstallationResponse(resp *http.Response, preserveBody bool) (*GetUserInstallationResponse, error) {
+	var result GetUserInstallationResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -2178,7 +2429,6 @@ func (r *GetUserInstallationReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"machine-man"},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -2188,7 +2438,6 @@ func (r *GetUserInstallationReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{"machine-man"},
 		URLPath:            fmt.Sprintf("/users/%v/installation", r.Username),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -2198,7 +2447,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetUserInstallationReq) Rel(link string, resp *GetUserInstallationResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -2212,9 +2461,12 @@ GetUserInstallationResponse is a response for GetUserInstallation
 https://developer.github.com/v3/apps/#get-a-user-installation-for-the-authenticated-app
 */
 type GetUserInstallationResponse struct {
-	requests.Response
-	request *GetUserInstallationReq
-	Data    components.Installation
+	httpResponse *http.Response
+	Data         components.Installation
+}
+
+func (r *GetUserInstallationResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -2234,23 +2486,38 @@ func ListAccountsForPlan(ctx context.Context, req *ListAccountsForPlanReq, opt .
 	if req == nil {
 		req = new(ListAccountsForPlanReq)
 	}
-	resp := &ListAccountsForPlanResponse{request: req}
+	resp := &ListAccountsForPlanResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.MarketplacePurchase{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListAccountsForPlanResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListAccountsForPlanResponse builds a new *ListAccountsForPlanResponse from an *http.Response
+func NewListAccountsForPlanResponse(resp *http.Response, preserveBody bool) (*ListAccountsForPlanResponse, error) {
+	var result ListAccountsForPlanResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -2323,7 +2590,6 @@ func (r *ListAccountsForPlanReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -2333,7 +2599,6 @@ func (r *ListAccountsForPlanReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/marketplace_listing/plans/%v/accounts", r.PlanId),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -2343,7 +2608,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListAccountsForPlanReq) Rel(link string, resp *ListAccountsForPlanResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -2357,9 +2622,12 @@ ListAccountsForPlanResponse is a response for ListAccountsForPlan
 https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan
 */
 type ListAccountsForPlanResponse struct {
-	requests.Response
-	request *ListAccountsForPlanReq
-	Data    []components.MarketplacePurchase
+	httpResponse *http.Response
+	Data         []components.MarketplacePurchase
+}
+
+func (r *ListAccountsForPlanResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -2379,23 +2647,38 @@ func ListAccountsForPlanStubbed(ctx context.Context, req *ListAccountsForPlanStu
 	if req == nil {
 		req = new(ListAccountsForPlanStubbedReq)
 	}
-	resp := &ListAccountsForPlanStubbedResponse{request: req}
+	resp := &ListAccountsForPlanStubbedResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.MarketplacePurchase{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListAccountsForPlanStubbedResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListAccountsForPlanStubbedResponse builds a new *ListAccountsForPlanStubbedResponse from an *http.Response
+func NewListAccountsForPlanStubbedResponse(resp *http.Response, preserveBody bool) (*ListAccountsForPlanStubbedResponse, error) {
+	var result ListAccountsForPlanStubbedResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -2468,7 +2751,6 @@ func (r *ListAccountsForPlanStubbedReq) requestBuilder() *internal.RequestBuilde
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -2478,7 +2760,6 @@ func (r *ListAccountsForPlanStubbedReq) requestBuilder() *internal.RequestBuilde
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/marketplace_listing/stubbed/plans/%v/accounts", r.PlanId),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -2488,7 +2769,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListAccountsForPlanStubbedReq) Rel(link string, resp *ListAccountsForPlanStubbedResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -2502,9 +2783,12 @@ ListAccountsForPlanStubbedResponse is a response for ListAccountsForPlanStubbed
 https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan-stubbed
 */
 type ListAccountsForPlanStubbedResponse struct {
-	requests.Response
-	request *ListAccountsForPlanStubbedReq
-	Data    []components.MarketplacePurchase
+	httpResponse *http.Response
+	Data         []components.MarketplacePurchase
+}
+
+func (r *ListAccountsForPlanStubbedResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -2524,23 +2808,38 @@ func ListInstallationReposForAuthenticatedUser(ctx context.Context, req *ListIns
 	if req == nil {
 		req = new(ListInstallationReposForAuthenticatedUserReq)
 	}
-	resp := &ListInstallationReposForAuthenticatedUserResponse{request: req}
+	resp := &ListInstallationReposForAuthenticatedUserResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = ListInstallationReposForAuthenticatedUserResponseBody{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListInstallationReposForAuthenticatedUserResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListInstallationReposForAuthenticatedUserResponse builds a new *ListInstallationReposForAuthenticatedUserResponse from an *http.Response
+func NewListInstallationReposForAuthenticatedUserResponse(resp *http.Response, preserveBody bool) (*ListInstallationReposForAuthenticatedUserResponse, error) {
+	var result ListInstallationReposForAuthenticatedUserResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -2608,7 +2907,6 @@ func (r *ListInstallationReposForAuthenticatedUserReq) requestBuilder() *interna
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"machine-man", "mercy"},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -2621,7 +2919,6 @@ func (r *ListInstallationReposForAuthenticatedUserReq) requestBuilder() *interna
 		RequiredPreviews: []string{"machine-man"},
 		URLPath:          fmt.Sprintf("/user/installations/%v/repositories", r.InstallationId),
 		URLQuery:         query,
-		ValidStatuses:    []int{200, 304},
 	}
 	return builder
 }
@@ -2631,7 +2928,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListInstallationReposForAuthenticatedUserReq) Rel(link string, resp *ListInstallationReposForAuthenticatedUserResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -2656,9 +2953,12 @@ ListInstallationReposForAuthenticatedUserResponse is a response for ListInstalla
 https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-access-token
 */
 type ListInstallationReposForAuthenticatedUserResponse struct {
-	requests.Response
-	request *ListInstallationReposForAuthenticatedUserReq
-	Data    ListInstallationReposForAuthenticatedUserResponseBody
+	httpResponse *http.Response
+	Data         ListInstallationReposForAuthenticatedUserResponseBody
+}
+
+func (r *ListInstallationReposForAuthenticatedUserResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -2678,23 +2978,38 @@ func ListInstallations(ctx context.Context, req *ListInstallationsReq, opt ...re
 	if req == nil {
 		req = new(ListInstallationsReq)
 	}
-	resp := &ListInstallationsResponse{request: req}
+	resp := &ListInstallationsResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.Installation{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListInstallationsResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListInstallationsResponse builds a new *ListInstallationsResponse from an *http.Response
+func NewListInstallationsResponse(resp *http.Response, preserveBody bool) (*ListInstallationsResponse, error) {
+	var result ListInstallationsResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -2766,7 +3081,6 @@ func (r *ListInstallationsReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"machine-man"},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -2776,7 +3090,6 @@ func (r *ListInstallationsReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{"machine-man"},
 		URLPath:            fmt.Sprintf("/app/installations"),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -2786,7 +3099,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListInstallationsReq) Rel(link string, resp *ListInstallationsResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -2800,9 +3113,12 @@ ListInstallationsResponse is a response for ListInstallations
 https://developer.github.com/v3/apps/#list-installations-for-the-authenticated-app
 */
 type ListInstallationsResponse struct {
-	requests.Response
-	request *ListInstallationsReq
-	Data    []components.Installation
+	httpResponse *http.Response
+	Data         []components.Installation
+}
+
+func (r *ListInstallationsResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -2822,23 +3138,38 @@ func ListInstallationsForAuthenticatedUser(ctx context.Context, req *ListInstall
 	if req == nil {
 		req = new(ListInstallationsForAuthenticatedUserReq)
 	}
-	resp := &ListInstallationsForAuthenticatedUserResponse{request: req}
+	resp := &ListInstallationsForAuthenticatedUserResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = ListInstallationsForAuthenticatedUserResponseBody{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListInstallationsForAuthenticatedUserResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListInstallationsForAuthenticatedUserResponse builds a new *ListInstallationsForAuthenticatedUserResponse from an *http.Response
+func NewListInstallationsForAuthenticatedUserResponse(resp *http.Response, preserveBody bool) (*ListInstallationsForAuthenticatedUserResponse, error) {
+	var result ListInstallationsForAuthenticatedUserResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -2896,7 +3227,6 @@ func (r *ListInstallationsForAuthenticatedUserReq) requestBuilder() *internal.Re
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"machine-man"},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -2906,7 +3236,6 @@ func (r *ListInstallationsForAuthenticatedUserReq) requestBuilder() *internal.Re
 		RequiredPreviews:   []string{"machine-man"},
 		URLPath:            fmt.Sprintf("/user/installations"),
 		URLQuery:           query,
-		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -2916,7 +3245,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListInstallationsForAuthenticatedUserReq) Rel(link string, resp *ListInstallationsForAuthenticatedUserResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -2940,9 +3269,12 @@ ListInstallationsForAuthenticatedUserResponse is a response for ListInstallation
 https://developer.github.com/v3/apps/installations/#list-app-installations-accessible-to-the-user-access-token
 */
 type ListInstallationsForAuthenticatedUserResponse struct {
-	requests.Response
-	request *ListInstallationsForAuthenticatedUserReq
-	Data    ListInstallationsForAuthenticatedUserResponseBody
+	httpResponse *http.Response
+	Data         ListInstallationsForAuthenticatedUserResponseBody
+}
+
+func (r *ListInstallationsForAuthenticatedUserResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -2962,23 +3294,38 @@ func ListPlans(ctx context.Context, req *ListPlansReq, opt ...requests.Option) (
 	if req == nil {
 		req = new(ListPlansReq)
 	}
-	resp := &ListPlansResponse{request: req}
+	resp := &ListPlansResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.MarketplaceListingPlan{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListPlansResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListPlansResponse builds a new *ListPlansResponse from an *http.Response
+func NewListPlansResponse(resp *http.Response, preserveBody bool) (*ListPlansResponse, error) {
+	var result ListPlansResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -3030,7 +3377,6 @@ func (r *ListPlansReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -3040,7 +3386,6 @@ func (r *ListPlansReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/marketplace_listing/plans"),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -3050,7 +3395,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListPlansReq) Rel(link string, resp *ListPlansResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -3064,9 +3409,12 @@ ListPlansResponse is a response for ListPlans
 https://developer.github.com/v3/apps/marketplace/#list-plans
 */
 type ListPlansResponse struct {
-	requests.Response
-	request *ListPlansReq
-	Data    []components.MarketplaceListingPlan
+	httpResponse *http.Response
+	Data         []components.MarketplaceListingPlan
+}
+
+func (r *ListPlansResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -3086,23 +3434,38 @@ func ListPlansStubbed(ctx context.Context, req *ListPlansStubbedReq, opt ...requ
 	if req == nil {
 		req = new(ListPlansStubbedReq)
 	}
-	resp := &ListPlansStubbedResponse{request: req}
+	resp := &ListPlansStubbedResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.MarketplaceListingPlan{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListPlansStubbedResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListPlansStubbedResponse builds a new *ListPlansStubbedResponse from an *http.Response
+func NewListPlansStubbedResponse(resp *http.Response, preserveBody bool) (*ListPlansStubbedResponse, error) {
+	var result ListPlansStubbedResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -3154,7 +3517,6 @@ func (r *ListPlansStubbedReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -3164,7 +3526,6 @@ func (r *ListPlansStubbedReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/marketplace_listing/stubbed/plans"),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -3174,7 +3535,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListPlansStubbedReq) Rel(link string, resp *ListPlansStubbedResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -3188,9 +3549,12 @@ ListPlansStubbedResponse is a response for ListPlansStubbed
 https://developer.github.com/v3/apps/marketplace/#list-plans-stubbed
 */
 type ListPlansStubbedResponse struct {
-	requests.Response
-	request *ListPlansStubbedReq
-	Data    []components.MarketplaceListingPlan
+	httpResponse *http.Response
+	Data         []components.MarketplaceListingPlan
+}
+
+func (r *ListPlansStubbedResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -3210,23 +3574,38 @@ func ListReposAccessibleToInstallation(ctx context.Context, req *ListReposAccess
 	if req == nil {
 		req = new(ListReposAccessibleToInstallationReq)
 	}
-	resp := &ListReposAccessibleToInstallationResponse{request: req}
+	resp := &ListReposAccessibleToInstallationResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = ListReposAccessibleToInstallationResponseBody{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListReposAccessibleToInstallationResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListReposAccessibleToInstallationResponse builds a new *ListReposAccessibleToInstallationResponse from an *http.Response
+func NewListReposAccessibleToInstallationResponse(resp *http.Response, preserveBody bool) (*ListReposAccessibleToInstallationResponse, error) {
+	var result ListReposAccessibleToInstallationResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -3291,7 +3670,6 @@ func (r *ListReposAccessibleToInstallationReq) requestBuilder() *internal.Reques
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"machine-man", "mercy"},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -3304,7 +3682,6 @@ func (r *ListReposAccessibleToInstallationReq) requestBuilder() *internal.Reques
 		RequiredPreviews: []string{"machine-man"},
 		URLPath:          fmt.Sprintf("/installation/repositories"),
 		URLQuery:         query,
-		ValidStatuses:    []int{200, 304},
 	}
 	return builder
 }
@@ -3314,7 +3691,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListReposAccessibleToInstallationReq) Rel(link string, resp *ListReposAccessibleToInstallationResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -3339,9 +3716,12 @@ ListReposAccessibleToInstallationResponse is a response for ListReposAccessibleT
 https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-app-installation
 */
 type ListReposAccessibleToInstallationResponse struct {
-	requests.Response
-	request *ListReposAccessibleToInstallationReq
-	Data    ListReposAccessibleToInstallationResponseBody
+	httpResponse *http.Response
+	Data         ListReposAccessibleToInstallationResponseBody
+}
+
+func (r *ListReposAccessibleToInstallationResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -3361,23 +3741,38 @@ func ListSubscriptionsForAuthenticatedUser(ctx context.Context, req *ListSubscri
 	if req == nil {
 		req = new(ListSubscriptionsForAuthenticatedUserReq)
 	}
-	resp := &ListSubscriptionsForAuthenticatedUserResponse{request: req}
+	resp := &ListSubscriptionsForAuthenticatedUserResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.UserMarketplacePurchase{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListSubscriptionsForAuthenticatedUserResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListSubscriptionsForAuthenticatedUserResponse builds a new *ListSubscriptionsForAuthenticatedUserResponse from an *http.Response
+func NewListSubscriptionsForAuthenticatedUserResponse(resp *http.Response, preserveBody bool) (*ListSubscriptionsForAuthenticatedUserResponse, error) {
+	var result ListSubscriptionsForAuthenticatedUserResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -3429,7 +3824,6 @@ func (r *ListSubscriptionsForAuthenticatedUserReq) requestBuilder() *internal.Re
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -3439,7 +3833,6 @@ func (r *ListSubscriptionsForAuthenticatedUserReq) requestBuilder() *internal.Re
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/user/marketplace_purchases"),
 		URLQuery:           query,
-		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -3449,7 +3842,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListSubscriptionsForAuthenticatedUserReq) Rel(link string, resp *ListSubscriptionsForAuthenticatedUserResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -3463,9 +3856,12 @@ ListSubscriptionsForAuthenticatedUserResponse is a response for ListSubscription
 https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user
 */
 type ListSubscriptionsForAuthenticatedUserResponse struct {
-	requests.Response
-	request *ListSubscriptionsForAuthenticatedUserReq
-	Data    []components.UserMarketplacePurchase
+	httpResponse *http.Response
+	Data         []components.UserMarketplacePurchase
+}
+
+func (r *ListSubscriptionsForAuthenticatedUserResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -3485,23 +3881,38 @@ func ListSubscriptionsForAuthenticatedUserStubbed(ctx context.Context, req *List
 	if req == nil {
 		req = new(ListSubscriptionsForAuthenticatedUserStubbedReq)
 	}
-	resp := &ListSubscriptionsForAuthenticatedUserStubbedResponse{request: req}
+	resp := &ListSubscriptionsForAuthenticatedUserStubbedResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.UserMarketplacePurchase{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListSubscriptionsForAuthenticatedUserStubbedResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListSubscriptionsForAuthenticatedUserStubbedResponse builds a new *ListSubscriptionsForAuthenticatedUserStubbedResponse from an *http.Response
+func NewListSubscriptionsForAuthenticatedUserStubbedResponse(resp *http.Response, preserveBody bool) (*ListSubscriptionsForAuthenticatedUserStubbedResponse, error) {
+	var result ListSubscriptionsForAuthenticatedUserStubbedResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -3553,7 +3964,6 @@ func (r *ListSubscriptionsForAuthenticatedUserStubbedReq) requestBuilder() *inte
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -3563,7 +3973,6 @@ func (r *ListSubscriptionsForAuthenticatedUserStubbedReq) requestBuilder() *inte
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/user/marketplace_purchases/stubbed"),
 		URLQuery:           query,
-		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -3573,7 +3982,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListSubscriptionsForAuthenticatedUserStubbedReq) Rel(link string, resp *ListSubscriptionsForAuthenticatedUserStubbedResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -3587,9 +3996,12 @@ ListSubscriptionsForAuthenticatedUserStubbedResponse is a response for ListSubsc
 https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user-stubbed
 */
 type ListSubscriptionsForAuthenticatedUserStubbedResponse struct {
-	requests.Response
-	request *ListSubscriptionsForAuthenticatedUserStubbedReq
-	Data    []components.UserMarketplacePurchase
+	httpResponse *http.Response
+	Data         []components.UserMarketplacePurchase
+}
+
+func (r *ListSubscriptionsForAuthenticatedUserStubbedResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -3609,22 +4021,32 @@ func RemoveRepoFromInstallation(ctx context.Context, req *RemoveRepoFromInstalla
 	if req == nil {
 		req = new(RemoveRepoFromInstallationReq)
 	}
-	resp := &RemoveRepoFromInstallationResponse{request: req}
+	resp := &RemoveRepoFromInstallationResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewRemoveRepoFromInstallationResponse(r, opts.PreserveResponseBody())
+}
+
+// NewRemoveRepoFromInstallationResponse builds a new *RemoveRepoFromInstallationResponse from an *http.Response
+func NewRemoveRepoFromInstallationResponse(resp *http.Response, preserveBody bool) (*RemoveRepoFromInstallationResponse, error) {
+	var result RemoveRepoFromInstallationResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204, 304})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -3676,7 +4098,6 @@ func (r *RemoveRepoFromInstallationReq) requestBuilder() *internal.RequestBuilde
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"machine-man"},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -3686,7 +4107,6 @@ func (r *RemoveRepoFromInstallationReq) requestBuilder() *internal.RequestBuilde
 		RequiredPreviews:   []string{"machine-man"},
 		URLPath:            fmt.Sprintf("/user/installations/%v/repositories/%v", r.InstallationId, r.RepositoryId),
 		URLQuery:           query,
-		ValidStatuses:      []int{204, 304},
 	}
 	return builder
 }
@@ -3696,7 +4116,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *RemoveRepoFromInstallationReq) Rel(link string, resp *RemoveRepoFromInstallationResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -3710,8 +4130,11 @@ RemoveRepoFromInstallationResponse is a response for RemoveRepoFromInstallation
 https://developer.github.com/v3/apps/installations/#remove-a-repository-from-an-app-installation
 */
 type RemoveRepoFromInstallationResponse struct {
-	requests.Response
-	request *RemoveRepoFromInstallationReq
+	httpResponse *http.Response
+}
+
+func (r *RemoveRepoFromInstallationResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -3731,23 +4154,38 @@ func ResetAuthorization(ctx context.Context, req *ResetAuthorizationReq, opt ...
 	if req == nil {
 		req = new(ResetAuthorizationReq)
 	}
-	resp := &ResetAuthorizationResponse{request: req}
+	resp := &ResetAuthorizationResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.Authorization{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewResetAuthorizationResponse(r, opts.PreserveResponseBody())
+}
+
+// NewResetAuthorizationResponse builds a new *ResetAuthorizationResponse from an *http.Response
+func NewResetAuthorizationResponse(resp *http.Response, preserveBody bool) (*ResetAuthorizationResponse, error) {
+	var result ResetAuthorizationResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -3789,7 +4227,6 @@ func (r *ResetAuthorizationReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -3799,7 +4236,6 @@ func (r *ResetAuthorizationReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/applications/%v/tokens/%v", r.ClientId, r.AccessToken),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -3809,7 +4245,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ResetAuthorizationReq) Rel(link string, resp *ResetAuthorizationResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -3823,9 +4259,12 @@ ResetAuthorizationResponse is a response for ResetAuthorization
 https://developer.github.com/v3/apps/oauth_applications/#reset-an-authorization
 */
 type ResetAuthorizationResponse struct {
-	requests.Response
-	request *ResetAuthorizationReq
-	Data    components.Authorization
+	httpResponse *http.Response
+	Data         components.Authorization
+}
+
+func (r *ResetAuthorizationResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -3845,23 +4284,38 @@ func ResetToken(ctx context.Context, req *ResetTokenReq, opt ...requests.Option)
 	if req == nil {
 		req = new(ResetTokenReq)
 	}
-	resp := &ResetTokenResponse{request: req}
+	resp := &ResetTokenResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.Authorization{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewResetTokenResponse(r, opts.PreserveResponseBody())
+}
+
+// NewResetTokenResponse builds a new *ResetTokenResponse from an *http.Response
+func NewResetTokenResponse(resp *http.Response, preserveBody bool) (*ResetTokenResponse, error) {
+	var result ResetTokenResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -3903,7 +4357,6 @@ func (r *ResetTokenReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
@@ -3916,7 +4369,6 @@ func (r *ResetTokenReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/applications/%v/token", r.ClientId),
 		URLQuery:         query,
-		ValidStatuses:    []int{200},
 	}
 	return builder
 }
@@ -3926,7 +4378,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ResetTokenReq) Rel(link string, resp *ResetTokenResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -3951,9 +4403,12 @@ ResetTokenResponse is a response for ResetToken
 https://developer.github.com/v3/apps/oauth_applications/#reset-a-token
 */
 type ResetTokenResponse struct {
-	requests.Response
-	request *ResetTokenReq
-	Data    components.Authorization
+	httpResponse *http.Response
+	Data         components.Authorization
+}
+
+func (r *ResetTokenResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -3973,22 +4428,32 @@ func RevokeAuthorizationForApplication(ctx context.Context, req *RevokeAuthoriza
 	if req == nil {
 		req = new(RevokeAuthorizationForApplicationReq)
 	}
-	resp := &RevokeAuthorizationForApplicationResponse{request: req}
+	resp := &RevokeAuthorizationForApplicationResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewRevokeAuthorizationForApplicationResponse(r, opts.PreserveResponseBody())
+}
+
+// NewRevokeAuthorizationForApplicationResponse builds a new *RevokeAuthorizationForApplicationResponse from an *http.Response
+func NewRevokeAuthorizationForApplicationResponse(resp *http.Response, preserveBody bool) (*RevokeAuthorizationForApplicationResponse, error) {
+	var result RevokeAuthorizationForApplicationResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -4030,7 +4495,6 @@ func (r *RevokeAuthorizationForApplicationReq) requestBuilder() *internal.Reques
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -4040,7 +4504,6 @@ func (r *RevokeAuthorizationForApplicationReq) requestBuilder() *internal.Reques
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/applications/%v/tokens/%v", r.ClientId, r.AccessToken),
 		URLQuery:           query,
-		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -4050,7 +4513,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *RevokeAuthorizationForApplicationReq) Rel(link string, resp *RevokeAuthorizationForApplicationResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -4064,8 +4527,11 @@ RevokeAuthorizationForApplicationResponse is a response for RevokeAuthorizationF
 https://developer.github.com/v3/apps/oauth_applications/#revoke-an-authorization-for-an-application
 */
 type RevokeAuthorizationForApplicationResponse struct {
-	requests.Response
-	request *RevokeAuthorizationForApplicationReq
+	httpResponse *http.Response
+}
+
+func (r *RevokeAuthorizationForApplicationResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -4085,22 +4551,32 @@ func RevokeGrantForApplication(ctx context.Context, req *RevokeGrantForApplicati
 	if req == nil {
 		req = new(RevokeGrantForApplicationReq)
 	}
-	resp := &RevokeGrantForApplicationResponse{request: req}
+	resp := &RevokeGrantForApplicationResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewRevokeGrantForApplicationResponse(r, opts.PreserveResponseBody())
+}
+
+// NewRevokeGrantForApplicationResponse builds a new *RevokeGrantForApplicationResponse from an *http.Response
+func NewRevokeGrantForApplicationResponse(resp *http.Response, preserveBody bool) (*RevokeGrantForApplicationResponse, error) {
+	var result RevokeGrantForApplicationResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -4142,7 +4618,6 @@ func (r *RevokeGrantForApplicationReq) requestBuilder() *internal.RequestBuilder
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -4152,7 +4627,6 @@ func (r *RevokeGrantForApplicationReq) requestBuilder() *internal.RequestBuilder
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/applications/%v/grants/%v", r.ClientId, r.AccessToken),
 		URLQuery:           query,
-		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -4162,7 +4636,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *RevokeGrantForApplicationReq) Rel(link string, resp *RevokeGrantForApplicationResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -4176,8 +4650,11 @@ RevokeGrantForApplicationResponse is a response for RevokeGrantForApplication
 https://developer.github.com/v3/apps/oauth_applications/#revoke-a-grant-for-an-application
 */
 type RevokeGrantForApplicationResponse struct {
-	requests.Response
-	request *RevokeGrantForApplicationReq
+	httpResponse *http.Response
+}
+
+func (r *RevokeGrantForApplicationResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -4197,22 +4674,32 @@ func RevokeInstallationAccessToken(ctx context.Context, req *RevokeInstallationA
 	if req == nil {
 		req = new(RevokeInstallationAccessTokenReq)
 	}
-	resp := &RevokeInstallationAccessTokenResponse{request: req}
+	resp := &RevokeInstallationAccessTokenResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewRevokeInstallationAccessTokenResponse(r, opts.PreserveResponseBody())
+}
+
+// NewRevokeInstallationAccessTokenResponse builds a new *RevokeInstallationAccessTokenResponse from an *http.Response
+func NewRevokeInstallationAccessTokenResponse(resp *http.Response, preserveBody bool) (*RevokeInstallationAccessTokenResponse, error) {
+	var result RevokeInstallationAccessTokenResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -4252,7 +4739,6 @@ func (r *RevokeInstallationAccessTokenReq) requestBuilder() *internal.RequestBui
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -4262,7 +4748,6 @@ func (r *RevokeInstallationAccessTokenReq) requestBuilder() *internal.RequestBui
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/installation/token"),
 		URLQuery:           query,
-		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -4272,7 +4757,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *RevokeInstallationAccessTokenReq) Rel(link string, resp *RevokeInstallationAccessTokenResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -4286,8 +4771,11 @@ RevokeInstallationAccessTokenResponse is a response for RevokeInstallationAccess
 https://developer.github.com/v3/apps/installations/#revoke-an-installation-access-token
 */
 type RevokeInstallationAccessTokenResponse struct {
-	requests.Response
-	request *RevokeInstallationAccessTokenReq
+	httpResponse *http.Response
+}
+
+func (r *RevokeInstallationAccessTokenResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -4307,26 +4795,36 @@ func SuspendInstallation(ctx context.Context, req *SuspendInstallationReq, opt .
 	if req == nil {
 		req = new(SuspendInstallationReq)
 	}
-	resp := &SuspendInstallationResponse{request: req}
+	resp := &SuspendInstallationResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.SetBoolResult(r, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	resp.httpResponse = r
+
+	return NewSuspendInstallationResponse(r, opts.PreserveResponseBody())
+}
+
+// NewSuspendInstallationResponse builds a new *SuspendInstallationResponse from an *http.Response
+func NewSuspendInstallationResponse(resp *http.Response, preserveBody bool) (*SuspendInstallationResponse, error) {
+	var result SuspendInstallationResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204, 404})
 	if err != nil {
-		return nil, err
+		return &result, err
 	}
-	return resp, nil
+	err = internal.SetBoolResult(resp, &result.Data)
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -4369,7 +4867,6 @@ func (r *SuspendInstallationReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrBoolean},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -4379,7 +4876,6 @@ func (r *SuspendInstallationReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/app/installations/%v/suspended", r.InstallationId),
 		URLQuery:           query,
-		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -4389,7 +4885,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *SuspendInstallationReq) Rel(link string, resp *SuspendInstallationResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -4403,9 +4899,12 @@ SuspendInstallationResponse is a response for SuspendInstallation
 https://developer.github.com/v3/apps/#suspend-an-app-installation
 */
 type SuspendInstallationResponse struct {
-	requests.Response
-	request *SuspendInstallationReq
-	Data    bool
+	httpResponse *http.Response
+	Data         bool
+}
+
+func (r *SuspendInstallationResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -4425,26 +4924,36 @@ func UnsuspendInstallation(ctx context.Context, req *UnsuspendInstallationReq, o
 	if req == nil {
 		req = new(UnsuspendInstallationReq)
 	}
-	resp := &UnsuspendInstallationResponse{request: req}
+	resp := &UnsuspendInstallationResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.SetBoolResult(r, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	resp.httpResponse = r
+
+	return NewUnsuspendInstallationResponse(r, opts.PreserveResponseBody())
+}
+
+// NewUnsuspendInstallationResponse builds a new *UnsuspendInstallationResponse from an *http.Response
+func NewUnsuspendInstallationResponse(resp *http.Response, preserveBody bool) (*UnsuspendInstallationResponse, error) {
+	var result UnsuspendInstallationResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204, 404})
 	if err != nil {
-		return nil, err
+		return &result, err
 	}
-	return resp, nil
+	err = internal.SetBoolResult(resp, &result.Data)
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -4487,7 +4996,6 @@ func (r *UnsuspendInstallationReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrBoolean},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -4497,7 +5005,6 @@ func (r *UnsuspendInstallationReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/app/installations/%v/suspended", r.InstallationId),
 		URLQuery:           query,
-		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -4507,7 +5014,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *UnsuspendInstallationReq) Rel(link string, resp *UnsuspendInstallationResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -4521,7 +5028,10 @@ UnsuspendInstallationResponse is a response for UnsuspendInstallation
 https://developer.github.com/v3/apps/#unsuspend-an-app-installation
 */
 type UnsuspendInstallationResponse struct {
-	requests.Response
-	request *UnsuspendInstallationReq
-	Data    bool
+	httpResponse *http.Response
+	Data         bool
+}
+
+func (r *UnsuspendInstallationResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }

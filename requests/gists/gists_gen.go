@@ -40,22 +40,32 @@ func CheckIsStarred(ctx context.Context, req *CheckIsStarredReq, opt ...requests
 	if req == nil {
 		req = new(CheckIsStarredReq)
 	}
-	resp := &CheckIsStarredResponse{request: req}
+	resp := &CheckIsStarredResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewCheckIsStarredResponse(r, opts.PreserveResponseBody())
+}
+
+// NewCheckIsStarredResponse builds a new *CheckIsStarredResponse from an *http.Response
+func NewCheckIsStarredResponse(resp *http.Response, preserveBody bool) (*CheckIsStarredResponse, error) {
+	var result CheckIsStarredResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204, 304})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -98,7 +108,6 @@ func (r *CheckIsStarredReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -108,7 +117,6 @@ func (r *CheckIsStarredReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/gists/%v/star", r.GistId),
 		URLQuery:           query,
-		ValidStatuses:      []int{204, 304},
 	}
 	return builder
 }
@@ -118,7 +126,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *CheckIsStarredReq) Rel(link string, resp *CheckIsStarredResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -132,8 +140,11 @@ CheckIsStarredResponse is a response for CheckIsStarred
 https://developer.github.com/v3/gists/#check-if-a-gist-is-starred
 */
 type CheckIsStarredResponse struct {
-	requests.Response
-	request *CheckIsStarredReq
+	httpResponse *http.Response
+}
+
+func (r *CheckIsStarredResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -153,23 +164,38 @@ func Create(ctx context.Context, req *CreateReq, opt ...requests.Option) (*Creat
 	if req == nil {
 		req = new(CreateReq)
 	}
-	resp := &CreateResponse{request: req}
+	resp := &CreateResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.GistFull{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewCreateResponse(r, opts.PreserveResponseBody())
+}
+
+// NewCreateResponse builds a new *CreateResponse from an *http.Response
+func NewCreateResponse(resp *http.Response, preserveBody bool) (*CreateResponse, error) {
+	var result CreateResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{201, 304})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -210,7 +236,6 @@ func (r *CreateReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{201},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
@@ -223,7 +248,6 @@ func (r *CreateReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/gists"),
 		URLQuery:         query,
-		ValidStatuses:    []int{201, 304},
 	}
 	return builder
 }
@@ -233,7 +257,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *CreateReq) Rel(link string, resp *CreateResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -271,9 +295,12 @@ CreateResponse is a response for Create
 https://developer.github.com/v3/gists/#create-a-gist
 */
 type CreateResponse struct {
-	requests.Response
-	request *CreateReq
-	Data    components.GistFull
+	httpResponse *http.Response
+	Data         components.GistFull
+}
+
+func (r *CreateResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -293,23 +320,38 @@ func CreateComment(ctx context.Context, req *CreateCommentReq, opt ...requests.O
 	if req == nil {
 		req = new(CreateCommentReq)
 	}
-	resp := &CreateCommentResponse{request: req}
+	resp := &CreateCommentResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.GistComment{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewCreateCommentResponse(r, opts.PreserveResponseBody())
+}
+
+// NewCreateCommentResponse builds a new *CreateCommentResponse from an *http.Response
+func NewCreateCommentResponse(resp *http.Response, preserveBody bool) (*CreateCommentResponse, error) {
+	var result CreateCommentResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{201, 304})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -353,7 +395,6 @@ func (r *CreateCommentReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{201},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
@@ -366,7 +407,6 @@ func (r *CreateCommentReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/gists/%v/comments", r.GistId),
 		URLQuery:         query,
-		ValidStatuses:    []int{201, 304},
 	}
 	return builder
 }
@@ -376,7 +416,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *CreateCommentReq) Rel(link string, resp *CreateCommentResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -401,9 +441,12 @@ CreateCommentResponse is a response for CreateComment
 https://developer.github.com/v3/gists/comments/#create-a-gist-comment
 */
 type CreateCommentResponse struct {
-	requests.Response
-	request *CreateCommentReq
-	Data    components.GistComment
+	httpResponse *http.Response
+	Data         components.GistComment
+}
+
+func (r *CreateCommentResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -423,22 +466,32 @@ func Delete(ctx context.Context, req *DeleteReq, opt ...requests.Option) (*Delet
 	if req == nil {
 		req = new(DeleteReq)
 	}
-	resp := &DeleteResponse{request: req}
+	resp := &DeleteResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewDeleteResponse(r, opts.PreserveResponseBody())
+}
+
+// NewDeleteResponse builds a new *DeleteResponse from an *http.Response
+func NewDeleteResponse(resp *http.Response, preserveBody bool) (*DeleteResponse, error) {
+	var result DeleteResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204, 304})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -481,7 +534,6 @@ func (r *DeleteReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -491,7 +543,6 @@ func (r *DeleteReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/gists/%v", r.GistId),
 		URLQuery:           query,
-		ValidStatuses:      []int{204, 304},
 	}
 	return builder
 }
@@ -501,7 +552,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *DeleteReq) Rel(link string, resp *DeleteResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -515,8 +566,11 @@ DeleteResponse is a response for Delete
 https://developer.github.com/v3/gists/#delete-a-gist
 */
 type DeleteResponse struct {
-	requests.Response
-	request *DeleteReq
+	httpResponse *http.Response
+}
+
+func (r *DeleteResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -536,22 +590,32 @@ func DeleteComment(ctx context.Context, req *DeleteCommentReq, opt ...requests.O
 	if req == nil {
 		req = new(DeleteCommentReq)
 	}
-	resp := &DeleteCommentResponse{request: req}
+	resp := &DeleteCommentResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewDeleteCommentResponse(r, opts.PreserveResponseBody())
+}
+
+// NewDeleteCommentResponse builds a new *DeleteCommentResponse from an *http.Response
+func NewDeleteCommentResponse(resp *http.Response, preserveBody bool) (*DeleteCommentResponse, error) {
+	var result DeleteCommentResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204, 304})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -597,7 +661,6 @@ func (r *DeleteCommentReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -607,7 +670,6 @@ func (r *DeleteCommentReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/gists/%v/comments/%v", r.GistId, r.CommentId),
 		URLQuery:           query,
-		ValidStatuses:      []int{204, 304},
 	}
 	return builder
 }
@@ -617,7 +679,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *DeleteCommentReq) Rel(link string, resp *DeleteCommentResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -631,8 +693,11 @@ DeleteCommentResponse is a response for DeleteComment
 https://developer.github.com/v3/gists/comments/#delete-a-gist-comment
 */
 type DeleteCommentResponse struct {
-	requests.Response
-	request *DeleteCommentReq
+	httpResponse *http.Response
+}
+
+func (r *DeleteCommentResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -652,23 +717,38 @@ func Fork(ctx context.Context, req *ForkReq, opt ...requests.Option) (*ForkRespo
 	if req == nil {
 		req = new(ForkReq)
 	}
-	resp := &ForkResponse{request: req}
+	resp := &ForkResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.BaseGist{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewForkResponse(r, opts.PreserveResponseBody())
+}
+
+// NewForkResponse builds a new *ForkResponse from an *http.Response
+func NewForkResponse(resp *http.Response, preserveBody bool) (*ForkResponse, error) {
+	var result ForkResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{201, 304})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -711,7 +791,6 @@ func (r *ForkReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{201},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -721,7 +800,6 @@ func (r *ForkReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/gists/%v/forks", r.GistId),
 		URLQuery:           query,
-		ValidStatuses:      []int{201, 304},
 	}
 	return builder
 }
@@ -731,7 +809,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ForkReq) Rel(link string, resp *ForkResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -745,9 +823,12 @@ ForkResponse is a response for Fork
 https://developer.github.com/v3/gists/#fork-a-gist
 */
 type ForkResponse struct {
-	requests.Response
-	request *ForkReq
-	Data    components.BaseGist
+	httpResponse *http.Response
+	Data         components.BaseGist
+}
+
+func (r *ForkResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -767,23 +848,38 @@ func Get(ctx context.Context, req *GetReq, opt ...requests.Option) (*GetResponse
 	if req == nil {
 		req = new(GetReq)
 	}
-	resp := &GetResponse{request: req}
+	resp := &GetResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.GistFull{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetResponse builds a new *GetResponse from an *http.Response
+func NewGetResponse(resp *http.Response, preserveBody bool) (*GetResponse, error) {
+	var result GetResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -826,7 +922,6 @@ func (r *GetReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -836,7 +931,6 @@ func (r *GetReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/gists/%v", r.GistId),
 		URLQuery:           query,
-		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -846,7 +940,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetReq) Rel(link string, resp *GetResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -860,9 +954,12 @@ GetResponse is a response for Get
 https://developer.github.com/v3/gists/#get-a-gist
 */
 type GetResponse struct {
-	requests.Response
-	request *GetReq
-	Data    components.GistFull
+	httpResponse *http.Response
+	Data         components.GistFull
+}
+
+func (r *GetResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -882,23 +979,38 @@ func GetComment(ctx context.Context, req *GetCommentReq, opt ...requests.Option)
 	if req == nil {
 		req = new(GetCommentReq)
 	}
-	resp := &GetCommentResponse{request: req}
+	resp := &GetCommentResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.GistComment{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetCommentResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetCommentResponse builds a new *GetCommentResponse from an *http.Response
+func NewGetCommentResponse(resp *http.Response, preserveBody bool) (*GetCommentResponse, error) {
+	var result GetCommentResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -944,7 +1056,6 @@ func (r *GetCommentReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -954,7 +1065,6 @@ func (r *GetCommentReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/gists/%v/comments/%v", r.GistId, r.CommentId),
 		URLQuery:           query,
-		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -964,7 +1074,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetCommentReq) Rel(link string, resp *GetCommentResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -978,9 +1088,12 @@ GetCommentResponse is a response for GetComment
 https://developer.github.com/v3/gists/comments/#get-a-gist-comment
 */
 type GetCommentResponse struct {
-	requests.Response
-	request *GetCommentReq
-	Data    components.GistComment
+	httpResponse *http.Response
+	Data         components.GistComment
+}
+
+func (r *GetCommentResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1000,23 +1113,38 @@ func GetRevision(ctx context.Context, req *GetRevisionReq, opt ...requests.Optio
 	if req == nil {
 		req = new(GetRevisionReq)
 	}
-	resp := &GetRevisionResponse{request: req}
+	resp := &GetRevisionResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.GistFull{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetRevisionResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetRevisionResponse builds a new *GetRevisionResponse from an *http.Response
+func NewGetRevisionResponse(resp *http.Response, preserveBody bool) (*GetRevisionResponse, error) {
+	var result GetRevisionResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1062,7 +1190,6 @@ func (r *GetRevisionReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -1072,7 +1199,6 @@ func (r *GetRevisionReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/gists/%v/%v", r.GistId, r.Sha),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -1082,7 +1208,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetRevisionReq) Rel(link string, resp *GetRevisionResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1096,9 +1222,12 @@ GetRevisionResponse is a response for GetRevision
 https://developer.github.com/v3/gists/#get-a-gist-revision
 */
 type GetRevisionResponse struct {
-	requests.Response
-	request *GetRevisionReq
-	Data    components.GistFull
+	httpResponse *http.Response
+	Data         components.GistFull
+}
+
+func (r *GetRevisionResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1118,23 +1247,38 @@ func List(ctx context.Context, req *ListReq, opt ...requests.Option) (*ListRespo
 	if req == nil {
 		req = new(ListReq)
 	}
-	resp := &ListResponse{request: req}
+	resp := &ListResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.BaseGist{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListResponse builds a new *ListResponse from an *http.Response
+func NewListResponse(resp *http.Response, preserveBody bool) (*ListResponse, error) {
+	var result ListResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1196,7 +1340,6 @@ func (r *ListReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -1206,7 +1349,6 @@ func (r *ListReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/gists"),
 		URLQuery:           query,
-		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -1216,7 +1358,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListReq) Rel(link string, resp *ListResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1230,9 +1372,12 @@ ListResponse is a response for List
 https://developer.github.com/v3/gists/#list-gists-for-the-authenticated-user
 */
 type ListResponse struct {
-	requests.Response
-	request *ListReq
-	Data    []components.BaseGist
+	httpResponse *http.Response
+	Data         []components.BaseGist
+}
+
+func (r *ListResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1252,23 +1397,38 @@ func ListComments(ctx context.Context, req *ListCommentsReq, opt ...requests.Opt
 	if req == nil {
 		req = new(ListCommentsReq)
 	}
-	resp := &ListCommentsResponse{request: req}
+	resp := &ListCommentsResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.GistComment{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListCommentsResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListCommentsResponse builds a new *ListCommentsResponse from an *http.Response
+func NewListCommentsResponse(resp *http.Response, preserveBody bool) (*ListCommentsResponse, error) {
+	var result ListCommentsResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1323,7 +1483,6 @@ func (r *ListCommentsReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -1333,7 +1492,6 @@ func (r *ListCommentsReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/gists/%v/comments", r.GistId),
 		URLQuery:           query,
-		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -1343,7 +1501,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListCommentsReq) Rel(link string, resp *ListCommentsResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1357,9 +1515,12 @@ ListCommentsResponse is a response for ListComments
 https://developer.github.com/v3/gists/comments/#list-gist-comments
 */
 type ListCommentsResponse struct {
-	requests.Response
-	request *ListCommentsReq
-	Data    []components.GistComment
+	httpResponse *http.Response
+	Data         []components.GistComment
+}
+
+func (r *ListCommentsResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1379,23 +1540,38 @@ func ListCommits(ctx context.Context, req *ListCommitsReq, opt ...requests.Optio
 	if req == nil {
 		req = new(ListCommitsReq)
 	}
-	resp := &ListCommitsResponse{request: req}
+	resp := &ListCommitsResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.GistCommit{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListCommitsResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListCommitsResponse builds a new *ListCommitsResponse from an *http.Response
+func NewListCommitsResponse(resp *http.Response, preserveBody bool) (*ListCommitsResponse, error) {
+	var result ListCommitsResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1450,7 +1626,6 @@ func (r *ListCommitsReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -1460,7 +1635,6 @@ func (r *ListCommitsReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/gists/%v/commits", r.GistId),
 		URLQuery:           query,
-		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -1470,7 +1644,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListCommitsReq) Rel(link string, resp *ListCommitsResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1484,9 +1658,12 @@ ListCommitsResponse is a response for ListCommits
 https://developer.github.com/v3/gists/#list-gist-commits
 */
 type ListCommitsResponse struct {
-	requests.Response
-	request *ListCommitsReq
-	Data    []components.GistCommit
+	httpResponse *http.Response
+	Data         []components.GistCommit
+}
+
+func (r *ListCommitsResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1506,23 +1683,38 @@ func ListForUser(ctx context.Context, req *ListForUserReq, opt ...requests.Optio
 	if req == nil {
 		req = new(ListForUserReq)
 	}
-	resp := &ListForUserResponse{request: req}
+	resp := &ListForUserResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.BaseGist{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListForUserResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListForUserResponse builds a new *ListForUserResponse from an *http.Response
+func NewListForUserResponse(resp *http.Response, preserveBody bool) (*ListForUserResponse, error) {
+	var result ListForUserResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1585,7 +1777,6 @@ func (r *ListForUserReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -1595,7 +1786,6 @@ func (r *ListForUserReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/users/%v/gists", r.Username),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -1605,7 +1795,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListForUserReq) Rel(link string, resp *ListForUserResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1619,9 +1809,12 @@ ListForUserResponse is a response for ListForUser
 https://developer.github.com/v3/gists/#list-gists-for-a-user
 */
 type ListForUserResponse struct {
-	requests.Response
-	request *ListForUserReq
-	Data    []components.BaseGist
+	httpResponse *http.Response
+	Data         []components.BaseGist
+}
+
+func (r *ListForUserResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1641,23 +1834,38 @@ func ListForks(ctx context.Context, req *ListForksReq, opt ...requests.Option) (
 	if req == nil {
 		req = new(ListForksReq)
 	}
-	resp := &ListForksResponse{request: req}
+	resp := &ListForksResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.GistFull{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListForksResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListForksResponse builds a new *ListForksResponse from an *http.Response
+func NewListForksResponse(resp *http.Response, preserveBody bool) (*ListForksResponse, error) {
+	var result ListForksResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1712,7 +1920,6 @@ func (r *ListForksReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -1722,7 +1929,6 @@ func (r *ListForksReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/gists/%v/forks", r.GistId),
 		URLQuery:           query,
-		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -1732,7 +1938,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListForksReq) Rel(link string, resp *ListForksResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1746,9 +1952,12 @@ ListForksResponse is a response for ListForks
 https://developer.github.com/v3/gists/#list-gist-forks
 */
 type ListForksResponse struct {
-	requests.Response
-	request *ListForksReq
-	Data    []components.GistFull
+	httpResponse *http.Response
+	Data         []components.GistFull
+}
+
+func (r *ListForksResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1768,23 +1977,38 @@ func ListPublic(ctx context.Context, req *ListPublicReq, opt ...requests.Option)
 	if req == nil {
 		req = new(ListPublicReq)
 	}
-	resp := &ListPublicResponse{request: req}
+	resp := &ListPublicResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.BaseGist{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListPublicResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListPublicResponse builds a new *ListPublicResponse from an *http.Response
+func NewListPublicResponse(resp *http.Response, preserveBody bool) (*ListPublicResponse, error) {
+	var result ListPublicResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1846,7 +2070,6 @@ func (r *ListPublicReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -1856,7 +2079,6 @@ func (r *ListPublicReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/gists/public"),
 		URLQuery:           query,
-		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -1866,7 +2088,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListPublicReq) Rel(link string, resp *ListPublicResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1880,9 +2102,12 @@ ListPublicResponse is a response for ListPublic
 https://developer.github.com/v3/gists/#list-public-gists
 */
 type ListPublicResponse struct {
-	requests.Response
-	request *ListPublicReq
-	Data    []components.BaseGist
+	httpResponse *http.Response
+	Data         []components.BaseGist
+}
+
+func (r *ListPublicResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1902,23 +2127,38 @@ func ListStarred(ctx context.Context, req *ListStarredReq, opt ...requests.Optio
 	if req == nil {
 		req = new(ListStarredReq)
 	}
-	resp := &ListStarredResponse{request: req}
+	resp := &ListStarredResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.BaseGist{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListStarredResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListStarredResponse builds a new *ListStarredResponse from an *http.Response
+func NewListStarredResponse(resp *http.Response, preserveBody bool) (*ListStarredResponse, error) {
+	var result ListStarredResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1980,7 +2220,6 @@ func (r *ListStarredReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -1990,7 +2229,6 @@ func (r *ListStarredReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/gists/starred"),
 		URLQuery:           query,
-		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -2000,7 +2238,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListStarredReq) Rel(link string, resp *ListStarredResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -2014,9 +2252,12 @@ ListStarredResponse is a response for ListStarred
 https://developer.github.com/v3/gists/#list-starred-gists
 */
 type ListStarredResponse struct {
-	requests.Response
-	request *ListStarredReq
-	Data    []components.BaseGist
+	httpResponse *http.Response
+	Data         []components.BaseGist
+}
+
+func (r *ListStarredResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -2036,22 +2277,32 @@ func Star(ctx context.Context, req *StarReq, opt ...requests.Option) (*StarRespo
 	if req == nil {
 		req = new(StarReq)
 	}
-	resp := &StarResponse{request: req}
+	resp := &StarResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewStarResponse(r, opts.PreserveResponseBody())
+}
+
+// NewStarResponse builds a new *StarResponse from an *http.Response
+func NewStarResponse(resp *http.Response, preserveBody bool) (*StarResponse, error) {
+	var result StarResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204, 304})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -2094,7 +2345,6 @@ func (r *StarReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -2104,7 +2354,6 @@ func (r *StarReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/gists/%v/star", r.GistId),
 		URLQuery:           query,
-		ValidStatuses:      []int{204, 304},
 	}
 	return builder
 }
@@ -2114,7 +2363,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *StarReq) Rel(link string, resp *StarResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -2128,8 +2377,11 @@ StarResponse is a response for Star
 https://developer.github.com/v3/gists/#star-a-gist
 */
 type StarResponse struct {
-	requests.Response
-	request *StarReq
+	httpResponse *http.Response
+}
+
+func (r *StarResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -2149,22 +2401,32 @@ func Unstar(ctx context.Context, req *UnstarReq, opt ...requests.Option) (*Unsta
 	if req == nil {
 		req = new(UnstarReq)
 	}
-	resp := &UnstarResponse{request: req}
+	resp := &UnstarResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewUnstarResponse(r, opts.PreserveResponseBody())
+}
+
+// NewUnstarResponse builds a new *UnstarResponse from an *http.Response
+func NewUnstarResponse(resp *http.Response, preserveBody bool) (*UnstarResponse, error) {
+	var result UnstarResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204, 304})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -2207,7 +2469,6 @@ func (r *UnstarReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -2217,7 +2478,6 @@ func (r *UnstarReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/gists/%v/star", r.GistId),
 		URLQuery:           query,
-		ValidStatuses:      []int{204, 304},
 	}
 	return builder
 }
@@ -2227,7 +2487,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *UnstarReq) Rel(link string, resp *UnstarResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -2241,8 +2501,11 @@ UnstarResponse is a response for Unstar
 https://developer.github.com/v3/gists/#unstar-a-gist
 */
 type UnstarResponse struct {
-	requests.Response
-	request *UnstarReq
+	httpResponse *http.Response
+}
+
+func (r *UnstarResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -2262,23 +2525,38 @@ func Update(ctx context.Context, req *UpdateReq, opt ...requests.Option) (*Updat
 	if req == nil {
 		req = new(UpdateReq)
 	}
-	resp := &UpdateResponse{request: req}
+	resp := &UpdateResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.GistFull{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewUpdateResponse(r, opts.PreserveResponseBody())
+}
+
+// NewUpdateResponse builds a new *UpdateResponse from an *http.Response
+func NewUpdateResponse(resp *http.Response, preserveBody bool) (*UpdateResponse, error) {
+	var result UpdateResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -2322,7 +2600,6 @@ func (r *UpdateReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
@@ -2335,7 +2612,6 @@ func (r *UpdateReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/gists/%v", r.GistId),
 		URLQuery:         query,
-		ValidStatuses:    []int{200},
 	}
 	return builder
 }
@@ -2345,7 +2621,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *UpdateReq) Rel(link string, resp *UpdateResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -2383,9 +2659,12 @@ UpdateResponse is a response for Update
 https://developer.github.com/v3/gists/#update-a-gist
 */
 type UpdateResponse struct {
-	requests.Response
-	request *UpdateReq
-	Data    components.GistFull
+	httpResponse *http.Response
+	Data         components.GistFull
+}
+
+func (r *UpdateResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -2405,23 +2684,38 @@ func UpdateComment(ctx context.Context, req *UpdateCommentReq, opt ...requests.O
 	if req == nil {
 		req = new(UpdateCommentReq)
 	}
-	resp := &UpdateCommentResponse{request: req}
+	resp := &UpdateCommentResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.GistComment{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewUpdateCommentResponse(r, opts.PreserveResponseBody())
+}
+
+// NewUpdateCommentResponse builds a new *UpdateCommentResponse from an *http.Response
+func NewUpdateCommentResponse(resp *http.Response, preserveBody bool) (*UpdateCommentResponse, error) {
+	var result UpdateCommentResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -2468,7 +2762,6 @@ func (r *UpdateCommentReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
@@ -2481,7 +2774,6 @@ func (r *UpdateCommentReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/gists/%v/comments/%v", r.GistId, r.CommentId),
 		URLQuery:         query,
-		ValidStatuses:    []int{200},
 	}
 	return builder
 }
@@ -2491,7 +2783,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *UpdateCommentReq) Rel(link string, resp *UpdateCommentResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -2516,7 +2808,10 @@ UpdateCommentResponse is a response for UpdateComment
 https://developer.github.com/v3/gists/comments/#update-a-gist-comment
 */
 type UpdateCommentResponse struct {
-	requests.Response
-	request *UpdateCommentReq
-	Data    components.GistComment
+	httpResponse *http.Response
+	Data         components.GistComment
+}
+
+func (r *UpdateCommentResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }

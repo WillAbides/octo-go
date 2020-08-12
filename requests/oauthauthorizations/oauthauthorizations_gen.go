@@ -40,23 +40,38 @@ func CreateAuthorization(ctx context.Context, req *CreateAuthorizationReq, opt .
 	if req == nil {
 		req = new(CreateAuthorizationReq)
 	}
-	resp := &CreateAuthorizationResponse{request: req}
+	resp := &CreateAuthorizationResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.Authorization{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewCreateAuthorizationResponse(r, opts.PreserveResponseBody())
+}
+
+// NewCreateAuthorizationResponse builds a new *CreateAuthorizationResponse from an *http.Response
+func NewCreateAuthorizationResponse(resp *http.Response, preserveBody bool) (*CreateAuthorizationResponse, error) {
+	var result CreateAuthorizationResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{201, 304})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -97,7 +112,6 @@ func (r *CreateAuthorizationReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{201},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
@@ -110,7 +124,6 @@ func (r *CreateAuthorizationReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/authorizations"),
 		URLQuery:         query,
-		ValidStatuses:    []int{201, 304},
 	}
 	return builder
 }
@@ -120,7 +133,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *CreateAuthorizationReq) Rel(link string, resp *CreateAuthorizationResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -160,9 +173,12 @@ CreateAuthorizationResponse is a response for CreateAuthorization
 https://developer.github.com/v3/oauth_authorizations/#create-a-new-authorization
 */
 type CreateAuthorizationResponse struct {
-	requests.Response
-	request *CreateAuthorizationReq
-	Data    components.Authorization
+	httpResponse *http.Response
+	Data         components.Authorization
+}
+
+func (r *CreateAuthorizationResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -182,22 +198,32 @@ func DeleteAuthorization(ctx context.Context, req *DeleteAuthorizationReq, opt .
 	if req == nil {
 		req = new(DeleteAuthorizationReq)
 	}
-	resp := &DeleteAuthorizationResponse{request: req}
+	resp := &DeleteAuthorizationResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewDeleteAuthorizationResponse(r, opts.PreserveResponseBody())
+}
+
+// NewDeleteAuthorizationResponse builds a new *DeleteAuthorizationResponse from an *http.Response
+func NewDeleteAuthorizationResponse(resp *http.Response, preserveBody bool) (*DeleteAuthorizationResponse, error) {
+	var result DeleteAuthorizationResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204, 304})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -240,7 +266,6 @@ func (r *DeleteAuthorizationReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -250,7 +275,6 @@ func (r *DeleteAuthorizationReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/authorizations/%v", r.AuthorizationId),
 		URLQuery:           query,
-		ValidStatuses:      []int{204, 304},
 	}
 	return builder
 }
@@ -260,7 +284,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *DeleteAuthorizationReq) Rel(link string, resp *DeleteAuthorizationResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -274,8 +298,11 @@ DeleteAuthorizationResponse is a response for DeleteAuthorization
 https://developer.github.com/v3/oauth_authorizations/#delete-an-authorization
 */
 type DeleteAuthorizationResponse struct {
-	requests.Response
-	request *DeleteAuthorizationReq
+	httpResponse *http.Response
+}
+
+func (r *DeleteAuthorizationResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -295,22 +322,32 @@ func DeleteGrant(ctx context.Context, req *DeleteGrantReq, opt ...requests.Optio
 	if req == nil {
 		req = new(DeleteGrantReq)
 	}
-	resp := &DeleteGrantResponse{request: req}
+	resp := &DeleteGrantResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewDeleteGrantResponse(r, opts.PreserveResponseBody())
+}
+
+// NewDeleteGrantResponse builds a new *DeleteGrantResponse from an *http.Response
+func NewDeleteGrantResponse(resp *http.Response, preserveBody bool) (*DeleteGrantResponse, error) {
+	var result DeleteGrantResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204, 304})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -353,7 +390,6 @@ func (r *DeleteGrantReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -363,7 +399,6 @@ func (r *DeleteGrantReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/applications/grants/%v", r.GrantId),
 		URLQuery:           query,
-		ValidStatuses:      []int{204, 304},
 	}
 	return builder
 }
@@ -373,7 +408,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *DeleteGrantReq) Rel(link string, resp *DeleteGrantResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -387,8 +422,11 @@ DeleteGrantResponse is a response for DeleteGrant
 https://developer.github.com/v3/oauth_authorizations/#delete-a-grant
 */
 type DeleteGrantResponse struct {
-	requests.Response
-	request *DeleteGrantReq
+	httpResponse *http.Response
+}
+
+func (r *DeleteGrantResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -408,23 +446,38 @@ func GetAuthorization(ctx context.Context, req *GetAuthorizationReq, opt ...requ
 	if req == nil {
 		req = new(GetAuthorizationReq)
 	}
-	resp := &GetAuthorizationResponse{request: req}
+	resp := &GetAuthorizationResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.Authorization{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetAuthorizationResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetAuthorizationResponse builds a new *GetAuthorizationResponse from an *http.Response
+func NewGetAuthorizationResponse(resp *http.Response, preserveBody bool) (*GetAuthorizationResponse, error) {
+	var result GetAuthorizationResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -467,7 +520,6 @@ func (r *GetAuthorizationReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -477,7 +529,6 @@ func (r *GetAuthorizationReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/authorizations/%v", r.AuthorizationId),
 		URLQuery:           query,
-		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -487,7 +538,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetAuthorizationReq) Rel(link string, resp *GetAuthorizationResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -501,9 +552,12 @@ GetAuthorizationResponse is a response for GetAuthorization
 https://developer.github.com/v3/oauth_authorizations/#get-a-single-authorization
 */
 type GetAuthorizationResponse struct {
-	requests.Response
-	request *GetAuthorizationReq
-	Data    components.Authorization
+	httpResponse *http.Response
+	Data         components.Authorization
+}
+
+func (r *GetAuthorizationResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -523,23 +577,38 @@ func GetGrant(ctx context.Context, req *GetGrantReq, opt ...requests.Option) (*G
 	if req == nil {
 		req = new(GetGrantReq)
 	}
-	resp := &GetGrantResponse{request: req}
+	resp := &GetGrantResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.ApplicationGrant{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetGrantResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetGrantResponse builds a new *GetGrantResponse from an *http.Response
+func NewGetGrantResponse(resp *http.Response, preserveBody bool) (*GetGrantResponse, error) {
+	var result GetGrantResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -582,7 +651,6 @@ func (r *GetGrantReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -592,7 +660,6 @@ func (r *GetGrantReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/applications/grants/%v", r.GrantId),
 		URLQuery:           query,
-		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -602,7 +669,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetGrantReq) Rel(link string, resp *GetGrantResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -616,9 +683,12 @@ GetGrantResponse is a response for GetGrant
 https://developer.github.com/v3/oauth_authorizations/#get-a-single-grant
 */
 type GetGrantResponse struct {
-	requests.Response
-	request *GetGrantReq
-	Data    components.ApplicationGrant
+	httpResponse *http.Response
+	Data         components.ApplicationGrant
+}
+
+func (r *GetGrantResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -638,23 +708,38 @@ func GetOrCreateAuthorizationForApp(ctx context.Context, req *GetOrCreateAuthori
 	if req == nil {
 		req = new(GetOrCreateAuthorizationForAppReq)
 	}
-	resp := &GetOrCreateAuthorizationForAppResponse{request: req}
+	resp := &GetOrCreateAuthorizationForAppResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.Authorization{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetOrCreateAuthorizationForAppResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetOrCreateAuthorizationForAppResponse builds a new *GetOrCreateAuthorizationForAppResponse from an *http.Response
+func NewGetOrCreateAuthorizationForAppResponse(resp *http.Response, preserveBody bool) (*GetOrCreateAuthorizationForAppResponse, error) {
+	var result GetOrCreateAuthorizationForAppResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200, 201, 304})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200, 201}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -696,7 +781,6 @@ func (r *GetOrCreateAuthorizationForAppReq) requestBuilder() *internal.RequestBu
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{200, 201},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
@@ -709,7 +793,6 @@ func (r *GetOrCreateAuthorizationForAppReq) requestBuilder() *internal.RequestBu
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/authorizations/clients/%v", r.ClientId),
 		URLQuery:         query,
-		ValidStatuses:    []int{200, 201, 304},
 	}
 	return builder
 }
@@ -719,7 +802,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetOrCreateAuthorizationForAppReq) Rel(link string, resp *GetOrCreateAuthorizationForAppResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -756,9 +839,12 @@ GetOrCreateAuthorizationForAppResponse is a response for GetOrCreateAuthorizatio
 https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app
 */
 type GetOrCreateAuthorizationForAppResponse struct {
-	requests.Response
-	request *GetOrCreateAuthorizationForAppReq
-	Data    components.Authorization
+	httpResponse *http.Response
+	Data         components.Authorization
+}
+
+func (r *GetOrCreateAuthorizationForAppResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -778,23 +864,38 @@ func GetOrCreateAuthorizationForAppAndFingerprint(ctx context.Context, req *GetO
 	if req == nil {
 		req = new(GetOrCreateAuthorizationForAppAndFingerprintReq)
 	}
-	resp := &GetOrCreateAuthorizationForAppAndFingerprintResponse{request: req}
+	resp := &GetOrCreateAuthorizationForAppAndFingerprintResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.Authorization{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetOrCreateAuthorizationForAppAndFingerprintResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetOrCreateAuthorizationForAppAndFingerprintResponse builds a new *GetOrCreateAuthorizationForAppAndFingerprintResponse from an *http.Response
+func NewGetOrCreateAuthorizationForAppAndFingerprintResponse(resp *http.Response, preserveBody bool) (*GetOrCreateAuthorizationForAppAndFingerprintResponse, error) {
+	var result GetOrCreateAuthorizationForAppAndFingerprintResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200, 201})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200, 201}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -839,7 +940,6 @@ func (r *GetOrCreateAuthorizationForAppAndFingerprintReq) requestBuilder() *inte
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{200, 201},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
@@ -852,7 +952,6 @@ func (r *GetOrCreateAuthorizationForAppAndFingerprintReq) requestBuilder() *inte
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/authorizations/clients/%v/%v", r.ClientId, r.Fingerprint),
 		URLQuery:         query,
-		ValidStatuses:    []int{200, 201},
 	}
 	return builder
 }
@@ -862,7 +961,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetOrCreateAuthorizationForAppAndFingerprintReq) Rel(link string, resp *GetOrCreateAuthorizationForAppAndFingerprintResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -896,9 +995,12 @@ GetOrCreateAuthorizationForAppAndFingerprintResponse is a response for GetOrCrea
 https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app-and-fingerprint
 */
 type GetOrCreateAuthorizationForAppAndFingerprintResponse struct {
-	requests.Response
-	request *GetOrCreateAuthorizationForAppAndFingerprintReq
-	Data    components.Authorization
+	httpResponse *http.Response
+	Data         components.Authorization
+}
+
+func (r *GetOrCreateAuthorizationForAppAndFingerprintResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -918,23 +1020,38 @@ func ListAuthorizations(ctx context.Context, req *ListAuthorizationsReq, opt ...
 	if req == nil {
 		req = new(ListAuthorizationsReq)
 	}
-	resp := &ListAuthorizationsResponse{request: req}
+	resp := &ListAuthorizationsResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.Authorization{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListAuthorizationsResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListAuthorizationsResponse builds a new *ListAuthorizationsResponse from an *http.Response
+func NewListAuthorizationsResponse(resp *http.Response, preserveBody bool) (*ListAuthorizationsResponse, error) {
+	var result ListAuthorizationsResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -986,7 +1103,6 @@ func (r *ListAuthorizationsReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -996,7 +1112,6 @@ func (r *ListAuthorizationsReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/authorizations"),
 		URLQuery:           query,
-		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -1006,7 +1121,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListAuthorizationsReq) Rel(link string, resp *ListAuthorizationsResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1020,9 +1135,12 @@ ListAuthorizationsResponse is a response for ListAuthorizations
 https://developer.github.com/v3/oauth_authorizations/#list-your-authorizations
 */
 type ListAuthorizationsResponse struct {
-	requests.Response
-	request *ListAuthorizationsReq
-	Data    []components.Authorization
+	httpResponse *http.Response
+	Data         []components.Authorization
+}
+
+func (r *ListAuthorizationsResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1042,23 +1160,38 @@ func ListGrants(ctx context.Context, req *ListGrantsReq, opt ...requests.Option)
 	if req == nil {
 		req = new(ListGrantsReq)
 	}
-	resp := &ListGrantsResponse{request: req}
+	resp := &ListGrantsResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.ApplicationGrant{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListGrantsResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListGrantsResponse builds a new *ListGrantsResponse from an *http.Response
+func NewListGrantsResponse(resp *http.Response, preserveBody bool) (*ListGrantsResponse, error) {
+	var result ListGrantsResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1110,7 +1243,6 @@ func (r *ListGrantsReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -1120,7 +1252,6 @@ func (r *ListGrantsReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/applications/grants"),
 		URLQuery:           query,
-		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -1130,7 +1261,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListGrantsReq) Rel(link string, resp *ListGrantsResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1144,9 +1275,12 @@ ListGrantsResponse is a response for ListGrants
 https://developer.github.com/v3/oauth_authorizations/#list-your-grants
 */
 type ListGrantsResponse struct {
-	requests.Response
-	request *ListGrantsReq
-	Data    []components.ApplicationGrant
+	httpResponse *http.Response
+	Data         []components.ApplicationGrant
+}
+
+func (r *ListGrantsResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1166,23 +1300,38 @@ func UpdateAuthorization(ctx context.Context, req *UpdateAuthorizationReq, opt .
 	if req == nil {
 		req = new(UpdateAuthorizationReq)
 	}
-	resp := &UpdateAuthorizationResponse{request: req}
+	resp := &UpdateAuthorizationResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.Authorization{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewUpdateAuthorizationResponse(r, opts.PreserveResponseBody())
+}
+
+// NewUpdateAuthorizationResponse builds a new *UpdateAuthorizationResponse from an *http.Response
+func NewUpdateAuthorizationResponse(resp *http.Response, preserveBody bool) (*UpdateAuthorizationResponse, error) {
+	var result UpdateAuthorizationResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1226,7 +1375,6 @@ func (r *UpdateAuthorizationReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
@@ -1239,7 +1387,6 @@ func (r *UpdateAuthorizationReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/authorizations/%v", r.AuthorizationId),
 		URLQuery:         query,
-		ValidStatuses:    []int{200},
 	}
 	return builder
 }
@@ -1249,7 +1396,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *UpdateAuthorizationReq) Rel(link string, resp *UpdateAuthorizationResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1289,7 +1436,10 @@ UpdateAuthorizationResponse is a response for UpdateAuthorization
 https://developer.github.com/v3/oauth_authorizations/#update-an-existing-authorization
 */
 type UpdateAuthorizationResponse struct {
-	requests.Response
-	request *UpdateAuthorizationReq
-	Data    components.Authorization
+	httpResponse *http.Response
+	Data         components.Authorization
+}
+
+func (r *UpdateAuthorizationResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }

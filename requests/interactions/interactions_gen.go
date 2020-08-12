@@ -39,23 +39,38 @@ func GetRestrictionsForOrg(ctx context.Context, req *GetRestrictionsForOrgReq, o
 	if req == nil {
 		req = new(GetRestrictionsForOrgReq)
 	}
-	resp := &GetRestrictionsForOrgResponse{request: req}
+	resp := &GetRestrictionsForOrgResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.InteractionLimit{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetRestrictionsForOrgResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetRestrictionsForOrgResponse builds a new *GetRestrictionsForOrgResponse from an *http.Response
+func NewGetRestrictionsForOrgResponse(resp *http.Response, preserveBody bool) (*GetRestrictionsForOrgResponse, error) {
+	var result GetRestrictionsForOrgResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -104,7 +119,6 @@ func (r *GetRestrictionsForOrgReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"sombra"},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -114,7 +128,6 @@ func (r *GetRestrictionsForOrgReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{"sombra"},
 		URLPath:            fmt.Sprintf("/orgs/%v/interaction-limits", r.Org),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -124,7 +137,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetRestrictionsForOrgReq) Rel(link string, resp *GetRestrictionsForOrgResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -138,9 +151,12 @@ GetRestrictionsForOrgResponse is a response for GetRestrictionsForOrg
 https://developer.github.com/v3/interactions/orgs/#get-interaction-restrictions-for-an-organization
 */
 type GetRestrictionsForOrgResponse struct {
-	requests.Response
-	request *GetRestrictionsForOrgReq
-	Data    components.InteractionLimit
+	httpResponse *http.Response
+	Data         components.InteractionLimit
+}
+
+func (r *GetRestrictionsForOrgResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -160,23 +176,38 @@ func GetRestrictionsForRepo(ctx context.Context, req *GetRestrictionsForRepoReq,
 	if req == nil {
 		req = new(GetRestrictionsForRepoReq)
 	}
-	resp := &GetRestrictionsForRepoResponse{request: req}
+	resp := &GetRestrictionsForRepoResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.InteractionLimit{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetRestrictionsForRepoResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetRestrictionsForRepoResponse builds a new *GetRestrictionsForRepoResponse from an *http.Response
+func NewGetRestrictionsForRepoResponse(resp *http.Response, preserveBody bool) (*GetRestrictionsForRepoResponse, error) {
+	var result GetRestrictionsForRepoResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -226,7 +257,6 @@ func (r *GetRestrictionsForRepoReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"sombra"},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -236,7 +266,6 @@ func (r *GetRestrictionsForRepoReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{"sombra"},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/interaction-limits", r.Owner, r.Repo),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -246,7 +275,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetRestrictionsForRepoReq) Rel(link string, resp *GetRestrictionsForRepoResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -260,9 +289,12 @@ GetRestrictionsForRepoResponse is a response for GetRestrictionsForRepo
 https://developer.github.com/v3/interactions/repos/#get-interaction-restrictions-for-a-repository
 */
 type GetRestrictionsForRepoResponse struct {
-	requests.Response
-	request *GetRestrictionsForRepoReq
-	Data    components.InteractionLimit
+	httpResponse *http.Response
+	Data         components.InteractionLimit
+}
+
+func (r *GetRestrictionsForRepoResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -282,22 +314,32 @@ func RemoveRestrictionsForOrg(ctx context.Context, req *RemoveRestrictionsForOrg
 	if req == nil {
 		req = new(RemoveRestrictionsForOrgReq)
 	}
-	resp := &RemoveRestrictionsForOrgResponse{request: req}
+	resp := &RemoveRestrictionsForOrgResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewRemoveRestrictionsForOrgResponse(r, opts.PreserveResponseBody())
+}
+
+// NewRemoveRestrictionsForOrgResponse builds a new *RemoveRestrictionsForOrgResponse from an *http.Response
+func NewRemoveRestrictionsForOrgResponse(resp *http.Response, preserveBody bool) (*RemoveRestrictionsForOrgResponse, error) {
+	var result RemoveRestrictionsForOrgResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -346,7 +388,6 @@ func (r *RemoveRestrictionsForOrgReq) requestBuilder() *internal.RequestBuilder 
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"sombra"},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -356,7 +397,6 @@ func (r *RemoveRestrictionsForOrgReq) requestBuilder() *internal.RequestBuilder 
 		RequiredPreviews:   []string{"sombra"},
 		URLPath:            fmt.Sprintf("/orgs/%v/interaction-limits", r.Org),
 		URLQuery:           query,
-		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -366,7 +406,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *RemoveRestrictionsForOrgReq) Rel(link string, resp *RemoveRestrictionsForOrgResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -380,8 +420,11 @@ RemoveRestrictionsForOrgResponse is a response for RemoveRestrictionsForOrg
 https://developer.github.com/v3/interactions/orgs/#remove-interaction-restrictions-for-an-organization
 */
 type RemoveRestrictionsForOrgResponse struct {
-	requests.Response
-	request *RemoveRestrictionsForOrgReq
+	httpResponse *http.Response
+}
+
+func (r *RemoveRestrictionsForOrgResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -401,22 +444,32 @@ func RemoveRestrictionsForRepo(ctx context.Context, req *RemoveRestrictionsForRe
 	if req == nil {
 		req = new(RemoveRestrictionsForRepoReq)
 	}
-	resp := &RemoveRestrictionsForRepoResponse{request: req}
+	resp := &RemoveRestrictionsForRepoResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewRemoveRestrictionsForRepoResponse(r, opts.PreserveResponseBody())
+}
+
+// NewRemoveRestrictionsForRepoResponse builds a new *RemoveRestrictionsForRepoResponse from an *http.Response
+func NewRemoveRestrictionsForRepoResponse(resp *http.Response, preserveBody bool) (*RemoveRestrictionsForRepoResponse, error) {
+	var result RemoveRestrictionsForRepoResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -466,7 +519,6 @@ func (r *RemoveRestrictionsForRepoReq) requestBuilder() *internal.RequestBuilder
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"sombra"},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -476,7 +528,6 @@ func (r *RemoveRestrictionsForRepoReq) requestBuilder() *internal.RequestBuilder
 		RequiredPreviews:   []string{"sombra"},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/interaction-limits", r.Owner, r.Repo),
 		URLQuery:           query,
-		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -486,7 +537,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *RemoveRestrictionsForRepoReq) Rel(link string, resp *RemoveRestrictionsForRepoResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -500,8 +551,11 @@ RemoveRestrictionsForRepoResponse is a response for RemoveRestrictionsForRepo
 https://developer.github.com/v3/interactions/repos/#remove-interaction-restrictions-for-a-repository
 */
 type RemoveRestrictionsForRepoResponse struct {
-	requests.Response
-	request *RemoveRestrictionsForRepoReq
+	httpResponse *http.Response
+}
+
+func (r *RemoveRestrictionsForRepoResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -521,23 +575,38 @@ func SetRestrictionsForOrg(ctx context.Context, req *SetRestrictionsForOrgReq, o
 	if req == nil {
 		req = new(SetRestrictionsForOrgReq)
 	}
-	resp := &SetRestrictionsForOrgResponse{request: req}
+	resp := &SetRestrictionsForOrgResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.InteractionLimit{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewSetRestrictionsForOrgResponse(r, opts.PreserveResponseBody())
+}
+
+// NewSetRestrictionsForOrgResponse builds a new *SetRestrictionsForOrgResponse from an *http.Response
+func NewSetRestrictionsForOrgResponse(resp *http.Response, preserveBody bool) (*SetRestrictionsForOrgResponse, error) {
+	var result SetRestrictionsForOrgResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -587,7 +656,6 @@ func (r *SetRestrictionsForOrgReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"sombra"},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
@@ -600,7 +668,6 @@ func (r *SetRestrictionsForOrgReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews: []string{"sombra"},
 		URLPath:          fmt.Sprintf("/orgs/%v/interaction-limits", r.Org),
 		URLQuery:         query,
-		ValidStatuses:    []int{200},
 	}
 	return builder
 }
@@ -610,7 +677,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *SetRestrictionsForOrgReq) Rel(link string, resp *SetRestrictionsForOrgResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -639,9 +706,12 @@ SetRestrictionsForOrgResponse is a response for SetRestrictionsForOrg
 https://developer.github.com/v3/interactions/orgs/#set-interaction-restrictions-for-an-organization
 */
 type SetRestrictionsForOrgResponse struct {
-	requests.Response
-	request *SetRestrictionsForOrgReq
-	Data    components.InteractionLimit
+	httpResponse *http.Response
+	Data         components.InteractionLimit
+}
+
+func (r *SetRestrictionsForOrgResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -661,23 +731,38 @@ func SetRestrictionsForRepo(ctx context.Context, req *SetRestrictionsForRepoReq,
 	if req == nil {
 		req = new(SetRestrictionsForRepoReq)
 	}
-	resp := &SetRestrictionsForRepoResponse{request: req}
+	resp := &SetRestrictionsForRepoResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.InteractionLimit{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewSetRestrictionsForRepoResponse(r, opts.PreserveResponseBody())
+}
+
+// NewSetRestrictionsForRepoResponse builds a new *SetRestrictionsForRepoResponse from an *http.Response
+func NewSetRestrictionsForRepoResponse(resp *http.Response, preserveBody bool) (*SetRestrictionsForRepoResponse, error) {
+	var result SetRestrictionsForRepoResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -728,7 +813,6 @@ func (r *SetRestrictionsForRepoReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"sombra"},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
@@ -741,7 +825,6 @@ func (r *SetRestrictionsForRepoReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews: []string{"sombra"},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/interaction-limits", r.Owner, r.Repo),
 		URLQuery:         query,
-		ValidStatuses:    []int{200},
 	}
 	return builder
 }
@@ -751,7 +834,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *SetRestrictionsForRepoReq) Rel(link string, resp *SetRestrictionsForRepoResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -780,7 +863,10 @@ SetRestrictionsForRepoResponse is a response for SetRestrictionsForRepo
 https://developer.github.com/v3/interactions/repos/#set-interaction-restrictions-for-a-repository
 */
 type SetRestrictionsForRepoResponse struct {
-	requests.Response
-	request *SetRestrictionsForRepoReq
-	Data    components.InteractionLimit
+	httpResponse *http.Response
+	Data         components.InteractionLimit
+}
+
+func (r *SetRestrictionsForRepoResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }

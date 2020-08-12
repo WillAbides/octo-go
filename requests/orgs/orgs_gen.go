@@ -40,22 +40,32 @@ func BlockUser(ctx context.Context, req *BlockUserReq, opt ...requests.Option) (
 	if req == nil {
 		req = new(BlockUserReq)
 	}
-	resp := &BlockUserResponse{request: req}
+	resp := &BlockUserResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewBlockUserResponse(r, opts.PreserveResponseBody())
+}
+
+// NewBlockUserResponse builds a new *BlockUserResponse from an *http.Response
+func NewBlockUserResponse(resp *http.Response, preserveBody bool) (*BlockUserResponse, error) {
+	var result BlockUserResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -97,7 +107,6 @@ func (r *BlockUserReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -107,7 +116,6 @@ func (r *BlockUserReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/blocks/%v", r.Org, r.Username),
 		URLQuery:           query,
-		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -117,7 +125,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *BlockUserReq) Rel(link string, resp *BlockUserResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -131,8 +139,11 @@ BlockUserResponse is a response for BlockUser
 https://developer.github.com/v3/orgs/blocking/#block-a-user-from-an-organization
 */
 type BlockUserResponse struct {
-	requests.Response
-	request *BlockUserReq
+	httpResponse *http.Response
+}
+
+func (r *BlockUserResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -152,26 +163,36 @@ func CheckBlockedUser(ctx context.Context, req *CheckBlockedUserReq, opt ...requ
 	if req == nil {
 		req = new(CheckBlockedUserReq)
 	}
-	resp := &CheckBlockedUserResponse{request: req}
+	resp := &CheckBlockedUserResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.SetBoolResult(r, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	resp.httpResponse = r
+
+	return NewCheckBlockedUserResponse(r, opts.PreserveResponseBody())
+}
+
+// NewCheckBlockedUserResponse builds a new *CheckBlockedUserResponse from an *http.Response
+func NewCheckBlockedUserResponse(resp *http.Response, preserveBody bool) (*CheckBlockedUserResponse, error) {
+	var result CheckBlockedUserResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204, 404})
 	if err != nil {
-		return nil, err
+		return &result, err
 	}
-	return resp, nil
+	err = internal.SetBoolResult(resp, &result.Data)
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -213,7 +234,6 @@ func (r *CheckBlockedUserReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrBoolean},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -223,7 +243,6 @@ func (r *CheckBlockedUserReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/blocks/%v", r.Org, r.Username),
 		URLQuery:           query,
-		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -233,7 +252,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *CheckBlockedUserReq) Rel(link string, resp *CheckBlockedUserResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -247,9 +266,12 @@ CheckBlockedUserResponse is a response for CheckBlockedUser
 https://developer.github.com/v3/orgs/blocking/#check-if-a-user-is-blocked-by-an-organization
 */
 type CheckBlockedUserResponse struct {
-	requests.Response
-	request *CheckBlockedUserReq
-	Data    bool
+	httpResponse *http.Response
+	Data         bool
+}
+
+func (r *CheckBlockedUserResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -269,22 +291,32 @@ func CheckMembershipForUser(ctx context.Context, req *CheckMembershipForUserReq,
 	if req == nil {
 		req = new(CheckMembershipForUserReq)
 	}
-	resp := &CheckMembershipForUserResponse{request: req}
+	resp := &CheckMembershipForUserResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewCheckMembershipForUserResponse(r, opts.PreserveResponseBody())
+}
+
+// NewCheckMembershipForUserResponse builds a new *CheckMembershipForUserResponse from an *http.Response
+func NewCheckMembershipForUserResponse(resp *http.Response, preserveBody bool) (*CheckMembershipForUserResponse, error) {
+	var result CheckMembershipForUserResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204, 302})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -326,7 +358,6 @@ func (r *CheckMembershipForUserReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -336,7 +367,6 @@ func (r *CheckMembershipForUserReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/members/%v", r.Org, r.Username),
 		URLQuery:           query,
-		ValidStatuses:      []int{204, 302},
 	}
 	return builder
 }
@@ -346,7 +376,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *CheckMembershipForUserReq) Rel(link string, resp *CheckMembershipForUserResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -360,8 +390,11 @@ CheckMembershipForUserResponse is a response for CheckMembershipForUser
 https://developer.github.com/v3/orgs/members/#check-organization-membership-for-a-user
 */
 type CheckMembershipForUserResponse struct {
-	requests.Response
-	request *CheckMembershipForUserReq
+	httpResponse *http.Response
+}
+
+func (r *CheckMembershipForUserResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -381,26 +414,36 @@ func CheckPublicMembershipForUser(ctx context.Context, req *CheckPublicMembershi
 	if req == nil {
 		req = new(CheckPublicMembershipForUserReq)
 	}
-	resp := &CheckPublicMembershipForUserResponse{request: req}
+	resp := &CheckPublicMembershipForUserResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.SetBoolResult(r, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	resp.httpResponse = r
+
+	return NewCheckPublicMembershipForUserResponse(r, opts.PreserveResponseBody())
+}
+
+// NewCheckPublicMembershipForUserResponse builds a new *CheckPublicMembershipForUserResponse from an *http.Response
+func NewCheckPublicMembershipForUserResponse(resp *http.Response, preserveBody bool) (*CheckPublicMembershipForUserResponse, error) {
+	var result CheckPublicMembershipForUserResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204, 404})
 	if err != nil {
-		return nil, err
+		return &result, err
 	}
-	return resp, nil
+	err = internal.SetBoolResult(resp, &result.Data)
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -442,7 +485,6 @@ func (r *CheckPublicMembershipForUserReq) requestBuilder() *internal.RequestBuil
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrBoolean},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -452,7 +494,6 @@ func (r *CheckPublicMembershipForUserReq) requestBuilder() *internal.RequestBuil
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/public_members/%v", r.Org, r.Username),
 		URLQuery:           query,
-		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -462,7 +503,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *CheckPublicMembershipForUserReq) Rel(link string, resp *CheckPublicMembershipForUserResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -476,9 +517,12 @@ CheckPublicMembershipForUserResponse is a response for CheckPublicMembershipForU
 https://developer.github.com/v3/orgs/members/#check-public-organization-membership-for-a-user
 */
 type CheckPublicMembershipForUserResponse struct {
-	requests.Response
-	request *CheckPublicMembershipForUserReq
-	Data    bool
+	httpResponse *http.Response
+	Data         bool
+}
+
+func (r *CheckPublicMembershipForUserResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -498,22 +542,32 @@ func ConvertMemberToOutsideCollaborator(ctx context.Context, req *ConvertMemberT
 	if req == nil {
 		req = new(ConvertMemberToOutsideCollaboratorReq)
 	}
-	resp := &ConvertMemberToOutsideCollaboratorResponse{request: req}
+	resp := &ConvertMemberToOutsideCollaboratorResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewConvertMemberToOutsideCollaboratorResponse(r, opts.PreserveResponseBody())
+}
+
+// NewConvertMemberToOutsideCollaboratorResponse builds a new *ConvertMemberToOutsideCollaboratorResponse from an *http.Response
+func NewConvertMemberToOutsideCollaboratorResponse(resp *http.Response, preserveBody bool) (*ConvertMemberToOutsideCollaboratorResponse, error) {
+	var result ConvertMemberToOutsideCollaboratorResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{202, 204})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -555,7 +609,6 @@ func (r *ConvertMemberToOutsideCollaboratorReq) requestBuilder() *internal.Reque
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -565,7 +618,6 @@ func (r *ConvertMemberToOutsideCollaboratorReq) requestBuilder() *internal.Reque
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/outside_collaborators/%v", r.Org, r.Username),
 		URLQuery:           query,
-		ValidStatuses:      []int{202, 204},
 	}
 	return builder
 }
@@ -575,7 +627,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ConvertMemberToOutsideCollaboratorReq) Rel(link string, resp *ConvertMemberToOutsideCollaboratorResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -589,8 +641,11 @@ ConvertMemberToOutsideCollaboratorResponse is a response for ConvertMemberToOuts
 https://developer.github.com/v3/orgs/outside_collaborators/#convert-an-organization-member-to-outside-collaborator
 */
 type ConvertMemberToOutsideCollaboratorResponse struct {
-	requests.Response
-	request *ConvertMemberToOutsideCollaboratorReq
+	httpResponse *http.Response
+}
+
+func (r *ConvertMemberToOutsideCollaboratorResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -610,23 +665,38 @@ func CreateInvitation(ctx context.Context, req *CreateInvitationReq, opt ...requ
 	if req == nil {
 		req = new(CreateInvitationReq)
 	}
-	resp := &CreateInvitationResponse{request: req}
+	resp := &CreateInvitationResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.OrganizationInvitation{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewCreateInvitationResponse(r, opts.PreserveResponseBody())
+}
+
+// NewCreateInvitationResponse builds a new *CreateInvitationResponse from an *http.Response
+func NewCreateInvitationResponse(resp *http.Response, preserveBody bool) (*CreateInvitationResponse, error) {
+	var result CreateInvitationResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{201})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -668,7 +738,6 @@ func (r *CreateInvitationReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{201},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
@@ -681,7 +750,6 @@ func (r *CreateInvitationReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/orgs/%v/invitations", r.Org),
 		URLQuery:         query,
-		ValidStatuses:    []int{201},
 	}
 	return builder
 }
@@ -691,7 +759,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *CreateInvitationReq) Rel(link string, resp *CreateInvitationResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -736,9 +804,12 @@ CreateInvitationResponse is a response for CreateInvitation
 https://developer.github.com/v3/orgs/members/#create-an-organization-invitation
 */
 type CreateInvitationResponse struct {
-	requests.Response
-	request *CreateInvitationReq
-	Data    components.OrganizationInvitation
+	httpResponse *http.Response
+	Data         components.OrganizationInvitation
+}
+
+func (r *CreateInvitationResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -758,23 +829,38 @@ func CreateWebhook(ctx context.Context, req *CreateWebhookReq, opt ...requests.O
 	if req == nil {
 		req = new(CreateWebhookReq)
 	}
-	resp := &CreateWebhookResponse{request: req}
+	resp := &CreateWebhookResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.OrgHook{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewCreateWebhookResponse(r, opts.PreserveResponseBody())
+}
+
+// NewCreateWebhookResponse builds a new *CreateWebhookResponse from an *http.Response
+func NewCreateWebhookResponse(resp *http.Response, preserveBody bool) (*CreateWebhookResponse, error) {
+	var result CreateWebhookResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{201})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -816,7 +902,6 @@ func (r *CreateWebhookReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{201},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
@@ -829,7 +914,6 @@ func (r *CreateWebhookReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/orgs/%v/hooks", r.Org),
 		URLQuery:         query,
-		ValidStatuses:    []int{201},
 	}
 	return builder
 }
@@ -839,7 +923,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *CreateWebhookReq) Rel(link string, resp *CreateWebhookResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -905,9 +989,12 @@ CreateWebhookResponse is a response for CreateWebhook
 https://developer.github.com/v3/orgs/hooks/#create-an-organization-webhook
 */
 type CreateWebhookResponse struct {
-	requests.Response
-	request *CreateWebhookReq
-	Data    components.OrgHook
+	httpResponse *http.Response
+	Data         components.OrgHook
+}
+
+func (r *CreateWebhookResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -927,26 +1014,36 @@ func DeleteWebhook(ctx context.Context, req *DeleteWebhookReq, opt ...requests.O
 	if req == nil {
 		req = new(DeleteWebhookReq)
 	}
-	resp := &DeleteWebhookResponse{request: req}
+	resp := &DeleteWebhookResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.SetBoolResult(r, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	resp.httpResponse = r
+
+	return NewDeleteWebhookResponse(r, opts.PreserveResponseBody())
+}
+
+// NewDeleteWebhookResponse builds a new *DeleteWebhookResponse from an *http.Response
+func NewDeleteWebhookResponse(resp *http.Response, preserveBody bool) (*DeleteWebhookResponse, error) {
+	var result DeleteWebhookResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204, 404})
 	if err != nil {
-		return nil, err
+		return &result, err
 	}
-	return resp, nil
+	err = internal.SetBoolResult(resp, &result.Data)
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -988,7 +1085,6 @@ func (r *DeleteWebhookReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrBoolean},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -998,7 +1094,6 @@ func (r *DeleteWebhookReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/hooks/%v", r.Org, r.HookId),
 		URLQuery:           query,
-		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -1008,7 +1103,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *DeleteWebhookReq) Rel(link string, resp *DeleteWebhookResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1022,9 +1117,12 @@ DeleteWebhookResponse is a response for DeleteWebhook
 https://developer.github.com/v3/orgs/hooks/#delete-an-organization-webhook
 */
 type DeleteWebhookResponse struct {
-	requests.Response
-	request *DeleteWebhookReq
-	Data    bool
+	httpResponse *http.Response
+	Data         bool
+}
+
+func (r *DeleteWebhookResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1044,23 +1142,38 @@ func Get(ctx context.Context, req *GetReq, opt ...requests.Option) (*GetResponse
 	if req == nil {
 		req = new(GetReq)
 	}
-	resp := &GetResponse{request: req}
+	resp := &GetResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.OrganizationFull{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetResponse builds a new *GetResponse from an *http.Response
+func NewGetResponse(resp *http.Response, preserveBody bool) (*GetResponse, error) {
+	var result GetResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1116,7 +1229,6 @@ func (r *GetReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"surtur"},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -1126,7 +1238,6 @@ func (r *GetReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v", r.Org),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -1136,7 +1247,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetReq) Rel(link string, resp *GetResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1150,9 +1261,12 @@ GetResponse is a response for Get
 https://developer.github.com/v3/orgs/#get-an-organization
 */
 type GetResponse struct {
-	requests.Response
-	request *GetReq
-	Data    components.OrganizationFull
+	httpResponse *http.Response
+	Data         components.OrganizationFull
+}
+
+func (r *GetResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1172,23 +1286,38 @@ func GetMembershipForAuthenticatedUser(ctx context.Context, req *GetMembershipFo
 	if req == nil {
 		req = new(GetMembershipForAuthenticatedUserReq)
 	}
-	resp := &GetMembershipForAuthenticatedUserResponse{request: req}
+	resp := &GetMembershipForAuthenticatedUserResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.OrgMembership{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetMembershipForAuthenticatedUserResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetMembershipForAuthenticatedUserResponse builds a new *GetMembershipForAuthenticatedUserResponse from an *http.Response
+func NewGetMembershipForAuthenticatedUserResponse(resp *http.Response, preserveBody bool) (*GetMembershipForAuthenticatedUserResponse, error) {
+	var result GetMembershipForAuthenticatedUserResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1229,7 +1358,6 @@ func (r *GetMembershipForAuthenticatedUserReq) requestBuilder() *internal.Reques
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -1239,7 +1367,6 @@ func (r *GetMembershipForAuthenticatedUserReq) requestBuilder() *internal.Reques
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/user/memberships/orgs/%v", r.Org),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -1249,7 +1376,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetMembershipForAuthenticatedUserReq) Rel(link string, resp *GetMembershipForAuthenticatedUserResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1263,9 +1390,12 @@ GetMembershipForAuthenticatedUserResponse is a response for GetMembershipForAuth
 https://developer.github.com/v3/orgs/members/#get-an-organization-membership-for-the-authenticated-user
 */
 type GetMembershipForAuthenticatedUserResponse struct {
-	requests.Response
-	request *GetMembershipForAuthenticatedUserReq
-	Data    components.OrgMembership
+	httpResponse *http.Response
+	Data         components.OrgMembership
+}
+
+func (r *GetMembershipForAuthenticatedUserResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1285,23 +1415,38 @@ func GetMembershipForUser(ctx context.Context, req *GetMembershipForUserReq, opt
 	if req == nil {
 		req = new(GetMembershipForUserReq)
 	}
-	resp := &GetMembershipForUserResponse{request: req}
+	resp := &GetMembershipForUserResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.OrgMembership{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetMembershipForUserResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetMembershipForUserResponse builds a new *GetMembershipForUserResponse from an *http.Response
+func NewGetMembershipForUserResponse(resp *http.Response, preserveBody bool) (*GetMembershipForUserResponse, error) {
+	var result GetMembershipForUserResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1343,7 +1488,6 @@ func (r *GetMembershipForUserReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -1353,7 +1497,6 @@ func (r *GetMembershipForUserReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/memberships/%v", r.Org, r.Username),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -1363,7 +1506,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetMembershipForUserReq) Rel(link string, resp *GetMembershipForUserResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1377,9 +1520,12 @@ GetMembershipForUserResponse is a response for GetMembershipForUser
 https://developer.github.com/v3/orgs/members/#get-organization-membership-for-a-user
 */
 type GetMembershipForUserResponse struct {
-	requests.Response
-	request *GetMembershipForUserReq
-	Data    components.OrgMembership
+	httpResponse *http.Response
+	Data         components.OrgMembership
+}
+
+func (r *GetMembershipForUserResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1399,23 +1545,38 @@ func GetWebhook(ctx context.Context, req *GetWebhookReq, opt ...requests.Option)
 	if req == nil {
 		req = new(GetWebhookReq)
 	}
-	resp := &GetWebhookResponse{request: req}
+	resp := &GetWebhookResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.OrgHook{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetWebhookResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetWebhookResponse builds a new *GetWebhookResponse from an *http.Response
+func NewGetWebhookResponse(resp *http.Response, preserveBody bool) (*GetWebhookResponse, error) {
+	var result GetWebhookResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1457,7 +1618,6 @@ func (r *GetWebhookReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -1467,7 +1627,6 @@ func (r *GetWebhookReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/hooks/%v", r.Org, r.HookId),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -1477,7 +1636,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetWebhookReq) Rel(link string, resp *GetWebhookResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1491,9 +1650,12 @@ GetWebhookResponse is a response for GetWebhook
 https://developer.github.com/v3/orgs/hooks/#get-an-organization-webhook
 */
 type GetWebhookResponse struct {
-	requests.Response
-	request *GetWebhookReq
-	Data    components.OrgHook
+	httpResponse *http.Response
+	Data         components.OrgHook
+}
+
+func (r *GetWebhookResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1513,23 +1675,38 @@ func List(ctx context.Context, req *ListReq, opt ...requests.Option) (*ListRespo
 	if req == nil {
 		req = new(ListReq)
 	}
-	resp := &ListResponse{request: req}
+	resp := &ListResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.OrganizationSimple{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListResponse builds a new *ListResponse from an *http.Response
+func NewListResponse(resp *http.Response, preserveBody bool) (*ListResponse, error) {
+	var result ListResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1585,7 +1762,6 @@ func (r *ListReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -1595,7 +1771,6 @@ func (r *ListReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/organizations"),
 		URLQuery:           query,
-		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -1605,7 +1780,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListReq) Rel(link string, resp *ListResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1619,9 +1794,12 @@ ListResponse is a response for List
 https://developer.github.com/v3/orgs/#list-organizations
 */
 type ListResponse struct {
-	requests.Response
-	request *ListReq
-	Data    []components.OrganizationSimple
+	httpResponse *http.Response
+	Data         []components.OrganizationSimple
+}
+
+func (r *ListResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1641,23 +1819,38 @@ func ListAppInstallations(ctx context.Context, req *ListAppInstallationsReq, opt
 	if req == nil {
 		req = new(ListAppInstallationsReq)
 	}
-	resp := &ListAppInstallationsResponse{request: req}
+	resp := &ListAppInstallationsResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = ListAppInstallationsResponseBody{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListAppInstallationsResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListAppInstallationsResponse builds a new *ListAppInstallationsResponse from an *http.Response
+func NewListAppInstallationsResponse(resp *http.Response, preserveBody bool) (*ListAppInstallationsResponse, error) {
+	var result ListAppInstallationsResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1716,7 +1909,6 @@ func (r *ListAppInstallationsReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"machine-man"},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -1726,7 +1918,6 @@ func (r *ListAppInstallationsReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{"machine-man"},
 		URLPath:            fmt.Sprintf("/orgs/%v/installations", r.Org),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -1736,7 +1927,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListAppInstallationsReq) Rel(link string, resp *ListAppInstallationsResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1760,9 +1951,12 @@ ListAppInstallationsResponse is a response for ListAppInstallations
 https://developer.github.com/v3/orgs/#list-app-installations-for-an-organization
 */
 type ListAppInstallationsResponse struct {
-	requests.Response
-	request *ListAppInstallationsReq
-	Data    ListAppInstallationsResponseBody
+	httpResponse *http.Response
+	Data         ListAppInstallationsResponseBody
+}
+
+func (r *ListAppInstallationsResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1782,23 +1976,38 @@ func ListBlockedUsers(ctx context.Context, req *ListBlockedUsersReq, opt ...requ
 	if req == nil {
 		req = new(ListBlockedUsersReq)
 	}
-	resp := &ListBlockedUsersResponse{request: req}
+	resp := &ListBlockedUsersResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.SimpleUser{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListBlockedUsersResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListBlockedUsersResponse builds a new *ListBlockedUsersResponse from an *http.Response
+func NewListBlockedUsersResponse(resp *http.Response, preserveBody bool) (*ListBlockedUsersResponse, error) {
+	var result ListBlockedUsersResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1839,7 +2048,6 @@ func (r *ListBlockedUsersReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -1849,7 +2057,6 @@ func (r *ListBlockedUsersReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/blocks", r.Org),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -1859,7 +2066,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListBlockedUsersReq) Rel(link string, resp *ListBlockedUsersResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1873,9 +2080,12 @@ ListBlockedUsersResponse is a response for ListBlockedUsers
 https://developer.github.com/v3/orgs/blocking/#list-users-blocked-by-an-organization
 */
 type ListBlockedUsersResponse struct {
-	requests.Response
-	request *ListBlockedUsersReq
-	Data    []components.SimpleUser
+	httpResponse *http.Response
+	Data         []components.SimpleUser
+}
+
+func (r *ListBlockedUsersResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1895,23 +2105,38 @@ func ListForAuthenticatedUser(ctx context.Context, req *ListForAuthenticatedUser
 	if req == nil {
 		req = new(ListForAuthenticatedUserReq)
 	}
-	resp := &ListForAuthenticatedUserResponse{request: req}
+	resp := &ListForAuthenticatedUserResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.OrganizationSimple{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListForAuthenticatedUserResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListForAuthenticatedUserResponse builds a new *ListForAuthenticatedUserResponse from an *http.Response
+func NewListForAuthenticatedUserResponse(resp *http.Response, preserveBody bool) (*ListForAuthenticatedUserResponse, error) {
+	var result ListForAuthenticatedUserResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1963,7 +2188,6 @@ func (r *ListForAuthenticatedUserReq) requestBuilder() *internal.RequestBuilder 
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -1973,7 +2197,6 @@ func (r *ListForAuthenticatedUserReq) requestBuilder() *internal.RequestBuilder 
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/user/orgs"),
 		URLQuery:           query,
-		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -1983,7 +2206,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListForAuthenticatedUserReq) Rel(link string, resp *ListForAuthenticatedUserResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1997,9 +2220,12 @@ ListForAuthenticatedUserResponse is a response for ListForAuthenticatedUser
 https://developer.github.com/v3/orgs/#list-organizations-for-the-authenticated-user
 */
 type ListForAuthenticatedUserResponse struct {
-	requests.Response
-	request *ListForAuthenticatedUserReq
-	Data    []components.OrganizationSimple
+	httpResponse *http.Response
+	Data         []components.OrganizationSimple
+}
+
+func (r *ListForAuthenticatedUserResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -2019,23 +2245,38 @@ func ListForUser(ctx context.Context, req *ListForUserReq, opt ...requests.Optio
 	if req == nil {
 		req = new(ListForUserReq)
 	}
-	resp := &ListForUserResponse{request: req}
+	resp := &ListForUserResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.OrganizationSimple{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListForUserResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListForUserResponse builds a new *ListForUserResponse from an *http.Response
+func NewListForUserResponse(resp *http.Response, preserveBody bool) (*ListForUserResponse, error) {
+	var result ListForUserResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -2088,7 +2329,6 @@ func (r *ListForUserReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -2098,7 +2338,6 @@ func (r *ListForUserReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/users/%v/orgs", r.Username),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -2108,7 +2347,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListForUserReq) Rel(link string, resp *ListForUserResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -2122,9 +2361,12 @@ ListForUserResponse is a response for ListForUser
 https://developer.github.com/v3/orgs/#list-organizations-for-a-user
 */
 type ListForUserResponse struct {
-	requests.Response
-	request *ListForUserReq
-	Data    []components.OrganizationSimple
+	httpResponse *http.Response
+	Data         []components.OrganizationSimple
+}
+
+func (r *ListForUserResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -2144,23 +2386,38 @@ func ListInvitationTeams(ctx context.Context, req *ListInvitationTeamsReq, opt .
 	if req == nil {
 		req = new(ListInvitationTeamsReq)
 	}
-	resp := &ListInvitationTeamsResponse{request: req}
+	resp := &ListInvitationTeamsResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.Team{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListInvitationTeamsResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListInvitationTeamsResponse builds a new *ListInvitationTeamsResponse from an *http.Response
+func NewListInvitationTeamsResponse(resp *http.Response, preserveBody bool) (*ListInvitationTeamsResponse, error) {
+	var result ListInvitationTeamsResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -2216,7 +2473,6 @@ func (r *ListInvitationTeamsReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -2226,7 +2482,6 @@ func (r *ListInvitationTeamsReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/invitations/%v/teams", r.Org, r.InvitationId),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -2236,7 +2491,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListInvitationTeamsReq) Rel(link string, resp *ListInvitationTeamsResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -2250,9 +2505,12 @@ ListInvitationTeamsResponse is a response for ListInvitationTeams
 https://developer.github.com/v3/orgs/members/#list-organization-invitation-teams
 */
 type ListInvitationTeamsResponse struct {
-	requests.Response
-	request *ListInvitationTeamsReq
-	Data    []components.Team
+	httpResponse *http.Response
+	Data         []components.Team
+}
+
+func (r *ListInvitationTeamsResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -2272,23 +2530,38 @@ func ListMembers(ctx context.Context, req *ListMembersReq, opt ...requests.Optio
 	if req == nil {
 		req = new(ListMembersReq)
 	}
-	resp := &ListMembersResponse{request: req}
+	resp := &ListMembersResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.SimpleUser{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListMembersResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListMembersResponse builds a new *ListMembersResponse from an *http.Response
+func NewListMembersResponse(resp *http.Response, preserveBody bool) (*ListMembersResponse, error) {
+	var result ListMembersResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200, 302})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -2364,7 +2637,6 @@ func (r *ListMembersReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -2374,7 +2646,6 @@ func (r *ListMembersReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/members", r.Org),
 		URLQuery:           query,
-		ValidStatuses:      []int{200, 302},
 	}
 	return builder
 }
@@ -2384,7 +2655,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListMembersReq) Rel(link string, resp *ListMembersResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -2398,9 +2669,12 @@ ListMembersResponse is a response for ListMembers
 https://developer.github.com/v3/orgs/members/#list-organization-members
 */
 type ListMembersResponse struct {
-	requests.Response
-	request *ListMembersReq
-	Data    []components.SimpleUser
+	httpResponse *http.Response
+	Data         []components.SimpleUser
+}
+
+func (r *ListMembersResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -2420,23 +2694,38 @@ func ListMembershipsForAuthenticatedUser(ctx context.Context, req *ListMembershi
 	if req == nil {
 		req = new(ListMembershipsForAuthenticatedUserReq)
 	}
-	resp := &ListMembershipsForAuthenticatedUserResponse{request: req}
+	resp := &ListMembershipsForAuthenticatedUserResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.OrgMembership{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListMembershipsForAuthenticatedUserResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListMembershipsForAuthenticatedUserResponse builds a new *ListMembershipsForAuthenticatedUserResponse from an *http.Response
+func NewListMembershipsForAuthenticatedUserResponse(resp *http.Response, preserveBody bool) (*ListMembershipsForAuthenticatedUserResponse, error) {
+	var result ListMembershipsForAuthenticatedUserResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -2498,7 +2787,6 @@ func (r *ListMembershipsForAuthenticatedUserReq) requestBuilder() *internal.Requ
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -2508,7 +2796,6 @@ func (r *ListMembershipsForAuthenticatedUserReq) requestBuilder() *internal.Requ
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/user/memberships/orgs"),
 		URLQuery:           query,
-		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -2518,7 +2805,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListMembershipsForAuthenticatedUserReq) Rel(link string, resp *ListMembershipsForAuthenticatedUserResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -2532,9 +2819,12 @@ ListMembershipsForAuthenticatedUserResponse is a response for ListMembershipsFor
 https://developer.github.com/v3/orgs/members/#list-organization-memberships-for-the-authenticated-user
 */
 type ListMembershipsForAuthenticatedUserResponse struct {
-	requests.Response
-	request *ListMembershipsForAuthenticatedUserReq
-	Data    []components.OrgMembership
+	httpResponse *http.Response
+	Data         []components.OrgMembership
+}
+
+func (r *ListMembershipsForAuthenticatedUserResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -2554,23 +2844,38 @@ func ListOutsideCollaborators(ctx context.Context, req *ListOutsideCollaborators
 	if req == nil {
 		req = new(ListOutsideCollaboratorsReq)
 	}
-	resp := &ListOutsideCollaboratorsResponse{request: req}
+	resp := &ListOutsideCollaboratorsResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.SimpleUser{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListOutsideCollaboratorsResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListOutsideCollaboratorsResponse builds a new *ListOutsideCollaboratorsResponse from an *http.Response
+func NewListOutsideCollaboratorsResponse(resp *http.Response, preserveBody bool) (*ListOutsideCollaboratorsResponse, error) {
+	var result ListOutsideCollaboratorsResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -2634,7 +2939,6 @@ func (r *ListOutsideCollaboratorsReq) requestBuilder() *internal.RequestBuilder 
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -2644,7 +2948,6 @@ func (r *ListOutsideCollaboratorsReq) requestBuilder() *internal.RequestBuilder 
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/outside_collaborators", r.Org),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -2654,7 +2957,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListOutsideCollaboratorsReq) Rel(link string, resp *ListOutsideCollaboratorsResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -2668,9 +2971,12 @@ ListOutsideCollaboratorsResponse is a response for ListOutsideCollaborators
 https://developer.github.com/v3/orgs/outside_collaborators/#list-outside-collaborators-for-an-organization
 */
 type ListOutsideCollaboratorsResponse struct {
-	requests.Response
-	request *ListOutsideCollaboratorsReq
-	Data    []components.SimpleUser
+	httpResponse *http.Response
+	Data         []components.SimpleUser
+}
+
+func (r *ListOutsideCollaboratorsResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -2690,23 +2996,38 @@ func ListPendingInvitations(ctx context.Context, req *ListPendingInvitationsReq,
 	if req == nil {
 		req = new(ListPendingInvitationsReq)
 	}
-	resp := &ListPendingInvitationsResponse{request: req}
+	resp := &ListPendingInvitationsResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.OrganizationInvitation{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListPendingInvitationsResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListPendingInvitationsResponse builds a new *ListPendingInvitationsResponse from an *http.Response
+func NewListPendingInvitationsResponse(resp *http.Response, preserveBody bool) (*ListPendingInvitationsResponse, error) {
+	var result ListPendingInvitationsResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -2759,7 +3080,6 @@ func (r *ListPendingInvitationsReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -2769,7 +3089,6 @@ func (r *ListPendingInvitationsReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/invitations", r.Org),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -2779,7 +3098,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListPendingInvitationsReq) Rel(link string, resp *ListPendingInvitationsResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -2793,9 +3112,12 @@ ListPendingInvitationsResponse is a response for ListPendingInvitations
 https://developer.github.com/v3/orgs/members/#list-pending-organization-invitations
 */
 type ListPendingInvitationsResponse struct {
-	requests.Response
-	request *ListPendingInvitationsReq
-	Data    []components.OrganizationInvitation
+	httpResponse *http.Response
+	Data         []components.OrganizationInvitation
+}
+
+func (r *ListPendingInvitationsResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -2815,23 +3137,38 @@ func ListPublicMembers(ctx context.Context, req *ListPublicMembersReq, opt ...re
 	if req == nil {
 		req = new(ListPublicMembersReq)
 	}
-	resp := &ListPublicMembersResponse{request: req}
+	resp := &ListPublicMembersResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.SimpleUser{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListPublicMembersResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListPublicMembersResponse builds a new *ListPublicMembersResponse from an *http.Response
+func NewListPublicMembersResponse(resp *http.Response, preserveBody bool) (*ListPublicMembersResponse, error) {
+	var result ListPublicMembersResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -2884,7 +3221,6 @@ func (r *ListPublicMembersReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -2894,7 +3230,6 @@ func (r *ListPublicMembersReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/public_members", r.Org),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -2904,7 +3239,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListPublicMembersReq) Rel(link string, resp *ListPublicMembersResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -2918,9 +3253,12 @@ ListPublicMembersResponse is a response for ListPublicMembers
 https://developer.github.com/v3/orgs/members/#list-public-organization-members
 */
 type ListPublicMembersResponse struct {
-	requests.Response
-	request *ListPublicMembersReq
-	Data    []components.SimpleUser
+	httpResponse *http.Response
+	Data         []components.SimpleUser
+}
+
+func (r *ListPublicMembersResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -2940,23 +3278,38 @@ func ListSamlSsoAuthorizations(ctx context.Context, req *ListSamlSsoAuthorizatio
 	if req == nil {
 		req = new(ListSamlSsoAuthorizationsReq)
 	}
-	resp := &ListSamlSsoAuthorizationsResponse{request: req}
+	resp := &ListSamlSsoAuthorizationsResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.CredentialAuthorization{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListSamlSsoAuthorizationsResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListSamlSsoAuthorizationsResponse builds a new *ListSamlSsoAuthorizationsResponse from an *http.Response
+func NewListSamlSsoAuthorizationsResponse(resp *http.Response, preserveBody bool) (*ListSamlSsoAuthorizationsResponse, error) {
+	var result ListSamlSsoAuthorizationsResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -2997,7 +3350,6 @@ func (r *ListSamlSsoAuthorizationsReq) requestBuilder() *internal.RequestBuilder
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -3007,7 +3359,6 @@ func (r *ListSamlSsoAuthorizationsReq) requestBuilder() *internal.RequestBuilder
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/credential-authorizations", r.Org),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -3017,7 +3368,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListSamlSsoAuthorizationsReq) Rel(link string, resp *ListSamlSsoAuthorizationsResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -3031,9 +3382,12 @@ ListSamlSsoAuthorizationsResponse is a response for ListSamlSsoAuthorizations
 https://developer.github.com/v3/orgs/#list-saml-sso-authorizations-for-an-organization
 */
 type ListSamlSsoAuthorizationsResponse struct {
-	requests.Response
-	request *ListSamlSsoAuthorizationsReq
-	Data    []components.CredentialAuthorization
+	httpResponse *http.Response
+	Data         []components.CredentialAuthorization
+}
+
+func (r *ListSamlSsoAuthorizationsResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -3053,23 +3407,38 @@ func ListWebhooks(ctx context.Context, req *ListWebhooksReq, opt ...requests.Opt
 	if req == nil {
 		req = new(ListWebhooksReq)
 	}
-	resp := &ListWebhooksResponse{request: req}
+	resp := &ListWebhooksResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.OrgHook{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListWebhooksResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListWebhooksResponse builds a new *ListWebhooksResponse from an *http.Response
+func NewListWebhooksResponse(resp *http.Response, preserveBody bool) (*ListWebhooksResponse, error) {
+	var result ListWebhooksResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -3122,7 +3491,6 @@ func (r *ListWebhooksReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -3132,7 +3500,6 @@ func (r *ListWebhooksReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/hooks", r.Org),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -3142,7 +3509,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListWebhooksReq) Rel(link string, resp *ListWebhooksResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -3156,9 +3523,12 @@ ListWebhooksResponse is a response for ListWebhooks
 https://developer.github.com/v3/orgs/hooks/#list-organization-webhooks
 */
 type ListWebhooksResponse struct {
-	requests.Response
-	request *ListWebhooksReq
-	Data    []components.OrgHook
+	httpResponse *http.Response
+	Data         []components.OrgHook
+}
+
+func (r *ListWebhooksResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -3178,26 +3548,36 @@ func PingWebhook(ctx context.Context, req *PingWebhookReq, opt ...requests.Optio
 	if req == nil {
 		req = new(PingWebhookReq)
 	}
-	resp := &PingWebhookResponse{request: req}
+	resp := &PingWebhookResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.SetBoolResult(r, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	resp.httpResponse = r
+
+	return NewPingWebhookResponse(r, opts.PreserveResponseBody())
+}
+
+// NewPingWebhookResponse builds a new *PingWebhookResponse from an *http.Response
+func NewPingWebhookResponse(resp *http.Response, preserveBody bool) (*PingWebhookResponse, error) {
+	var result PingWebhookResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204, 404})
 	if err != nil {
-		return nil, err
+		return &result, err
 	}
-	return resp, nil
+	err = internal.SetBoolResult(resp, &result.Data)
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -3239,7 +3619,6 @@ func (r *PingWebhookReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrBoolean},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -3249,7 +3628,6 @@ func (r *PingWebhookReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/hooks/%v/pings", r.Org, r.HookId),
 		URLQuery:           query,
-		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -3259,7 +3637,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *PingWebhookReq) Rel(link string, resp *PingWebhookResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -3273,9 +3651,12 @@ PingWebhookResponse is a response for PingWebhook
 https://developer.github.com/v3/orgs/hooks/#ping-an-organization-webhook
 */
 type PingWebhookResponse struct {
-	requests.Response
-	request *PingWebhookReq
-	Data    bool
+	httpResponse *http.Response
+	Data         bool
+}
+
+func (r *PingWebhookResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -3295,22 +3676,32 @@ func RemoveMember(ctx context.Context, req *RemoveMemberReq, opt ...requests.Opt
 	if req == nil {
 		req = new(RemoveMemberReq)
 	}
-	resp := &RemoveMemberResponse{request: req}
+	resp := &RemoveMemberResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewRemoveMemberResponse(r, opts.PreserveResponseBody())
+}
+
+// NewRemoveMemberResponse builds a new *RemoveMemberResponse from an *http.Response
+func NewRemoveMemberResponse(resp *http.Response, preserveBody bool) (*RemoveMemberResponse, error) {
+	var result RemoveMemberResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -3352,7 +3743,6 @@ func (r *RemoveMemberReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -3362,7 +3752,6 @@ func (r *RemoveMemberReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/members/%v", r.Org, r.Username),
 		URLQuery:           query,
-		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -3372,7 +3761,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *RemoveMemberReq) Rel(link string, resp *RemoveMemberResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -3386,8 +3775,11 @@ RemoveMemberResponse is a response for RemoveMember
 https://developer.github.com/v3/orgs/members/#remove-an-organization-member
 */
 type RemoveMemberResponse struct {
-	requests.Response
-	request *RemoveMemberReq
+	httpResponse *http.Response
+}
+
+func (r *RemoveMemberResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -3407,22 +3799,32 @@ func RemoveMembershipForUser(ctx context.Context, req *RemoveMembershipForUserRe
 	if req == nil {
 		req = new(RemoveMembershipForUserReq)
 	}
-	resp := &RemoveMembershipForUserResponse{request: req}
+	resp := &RemoveMembershipForUserResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewRemoveMembershipForUserResponse(r, opts.PreserveResponseBody())
+}
+
+// NewRemoveMembershipForUserResponse builds a new *RemoveMembershipForUserResponse from an *http.Response
+func NewRemoveMembershipForUserResponse(resp *http.Response, preserveBody bool) (*RemoveMembershipForUserResponse, error) {
+	var result RemoveMembershipForUserResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -3464,7 +3866,6 @@ func (r *RemoveMembershipForUserReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -3474,7 +3875,6 @@ func (r *RemoveMembershipForUserReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/memberships/%v", r.Org, r.Username),
 		URLQuery:           query,
-		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -3484,7 +3884,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *RemoveMembershipForUserReq) Rel(link string, resp *RemoveMembershipForUserResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -3498,8 +3898,11 @@ RemoveMembershipForUserResponse is a response for RemoveMembershipForUser
 https://developer.github.com/v3/orgs/members/#remove-organization-membership-for-a-user
 */
 type RemoveMembershipForUserResponse struct {
-	requests.Response
-	request *RemoveMembershipForUserReq
+	httpResponse *http.Response
+}
+
+func (r *RemoveMembershipForUserResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -3519,22 +3922,32 @@ func RemoveOutsideCollaborator(ctx context.Context, req *RemoveOutsideCollaborat
 	if req == nil {
 		req = new(RemoveOutsideCollaboratorReq)
 	}
-	resp := &RemoveOutsideCollaboratorResponse{request: req}
+	resp := &RemoveOutsideCollaboratorResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewRemoveOutsideCollaboratorResponse(r, opts.PreserveResponseBody())
+}
+
+// NewRemoveOutsideCollaboratorResponse builds a new *RemoveOutsideCollaboratorResponse from an *http.Response
+func NewRemoveOutsideCollaboratorResponse(resp *http.Response, preserveBody bool) (*RemoveOutsideCollaboratorResponse, error) {
+	var result RemoveOutsideCollaboratorResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -3576,7 +3989,6 @@ func (r *RemoveOutsideCollaboratorReq) requestBuilder() *internal.RequestBuilder
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -3586,7 +3998,6 @@ func (r *RemoveOutsideCollaboratorReq) requestBuilder() *internal.RequestBuilder
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/outside_collaborators/%v", r.Org, r.Username),
 		URLQuery:           query,
-		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -3596,7 +4007,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *RemoveOutsideCollaboratorReq) Rel(link string, resp *RemoveOutsideCollaboratorResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -3610,8 +4021,11 @@ RemoveOutsideCollaboratorResponse is a response for RemoveOutsideCollaborator
 https://developer.github.com/v3/orgs/outside_collaborators/#remove-outside-collaborator-from-an-organization
 */
 type RemoveOutsideCollaboratorResponse struct {
-	requests.Response
-	request *RemoveOutsideCollaboratorReq
+	httpResponse *http.Response
+}
+
+func (r *RemoveOutsideCollaboratorResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -3631,22 +4045,32 @@ func RemovePublicMembershipForAuthenticatedUser(ctx context.Context, req *Remove
 	if req == nil {
 		req = new(RemovePublicMembershipForAuthenticatedUserReq)
 	}
-	resp := &RemovePublicMembershipForAuthenticatedUserResponse{request: req}
+	resp := &RemovePublicMembershipForAuthenticatedUserResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewRemovePublicMembershipForAuthenticatedUserResponse(r, opts.PreserveResponseBody())
+}
+
+// NewRemovePublicMembershipForAuthenticatedUserResponse builds a new *RemovePublicMembershipForAuthenticatedUserResponse from an *http.Response
+func NewRemovePublicMembershipForAuthenticatedUserResponse(resp *http.Response, preserveBody bool) (*RemovePublicMembershipForAuthenticatedUserResponse, error) {
+	var result RemovePublicMembershipForAuthenticatedUserResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -3688,7 +4112,6 @@ func (r *RemovePublicMembershipForAuthenticatedUserReq) requestBuilder() *intern
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -3698,7 +4121,6 @@ func (r *RemovePublicMembershipForAuthenticatedUserReq) requestBuilder() *intern
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/public_members/%v", r.Org, r.Username),
 		URLQuery:           query,
-		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -3708,7 +4130,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *RemovePublicMembershipForAuthenticatedUserReq) Rel(link string, resp *RemovePublicMembershipForAuthenticatedUserResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -3722,8 +4144,11 @@ RemovePublicMembershipForAuthenticatedUserResponse is a response for RemovePubli
 https://developer.github.com/v3/orgs/members/#remove-public-organization-membership-for-the-authenticated-user
 */
 type RemovePublicMembershipForAuthenticatedUserResponse struct {
-	requests.Response
-	request *RemovePublicMembershipForAuthenticatedUserReq
+	httpResponse *http.Response
+}
+
+func (r *RemovePublicMembershipForAuthenticatedUserResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -3743,26 +4168,36 @@ func RemoveSamlSsoAuthorization(ctx context.Context, req *RemoveSamlSsoAuthoriza
 	if req == nil {
 		req = new(RemoveSamlSsoAuthorizationReq)
 	}
-	resp := &RemoveSamlSsoAuthorizationResponse{request: req}
+	resp := &RemoveSamlSsoAuthorizationResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.SetBoolResult(r, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	resp.httpResponse = r
+
+	return NewRemoveSamlSsoAuthorizationResponse(r, opts.PreserveResponseBody())
+}
+
+// NewRemoveSamlSsoAuthorizationResponse builds a new *RemoveSamlSsoAuthorizationResponse from an *http.Response
+func NewRemoveSamlSsoAuthorizationResponse(resp *http.Response, preserveBody bool) (*RemoveSamlSsoAuthorizationResponse, error) {
+	var result RemoveSamlSsoAuthorizationResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204, 404})
 	if err != nil {
-		return nil, err
+		return &result, err
 	}
-	return resp, nil
+	err = internal.SetBoolResult(resp, &result.Data)
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -3806,7 +4241,6 @@ func (r *RemoveSamlSsoAuthorizationReq) requestBuilder() *internal.RequestBuilde
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrBoolean},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -3816,7 +4250,6 @@ func (r *RemoveSamlSsoAuthorizationReq) requestBuilder() *internal.RequestBuilde
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/credential-authorizations/%v", r.Org, r.CredentialId),
 		URLQuery:           query,
-		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -3826,7 +4259,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *RemoveSamlSsoAuthorizationReq) Rel(link string, resp *RemoveSamlSsoAuthorizationResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -3840,9 +4273,12 @@ RemoveSamlSsoAuthorizationResponse is a response for RemoveSamlSsoAuthorization
 https://developer.github.com/v3/orgs/#remove-a-saml-sso-authorization-for-an-organization
 */
 type RemoveSamlSsoAuthorizationResponse struct {
-	requests.Response
-	request *RemoveSamlSsoAuthorizationReq
-	Data    bool
+	httpResponse *http.Response
+	Data         bool
+}
+
+func (r *RemoveSamlSsoAuthorizationResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -3862,23 +4298,38 @@ func SetMembershipForUser(ctx context.Context, req *SetMembershipForUserReq, opt
 	if req == nil {
 		req = new(SetMembershipForUserReq)
 	}
-	resp := &SetMembershipForUserResponse{request: req}
+	resp := &SetMembershipForUserResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.OrgMembership{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewSetMembershipForUserResponse(r, opts.PreserveResponseBody())
+}
+
+// NewSetMembershipForUserResponse builds a new *SetMembershipForUserResponse from an *http.Response
+func NewSetMembershipForUserResponse(resp *http.Response, preserveBody bool) (*SetMembershipForUserResponse, error) {
+	var result SetMembershipForUserResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -3921,7 +4372,6 @@ func (r *SetMembershipForUserReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
@@ -3934,7 +4384,6 @@ func (r *SetMembershipForUserReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/orgs/%v/memberships/%v", r.Org, r.Username),
 		URLQuery:         query,
-		ValidStatuses:    []int{200},
 	}
 	return builder
 }
@@ -3944,7 +4393,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *SetMembershipForUserReq) Rel(link string, resp *SetMembershipForUserResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -3973,9 +4422,12 @@ SetMembershipForUserResponse is a response for SetMembershipForUser
 https://developer.github.com/v3/orgs/members/#set-organization-membership-for-a-user
 */
 type SetMembershipForUserResponse struct {
-	requests.Response
-	request *SetMembershipForUserReq
-	Data    components.OrgMembership
+	httpResponse *http.Response
+	Data         components.OrgMembership
+}
+
+func (r *SetMembershipForUserResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -3995,22 +4447,32 @@ func SetPublicMembershipForAuthenticatedUser(ctx context.Context, req *SetPublic
 	if req == nil {
 		req = new(SetPublicMembershipForAuthenticatedUserReq)
 	}
-	resp := &SetPublicMembershipForAuthenticatedUserResponse{request: req}
+	resp := &SetPublicMembershipForAuthenticatedUserResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewSetPublicMembershipForAuthenticatedUserResponse(r, opts.PreserveResponseBody())
+}
+
+// NewSetPublicMembershipForAuthenticatedUserResponse builds a new *SetPublicMembershipForAuthenticatedUserResponse from an *http.Response
+func NewSetPublicMembershipForAuthenticatedUserResponse(resp *http.Response, preserveBody bool) (*SetPublicMembershipForAuthenticatedUserResponse, error) {
+	var result SetPublicMembershipForAuthenticatedUserResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -4052,7 +4514,6 @@ func (r *SetPublicMembershipForAuthenticatedUserReq) requestBuilder() *internal.
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -4062,7 +4523,6 @@ func (r *SetPublicMembershipForAuthenticatedUserReq) requestBuilder() *internal.
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/public_members/%v", r.Org, r.Username),
 		URLQuery:           query,
-		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -4072,7 +4532,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *SetPublicMembershipForAuthenticatedUserReq) Rel(link string, resp *SetPublicMembershipForAuthenticatedUserResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -4086,8 +4546,11 @@ SetPublicMembershipForAuthenticatedUserResponse is a response for SetPublicMembe
 https://developer.github.com/v3/orgs/members/#set-public-organization-membership-for-the-authenticated-user
 */
 type SetPublicMembershipForAuthenticatedUserResponse struct {
-	requests.Response
-	request *SetPublicMembershipForAuthenticatedUserReq
+	httpResponse *http.Response
+}
+
+func (r *SetPublicMembershipForAuthenticatedUserResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -4107,22 +4570,32 @@ func UnblockUser(ctx context.Context, req *UnblockUserReq, opt ...requests.Optio
 	if req == nil {
 		req = new(UnblockUserReq)
 	}
-	resp := &UnblockUserResponse{request: req}
+	resp := &UnblockUserResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewUnblockUserResponse(r, opts.PreserveResponseBody())
+}
+
+// NewUnblockUserResponse builds a new *UnblockUserResponse from an *http.Response
+func NewUnblockUserResponse(resp *http.Response, preserveBody bool) (*UnblockUserResponse, error) {
+	var result UnblockUserResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -4164,7 +4637,6 @@ func (r *UnblockUserReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -4174,7 +4646,6 @@ func (r *UnblockUserReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/blocks/%v", r.Org, r.Username),
 		URLQuery:           query,
-		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -4184,7 +4655,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *UnblockUserReq) Rel(link string, resp *UnblockUserResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -4198,8 +4669,11 @@ UnblockUserResponse is a response for UnblockUser
 https://developer.github.com/v3/orgs/blocking/#unblock-a-user-from-an-organization
 */
 type UnblockUserResponse struct {
-	requests.Response
-	request *UnblockUserReq
+	httpResponse *http.Response
+}
+
+func (r *UnblockUserResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -4219,23 +4693,38 @@ func Update(ctx context.Context, req *UpdateReq, opt ...requests.Option) (*Updat
 	if req == nil {
 		req = new(UpdateReq)
 	}
-	resp := &UpdateResponse{request: req}
+	resp := &UpdateResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.OrganizationFull{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewUpdateResponse(r, opts.PreserveResponseBody())
+}
+
+// NewUpdateResponse builds a new *UpdateResponse from an *http.Response
+func NewUpdateResponse(resp *http.Response, preserveBody bool) (*UpdateResponse, error) {
+	var result UpdateResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -4292,7 +4781,6 @@ func (r *UpdateReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"surtur"},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
@@ -4305,7 +4793,6 @@ func (r *UpdateReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/orgs/%v", r.Org),
 		URLQuery:         query,
-		ValidStatuses:    []int{200},
 	}
 	return builder
 }
@@ -4315,7 +4802,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *UpdateReq) Rel(link string, resp *UpdateResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -4441,9 +4928,12 @@ UpdateResponse is a response for Update
 https://developer.github.com/v3/orgs/#update-an-organization
 */
 type UpdateResponse struct {
-	requests.Response
-	request *UpdateReq
-	Data    components.OrganizationFull
+	httpResponse *http.Response
+	Data         components.OrganizationFull
+}
+
+func (r *UpdateResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -4463,23 +4953,38 @@ func UpdateMembershipForAuthenticatedUser(ctx context.Context, req *UpdateMember
 	if req == nil {
 		req = new(UpdateMembershipForAuthenticatedUserReq)
 	}
-	resp := &UpdateMembershipForAuthenticatedUserResponse{request: req}
+	resp := &UpdateMembershipForAuthenticatedUserResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.OrgMembership{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewUpdateMembershipForAuthenticatedUserResponse(r, opts.PreserveResponseBody())
+}
+
+// NewUpdateMembershipForAuthenticatedUserResponse builds a new *UpdateMembershipForAuthenticatedUserResponse from an *http.Response
+func NewUpdateMembershipForAuthenticatedUserResponse(resp *http.Response, preserveBody bool) (*UpdateMembershipForAuthenticatedUserResponse, error) {
+	var result UpdateMembershipForAuthenticatedUserResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -4521,7 +5026,6 @@ func (r *UpdateMembershipForAuthenticatedUserReq) requestBuilder() *internal.Req
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
@@ -4534,7 +5038,6 @@ func (r *UpdateMembershipForAuthenticatedUserReq) requestBuilder() *internal.Req
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/user/memberships/orgs/%v", r.Org),
 		URLQuery:         query,
-		ValidStatuses:    []int{200},
 	}
 	return builder
 }
@@ -4544,7 +5047,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *UpdateMembershipForAuthenticatedUserReq) Rel(link string, resp *UpdateMembershipForAuthenticatedUserResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -4569,9 +5072,12 @@ UpdateMembershipForAuthenticatedUserResponse is a response for UpdateMembershipF
 https://developer.github.com/v3/orgs/members/#update-an-organization-membership-for-the-authenticated-user
 */
 type UpdateMembershipForAuthenticatedUserResponse struct {
-	requests.Response
-	request *UpdateMembershipForAuthenticatedUserReq
-	Data    components.OrgMembership
+	httpResponse *http.Response
+	Data         components.OrgMembership
+}
+
+func (r *UpdateMembershipForAuthenticatedUserResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -4591,23 +5097,38 @@ func UpdateWebhook(ctx context.Context, req *UpdateWebhookReq, opt ...requests.O
 	if req == nil {
 		req = new(UpdateWebhookReq)
 	}
-	resp := &UpdateWebhookResponse{request: req}
+	resp := &UpdateWebhookResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.OrgHook{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewUpdateWebhookResponse(r, opts.PreserveResponseBody())
+}
+
+// NewUpdateWebhookResponse builds a new *UpdateWebhookResponse from an *http.Response
+func NewUpdateWebhookResponse(resp *http.Response, preserveBody bool) (*UpdateWebhookResponse, error) {
+	var result UpdateWebhookResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -4650,7 +5171,6 @@ func (r *UpdateWebhookReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
@@ -4663,7 +5183,6 @@ func (r *UpdateWebhookReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/orgs/%v/hooks/%v", r.Org, r.HookId),
 		URLQuery:         query,
-		ValidStatuses:    []int{200},
 	}
 	return builder
 }
@@ -4673,7 +5192,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *UpdateWebhookReq) Rel(link string, resp *UpdateWebhookResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -4735,7 +5254,10 @@ UpdateWebhookResponse is a response for UpdateWebhook
 https://developer.github.com/v3/orgs/hooks/#update-an-organization-webhook
 */
 type UpdateWebhookResponse struct {
-	requests.Response
-	request *UpdateWebhookReq
-	Data    components.OrgHook
+	httpResponse *http.Response
+	Data         components.OrgHook
+}
+
+func (r *UpdateWebhookResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }

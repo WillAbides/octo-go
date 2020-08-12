@@ -6,42 +6,31 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
-
-	"github.com/willabides/octo-go/requests"
+	"net/http"
 )
 
-// DecodeResponseBody unmarshals a common body onto target
-func DecodeResponseBody(r *requests.Response, builder *RequestBuilder, opts *requests.Options, target interface{}) error {
-	if builder.HasAttribute(AttrRedirectOnly) {
-		return nil
-	}
-	origBody := r.HTTPResponse().Body
+// DecodeResponseBody unmarshalls a response body onto target
+func DecodeResponseBody(r *http.Response, target interface{}, preserveResponseBody bool) error {
+	origBody := r.Body
 	var bodyReader io.Reader = origBody
-	if opts.PreserveResponseBody() {
+	if preserveResponseBody {
 		var buf bytes.Buffer
-		bodyReader = io.TeeReader(r.HTTPResponse().Body, &buf)
-		r.HTTPResponse().Body = ioutil.NopCloser(&buf)
+		bodyReader = io.TeeReader(r.Body, &buf)
+		r.Body = ioutil.NopCloser(&buf)
 	}
-	//nolint:errcheck // If there's an error draining the common body, there was probably already an error reported.
+	//nolint:errcheck // If there's an error draining the response body, there was probably already an error reported.
 	defer func() {
 		_, _ = ioutil.ReadAll(bodyReader)
 		_ = origBody.Close()
 	}()
-	if !statusCodeInList(r, builder.DataStatuses) {
-		return nil
-	}
-	if target == nil {
-		return nil
-	}
+
 	return json.NewDecoder(bodyReader).Decode(target)
 }
 
-func statusCodeInList(r *requests.Response, codes []int) bool {
-	if r.HTTPResponse() == nil {
-		return false
-	}
-	for _, code := range codes {
-		if r.HTTPResponse().StatusCode == code {
+// IntInSlice returns true if i is in want
+func IntInSlice(i int, want []int) bool {
+	for _, code := range want {
+		if i == code {
 			return true
 		}
 	}
@@ -49,15 +38,15 @@ func statusCodeInList(r *requests.Response, codes []int) bool {
 }
 
 // SetBoolResult sets the value of ptr to true if r has a 204 status code to true or false if the status code is 404
-//  returns an error if the common is any other value
-func SetBoolResult(r *requests.Response, ptr *bool) error {
-	switch r.HTTPResponse().StatusCode {
+//  returns an error if the response is any other value
+func SetBoolResult(r *http.Response, ptr *bool) error {
+	switch r.StatusCode {
 	case 204:
 		*ptr = true
 	case 404:
 		*ptr = false
 	default:
-		return fmt.Errorf("non-boolean common status")
+		return fmt.Errorf("non-boolean response status")
 	}
 	return nil
 }

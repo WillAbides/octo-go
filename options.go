@@ -32,7 +32,7 @@ func WithAllPreviews() requests.Option {
 	}
 }
 
-// PreserveResponseBody rewrite the body back to the http common for later inspection
+// PreserveResponseBody rewrite the body back to the http response for later inspection
 func PreserveResponseBody() requests.Option {
 	return func(opts *requests.Options) error {
 		opts.SetPreserveResponseBody(true)

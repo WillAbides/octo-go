@@ -73,7 +73,7 @@ func New(opt ...requests.Option) *Server {
 	return s
 }
 
-// Expect configures the Server to expect a request matching request and respond with common
+// Expect configures the Server to expect a request matching request and respond with response
 func (s *Server) Expect(request HTTPRequester, response http.Handler) {
 	s.mu.Lock()
 	defer s.mu.Unlock()

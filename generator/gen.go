@@ -54,47 +54,81 @@ func requestFunc(endpoint *model.Endpoint, pq pkgQual) jen.Code {
 		group.If(jen.Id("req == nil")).Block(
 			jen.Id("req").Op("=").New(jen.Id(reqStructName(endpoint))),
 		)
-		group.Id("resp").Op(":=").Op("&").Id(respStructName(endpoint)).Values(jen.Dict{
-			jen.Id("request"): jen.Id("req"),
-		})
+		group.Id("resp").Op(":=").Op("&").Id(respStructName(endpoint)).Values()
 		group.Id("builder := req.requestBuilder()")
-		group.Id("r, err := ").Qual(pq.pkgPath("internal"), "DoRequest").Call(
-			jen.Id("ctx"),
-			jen.Id("builder"),
-			jen.Id("opts"),
-		)
 		group.Id(`
-if r != nil {
-	resp.Response = *r
-}
+httpReq, err := builder.HTTPRequest(ctx, opts)
 if err != nil {
 	return resp, err
 }
+
+r, err := opts.HttpClient().Do(httpReq)
+if err != nil {
+	return resp, err
+}
+resp.httpResponse = r
 `)
-		decodeBody := jen.Qual(pq.pkgPath("internal"), "DecodeResponseBody")
-		setBoolResult := jen.Qual(pq.pkgPath("internal"), "SetBoolResult")
-		switch {
-		case endpointHasAttribute(endpoint, attrNoResponseBody):
-			group.Id("err = ").Add(decodeBody).Id("(r, builder, opts, nil)")
-		case endpointHasAttribute(endpoint, attrBoolean):
-			group.Id("err = ").Add(setBoolResult).Id("(r, &resp.Data)")
-			group.Id("if err != nil {return nil, err}")
-			group.Id("err =").Add(decodeBody).Id("(r, builder, opts, nil)")
-		case len(responseCodesWithBodies(endpoint)) > 0:
-			bodyType := respBodyType(endpoint)
-			group.Id("resp.Data = ").Add(bodyType.jenType(pq)).Block()
-			group.Id("err = ").Add(decodeBody).Id("(r, builder, opts, &resp.Data)")
-		default:
-			group.Id("err = ").Add(decodeBody).Id("(r, builder, opts, nil)")
-		}
-		group.Id("if err != nil {return nil, err}")
-		group.Id("return resp, nil")
+		group.Return(jen.Id("New" + respStructName(endpoint)).Id("(r,opts.PreserveResponseBody() )"))
 	})
 	return stmt
 }
 
 func addRequestFunc(file *jen.File, pq pkgQual, endpoint *model.Endpoint) {
 	file.Add(requestFunc(endpoint, pq))
+}
+
+func addResponseFunc(file *jen.File, pq pkgQual, endpoint *model.Endpoint) {
+	file.Add(responseFunc(endpoint, pq))
+}
+
+func responseFunc(endpoint *model.Endpoint, pq pkgQual) *jen.Statement {
+	respStruct := respStructName(endpoint)
+	fnName := "New" + respStruct
+	stmt := jen.Commentf(`%s builds a new *%s from an *http.Response`, fnName, respStruct)
+	stmt.Line()
+	stmt.Func().Id(fnName).Params(
+		jen.Id("resp").Op("*").Qual("net/http", "Response"),
+		jen.Id("preserveBody").Bool(),
+	).Params(
+		jen.Op("*").Id(respStruct),
+		jen.Error(),
+	)
+	stmt.BlockFunc(func(group *jen.Group) {
+		group.Id("var result").Id(respStruct)
+		group.Id("result.httpResponse = resp")
+		group.Id("err := ").Qual(pq.pkgPath("internal"), "ErrorCheck").Call(
+			jen.Id("resp"),
+			jen.Id("[]int").ValuesFunc(func(group *jen.Group) {
+				for _, code := range validCodes(endpoint) {
+					group.Lit(code)
+				}
+			}),
+		)
+		group.Id("if err != nil {return &result, err}")
+		switch {
+		case endpointHasAttribute(endpoint, attrNoResponseBody):
+		case endpointHasAttribute(endpoint, attrBoolean):
+			group.Id("err = ").Qual(pq.pkgPath("internal"), "SetBoolResult").Id("(resp, &result.Data)")
+			group.Id("if err != nil {return &result, err}")
+		case len(responseCodesWithBodies(endpoint)) > 0:
+			dataStatuses := jen.Id("[]int").ValuesFunc(func(group *jen.Group) {
+				for _, code := range responseCodesWithBodies(endpoint) {
+					group.Lit(code)
+				}
+			})
+			group.If(
+				jen.Qual(pq.pkgPath("internal"), "IntInSlice").Call(jen.Id("resp.StatusCode"), dataStatuses),
+			).Block(
+				jen.Id("err = ").Qual(
+					pq.pkgPath("internal"),
+					"DecodeResponseBody(resp, &result.Data, preserveBody)",
+				),
+				jen.Id("if err != nil {return &result, err}"),
+			)
+		}
+		group.Id("return &result, nil")
+	})
+	return stmt
 }
 
 func addClientMethod(file *jen.File, pq pkgQual, endpoint *model.Endpoint) {

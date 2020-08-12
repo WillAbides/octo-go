@@ -15,6 +15,19 @@ func vcrClient(t *testing.T, cas string, opts ...requests.Option) issues.Client 
 	return testutil.VCRClient(t, cas, opts...).Issues()
 }
 
+func TestGet(t *testing.T) {
+	ctx := context.Background()
+	client := vcrClient(t, t.Name(), testutil.PATAuth())
+	req := &issues.GetReq{
+		Owner:       "golang",
+		Repo:        "go",
+		IssueNumber: 1,
+	}
+	resp, err := issues.Get(ctx, req, client...)
+	require.NoError(t, err)
+	require.Equal(t, int64(1), resp.Data.Number)
+}
+
 func TestAddLabels(t *testing.T) {
 	t.Run("as_app", func(t *testing.T) {
 		ctx := context.Background()

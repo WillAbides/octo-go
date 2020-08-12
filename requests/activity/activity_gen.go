@@ -40,22 +40,32 @@ func CheckRepoIsStarredByAuthenticatedUser(ctx context.Context, req *CheckRepoIs
 	if req == nil {
 		req = new(CheckRepoIsStarredByAuthenticatedUserReq)
 	}
-	resp := &CheckRepoIsStarredByAuthenticatedUserResponse{request: req}
+	resp := &CheckRepoIsStarredByAuthenticatedUserResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewCheckRepoIsStarredByAuthenticatedUserResponse(r, opts.PreserveResponseBody())
+}
+
+// NewCheckRepoIsStarredByAuthenticatedUserResponse builds a new *CheckRepoIsStarredByAuthenticatedUserResponse from an *http.Response
+func NewCheckRepoIsStarredByAuthenticatedUserResponse(resp *http.Response, preserveBody bool) (*CheckRepoIsStarredByAuthenticatedUserResponse, error) {
+	var result CheckRepoIsStarredByAuthenticatedUserResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204, 304})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -97,7 +107,6 @@ func (r *CheckRepoIsStarredByAuthenticatedUserReq) requestBuilder() *internal.Re
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -107,7 +116,6 @@ func (r *CheckRepoIsStarredByAuthenticatedUserReq) requestBuilder() *internal.Re
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/user/starred/%v/%v", r.Owner, r.Repo),
 		URLQuery:           query,
-		ValidStatuses:      []int{204, 304},
 	}
 	return builder
 }
@@ -117,7 +125,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *CheckRepoIsStarredByAuthenticatedUserReq) Rel(link string, resp *CheckRepoIsStarredByAuthenticatedUserResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -131,8 +139,11 @@ CheckRepoIsStarredByAuthenticatedUserResponse is a response for CheckRepoIsStarr
 https://developer.github.com/v3/activity/starring/#check-if-a-repository-is-starred-by-the-authenticated-user
 */
 type CheckRepoIsStarredByAuthenticatedUserResponse struct {
-	requests.Response
-	request *CheckRepoIsStarredByAuthenticatedUserReq
+	httpResponse *http.Response
+}
+
+func (r *CheckRepoIsStarredByAuthenticatedUserResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -152,22 +163,32 @@ func DeleteRepoSubscription(ctx context.Context, req *DeleteRepoSubscriptionReq,
 	if req == nil {
 		req = new(DeleteRepoSubscriptionReq)
 	}
-	resp := &DeleteRepoSubscriptionResponse{request: req}
+	resp := &DeleteRepoSubscriptionResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewDeleteRepoSubscriptionResponse(r, opts.PreserveResponseBody())
+}
+
+// NewDeleteRepoSubscriptionResponse builds a new *DeleteRepoSubscriptionResponse from an *http.Response
+func NewDeleteRepoSubscriptionResponse(resp *http.Response, preserveBody bool) (*DeleteRepoSubscriptionResponse, error) {
+	var result DeleteRepoSubscriptionResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -209,7 +230,6 @@ func (r *DeleteRepoSubscriptionReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -219,7 +239,6 @@ func (r *DeleteRepoSubscriptionReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/subscription", r.Owner, r.Repo),
 		URLQuery:           query,
-		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -229,7 +248,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *DeleteRepoSubscriptionReq) Rel(link string, resp *DeleteRepoSubscriptionResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -243,8 +262,11 @@ DeleteRepoSubscriptionResponse is a response for DeleteRepoSubscription
 https://developer.github.com/v3/activity/watching/#delete-a-repository-subscription
 */
 type DeleteRepoSubscriptionResponse struct {
-	requests.Response
-	request *DeleteRepoSubscriptionReq
+	httpResponse *http.Response
+}
+
+func (r *DeleteRepoSubscriptionResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -264,22 +286,32 @@ func DeleteThreadSubscription(ctx context.Context, req *DeleteThreadSubscription
 	if req == nil {
 		req = new(DeleteThreadSubscriptionReq)
 	}
-	resp := &DeleteThreadSubscriptionResponse{request: req}
+	resp := &DeleteThreadSubscriptionResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewDeleteThreadSubscriptionResponse(r, opts.PreserveResponseBody())
+}
+
+// NewDeleteThreadSubscriptionResponse builds a new *DeleteThreadSubscriptionResponse from an *http.Response
+func NewDeleteThreadSubscriptionResponse(resp *http.Response, preserveBody bool) (*DeleteThreadSubscriptionResponse, error) {
+	var result DeleteThreadSubscriptionResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204, 304})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -322,7 +354,6 @@ func (r *DeleteThreadSubscriptionReq) requestBuilder() *internal.RequestBuilder 
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -332,7 +363,6 @@ func (r *DeleteThreadSubscriptionReq) requestBuilder() *internal.RequestBuilder 
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/notifications/threads/%v/subscription", r.ThreadId),
 		URLQuery:           query,
-		ValidStatuses:      []int{204, 304},
 	}
 	return builder
 }
@@ -342,7 +372,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *DeleteThreadSubscriptionReq) Rel(link string, resp *DeleteThreadSubscriptionResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -356,8 +386,11 @@ DeleteThreadSubscriptionResponse is a response for DeleteThreadSubscription
 https://developer.github.com/v3/activity/notifications/#delete-a-thread-subscription
 */
 type DeleteThreadSubscriptionResponse struct {
-	requests.Response
-	request *DeleteThreadSubscriptionReq
+	httpResponse *http.Response
+}
+
+func (r *DeleteThreadSubscriptionResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -377,23 +410,38 @@ func GetFeeds(ctx context.Context, req *GetFeedsReq, opt ...requests.Option) (*G
 	if req == nil {
 		req = new(GetFeedsReq)
 	}
-	resp := &GetFeedsResponse{request: req}
+	resp := &GetFeedsResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.Feed{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetFeedsResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetFeedsResponse builds a new *GetFeedsResponse from an *http.Response
+func NewGetFeedsResponse(resp *http.Response, preserveBody bool) (*GetFeedsResponse, error) {
+	var result GetFeedsResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -433,7 +481,6 @@ func (r *GetFeedsReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -443,7 +490,6 @@ func (r *GetFeedsReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/feeds"),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -453,7 +499,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetFeedsReq) Rel(link string, resp *GetFeedsResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -467,9 +513,12 @@ GetFeedsResponse is a response for GetFeeds
 https://developer.github.com/v3/activity/feeds/#get-feeds
 */
 type GetFeedsResponse struct {
-	requests.Response
-	request *GetFeedsReq
-	Data    components.Feed
+	httpResponse *http.Response
+	Data         components.Feed
+}
+
+func (r *GetFeedsResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -489,23 +538,38 @@ func GetRepoSubscription(ctx context.Context, req *GetRepoSubscriptionReq, opt .
 	if req == nil {
 		req = new(GetRepoSubscriptionReq)
 	}
-	resp := &GetRepoSubscriptionResponse{request: req}
+	resp := &GetRepoSubscriptionResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.RepositorySubscription{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetRepoSubscriptionResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetRepoSubscriptionResponse builds a new *GetRepoSubscriptionResponse from an *http.Response
+func NewGetRepoSubscriptionResponse(resp *http.Response, preserveBody bool) (*GetRepoSubscriptionResponse, error) {
+	var result GetRepoSubscriptionResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -547,7 +611,6 @@ func (r *GetRepoSubscriptionReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -557,7 +620,6 @@ func (r *GetRepoSubscriptionReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/subscription", r.Owner, r.Repo),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -567,7 +629,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetRepoSubscriptionReq) Rel(link string, resp *GetRepoSubscriptionResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -581,9 +643,12 @@ GetRepoSubscriptionResponse is a response for GetRepoSubscription
 https://developer.github.com/v3/activity/watching/#get-a-repository-subscription
 */
 type GetRepoSubscriptionResponse struct {
-	requests.Response
-	request *GetRepoSubscriptionReq
-	Data    components.RepositorySubscription
+	httpResponse *http.Response
+	Data         components.RepositorySubscription
+}
+
+func (r *GetRepoSubscriptionResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -603,23 +668,38 @@ func GetThread(ctx context.Context, req *GetThreadReq, opt ...requests.Option) (
 	if req == nil {
 		req = new(GetThreadReq)
 	}
-	resp := &GetThreadResponse{request: req}
+	resp := &GetThreadResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.Thread{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetThreadResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetThreadResponse builds a new *GetThreadResponse from an *http.Response
+func NewGetThreadResponse(resp *http.Response, preserveBody bool) (*GetThreadResponse, error) {
+	var result GetThreadResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -662,7 +742,6 @@ func (r *GetThreadReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -672,7 +751,6 @@ func (r *GetThreadReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/notifications/threads/%v", r.ThreadId),
 		URLQuery:           query,
-		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -682,7 +760,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetThreadReq) Rel(link string, resp *GetThreadResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -696,9 +774,12 @@ GetThreadResponse is a response for GetThread
 https://developer.github.com/v3/activity/notifications/#get-a-thread
 */
 type GetThreadResponse struct {
-	requests.Response
-	request *GetThreadReq
-	Data    components.Thread
+	httpResponse *http.Response
+	Data         components.Thread
+}
+
+func (r *GetThreadResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -718,23 +799,38 @@ func GetThreadSubscriptionForAuthenticatedUser(ctx context.Context, req *GetThre
 	if req == nil {
 		req = new(GetThreadSubscriptionForAuthenticatedUserReq)
 	}
-	resp := &GetThreadSubscriptionForAuthenticatedUserResponse{request: req}
+	resp := &GetThreadSubscriptionForAuthenticatedUserResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.ThreadSubscription{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetThreadSubscriptionForAuthenticatedUserResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetThreadSubscriptionForAuthenticatedUserResponse builds a new *GetThreadSubscriptionForAuthenticatedUserResponse from an *http.Response
+func NewGetThreadSubscriptionForAuthenticatedUserResponse(resp *http.Response, preserveBody bool) (*GetThreadSubscriptionForAuthenticatedUserResponse, error) {
+	var result GetThreadSubscriptionForAuthenticatedUserResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -777,7 +873,6 @@ func (r *GetThreadSubscriptionForAuthenticatedUserReq) requestBuilder() *interna
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -787,7 +882,6 @@ func (r *GetThreadSubscriptionForAuthenticatedUserReq) requestBuilder() *interna
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/notifications/threads/%v/subscription", r.ThreadId),
 		URLQuery:           query,
-		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -797,7 +891,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetThreadSubscriptionForAuthenticatedUserReq) Rel(link string, resp *GetThreadSubscriptionForAuthenticatedUserResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -811,9 +905,12 @@ GetThreadSubscriptionForAuthenticatedUserResponse is a response for GetThreadSub
 https://developer.github.com/v3/activity/notifications/#get-a-thread-subscription-for-the-authenticated-user
 */
 type GetThreadSubscriptionForAuthenticatedUserResponse struct {
-	requests.Response
-	request *GetThreadSubscriptionForAuthenticatedUserReq
-	Data    components.ThreadSubscription
+	httpResponse *http.Response
+	Data         components.ThreadSubscription
+}
+
+func (r *GetThreadSubscriptionForAuthenticatedUserResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -833,23 +930,38 @@ func ListEventsForAuthenticatedUser(ctx context.Context, req *ListEventsForAuthe
 	if req == nil {
 		req = new(ListEventsForAuthenticatedUserReq)
 	}
-	resp := &ListEventsForAuthenticatedUserResponse{request: req}
+	resp := &ListEventsForAuthenticatedUserResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.Event{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListEventsForAuthenticatedUserResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListEventsForAuthenticatedUserResponse builds a new *ListEventsForAuthenticatedUserResponse from an *http.Response
+func NewListEventsForAuthenticatedUserResponse(resp *http.Response, preserveBody bool) (*ListEventsForAuthenticatedUserResponse, error) {
+	var result ListEventsForAuthenticatedUserResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -902,7 +1014,6 @@ func (r *ListEventsForAuthenticatedUserReq) requestBuilder() *internal.RequestBu
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -912,7 +1023,6 @@ func (r *ListEventsForAuthenticatedUserReq) requestBuilder() *internal.RequestBu
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/users/%v/events", r.Username),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -922,7 +1032,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListEventsForAuthenticatedUserReq) Rel(link string, resp *ListEventsForAuthenticatedUserResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -936,9 +1046,12 @@ ListEventsForAuthenticatedUserResponse is a response for ListEventsForAuthentica
 https://developer.github.com/v3/activity/events/#list-events-for-the-authenticated-user
 */
 type ListEventsForAuthenticatedUserResponse struct {
-	requests.Response
-	request *ListEventsForAuthenticatedUserReq
-	Data    []components.Event
+	httpResponse *http.Response
+	Data         []components.Event
+}
+
+func (r *ListEventsForAuthenticatedUserResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -958,23 +1071,38 @@ func ListNotificationsForAuthenticatedUser(ctx context.Context, req *ListNotific
 	if req == nil {
 		req = new(ListNotificationsForAuthenticatedUserReq)
 	}
-	resp := &ListNotificationsForAuthenticatedUserResponse{request: req}
+	resp := &ListNotificationsForAuthenticatedUserResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.Thread{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListNotificationsForAuthenticatedUserResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListNotificationsForAuthenticatedUserResponse builds a new *ListNotificationsForAuthenticatedUserResponse from an *http.Response
+func NewListNotificationsForAuthenticatedUserResponse(resp *http.Response, preserveBody bool) (*ListNotificationsForAuthenticatedUserResponse, error) {
+	var result ListNotificationsForAuthenticatedUserResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1061,7 +1189,6 @@ func (r *ListNotificationsForAuthenticatedUserReq) requestBuilder() *internal.Re
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -1071,7 +1198,6 @@ func (r *ListNotificationsForAuthenticatedUserReq) requestBuilder() *internal.Re
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/notifications"),
 		URLQuery:           query,
-		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -1081,7 +1207,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListNotificationsForAuthenticatedUserReq) Rel(link string, resp *ListNotificationsForAuthenticatedUserResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1095,9 +1221,12 @@ ListNotificationsForAuthenticatedUserResponse is a response for ListNotification
 https://developer.github.com/v3/activity/notifications/#list-notifications-for-the-authenticated-user
 */
 type ListNotificationsForAuthenticatedUserResponse struct {
-	requests.Response
-	request *ListNotificationsForAuthenticatedUserReq
-	Data    []components.Thread
+	httpResponse *http.Response
+	Data         []components.Thread
+}
+
+func (r *ListNotificationsForAuthenticatedUserResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1117,23 +1246,38 @@ func ListOrgEventsForAuthenticatedUser(ctx context.Context, req *ListOrgEventsFo
 	if req == nil {
 		req = new(ListOrgEventsForAuthenticatedUserReq)
 	}
-	resp := &ListOrgEventsForAuthenticatedUserResponse{request: req}
+	resp := &ListOrgEventsForAuthenticatedUserResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.Event{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListOrgEventsForAuthenticatedUserResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListOrgEventsForAuthenticatedUserResponse builds a new *ListOrgEventsForAuthenticatedUserResponse from an *http.Response
+func NewListOrgEventsForAuthenticatedUserResponse(resp *http.Response, preserveBody bool) (*ListOrgEventsForAuthenticatedUserResponse, error) {
+	var result ListOrgEventsForAuthenticatedUserResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1187,7 +1331,6 @@ func (r *ListOrgEventsForAuthenticatedUserReq) requestBuilder() *internal.Reques
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -1197,7 +1340,6 @@ func (r *ListOrgEventsForAuthenticatedUserReq) requestBuilder() *internal.Reques
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/users/%v/events/orgs/%v", r.Username, r.Org),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -1207,7 +1349,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListOrgEventsForAuthenticatedUserReq) Rel(link string, resp *ListOrgEventsForAuthenticatedUserResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1221,9 +1363,12 @@ ListOrgEventsForAuthenticatedUserResponse is a response for ListOrgEventsForAuth
 https://developer.github.com/v3/activity/events/#list-organization-events-for-the-authenticated-user
 */
 type ListOrgEventsForAuthenticatedUserResponse struct {
-	requests.Response
-	request *ListOrgEventsForAuthenticatedUserReq
-	Data    []components.Event
+	httpResponse *http.Response
+	Data         []components.Event
+}
+
+func (r *ListOrgEventsForAuthenticatedUserResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1243,23 +1388,38 @@ func ListPublicEvents(ctx context.Context, req *ListPublicEventsReq, opt ...requ
 	if req == nil {
 		req = new(ListPublicEventsReq)
 	}
-	resp := &ListPublicEventsResponse{request: req}
+	resp := &ListPublicEventsResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.Event{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListPublicEventsResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListPublicEventsResponse builds a new *ListPublicEventsResponse from an *http.Response
+func NewListPublicEventsResponse(resp *http.Response, preserveBody bool) (*ListPublicEventsResponse, error) {
+	var result ListPublicEventsResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1311,7 +1471,6 @@ func (r *ListPublicEventsReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -1321,7 +1480,6 @@ func (r *ListPublicEventsReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/events"),
 		URLQuery:           query,
-		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -1331,7 +1489,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListPublicEventsReq) Rel(link string, resp *ListPublicEventsResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1345,9 +1503,12 @@ ListPublicEventsResponse is a response for ListPublicEvents
 https://developer.github.com/v3/activity/events/#list-public-events
 */
 type ListPublicEventsResponse struct {
-	requests.Response
-	request *ListPublicEventsReq
-	Data    []components.Event
+	httpResponse *http.Response
+	Data         []components.Event
+}
+
+func (r *ListPublicEventsResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1367,23 +1528,38 @@ func ListPublicEventsForRepoNetwork(ctx context.Context, req *ListPublicEventsFo
 	if req == nil {
 		req = new(ListPublicEventsForRepoNetworkReq)
 	}
-	resp := &ListPublicEventsForRepoNetworkResponse{request: req}
+	resp := &ListPublicEventsForRepoNetworkResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.Event{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListPublicEventsForRepoNetworkResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListPublicEventsForRepoNetworkResponse builds a new *ListPublicEventsForRepoNetworkResponse from an *http.Response
+func NewListPublicEventsForRepoNetworkResponse(resp *http.Response, preserveBody bool) (*ListPublicEventsForRepoNetworkResponse, error) {
+	var result ListPublicEventsForRepoNetworkResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200, 301, 304})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1437,7 +1613,6 @@ func (r *ListPublicEventsForRepoNetworkReq) requestBuilder() *internal.RequestBu
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -1447,7 +1622,6 @@ func (r *ListPublicEventsForRepoNetworkReq) requestBuilder() *internal.RequestBu
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/networks/%v/%v/events", r.Owner, r.Repo),
 		URLQuery:           query,
-		ValidStatuses:      []int{200, 301, 304},
 	}
 	return builder
 }
@@ -1457,7 +1631,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListPublicEventsForRepoNetworkReq) Rel(link string, resp *ListPublicEventsForRepoNetworkResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1471,9 +1645,12 @@ ListPublicEventsForRepoNetworkResponse is a response for ListPublicEventsForRepo
 https://developer.github.com/v3/activity/events/#list-public-events-for-a-network-of-repositories
 */
 type ListPublicEventsForRepoNetworkResponse struct {
-	requests.Response
-	request *ListPublicEventsForRepoNetworkReq
-	Data    []components.Event
+	httpResponse *http.Response
+	Data         []components.Event
+}
+
+func (r *ListPublicEventsForRepoNetworkResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1493,23 +1670,38 @@ func ListPublicEventsForUser(ctx context.Context, req *ListPublicEventsForUserRe
 	if req == nil {
 		req = new(ListPublicEventsForUserReq)
 	}
-	resp := &ListPublicEventsForUserResponse{request: req}
+	resp := &ListPublicEventsForUserResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.Event{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListPublicEventsForUserResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListPublicEventsForUserResponse builds a new *ListPublicEventsForUserResponse from an *http.Response
+func NewListPublicEventsForUserResponse(resp *http.Response, preserveBody bool) (*ListPublicEventsForUserResponse, error) {
+	var result ListPublicEventsForUserResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1562,7 +1754,6 @@ func (r *ListPublicEventsForUserReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -1572,7 +1763,6 @@ func (r *ListPublicEventsForUserReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/users/%v/events/public", r.Username),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -1582,7 +1772,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListPublicEventsForUserReq) Rel(link string, resp *ListPublicEventsForUserResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1596,9 +1786,12 @@ ListPublicEventsForUserResponse is a response for ListPublicEventsForUser
 https://developer.github.com/v3/activity/events/#list-public-events-for-a-user
 */
 type ListPublicEventsForUserResponse struct {
-	requests.Response
-	request *ListPublicEventsForUserReq
-	Data    []components.Event
+	httpResponse *http.Response
+	Data         []components.Event
+}
+
+func (r *ListPublicEventsForUserResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1618,23 +1811,38 @@ func ListPublicOrgEvents(ctx context.Context, req *ListPublicOrgEventsReq, opt .
 	if req == nil {
 		req = new(ListPublicOrgEventsReq)
 	}
-	resp := &ListPublicOrgEventsResponse{request: req}
+	resp := &ListPublicOrgEventsResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.Event{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListPublicOrgEventsResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListPublicOrgEventsResponse builds a new *ListPublicOrgEventsResponse from an *http.Response
+func NewListPublicOrgEventsResponse(resp *http.Response, preserveBody bool) (*ListPublicOrgEventsResponse, error) {
+	var result ListPublicOrgEventsResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1687,7 +1895,6 @@ func (r *ListPublicOrgEventsReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -1697,7 +1904,6 @@ func (r *ListPublicOrgEventsReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/events", r.Org),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -1707,7 +1913,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListPublicOrgEventsReq) Rel(link string, resp *ListPublicOrgEventsResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1721,9 +1927,12 @@ ListPublicOrgEventsResponse is a response for ListPublicOrgEvents
 https://developer.github.com/v3/activity/events/#list-public-organization-events
 */
 type ListPublicOrgEventsResponse struct {
-	requests.Response
-	request *ListPublicOrgEventsReq
-	Data    []components.Event
+	httpResponse *http.Response
+	Data         []components.Event
+}
+
+func (r *ListPublicOrgEventsResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1743,23 +1952,38 @@ func ListReceivedEventsForUser(ctx context.Context, req *ListReceivedEventsForUs
 	if req == nil {
 		req = new(ListReceivedEventsForUserReq)
 	}
-	resp := &ListReceivedEventsForUserResponse{request: req}
+	resp := &ListReceivedEventsForUserResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.Event{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListReceivedEventsForUserResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListReceivedEventsForUserResponse builds a new *ListReceivedEventsForUserResponse from an *http.Response
+func NewListReceivedEventsForUserResponse(resp *http.Response, preserveBody bool) (*ListReceivedEventsForUserResponse, error) {
+	var result ListReceivedEventsForUserResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1812,7 +2036,6 @@ func (r *ListReceivedEventsForUserReq) requestBuilder() *internal.RequestBuilder
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -1822,7 +2045,6 @@ func (r *ListReceivedEventsForUserReq) requestBuilder() *internal.RequestBuilder
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/users/%v/received_events", r.Username),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -1832,7 +2054,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListReceivedEventsForUserReq) Rel(link string, resp *ListReceivedEventsForUserResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1846,9 +2068,12 @@ ListReceivedEventsForUserResponse is a response for ListReceivedEventsForUser
 https://developer.github.com/v3/activity/events/#list-events-received-by-the-authenticated-user
 */
 type ListReceivedEventsForUserResponse struct {
-	requests.Response
-	request *ListReceivedEventsForUserReq
-	Data    []components.Event
+	httpResponse *http.Response
+	Data         []components.Event
+}
+
+func (r *ListReceivedEventsForUserResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1868,23 +2093,38 @@ func ListReceivedPublicEventsForUser(ctx context.Context, req *ListReceivedPubli
 	if req == nil {
 		req = new(ListReceivedPublicEventsForUserReq)
 	}
-	resp := &ListReceivedPublicEventsForUserResponse{request: req}
+	resp := &ListReceivedPublicEventsForUserResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.Event{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListReceivedPublicEventsForUserResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListReceivedPublicEventsForUserResponse builds a new *ListReceivedPublicEventsForUserResponse from an *http.Response
+func NewListReceivedPublicEventsForUserResponse(resp *http.Response, preserveBody bool) (*ListReceivedPublicEventsForUserResponse, error) {
+	var result ListReceivedPublicEventsForUserResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1937,7 +2177,6 @@ func (r *ListReceivedPublicEventsForUserReq) requestBuilder() *internal.RequestB
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -1947,7 +2186,6 @@ func (r *ListReceivedPublicEventsForUserReq) requestBuilder() *internal.RequestB
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/users/%v/received_events/public", r.Username),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -1957,7 +2195,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListReceivedPublicEventsForUserReq) Rel(link string, resp *ListReceivedPublicEventsForUserResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1971,9 +2209,12 @@ ListReceivedPublicEventsForUserResponse is a response for ListReceivedPublicEven
 https://developer.github.com/v3/activity/events/#list-public-events-received-by-a-user
 */
 type ListReceivedPublicEventsForUserResponse struct {
-	requests.Response
-	request *ListReceivedPublicEventsForUserReq
-	Data    []components.Event
+	httpResponse *http.Response
+	Data         []components.Event
+}
+
+func (r *ListReceivedPublicEventsForUserResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1993,23 +2234,38 @@ func ListRepoEvents(ctx context.Context, req *ListRepoEventsReq, opt ...requests
 	if req == nil {
 		req = new(ListRepoEventsReq)
 	}
-	resp := &ListRepoEventsResponse{request: req}
+	resp := &ListRepoEventsResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.Event{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListRepoEventsResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListRepoEventsResponse builds a new *ListRepoEventsResponse from an *http.Response
+func NewListRepoEventsResponse(resp *http.Response, preserveBody bool) (*ListRepoEventsResponse, error) {
+	var result ListRepoEventsResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -2063,7 +2319,6 @@ func (r *ListRepoEventsReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -2073,7 +2328,6 @@ func (r *ListRepoEventsReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/events", r.Owner, r.Repo),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -2083,7 +2337,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListRepoEventsReq) Rel(link string, resp *ListRepoEventsResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -2097,9 +2351,12 @@ ListRepoEventsResponse is a response for ListRepoEvents
 https://developer.github.com/v3/activity/events/#list-repository-events
 */
 type ListRepoEventsResponse struct {
-	requests.Response
-	request *ListRepoEventsReq
-	Data    []components.Event
+	httpResponse *http.Response
+	Data         []components.Event
+}
+
+func (r *ListRepoEventsResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -2119,23 +2376,38 @@ func ListRepoNotificationsForAuthenticatedUser(ctx context.Context, req *ListRep
 	if req == nil {
 		req = new(ListRepoNotificationsForAuthenticatedUserReq)
 	}
-	resp := &ListRepoNotificationsForAuthenticatedUserResponse{request: req}
+	resp := &ListRepoNotificationsForAuthenticatedUserResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.Thread{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListRepoNotificationsForAuthenticatedUserResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListRepoNotificationsForAuthenticatedUserResponse builds a new *ListRepoNotificationsForAuthenticatedUserResponse from an *http.Response
+func NewListRepoNotificationsForAuthenticatedUserResponse(resp *http.Response, preserveBody bool) (*ListRepoNotificationsForAuthenticatedUserResponse, error) {
+	var result ListRepoNotificationsForAuthenticatedUserResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -2224,7 +2496,6 @@ func (r *ListRepoNotificationsForAuthenticatedUserReq) requestBuilder() *interna
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -2234,7 +2505,6 @@ func (r *ListRepoNotificationsForAuthenticatedUserReq) requestBuilder() *interna
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/notifications", r.Owner, r.Repo),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -2244,7 +2514,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListRepoNotificationsForAuthenticatedUserReq) Rel(link string, resp *ListRepoNotificationsForAuthenticatedUserResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -2258,9 +2528,12 @@ ListRepoNotificationsForAuthenticatedUserResponse is a response for ListRepoNoti
 https://developer.github.com/v3/activity/notifications/#list-repository-notifications-for-the-authenticated-user
 */
 type ListRepoNotificationsForAuthenticatedUserResponse struct {
-	requests.Response
-	request *ListRepoNotificationsForAuthenticatedUserReq
-	Data    []components.Thread
+	httpResponse *http.Response
+	Data         []components.Thread
+}
+
+func (r *ListRepoNotificationsForAuthenticatedUserResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -2280,23 +2553,38 @@ func ListReposStarredByAuthenticatedUser(ctx context.Context, req *ListReposStar
 	if req == nil {
 		req = new(ListReposStarredByAuthenticatedUserReq)
 	}
-	resp := &ListReposStarredByAuthenticatedUserResponse{request: req}
+	resp := &ListReposStarredByAuthenticatedUserResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.StarredRepository{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListReposStarredByAuthenticatedUserResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListReposStarredByAuthenticatedUserResponse builds a new *ListReposStarredByAuthenticatedUserResponse from an *http.Response
+func NewListReposStarredByAuthenticatedUserResponse(resp *http.Response, preserveBody bool) (*ListReposStarredByAuthenticatedUserResponse, error) {
+	var result ListReposStarredByAuthenticatedUserResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -2363,7 +2651,6 @@ func (r *ListReposStarredByAuthenticatedUserReq) requestBuilder() *internal.Requ
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/vnd.github.v3.star+json")},
@@ -2373,7 +2660,6 @@ func (r *ListReposStarredByAuthenticatedUserReq) requestBuilder() *internal.Requ
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/user/starred"),
 		URLQuery:           query,
-		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -2383,7 +2669,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListReposStarredByAuthenticatedUserReq) Rel(link string, resp *ListReposStarredByAuthenticatedUserResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -2397,9 +2683,12 @@ ListReposStarredByAuthenticatedUserResponse is a response for ListReposStarredBy
 https://developer.github.com/v3/activity/starring/#list-repositories-starred-by-the-authenticated-user
 */
 type ListReposStarredByAuthenticatedUserResponse struct {
-	requests.Response
-	request *ListReposStarredByAuthenticatedUserReq
-	Data    []components.StarredRepository
+	httpResponse *http.Response
+	Data         []components.StarredRepository
+}
+
+func (r *ListReposStarredByAuthenticatedUserResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -2419,23 +2708,38 @@ func ListReposStarredByUser(ctx context.Context, req *ListReposStarredByUserReq,
 	if req == nil {
 		req = new(ListReposStarredByUserReq)
 	}
-	resp := &ListReposStarredByUserResponse{request: req}
+	resp := &ListReposStarredByUserResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.StarredRepository{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListReposStarredByUserResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListReposStarredByUserResponse builds a new *ListReposStarredByUserResponse from an *http.Response
+func NewListReposStarredByUserResponse(resp *http.Response, preserveBody bool) (*ListReposStarredByUserResponse, error) {
+	var result ListReposStarredByUserResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -2503,7 +2807,6 @@ func (r *ListReposStarredByUserReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/vnd.github.v3.star+json")},
@@ -2513,7 +2816,6 @@ func (r *ListReposStarredByUserReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/users/%v/starred", r.Username),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -2523,7 +2825,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListReposStarredByUserReq) Rel(link string, resp *ListReposStarredByUserResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -2537,9 +2839,12 @@ ListReposStarredByUserResponse is a response for ListReposStarredByUser
 https://developer.github.com/v3/activity/starring/#list-repositories-starred-by-a-user
 */
 type ListReposStarredByUserResponse struct {
-	requests.Response
-	request *ListReposStarredByUserReq
-	Data    []components.StarredRepository
+	httpResponse *http.Response
+	Data         []components.StarredRepository
+}
+
+func (r *ListReposStarredByUserResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -2559,23 +2864,38 @@ func ListReposWatchedByUser(ctx context.Context, req *ListReposWatchedByUserReq,
 	if req == nil {
 		req = new(ListReposWatchedByUserReq)
 	}
-	resp := &ListReposWatchedByUserResponse{request: req}
+	resp := &ListReposWatchedByUserResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.MinimalRepository{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListReposWatchedByUserResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListReposWatchedByUserResponse builds a new *ListReposWatchedByUserResponse from an *http.Response
+func NewListReposWatchedByUserResponse(resp *http.Response, preserveBody bool) (*ListReposWatchedByUserResponse, error) {
+	var result ListReposWatchedByUserResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -2628,7 +2948,6 @@ func (r *ListReposWatchedByUserReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -2638,7 +2957,6 @@ func (r *ListReposWatchedByUserReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/users/%v/subscriptions", r.Username),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -2648,7 +2966,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListReposWatchedByUserReq) Rel(link string, resp *ListReposWatchedByUserResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -2662,9 +2980,12 @@ ListReposWatchedByUserResponse is a response for ListReposWatchedByUser
 https://developer.github.com/v3/activity/watching/#list-repositories-watched-by-a-user
 */
 type ListReposWatchedByUserResponse struct {
-	requests.Response
-	request *ListReposWatchedByUserReq
-	Data    []components.MinimalRepository
+	httpResponse *http.Response
+	Data         []components.MinimalRepository
+}
+
+func (r *ListReposWatchedByUserResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -2684,23 +3005,38 @@ func ListStargazersForRepo(ctx context.Context, req *ListStargazersForRepoReq, o
 	if req == nil {
 		req = new(ListStargazersForRepoReq)
 	}
-	resp := &ListStargazersForRepoResponse{request: req}
+	resp := &ListStargazersForRepoResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.Stargazer{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListStargazersForRepoResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListStargazersForRepoResponse builds a new *ListStargazersForRepoResponse from an *http.Response
+func NewListStargazersForRepoResponse(resp *http.Response, preserveBody bool) (*ListStargazersForRepoResponse, error) {
+	var result ListStargazersForRepoResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -2754,7 +3090,6 @@ func (r *ListStargazersForRepoReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/vnd.github.v3.star+json")},
@@ -2764,7 +3099,6 @@ func (r *ListStargazersForRepoReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/stargazers", r.Owner, r.Repo),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -2774,7 +3108,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListStargazersForRepoReq) Rel(link string, resp *ListStargazersForRepoResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -2788,9 +3122,12 @@ ListStargazersForRepoResponse is a response for ListStargazersForRepo
 https://developer.github.com/v3/activity/starring/#list-stargazers
 */
 type ListStargazersForRepoResponse struct {
-	requests.Response
-	request *ListStargazersForRepoReq
-	Data    []components.Stargazer
+	httpResponse *http.Response
+	Data         []components.Stargazer
+}
+
+func (r *ListStargazersForRepoResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -2810,23 +3147,38 @@ func ListWatchedReposForAuthenticatedUser(ctx context.Context, req *ListWatchedR
 	if req == nil {
 		req = new(ListWatchedReposForAuthenticatedUserReq)
 	}
-	resp := &ListWatchedReposForAuthenticatedUserResponse{request: req}
+	resp := &ListWatchedReposForAuthenticatedUserResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.MinimalRepository{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListWatchedReposForAuthenticatedUserResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListWatchedReposForAuthenticatedUserResponse builds a new *ListWatchedReposForAuthenticatedUserResponse from an *http.Response
+func NewListWatchedReposForAuthenticatedUserResponse(resp *http.Response, preserveBody bool) (*ListWatchedReposForAuthenticatedUserResponse, error) {
+	var result ListWatchedReposForAuthenticatedUserResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -2878,7 +3230,6 @@ func (r *ListWatchedReposForAuthenticatedUserReq) requestBuilder() *internal.Req
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -2888,7 +3239,6 @@ func (r *ListWatchedReposForAuthenticatedUserReq) requestBuilder() *internal.Req
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/user/subscriptions"),
 		URLQuery:           query,
-		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -2898,7 +3248,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListWatchedReposForAuthenticatedUserReq) Rel(link string, resp *ListWatchedReposForAuthenticatedUserResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -2912,9 +3262,12 @@ ListWatchedReposForAuthenticatedUserResponse is a response for ListWatchedReposF
 https://developer.github.com/v3/activity/watching/#list-repositories-watched-by-the-authenticated-user
 */
 type ListWatchedReposForAuthenticatedUserResponse struct {
-	requests.Response
-	request *ListWatchedReposForAuthenticatedUserReq
-	Data    []components.MinimalRepository
+	httpResponse *http.Response
+	Data         []components.MinimalRepository
+}
+
+func (r *ListWatchedReposForAuthenticatedUserResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -2934,23 +3287,38 @@ func ListWatchersForRepo(ctx context.Context, req *ListWatchersForRepoReq, opt .
 	if req == nil {
 		req = new(ListWatchersForRepoReq)
 	}
-	resp := &ListWatchersForRepoResponse{request: req}
+	resp := &ListWatchersForRepoResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.SimpleUser{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListWatchersForRepoResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListWatchersForRepoResponse builds a new *ListWatchersForRepoResponse from an *http.Response
+func NewListWatchersForRepoResponse(resp *http.Response, preserveBody bool) (*ListWatchersForRepoResponse, error) {
+	var result ListWatchersForRepoResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -3004,7 +3372,6 @@ func (r *ListWatchersForRepoReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -3014,7 +3381,6 @@ func (r *ListWatchersForRepoReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/subscribers", r.Owner, r.Repo),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -3024,7 +3390,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListWatchersForRepoReq) Rel(link string, resp *ListWatchersForRepoResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -3038,9 +3404,12 @@ ListWatchersForRepoResponse is a response for ListWatchersForRepo
 https://developer.github.com/v3/activity/watching/#list-watchers
 */
 type ListWatchersForRepoResponse struct {
-	requests.Response
-	request *ListWatchersForRepoReq
-	Data    []components.SimpleUser
+	httpResponse *http.Response
+	Data         []components.SimpleUser
+}
+
+func (r *ListWatchersForRepoResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -3060,23 +3429,38 @@ func MarkNotificationsAsRead(ctx context.Context, req *MarkNotificationsAsReadRe
 	if req == nil {
 		req = new(MarkNotificationsAsReadReq)
 	}
-	resp := &MarkNotificationsAsReadResponse{request: req}
+	resp := &MarkNotificationsAsReadResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = MarkNotificationsAsReadResponseBody{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewMarkNotificationsAsReadResponse(r, opts.PreserveResponseBody())
+}
+
+// NewMarkNotificationsAsReadResponse builds a new *MarkNotificationsAsReadResponse from an *http.Response
+func NewMarkNotificationsAsReadResponse(resp *http.Response, preserveBody bool) (*MarkNotificationsAsReadResponse, error) {
+	var result MarkNotificationsAsReadResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{202, 205, 304})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{202}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -3117,7 +3501,6 @@ func (r *MarkNotificationsAsReadReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{202},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
@@ -3130,7 +3513,6 @@ func (r *MarkNotificationsAsReadReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/notifications"),
 		URLQuery:         query,
-		ValidStatuses:    []int{202, 205, 304},
 	}
 	return builder
 }
@@ -3140,7 +3522,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *MarkNotificationsAsReadReq) Rel(link string, resp *MarkNotificationsAsReadResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -3177,9 +3559,12 @@ MarkNotificationsAsReadResponse is a response for MarkNotificationsAsRead
 https://developer.github.com/v3/activity/notifications/#mark-notifications-as-read
 */
 type MarkNotificationsAsReadResponse struct {
-	requests.Response
-	request *MarkNotificationsAsReadReq
-	Data    MarkNotificationsAsReadResponseBody
+	httpResponse *http.Response
+	Data         MarkNotificationsAsReadResponseBody
+}
+
+func (r *MarkNotificationsAsReadResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -3199,22 +3584,32 @@ func MarkRepoNotificationsAsRead(ctx context.Context, req *MarkRepoNotifications
 	if req == nil {
 		req = new(MarkRepoNotificationsAsReadReq)
 	}
-	resp := &MarkRepoNotificationsAsReadResponse{request: req}
+	resp := &MarkRepoNotificationsAsReadResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewMarkRepoNotificationsAsReadResponse(r, opts.PreserveResponseBody())
+}
+
+// NewMarkRepoNotificationsAsReadResponse builds a new *MarkRepoNotificationsAsReadResponse from an *http.Response
+func NewMarkRepoNotificationsAsReadResponse(resp *http.Response, preserveBody bool) (*MarkRepoNotificationsAsReadResponse, error) {
+	var result MarkRepoNotificationsAsReadResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{202})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -3257,7 +3652,6 @@ func (r *MarkRepoNotificationsAsReadReq) requestBuilder() *internal.RequestBuild
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"content-type": internal.String("application/json")},
@@ -3267,7 +3661,6 @@ func (r *MarkRepoNotificationsAsReadReq) requestBuilder() *internal.RequestBuild
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/notifications", r.Owner, r.Repo),
 		URLQuery:           query,
-		ValidStatuses:      []int{202},
 	}
 	return builder
 }
@@ -3277,7 +3670,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *MarkRepoNotificationsAsReadReq) Rel(link string, resp *MarkRepoNotificationsAsReadResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -3308,8 +3701,11 @@ MarkRepoNotificationsAsReadResponse is a response for MarkRepoNotificationsAsRea
 https://developer.github.com/v3/activity/notifications/#mark-repository-notifications-as-read
 */
 type MarkRepoNotificationsAsReadResponse struct {
-	requests.Response
-	request *MarkRepoNotificationsAsReadReq
+	httpResponse *http.Response
+}
+
+func (r *MarkRepoNotificationsAsReadResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -3329,22 +3725,32 @@ func MarkThreadAsRead(ctx context.Context, req *MarkThreadAsReadReq, opt ...requ
 	if req == nil {
 		req = new(MarkThreadAsReadReq)
 	}
-	resp := &MarkThreadAsReadResponse{request: req}
+	resp := &MarkThreadAsReadResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewMarkThreadAsReadResponse(r, opts.PreserveResponseBody())
+}
+
+// NewMarkThreadAsReadResponse builds a new *MarkThreadAsReadResponse from an *http.Response
+func NewMarkThreadAsReadResponse(resp *http.Response, preserveBody bool) (*MarkThreadAsReadResponse, error) {
+	var result MarkThreadAsReadResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{205, 304})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -3387,7 +3793,6 @@ func (r *MarkThreadAsReadReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -3397,7 +3802,6 @@ func (r *MarkThreadAsReadReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/notifications/threads/%v", r.ThreadId),
 		URLQuery:           query,
-		ValidStatuses:      []int{205, 304},
 	}
 	return builder
 }
@@ -3407,7 +3811,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *MarkThreadAsReadReq) Rel(link string, resp *MarkThreadAsReadResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -3421,8 +3825,11 @@ MarkThreadAsReadResponse is a response for MarkThreadAsRead
 https://developer.github.com/v3/activity/notifications/#mark-a-thread-as-read
 */
 type MarkThreadAsReadResponse struct {
-	requests.Response
-	request *MarkThreadAsReadReq
+	httpResponse *http.Response
+}
+
+func (r *MarkThreadAsReadResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -3442,23 +3849,38 @@ func SetRepoSubscription(ctx context.Context, req *SetRepoSubscriptionReq, opt .
 	if req == nil {
 		req = new(SetRepoSubscriptionReq)
 	}
-	resp := &SetRepoSubscriptionResponse{request: req}
+	resp := &SetRepoSubscriptionResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.RepositorySubscription{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewSetRepoSubscriptionResponse(r, opts.PreserveResponseBody())
+}
+
+// NewSetRepoSubscriptionResponse builds a new *SetRepoSubscriptionResponse from an *http.Response
+func NewSetRepoSubscriptionResponse(resp *http.Response, preserveBody bool) (*SetRepoSubscriptionResponse, error) {
+	var result SetRepoSubscriptionResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -3501,7 +3923,6 @@ func (r *SetRepoSubscriptionReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
@@ -3514,7 +3935,6 @@ func (r *SetRepoSubscriptionReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/subscription", r.Owner, r.Repo),
 		URLQuery:         query,
-		ValidStatuses:    []int{200},
 	}
 	return builder
 }
@@ -3524,7 +3944,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *SetRepoSubscriptionReq) Rel(link string, resp *SetRepoSubscriptionResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -3552,9 +3972,12 @@ SetRepoSubscriptionResponse is a response for SetRepoSubscription
 https://developer.github.com/v3/activity/watching/#set-a-repository-subscription
 */
 type SetRepoSubscriptionResponse struct {
-	requests.Response
-	request *SetRepoSubscriptionReq
-	Data    components.RepositorySubscription
+	httpResponse *http.Response
+	Data         components.RepositorySubscription
+}
+
+func (r *SetRepoSubscriptionResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -3574,23 +3997,38 @@ func SetThreadSubscription(ctx context.Context, req *SetThreadSubscriptionReq, o
 	if req == nil {
 		req = new(SetThreadSubscriptionReq)
 	}
-	resp := &SetThreadSubscriptionResponse{request: req}
+	resp := &SetThreadSubscriptionResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.ThreadSubscription{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewSetThreadSubscriptionResponse(r, opts.PreserveResponseBody())
+}
+
+// NewSetThreadSubscriptionResponse builds a new *SetThreadSubscriptionResponse from an *http.Response
+func NewSetThreadSubscriptionResponse(resp *http.Response, preserveBody bool) (*SetThreadSubscriptionResponse, error) {
+	var result SetThreadSubscriptionResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -3634,7 +4072,6 @@ func (r *SetThreadSubscriptionReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
@@ -3647,7 +4084,6 @@ func (r *SetThreadSubscriptionReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/notifications/threads/%v/subscription", r.ThreadId),
 		URLQuery:         query,
-		ValidStatuses:    []int{200, 304},
 	}
 	return builder
 }
@@ -3657,7 +4093,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *SetThreadSubscriptionReq) Rel(link string, resp *SetThreadSubscriptionResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -3682,9 +4118,12 @@ SetThreadSubscriptionResponse is a response for SetThreadSubscription
 https://developer.github.com/v3/activity/notifications/#set-a-thread-subscription
 */
 type SetThreadSubscriptionResponse struct {
-	requests.Response
-	request *SetThreadSubscriptionReq
-	Data    components.ThreadSubscription
+	httpResponse *http.Response
+	Data         components.ThreadSubscription
+}
+
+func (r *SetThreadSubscriptionResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -3704,22 +4143,32 @@ func StarRepoForAuthenticatedUser(ctx context.Context, req *StarRepoForAuthentic
 	if req == nil {
 		req = new(StarRepoForAuthenticatedUserReq)
 	}
-	resp := &StarRepoForAuthenticatedUserResponse{request: req}
+	resp := &StarRepoForAuthenticatedUserResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewStarRepoForAuthenticatedUserResponse(r, opts.PreserveResponseBody())
+}
+
+// NewStarRepoForAuthenticatedUserResponse builds a new *StarRepoForAuthenticatedUserResponse from an *http.Response
+func NewStarRepoForAuthenticatedUserResponse(resp *http.Response, preserveBody bool) (*StarRepoForAuthenticatedUserResponse, error) {
+	var result StarRepoForAuthenticatedUserResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204, 304})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -3761,7 +4210,6 @@ func (r *StarRepoForAuthenticatedUserReq) requestBuilder() *internal.RequestBuil
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -3771,7 +4219,6 @@ func (r *StarRepoForAuthenticatedUserReq) requestBuilder() *internal.RequestBuil
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/user/starred/%v/%v", r.Owner, r.Repo),
 		URLQuery:           query,
-		ValidStatuses:      []int{204, 304},
 	}
 	return builder
 }
@@ -3781,7 +4228,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *StarRepoForAuthenticatedUserReq) Rel(link string, resp *StarRepoForAuthenticatedUserResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -3795,8 +4242,11 @@ StarRepoForAuthenticatedUserResponse is a response for StarRepoForAuthenticatedU
 https://developer.github.com/v3/activity/starring/#star-a-repository-for-the-authenticated-user
 */
 type StarRepoForAuthenticatedUserResponse struct {
-	requests.Response
-	request *StarRepoForAuthenticatedUserReq
+	httpResponse *http.Response
+}
+
+func (r *StarRepoForAuthenticatedUserResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -3816,22 +4266,32 @@ func UnstarRepoForAuthenticatedUser(ctx context.Context, req *UnstarRepoForAuthe
 	if req == nil {
 		req = new(UnstarRepoForAuthenticatedUserReq)
 	}
-	resp := &UnstarRepoForAuthenticatedUserResponse{request: req}
+	resp := &UnstarRepoForAuthenticatedUserResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewUnstarRepoForAuthenticatedUserResponse(r, opts.PreserveResponseBody())
+}
+
+// NewUnstarRepoForAuthenticatedUserResponse builds a new *UnstarRepoForAuthenticatedUserResponse from an *http.Response
+func NewUnstarRepoForAuthenticatedUserResponse(resp *http.Response, preserveBody bool) (*UnstarRepoForAuthenticatedUserResponse, error) {
+	var result UnstarRepoForAuthenticatedUserResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204, 304})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -3873,7 +4333,6 @@ func (r *UnstarRepoForAuthenticatedUserReq) requestBuilder() *internal.RequestBu
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -3883,7 +4342,6 @@ func (r *UnstarRepoForAuthenticatedUserReq) requestBuilder() *internal.RequestBu
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/user/starred/%v/%v", r.Owner, r.Repo),
 		URLQuery:           query,
-		ValidStatuses:      []int{204, 304},
 	}
 	return builder
 }
@@ -3893,7 +4351,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *UnstarRepoForAuthenticatedUserReq) Rel(link string, resp *UnstarRepoForAuthenticatedUserResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -3907,6 +4365,9 @@ UnstarRepoForAuthenticatedUserResponse is a response for UnstarRepoForAuthentica
 https://developer.github.com/v3/activity/starring/#unstar-a-repository-for-the-authenticated-user
 */
 type UnstarRepoForAuthenticatedUserResponse struct {
-	requests.Response
-	request *UnstarRepoForAuthenticatedUserReq
+	httpResponse *http.Response
+}
+
+func (r *UnstarRepoForAuthenticatedUserResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }

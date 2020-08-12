@@ -38,8 +38,7 @@ func addResponse(file *jen.File, pq pkgQual, endpoint *model.Endpoint) {
 		endpoint.DocsURL,
 	)
 	file.Type().Id(structName).StructFunc(func(group *jen.Group) {
-		group.Qual(pq.pkgPath("requests"), "Response")
-		group.Id("request").Op("*").Id(reqStructName(endpoint))
+		group.Id("httpResponse").Op("*").Qual("net/http", "Response")
 		if endpointHasAttribute(endpoint, attrNoResponseBody) {
 			return
 		}
@@ -51,6 +50,10 @@ func addResponse(file *jen.File, pq pkgQual, endpoint *model.Endpoint) {
 			group.Id("Data").Bool()
 		}
 	})
+
+	file.Func().Params(jen.Id("r *"+structName)).Id("HTTPResponse() *").Qual("net/http", "Response").Block(
+		jen.Id("return r.httpResponse"),
+	)
 }
 
 func respBodyType(endpoint *model.Endpoint) *qualifiedType {

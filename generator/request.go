@@ -92,7 +92,7 @@ func reqRelReqFunc(file *jen.File, endpoint *model.Endpoint, pq pkgQual) {
 		jen.Id("link string"),
 		jen.Id("resp").Op("*").Id(respStructName(endpoint)),
 	).Params(jen.Bool()).Block(
-		jen.Id("u := resp.RelLink(string(link))"),
+		jen.Id("u := ").Qual(pq.pkgPath("internal"), "RelLink").Call(jen.Id("resp.HTTPResponse(), link")),
 		jen.If(jen.Id("u").Op("==").Lit("")).Block(jen.Return(jen.False())),
 		jen.Id("r._url = u"),
 		jen.Return(jen.True()),
@@ -146,16 +146,6 @@ func reqBuilderFunc(endpoint *model.Endpoint, pq pkgQual) jen.Code {
 				jen.Id("OperationID"): jen.Lit(endpoint.ID),
 				jen.Id("ExplicitURL"): reqExplicitURLVal(endpoint),
 				jen.Id("Method"):      jen.Lit(endpoint.Method),
-				jen.Id("DataStatuses"): jen.Op("[]").Int().ValuesFunc(func(group *jen.Group) {
-					for _, code := range responseCodesWithBodies(endpoint) {
-						group.Lit(code)
-					}
-				}),
-				jen.Id("ValidStatuses"): jen.Op("[]").Int().ValuesFunc(func(group *jen.Group) {
-					for _, code := range validCodes(endpoint) {
-						group.Lit(code)
-					}
-				}),
 				jen.Id("RequiredPreviews"): jen.Op("[]").String().ValuesFunc(func(group *jen.Group) {
 					for _, preview := range endpoint.Previews {
 						if !preview.Required {
@@ -195,6 +185,9 @@ func reqEndpointAttributesValue(endpoint *model.Endpoint, pq pkgQual) *jen.State
 }
 
 func validCodes(endpoint *model.Endpoint) []int {
+	if endpointHasAttribute(endpoint, attrBoolean) {
+		return []int{204, 404}
+	}
 	codes := make([]int, 0, len(endpoint.Responses))
 	for code := range endpoint.Responses {
 		if code < 400 {

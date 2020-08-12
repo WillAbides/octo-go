@@ -40,22 +40,32 @@ func AddMemberLegacy(ctx context.Context, req *AddMemberLegacyReq, opt ...reques
 	if req == nil {
 		req = new(AddMemberLegacyReq)
 	}
-	resp := &AddMemberLegacyResponse{request: req}
+	resp := &AddMemberLegacyResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewAddMemberLegacyResponse(r, opts.PreserveResponseBody())
+}
+
+// NewAddMemberLegacyResponse builds a new *AddMemberLegacyResponse from an *http.Response
+func NewAddMemberLegacyResponse(resp *http.Response, preserveBody bool) (*AddMemberLegacyResponse, error) {
+	var result AddMemberLegacyResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -97,7 +107,6 @@ func (r *AddMemberLegacyReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -107,7 +116,6 @@ func (r *AddMemberLegacyReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/teams/%v/members/%v", r.TeamId, r.Username),
 		URLQuery:           query,
-		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -117,7 +125,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *AddMemberLegacyReq) Rel(link string, resp *AddMemberLegacyResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -131,8 +139,11 @@ AddMemberLegacyResponse is a response for AddMemberLegacy
 https://developer.github.com/v3/teams/members/#add-team-member-legacy
 */
 type AddMemberLegacyResponse struct {
-	requests.Response
-	request *AddMemberLegacyReq
+	httpResponse *http.Response
+}
+
+func (r *AddMemberLegacyResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -152,23 +163,38 @@ func AddOrUpdateMembershipForUserInOrg(ctx context.Context, req *AddOrUpdateMemb
 	if req == nil {
 		req = new(AddOrUpdateMembershipForUserInOrgReq)
 	}
-	resp := &AddOrUpdateMembershipForUserInOrgResponse{request: req}
+	resp := &AddOrUpdateMembershipForUserInOrgResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.TeamMembership{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewAddOrUpdateMembershipForUserInOrgResponse(r, opts.PreserveResponseBody())
+}
+
+// NewAddOrUpdateMembershipForUserInOrgResponse builds a new *AddOrUpdateMembershipForUserInOrgResponse from an *http.Response
+func NewAddOrUpdateMembershipForUserInOrgResponse(resp *http.Response, preserveBody bool) (*AddOrUpdateMembershipForUserInOrgResponse, error) {
+	var result AddOrUpdateMembershipForUserInOrgResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -214,7 +240,6 @@ func (r *AddOrUpdateMembershipForUserInOrgReq) requestBuilder() *internal.Reques
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
@@ -227,7 +252,6 @@ func (r *AddOrUpdateMembershipForUserInOrgReq) requestBuilder() *internal.Reques
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/orgs/%v/teams/%v/memberships/%v", r.Org, r.TeamSlug, r.Username),
 		URLQuery:         query,
-		ValidStatuses:    []int{200},
 	}
 	return builder
 }
@@ -237,7 +261,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *AddOrUpdateMembershipForUserInOrgReq) Rel(link string, resp *AddOrUpdateMembershipForUserInOrgResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -268,9 +292,12 @@ AddOrUpdateMembershipForUserInOrgResponse is a response for AddOrUpdateMembershi
 https://developer.github.com/v3/teams/members/#add-or-update-team-membership-for-a-user
 */
 type AddOrUpdateMembershipForUserInOrgResponse struct {
-	requests.Response
-	request *AddOrUpdateMembershipForUserInOrgReq
-	Data    components.TeamMembership
+	httpResponse *http.Response
+	Data         components.TeamMembership
+}
+
+func (r *AddOrUpdateMembershipForUserInOrgResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -290,23 +317,38 @@ func AddOrUpdateMembershipForUserLegacy(ctx context.Context, req *AddOrUpdateMem
 	if req == nil {
 		req = new(AddOrUpdateMembershipForUserLegacyReq)
 	}
-	resp := &AddOrUpdateMembershipForUserLegacyResponse{request: req}
+	resp := &AddOrUpdateMembershipForUserLegacyResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.TeamMembership{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewAddOrUpdateMembershipForUserLegacyResponse(r, opts.PreserveResponseBody())
+}
+
+// NewAddOrUpdateMembershipForUserLegacyResponse builds a new *AddOrUpdateMembershipForUserLegacyResponse from an *http.Response
+func NewAddOrUpdateMembershipForUserLegacyResponse(resp *http.Response, preserveBody bool) (*AddOrUpdateMembershipForUserLegacyResponse, error) {
+	var result AddOrUpdateMembershipForUserLegacyResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -349,7 +391,6 @@ func (r *AddOrUpdateMembershipForUserLegacyReq) requestBuilder() *internal.Reque
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
@@ -362,7 +403,6 @@ func (r *AddOrUpdateMembershipForUserLegacyReq) requestBuilder() *internal.Reque
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/teams/%v/memberships/%v", r.TeamId, r.Username),
 		URLQuery:         query,
-		ValidStatuses:    []int{200},
 	}
 	return builder
 }
@@ -372,7 +412,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *AddOrUpdateMembershipForUserLegacyReq) Rel(link string, resp *AddOrUpdateMembershipForUserLegacyResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -403,9 +443,12 @@ AddOrUpdateMembershipForUserLegacyResponse is a response for AddOrUpdateMembersh
 https://developer.github.com/v3/teams/members/#add-or-update-team-membership-for-a-user-legacy
 */
 type AddOrUpdateMembershipForUserLegacyResponse struct {
-	requests.Response
-	request *AddOrUpdateMembershipForUserLegacyReq
-	Data    components.TeamMembership
+	httpResponse *http.Response
+	Data         components.TeamMembership
+}
+
+func (r *AddOrUpdateMembershipForUserLegacyResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -425,22 +468,32 @@ func AddOrUpdateProjectPermissionsInOrg(ctx context.Context, req *AddOrUpdatePro
 	if req == nil {
 		req = new(AddOrUpdateProjectPermissionsInOrgReq)
 	}
-	resp := &AddOrUpdateProjectPermissionsInOrgResponse{request: req}
+	resp := &AddOrUpdateProjectPermissionsInOrgResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewAddOrUpdateProjectPermissionsInOrgResponse(r, opts.PreserveResponseBody())
+}
+
+// NewAddOrUpdateProjectPermissionsInOrgResponse builds a new *AddOrUpdateProjectPermissionsInOrgResponse from an *http.Response
+func NewAddOrUpdateProjectPermissionsInOrgResponse(resp *http.Response, preserveBody bool) (*AddOrUpdateProjectPermissionsInOrgResponse, error) {
+	var result AddOrUpdateProjectPermissionsInOrgResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -495,7 +548,6 @@ func (r *AddOrUpdateProjectPermissionsInOrgReq) requestBuilder() *internal.Reque
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"inertia"},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"content-type": internal.String("application/json")},
@@ -505,7 +557,6 @@ func (r *AddOrUpdateProjectPermissionsInOrgReq) requestBuilder() *internal.Reque
 		RequiredPreviews:   []string{"inertia"},
 		URLPath:            fmt.Sprintf("/orgs/%v/teams/%v/projects/%v", r.Org, r.TeamSlug, r.ProjectId),
 		URLQuery:           query,
-		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -515,7 +566,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *AddOrUpdateProjectPermissionsInOrgReq) Rel(link string, resp *AddOrUpdateProjectPermissionsInOrgResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -550,8 +601,11 @@ AddOrUpdateProjectPermissionsInOrgResponse is a response for AddOrUpdateProjectP
 https://developer.github.com/v3/teams/#add-or-update-team-project-permissions
 */
 type AddOrUpdateProjectPermissionsInOrgResponse struct {
-	requests.Response
-	request *AddOrUpdateProjectPermissionsInOrgReq
+	httpResponse *http.Response
+}
+
+func (r *AddOrUpdateProjectPermissionsInOrgResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -571,22 +625,32 @@ func AddOrUpdateProjectPermissionsLegacy(ctx context.Context, req *AddOrUpdatePr
 	if req == nil {
 		req = new(AddOrUpdateProjectPermissionsLegacyReq)
 	}
-	resp := &AddOrUpdateProjectPermissionsLegacyResponse{request: req}
+	resp := &AddOrUpdateProjectPermissionsLegacyResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewAddOrUpdateProjectPermissionsLegacyResponse(r, opts.PreserveResponseBody())
+}
+
+// NewAddOrUpdateProjectPermissionsLegacyResponse builds a new *AddOrUpdateProjectPermissionsLegacyResponse from an *http.Response
+func NewAddOrUpdateProjectPermissionsLegacyResponse(resp *http.Response, preserveBody bool) (*AddOrUpdateProjectPermissionsLegacyResponse, error) {
+	var result AddOrUpdateProjectPermissionsLegacyResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -638,7 +702,6 @@ func (r *AddOrUpdateProjectPermissionsLegacyReq) requestBuilder() *internal.Requ
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"inertia"},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"content-type": internal.String("application/json")},
@@ -648,7 +711,6 @@ func (r *AddOrUpdateProjectPermissionsLegacyReq) requestBuilder() *internal.Requ
 		RequiredPreviews:   []string{"inertia"},
 		URLPath:            fmt.Sprintf("/teams/%v/projects/%v", r.TeamId, r.ProjectId),
 		URLQuery:           query,
-		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -658,7 +720,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *AddOrUpdateProjectPermissionsLegacyReq) Rel(link string, resp *AddOrUpdateProjectPermissionsLegacyResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -693,8 +755,11 @@ AddOrUpdateProjectPermissionsLegacyResponse is a response for AddOrUpdateProject
 https://developer.github.com/v3/teams/#add-or-update-team-project-permissions-legacy
 */
 type AddOrUpdateProjectPermissionsLegacyResponse struct {
-	requests.Response
-	request *AddOrUpdateProjectPermissionsLegacyReq
+	httpResponse *http.Response
+}
+
+func (r *AddOrUpdateProjectPermissionsLegacyResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -714,22 +779,32 @@ func AddOrUpdateRepoPermissionsInOrg(ctx context.Context, req *AddOrUpdateRepoPe
 	if req == nil {
 		req = new(AddOrUpdateRepoPermissionsInOrgReq)
 	}
-	resp := &AddOrUpdateRepoPermissionsInOrgResponse{request: req}
+	resp := &AddOrUpdateRepoPermissionsInOrgResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewAddOrUpdateRepoPermissionsInOrgResponse(r, opts.PreserveResponseBody())
+}
+
+// NewAddOrUpdateRepoPermissionsInOrgResponse builds a new *AddOrUpdateRepoPermissionsInOrgResponse from an *http.Response
+func NewAddOrUpdateRepoPermissionsInOrgResponse(resp *http.Response, preserveBody bool) (*AddOrUpdateRepoPermissionsInOrgResponse, error) {
+	var result AddOrUpdateRepoPermissionsInOrgResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -776,7 +851,6 @@ func (r *AddOrUpdateRepoPermissionsInOrgReq) requestBuilder() *internal.RequestB
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"content-type": internal.String("application/json")},
@@ -786,7 +860,6 @@ func (r *AddOrUpdateRepoPermissionsInOrgReq) requestBuilder() *internal.RequestB
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/teams/%v/repos/%v/%v", r.Org, r.TeamSlug, r.Owner, r.Repo),
 		URLQuery:           query,
-		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -796,7 +869,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *AddOrUpdateRepoPermissionsInOrgReq) Rel(link string, resp *AddOrUpdateRepoPermissionsInOrgResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -836,8 +909,11 @@ AddOrUpdateRepoPermissionsInOrgResponse is a response for AddOrUpdateRepoPermiss
 https://developer.github.com/v3/teams/#add-or-update-team-repository-permissions
 */
 type AddOrUpdateRepoPermissionsInOrgResponse struct {
-	requests.Response
-	request *AddOrUpdateRepoPermissionsInOrgReq
+	httpResponse *http.Response
+}
+
+func (r *AddOrUpdateRepoPermissionsInOrgResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -857,22 +933,32 @@ func AddOrUpdateRepoPermissionsLegacy(ctx context.Context, req *AddOrUpdateRepoP
 	if req == nil {
 		req = new(AddOrUpdateRepoPermissionsLegacyReq)
 	}
-	resp := &AddOrUpdateRepoPermissionsLegacyResponse{request: req}
+	resp := &AddOrUpdateRepoPermissionsLegacyResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewAddOrUpdateRepoPermissionsLegacyResponse(r, opts.PreserveResponseBody())
+}
+
+// NewAddOrUpdateRepoPermissionsLegacyResponse builds a new *AddOrUpdateRepoPermissionsLegacyResponse from an *http.Response
+func NewAddOrUpdateRepoPermissionsLegacyResponse(resp *http.Response, preserveBody bool) (*AddOrUpdateRepoPermissionsLegacyResponse, error) {
+	var result AddOrUpdateRepoPermissionsLegacyResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -916,7 +1002,6 @@ func (r *AddOrUpdateRepoPermissionsLegacyReq) requestBuilder() *internal.Request
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"content-type": internal.String("application/json")},
@@ -926,7 +1011,6 @@ func (r *AddOrUpdateRepoPermissionsLegacyReq) requestBuilder() *internal.Request
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/teams/%v/repos/%v/%v", r.TeamId, r.Owner, r.Repo),
 		URLQuery:           query,
-		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -936,7 +1020,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *AddOrUpdateRepoPermissionsLegacyReq) Rel(link string, resp *AddOrUpdateRepoPermissionsLegacyResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -970,8 +1054,11 @@ AddOrUpdateRepoPermissionsLegacyResponse is a response for AddOrUpdateRepoPermis
 https://developer.github.com/v3/teams/#add-or-update-team-repository-permissions-legacy
 */
 type AddOrUpdateRepoPermissionsLegacyResponse struct {
-	requests.Response
-	request *AddOrUpdateRepoPermissionsLegacyReq
+	httpResponse *http.Response
+}
+
+func (r *AddOrUpdateRepoPermissionsLegacyResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -991,23 +1078,38 @@ func CheckPermissionsForProjectInOrg(ctx context.Context, req *CheckPermissionsF
 	if req == nil {
 		req = new(CheckPermissionsForProjectInOrgReq)
 	}
-	resp := &CheckPermissionsForProjectInOrgResponse{request: req}
+	resp := &CheckPermissionsForProjectInOrgResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.TeamProject{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewCheckPermissionsForProjectInOrgResponse(r, opts.PreserveResponseBody())
+}
+
+// NewCheckPermissionsForProjectInOrgResponse builds a new *CheckPermissionsForProjectInOrgResponse from an *http.Response
+func NewCheckPermissionsForProjectInOrgResponse(resp *http.Response, preserveBody bool) (*CheckPermissionsForProjectInOrgResponse, error) {
+	var result CheckPermissionsForProjectInOrgResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1061,7 +1163,6 @@ func (r *CheckPermissionsForProjectInOrgReq) requestBuilder() *internal.RequestB
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"inertia"},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -1071,7 +1172,6 @@ func (r *CheckPermissionsForProjectInOrgReq) requestBuilder() *internal.RequestB
 		RequiredPreviews:   []string{"inertia"},
 		URLPath:            fmt.Sprintf("/orgs/%v/teams/%v/projects/%v", r.Org, r.TeamSlug, r.ProjectId),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -1081,7 +1181,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *CheckPermissionsForProjectInOrgReq) Rel(link string, resp *CheckPermissionsForProjectInOrgResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1095,9 +1195,12 @@ CheckPermissionsForProjectInOrgResponse is a response for CheckPermissionsForPro
 https://developer.github.com/v3/teams/#check-team-permissions-for-a-project
 */
 type CheckPermissionsForProjectInOrgResponse struct {
-	requests.Response
-	request *CheckPermissionsForProjectInOrgReq
-	Data    components.TeamProject
+	httpResponse *http.Response
+	Data         components.TeamProject
+}
+
+func (r *CheckPermissionsForProjectInOrgResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1117,23 +1220,38 @@ func CheckPermissionsForProjectLegacy(ctx context.Context, req *CheckPermissions
 	if req == nil {
 		req = new(CheckPermissionsForProjectLegacyReq)
 	}
-	resp := &CheckPermissionsForProjectLegacyResponse{request: req}
+	resp := &CheckPermissionsForProjectLegacyResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.TeamProject{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewCheckPermissionsForProjectLegacyResponse(r, opts.PreserveResponseBody())
+}
+
+// NewCheckPermissionsForProjectLegacyResponse builds a new *CheckPermissionsForProjectLegacyResponse from an *http.Response
+func NewCheckPermissionsForProjectLegacyResponse(resp *http.Response, preserveBody bool) (*CheckPermissionsForProjectLegacyResponse, error) {
+	var result CheckPermissionsForProjectLegacyResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1184,7 +1302,6 @@ func (r *CheckPermissionsForProjectLegacyReq) requestBuilder() *internal.Request
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"inertia"},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -1194,7 +1311,6 @@ func (r *CheckPermissionsForProjectLegacyReq) requestBuilder() *internal.Request
 		RequiredPreviews:   []string{"inertia"},
 		URLPath:            fmt.Sprintf("/teams/%v/projects/%v", r.TeamId, r.ProjectId),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -1204,7 +1320,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *CheckPermissionsForProjectLegacyReq) Rel(link string, resp *CheckPermissionsForProjectLegacyResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1218,9 +1334,12 @@ CheckPermissionsForProjectLegacyResponse is a response for CheckPermissionsForPr
 https://developer.github.com/v3/teams/#check-team-permissions-for-a-project-legacy
 */
 type CheckPermissionsForProjectLegacyResponse struct {
-	requests.Response
-	request *CheckPermissionsForProjectLegacyReq
-	Data    components.TeamProject
+	httpResponse *http.Response
+	Data         components.TeamProject
+}
+
+func (r *CheckPermissionsForProjectLegacyResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1240,23 +1359,38 @@ func CheckPermissionsForRepoInOrg(ctx context.Context, req *CheckPermissionsForR
 	if req == nil {
 		req = new(CheckPermissionsForRepoInOrgReq)
 	}
-	resp := &CheckPermissionsForRepoInOrgResponse{request: req}
+	resp := &CheckPermissionsForRepoInOrgResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.TeamRepository{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewCheckPermissionsForRepoInOrgResponse(r, opts.PreserveResponseBody())
+}
+
+// NewCheckPermissionsForRepoInOrgResponse builds a new *CheckPermissionsForRepoInOrgResponse from an *http.Response
+func NewCheckPermissionsForRepoInOrgResponse(resp *http.Response, preserveBody bool) (*CheckPermissionsForRepoInOrgResponse, error) {
+	var result CheckPermissionsForRepoInOrgResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200, 204})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1302,7 +1436,6 @@ func (r *CheckPermissionsForRepoInOrgReq) requestBuilder() *internal.RequestBuil
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/vnd.github.v3.repository+json")},
@@ -1312,7 +1445,6 @@ func (r *CheckPermissionsForRepoInOrgReq) requestBuilder() *internal.RequestBuil
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/teams/%v/repos/%v/%v", r.Org, r.TeamSlug, r.Owner, r.Repo),
 		URLQuery:           query,
-		ValidStatuses:      []int{200, 204},
 	}
 	return builder
 }
@@ -1322,7 +1454,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *CheckPermissionsForRepoInOrgReq) Rel(link string, resp *CheckPermissionsForRepoInOrgResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1336,9 +1468,12 @@ CheckPermissionsForRepoInOrgResponse is a response for CheckPermissionsForRepoIn
 https://developer.github.com/v3/teams/#check-team-permissions-for-a-repository
 */
 type CheckPermissionsForRepoInOrgResponse struct {
-	requests.Response
-	request *CheckPermissionsForRepoInOrgReq
-	Data    components.TeamRepository
+	httpResponse *http.Response
+	Data         components.TeamRepository
+}
+
+func (r *CheckPermissionsForRepoInOrgResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1358,23 +1493,38 @@ func CheckPermissionsForRepoLegacy(ctx context.Context, req *CheckPermissionsFor
 	if req == nil {
 		req = new(CheckPermissionsForRepoLegacyReq)
 	}
-	resp := &CheckPermissionsForRepoLegacyResponse{request: req}
+	resp := &CheckPermissionsForRepoLegacyResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.TeamRepository{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewCheckPermissionsForRepoLegacyResponse(r, opts.PreserveResponseBody())
+}
+
+// NewCheckPermissionsForRepoLegacyResponse builds a new *CheckPermissionsForRepoLegacyResponse from an *http.Response
+func NewCheckPermissionsForRepoLegacyResponse(resp *http.Response, preserveBody bool) (*CheckPermissionsForRepoLegacyResponse, error) {
+	var result CheckPermissionsForRepoLegacyResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200, 204})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1417,7 +1567,6 @@ func (r *CheckPermissionsForRepoLegacyReq) requestBuilder() *internal.RequestBui
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/vnd.github.v3.repository+json")},
@@ -1427,7 +1576,6 @@ func (r *CheckPermissionsForRepoLegacyReq) requestBuilder() *internal.RequestBui
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/teams/%v/repos/%v/%v", r.TeamId, r.Owner, r.Repo),
 		URLQuery:           query,
-		ValidStatuses:      []int{200, 204},
 	}
 	return builder
 }
@@ -1437,7 +1585,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *CheckPermissionsForRepoLegacyReq) Rel(link string, resp *CheckPermissionsForRepoLegacyResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1451,9 +1599,12 @@ CheckPermissionsForRepoLegacyResponse is a response for CheckPermissionsForRepoL
 https://developer.github.com/v3/teams/#check-team-permissions-for-a-repository-legacy
 */
 type CheckPermissionsForRepoLegacyResponse struct {
-	requests.Response
-	request *CheckPermissionsForRepoLegacyReq
-	Data    components.TeamRepository
+	httpResponse *http.Response
+	Data         components.TeamRepository
+}
+
+func (r *CheckPermissionsForRepoLegacyResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1473,23 +1624,38 @@ func Create(ctx context.Context, req *CreateReq, opt ...requests.Option) (*Creat
 	if req == nil {
 		req = new(CreateReq)
 	}
-	resp := &CreateResponse{request: req}
+	resp := &CreateResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.TeamFull{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewCreateResponse(r, opts.PreserveResponseBody())
+}
+
+// NewCreateResponse builds a new *CreateResponse from an *http.Response
+func NewCreateResponse(resp *http.Response, preserveBody bool) (*CreateResponse, error) {
+	var result CreateResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{201})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1531,7 +1697,6 @@ func (r *CreateReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{201},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
@@ -1544,7 +1709,6 @@ func (r *CreateReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/orgs/%v/teams", r.Org),
 		URLQuery:         query,
-		ValidStatuses:    []int{201},
 	}
 	return builder
 }
@@ -1554,7 +1718,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *CreateReq) Rel(link string, resp *CreateResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1615,9 +1779,12 @@ CreateResponse is a response for Create
 https://developer.github.com/v3/teams/#create-a-team
 */
 type CreateResponse struct {
-	requests.Response
-	request *CreateReq
-	Data    components.TeamFull
+	httpResponse *http.Response
+	Data         components.TeamFull
+}
+
+func (r *CreateResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1637,23 +1804,38 @@ func CreateDiscussionCommentInOrg(ctx context.Context, req *CreateDiscussionComm
 	if req == nil {
 		req = new(CreateDiscussionCommentInOrgReq)
 	}
-	resp := &CreateDiscussionCommentInOrgResponse{request: req}
+	resp := &CreateDiscussionCommentInOrgResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.TeamDiscussionComment{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewCreateDiscussionCommentInOrgResponse(r, opts.PreserveResponseBody())
+}
+
+// NewCreateDiscussionCommentInOrgResponse builds a new *CreateDiscussionCommentInOrgResponse from an *http.Response
+func NewCreateDiscussionCommentInOrgResponse(resp *http.Response, preserveBody bool) (*CreateDiscussionCommentInOrgResponse, error) {
+	var result CreateDiscussionCommentInOrgResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{201})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1710,7 +1892,6 @@ func (r *CreateDiscussionCommentInOrgReq) requestBuilder() *internal.RequestBuil
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"squirrel-girl"},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{201},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
@@ -1723,7 +1904,6 @@ func (r *CreateDiscussionCommentInOrgReq) requestBuilder() *internal.RequestBuil
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/comments", r.Org, r.TeamSlug, r.DiscussionNumber),
 		URLQuery:         query,
-		ValidStatuses:    []int{201},
 	}
 	return builder
 }
@@ -1733,7 +1913,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *CreateDiscussionCommentInOrgReq) Rel(link string, resp *CreateDiscussionCommentInOrgResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1758,9 +1938,12 @@ CreateDiscussionCommentInOrgResponse is a response for CreateDiscussionCommentIn
 https://developer.github.com/v3/teams/discussion_comments/#create-a-discussion-comment
 */
 type CreateDiscussionCommentInOrgResponse struct {
-	requests.Response
-	request *CreateDiscussionCommentInOrgReq
-	Data    components.TeamDiscussionComment
+	httpResponse *http.Response
+	Data         components.TeamDiscussionComment
+}
+
+func (r *CreateDiscussionCommentInOrgResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1780,23 +1963,38 @@ func CreateDiscussionCommentLegacy(ctx context.Context, req *CreateDiscussionCom
 	if req == nil {
 		req = new(CreateDiscussionCommentLegacyReq)
 	}
-	resp := &CreateDiscussionCommentLegacyResponse{request: req}
+	resp := &CreateDiscussionCommentLegacyResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.TeamDiscussionComment{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewCreateDiscussionCommentLegacyResponse(r, opts.PreserveResponseBody())
+}
+
+// NewCreateDiscussionCommentLegacyResponse builds a new *CreateDiscussionCommentLegacyResponse from an *http.Response
+func NewCreateDiscussionCommentLegacyResponse(resp *http.Response, preserveBody bool) (*CreateDiscussionCommentLegacyResponse, error) {
+	var result CreateDiscussionCommentLegacyResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{201})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1850,7 +2048,6 @@ func (r *CreateDiscussionCommentLegacyReq) requestBuilder() *internal.RequestBui
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"squirrel-girl"},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{201},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
@@ -1863,7 +2060,6 @@ func (r *CreateDiscussionCommentLegacyReq) requestBuilder() *internal.RequestBui
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/teams/%v/discussions/%v/comments", r.TeamId, r.DiscussionNumber),
 		URLQuery:         query,
-		ValidStatuses:    []int{201},
 	}
 	return builder
 }
@@ -1873,7 +2069,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *CreateDiscussionCommentLegacyReq) Rel(link string, resp *CreateDiscussionCommentLegacyResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1898,9 +2094,12 @@ CreateDiscussionCommentLegacyResponse is a response for CreateDiscussionCommentL
 https://developer.github.com/v3/teams/discussion_comments/#create-a-discussion-comment-legacy
 */
 type CreateDiscussionCommentLegacyResponse struct {
-	requests.Response
-	request *CreateDiscussionCommentLegacyReq
-	Data    components.TeamDiscussionComment
+	httpResponse *http.Response
+	Data         components.TeamDiscussionComment
+}
+
+func (r *CreateDiscussionCommentLegacyResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1920,23 +2119,38 @@ func CreateDiscussionInOrg(ctx context.Context, req *CreateDiscussionInOrgReq, o
 	if req == nil {
 		req = new(CreateDiscussionInOrgReq)
 	}
-	resp := &CreateDiscussionInOrgResponse{request: req}
+	resp := &CreateDiscussionInOrgResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.TeamDiscussion{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewCreateDiscussionInOrgResponse(r, opts.PreserveResponseBody())
+}
+
+// NewCreateDiscussionInOrgResponse builds a new *CreateDiscussionInOrgResponse from an *http.Response
+func NewCreateDiscussionInOrgResponse(resp *http.Response, preserveBody bool) (*CreateDiscussionInOrgResponse, error) {
+	var result CreateDiscussionInOrgResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{201})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1992,7 +2206,6 @@ func (r *CreateDiscussionInOrgReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"squirrel-girl"},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{201},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
@@ -2005,7 +2218,6 @@ func (r *CreateDiscussionInOrgReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/orgs/%v/teams/%v/discussions", r.Org, r.TeamSlug),
 		URLQuery:         query,
-		ValidStatuses:    []int{201},
 	}
 	return builder
 }
@@ -2015,7 +2227,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *CreateDiscussionInOrgReq) Rel(link string, resp *CreateDiscussionInOrgResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -2050,9 +2262,12 @@ CreateDiscussionInOrgResponse is a response for CreateDiscussionInOrg
 https://developer.github.com/v3/teams/discussions/#create-a-discussion
 */
 type CreateDiscussionInOrgResponse struct {
-	requests.Response
-	request *CreateDiscussionInOrgReq
-	Data    components.TeamDiscussion
+	httpResponse *http.Response
+	Data         components.TeamDiscussion
+}
+
+func (r *CreateDiscussionInOrgResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -2072,23 +2287,38 @@ func CreateDiscussionLegacy(ctx context.Context, req *CreateDiscussionLegacyReq,
 	if req == nil {
 		req = new(CreateDiscussionLegacyReq)
 	}
-	resp := &CreateDiscussionLegacyResponse{request: req}
+	resp := &CreateDiscussionLegacyResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.TeamDiscussion{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewCreateDiscussionLegacyResponse(r, opts.PreserveResponseBody())
+}
+
+// NewCreateDiscussionLegacyResponse builds a new *CreateDiscussionLegacyResponse from an *http.Response
+func NewCreateDiscussionLegacyResponse(resp *http.Response, preserveBody bool) (*CreateDiscussionLegacyResponse, error) {
+	var result CreateDiscussionLegacyResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{201})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -2141,7 +2371,6 @@ func (r *CreateDiscussionLegacyReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"squirrel-girl"},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{201},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
@@ -2154,7 +2383,6 @@ func (r *CreateDiscussionLegacyReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/teams/%v/discussions", r.TeamId),
 		URLQuery:         query,
-		ValidStatuses:    []int{201},
 	}
 	return builder
 }
@@ -2164,7 +2392,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *CreateDiscussionLegacyReq) Rel(link string, resp *CreateDiscussionLegacyResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -2199,9 +2427,12 @@ CreateDiscussionLegacyResponse is a response for CreateDiscussionLegacy
 https://developer.github.com/v3/teams/discussions/#create-a-discussion-legacy
 */
 type CreateDiscussionLegacyResponse struct {
-	requests.Response
-	request *CreateDiscussionLegacyReq
-	Data    components.TeamDiscussion
+	httpResponse *http.Response
+	Data         components.TeamDiscussion
+}
+
+func (r *CreateDiscussionLegacyResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -2221,23 +2452,38 @@ func CreateOrUpdateIdpGroupConnectionsInOrg(ctx context.Context, req *CreateOrUp
 	if req == nil {
 		req = new(CreateOrUpdateIdpGroupConnectionsInOrgReq)
 	}
-	resp := &CreateOrUpdateIdpGroupConnectionsInOrgResponse{request: req}
+	resp := &CreateOrUpdateIdpGroupConnectionsInOrgResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.GroupMapping{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewCreateOrUpdateIdpGroupConnectionsInOrgResponse(r, opts.PreserveResponseBody())
+}
+
+// NewCreateOrUpdateIdpGroupConnectionsInOrgResponse builds a new *CreateOrUpdateIdpGroupConnectionsInOrgResponse from an *http.Response
+func NewCreateOrUpdateIdpGroupConnectionsInOrgResponse(resp *http.Response, preserveBody bool) (*CreateOrUpdateIdpGroupConnectionsInOrgResponse, error) {
+	var result CreateOrUpdateIdpGroupConnectionsInOrgResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -2282,7 +2528,6 @@ func (r *CreateOrUpdateIdpGroupConnectionsInOrgReq) requestBuilder() *internal.R
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
@@ -2295,7 +2540,6 @@ func (r *CreateOrUpdateIdpGroupConnectionsInOrgReq) requestBuilder() *internal.R
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/orgs/%v/teams/%v/team-sync/group-mappings", r.Org, r.TeamSlug),
 		URLQuery:         query,
-		ValidStatuses:    []int{200},
 	}
 	return builder
 }
@@ -2305,7 +2549,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *CreateOrUpdateIdpGroupConnectionsInOrgReq) Rel(link string, resp *CreateOrUpdateIdpGroupConnectionsInOrgResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -2347,9 +2591,12 @@ CreateOrUpdateIdpGroupConnectionsInOrgResponse is a response for CreateOrUpdateI
 https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections
 */
 type CreateOrUpdateIdpGroupConnectionsInOrgResponse struct {
-	requests.Response
-	request *CreateOrUpdateIdpGroupConnectionsInOrgReq
-	Data    components.GroupMapping
+	httpResponse *http.Response
+	Data         components.GroupMapping
+}
+
+func (r *CreateOrUpdateIdpGroupConnectionsInOrgResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -2369,23 +2616,38 @@ func CreateOrUpdateIdpGroupConnectionsLegacy(ctx context.Context, req *CreateOrU
 	if req == nil {
 		req = new(CreateOrUpdateIdpGroupConnectionsLegacyReq)
 	}
-	resp := &CreateOrUpdateIdpGroupConnectionsLegacyResponse{request: req}
+	resp := &CreateOrUpdateIdpGroupConnectionsLegacyResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.GroupMapping{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewCreateOrUpdateIdpGroupConnectionsLegacyResponse(r, opts.PreserveResponseBody())
+}
+
+// NewCreateOrUpdateIdpGroupConnectionsLegacyResponse builds a new *CreateOrUpdateIdpGroupConnectionsLegacyResponse from an *http.Response
+func NewCreateOrUpdateIdpGroupConnectionsLegacyResponse(resp *http.Response, preserveBody bool) (*CreateOrUpdateIdpGroupConnectionsLegacyResponse, error) {
+	var result CreateOrUpdateIdpGroupConnectionsLegacyResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -2427,7 +2689,6 @@ func (r *CreateOrUpdateIdpGroupConnectionsLegacyReq) requestBuilder() *internal.
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
@@ -2440,7 +2701,6 @@ func (r *CreateOrUpdateIdpGroupConnectionsLegacyReq) requestBuilder() *internal.
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/teams/%v/team-sync/group-mappings", r.TeamId),
 		URLQuery:         query,
-		ValidStatuses:    []int{200},
 	}
 	return builder
 }
@@ -2450,7 +2710,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *CreateOrUpdateIdpGroupConnectionsLegacyReq) Rel(link string, resp *CreateOrUpdateIdpGroupConnectionsLegacyResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -2496,9 +2756,12 @@ CreateOrUpdateIdpGroupConnectionsLegacyResponse is a response for CreateOrUpdate
 https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections-legacy
 */
 type CreateOrUpdateIdpGroupConnectionsLegacyResponse struct {
-	requests.Response
-	request *CreateOrUpdateIdpGroupConnectionsLegacyReq
-	Data    components.GroupMapping
+	httpResponse *http.Response
+	Data         components.GroupMapping
+}
+
+func (r *CreateOrUpdateIdpGroupConnectionsLegacyResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -2518,22 +2781,32 @@ func DeleteDiscussionCommentInOrg(ctx context.Context, req *DeleteDiscussionComm
 	if req == nil {
 		req = new(DeleteDiscussionCommentInOrgReq)
 	}
-	resp := &DeleteDiscussionCommentInOrgResponse{request: req}
+	resp := &DeleteDiscussionCommentInOrgResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewDeleteDiscussionCommentInOrgResponse(r, opts.PreserveResponseBody())
+}
+
+// NewDeleteDiscussionCommentInOrgResponse builds a new *DeleteDiscussionCommentInOrgResponse from an *http.Response
+func NewDeleteDiscussionCommentInOrgResponse(resp *http.Response, preserveBody bool) (*DeleteDiscussionCommentInOrgResponse, error) {
+	var result DeleteDiscussionCommentInOrgResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -2579,7 +2852,6 @@ func (r *DeleteDiscussionCommentInOrgReq) requestBuilder() *internal.RequestBuil
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -2589,7 +2861,6 @@ func (r *DeleteDiscussionCommentInOrgReq) requestBuilder() *internal.RequestBuil
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/comments/%v", r.Org, r.TeamSlug, r.DiscussionNumber, r.CommentNumber),
 		URLQuery:           query,
-		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -2599,7 +2870,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *DeleteDiscussionCommentInOrgReq) Rel(link string, resp *DeleteDiscussionCommentInOrgResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -2613,8 +2884,11 @@ DeleteDiscussionCommentInOrgResponse is a response for DeleteDiscussionCommentIn
 https://developer.github.com/v3/teams/discussion_comments/#delete-a-discussion-comment
 */
 type DeleteDiscussionCommentInOrgResponse struct {
-	requests.Response
-	request *DeleteDiscussionCommentInOrgReq
+	httpResponse *http.Response
+}
+
+func (r *DeleteDiscussionCommentInOrgResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -2634,22 +2908,32 @@ func DeleteDiscussionCommentLegacy(ctx context.Context, req *DeleteDiscussionCom
 	if req == nil {
 		req = new(DeleteDiscussionCommentLegacyReq)
 	}
-	resp := &DeleteDiscussionCommentLegacyResponse{request: req}
+	resp := &DeleteDiscussionCommentLegacyResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewDeleteDiscussionCommentLegacyResponse(r, opts.PreserveResponseBody())
+}
+
+// NewDeleteDiscussionCommentLegacyResponse builds a new *DeleteDiscussionCommentLegacyResponse from an *http.Response
+func NewDeleteDiscussionCommentLegacyResponse(resp *http.Response, preserveBody bool) (*DeleteDiscussionCommentLegacyResponse, error) {
+	var result DeleteDiscussionCommentLegacyResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -2692,7 +2976,6 @@ func (r *DeleteDiscussionCommentLegacyReq) requestBuilder() *internal.RequestBui
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -2702,7 +2985,6 @@ func (r *DeleteDiscussionCommentLegacyReq) requestBuilder() *internal.RequestBui
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/teams/%v/discussions/%v/comments/%v", r.TeamId, r.DiscussionNumber, r.CommentNumber),
 		URLQuery:           query,
-		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -2712,7 +2994,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *DeleteDiscussionCommentLegacyReq) Rel(link string, resp *DeleteDiscussionCommentLegacyResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -2726,8 +3008,11 @@ DeleteDiscussionCommentLegacyResponse is a response for DeleteDiscussionCommentL
 https://developer.github.com/v3/teams/discussion_comments/#delete-a-discussion-comment-legacy
 */
 type DeleteDiscussionCommentLegacyResponse struct {
-	requests.Response
-	request *DeleteDiscussionCommentLegacyReq
+	httpResponse *http.Response
+}
+
+func (r *DeleteDiscussionCommentLegacyResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -2747,22 +3032,32 @@ func DeleteDiscussionInOrg(ctx context.Context, req *DeleteDiscussionInOrgReq, o
 	if req == nil {
 		req = new(DeleteDiscussionInOrgReq)
 	}
-	resp := &DeleteDiscussionInOrgResponse{request: req}
+	resp := &DeleteDiscussionInOrgResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewDeleteDiscussionInOrgResponse(r, opts.PreserveResponseBody())
+}
+
+// NewDeleteDiscussionInOrgResponse builds a new *DeleteDiscussionInOrgResponse from an *http.Response
+func NewDeleteDiscussionInOrgResponse(resp *http.Response, preserveBody bool) (*DeleteDiscussionInOrgResponse, error) {
+	var result DeleteDiscussionInOrgResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -2807,7 +3102,6 @@ func (r *DeleteDiscussionInOrgReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -2817,7 +3111,6 @@ func (r *DeleteDiscussionInOrgReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v", r.Org, r.TeamSlug, r.DiscussionNumber),
 		URLQuery:           query,
-		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -2827,7 +3120,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *DeleteDiscussionInOrgReq) Rel(link string, resp *DeleteDiscussionInOrgResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -2841,8 +3134,11 @@ DeleteDiscussionInOrgResponse is a response for DeleteDiscussionInOrg
 https://developer.github.com/v3/teams/discussions/#delete-a-discussion
 */
 type DeleteDiscussionInOrgResponse struct {
-	requests.Response
-	request *DeleteDiscussionInOrgReq
+	httpResponse *http.Response
+}
+
+func (r *DeleteDiscussionInOrgResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -2862,22 +3158,32 @@ func DeleteDiscussionLegacy(ctx context.Context, req *DeleteDiscussionLegacyReq,
 	if req == nil {
 		req = new(DeleteDiscussionLegacyReq)
 	}
-	resp := &DeleteDiscussionLegacyResponse{request: req}
+	resp := &DeleteDiscussionLegacyResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewDeleteDiscussionLegacyResponse(r, opts.PreserveResponseBody())
+}
+
+// NewDeleteDiscussionLegacyResponse builds a new *DeleteDiscussionLegacyResponse from an *http.Response
+func NewDeleteDiscussionLegacyResponse(resp *http.Response, preserveBody bool) (*DeleteDiscussionLegacyResponse, error) {
+	var result DeleteDiscussionLegacyResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -2919,7 +3225,6 @@ func (r *DeleteDiscussionLegacyReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -2929,7 +3234,6 @@ func (r *DeleteDiscussionLegacyReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/teams/%v/discussions/%v", r.TeamId, r.DiscussionNumber),
 		URLQuery:           query,
-		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -2939,7 +3243,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *DeleteDiscussionLegacyReq) Rel(link string, resp *DeleteDiscussionLegacyResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -2953,8 +3257,11 @@ DeleteDiscussionLegacyResponse is a response for DeleteDiscussionLegacy
 https://developer.github.com/v3/teams/discussions/#delete-a-discussion-legacy
 */
 type DeleteDiscussionLegacyResponse struct {
-	requests.Response
-	request *DeleteDiscussionLegacyReq
+	httpResponse *http.Response
+}
+
+func (r *DeleteDiscussionLegacyResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -2974,22 +3281,32 @@ func DeleteInOrg(ctx context.Context, req *DeleteInOrgReq, opt ...requests.Optio
 	if req == nil {
 		req = new(DeleteInOrgReq)
 	}
-	resp := &DeleteInOrgResponse{request: req}
+	resp := &DeleteInOrgResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewDeleteInOrgResponse(r, opts.PreserveResponseBody())
+}
+
+// NewDeleteInOrgResponse builds a new *DeleteInOrgResponse from an *http.Response
+func NewDeleteInOrgResponse(resp *http.Response, preserveBody bool) (*DeleteInOrgResponse, error) {
+	var result DeleteInOrgResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -3033,7 +3350,6 @@ func (r *DeleteInOrgReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -3043,7 +3359,6 @@ func (r *DeleteInOrgReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/teams/%v", r.Org, r.TeamSlug),
 		URLQuery:           query,
-		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -3053,7 +3368,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *DeleteInOrgReq) Rel(link string, resp *DeleteInOrgResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -3067,8 +3382,11 @@ DeleteInOrgResponse is a response for DeleteInOrg
 https://developer.github.com/v3/teams/#delete-a-team
 */
 type DeleteInOrgResponse struct {
-	requests.Response
-	request *DeleteInOrgReq
+	httpResponse *http.Response
+}
+
+func (r *DeleteInOrgResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -3088,22 +3406,32 @@ func DeleteLegacy(ctx context.Context, req *DeleteLegacyReq, opt ...requests.Opt
 	if req == nil {
 		req = new(DeleteLegacyReq)
 	}
-	resp := &DeleteLegacyResponse{request: req}
+	resp := &DeleteLegacyResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewDeleteLegacyResponse(r, opts.PreserveResponseBody())
+}
+
+// NewDeleteLegacyResponse builds a new *DeleteLegacyResponse from an *http.Response
+func NewDeleteLegacyResponse(resp *http.Response, preserveBody bool) (*DeleteLegacyResponse, error) {
+	var result DeleteLegacyResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -3144,7 +3472,6 @@ func (r *DeleteLegacyReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -3154,7 +3481,6 @@ func (r *DeleteLegacyReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/teams/%v", r.TeamId),
 		URLQuery:           query,
-		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -3164,7 +3490,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *DeleteLegacyReq) Rel(link string, resp *DeleteLegacyResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -3178,8 +3504,11 @@ DeleteLegacyResponse is a response for DeleteLegacy
 https://developer.github.com/v3/teams/#delete-a-team-legacy
 */
 type DeleteLegacyResponse struct {
-	requests.Response
-	request *DeleteLegacyReq
+	httpResponse *http.Response
+}
+
+func (r *DeleteLegacyResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -3199,23 +3528,38 @@ func GetByName(ctx context.Context, req *GetByNameReq, opt ...requests.Option) (
 	if req == nil {
 		req = new(GetByNameReq)
 	}
-	resp := &GetByNameResponse{request: req}
+	resp := &GetByNameResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.TeamFull{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetByNameResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetByNameResponse builds a new *GetByNameResponse from an *http.Response
+func NewGetByNameResponse(resp *http.Response, preserveBody bool) (*GetByNameResponse, error) {
+	var result GetByNameResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -3259,7 +3603,6 @@ func (r *GetByNameReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -3269,7 +3612,6 @@ func (r *GetByNameReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/teams/%v", r.Org, r.TeamSlug),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -3279,7 +3621,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetByNameReq) Rel(link string, resp *GetByNameResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -3293,9 +3635,12 @@ GetByNameResponse is a response for GetByName
 https://developer.github.com/v3/teams/#get-a-team-by-name
 */
 type GetByNameResponse struct {
-	requests.Response
-	request *GetByNameReq
-	Data    components.TeamFull
+	httpResponse *http.Response
+	Data         components.TeamFull
+}
+
+func (r *GetByNameResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -3315,23 +3660,38 @@ func GetDiscussionCommentInOrg(ctx context.Context, req *GetDiscussionCommentInO
 	if req == nil {
 		req = new(GetDiscussionCommentInOrgReq)
 	}
-	resp := &GetDiscussionCommentInOrgResponse{request: req}
+	resp := &GetDiscussionCommentInOrgResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.TeamDiscussionComment{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetDiscussionCommentInOrgResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetDiscussionCommentInOrgResponse builds a new *GetDiscussionCommentInOrgResponse from an *http.Response
+func NewGetDiscussionCommentInOrgResponse(resp *http.Response, preserveBody bool) (*GetDiscussionCommentInOrgResponse, error) {
+	var result GetDiscussionCommentInOrgResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -3388,7 +3748,6 @@ func (r *GetDiscussionCommentInOrgReq) requestBuilder() *internal.RequestBuilder
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"squirrel-girl"},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -3398,7 +3757,6 @@ func (r *GetDiscussionCommentInOrgReq) requestBuilder() *internal.RequestBuilder
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/comments/%v", r.Org, r.TeamSlug, r.DiscussionNumber, r.CommentNumber),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -3408,7 +3766,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetDiscussionCommentInOrgReq) Rel(link string, resp *GetDiscussionCommentInOrgResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -3422,9 +3780,12 @@ GetDiscussionCommentInOrgResponse is a response for GetDiscussionCommentInOrg
 https://developer.github.com/v3/teams/discussion_comments/#get-a-discussion-comment
 */
 type GetDiscussionCommentInOrgResponse struct {
-	requests.Response
-	request *GetDiscussionCommentInOrgReq
-	Data    components.TeamDiscussionComment
+	httpResponse *http.Response
+	Data         components.TeamDiscussionComment
+}
+
+func (r *GetDiscussionCommentInOrgResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -3444,23 +3805,38 @@ func GetDiscussionCommentLegacy(ctx context.Context, req *GetDiscussionCommentLe
 	if req == nil {
 		req = new(GetDiscussionCommentLegacyReq)
 	}
-	resp := &GetDiscussionCommentLegacyResponse{request: req}
+	resp := &GetDiscussionCommentLegacyResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.TeamDiscussionComment{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetDiscussionCommentLegacyResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetDiscussionCommentLegacyResponse builds a new *GetDiscussionCommentLegacyResponse from an *http.Response
+func NewGetDiscussionCommentLegacyResponse(resp *http.Response, preserveBody bool) (*GetDiscussionCommentLegacyResponse, error) {
+	var result GetDiscussionCommentLegacyResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -3514,7 +3890,6 @@ func (r *GetDiscussionCommentLegacyReq) requestBuilder() *internal.RequestBuilde
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"squirrel-girl"},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -3524,7 +3899,6 @@ func (r *GetDiscussionCommentLegacyReq) requestBuilder() *internal.RequestBuilde
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/teams/%v/discussions/%v/comments/%v", r.TeamId, r.DiscussionNumber, r.CommentNumber),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -3534,7 +3908,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetDiscussionCommentLegacyReq) Rel(link string, resp *GetDiscussionCommentLegacyResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -3548,9 +3922,12 @@ GetDiscussionCommentLegacyResponse is a response for GetDiscussionCommentLegacy
 https://developer.github.com/v3/teams/discussion_comments/#get-a-discussion-comment-legacy
 */
 type GetDiscussionCommentLegacyResponse struct {
-	requests.Response
-	request *GetDiscussionCommentLegacyReq
-	Data    components.TeamDiscussionComment
+	httpResponse *http.Response
+	Data         components.TeamDiscussionComment
+}
+
+func (r *GetDiscussionCommentLegacyResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -3570,23 +3947,38 @@ func GetDiscussionInOrg(ctx context.Context, req *GetDiscussionInOrgReq, opt ...
 	if req == nil {
 		req = new(GetDiscussionInOrgReq)
 	}
-	resp := &GetDiscussionInOrgResponse{request: req}
+	resp := &GetDiscussionInOrgResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.TeamDiscussion{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetDiscussionInOrgResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetDiscussionInOrgResponse builds a new *GetDiscussionInOrgResponse from an *http.Response
+func NewGetDiscussionInOrgResponse(resp *http.Response, preserveBody bool) (*GetDiscussionInOrgResponse, error) {
+	var result GetDiscussionInOrgResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -3642,7 +4034,6 @@ func (r *GetDiscussionInOrgReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"squirrel-girl"},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -3652,7 +4043,6 @@ func (r *GetDiscussionInOrgReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v", r.Org, r.TeamSlug, r.DiscussionNumber),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -3662,7 +4052,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetDiscussionInOrgReq) Rel(link string, resp *GetDiscussionInOrgResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -3676,9 +4066,12 @@ GetDiscussionInOrgResponse is a response for GetDiscussionInOrg
 https://developer.github.com/v3/teams/discussions/#get-a-discussion
 */
 type GetDiscussionInOrgResponse struct {
-	requests.Response
-	request *GetDiscussionInOrgReq
-	Data    components.TeamDiscussion
+	httpResponse *http.Response
+	Data         components.TeamDiscussion
+}
+
+func (r *GetDiscussionInOrgResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -3698,23 +4091,38 @@ func GetDiscussionLegacy(ctx context.Context, req *GetDiscussionLegacyReq, opt .
 	if req == nil {
 		req = new(GetDiscussionLegacyReq)
 	}
-	resp := &GetDiscussionLegacyResponse{request: req}
+	resp := &GetDiscussionLegacyResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.TeamDiscussion{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetDiscussionLegacyResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetDiscussionLegacyResponse builds a new *GetDiscussionLegacyResponse from an *http.Response
+func NewGetDiscussionLegacyResponse(resp *http.Response, preserveBody bool) (*GetDiscussionLegacyResponse, error) {
+	var result GetDiscussionLegacyResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -3767,7 +4175,6 @@ func (r *GetDiscussionLegacyReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"squirrel-girl"},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -3777,7 +4184,6 @@ func (r *GetDiscussionLegacyReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/teams/%v/discussions/%v", r.TeamId, r.DiscussionNumber),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -3787,7 +4193,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetDiscussionLegacyReq) Rel(link string, resp *GetDiscussionLegacyResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -3801,9 +4207,12 @@ GetDiscussionLegacyResponse is a response for GetDiscussionLegacy
 https://developer.github.com/v3/teams/discussions/#get-a-discussion-legacy
 */
 type GetDiscussionLegacyResponse struct {
-	requests.Response
-	request *GetDiscussionLegacyReq
-	Data    components.TeamDiscussion
+	httpResponse *http.Response
+	Data         components.TeamDiscussion
+}
+
+func (r *GetDiscussionLegacyResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -3823,23 +4232,38 @@ func GetLegacy(ctx context.Context, req *GetLegacyReq, opt ...requests.Option) (
 	if req == nil {
 		req = new(GetLegacyReq)
 	}
-	resp := &GetLegacyResponse{request: req}
+	resp := &GetLegacyResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.TeamFull{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetLegacyResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetLegacyResponse builds a new *GetLegacyResponse from an *http.Response
+func NewGetLegacyResponse(resp *http.Response, preserveBody bool) (*GetLegacyResponse, error) {
+	var result GetLegacyResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -3880,7 +4304,6 @@ func (r *GetLegacyReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -3890,7 +4313,6 @@ func (r *GetLegacyReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/teams/%v", r.TeamId),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -3900,7 +4322,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetLegacyReq) Rel(link string, resp *GetLegacyResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -3914,9 +4336,12 @@ GetLegacyResponse is a response for GetLegacy
 https://developer.github.com/v3/teams/#get-a-team-legacy
 */
 type GetLegacyResponse struct {
-	requests.Response
-	request *GetLegacyReq
-	Data    components.TeamFull
+	httpResponse *http.Response
+	Data         components.TeamFull
+}
+
+func (r *GetLegacyResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -3936,26 +4361,36 @@ func GetMemberLegacy(ctx context.Context, req *GetMemberLegacyReq, opt ...reques
 	if req == nil {
 		req = new(GetMemberLegacyReq)
 	}
-	resp := &GetMemberLegacyResponse{request: req}
+	resp := &GetMemberLegacyResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.SetBoolResult(r, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	resp.httpResponse = r
+
+	return NewGetMemberLegacyResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetMemberLegacyResponse builds a new *GetMemberLegacyResponse from an *http.Response
+func NewGetMemberLegacyResponse(resp *http.Response, preserveBody bool) (*GetMemberLegacyResponse, error) {
+	var result GetMemberLegacyResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204, 404})
 	if err != nil {
-		return nil, err
+		return &result, err
 	}
-	return resp, nil
+	err = internal.SetBoolResult(resp, &result.Data)
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -3997,7 +4432,6 @@ func (r *GetMemberLegacyReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrBoolean},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -4007,7 +4441,6 @@ func (r *GetMemberLegacyReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/teams/%v/members/%v", r.TeamId, r.Username),
 		URLQuery:           query,
-		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -4017,7 +4450,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetMemberLegacyReq) Rel(link string, resp *GetMemberLegacyResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -4031,9 +4464,12 @@ GetMemberLegacyResponse is a response for GetMemberLegacy
 https://developer.github.com/v3/teams/members/#get-team-member-legacy
 */
 type GetMemberLegacyResponse struct {
-	requests.Response
-	request *GetMemberLegacyReq
-	Data    bool
+	httpResponse *http.Response
+	Data         bool
+}
+
+func (r *GetMemberLegacyResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -4053,23 +4489,38 @@ func GetMembershipForUserInOrg(ctx context.Context, req *GetMembershipForUserInO
 	if req == nil {
 		req = new(GetMembershipForUserInOrgReq)
 	}
-	resp := &GetMembershipForUserInOrgResponse{request: req}
+	resp := &GetMembershipForUserInOrgResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.TeamMembership{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetMembershipForUserInOrgResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetMembershipForUserInOrgResponse builds a new *GetMembershipForUserInOrgResponse from an *http.Response
+func NewGetMembershipForUserInOrgResponse(resp *http.Response, preserveBody bool) (*GetMembershipForUserInOrgResponse, error) {
+	var result GetMembershipForUserInOrgResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -4114,7 +4565,6 @@ func (r *GetMembershipForUserInOrgReq) requestBuilder() *internal.RequestBuilder
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -4124,7 +4574,6 @@ func (r *GetMembershipForUserInOrgReq) requestBuilder() *internal.RequestBuilder
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/teams/%v/memberships/%v", r.Org, r.TeamSlug, r.Username),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -4134,7 +4583,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetMembershipForUserInOrgReq) Rel(link string, resp *GetMembershipForUserInOrgResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -4148,9 +4597,12 @@ GetMembershipForUserInOrgResponse is a response for GetMembershipForUserInOrg
 https://developer.github.com/v3/teams/members/#get-team-membership-for-a-user
 */
 type GetMembershipForUserInOrgResponse struct {
-	requests.Response
-	request *GetMembershipForUserInOrgReq
-	Data    components.TeamMembership
+	httpResponse *http.Response
+	Data         components.TeamMembership
+}
+
+func (r *GetMembershipForUserInOrgResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -4170,23 +4622,38 @@ func GetMembershipForUserLegacy(ctx context.Context, req *GetMembershipForUserLe
 	if req == nil {
 		req = new(GetMembershipForUserLegacyReq)
 	}
-	resp := &GetMembershipForUserLegacyResponse{request: req}
+	resp := &GetMembershipForUserLegacyResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.TeamMembership{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetMembershipForUserLegacyResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetMembershipForUserLegacyResponse builds a new *GetMembershipForUserLegacyResponse from an *http.Response
+func NewGetMembershipForUserLegacyResponse(resp *http.Response, preserveBody bool) (*GetMembershipForUserLegacyResponse, error) {
+	var result GetMembershipForUserLegacyResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -4228,7 +4695,6 @@ func (r *GetMembershipForUserLegacyReq) requestBuilder() *internal.RequestBuilde
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -4238,7 +4704,6 @@ func (r *GetMembershipForUserLegacyReq) requestBuilder() *internal.RequestBuilde
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/teams/%v/memberships/%v", r.TeamId, r.Username),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -4248,7 +4713,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetMembershipForUserLegacyReq) Rel(link string, resp *GetMembershipForUserLegacyResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -4262,9 +4727,12 @@ GetMembershipForUserLegacyResponse is a response for GetMembershipForUserLegacy
 https://developer.github.com/v3/teams/members/#get-team-membership-for-a-user-legacy
 */
 type GetMembershipForUserLegacyResponse struct {
-	requests.Response
-	request *GetMembershipForUserLegacyReq
-	Data    components.TeamMembership
+	httpResponse *http.Response
+	Data         components.TeamMembership
+}
+
+func (r *GetMembershipForUserLegacyResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -4284,23 +4752,38 @@ func List(ctx context.Context, req *ListReq, opt ...requests.Option) (*ListRespo
 	if req == nil {
 		req = new(ListReq)
 	}
-	resp := &ListResponse{request: req}
+	resp := &ListResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.Team{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListResponse builds a new *ListResponse from an *http.Response
+func NewListResponse(resp *http.Response, preserveBody bool) (*ListResponse, error) {
+	var result ListResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -4353,7 +4836,6 @@ func (r *ListReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -4363,7 +4845,6 @@ func (r *ListReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/teams", r.Org),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -4373,7 +4854,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListReq) Rel(link string, resp *ListResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -4387,9 +4868,12 @@ ListResponse is a response for List
 https://developer.github.com/v3/teams/#list-teams
 */
 type ListResponse struct {
-	requests.Response
-	request *ListReq
-	Data    []components.Team
+	httpResponse *http.Response
+	Data         []components.Team
+}
+
+func (r *ListResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -4409,23 +4893,38 @@ func ListChildInOrg(ctx context.Context, req *ListChildInOrgReq, opt ...requests
 	if req == nil {
 		req = new(ListChildInOrgReq)
 	}
-	resp := &ListChildInOrgResponse{request: req}
+	resp := &ListChildInOrgResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.Team{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListChildInOrgResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListChildInOrgResponse builds a new *ListChildInOrgResponse from an *http.Response
+func NewListChildInOrgResponse(resp *http.Response, preserveBody bool) (*ListChildInOrgResponse, error) {
+	var result ListChildInOrgResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -4481,7 +4980,6 @@ func (r *ListChildInOrgReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -4491,7 +4989,6 @@ func (r *ListChildInOrgReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/teams/%v/teams", r.Org, r.TeamSlug),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -4501,7 +4998,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListChildInOrgReq) Rel(link string, resp *ListChildInOrgResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -4515,9 +5012,12 @@ ListChildInOrgResponse is a response for ListChildInOrg
 https://developer.github.com/v3/teams/#list-child-teams
 */
 type ListChildInOrgResponse struct {
-	requests.Response
-	request *ListChildInOrgReq
-	Data    []components.Team
+	httpResponse *http.Response
+	Data         []components.Team
+}
+
+func (r *ListChildInOrgResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -4537,23 +5037,38 @@ func ListChildLegacy(ctx context.Context, req *ListChildLegacyReq, opt ...reques
 	if req == nil {
 		req = new(ListChildLegacyReq)
 	}
-	resp := &ListChildLegacyResponse{request: req}
+	resp := &ListChildLegacyResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.Team{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListChildLegacyResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListChildLegacyResponse builds a new *ListChildLegacyResponse from an *http.Response
+func NewListChildLegacyResponse(resp *http.Response, preserveBody bool) (*ListChildLegacyResponse, error) {
+	var result ListChildLegacyResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -4606,7 +5121,6 @@ func (r *ListChildLegacyReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -4616,7 +5130,6 @@ func (r *ListChildLegacyReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/teams/%v/teams", r.TeamId),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -4626,7 +5139,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListChildLegacyReq) Rel(link string, resp *ListChildLegacyResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -4640,9 +5153,12 @@ ListChildLegacyResponse is a response for ListChildLegacy
 https://developer.github.com/v3/teams/#list-child-teams-legacy
 */
 type ListChildLegacyResponse struct {
-	requests.Response
-	request *ListChildLegacyReq
-	Data    []components.Team
+	httpResponse *http.Response
+	Data         []components.Team
+}
+
+func (r *ListChildLegacyResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -4662,23 +5178,38 @@ func ListDiscussionCommentsInOrg(ctx context.Context, req *ListDiscussionComment
 	if req == nil {
 		req = new(ListDiscussionCommentsInOrgReq)
 	}
-	resp := &ListDiscussionCommentsInOrgResponse{request: req}
+	resp := &ListDiscussionCommentsInOrgResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.TeamDiscussionComment{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListDiscussionCommentsInOrgResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListDiscussionCommentsInOrgResponse builds a new *ListDiscussionCommentsInOrgResponse from an *http.Response
+func NewListDiscussionCommentsInOrgResponse(resp *http.Response, preserveBody bool) (*ListDiscussionCommentsInOrgResponse, error) {
+	var result ListDiscussionCommentsInOrgResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -4752,7 +5283,6 @@ func (r *ListDiscussionCommentsInOrgReq) requestBuilder() *internal.RequestBuild
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"squirrel-girl"},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -4762,7 +5292,6 @@ func (r *ListDiscussionCommentsInOrgReq) requestBuilder() *internal.RequestBuild
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/comments", r.Org, r.TeamSlug, r.DiscussionNumber),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -4772,7 +5301,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListDiscussionCommentsInOrgReq) Rel(link string, resp *ListDiscussionCommentsInOrgResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -4786,9 +5315,12 @@ ListDiscussionCommentsInOrgResponse is a response for ListDiscussionCommentsInOr
 https://developer.github.com/v3/teams/discussion_comments/#list-discussion-comments
 */
 type ListDiscussionCommentsInOrgResponse struct {
-	requests.Response
-	request *ListDiscussionCommentsInOrgReq
-	Data    []components.TeamDiscussionComment
+	httpResponse *http.Response
+	Data         []components.TeamDiscussionComment
+}
+
+func (r *ListDiscussionCommentsInOrgResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -4808,23 +5340,38 @@ func ListDiscussionCommentsLegacy(ctx context.Context, req *ListDiscussionCommen
 	if req == nil {
 		req = new(ListDiscussionCommentsLegacyReq)
 	}
-	resp := &ListDiscussionCommentsLegacyResponse{request: req}
+	resp := &ListDiscussionCommentsLegacyResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.TeamDiscussionComment{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListDiscussionCommentsLegacyResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListDiscussionCommentsLegacyResponse builds a new *ListDiscussionCommentsLegacyResponse from an *http.Response
+func NewListDiscussionCommentsLegacyResponse(resp *http.Response, preserveBody bool) (*ListDiscussionCommentsLegacyResponse, error) {
+	var result ListDiscussionCommentsLegacyResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -4895,7 +5442,6 @@ func (r *ListDiscussionCommentsLegacyReq) requestBuilder() *internal.RequestBuil
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"squirrel-girl"},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -4905,7 +5451,6 @@ func (r *ListDiscussionCommentsLegacyReq) requestBuilder() *internal.RequestBuil
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/teams/%v/discussions/%v/comments", r.TeamId, r.DiscussionNumber),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -4915,7 +5460,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListDiscussionCommentsLegacyReq) Rel(link string, resp *ListDiscussionCommentsLegacyResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -4929,9 +5474,12 @@ ListDiscussionCommentsLegacyResponse is a response for ListDiscussionCommentsLeg
 https://developer.github.com/v3/teams/discussion_comments/#list-discussion-comments-legacy
 */
 type ListDiscussionCommentsLegacyResponse struct {
-	requests.Response
-	request *ListDiscussionCommentsLegacyReq
-	Data    []components.TeamDiscussionComment
+	httpResponse *http.Response
+	Data         []components.TeamDiscussionComment
+}
+
+func (r *ListDiscussionCommentsLegacyResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -4951,23 +5499,38 @@ func ListDiscussionsInOrg(ctx context.Context, req *ListDiscussionsInOrgReq, opt
 	if req == nil {
 		req = new(ListDiscussionsInOrgReq)
 	}
-	resp := &ListDiscussionsInOrgResponse{request: req}
+	resp := &ListDiscussionsInOrgResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.TeamDiscussion{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListDiscussionsInOrgResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListDiscussionsInOrgResponse builds a new *ListDiscussionsInOrgResponse from an *http.Response
+func NewListDiscussionsInOrgResponse(resp *http.Response, preserveBody bool) (*ListDiscussionsInOrgResponse, error) {
+	var result ListDiscussionsInOrgResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -5040,7 +5603,6 @@ func (r *ListDiscussionsInOrgReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"squirrel-girl"},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -5050,7 +5612,6 @@ func (r *ListDiscussionsInOrgReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/teams/%v/discussions", r.Org, r.TeamSlug),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -5060,7 +5621,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListDiscussionsInOrgReq) Rel(link string, resp *ListDiscussionsInOrgResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -5074,9 +5635,12 @@ ListDiscussionsInOrgResponse is a response for ListDiscussionsInOrg
 https://developer.github.com/v3/teams/discussions/#list-discussions
 */
 type ListDiscussionsInOrgResponse struct {
-	requests.Response
-	request *ListDiscussionsInOrgReq
-	Data    []components.TeamDiscussion
+	httpResponse *http.Response
+	Data         []components.TeamDiscussion
+}
+
+func (r *ListDiscussionsInOrgResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -5096,23 +5660,38 @@ func ListDiscussionsLegacy(ctx context.Context, req *ListDiscussionsLegacyReq, o
 	if req == nil {
 		req = new(ListDiscussionsLegacyReq)
 	}
-	resp := &ListDiscussionsLegacyResponse{request: req}
+	resp := &ListDiscussionsLegacyResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.TeamDiscussion{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListDiscussionsLegacyResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListDiscussionsLegacyResponse builds a new *ListDiscussionsLegacyResponse from an *http.Response
+func NewListDiscussionsLegacyResponse(resp *http.Response, preserveBody bool) (*ListDiscussionsLegacyResponse, error) {
+	var result ListDiscussionsLegacyResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -5182,7 +5761,6 @@ func (r *ListDiscussionsLegacyReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"squirrel-girl"},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -5192,7 +5770,6 @@ func (r *ListDiscussionsLegacyReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/teams/%v/discussions", r.TeamId),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -5202,7 +5779,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListDiscussionsLegacyReq) Rel(link string, resp *ListDiscussionsLegacyResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -5216,9 +5793,12 @@ ListDiscussionsLegacyResponse is a response for ListDiscussionsLegacy
 https://developer.github.com/v3/teams/discussions/#list-discussions-legacy
 */
 type ListDiscussionsLegacyResponse struct {
-	requests.Response
-	request *ListDiscussionsLegacyReq
-	Data    []components.TeamDiscussion
+	httpResponse *http.Response
+	Data         []components.TeamDiscussion
+}
+
+func (r *ListDiscussionsLegacyResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -5238,23 +5818,38 @@ func ListForAuthenticatedUser(ctx context.Context, req *ListForAuthenticatedUser
 	if req == nil {
 		req = new(ListForAuthenticatedUserReq)
 	}
-	resp := &ListForAuthenticatedUserResponse{request: req}
+	resp := &ListForAuthenticatedUserResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.TeamFull{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListForAuthenticatedUserResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListForAuthenticatedUserResponse builds a new *ListForAuthenticatedUserResponse from an *http.Response
+func NewListForAuthenticatedUserResponse(resp *http.Response, preserveBody bool) (*ListForAuthenticatedUserResponse, error) {
+	var result ListForAuthenticatedUserResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -5306,7 +5901,6 @@ func (r *ListForAuthenticatedUserReq) requestBuilder() *internal.RequestBuilder 
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -5316,7 +5910,6 @@ func (r *ListForAuthenticatedUserReq) requestBuilder() *internal.RequestBuilder 
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/user/teams"),
 		URLQuery:           query,
-		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -5326,7 +5919,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListForAuthenticatedUserReq) Rel(link string, resp *ListForAuthenticatedUserResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -5340,9 +5933,12 @@ ListForAuthenticatedUserResponse is a response for ListForAuthenticatedUser
 https://developer.github.com/v3/teams/#list-teams-for-the-authenticated-user
 */
 type ListForAuthenticatedUserResponse struct {
-	requests.Response
-	request *ListForAuthenticatedUserReq
-	Data    []components.TeamFull
+	httpResponse *http.Response
+	Data         []components.TeamFull
+}
+
+func (r *ListForAuthenticatedUserResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -5362,23 +5958,38 @@ func ListIdpGroupsForLegacy(ctx context.Context, req *ListIdpGroupsForLegacyReq,
 	if req == nil {
 		req = new(ListIdpGroupsForLegacyReq)
 	}
-	resp := &ListIdpGroupsForLegacyResponse{request: req}
+	resp := &ListIdpGroupsForLegacyResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.GroupMapping{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListIdpGroupsForLegacyResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListIdpGroupsForLegacyResponse builds a new *ListIdpGroupsForLegacyResponse from an *http.Response
+func NewListIdpGroupsForLegacyResponse(resp *http.Response, preserveBody bool) (*ListIdpGroupsForLegacyResponse, error) {
+	var result ListIdpGroupsForLegacyResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -5419,7 +6030,6 @@ func (r *ListIdpGroupsForLegacyReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -5429,7 +6039,6 @@ func (r *ListIdpGroupsForLegacyReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/teams/%v/team-sync/group-mappings", r.TeamId),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -5439,7 +6048,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListIdpGroupsForLegacyReq) Rel(link string, resp *ListIdpGroupsForLegacyResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -5453,9 +6062,12 @@ ListIdpGroupsForLegacyResponse is a response for ListIdpGroupsForLegacy
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team-legacy
 */
 type ListIdpGroupsForLegacyResponse struct {
-	requests.Response
-	request *ListIdpGroupsForLegacyReq
-	Data    components.GroupMapping
+	httpResponse *http.Response
+	Data         components.GroupMapping
+}
+
+func (r *ListIdpGroupsForLegacyResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -5475,23 +6087,38 @@ func ListIdpGroupsForOrg(ctx context.Context, req *ListIdpGroupsForOrgReq, opt .
 	if req == nil {
 		req = new(ListIdpGroupsForOrgReq)
 	}
-	resp := &ListIdpGroupsForOrgResponse{request: req}
+	resp := &ListIdpGroupsForOrgResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.GroupMapping{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListIdpGroupsForOrgResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListIdpGroupsForOrgResponse builds a new *ListIdpGroupsForOrgResponse from an *http.Response
+func NewListIdpGroupsForOrgResponse(resp *http.Response, preserveBody bool) (*ListIdpGroupsForOrgResponse, error) {
+	var result ListIdpGroupsForOrgResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -5544,7 +6171,6 @@ func (r *ListIdpGroupsForOrgReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -5554,7 +6180,6 @@ func (r *ListIdpGroupsForOrgReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/team-sync/groups", r.Org),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -5564,7 +6189,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListIdpGroupsForOrgReq) Rel(link string, resp *ListIdpGroupsForOrgResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -5578,9 +6203,12 @@ ListIdpGroupsForOrgResponse is a response for ListIdpGroupsForOrg
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-an-organization
 */
 type ListIdpGroupsForOrgResponse struct {
-	requests.Response
-	request *ListIdpGroupsForOrgReq
-	Data    components.GroupMapping
+	httpResponse *http.Response
+	Data         components.GroupMapping
+}
+
+func (r *ListIdpGroupsForOrgResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -5600,23 +6228,38 @@ func ListIdpGroupsInOrg(ctx context.Context, req *ListIdpGroupsInOrgReq, opt ...
 	if req == nil {
 		req = new(ListIdpGroupsInOrgReq)
 	}
-	resp := &ListIdpGroupsInOrgResponse{request: req}
+	resp := &ListIdpGroupsInOrgResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.GroupMapping{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListIdpGroupsInOrgResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListIdpGroupsInOrgResponse builds a new *ListIdpGroupsInOrgResponse from an *http.Response
+func NewListIdpGroupsInOrgResponse(resp *http.Response, preserveBody bool) (*ListIdpGroupsInOrgResponse, error) {
+	var result ListIdpGroupsInOrgResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -5660,7 +6303,6 @@ func (r *ListIdpGroupsInOrgReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -5670,7 +6312,6 @@ func (r *ListIdpGroupsInOrgReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/teams/%v/team-sync/group-mappings", r.Org, r.TeamSlug),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -5680,7 +6321,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListIdpGroupsInOrgReq) Rel(link string, resp *ListIdpGroupsInOrgResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -5694,9 +6335,12 @@ ListIdpGroupsInOrgResponse is a response for ListIdpGroupsInOrg
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team
 */
 type ListIdpGroupsInOrgResponse struct {
-	requests.Response
-	request *ListIdpGroupsInOrgReq
-	Data    components.GroupMapping
+	httpResponse *http.Response
+	Data         components.GroupMapping
+}
+
+func (r *ListIdpGroupsInOrgResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -5716,23 +6360,38 @@ func ListMembersInOrg(ctx context.Context, req *ListMembersInOrgReq, opt ...requ
 	if req == nil {
 		req = new(ListMembersInOrgReq)
 	}
-	resp := &ListMembersInOrgResponse{request: req}
+	resp := &ListMembersInOrgResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.SimpleUser{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListMembersInOrgResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListMembersInOrgResponse builds a new *ListMembersInOrgResponse from an *http.Response
+func NewListMembersInOrgResponse(resp *http.Response, preserveBody bool) (*ListMembersInOrgResponse, error) {
+	var result ListMembersInOrgResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -5799,7 +6458,6 @@ func (r *ListMembersInOrgReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -5809,7 +6467,6 @@ func (r *ListMembersInOrgReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/teams/%v/members", r.Org, r.TeamSlug),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -5819,7 +6476,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListMembersInOrgReq) Rel(link string, resp *ListMembersInOrgResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -5833,9 +6490,12 @@ ListMembersInOrgResponse is a response for ListMembersInOrg
 https://developer.github.com/v3/teams/members/#list-team-members
 */
 type ListMembersInOrgResponse struct {
-	requests.Response
-	request *ListMembersInOrgReq
-	Data    []components.SimpleUser
+	httpResponse *http.Response
+	Data         []components.SimpleUser
+}
+
+func (r *ListMembersInOrgResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -5855,23 +6515,38 @@ func ListMembersLegacy(ctx context.Context, req *ListMembersLegacyReq, opt ...re
 	if req == nil {
 		req = new(ListMembersLegacyReq)
 	}
-	resp := &ListMembersLegacyResponse{request: req}
+	resp := &ListMembersLegacyResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.SimpleUser{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListMembersLegacyResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListMembersLegacyResponse builds a new *ListMembersLegacyResponse from an *http.Response
+func NewListMembersLegacyResponse(resp *http.Response, preserveBody bool) (*ListMembersLegacyResponse, error) {
+	var result ListMembersLegacyResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -5935,7 +6610,6 @@ func (r *ListMembersLegacyReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -5945,7 +6619,6 @@ func (r *ListMembersLegacyReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/teams/%v/members", r.TeamId),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -5955,7 +6628,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListMembersLegacyReq) Rel(link string, resp *ListMembersLegacyResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -5969,9 +6642,12 @@ ListMembersLegacyResponse is a response for ListMembersLegacy
 https://developer.github.com/v3/teams/members/#list-team-members-legacy
 */
 type ListMembersLegacyResponse struct {
-	requests.Response
-	request *ListMembersLegacyReq
-	Data    []components.SimpleUser
+	httpResponse *http.Response
+	Data         []components.SimpleUser
+}
+
+func (r *ListMembersLegacyResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -5991,23 +6667,38 @@ func ListPendingInvitationsInOrg(ctx context.Context, req *ListPendingInvitation
 	if req == nil {
 		req = new(ListPendingInvitationsInOrgReq)
 	}
-	resp := &ListPendingInvitationsInOrgResponse{request: req}
+	resp := &ListPendingInvitationsInOrgResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.OrganizationInvitation{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListPendingInvitationsInOrgResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListPendingInvitationsInOrgResponse builds a new *ListPendingInvitationsInOrgResponse from an *http.Response
+func NewListPendingInvitationsInOrgResponse(resp *http.Response, preserveBody bool) (*ListPendingInvitationsInOrgResponse, error) {
+	var result ListPendingInvitationsInOrgResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -6063,7 +6754,6 @@ func (r *ListPendingInvitationsInOrgReq) requestBuilder() *internal.RequestBuild
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -6073,7 +6763,6 @@ func (r *ListPendingInvitationsInOrgReq) requestBuilder() *internal.RequestBuild
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/teams/%v/invitations", r.Org, r.TeamSlug),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -6083,7 +6772,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListPendingInvitationsInOrgReq) Rel(link string, resp *ListPendingInvitationsInOrgResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -6097,9 +6786,12 @@ ListPendingInvitationsInOrgResponse is a response for ListPendingInvitationsInOr
 https://developer.github.com/v3/teams/members/#list-pending-team-invitations
 */
 type ListPendingInvitationsInOrgResponse struct {
-	requests.Response
-	request *ListPendingInvitationsInOrgReq
-	Data    []components.OrganizationInvitation
+	httpResponse *http.Response
+	Data         []components.OrganizationInvitation
+}
+
+func (r *ListPendingInvitationsInOrgResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -6119,23 +6811,38 @@ func ListPendingInvitationsLegacy(ctx context.Context, req *ListPendingInvitatio
 	if req == nil {
 		req = new(ListPendingInvitationsLegacyReq)
 	}
-	resp := &ListPendingInvitationsLegacyResponse{request: req}
+	resp := &ListPendingInvitationsLegacyResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.OrganizationInvitation{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListPendingInvitationsLegacyResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListPendingInvitationsLegacyResponse builds a new *ListPendingInvitationsLegacyResponse from an *http.Response
+func NewListPendingInvitationsLegacyResponse(resp *http.Response, preserveBody bool) (*ListPendingInvitationsLegacyResponse, error) {
+	var result ListPendingInvitationsLegacyResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -6188,7 +6895,6 @@ func (r *ListPendingInvitationsLegacyReq) requestBuilder() *internal.RequestBuil
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -6198,7 +6904,6 @@ func (r *ListPendingInvitationsLegacyReq) requestBuilder() *internal.RequestBuil
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/teams/%v/invitations", r.TeamId),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -6208,7 +6913,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListPendingInvitationsLegacyReq) Rel(link string, resp *ListPendingInvitationsLegacyResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -6222,9 +6927,12 @@ ListPendingInvitationsLegacyResponse is a response for ListPendingInvitationsLeg
 https://developer.github.com/v3/teams/members/#list-pending-team-invitations-legacy
 */
 type ListPendingInvitationsLegacyResponse struct {
-	requests.Response
-	request *ListPendingInvitationsLegacyReq
-	Data    []components.OrganizationInvitation
+	httpResponse *http.Response
+	Data         []components.OrganizationInvitation
+}
+
+func (r *ListPendingInvitationsLegacyResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -6244,23 +6952,38 @@ func ListProjectsInOrg(ctx context.Context, req *ListProjectsInOrgReq, opt ...re
 	if req == nil {
 		req = new(ListProjectsInOrgReq)
 	}
-	resp := &ListProjectsInOrgResponse{request: req}
+	resp := &ListProjectsInOrgResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.TeamProject{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListProjectsInOrgResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListProjectsInOrgResponse builds a new *ListProjectsInOrgResponse from an *http.Response
+func NewListProjectsInOrgResponse(resp *http.Response, preserveBody bool) (*ListProjectsInOrgResponse, error) {
+	var result ListProjectsInOrgResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -6325,7 +7048,6 @@ func (r *ListProjectsInOrgReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"inertia"},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -6335,7 +7057,6 @@ func (r *ListProjectsInOrgReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{"inertia"},
 		URLPath:            fmt.Sprintf("/orgs/%v/teams/%v/projects", r.Org, r.TeamSlug),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -6345,7 +7066,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListProjectsInOrgReq) Rel(link string, resp *ListProjectsInOrgResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -6359,9 +7080,12 @@ ListProjectsInOrgResponse is a response for ListProjectsInOrg
 https://developer.github.com/v3/teams/#list-team-projects
 */
 type ListProjectsInOrgResponse struct {
-	requests.Response
-	request *ListProjectsInOrgReq
-	Data    []components.TeamProject
+	httpResponse *http.Response
+	Data         []components.TeamProject
+}
+
+func (r *ListProjectsInOrgResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -6381,23 +7105,38 @@ func ListProjectsLegacy(ctx context.Context, req *ListProjectsLegacyReq, opt ...
 	if req == nil {
 		req = new(ListProjectsLegacyReq)
 	}
-	resp := &ListProjectsLegacyResponse{request: req}
+	resp := &ListProjectsLegacyResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.TeamProject{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListProjectsLegacyResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListProjectsLegacyResponse builds a new *ListProjectsLegacyResponse from an *http.Response
+func NewListProjectsLegacyResponse(resp *http.Response, preserveBody bool) (*ListProjectsLegacyResponse, error) {
+	var result ListProjectsLegacyResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -6459,7 +7198,6 @@ func (r *ListProjectsLegacyReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"inertia"},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -6469,7 +7207,6 @@ func (r *ListProjectsLegacyReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{"inertia"},
 		URLPath:            fmt.Sprintf("/teams/%v/projects", r.TeamId),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -6479,7 +7216,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListProjectsLegacyReq) Rel(link string, resp *ListProjectsLegacyResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -6493,9 +7230,12 @@ ListProjectsLegacyResponse is a response for ListProjectsLegacy
 https://developer.github.com/v3/teams/#list-team-projects-legacy
 */
 type ListProjectsLegacyResponse struct {
-	requests.Response
-	request *ListProjectsLegacyReq
-	Data    []components.TeamProject
+	httpResponse *http.Response
+	Data         []components.TeamProject
+}
+
+func (r *ListProjectsLegacyResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -6515,23 +7255,38 @@ func ListReposInOrg(ctx context.Context, req *ListReposInOrgReq, opt ...requests
 	if req == nil {
 		req = new(ListReposInOrgReq)
 	}
-	resp := &ListReposInOrgResponse{request: req}
+	resp := &ListReposInOrgResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.MinimalRepository{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListReposInOrgResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListReposInOrgResponse builds a new *ListReposInOrgResponse from an *http.Response
+func NewListReposInOrgResponse(resp *http.Response, preserveBody bool) (*ListReposInOrgResponse, error) {
+	var result ListReposInOrgResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -6587,7 +7342,6 @@ func (r *ListReposInOrgReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -6597,7 +7351,6 @@ func (r *ListReposInOrgReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/teams/%v/repos", r.Org, r.TeamSlug),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -6607,7 +7360,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListReposInOrgReq) Rel(link string, resp *ListReposInOrgResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -6621,9 +7374,12 @@ ListReposInOrgResponse is a response for ListReposInOrg
 https://developer.github.com/v3/teams/#list-team-repositories
 */
 type ListReposInOrgResponse struct {
-	requests.Response
-	request *ListReposInOrgReq
-	Data    []components.MinimalRepository
+	httpResponse *http.Response
+	Data         []components.MinimalRepository
+}
+
+func (r *ListReposInOrgResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -6643,23 +7399,38 @@ func ListReposLegacy(ctx context.Context, req *ListReposLegacyReq, opt ...reques
 	if req == nil {
 		req = new(ListReposLegacyReq)
 	}
-	resp := &ListReposLegacyResponse{request: req}
+	resp := &ListReposLegacyResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.MinimalRepository{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListReposLegacyResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListReposLegacyResponse builds a new *ListReposLegacyResponse from an *http.Response
+func NewListReposLegacyResponse(resp *http.Response, preserveBody bool) (*ListReposLegacyResponse, error) {
+	var result ListReposLegacyResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -6712,7 +7483,6 @@ func (r *ListReposLegacyReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -6722,7 +7492,6 @@ func (r *ListReposLegacyReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/teams/%v/repos", r.TeamId),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -6732,7 +7501,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListReposLegacyReq) Rel(link string, resp *ListReposLegacyResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -6746,9 +7515,12 @@ ListReposLegacyResponse is a response for ListReposLegacy
 https://developer.github.com/v3/teams/#list-team-repositories-legacy
 */
 type ListReposLegacyResponse struct {
-	requests.Response
-	request *ListReposLegacyReq
-	Data    []components.MinimalRepository
+	httpResponse *http.Response
+	Data         []components.MinimalRepository
+}
+
+func (r *ListReposLegacyResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -6768,26 +7540,36 @@ func RemoveMemberLegacy(ctx context.Context, req *RemoveMemberLegacyReq, opt ...
 	if req == nil {
 		req = new(RemoveMemberLegacyReq)
 	}
-	resp := &RemoveMemberLegacyResponse{request: req}
+	resp := &RemoveMemberLegacyResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.SetBoolResult(r, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	resp.httpResponse = r
+
+	return NewRemoveMemberLegacyResponse(r, opts.PreserveResponseBody())
+}
+
+// NewRemoveMemberLegacyResponse builds a new *RemoveMemberLegacyResponse from an *http.Response
+func NewRemoveMemberLegacyResponse(resp *http.Response, preserveBody bool) (*RemoveMemberLegacyResponse, error) {
+	var result RemoveMemberLegacyResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204, 404})
 	if err != nil {
-		return nil, err
+		return &result, err
 	}
-	return resp, nil
+	err = internal.SetBoolResult(resp, &result.Data)
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -6829,7 +7611,6 @@ func (r *RemoveMemberLegacyReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrBoolean},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -6839,7 +7620,6 @@ func (r *RemoveMemberLegacyReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/teams/%v/members/%v", r.TeamId, r.Username),
 		URLQuery:           query,
-		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -6849,7 +7629,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *RemoveMemberLegacyReq) Rel(link string, resp *RemoveMemberLegacyResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -6863,9 +7643,12 @@ RemoveMemberLegacyResponse is a response for RemoveMemberLegacy
 https://developer.github.com/v3/teams/members/#remove-team-member-legacy
 */
 type RemoveMemberLegacyResponse struct {
-	requests.Response
-	request *RemoveMemberLegacyReq
-	Data    bool
+	httpResponse *http.Response
+	Data         bool
+}
+
+func (r *RemoveMemberLegacyResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -6885,22 +7668,32 @@ func RemoveMembershipForUserInOrg(ctx context.Context, req *RemoveMembershipForU
 	if req == nil {
 		req = new(RemoveMembershipForUserInOrgReq)
 	}
-	resp := &RemoveMembershipForUserInOrgResponse{request: req}
+	resp := &RemoveMembershipForUserInOrgResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewRemoveMembershipForUserInOrgResponse(r, opts.PreserveResponseBody())
+}
+
+// NewRemoveMembershipForUserInOrgResponse builds a new *RemoveMembershipForUserInOrgResponse from an *http.Response
+func NewRemoveMembershipForUserInOrgResponse(resp *http.Response, preserveBody bool) (*RemoveMembershipForUserInOrgResponse, error) {
+	var result RemoveMembershipForUserInOrgResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -6945,7 +7738,6 @@ func (r *RemoveMembershipForUserInOrgReq) requestBuilder() *internal.RequestBuil
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -6955,7 +7747,6 @@ func (r *RemoveMembershipForUserInOrgReq) requestBuilder() *internal.RequestBuil
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/teams/%v/memberships/%v", r.Org, r.TeamSlug, r.Username),
 		URLQuery:           query,
-		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -6965,7 +7756,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *RemoveMembershipForUserInOrgReq) Rel(link string, resp *RemoveMembershipForUserInOrgResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -6979,8 +7770,11 @@ RemoveMembershipForUserInOrgResponse is a response for RemoveMembershipForUserIn
 https://developer.github.com/v3/teams/members/#remove-team-membership-for-a-user
 */
 type RemoveMembershipForUserInOrgResponse struct {
-	requests.Response
-	request *RemoveMembershipForUserInOrgReq
+	httpResponse *http.Response
+}
+
+func (r *RemoveMembershipForUserInOrgResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -7000,22 +7794,32 @@ func RemoveMembershipForUserLegacy(ctx context.Context, req *RemoveMembershipFor
 	if req == nil {
 		req = new(RemoveMembershipForUserLegacyReq)
 	}
-	resp := &RemoveMembershipForUserLegacyResponse{request: req}
+	resp := &RemoveMembershipForUserLegacyResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewRemoveMembershipForUserLegacyResponse(r, opts.PreserveResponseBody())
+}
+
+// NewRemoveMembershipForUserLegacyResponse builds a new *RemoveMembershipForUserLegacyResponse from an *http.Response
+func NewRemoveMembershipForUserLegacyResponse(resp *http.Response, preserveBody bool) (*RemoveMembershipForUserLegacyResponse, error) {
+	var result RemoveMembershipForUserLegacyResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -7057,7 +7861,6 @@ func (r *RemoveMembershipForUserLegacyReq) requestBuilder() *internal.RequestBui
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -7067,7 +7870,6 @@ func (r *RemoveMembershipForUserLegacyReq) requestBuilder() *internal.RequestBui
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/teams/%v/memberships/%v", r.TeamId, r.Username),
 		URLQuery:           query,
-		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -7077,7 +7879,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *RemoveMembershipForUserLegacyReq) Rel(link string, resp *RemoveMembershipForUserLegacyResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -7091,8 +7893,11 @@ RemoveMembershipForUserLegacyResponse is a response for RemoveMembershipForUserL
 https://developer.github.com/v3/teams/members/#remove-team-membership-for-a-user-legacy
 */
 type RemoveMembershipForUserLegacyResponse struct {
-	requests.Response
-	request *RemoveMembershipForUserLegacyReq
+	httpResponse *http.Response
+}
+
+func (r *RemoveMembershipForUserLegacyResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -7112,22 +7917,32 @@ func RemoveProjectInOrg(ctx context.Context, req *RemoveProjectInOrgReq, opt ...
 	if req == nil {
 		req = new(RemoveProjectInOrgReq)
 	}
-	resp := &RemoveProjectInOrgResponse{request: req}
+	resp := &RemoveProjectInOrgResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewRemoveProjectInOrgResponse(r, opts.PreserveResponseBody())
+}
+
+// NewRemoveProjectInOrgResponse builds a new *RemoveProjectInOrgResponse from an *http.Response
+func NewRemoveProjectInOrgResponse(resp *http.Response, preserveBody bool) (*RemoveProjectInOrgResponse, error) {
+	var result RemoveProjectInOrgResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -7172,7 +7987,6 @@ func (r *RemoveProjectInOrgReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -7182,7 +7996,6 @@ func (r *RemoveProjectInOrgReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/teams/%v/projects/%v", r.Org, r.TeamSlug, r.ProjectId),
 		URLQuery:           query,
-		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -7192,7 +8005,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *RemoveProjectInOrgReq) Rel(link string, resp *RemoveProjectInOrgResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -7206,8 +8019,11 @@ RemoveProjectInOrgResponse is a response for RemoveProjectInOrg
 https://developer.github.com/v3/teams/#remove-a-project-from-a-team
 */
 type RemoveProjectInOrgResponse struct {
-	requests.Response
-	request *RemoveProjectInOrgReq
+	httpResponse *http.Response
+}
+
+func (r *RemoveProjectInOrgResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -7227,22 +8043,32 @@ func RemoveProjectLegacy(ctx context.Context, req *RemoveProjectLegacyReq, opt .
 	if req == nil {
 		req = new(RemoveProjectLegacyReq)
 	}
-	resp := &RemoveProjectLegacyResponse{request: req}
+	resp := &RemoveProjectLegacyResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewRemoveProjectLegacyResponse(r, opts.PreserveResponseBody())
+}
+
+// NewRemoveProjectLegacyResponse builds a new *RemoveProjectLegacyResponse from an *http.Response
+func NewRemoveProjectLegacyResponse(resp *http.Response, preserveBody bool) (*RemoveProjectLegacyResponse, error) {
+	var result RemoveProjectLegacyResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -7284,7 +8110,6 @@ func (r *RemoveProjectLegacyReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -7294,7 +8119,6 @@ func (r *RemoveProjectLegacyReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/teams/%v/projects/%v", r.TeamId, r.ProjectId),
 		URLQuery:           query,
-		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -7304,7 +8128,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *RemoveProjectLegacyReq) Rel(link string, resp *RemoveProjectLegacyResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -7318,8 +8142,11 @@ RemoveProjectLegacyResponse is a response for RemoveProjectLegacy
 https://developer.github.com/v3/teams/#remove-a-project-from-a-team-legacy
 */
 type RemoveProjectLegacyResponse struct {
-	requests.Response
-	request *RemoveProjectLegacyReq
+	httpResponse *http.Response
+}
+
+func (r *RemoveProjectLegacyResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -7339,22 +8166,32 @@ func RemoveRepoInOrg(ctx context.Context, req *RemoveRepoInOrgReq, opt ...reques
 	if req == nil {
 		req = new(RemoveRepoInOrgReq)
 	}
-	resp := &RemoveRepoInOrgResponse{request: req}
+	resp := &RemoveRepoInOrgResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewRemoveRepoInOrgResponse(r, opts.PreserveResponseBody())
+}
+
+// NewRemoveRepoInOrgResponse builds a new *RemoveRepoInOrgResponse from an *http.Response
+func NewRemoveRepoInOrgResponse(resp *http.Response, preserveBody bool) (*RemoveRepoInOrgResponse, error) {
+	var result RemoveRepoInOrgResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -7400,7 +8237,6 @@ func (r *RemoveRepoInOrgReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -7410,7 +8246,6 @@ func (r *RemoveRepoInOrgReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/teams/%v/repos/%v/%v", r.Org, r.TeamSlug, r.Owner, r.Repo),
 		URLQuery:           query,
-		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -7420,7 +8255,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *RemoveRepoInOrgReq) Rel(link string, resp *RemoveRepoInOrgResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -7434,8 +8269,11 @@ RemoveRepoInOrgResponse is a response for RemoveRepoInOrg
 https://developer.github.com/v3/teams/#remove-a-repository-from-a-team
 */
 type RemoveRepoInOrgResponse struct {
-	requests.Response
-	request *RemoveRepoInOrgReq
+	httpResponse *http.Response
+}
+
+func (r *RemoveRepoInOrgResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -7455,22 +8293,32 @@ func RemoveRepoLegacy(ctx context.Context, req *RemoveRepoLegacyReq, opt ...requ
 	if req == nil {
 		req = new(RemoveRepoLegacyReq)
 	}
-	resp := &RemoveRepoLegacyResponse{request: req}
+	resp := &RemoveRepoLegacyResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewRemoveRepoLegacyResponse(r, opts.PreserveResponseBody())
+}
+
+// NewRemoveRepoLegacyResponse builds a new *RemoveRepoLegacyResponse from an *http.Response
+func NewRemoveRepoLegacyResponse(resp *http.Response, preserveBody bool) (*RemoveRepoLegacyResponse, error) {
+	var result RemoveRepoLegacyResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -7513,7 +8361,6 @@ func (r *RemoveRepoLegacyReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -7523,7 +8370,6 @@ func (r *RemoveRepoLegacyReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/teams/%v/repos/%v/%v", r.TeamId, r.Owner, r.Repo),
 		URLQuery:           query,
-		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -7533,7 +8379,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *RemoveRepoLegacyReq) Rel(link string, resp *RemoveRepoLegacyResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -7547,8 +8393,11 @@ RemoveRepoLegacyResponse is a response for RemoveRepoLegacy
 https://developer.github.com/v3/teams/#remove-a-repository-from-a-team-legacy
 */
 type RemoveRepoLegacyResponse struct {
-	requests.Response
-	request *RemoveRepoLegacyReq
+	httpResponse *http.Response
+}
+
+func (r *RemoveRepoLegacyResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -7568,23 +8417,38 @@ func UpdateDiscussionCommentInOrg(ctx context.Context, req *UpdateDiscussionComm
 	if req == nil {
 		req = new(UpdateDiscussionCommentInOrgReq)
 	}
-	resp := &UpdateDiscussionCommentInOrgResponse{request: req}
+	resp := &UpdateDiscussionCommentInOrgResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.TeamDiscussionComment{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewUpdateDiscussionCommentInOrgResponse(r, opts.PreserveResponseBody())
+}
+
+// NewUpdateDiscussionCommentInOrgResponse builds a new *UpdateDiscussionCommentInOrgResponse from an *http.Response
+func NewUpdateDiscussionCommentInOrgResponse(resp *http.Response, preserveBody bool) (*UpdateDiscussionCommentInOrgResponse, error) {
+	var result UpdateDiscussionCommentInOrgResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -7642,7 +8506,6 @@ func (r *UpdateDiscussionCommentInOrgReq) requestBuilder() *internal.RequestBuil
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"squirrel-girl"},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
@@ -7655,7 +8518,6 @@ func (r *UpdateDiscussionCommentInOrgReq) requestBuilder() *internal.RequestBuil
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/comments/%v", r.Org, r.TeamSlug, r.DiscussionNumber, r.CommentNumber),
 		URLQuery:         query,
-		ValidStatuses:    []int{200},
 	}
 	return builder
 }
@@ -7665,7 +8527,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *UpdateDiscussionCommentInOrgReq) Rel(link string, resp *UpdateDiscussionCommentInOrgResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -7690,9 +8552,12 @@ UpdateDiscussionCommentInOrgResponse is a response for UpdateDiscussionCommentIn
 https://developer.github.com/v3/teams/discussion_comments/#update-a-discussion-comment
 */
 type UpdateDiscussionCommentInOrgResponse struct {
-	requests.Response
-	request *UpdateDiscussionCommentInOrgReq
-	Data    components.TeamDiscussionComment
+	httpResponse *http.Response
+	Data         components.TeamDiscussionComment
+}
+
+func (r *UpdateDiscussionCommentInOrgResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -7712,23 +8577,38 @@ func UpdateDiscussionCommentLegacy(ctx context.Context, req *UpdateDiscussionCom
 	if req == nil {
 		req = new(UpdateDiscussionCommentLegacyReq)
 	}
-	resp := &UpdateDiscussionCommentLegacyResponse{request: req}
+	resp := &UpdateDiscussionCommentLegacyResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.TeamDiscussionComment{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewUpdateDiscussionCommentLegacyResponse(r, opts.PreserveResponseBody())
+}
+
+// NewUpdateDiscussionCommentLegacyResponse builds a new *UpdateDiscussionCommentLegacyResponse from an *http.Response
+func NewUpdateDiscussionCommentLegacyResponse(resp *http.Response, preserveBody bool) (*UpdateDiscussionCommentLegacyResponse, error) {
+	var result UpdateDiscussionCommentLegacyResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -7783,7 +8663,6 @@ func (r *UpdateDiscussionCommentLegacyReq) requestBuilder() *internal.RequestBui
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"squirrel-girl"},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
@@ -7796,7 +8675,6 @@ func (r *UpdateDiscussionCommentLegacyReq) requestBuilder() *internal.RequestBui
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/teams/%v/discussions/%v/comments/%v", r.TeamId, r.DiscussionNumber, r.CommentNumber),
 		URLQuery:         query,
-		ValidStatuses:    []int{200},
 	}
 	return builder
 }
@@ -7806,7 +8684,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *UpdateDiscussionCommentLegacyReq) Rel(link string, resp *UpdateDiscussionCommentLegacyResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -7831,9 +8709,12 @@ UpdateDiscussionCommentLegacyResponse is a response for UpdateDiscussionCommentL
 https://developer.github.com/v3/teams/discussion_comments/#update-a-discussion-comment-legacy
 */
 type UpdateDiscussionCommentLegacyResponse struct {
-	requests.Response
-	request *UpdateDiscussionCommentLegacyReq
-	Data    components.TeamDiscussionComment
+	httpResponse *http.Response
+	Data         components.TeamDiscussionComment
+}
+
+func (r *UpdateDiscussionCommentLegacyResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -7853,23 +8734,38 @@ func UpdateDiscussionInOrg(ctx context.Context, req *UpdateDiscussionInOrgReq, o
 	if req == nil {
 		req = new(UpdateDiscussionInOrgReq)
 	}
-	resp := &UpdateDiscussionInOrgResponse{request: req}
+	resp := &UpdateDiscussionInOrgResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.TeamDiscussion{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewUpdateDiscussionInOrgResponse(r, opts.PreserveResponseBody())
+}
+
+// NewUpdateDiscussionInOrgResponse builds a new *UpdateDiscussionInOrgResponse from an *http.Response
+func NewUpdateDiscussionInOrgResponse(resp *http.Response, preserveBody bool) (*UpdateDiscussionInOrgResponse, error) {
+	var result UpdateDiscussionInOrgResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -7926,7 +8822,6 @@ func (r *UpdateDiscussionInOrgReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"squirrel-girl"},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
@@ -7939,7 +8834,6 @@ func (r *UpdateDiscussionInOrgReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v", r.Org, r.TeamSlug, r.DiscussionNumber),
 		URLQuery:         query,
-		ValidStatuses:    []int{200},
 	}
 	return builder
 }
@@ -7949,7 +8843,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *UpdateDiscussionInOrgReq) Rel(link string, resp *UpdateDiscussionInOrgResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -7977,9 +8871,12 @@ UpdateDiscussionInOrgResponse is a response for UpdateDiscussionInOrg
 https://developer.github.com/v3/teams/discussions/#update-a-discussion
 */
 type UpdateDiscussionInOrgResponse struct {
-	requests.Response
-	request *UpdateDiscussionInOrgReq
-	Data    components.TeamDiscussion
+	httpResponse *http.Response
+	Data         components.TeamDiscussion
+}
+
+func (r *UpdateDiscussionInOrgResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -7999,23 +8896,38 @@ func UpdateDiscussionLegacy(ctx context.Context, req *UpdateDiscussionLegacyReq,
 	if req == nil {
 		req = new(UpdateDiscussionLegacyReq)
 	}
-	resp := &UpdateDiscussionLegacyResponse{request: req}
+	resp := &UpdateDiscussionLegacyResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.TeamDiscussion{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewUpdateDiscussionLegacyResponse(r, opts.PreserveResponseBody())
+}
+
+// NewUpdateDiscussionLegacyResponse builds a new *UpdateDiscussionLegacyResponse from an *http.Response
+func NewUpdateDiscussionLegacyResponse(resp *http.Response, preserveBody bool) (*UpdateDiscussionLegacyResponse, error) {
+	var result UpdateDiscussionLegacyResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -8069,7 +8981,6 @@ func (r *UpdateDiscussionLegacyReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"squirrel-girl"},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
@@ -8082,7 +8993,6 @@ func (r *UpdateDiscussionLegacyReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/teams/%v/discussions/%v", r.TeamId, r.DiscussionNumber),
 		URLQuery:         query,
-		ValidStatuses:    []int{200},
 	}
 	return builder
 }
@@ -8092,7 +9002,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *UpdateDiscussionLegacyReq) Rel(link string, resp *UpdateDiscussionLegacyResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -8120,9 +9030,12 @@ UpdateDiscussionLegacyResponse is a response for UpdateDiscussionLegacy
 https://developer.github.com/v3/teams/discussions/#update-a-discussion-legacy
 */
 type UpdateDiscussionLegacyResponse struct {
-	requests.Response
-	request *UpdateDiscussionLegacyReq
-	Data    components.TeamDiscussion
+	httpResponse *http.Response
+	Data         components.TeamDiscussion
+}
+
+func (r *UpdateDiscussionLegacyResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -8142,23 +9055,38 @@ func UpdateInOrg(ctx context.Context, req *UpdateInOrgReq, opt ...requests.Optio
 	if req == nil {
 		req = new(UpdateInOrgReq)
 	}
-	resp := &UpdateInOrgResponse{request: req}
+	resp := &UpdateInOrgResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.TeamFull{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewUpdateInOrgResponse(r, opts.PreserveResponseBody())
+}
+
+// NewUpdateInOrgResponse builds a new *UpdateInOrgResponse from an *http.Response
+func NewUpdateInOrgResponse(resp *http.Response, preserveBody bool) (*UpdateInOrgResponse, error) {
+	var result UpdateInOrgResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{201})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -8203,7 +9131,6 @@ func (r *UpdateInOrgReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{201},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
@@ -8216,7 +9143,6 @@ func (r *UpdateInOrgReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/orgs/%v/teams/%v", r.Org, r.TeamSlug),
 		URLQuery:         query,
-		ValidStatuses:    []int{201},
 	}
 	return builder
 }
@@ -8226,7 +9152,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *UpdateInOrgReq) Rel(link string, resp *UpdateInOrgResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -8281,9 +9207,12 @@ UpdateInOrgResponse is a response for UpdateInOrg
 https://developer.github.com/v3/teams/#update-a-team
 */
 type UpdateInOrgResponse struct {
-	requests.Response
-	request *UpdateInOrgReq
-	Data    components.TeamFull
+	httpResponse *http.Response
+	Data         components.TeamFull
+}
+
+func (r *UpdateInOrgResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -8303,23 +9232,38 @@ func UpdateLegacy(ctx context.Context, req *UpdateLegacyReq, opt ...requests.Opt
 	if req == nil {
 		req = new(UpdateLegacyReq)
 	}
-	resp := &UpdateLegacyResponse{request: req}
+	resp := &UpdateLegacyResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.TeamFull{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewUpdateLegacyResponse(r, opts.PreserveResponseBody())
+}
+
+// NewUpdateLegacyResponse builds a new *UpdateLegacyResponse from an *http.Response
+func NewUpdateLegacyResponse(resp *http.Response, preserveBody bool) (*UpdateLegacyResponse, error) {
+	var result UpdateLegacyResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{201})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -8361,7 +9305,6 @@ func (r *UpdateLegacyReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{201},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
@@ -8374,7 +9317,6 @@ func (r *UpdateLegacyReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/teams/%v", r.TeamId),
 		URLQuery:         query,
-		ValidStatuses:    []int{201},
 	}
 	return builder
 }
@@ -8384,7 +9326,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *UpdateLegacyReq) Rel(link string, resp *UpdateLegacyResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -8438,7 +9380,10 @@ UpdateLegacyResponse is a response for UpdateLegacy
 https://developer.github.com/v3/teams/#update-a-team-legacy
 */
 type UpdateLegacyResponse struct {
-	requests.Response
-	request *UpdateLegacyReq
-	Data    components.TeamFull
+	httpResponse *http.Response
+	Data         components.TeamFull
+}
+
+func (r *UpdateLegacyResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }

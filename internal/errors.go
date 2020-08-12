@@ -8,142 +8,68 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"github.com/willabides/octo-go/requests"
+	"github.com/willabides/octo-go/errors"
 )
 
-// ErrorCheck checks for errors in the common
-func ErrorCheck(resp *requests.Response, builder *RequestBuilder) error {
-	err := clientErrorCheck(resp, builder)
-	if err != nil {
-		return err
+// ErrorCheck checks for error responses
+func ErrorCheck(resp *http.Response, validStatuses []int) error {
+	code := resp.StatusCode
+	for _, wantStatus := range validStatuses {
+		if code == wantStatus {
+			return nil
+		}
 	}
-	err = serverErrorCheck(resp)
-	if err != nil {
-		return err
+	switch {
+	case code >= 400 && code < 500:
+		return newClientError(resp)
+	case code >= 500 && code < 600:
+		return newServerError(resp)
 	}
-	err = unexpectedStatusCheck(resp, builder)
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
-// UnexpectedStatusCodeError is returned when an unexpected status code is received, but
-// the status is not in the 4xx or 5xx range.
-type UnexpectedStatusCodeError struct {
-	wantedCodes []int
-	gotCode     int
-	requests.Response
-}
-
-func (e *UnexpectedStatusCodeError) Error() string {
-	return fmt.Sprintf("received unexpected http status code %d, expected codes are %v", e.gotCode, e.wantedCodes)
-}
-
-func unexpectedStatusCheck(resp *requests.Response, builder *RequestBuilder) error {
-	valid := make([]int, len(builder.ValidStatuses))
-	copy(valid, builder.ValidStatuses)
-	if builder.HasAttribute(AttrBoolean) {
-		valid = append(valid, 404)
-	}
-	if builder.HasAttribute(AttrRedirectOnly) {
+	if isRedirectOnly(validStatuses) && code < 300 {
 		return nil
 	}
-	statusCode := resp.HTTPResponse().StatusCode
-	if statusCodeInList(resp, valid) {
-		return nil
-	}
-	return &UnexpectedStatusCodeError{
-		wantedCodes: valid,
-		gotCode:     statusCode,
-		Response:    *resp,
+	msg := fmt.Sprintf("received unexpected http status code %d, expected codes are %v", code, validStatuses)
+	return &errors.UnexpectedStatusCodeError{
+		HTTPResponse: resp,
+		Message:      msg,
 	}
 }
 
-// ClientError is returned when the http status is in the 4xx range
-type ClientError struct {
-	requests.Response
-	ErrorData *ErrorData
-}
-
-func (e *ClientError) Error() string {
-	if e.ErrorData == nil || e.ErrorData.Message == "" {
-		return fmt.Sprintf("client error %d", e.Response.HTTPResponse().StatusCode)
-	}
-	return fmt.Sprintf("client error %d: %s", e.Response.HTTPResponse().StatusCode, e.ErrorData.Message)
-}
-
-func clientErrorCheck(resp *requests.Response, builder *RequestBuilder) error {
-	statusCode := resp.HTTPResponse().StatusCode
-	if statusCode < 400 || statusCode > 499 {
-		return nil
-	}
-
-	// 404 isn't an error for boolean endpoints ¯\_(ツ)_/¯
-	if builder.HasAttribute(AttrBoolean) && statusCode == 404 {
-		return nil
-	}
-
-	clientErr := &ClientError{
-		Response:  *resp,
-		ErrorData: new(ErrorData),
-	}
-	err := clientErr.ErrorData.decode(resp.HTTPResponse())
+func newClientError(resp *http.Response) error {
+	msg := fmt.Sprintf("client error %d", resp.StatusCode)
+	errorData, err := unmarshalErrorData(resp)
 	if err != nil {
-		clientErr.ErrorData = nil
+		errorData = nil
 	}
-	return clientErr
+	if errorData != nil && errorData.Message != "" {
+		msg += ": " + errorData.Message
+	}
+	return &errors.ClientError{
+		HTTPResponse: resp,
+		Message:      msg,
+	}
 }
 
-// ServerError is returned when the http status is in the 5xx range
-type ServerError struct {
-	requests.Response
-	ErrorData *ErrorData
-}
-
-func (e *ServerError) Error() string {
-	if e.ErrorData == nil || e.ErrorData.Message == "" {
-		return fmt.Sprintf("client error %d", e.Response.HTTPResponse().StatusCode)
-	}
-	return fmt.Sprintf("client error %d: %s", e.Response.HTTPResponse().StatusCode, e.ErrorData.Message)
-}
-
-func serverErrorCheck(resp *requests.Response) error {
-	statusCode := resp.HTTPResponse().StatusCode
-	if statusCode < 500 || statusCode > 599 {
-		return nil
-	}
-	serverErr := &ServerError{
-		Response:  *resp,
-		ErrorData: new(ErrorData),
-	}
-	err := serverErr.ErrorData.decode(resp.HTTPResponse())
+func newServerError(resp *http.Response) error {
+	msg := fmt.Sprintf("client error %d", resp.StatusCode)
+	errorData, err := unmarshalErrorData(resp)
 	if err != nil {
-		serverErr.ErrorData = nil
+		errorData = nil
 	}
-	return serverErr
+	if errorData != nil && errorData.Message != "" {
+		msg += ": " + errorData.Message
+	}
+	return &errors.ServerError{
+		HTTPResponse: resp,
+		Message:      msg,
+	}
 }
 
-// ErrorData all 4xx common bodies and maybe some 5xx should unmarshal to this
+// ErrorData all 4xx response bodies and maybe some 5xx should unmarshal to this
 type ErrorData struct {
 	DocumentationUrl string           `json:"documentation_url,omitempty"`
 	Message          string           `json:"message,omitempty"`
 	Errors           []ErrorDataError `json:"errors,omitempty"`
-}
-
-func (e *ErrorData) decode(resp *http.Response) error {
-	if resp.Body == nil {
-		return fmt.Errorf("no body")
-	}
-	var nextBody bytes.Buffer
-	bodyReader := io.TeeReader(resp.Body, &nextBody)
-	//nolint:errcheck // If there's an error draining the common body, there was probably already an error reported.
-	defer func() {
-		_, _ = ioutil.ReadAll(bodyReader)
-		_ = resp.Body.Close()
-		resp.Body = ioutil.NopCloser(&nextBody)
-	}()
-	return json.NewDecoder(bodyReader).Decode(e)
 }
 
 // ErrorDataError an Error field in ErrorData
@@ -152,4 +78,24 @@ type ErrorDataError struct {
 	Field    string `json:"field,omitempty"`
 	Message  string `json:"message,omitempty"`
 	Resource string `json:"resource,omitempty"`
+}
+
+func unmarshalErrorData(resp *http.Response) (*ErrorData, error) {
+	if resp.Body == nil {
+		return nil, fmt.Errorf("no body")
+	}
+	var nextBody bytes.Buffer
+	bodyReader := io.TeeReader(resp.Body, &nextBody)
+	//nolint:errcheck // If there's an error draining the response body, there was probably already an error reported.
+	defer func() {
+		_, _ = ioutil.ReadAll(bodyReader)
+		_ = resp.Body.Close()
+		resp.Body = ioutil.NopCloser(&nextBody)
+	}()
+	var errorData ErrorData
+	err := json.NewDecoder(bodyReader).Decode(&errorData)
+	if err != nil {
+		return nil, err
+	}
+	return &errorData, nil
 }

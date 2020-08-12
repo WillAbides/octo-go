@@ -40,23 +40,38 @@ func CreateBlob(ctx context.Context, req *CreateBlobReq, opt ...requests.Option)
 	if req == nil {
 		req = new(CreateBlobReq)
 	}
-	resp := &CreateBlobResponse{request: req}
+	resp := &CreateBlobResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.ShortBlob{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewCreateBlobResponse(r, opts.PreserveResponseBody())
+}
+
+// NewCreateBlobResponse builds a new *CreateBlobResponse from an *http.Response
+func NewCreateBlobResponse(resp *http.Response, preserveBody bool) (*CreateBlobResponse, error) {
+	var result CreateBlobResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{201})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -99,7 +114,6 @@ func (r *CreateBlobReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{201},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
@@ -112,7 +126,6 @@ func (r *CreateBlobReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/git/blobs", r.Owner, r.Repo),
 		URLQuery:         query,
-		ValidStatuses:    []int{201},
 	}
 	return builder
 }
@@ -122,7 +135,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *CreateBlobReq) Rel(link string, resp *CreateBlobResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -150,9 +163,12 @@ CreateBlobResponse is a response for CreateBlob
 https://developer.github.com/v3/git/blobs/#create-a-blob
 */
 type CreateBlobResponse struct {
-	requests.Response
-	request *CreateBlobReq
-	Data    components.ShortBlob
+	httpResponse *http.Response
+	Data         components.ShortBlob
+}
+
+func (r *CreateBlobResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -172,23 +188,38 @@ func CreateCommit(ctx context.Context, req *CreateCommitReq, opt ...requests.Opt
 	if req == nil {
 		req = new(CreateCommitReq)
 	}
-	resp := &CreateCommitResponse{request: req}
+	resp := &CreateCommitResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.GitCommit{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewCreateCommitResponse(r, opts.PreserveResponseBody())
+}
+
+// NewCreateCommitResponse builds a new *CreateCommitResponse from an *http.Response
+func NewCreateCommitResponse(resp *http.Response, preserveBody bool) (*CreateCommitResponse, error) {
+	var result CreateCommitResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{201})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -231,7 +262,6 @@ func (r *CreateCommitReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{201},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
@@ -244,7 +274,6 @@ func (r *CreateCommitReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/git/commits", r.Owner, r.Repo),
 		URLQuery:         query,
-		ValidStatuses:    []int{201},
 	}
 	return builder
 }
@@ -254,7 +283,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *CreateCommitReq) Rel(link string, resp *CreateCommitResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -351,9 +380,12 @@ CreateCommitResponse is a response for CreateCommit
 https://developer.github.com/v3/git/commits/#create-a-commit
 */
 type CreateCommitResponse struct {
-	requests.Response
-	request *CreateCommitReq
-	Data    components.GitCommit
+	httpResponse *http.Response
+	Data         components.GitCommit
+}
+
+func (r *CreateCommitResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -373,23 +405,38 @@ func CreateRef(ctx context.Context, req *CreateRefReq, opt ...requests.Option) (
 	if req == nil {
 		req = new(CreateRefReq)
 	}
-	resp := &CreateRefResponse{request: req}
+	resp := &CreateRefResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.GitRef{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewCreateRefResponse(r, opts.PreserveResponseBody())
+}
+
+// NewCreateRefResponse builds a new *CreateRefResponse from an *http.Response
+func NewCreateRefResponse(resp *http.Response, preserveBody bool) (*CreateRefResponse, error) {
+	var result CreateRefResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{201})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -432,7 +479,6 @@ func (r *CreateRefReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{201},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
@@ -445,7 +491,6 @@ func (r *CreateRefReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/git/refs", r.Owner, r.Repo),
 		URLQuery:         query,
-		ValidStatuses:    []int{201},
 	}
 	return builder
 }
@@ -455,7 +500,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *CreateRefReq) Rel(link string, resp *CreateRefResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -487,9 +532,12 @@ CreateRefResponse is a response for CreateRef
 https://developer.github.com/v3/git/refs/#create-a-reference
 */
 type CreateRefResponse struct {
-	requests.Response
-	request *CreateRefReq
-	Data    components.GitRef
+	httpResponse *http.Response
+	Data         components.GitRef
+}
+
+func (r *CreateRefResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -509,23 +557,38 @@ func CreateTag(ctx context.Context, req *CreateTagReq, opt ...requests.Option) (
 	if req == nil {
 		req = new(CreateTagReq)
 	}
-	resp := &CreateTagResponse{request: req}
+	resp := &CreateTagResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.GitTag{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewCreateTagResponse(r, opts.PreserveResponseBody())
+}
+
+// NewCreateTagResponse builds a new *CreateTagResponse from an *http.Response
+func NewCreateTagResponse(resp *http.Response, preserveBody bool) (*CreateTagResponse, error) {
+	var result CreateTagResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{201})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -568,7 +631,6 @@ func (r *CreateTagReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{201},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
@@ -581,7 +643,6 @@ func (r *CreateTagReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/git/tags", r.Owner, r.Repo),
 		URLQuery:         query,
-		ValidStatuses:    []int{201},
 	}
 	return builder
 }
@@ -591,7 +652,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *CreateTagReq) Rel(link string, resp *CreateTagResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -644,9 +705,12 @@ CreateTagResponse is a response for CreateTag
 https://developer.github.com/v3/git/tags/#create-a-tag-object
 */
 type CreateTagResponse struct {
-	requests.Response
-	request *CreateTagReq
-	Data    components.GitTag
+	httpResponse *http.Response
+	Data         components.GitTag
+}
+
+func (r *CreateTagResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -666,23 +730,38 @@ func CreateTree(ctx context.Context, req *CreateTreeReq, opt ...requests.Option)
 	if req == nil {
 		req = new(CreateTreeReq)
 	}
-	resp := &CreateTreeResponse{request: req}
+	resp := &CreateTreeResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.GitTree{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewCreateTreeResponse(r, opts.PreserveResponseBody())
+}
+
+// NewCreateTreeResponse builds a new *CreateTreeResponse from an *http.Response
+func NewCreateTreeResponse(resp *http.Response, preserveBody bool) (*CreateTreeResponse, error) {
+	var result CreateTreeResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{201})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -725,7 +804,6 @@ func (r *CreateTreeReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{201},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
@@ -738,7 +816,6 @@ func (r *CreateTreeReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/git/trees", r.Owner, r.Repo),
 		URLQuery:         query,
-		ValidStatuses:    []int{201},
 	}
 	return builder
 }
@@ -748,7 +825,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *CreateTreeReq) Rel(link string, resp *CreateTreeResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -815,9 +892,12 @@ CreateTreeResponse is a response for CreateTree
 https://developer.github.com/v3/git/trees/#create-a-tree
 */
 type CreateTreeResponse struct {
-	requests.Response
-	request *CreateTreeReq
-	Data    components.GitTree
+	httpResponse *http.Response
+	Data         components.GitTree
+}
+
+func (r *CreateTreeResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -837,22 +917,32 @@ func DeleteRef(ctx context.Context, req *DeleteRefReq, opt ...requests.Option) (
 	if req == nil {
 		req = new(DeleteRefReq)
 	}
-	resp := &DeleteRefResponse{request: req}
+	resp := &DeleteRefResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewDeleteRefResponse(r, opts.PreserveResponseBody())
+}
+
+// NewDeleteRefResponse builds a new *DeleteRefResponse from an *http.Response
+func NewDeleteRefResponse(resp *http.Response, preserveBody bool) (*DeleteRefResponse, error) {
+	var result DeleteRefResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -897,7 +987,6 @@ func (r *DeleteRefReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -907,7 +996,6 @@ func (r *DeleteRefReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/git/refs/%v", r.Owner, r.Repo, r.Ref),
 		URLQuery:           query,
-		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -917,7 +1005,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *DeleteRefReq) Rel(link string, resp *DeleteRefResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -931,8 +1019,11 @@ DeleteRefResponse is a response for DeleteRef
 https://developer.github.com/v3/git/refs/#delete-a-reference
 */
 type DeleteRefResponse struct {
-	requests.Response
-	request *DeleteRefReq
+	httpResponse *http.Response
+}
+
+func (r *DeleteRefResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -952,23 +1043,38 @@ func GetBlob(ctx context.Context, req *GetBlobReq, opt ...requests.Option) (*Get
 	if req == nil {
 		req = new(GetBlobReq)
 	}
-	resp := &GetBlobResponse{request: req}
+	resp := &GetBlobResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.Blob{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetBlobResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetBlobResponse builds a new *GetBlobResponse from an *http.Response
+func NewGetBlobResponse(resp *http.Response, preserveBody bool) (*GetBlobResponse, error) {
+	var result GetBlobResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1013,7 +1119,6 @@ func (r *GetBlobReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -1023,7 +1128,6 @@ func (r *GetBlobReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/git/blobs/%v", r.Owner, r.Repo, r.FileSha),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -1033,7 +1137,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetBlobReq) Rel(link string, resp *GetBlobResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1047,9 +1151,12 @@ GetBlobResponse is a response for GetBlob
 https://developer.github.com/v3/git/blobs/#get-a-blob
 */
 type GetBlobResponse struct {
-	requests.Response
-	request *GetBlobReq
-	Data    components.Blob
+	httpResponse *http.Response
+	Data         components.Blob
+}
+
+func (r *GetBlobResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1069,23 +1176,38 @@ func GetCommit(ctx context.Context, req *GetCommitReq, opt ...requests.Option) (
 	if req == nil {
 		req = new(GetCommitReq)
 	}
-	resp := &GetCommitResponse{request: req}
+	resp := &GetCommitResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.GitCommit{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetCommitResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetCommitResponse builds a new *GetCommitResponse from an *http.Response
+func NewGetCommitResponse(resp *http.Response, preserveBody bool) (*GetCommitResponse, error) {
+	var result GetCommitResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1130,7 +1252,6 @@ func (r *GetCommitReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -1140,7 +1261,6 @@ func (r *GetCommitReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/git/commits/%v", r.Owner, r.Repo, r.CommitSha),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -1150,7 +1270,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetCommitReq) Rel(link string, resp *GetCommitResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1164,9 +1284,12 @@ GetCommitResponse is a response for GetCommit
 https://developer.github.com/v3/git/commits/#get-a-commit
 */
 type GetCommitResponse struct {
-	requests.Response
-	request *GetCommitReq
-	Data    components.GitCommit
+	httpResponse *http.Response
+	Data         components.GitCommit
+}
+
+func (r *GetCommitResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1186,23 +1309,38 @@ func GetRef(ctx context.Context, req *GetRefReq, opt ...requests.Option) (*GetRe
 	if req == nil {
 		req = new(GetRefReq)
 	}
-	resp := &GetRefResponse{request: req}
+	resp := &GetRefResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.GitRef{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetRefResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetRefResponse builds a new *GetRefResponse from an *http.Response
+func NewGetRefResponse(resp *http.Response, preserveBody bool) (*GetRefResponse, error) {
+	var result GetRefResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1247,7 +1385,6 @@ func (r *GetRefReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -1257,7 +1394,6 @@ func (r *GetRefReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/git/ref/%v", r.Owner, r.Repo, r.Ref),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -1267,7 +1403,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetRefReq) Rel(link string, resp *GetRefResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1281,9 +1417,12 @@ GetRefResponse is a response for GetRef
 https://developer.github.com/v3/git/refs/#get-a-reference
 */
 type GetRefResponse struct {
-	requests.Response
-	request *GetRefReq
-	Data    components.GitRef
+	httpResponse *http.Response
+	Data         components.GitRef
+}
+
+func (r *GetRefResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1303,23 +1442,38 @@ func GetTag(ctx context.Context, req *GetTagReq, opt ...requests.Option) (*GetTa
 	if req == nil {
 		req = new(GetTagReq)
 	}
-	resp := &GetTagResponse{request: req}
+	resp := &GetTagResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.GitTag{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetTagResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetTagResponse builds a new *GetTagResponse from an *http.Response
+func NewGetTagResponse(resp *http.Response, preserveBody bool) (*GetTagResponse, error) {
+	var result GetTagResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1364,7 +1518,6 @@ func (r *GetTagReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -1374,7 +1527,6 @@ func (r *GetTagReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/git/tags/%v", r.Owner, r.Repo, r.TagSha),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -1384,7 +1536,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetTagReq) Rel(link string, resp *GetTagResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1398,9 +1550,12 @@ GetTagResponse is a response for GetTag
 https://developer.github.com/v3/git/tags/#get-a-tag
 */
 type GetTagResponse struct {
-	requests.Response
-	request *GetTagReq
-	Data    components.GitTag
+	httpResponse *http.Response
+	Data         components.GitTag
+}
+
+func (r *GetTagResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1420,23 +1575,38 @@ func GetTree(ctx context.Context, req *GetTreeReq, opt ...requests.Option) (*Get
 	if req == nil {
 		req = new(GetTreeReq)
 	}
-	resp := &GetTreeResponse{request: req}
+	resp := &GetTreeResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.GitTree{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetTreeResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetTreeResponse builds a new *GetTreeResponse from an *http.Response
+func NewGetTreeResponse(resp *http.Response, preserveBody bool) (*GetTreeResponse, error) {
+	var result GetTreeResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1493,7 +1663,6 @@ func (r *GetTreeReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -1503,7 +1672,6 @@ func (r *GetTreeReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/git/trees/%v", r.Owner, r.Repo, r.TreeSha),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -1513,7 +1681,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetTreeReq) Rel(link string, resp *GetTreeResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1527,9 +1695,12 @@ GetTreeResponse is a response for GetTree
 https://developer.github.com/v3/git/trees/#get-a-tree
 */
 type GetTreeResponse struct {
-	requests.Response
-	request *GetTreeReq
-	Data    components.GitTree
+	httpResponse *http.Response
+	Data         components.GitTree
+}
+
+func (r *GetTreeResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1549,23 +1720,38 @@ func ListMatchingRefs(ctx context.Context, req *ListMatchingRefsReq, opt ...requ
 	if req == nil {
 		req = new(ListMatchingRefsReq)
 	}
-	resp := &ListMatchingRefsResponse{request: req}
+	resp := &ListMatchingRefsResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.GitRef{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListMatchingRefsResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListMatchingRefsResponse builds a new *ListMatchingRefsResponse from an *http.Response
+func NewListMatchingRefsResponse(resp *http.Response, preserveBody bool) (*ListMatchingRefsResponse, error) {
+	var result ListMatchingRefsResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1622,7 +1808,6 @@ func (r *ListMatchingRefsReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -1632,7 +1817,6 @@ func (r *ListMatchingRefsReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/git/matching-refs/%v", r.Owner, r.Repo, r.Ref),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -1642,7 +1826,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListMatchingRefsReq) Rel(link string, resp *ListMatchingRefsResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1656,9 +1840,12 @@ ListMatchingRefsResponse is a response for ListMatchingRefs
 https://developer.github.com/v3/git/refs/#list-matching-references
 */
 type ListMatchingRefsResponse struct {
-	requests.Response
-	request *ListMatchingRefsReq
-	Data    []components.GitRef
+	httpResponse *http.Response
+	Data         []components.GitRef
+}
+
+func (r *ListMatchingRefsResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1678,23 +1865,38 @@ func UpdateRef(ctx context.Context, req *UpdateRefReq, opt ...requests.Option) (
 	if req == nil {
 		req = new(UpdateRefReq)
 	}
-	resp := &UpdateRefResponse{request: req}
+	resp := &UpdateRefResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.GitRef{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewUpdateRefResponse(r, opts.PreserveResponseBody())
+}
+
+// NewUpdateRefResponse builds a new *UpdateRefResponse from an *http.Response
+func NewUpdateRefResponse(resp *http.Response, preserveBody bool) (*UpdateRefResponse, error) {
+	var result UpdateRefResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1740,7 +1942,6 @@ func (r *UpdateRefReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
@@ -1753,7 +1954,6 @@ func (r *UpdateRefReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/git/refs/%v", r.Owner, r.Repo, r.Ref),
 		URLQuery:         query,
-		ValidStatuses:    []int{200},
 	}
 	return builder
 }
@@ -1763,7 +1963,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *UpdateRefReq) Rel(link string, resp *UpdateRefResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1795,7 +1995,10 @@ UpdateRefResponse is a response for UpdateRef
 https://developer.github.com/v3/git/refs/#update-a-reference
 */
 type UpdateRefResponse struct {
-	requests.Response
-	request *UpdateRefReq
-	Data    components.GitRef
+	httpResponse *http.Response
+	Data         components.GitRef
+}
+
+func (r *UpdateRefResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }

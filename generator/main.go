@@ -190,6 +190,7 @@ func addEndpointToRequestFiles(endpoint *model.Endpoint, requestFiles map[string
 	}
 	file := requestFiles[reqPkg]
 	addRequestFunc(file, pq, endpoint)
+	addResponseFunc(file, pq, endpoint)
 	addClientMethod(file, pq, endpoint)
 	addRequestStruct(file, pq, endpoint)
 	addRequestBody(file, pq, endpoint)

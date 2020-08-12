@@ -39,23 +39,38 @@ func GetAllTemplates(ctx context.Context, req *GetAllTemplatesReq, opt ...reques
 	if req == nil {
 		req = new(GetAllTemplatesReq)
 	}
-	resp := &GetAllTemplatesResponse{request: req}
+	resp := &GetAllTemplatesResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = GetAllTemplatesResponseBody{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetAllTemplatesResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetAllTemplatesResponse builds a new *GetAllTemplatesResponse from an *http.Response
+func NewGetAllTemplatesResponse(resp *http.Response, preserveBody bool) (*GetAllTemplatesResponse, error) {
+	var result GetAllTemplatesResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -95,7 +110,6 @@ func (r *GetAllTemplatesReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -105,7 +119,6 @@ func (r *GetAllTemplatesReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/gitignore/templates"),
 		URLQuery:           query,
-		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -115,7 +128,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetAllTemplatesReq) Rel(link string, resp *GetAllTemplatesResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -136,9 +149,12 @@ GetAllTemplatesResponse is a response for GetAllTemplates
 https://developer.github.com/v3/gitignore/#get-all-gitignore-templates
 */
 type GetAllTemplatesResponse struct {
-	requests.Response
-	request *GetAllTemplatesReq
-	Data    GetAllTemplatesResponseBody
+	httpResponse *http.Response
+	Data         GetAllTemplatesResponseBody
+}
+
+func (r *GetAllTemplatesResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -158,23 +174,38 @@ func GetTemplate(ctx context.Context, req *GetTemplateReq, opt ...requests.Optio
 	if req == nil {
 		req = new(GetTemplateReq)
 	}
-	resp := &GetTemplateResponse{request: req}
+	resp := &GetTemplateResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.GitignoreTemplate{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetTemplateResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetTemplateResponse builds a new *GetTemplateResponse from an *http.Response
+func NewGetTemplateResponse(resp *http.Response, preserveBody bool) (*GetTemplateResponse, error) {
+	var result GetTemplateResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -217,7 +248,6 @@ func (r *GetTemplateReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -227,7 +257,6 @@ func (r *GetTemplateReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/gitignore/templates/%v", r.Name),
 		URLQuery:           query,
-		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -237,7 +266,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetTemplateReq) Rel(link string, resp *GetTemplateResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -251,7 +280,10 @@ GetTemplateResponse is a response for GetTemplate
 https://developer.github.com/v3/gitignore/#get-a-gitignore-template
 */
 type GetTemplateResponse struct {
-	requests.Response
-	request *GetTemplateReq
-	Data    components.GitignoreTemplate
+	httpResponse *http.Response
+	Data         components.GitignoreTemplate
+}
+
+func (r *GetTemplateResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }

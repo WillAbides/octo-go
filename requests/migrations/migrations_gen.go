@@ -40,22 +40,32 @@ func CancelImport(ctx context.Context, req *CancelImportReq, opt ...requests.Opt
 	if req == nil {
 		req = new(CancelImportReq)
 	}
-	resp := &CancelImportResponse{request: req}
+	resp := &CancelImportResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewCancelImportResponse(r, opts.PreserveResponseBody())
+}
+
+// NewCancelImportResponse builds a new *CancelImportResponse from an *http.Response
+func NewCancelImportResponse(resp *http.Response, preserveBody bool) (*CancelImportResponse, error) {
+	var result CancelImportResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -97,7 +107,6 @@ func (r *CancelImportReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -107,7 +116,6 @@ func (r *CancelImportReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/import", r.Owner, r.Repo),
 		URLQuery:           query,
-		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -117,7 +125,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *CancelImportReq) Rel(link string, resp *CancelImportResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -131,8 +139,11 @@ CancelImportResponse is a response for CancelImport
 https://developer.github.com/v3/migrations/source_imports/#cancel-an-import
 */
 type CancelImportResponse struct {
-	requests.Response
-	request *CancelImportReq
+	httpResponse *http.Response
+}
+
+func (r *CancelImportResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -152,22 +163,32 @@ func DeleteArchiveForAuthenticatedUser(ctx context.Context, req *DeleteArchiveFo
 	if req == nil {
 		req = new(DeleteArchiveForAuthenticatedUserReq)
 	}
-	resp := &DeleteArchiveForAuthenticatedUserResponse{request: req}
+	resp := &DeleteArchiveForAuthenticatedUserResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewDeleteArchiveForAuthenticatedUserResponse(r, opts.PreserveResponseBody())
+}
+
+// NewDeleteArchiveForAuthenticatedUserResponse builds a new *DeleteArchiveForAuthenticatedUserResponse from an *http.Response
+func NewDeleteArchiveForAuthenticatedUserResponse(resp *http.Response, preserveBody bool) (*DeleteArchiveForAuthenticatedUserResponse, error) {
+	var result DeleteArchiveForAuthenticatedUserResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204, 304})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -213,7 +234,6 @@ func (r *DeleteArchiveForAuthenticatedUserReq) requestBuilder() *internal.Reques
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"wyandotte"},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -223,7 +243,6 @@ func (r *DeleteArchiveForAuthenticatedUserReq) requestBuilder() *internal.Reques
 		RequiredPreviews:   []string{"wyandotte"},
 		URLPath:            fmt.Sprintf("/user/migrations/%v/archive", r.MigrationId),
 		URLQuery:           query,
-		ValidStatuses:      []int{204, 304},
 	}
 	return builder
 }
@@ -233,7 +252,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *DeleteArchiveForAuthenticatedUserReq) Rel(link string, resp *DeleteArchiveForAuthenticatedUserResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -247,8 +266,11 @@ DeleteArchiveForAuthenticatedUserResponse is a response for DeleteArchiveForAuth
 https://developer.github.com/v3/migrations/users/#delete-a-user-migration-archive
 */
 type DeleteArchiveForAuthenticatedUserResponse struct {
-	requests.Response
-	request *DeleteArchiveForAuthenticatedUserReq
+	httpResponse *http.Response
+}
+
+func (r *DeleteArchiveForAuthenticatedUserResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -268,26 +290,36 @@ func DeleteArchiveForOrg(ctx context.Context, req *DeleteArchiveForOrgReq, opt .
 	if req == nil {
 		req = new(DeleteArchiveForOrgReq)
 	}
-	resp := &DeleteArchiveForOrgResponse{request: req}
+	resp := &DeleteArchiveForOrgResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.SetBoolResult(r, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	resp.httpResponse = r
+
+	return NewDeleteArchiveForOrgResponse(r, opts.PreserveResponseBody())
+}
+
+// NewDeleteArchiveForOrgResponse builds a new *DeleteArchiveForOrgResponse from an *http.Response
+func NewDeleteArchiveForOrgResponse(resp *http.Response, preserveBody bool) (*DeleteArchiveForOrgResponse, error) {
+	var result DeleteArchiveForOrgResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204, 404})
 	if err != nil {
-		return nil, err
+		return &result, err
 	}
-	return resp, nil
+	err = internal.SetBoolResult(resp, &result.Data)
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -334,7 +366,6 @@ func (r *DeleteArchiveForOrgReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"wyandotte"},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrBoolean},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -344,7 +375,6 @@ func (r *DeleteArchiveForOrgReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{"wyandotte"},
 		URLPath:            fmt.Sprintf("/orgs/%v/migrations/%v/archive", r.Org, r.MigrationId),
 		URLQuery:           query,
-		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -354,7 +384,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *DeleteArchiveForOrgReq) Rel(link string, resp *DeleteArchiveForOrgResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -368,9 +398,12 @@ DeleteArchiveForOrgResponse is a response for DeleteArchiveForOrg
 https://developer.github.com/v3/migrations/orgs/#delete-an-organization-migration-archive
 */
 type DeleteArchiveForOrgResponse struct {
-	requests.Response
-	request *DeleteArchiveForOrgReq
-	Data    bool
+	httpResponse *http.Response
+	Data         bool
+}
+
+func (r *DeleteArchiveForOrgResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -390,22 +423,32 @@ func DownloadArchiveForOrg(ctx context.Context, req *DownloadArchiveForOrgReq, o
 	if req == nil {
 		req = new(DownloadArchiveForOrgReq)
 	}
-	resp := &DownloadArchiveForOrgResponse{request: req}
+	resp := &DownloadArchiveForOrgResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewDownloadArchiveForOrgResponse(r, opts.PreserveResponseBody())
+}
+
+// NewDownloadArchiveForOrgResponse builds a new *DownloadArchiveForOrgResponse from an *http.Response
+func NewDownloadArchiveForOrgResponse(resp *http.Response, preserveBody bool) (*DownloadArchiveForOrgResponse, error) {
+	var result DownloadArchiveForOrgResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{302})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -452,7 +495,6 @@ func (r *DownloadArchiveForOrgReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"wyandotte"},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -462,7 +504,6 @@ func (r *DownloadArchiveForOrgReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{"wyandotte"},
 		URLPath:            fmt.Sprintf("/orgs/%v/migrations/%v/archive", r.Org, r.MigrationId),
 		URLQuery:           query,
-		ValidStatuses:      []int{302},
 	}
 	return builder
 }
@@ -472,7 +513,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *DownloadArchiveForOrgReq) Rel(link string, resp *DownloadArchiveForOrgResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -486,8 +527,11 @@ DownloadArchiveForOrgResponse is a response for DownloadArchiveForOrg
 https://developer.github.com/v3/migrations/orgs/#download-an-organization-migration-archive
 */
 type DownloadArchiveForOrgResponse struct {
-	requests.Response
-	request *DownloadArchiveForOrgReq
+	httpResponse *http.Response
+}
+
+func (r *DownloadArchiveForOrgResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -507,22 +551,32 @@ func GetArchiveForAuthenticatedUser(ctx context.Context, req *GetArchiveForAuthe
 	if req == nil {
 		req = new(GetArchiveForAuthenticatedUserReq)
 	}
-	resp := &GetArchiveForAuthenticatedUserResponse{request: req}
+	resp := &GetArchiveForAuthenticatedUserResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetArchiveForAuthenticatedUserResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetArchiveForAuthenticatedUserResponse builds a new *GetArchiveForAuthenticatedUserResponse from an *http.Response
+func NewGetArchiveForAuthenticatedUserResponse(resp *http.Response, preserveBody bool) (*GetArchiveForAuthenticatedUserResponse, error) {
+	var result GetArchiveForAuthenticatedUserResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{302, 304})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -568,7 +622,6 @@ func (r *GetArchiveForAuthenticatedUserReq) requestBuilder() *internal.RequestBu
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"wyandotte"},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -578,7 +631,6 @@ func (r *GetArchiveForAuthenticatedUserReq) requestBuilder() *internal.RequestBu
 		RequiredPreviews:   []string{"wyandotte"},
 		URLPath:            fmt.Sprintf("/user/migrations/%v/archive", r.MigrationId),
 		URLQuery:           query,
-		ValidStatuses:      []int{302, 304},
 	}
 	return builder
 }
@@ -588,7 +640,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetArchiveForAuthenticatedUserReq) Rel(link string, resp *GetArchiveForAuthenticatedUserResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -602,8 +654,11 @@ GetArchiveForAuthenticatedUserResponse is a response for GetArchiveForAuthentica
 https://developer.github.com/v3/migrations/users/#download-a-user-migration-archive
 */
 type GetArchiveForAuthenticatedUserResponse struct {
-	requests.Response
-	request *GetArchiveForAuthenticatedUserReq
+	httpResponse *http.Response
+}
+
+func (r *GetArchiveForAuthenticatedUserResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -623,23 +678,38 @@ func GetCommitAuthors(ctx context.Context, req *GetCommitAuthorsReq, opt ...requ
 	if req == nil {
 		req = new(GetCommitAuthorsReq)
 	}
-	resp := &GetCommitAuthorsResponse{request: req}
+	resp := &GetCommitAuthorsResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.PorterAuthor{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetCommitAuthorsResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetCommitAuthorsResponse builds a new *GetCommitAuthorsResponse from an *http.Response
+func NewGetCommitAuthorsResponse(resp *http.Response, preserveBody bool) (*GetCommitAuthorsResponse, error) {
+	var result GetCommitAuthorsResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -691,7 +761,6 @@ func (r *GetCommitAuthorsReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -701,7 +770,6 @@ func (r *GetCommitAuthorsReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/import/authors", r.Owner, r.Repo),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -711,7 +779,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetCommitAuthorsReq) Rel(link string, resp *GetCommitAuthorsResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -725,9 +793,12 @@ GetCommitAuthorsResponse is a response for GetCommitAuthors
 https://developer.github.com/v3/migrations/source_imports/#get-commit-authors
 */
 type GetCommitAuthorsResponse struct {
-	requests.Response
-	request *GetCommitAuthorsReq
-	Data    []components.PorterAuthor
+	httpResponse *http.Response
+	Data         []components.PorterAuthor
+}
+
+func (r *GetCommitAuthorsResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -747,23 +818,38 @@ func GetImportStatus(ctx context.Context, req *GetImportStatusReq, opt ...reques
 	if req == nil {
 		req = new(GetImportStatusReq)
 	}
-	resp := &GetImportStatusResponse{request: req}
+	resp := &GetImportStatusResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.Import{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetImportStatusResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetImportStatusResponse builds a new *GetImportStatusResponse from an *http.Response
+func NewGetImportStatusResponse(resp *http.Response, preserveBody bool) (*GetImportStatusResponse, error) {
+	var result GetImportStatusResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -805,7 +891,6 @@ func (r *GetImportStatusReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -815,7 +900,6 @@ func (r *GetImportStatusReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/import", r.Owner, r.Repo),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -825,7 +909,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetImportStatusReq) Rel(link string, resp *GetImportStatusResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -839,9 +923,12 @@ GetImportStatusResponse is a response for GetImportStatus
 https://developer.github.com/v3/migrations/source_imports/#get-an-import-status
 */
 type GetImportStatusResponse struct {
-	requests.Response
-	request *GetImportStatusReq
-	Data    components.Import
+	httpResponse *http.Response
+	Data         components.Import
+}
+
+func (r *GetImportStatusResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -861,23 +948,38 @@ func GetLargeFiles(ctx context.Context, req *GetLargeFilesReq, opt ...requests.O
 	if req == nil {
 		req = new(GetLargeFilesReq)
 	}
-	resp := &GetLargeFilesResponse{request: req}
+	resp := &GetLargeFilesResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.PorterLargeFile{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetLargeFilesResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetLargeFilesResponse builds a new *GetLargeFilesResponse from an *http.Response
+func NewGetLargeFilesResponse(resp *http.Response, preserveBody bool) (*GetLargeFilesResponse, error) {
+	var result GetLargeFilesResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -919,7 +1021,6 @@ func (r *GetLargeFilesReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -929,7 +1030,6 @@ func (r *GetLargeFilesReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/import/large_files", r.Owner, r.Repo),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -939,7 +1039,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetLargeFilesReq) Rel(link string, resp *GetLargeFilesResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -953,9 +1053,12 @@ GetLargeFilesResponse is a response for GetLargeFiles
 https://developer.github.com/v3/migrations/source_imports/#get-large-files
 */
 type GetLargeFilesResponse struct {
-	requests.Response
-	request *GetLargeFilesReq
-	Data    []components.PorterLargeFile
+	httpResponse *http.Response
+	Data         []components.PorterLargeFile
+}
+
+func (r *GetLargeFilesResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -975,23 +1078,38 @@ func GetStatusForAuthenticatedUser(ctx context.Context, req *GetStatusForAuthent
 	if req == nil {
 		req = new(GetStatusForAuthenticatedUserReq)
 	}
-	resp := &GetStatusForAuthenticatedUserResponse{request: req}
+	resp := &GetStatusForAuthenticatedUserResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.Migration{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetStatusForAuthenticatedUserResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetStatusForAuthenticatedUserResponse builds a new *GetStatusForAuthenticatedUserResponse from an *http.Response
+func NewGetStatusForAuthenticatedUserResponse(resp *http.Response, preserveBody bool) (*GetStatusForAuthenticatedUserResponse, error) {
+	var result GetStatusForAuthenticatedUserResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1037,7 +1155,6 @@ func (r *GetStatusForAuthenticatedUserReq) requestBuilder() *internal.RequestBui
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"wyandotte"},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -1047,7 +1164,6 @@ func (r *GetStatusForAuthenticatedUserReq) requestBuilder() *internal.RequestBui
 		RequiredPreviews:   []string{"wyandotte"},
 		URLPath:            fmt.Sprintf("/user/migrations/%v", r.MigrationId),
 		URLQuery:           query,
-		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -1057,7 +1173,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetStatusForAuthenticatedUserReq) Rel(link string, resp *GetStatusForAuthenticatedUserResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1071,9 +1187,12 @@ GetStatusForAuthenticatedUserResponse is a response for GetStatusForAuthenticate
 https://developer.github.com/v3/migrations/users/#get-a-user-migration-status
 */
 type GetStatusForAuthenticatedUserResponse struct {
-	requests.Response
-	request *GetStatusForAuthenticatedUserReq
-	Data    components.Migration
+	httpResponse *http.Response
+	Data         components.Migration
+}
+
+func (r *GetStatusForAuthenticatedUserResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1093,23 +1212,38 @@ func GetStatusForOrg(ctx context.Context, req *GetStatusForOrgReq, opt ...reques
 	if req == nil {
 		req = new(GetStatusForOrgReq)
 	}
-	resp := &GetStatusForOrgResponse{request: req}
+	resp := &GetStatusForOrgResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.Migration{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetStatusForOrgResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetStatusForOrgResponse builds a new *GetStatusForOrgResponse from an *http.Response
+func NewGetStatusForOrgResponse(resp *http.Response, preserveBody bool) (*GetStatusForOrgResponse, error) {
+	var result GetStatusForOrgResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1156,7 +1290,6 @@ func (r *GetStatusForOrgReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"wyandotte"},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -1166,7 +1299,6 @@ func (r *GetStatusForOrgReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{"wyandotte"},
 		URLPath:            fmt.Sprintf("/orgs/%v/migrations/%v", r.Org, r.MigrationId),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -1176,7 +1308,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetStatusForOrgReq) Rel(link string, resp *GetStatusForOrgResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1190,9 +1322,12 @@ GetStatusForOrgResponse is a response for GetStatusForOrg
 https://developer.github.com/v3/migrations/orgs/#get-an-organization-migration-status
 */
 type GetStatusForOrgResponse struct {
-	requests.Response
-	request *GetStatusForOrgReq
-	Data    components.Migration
+	httpResponse *http.Response
+	Data         components.Migration
+}
+
+func (r *GetStatusForOrgResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1212,23 +1347,38 @@ func ListForAuthenticatedUser(ctx context.Context, req *ListForAuthenticatedUser
 	if req == nil {
 		req = new(ListForAuthenticatedUserReq)
 	}
-	resp := &ListForAuthenticatedUserResponse{request: req}
+	resp := &ListForAuthenticatedUserResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.Migration{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListForAuthenticatedUserResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListForAuthenticatedUserResponse builds a new *ListForAuthenticatedUserResponse from an *http.Response
+func NewListForAuthenticatedUserResponse(resp *http.Response, preserveBody bool) (*ListForAuthenticatedUserResponse, error) {
+	var result ListForAuthenticatedUserResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1283,7 +1433,6 @@ func (r *ListForAuthenticatedUserReq) requestBuilder() *internal.RequestBuilder 
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"wyandotte"},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -1293,7 +1442,6 @@ func (r *ListForAuthenticatedUserReq) requestBuilder() *internal.RequestBuilder 
 		RequiredPreviews:   []string{"wyandotte"},
 		URLPath:            fmt.Sprintf("/user/migrations"),
 		URLQuery:           query,
-		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -1303,7 +1451,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListForAuthenticatedUserReq) Rel(link string, resp *ListForAuthenticatedUserResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1317,9 +1465,12 @@ ListForAuthenticatedUserResponse is a response for ListForAuthenticatedUser
 https://developer.github.com/v3/migrations/users/#list-user-migrations
 */
 type ListForAuthenticatedUserResponse struct {
-	requests.Response
-	request *ListForAuthenticatedUserReq
-	Data    []components.Migration
+	httpResponse *http.Response
+	Data         []components.Migration
+}
+
+func (r *ListForAuthenticatedUserResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1339,23 +1490,38 @@ func ListForOrg(ctx context.Context, req *ListForOrgReq, opt ...requests.Option)
 	if req == nil {
 		req = new(ListForOrgReq)
 	}
-	resp := &ListForOrgResponse{request: req}
+	resp := &ListForOrgResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.Migration{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListForOrgResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListForOrgResponse builds a new *ListForOrgResponse from an *http.Response
+func NewListForOrgResponse(resp *http.Response, preserveBody bool) (*ListForOrgResponse, error) {
+	var result ListForOrgResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1411,7 +1577,6 @@ func (r *ListForOrgReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"wyandotte"},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -1421,7 +1586,6 @@ func (r *ListForOrgReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{"wyandotte"},
 		URLPath:            fmt.Sprintf("/orgs/%v/migrations", r.Org),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -1431,7 +1595,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListForOrgReq) Rel(link string, resp *ListForOrgResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1445,9 +1609,12 @@ ListForOrgResponse is a response for ListForOrg
 https://developer.github.com/v3/migrations/orgs/#list-organization-migrations
 */
 type ListForOrgResponse struct {
-	requests.Response
-	request *ListForOrgReq
-	Data    []components.Migration
+	httpResponse *http.Response
+	Data         []components.Migration
+}
+
+func (r *ListForOrgResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1467,23 +1634,38 @@ func ListReposForOrg(ctx context.Context, req *ListReposForOrgReq, opt ...reques
 	if req == nil {
 		req = new(ListReposForOrgReq)
 	}
-	resp := &ListReposForOrgResponse{request: req}
+	resp := &ListReposForOrgResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.MinimalRepository{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListReposForOrgResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListReposForOrgResponse builds a new *ListReposForOrgResponse from an *http.Response
+func NewListReposForOrgResponse(resp *http.Response, preserveBody bool) (*ListReposForOrgResponse, error) {
+	var result ListReposForOrgResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1542,7 +1724,6 @@ func (r *ListReposForOrgReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"wyandotte"},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -1552,7 +1733,6 @@ func (r *ListReposForOrgReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{"wyandotte"},
 		URLPath:            fmt.Sprintf("/orgs/%v/migrations/%v/repositories", r.Org, r.MigrationId),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -1562,7 +1742,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListReposForOrgReq) Rel(link string, resp *ListReposForOrgResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1576,9 +1756,12 @@ ListReposForOrgResponse is a response for ListReposForOrg
 https://developer.github.com/v3/migrations/orgs/#list-repositories-in-an-organization-migration
 */
 type ListReposForOrgResponse struct {
-	requests.Response
-	request *ListReposForOrgReq
-	Data    []components.MinimalRepository
+	httpResponse *http.Response
+	Data         []components.MinimalRepository
+}
+
+func (r *ListReposForOrgResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1598,23 +1781,38 @@ func ListReposForUser(ctx context.Context, req *ListReposForUserReq, opt ...requ
 	if req == nil {
 		req = new(ListReposForUserReq)
 	}
-	resp := &ListReposForUserResponse{request: req}
+	resp := &ListReposForUserResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.MinimalRepository{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListReposForUserResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListReposForUserResponse builds a new *ListReposForUserResponse from an *http.Response
+func NewListReposForUserResponse(resp *http.Response, preserveBody bool) (*ListReposForUserResponse, error) {
+	var result ListReposForUserResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1672,7 +1870,6 @@ func (r *ListReposForUserReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"wyandotte"},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -1682,7 +1879,6 @@ func (r *ListReposForUserReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{"wyandotte"},
 		URLPath:            fmt.Sprintf("/user/migrations/%v/repositories", r.MigrationId),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -1692,7 +1888,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListReposForUserReq) Rel(link string, resp *ListReposForUserResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1706,9 +1902,12 @@ ListReposForUserResponse is a response for ListReposForUser
 https://developer.github.com/v3/migrations/users/#list-repositories-for-a-user-migration
 */
 type ListReposForUserResponse struct {
-	requests.Response
-	request *ListReposForUserReq
-	Data    []components.MinimalRepository
+	httpResponse *http.Response
+	Data         []components.MinimalRepository
+}
+
+func (r *ListReposForUserResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1728,23 +1927,38 @@ func MapCommitAuthor(ctx context.Context, req *MapCommitAuthorReq, opt ...reques
 	if req == nil {
 		req = new(MapCommitAuthorReq)
 	}
-	resp := &MapCommitAuthorResponse{request: req}
+	resp := &MapCommitAuthorResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.PorterAuthor{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewMapCommitAuthorResponse(r, opts.PreserveResponseBody())
+}
+
+// NewMapCommitAuthorResponse builds a new *MapCommitAuthorResponse from an *http.Response
+func NewMapCommitAuthorResponse(resp *http.Response, preserveBody bool) (*MapCommitAuthorResponse, error) {
+	var result MapCommitAuthorResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1790,7 +2004,6 @@ func (r *MapCommitAuthorReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
@@ -1803,7 +2016,6 @@ func (r *MapCommitAuthorReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/import/authors/%v", r.Owner, r.Repo, r.AuthorId),
 		URLQuery:         query,
-		ValidStatuses:    []int{200},
 	}
 	return builder
 }
@@ -1813,7 +2025,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *MapCommitAuthorReq) Rel(link string, resp *MapCommitAuthorResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1842,9 +2054,12 @@ MapCommitAuthorResponse is a response for MapCommitAuthor
 https://developer.github.com/v3/migrations/source_imports/#map-a-commit-author
 */
 type MapCommitAuthorResponse struct {
-	requests.Response
-	request *MapCommitAuthorReq
-	Data    components.PorterAuthor
+	httpResponse *http.Response
+	Data         components.PorterAuthor
+}
+
+func (r *MapCommitAuthorResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1864,23 +2079,38 @@ func SetLfsPreference(ctx context.Context, req *SetLfsPreferenceReq, opt ...requ
 	if req == nil {
 		req = new(SetLfsPreferenceReq)
 	}
-	resp := &SetLfsPreferenceResponse{request: req}
+	resp := &SetLfsPreferenceResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.Import{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewSetLfsPreferenceResponse(r, opts.PreserveResponseBody())
+}
+
+// NewSetLfsPreferenceResponse builds a new *SetLfsPreferenceResponse from an *http.Response
+func NewSetLfsPreferenceResponse(resp *http.Response, preserveBody bool) (*SetLfsPreferenceResponse, error) {
+	var result SetLfsPreferenceResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -1923,7 +2153,6 @@ func (r *SetLfsPreferenceReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
@@ -1936,7 +2165,6 @@ func (r *SetLfsPreferenceReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/import/lfs", r.Owner, r.Repo),
 		URLQuery:         query,
-		ValidStatuses:    []int{200},
 	}
 	return builder
 }
@@ -1946,7 +2174,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *SetLfsPreferenceReq) Rel(link string, resp *SetLfsPreferenceResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1974,9 +2202,12 @@ SetLfsPreferenceResponse is a response for SetLfsPreference
 https://developer.github.com/v3/migrations/source_imports/#update-git-lfs-preference
 */
 type SetLfsPreferenceResponse struct {
-	requests.Response
-	request *SetLfsPreferenceReq
-	Data    components.Import
+	httpResponse *http.Response
+	Data         components.Import
+}
+
+func (r *SetLfsPreferenceResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -1996,23 +2227,38 @@ func StartForAuthenticatedUser(ctx context.Context, req *StartForAuthenticatedUs
 	if req == nil {
 		req = new(StartForAuthenticatedUserReq)
 	}
-	resp := &StartForAuthenticatedUserResponse{request: req}
+	resp := &StartForAuthenticatedUserResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.Migration{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewStartForAuthenticatedUserResponse(r, opts.PreserveResponseBody())
+}
+
+// NewStartForAuthenticatedUserResponse builds a new *StartForAuthenticatedUserResponse from an *http.Response
+func NewStartForAuthenticatedUserResponse(resp *http.Response, preserveBody bool) (*StartForAuthenticatedUserResponse, error) {
+	var result StartForAuthenticatedUserResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{201, 304})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -2053,7 +2299,6 @@ func (r *StartForAuthenticatedUserReq) requestBuilder() *internal.RequestBuilder
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{201},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
@@ -2066,7 +2311,6 @@ func (r *StartForAuthenticatedUserReq) requestBuilder() *internal.RequestBuilder
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/user/migrations"),
 		URLQuery:         query,
-		ValidStatuses:    []int{201, 304},
 	}
 	return builder
 }
@@ -2076,7 +2320,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *StartForAuthenticatedUserReq) Rel(link string, resp *StartForAuthenticatedUserResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -2108,9 +2352,12 @@ StartForAuthenticatedUserResponse is a response for StartForAuthenticatedUser
 https://developer.github.com/v3/migrations/users/#start-a-user-migration
 */
 type StartForAuthenticatedUserResponse struct {
-	requests.Response
-	request *StartForAuthenticatedUserReq
-	Data    components.Migration
+	httpResponse *http.Response
+	Data         components.Migration
+}
+
+func (r *StartForAuthenticatedUserResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -2130,23 +2377,38 @@ func StartForOrg(ctx context.Context, req *StartForOrgReq, opt ...requests.Optio
 	if req == nil {
 		req = new(StartForOrgReq)
 	}
-	resp := &StartForOrgResponse{request: req}
+	resp := &StartForOrgResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.Migration{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewStartForOrgResponse(r, opts.PreserveResponseBody())
+}
+
+// NewStartForOrgResponse builds a new *StartForOrgResponse from an *http.Response
+func NewStartForOrgResponse(resp *http.Response, preserveBody bool) (*StartForOrgResponse, error) {
+	var result StartForOrgResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{201})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -2188,7 +2450,6 @@ func (r *StartForOrgReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{201},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
@@ -2201,7 +2462,6 @@ func (r *StartForOrgReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/orgs/%v/migrations", r.Org),
 		URLQuery:         query,
-		ValidStatuses:    []int{201},
 	}
 	return builder
 }
@@ -2211,7 +2471,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *StartForOrgReq) Rel(link string, resp *StartForOrgResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -2243,9 +2503,12 @@ StartForOrgResponse is a response for StartForOrg
 https://developer.github.com/v3/migrations/orgs/#start-an-organization-migration
 */
 type StartForOrgResponse struct {
-	requests.Response
-	request *StartForOrgReq
-	Data    components.Migration
+	httpResponse *http.Response
+	Data         components.Migration
+}
+
+func (r *StartForOrgResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -2265,23 +2528,38 @@ func StartImport(ctx context.Context, req *StartImportReq, opt ...requests.Optio
 	if req == nil {
 		req = new(StartImportReq)
 	}
-	resp := &StartImportResponse{request: req}
+	resp := &StartImportResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.Import{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewStartImportResponse(r, opts.PreserveResponseBody())
+}
+
+// NewStartImportResponse builds a new *StartImportResponse from an *http.Response
+func NewStartImportResponse(resp *http.Response, preserveBody bool) (*StartImportResponse, error) {
+	var result StartImportResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{201})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -2324,7 +2602,6 @@ func (r *StartImportReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{201},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
@@ -2337,7 +2614,6 @@ func (r *StartImportReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/import", r.Owner, r.Repo),
 		URLQuery:         query,
-		ValidStatuses:    []int{201},
 	}
 	return builder
 }
@@ -2347,7 +2623,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *StartImportReq) Rel(link string, resp *StartImportResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -2389,9 +2665,12 @@ StartImportResponse is a response for StartImport
 https://developer.github.com/v3/migrations/source_imports/#start-an-import
 */
 type StartImportResponse struct {
-	requests.Response
-	request *StartImportReq
-	Data    components.Import
+	httpResponse *http.Response
+	Data         components.Import
+}
+
+func (r *StartImportResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -2411,22 +2690,32 @@ func UnlockRepoForAuthenticatedUser(ctx context.Context, req *UnlockRepoForAuthe
 	if req == nil {
 		req = new(UnlockRepoForAuthenticatedUserReq)
 	}
-	resp := &UnlockRepoForAuthenticatedUserResponse{request: req}
+	resp := &UnlockRepoForAuthenticatedUserResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewUnlockRepoForAuthenticatedUserResponse(r, opts.PreserveResponseBody())
+}
+
+// NewUnlockRepoForAuthenticatedUserResponse builds a new *UnlockRepoForAuthenticatedUserResponse from an *http.Response
+func NewUnlockRepoForAuthenticatedUserResponse(resp *http.Response, preserveBody bool) (*UnlockRepoForAuthenticatedUserResponse, error) {
+	var result UnlockRepoForAuthenticatedUserResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204, 304})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -2475,7 +2764,6 @@ func (r *UnlockRepoForAuthenticatedUserReq) requestBuilder() *internal.RequestBu
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"wyandotte"},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -2485,7 +2773,6 @@ func (r *UnlockRepoForAuthenticatedUserReq) requestBuilder() *internal.RequestBu
 		RequiredPreviews:   []string{"wyandotte"},
 		URLPath:            fmt.Sprintf("/user/migrations/%v/repos/%v/lock", r.MigrationId, r.RepoName),
 		URLQuery:           query,
-		ValidStatuses:      []int{204, 304},
 	}
 	return builder
 }
@@ -2495,7 +2782,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *UnlockRepoForAuthenticatedUserReq) Rel(link string, resp *UnlockRepoForAuthenticatedUserResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -2509,8 +2796,11 @@ UnlockRepoForAuthenticatedUserResponse is a response for UnlockRepoForAuthentica
 https://developer.github.com/v3/migrations/users/#unlock-a-user-repository
 */
 type UnlockRepoForAuthenticatedUserResponse struct {
-	requests.Response
-	request *UnlockRepoForAuthenticatedUserReq
+	httpResponse *http.Response
+}
+
+func (r *UnlockRepoForAuthenticatedUserResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -2530,26 +2820,36 @@ func UnlockRepoForOrg(ctx context.Context, req *UnlockRepoForOrgReq, opt ...requ
 	if req == nil {
 		req = new(UnlockRepoForOrgReq)
 	}
-	resp := &UnlockRepoForOrgResponse{request: req}
+	resp := &UnlockRepoForOrgResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.SetBoolResult(r, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	resp.httpResponse = r
+
+	return NewUnlockRepoForOrgResponse(r, opts.PreserveResponseBody())
+}
+
+// NewUnlockRepoForOrgResponse builds a new *UnlockRepoForOrgResponse from an *http.Response
+func NewUnlockRepoForOrgResponse(resp *http.Response, preserveBody bool) (*UnlockRepoForOrgResponse, error) {
+	var result UnlockRepoForOrgResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204, 404})
 	if err != nil {
-		return nil, err
+		return &result, err
 	}
-	return resp, nil
+	err = internal.SetBoolResult(resp, &result.Data)
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -2599,7 +2899,6 @@ func (r *UnlockRepoForOrgReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"wyandotte"},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrBoolean},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -2609,7 +2908,6 @@ func (r *UnlockRepoForOrgReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{"wyandotte"},
 		URLPath:            fmt.Sprintf("/orgs/%v/migrations/%v/repos/%v/lock", r.Org, r.MigrationId, r.RepoName),
 		URLQuery:           query,
-		ValidStatuses:      []int{204},
 	}
 	return builder
 }
@@ -2619,7 +2917,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *UnlockRepoForOrgReq) Rel(link string, resp *UnlockRepoForOrgResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -2633,9 +2931,12 @@ UnlockRepoForOrgResponse is a response for UnlockRepoForOrg
 https://developer.github.com/v3/migrations/orgs/#unlock-an-organization-repository
 */
 type UnlockRepoForOrgResponse struct {
-	requests.Response
-	request *UnlockRepoForOrgReq
-	Data    bool
+	httpResponse *http.Response
+	Data         bool
+}
+
+func (r *UnlockRepoForOrgResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -2655,23 +2956,38 @@ func UpdateImport(ctx context.Context, req *UpdateImportReq, opt ...requests.Opt
 	if req == nil {
 		req = new(UpdateImportReq)
 	}
-	resp := &UpdateImportResponse{request: req}
+	resp := &UpdateImportResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.Import{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewUpdateImportResponse(r, opts.PreserveResponseBody())
+}
+
+// NewUpdateImportResponse builds a new *UpdateImportResponse from an *http.Response
+func NewUpdateImportResponse(resp *http.Response, preserveBody bool) (*UpdateImportResponse, error) {
+	var result UpdateImportResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -2714,7 +3030,6 @@ func (r *UpdateImportReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
@@ -2727,7 +3042,6 @@ func (r *UpdateImportReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/import", r.Owner, r.Repo),
 		URLQuery:         query,
-		ValidStatuses:    []int{200},
 	}
 	return builder
 }
@@ -2737,7 +3051,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *UpdateImportReq) Rel(link string, resp *UpdateImportResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -2767,7 +3081,10 @@ UpdateImportResponse is a response for UpdateImport
 https://developer.github.com/v3/migrations/source_imports/#update-an-import
 */
 type UpdateImportResponse struct {
-	requests.Response
-	request *UpdateImportReq
-	Data    components.Import
+	httpResponse *http.Response
+	Data         components.Import
+}
+
+func (r *UpdateImportResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }

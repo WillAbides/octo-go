@@ -39,23 +39,38 @@ func GetAllCodesOfConduct(ctx context.Context, req *GetAllCodesOfConductReq, opt
 	if req == nil {
 		req = new(GetAllCodesOfConductReq)
 	}
-	resp := &GetAllCodesOfConductResponse{request: req}
+	resp := &GetAllCodesOfConductResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.CodeOfConduct{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetAllCodesOfConductResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetAllCodesOfConductResponse builds a new *GetAllCodesOfConductResponse from an *http.Response
+func NewGetAllCodesOfConductResponse(resp *http.Response, preserveBody bool) (*GetAllCodesOfConductResponse, error) {
+	var result GetAllCodesOfConductResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -102,7 +117,6 @@ func (r *GetAllCodesOfConductReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"scarlet-witch"},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -112,7 +126,6 @@ func (r *GetAllCodesOfConductReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{"scarlet-witch"},
 		URLPath:            fmt.Sprintf("/codes_of_conduct"),
 		URLQuery:           query,
-		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -122,7 +135,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetAllCodesOfConductReq) Rel(link string, resp *GetAllCodesOfConductResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -136,9 +149,12 @@ GetAllCodesOfConductResponse is a response for GetAllCodesOfConduct
 https://developer.github.com/v3/codes_of_conduct/#get-all-codes-of-conduct
 */
 type GetAllCodesOfConductResponse struct {
-	requests.Response
-	request *GetAllCodesOfConductReq
-	Data    []components.CodeOfConduct
+	httpResponse *http.Response
+	Data         []components.CodeOfConduct
+}
+
+func (r *GetAllCodesOfConductResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -158,23 +174,38 @@ func GetConductCode(ctx context.Context, req *GetConductCodeReq, opt ...requests
 	if req == nil {
 		req = new(GetConductCodeReq)
 	}
-	resp := &GetConductCodeResponse{request: req}
+	resp := &GetConductCodeResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.CodeOfConduct{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetConductCodeResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetConductCodeResponse builds a new *GetConductCodeResponse from an *http.Response
+func NewGetConductCodeResponse(resp *http.Response, preserveBody bool) (*GetConductCodeResponse, error) {
+	var result GetConductCodeResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -224,7 +255,6 @@ func (r *GetConductCodeReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"scarlet-witch"},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -234,7 +264,6 @@ func (r *GetConductCodeReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{"scarlet-witch"},
 		URLPath:            fmt.Sprintf("/codes_of_conduct/%v", r.Key),
 		URLQuery:           query,
-		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -244,7 +273,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetConductCodeReq) Rel(link string, resp *GetConductCodeResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -258,9 +287,12 @@ GetConductCodeResponse is a response for GetConductCode
 https://developer.github.com/v3/codes_of_conduct/#get-a-code-of-conduct
 */
 type GetConductCodeResponse struct {
-	requests.Response
-	request *GetConductCodeReq
-	Data    components.CodeOfConduct
+	httpResponse *http.Response
+	Data         components.CodeOfConduct
+}
+
+func (r *GetConductCodeResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -280,23 +312,38 @@ func GetForRepo(ctx context.Context, req *GetForRepoReq, opt ...requests.Option)
 	if req == nil {
 		req = new(GetForRepoReq)
 	}
-	resp := &GetForRepoResponse{request: req}
+	resp := &GetForRepoResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.CodeOfConduct{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetForRepoResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetForRepoResponse builds a new *GetForRepoResponse from an *http.Response
+func NewGetForRepoResponse(resp *http.Response, preserveBody bool) (*GetForRepoResponse, error) {
+	var result GetForRepoResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -345,7 +392,6 @@ func (r *GetForRepoReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{"scarlet-witch"},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -355,7 +401,6 @@ func (r *GetForRepoReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{"scarlet-witch"},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/community/code_of_conduct", r.Owner, r.Repo),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -365,7 +410,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetForRepoReq) Rel(link string, resp *GetForRepoResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -379,7 +424,10 @@ GetForRepoResponse is a response for GetForRepo
 https://developer.github.com/v3/codes_of_conduct/#get-the-code-of-conduct-for-a-repository
 */
 type GetForRepoResponse struct {
-	requests.Response
-	request *GetForRepoReq
-	Data    components.CodeOfConduct
+	httpResponse *http.Response
+	Data         components.CodeOfConduct
+}
+
+func (r *GetForRepoResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }

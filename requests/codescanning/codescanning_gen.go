@@ -39,23 +39,38 @@ func GetAlert(ctx context.Context, req *GetAlertReq, opt ...requests.Option) (*G
 	if req == nil {
 		req = new(GetAlertReq)
 	}
-	resp := &GetAlertResponse{request: req}
+	resp := &GetAlertResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.CodeScanningAlert{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetAlertResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetAlertResponse builds a new *GetAlertResponse from an *http.Response
+func NewGetAlertResponse(resp *http.Response, preserveBody bool) (*GetAlertResponse, error) {
+	var result GetAlertResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -100,7 +115,6 @@ func (r *GetAlertReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -110,7 +124,6 @@ func (r *GetAlertReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/code-scanning/alerts/%v", r.Owner, r.Repo, r.AlertId),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -120,7 +133,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetAlertReq) Rel(link string, resp *GetAlertResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -134,9 +147,12 @@ GetAlertResponse is a response for GetAlert
 https://developer.github.com/v3/code-scanning/#get-a-code-scanning-alert
 */
 type GetAlertResponse struct {
-	requests.Response
-	request *GetAlertReq
-	Data    components.CodeScanningAlert
+	httpResponse *http.Response
+	Data         components.CodeScanningAlert
+}
+
+func (r *GetAlertResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -156,23 +172,38 @@ func ListAlertsForRepo(ctx context.Context, req *ListAlertsForRepoReq, opt ...re
 	if req == nil {
 		req = new(ListAlertsForRepoReq)
 	}
-	resp := &ListAlertsForRepoResponse{request: req}
+	resp := &ListAlertsForRepoResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = []components.CodeScanningAlert{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListAlertsForRepoResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListAlertsForRepoResponse builds a new *ListAlertsForRepoResponse from an *http.Response
+func NewListAlertsForRepoResponse(resp *http.Response, preserveBody bool) (*ListAlertsForRepoResponse, error) {
+	var result ListAlertsForRepoResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -229,7 +260,6 @@ func (r *ListAlertsForRepoReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
@@ -239,7 +269,6 @@ func (r *ListAlertsForRepoReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/code-scanning/alerts", r.Owner, r.Repo),
 		URLQuery:           query,
-		ValidStatuses:      []int{200},
 	}
 	return builder
 }
@@ -249,7 +278,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListAlertsForRepoReq) Rel(link string, resp *ListAlertsForRepoResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -263,7 +292,10 @@ ListAlertsForRepoResponse is a response for ListAlertsForRepo
 https://developer.github.com/v3/code-scanning/#list-code-scanning-alerts-for-a-repository
 */
 type ListAlertsForRepoResponse struct {
-	requests.Response
-	request *ListAlertsForRepoReq
-	Data    []components.CodeScanningAlert
+	httpResponse *http.Response
+	Data         []components.CodeScanningAlert
+}
+
+func (r *ListAlertsForRepoResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }

@@ -19,8 +19,6 @@ type RequestBuilder struct {
 	OperationID        string
 	ExplicitURL        string
 	Method             string
-	DataStatuses       []int
-	ValidStatuses      []int
 	RequiredPreviews   []string
 	AllPreviews        []string
 	HeaderVals         map[string]*string

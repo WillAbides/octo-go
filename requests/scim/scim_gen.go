@@ -40,22 +40,32 @@ func DeleteUserFromOrg(ctx context.Context, req *DeleteUserFromOrgReq, opt ...re
 	if req == nil {
 		req = new(DeleteUserFromOrgReq)
 	}
-	resp := &DeleteUserFromOrgResponse{request: req}
+	resp := &DeleteUserFromOrgResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	err = internal.DecodeResponseBody(r, builder, opts, nil)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewDeleteUserFromOrgResponse(r, opts.PreserveResponseBody())
+}
+
+// NewDeleteUserFromOrgResponse builds a new *DeleteUserFromOrgResponse from an *http.Response
+func NewDeleteUserFromOrgResponse(resp *http.Response, preserveBody bool) (*DeleteUserFromOrgResponse, error) {
+	var result DeleteUserFromOrgResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{204, 304})
+	if err != nil {
+		return &result, err
+	}
+	return &result, nil
 }
 
 /*
@@ -99,7 +109,6 @@ func (r *DeleteUserFromOrgReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
@@ -109,7 +118,6 @@ func (r *DeleteUserFromOrgReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/scim/v2/organizations/%v/Users/%v", r.Org, r.ScimUserId),
 		URLQuery:           query,
-		ValidStatuses:      []int{204, 304},
 	}
 	return builder
 }
@@ -119,7 +127,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *DeleteUserFromOrgReq) Rel(link string, resp *DeleteUserFromOrgResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -133,8 +141,11 @@ DeleteUserFromOrgResponse is a response for DeleteUserFromOrg
 https://developer.github.com/v3/scim/#delete-a-scim-user-from-an-organization
 */
 type DeleteUserFromOrgResponse struct {
-	requests.Response
-	request *DeleteUserFromOrgReq
+	httpResponse *http.Response
+}
+
+func (r *DeleteUserFromOrgResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -154,23 +165,38 @@ func GetProvisioningInformationForUser(ctx context.Context, req *GetProvisioning
 	if req == nil {
 		req = new(GetProvisioningInformationForUserReq)
 	}
-	resp := &GetProvisioningInformationForUserResponse{request: req}
+	resp := &GetProvisioningInformationForUserResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.ScimUser{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewGetProvisioningInformationForUserResponse(r, opts.PreserveResponseBody())
+}
+
+// NewGetProvisioningInformationForUserResponse builds a new *GetProvisioningInformationForUserResponse from an *http.Response
+func NewGetProvisioningInformationForUserResponse(resp *http.Response, preserveBody bool) (*GetProvisioningInformationForUserResponse, error) {
+	var result GetProvisioningInformationForUserResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -214,7 +240,6 @@ func (r *GetProvisioningInformationForUserReq) requestBuilder() *internal.Reques
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/scim+json")},
@@ -224,7 +249,6 @@ func (r *GetProvisioningInformationForUserReq) requestBuilder() *internal.Reques
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/scim/v2/organizations/%v/Users/%v", r.Org, r.ScimUserId),
 		URLQuery:           query,
-		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -234,7 +258,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetProvisioningInformationForUserReq) Rel(link string, resp *GetProvisioningInformationForUserResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -248,9 +272,12 @@ GetProvisioningInformationForUserResponse is a response for GetProvisioningInfor
 https://developer.github.com/v3/scim/#get-scim-provisioning-information-for-a-user
 */
 type GetProvisioningInformationForUserResponse struct {
-	requests.Response
-	request *GetProvisioningInformationForUserReq
-	Data    components.ScimUser
+	httpResponse *http.Response
+	Data         components.ScimUser
+}
+
+func (r *GetProvisioningInformationForUserResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -270,23 +297,38 @@ func ListProvisionedIdentities(ctx context.Context, req *ListProvisionedIdentiti
 	if req == nil {
 		req = new(ListProvisionedIdentitiesReq)
 	}
-	resp := &ListProvisionedIdentitiesResponse{request: req}
+	resp := &ListProvisionedIdentitiesResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.ScimUserList{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewListProvisionedIdentitiesResponse(r, opts.PreserveResponseBody())
+}
+
+// NewListProvisionedIdentitiesResponse builds a new *ListProvisionedIdentitiesResponse from an *http.Response
+func NewListProvisionedIdentitiesResponse(resp *http.Response, preserveBody bool) (*ListProvisionedIdentitiesResponse, error) {
+	var result ListProvisionedIdentitiesResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -357,7 +399,6 @@ func (r *ListProvisionedIdentitiesReq) requestBuilder() *internal.RequestBuilder
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               nil,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/scim+json")},
@@ -367,7 +408,6 @@ func (r *ListProvisionedIdentitiesReq) requestBuilder() *internal.RequestBuilder
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/scim/v2/organizations/%v/Users", r.Org),
 		URLQuery:           query,
-		ValidStatuses:      []int{200, 304},
 	}
 	return builder
 }
@@ -377,7 +417,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListProvisionedIdentitiesReq) Rel(link string, resp *ListProvisionedIdentitiesResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -391,9 +431,12 @@ ListProvisionedIdentitiesResponse is a response for ListProvisionedIdentities
 https://developer.github.com/v3/scim/#list-scim-provisioned-identities
 */
 type ListProvisionedIdentitiesResponse struct {
-	requests.Response
-	request *ListProvisionedIdentitiesReq
-	Data    components.ScimUserList
+	httpResponse *http.Response
+	Data         components.ScimUserList
+}
+
+func (r *ListProvisionedIdentitiesResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -413,23 +456,38 @@ func ProvisionAndInviteUser(ctx context.Context, req *ProvisionAndInviteUserReq,
 	if req == nil {
 		req = new(ProvisionAndInviteUserReq)
 	}
-	resp := &ProvisionAndInviteUserResponse{request: req}
+	resp := &ProvisionAndInviteUserResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.ScimUser{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewProvisionAndInviteUserResponse(r, opts.PreserveResponseBody())
+}
+
+// NewProvisionAndInviteUserResponse builds a new *ProvisionAndInviteUserResponse from an *http.Response
+func NewProvisionAndInviteUserResponse(resp *http.Response, preserveBody bool) (*ProvisionAndInviteUserResponse, error) {
+	var result ProvisionAndInviteUserResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{201, 304})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -471,7 +529,6 @@ func (r *ProvisionAndInviteUserReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{201},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
@@ -484,7 +541,6 @@ func (r *ProvisionAndInviteUserReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/scim/v2/organizations/%v/Users", r.Org),
 		URLQuery:         query,
-		ValidStatuses:    []int{201, 304},
 	}
 	return builder
 }
@@ -494,7 +550,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ProvisionAndInviteUserReq) Rel(link string, resp *ProvisionAndInviteUserResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -541,9 +597,12 @@ ProvisionAndInviteUserResponse is a response for ProvisionAndInviteUser
 https://developer.github.com/v3/scim/#provision-and-invite-a-scim-user
 */
 type ProvisionAndInviteUserResponse struct {
-	requests.Response
-	request *ProvisionAndInviteUserReq
-	Data    components.ScimUser
+	httpResponse *http.Response
+	Data         components.ScimUser
+}
+
+func (r *ProvisionAndInviteUserResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -563,23 +622,38 @@ func SetInformationForProvisionedUser(ctx context.Context, req *SetInformationFo
 	if req == nil {
 		req = new(SetInformationForProvisionedUserReq)
 	}
-	resp := &SetInformationForProvisionedUserResponse{request: req}
+	resp := &SetInformationForProvisionedUserResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.ScimUser{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewSetInformationForProvisionedUserResponse(r, opts.PreserveResponseBody())
+}
+
+// NewSetInformationForProvisionedUserResponse builds a new *SetInformationForProvisionedUserResponse from an *http.Response
+func NewSetInformationForProvisionedUserResponse(resp *http.Response, preserveBody bool) (*SetInformationForProvisionedUserResponse, error) {
+	var result SetInformationForProvisionedUserResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -624,7 +698,6 @@ func (r *SetInformationForProvisionedUserReq) requestBuilder() *internal.Request
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
@@ -637,7 +710,6 @@ func (r *SetInformationForProvisionedUserReq) requestBuilder() *internal.Request
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/scim/v2/organizations/%v/Users/%v", r.Org, r.ScimUserId),
 		URLQuery:         query,
-		ValidStatuses:    []int{200, 304},
 	}
 	return builder
 }
@@ -647,7 +719,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *SetInformationForProvisionedUserReq) Rel(link string, resp *SetInformationForProvisionedUserResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -694,9 +766,12 @@ SetInformationForProvisionedUserResponse is a response for SetInformationForProv
 https://developer.github.com/v3/scim/#set-scim-information-for-a-provisioned-user
 */
 type SetInformationForProvisionedUserResponse struct {
-	requests.Response
-	request *SetInformationForProvisionedUserReq
-	Data    components.ScimUser
+	httpResponse *http.Response
+	Data         components.ScimUser
+}
+
+func (r *SetInformationForProvisionedUserResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
 
 /*
@@ -716,23 +791,38 @@ func UpdateAttributeForUser(ctx context.Context, req *UpdateAttributeForUserReq,
 	if req == nil {
 		req = new(UpdateAttributeForUserReq)
 	}
-	resp := &UpdateAttributeForUserResponse{request: req}
+	resp := &UpdateAttributeForUserResponse{}
 	builder := req.requestBuilder()
-	r, err := internal.DoRequest(ctx, builder, opts)
 
-	if r != nil {
-		resp.Response = *r
-	}
+	httpReq, err := builder.HTTPRequest(ctx, opts)
 	if err != nil {
 		return resp, err
 	}
 
-	resp.Data = components.ScimUser{}
-	err = internal.DecodeResponseBody(r, builder, opts, &resp.Data)
+	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return nil, err
+		return resp, err
 	}
-	return resp, nil
+	resp.httpResponse = r
+
+	return NewUpdateAttributeForUserResponse(r, opts.PreserveResponseBody())
+}
+
+// NewUpdateAttributeForUserResponse builds a new *UpdateAttributeForUserResponse from an *http.Response
+func NewUpdateAttributeForUserResponse(resp *http.Response, preserveBody bool) (*UpdateAttributeForUserResponse, error) {
+	var result UpdateAttributeForUserResponse
+	result.httpResponse = resp
+	err := internal.ErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return &result, err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
+		if err != nil {
+			return &result, err
+		}
+	}
+	return &result, nil
 }
 
 /*
@@ -777,7 +867,6 @@ func (r *UpdateAttributeForUserReq) requestBuilder() *internal.RequestBuilder {
 	builder := &internal.RequestBuilder{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
-		DataStatuses:       []int{200},
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
 		ExplicitURL:        r._url,
 		HeaderVals: map[string]*string{
@@ -790,7 +879,6 @@ func (r *UpdateAttributeForUserReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/scim/v2/organizations/%v/Users/%v", r.Org, r.ScimUserId),
 		URLQuery:         query,
-		ValidStatuses:    []int{200, 304},
 	}
 	return builder
 }
@@ -800,7 +888,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *UpdateAttributeForUserReq) Rel(link string, resp *UpdateAttributeForUserResponse) bool {
-	u := resp.RelLink(string(link))
+	u := internal.RelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -842,7 +930,10 @@ UpdateAttributeForUserResponse is a response for UpdateAttributeForUser
 https://developer.github.com/v3/scim/#update-an-attribute-for-a-scim-user
 */
 type UpdateAttributeForUserResponse struct {
-	requests.Response
-	request *UpdateAttributeForUserReq
-	Data    components.ScimUser
+	httpResponse *http.Response
+	Data         components.ScimUser
+}
+
+func (r *UpdateAttributeForUserResponse) HTTPResponse() *http.Response {
+	return r.httpResponse
 }
