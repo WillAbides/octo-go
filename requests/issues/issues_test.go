@@ -23,7 +23,17 @@ func TestGet(t *testing.T) {
 		Repo:        "go",
 		IssueNumber: 1,
 	}
-	resp, err := issues.Get(ctx, req, client...)
+	httpReq, err := req.HTTPRequest(ctx, client...)
+	require.NoError(t, err)
+	opts, err := requests.BuildOptions(client...)
+	require.NoError(t, err)
+	httpClient := opts.HttpClient()
+	httpResp, err := httpClient.Do(httpReq)
+	require.NoError(t, err)
+	resp, err := issues.NewGetResponse(httpResp, true)
+	require.NoError(t, err)
+	require.Equal(t, int64(1), resp.Data.Number)
+	resp, err = issues.NewGetResponse(httpResp, false)
 	require.NoError(t, err)
 	require.Equal(t, int64(1), resp.Data.Number)
 }

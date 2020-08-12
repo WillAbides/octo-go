@@ -4,27 +4,25 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"io"
 	"io/ioutil"
 	"net/http"
 )
 
 // DecodeResponseBody unmarshalls a response body onto target
 func DecodeResponseBody(r *http.Response, target interface{}, preserveResponseBody bool) error {
-	origBody := r.Body
-	var bodyReader io.Reader = origBody
-	if preserveResponseBody {
-		var buf bytes.Buffer
-		bodyReader = io.TeeReader(r.Body, &buf)
-		r.Body = ioutil.NopCloser(&buf)
+	body := r.Body
+	bb, err := ioutil.ReadAll(body)
+	if err != nil {
+		return fmt.Errorf("error reading body")
 	}
-	//nolint:errcheck // If there's an error draining the response body, there was probably already an error reported.
-	defer func() {
-		_, _ = ioutil.ReadAll(bodyReader)
-		_ = origBody.Close()
-	}()
-
-	return json.NewDecoder(bodyReader).Decode(target)
+	err = body.Close()
+	if err != nil {
+		return fmt.Errorf("error closing body")
+	}
+	if preserveResponseBody {
+		r.Body = ioutil.NopCloser(bytes.NewReader(bb))
+	}
+	return json.Unmarshal(bb, &target)
 }
 
 // IntInSlice returns true if i is in want
