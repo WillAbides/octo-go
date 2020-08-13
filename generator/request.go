@@ -164,14 +164,8 @@ func reqHTTPRequestFunc(endpoint *model.Endpoint, pq pkgQual) jen.Code {
 					if val := reqURLPathVal(endpoint); val != nil {
 						dict[jen.Id("URLPath")] = val
 					}
-					if endpointHasAttribute(endpoint, attrBodyUploader) {
-						dict[jen.Id("StreamRequestBody")] = jen.Lit(true)
-					}
 					if endpointHasAttribute(endpoint, attrExplicitURL) {
 						dict[jen.Id("RequireExplicitURL")] = jen.Lit(true)
-					}
-					if endpointHasAttribute(endpoint, attrJSONRequestBody) {
-						dict[jen.Id("JSONRequestBody")] = jen.Lit(true)
 					}
 				}),
 			),

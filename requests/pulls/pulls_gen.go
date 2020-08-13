@@ -219,11 +219,10 @@ func (r *CreateReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*h
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "POST",
-		Options:         opt,
-		Previews:        map[string]bool{"sailor-v": r.SailorVPreview},
-		URLPath:         fmt.Sprintf("/repos/%v/%v/pulls", r.Owner, r.Repo),
+		Method:   "POST",
+		Options:  opt,
+		Previews: map[string]bool{"sailor-v": r.SailorVPreview},
+		URLPath:  fmt.Sprintf("/repos/%v/%v/pulls", r.Owner, r.Repo),
 	})
 }
 
@@ -389,10 +388,9 @@ func (r *CreateReplyForReviewCommentReq) HTTPRequest(ctx context.Context, opt ..
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "POST",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/repos/%v/%v/pulls/%v/comments/%v/replies", r.Owner, r.Repo, r.PullNumber, r.CommentId),
+		Method:  "POST",
+		Options: opt,
+		URLPath: fmt.Sprintf("/repos/%v/%v/pulls/%v/comments/%v/replies", r.Owner, r.Repo, r.PullNumber, r.CommentId),
 	})
 }
 
@@ -523,10 +521,9 @@ func (r *CreateReviewReq) HTTPRequest(ctx context.Context, opt ...requests.Optio
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "POST",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/repos/%v/%v/pulls/%v/reviews", r.Owner, r.Repo, r.PullNumber),
+		Method:  "POST",
+		Options: opt,
+		URLPath: fmt.Sprintf("/repos/%v/%v/pulls/%v/reviews", r.Owner, r.Repo, r.PullNumber),
 	})
 }
 
@@ -709,11 +706,10 @@ func (r *CreateReviewCommentReq) HTTPRequest(ctx context.Context, opt ...request
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "POST",
-		Options:         opt,
-		Previews:        map[string]bool{"comfort-fade": r.ComfortFadePreview},
-		URLPath:         fmt.Sprintf("/repos/%v/%v/pulls/%v/comments", r.Owner, r.Repo, r.PullNumber),
+		Method:   "POST",
+		Options:  opt,
+		Previews: map[string]bool{"comfort-fade": r.ComfortFadePreview},
+		URLPath:  fmt.Sprintf("/repos/%v/%v/pulls/%v/comments", r.Owner, r.Repo, r.PullNumber),
 	})
 }
 
@@ -1144,10 +1140,9 @@ func (r *DismissReviewReq) HTTPRequest(ctx context.Context, opt ...requests.Opti
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "PUT",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/repos/%v/%v/pulls/%v/reviews/%v/dismissals", r.Owner, r.Repo, r.PullNumber, r.ReviewId),
+		Method:  "PUT",
+		Options: opt,
+		URLPath: fmt.Sprintf("/repos/%v/%v/pulls/%v/reviews/%v/dismissals", r.Owner, r.Repo, r.PullNumber, r.ReviewId),
 	})
 }
 
@@ -2887,10 +2882,9 @@ func (r *MergeReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*ht
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "PUT",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/repos/%v/%v/pulls/%v/merge", r.Owner, r.Repo, r.PullNumber),
+		Method:  "PUT",
+		Options: opt,
+		URLPath: fmt.Sprintf("/repos/%v/%v/pulls/%v/merge", r.Owner, r.Repo, r.PullNumber),
 	})
 }
 
@@ -3024,13 +3018,12 @@ type RemoveRequestedReviewersReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *RemoveRequestedReviewersReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:            r.RequestBody,
-		ExplicitURL:     r._url,
-		HeaderVals:      map[string]*string{"content-type": internal.String("application/json")},
-		JSONRequestBody: true,
-		Method:          "DELETE",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/repos/%v/%v/pulls/%v/requested_reviewers", r.Owner, r.Repo, r.PullNumber),
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"content-type": internal.String("application/json")},
+		Method:      "DELETE",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/repos/%v/%v/pulls/%v/requested_reviewers", r.Owner, r.Repo, r.PullNumber),
 	})
 }
 
@@ -3157,10 +3150,9 @@ func (r *RequestReviewersReq) HTTPRequest(ctx context.Context, opt ...requests.O
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "POST",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/repos/%v/%v/pulls/%v/requested_reviewers", r.Owner, r.Repo, r.PullNumber),
+		Method:  "POST",
+		Options: opt,
+		URLPath: fmt.Sprintf("/repos/%v/%v/pulls/%v/requested_reviewers", r.Owner, r.Repo, r.PullNumber),
 	})
 }
 
@@ -3297,10 +3289,9 @@ func (r *SubmitReviewReq) HTTPRequest(ctx context.Context, opt ...requests.Optio
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "POST",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/repos/%v/%v/pulls/%v/reviews/%v/events", r.Owner, r.Repo, r.PullNumber, r.ReviewId),
+		Method:  "POST",
+		Options: opt,
+		URLPath: fmt.Sprintf("/repos/%v/%v/pulls/%v/reviews/%v/events", r.Owner, r.Repo, r.PullNumber, r.ReviewId),
 	})
 }
 
@@ -3451,11 +3442,10 @@ func (r *UpdateReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*h
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "PATCH",
-		Options:         opt,
-		Previews:        map[string]bool{"sailor-v": r.SailorVPreview},
-		URLPath:         fmt.Sprintf("/repos/%v/%v/pulls/%v", r.Owner, r.Repo, r.PullNumber),
+		Method:   "PATCH",
+		Options:  opt,
+		Previews: map[string]bool{"sailor-v": r.SailorVPreview},
+		URLPath:  fmt.Sprintf("/repos/%v/%v/pulls/%v", r.Owner, r.Repo, r.PullNumber),
 	})
 }
 
@@ -3614,7 +3604,6 @@ func (r *UpdateBranchReq) HTTPRequest(ctx context.Context, opt ...requests.Optio
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody:  true,
 		Method:           "PUT",
 		Options:          opt,
 		Previews:         map[string]bool{"lydian": r.LydianPreview},
@@ -3771,10 +3760,9 @@ func (r *UpdateReviewReq) HTTPRequest(ctx context.Context, opt ...requests.Optio
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "PUT",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/repos/%v/%v/pulls/%v/reviews/%v", r.Owner, r.Repo, r.PullNumber, r.ReviewId),
+		Method:  "PUT",
+		Options: opt,
+		URLPath: fmt.Sprintf("/repos/%v/%v/pulls/%v/reviews/%v", r.Owner, r.Repo, r.PullNumber, r.ReviewId),
 	})
 }
 
@@ -3915,11 +3903,10 @@ func (r *UpdateReviewCommentReq) HTTPRequest(ctx context.Context, opt ...request
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "PATCH",
-		Options:         opt,
-		Previews:        map[string]bool{"comfort-fade": r.ComfortFadePreview},
-		URLPath:         fmt.Sprintf("/repos/%v/%v/pulls/comments/%v", r.Owner, r.Repo, r.CommentId),
+		Method:   "PATCH",
+		Options:  opt,
+		Previews: map[string]bool{"comfort-fade": r.ComfortFadePreview},
+		URLPath:  fmt.Sprintf("/repos/%v/%v/pulls/comments/%v", r.Owner, r.Repo, r.CommentId),
 	})
 }
 

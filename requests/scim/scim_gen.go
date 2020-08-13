@@ -471,10 +471,9 @@ func (r *ProvisionAndInviteUserReq) HTTPRequest(ctx context.Context, opt ...requ
 			"accept":       internal.String("application/scim+json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "POST",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/scim/v2/organizations/%v/Users", r.Org),
+		Method:  "POST",
+		Options: opt,
+		URLPath: fmt.Sprintf("/scim/v2/organizations/%v/Users", r.Org),
 	})
 }
 
@@ -628,10 +627,9 @@ func (r *SetInformationForProvisionedUserReq) HTTPRequest(ctx context.Context, o
 			"accept":       internal.String("application/scim+json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "PUT",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/scim/v2/organizations/%v/Users/%v", r.Org, r.ScimUserId),
+		Method:  "PUT",
+		Options: opt,
+		URLPath: fmt.Sprintf("/scim/v2/organizations/%v/Users/%v", r.Org, r.ScimUserId),
 	})
 }
 
@@ -785,10 +783,9 @@ func (r *UpdateAttributeForUserReq) HTTPRequest(ctx context.Context, opt ...requ
 			"accept":       internal.String("application/scim+json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "PATCH",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/scim/v2/organizations/%v/Users/%v", r.Org, r.ScimUserId),
+		Method:  "PATCH",
+		Options: opt,
+		URLPath: fmt.Sprintf("/scim/v2/organizations/%v/Users/%v", r.Org, r.ScimUserId),
 	})
 }
 

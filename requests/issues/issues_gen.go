@@ -95,10 +95,9 @@ func (r *AddAssigneesReq) HTTPRequest(ctx context.Context, opt ...requests.Optio
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "POST",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/repos/%v/%v/issues/%v/assignees", r.Owner, r.Repo, r.IssueNumber),
+		Method:  "POST",
+		Options: opt,
+		URLPath: fmt.Sprintf("/repos/%v/%v/issues/%v/assignees", r.Owner, r.Repo, r.IssueNumber),
 	})
 }
 
@@ -234,10 +233,9 @@ func (r *AddLabelsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) 
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "POST",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/repos/%v/%v/issues/%v/labels", r.Owner, r.Repo, r.IssueNumber),
+		Method:  "POST",
+		Options: opt,
+		URLPath: fmt.Sprintf("/repos/%v/%v/issues/%v/labels", r.Owner, r.Repo, r.IssueNumber),
 	})
 }
 
@@ -490,10 +488,9 @@ func (r *CreateReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*h
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "POST",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/repos/%v/%v/issues", r.Owner, r.Repo),
+		Method:  "POST",
+		Options: opt,
+		URLPath: fmt.Sprintf("/repos/%v/%v/issues", r.Owner, r.Repo),
 	})
 }
 
@@ -655,10 +652,9 @@ func (r *CreateCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Opti
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "POST",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/repos/%v/%v/issues/%v/comments", r.Owner, r.Repo, r.IssueNumber),
+		Method:  "POST",
+		Options: opt,
+		URLPath: fmt.Sprintf("/repos/%v/%v/issues/%v/comments", r.Owner, r.Repo, r.IssueNumber),
 	})
 }
 
@@ -788,10 +784,9 @@ func (r *CreateLabelReq) HTTPRequest(ctx context.Context, opt ...requests.Option
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "POST",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/repos/%v/%v/labels", r.Owner, r.Repo),
+		Method:  "POST",
+		Options: opt,
+		URLPath: fmt.Sprintf("/repos/%v/%v/labels", r.Owner, r.Repo),
 	})
 }
 
@@ -934,10 +929,9 @@ func (r *CreateMilestoneReq) HTTPRequest(ctx context.Context, opt ...requests.Op
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "POST",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/repos/%v/%v/milestones", r.Owner, r.Repo),
+		Method:  "POST",
+		Options: opt,
+		URLPath: fmt.Sprintf("/repos/%v/%v/milestones", r.Owner, r.Repo),
 	})
 }
 
@@ -4442,15 +4436,14 @@ type LockReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *LockReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:     []string{"sailor-v"},
-		Body:            r.RequestBody,
-		ExplicitURL:     r._url,
-		HeaderVals:      map[string]*string{"content-type": internal.String("application/json")},
-		JSONRequestBody: true,
-		Method:          "PUT",
-		Options:         opt,
-		Previews:        map[string]bool{"sailor-v": r.SailorVPreview},
-		URLPath:         fmt.Sprintf("/repos/%v/%v/issues/%v/lock", r.Owner, r.Repo, r.IssueNumber),
+		AllPreviews: []string{"sailor-v"},
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"content-type": internal.String("application/json")},
+		Method:      "PUT",
+		Options:     opt,
+		Previews:    map[string]bool{"sailor-v": r.SailorVPreview},
+		URLPath:     fmt.Sprintf("/repos/%v/%v/issues/%v/lock", r.Owner, r.Repo, r.IssueNumber),
 	})
 }
 
@@ -4696,10 +4689,9 @@ func (r *RemoveAssigneesReq) HTTPRequest(ctx context.Context, opt ...requests.Op
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "DELETE",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/repos/%v/%v/issues/%v/assignees", r.Owner, r.Repo, r.IssueNumber),
+		Method:  "DELETE",
+		Options: opt,
+		URLPath: fmt.Sprintf("/repos/%v/%v/issues/%v/assignees", r.Owner, r.Repo, r.IssueNumber),
 	})
 }
 
@@ -4959,10 +4951,9 @@ func (r *SetLabelsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) 
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "PUT",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/repos/%v/%v/issues/%v/labels", r.Owner, r.Repo, r.IssueNumber),
+		Method:  "PUT",
+		Options: opt,
+		URLPath: fmt.Sprintf("/repos/%v/%v/issues/%v/labels", r.Owner, r.Repo, r.IssueNumber),
 	})
 }
 
@@ -5213,10 +5204,9 @@ func (r *UpdateReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*h
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "PATCH",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/repos/%v/%v/issues/%v", r.Owner, r.Repo, r.IssueNumber),
+		Method:  "PATCH",
+		Options: opt,
+		URLPath: fmt.Sprintf("/repos/%v/%v/issues/%v", r.Owner, r.Repo, r.IssueNumber),
 	})
 }
 
@@ -5381,10 +5371,9 @@ func (r *UpdateCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Opti
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "PATCH",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/repos/%v/%v/issues/comments/%v", r.Owner, r.Repo, r.CommentId),
+		Method:  "PATCH",
+		Options: opt,
+		URLPath: fmt.Sprintf("/repos/%v/%v/issues/comments/%v", r.Owner, r.Repo, r.CommentId),
 	})
 }
 
@@ -5517,10 +5506,9 @@ func (r *UpdateLabelReq) HTTPRequest(ctx context.Context, opt ...requests.Option
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "PATCH",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/repos/%v/%v/labels/%v", r.Owner, r.Repo, r.Name),
+		Method:  "PATCH",
+		Options: opt,
+		URLPath: fmt.Sprintf("/repos/%v/%v/labels/%v", r.Owner, r.Repo, r.Name),
 	})
 }
 
@@ -5666,10 +5654,9 @@ func (r *UpdateMilestoneReq) HTTPRequest(ctx context.Context, opt ...requests.Op
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "PATCH",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/repos/%v/%v/milestones/%v", r.Owner, r.Repo, r.MilestoneNumber),
+		Method:  "PATCH",
+		Options: opt,
+		URLPath: fmt.Sprintf("/repos/%v/%v/milestones/%v", r.Owner, r.Repo, r.MilestoneNumber),
 	})
 }
 

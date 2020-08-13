@@ -91,10 +91,9 @@ func (r *AddEmailForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...re
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "POST",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/user/emails"),
+		Method:  "POST",
+		Options: opt,
+		URLPath: fmt.Sprintf("/user/emails"),
 	})
 }
 
@@ -671,10 +670,9 @@ func (r *CreateGpgKeyForAuthenticatedReq) HTTPRequest(ctx context.Context, opt .
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "POST",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/user/gpg_keys"),
+		Method:  "POST",
+		Options: opt,
+		URLPath: fmt.Sprintf("/user/gpg_keys"),
 	})
 }
 
@@ -802,10 +800,9 @@ func (r *CreatePublicSshKeyForAuthenticatedReq) HTTPRequest(ctx context.Context,
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "POST",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/user/keys"),
+		Method:  "POST",
+		Options: opt,
+		URLPath: fmt.Sprintf("/user/keys"),
 	})
 }
 
@@ -930,13 +927,12 @@ type DeleteEmailForAuthenticatedReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteEmailForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:            r.RequestBody,
-		ExplicitURL:     r._url,
-		HeaderVals:      map[string]*string{"content-type": internal.String("application/json")},
-		JSONRequestBody: true,
-		Method:          "DELETE",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/user/emails"),
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"content-type": internal.String("application/json")},
+		Method:      "DELETE",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/user/emails"),
 	})
 }
 
@@ -3672,10 +3668,9 @@ func (r *SetPrimaryEmailVisibilityForAuthenticatedReq) HTTPRequest(ctx context.C
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "PATCH",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/user/email/visibility"),
+		Method:  "PATCH",
+		Options: opt,
+		URLPath: fmt.Sprintf("/user/email/visibility"),
 	})
 }
 
@@ -4024,10 +4019,9 @@ func (r *UpdateAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...request
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "PATCH",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/user"),
+		Method:  "PATCH",
+		Options: opt,
+		URLPath: fmt.Sprintf("/user"),
 	})
 }
 

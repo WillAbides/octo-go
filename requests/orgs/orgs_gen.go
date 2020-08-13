@@ -651,10 +651,9 @@ func (r *CreateInvitationReq) HTTPRequest(ctx context.Context, opt ...requests.O
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "POST",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/orgs/%v/invitations", r.Org),
+		Method:  "POST",
+		Options: opt,
+		URLPath: fmt.Sprintf("/orgs/%v/invitations", r.Org),
 	})
 }
 
@@ -803,10 +802,9 @@ func (r *CreateWebhookReq) HTTPRequest(ctx context.Context, opt ...requests.Opti
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "POST",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/orgs/%v/hooks", r.Org),
+		Method:  "POST",
+		Options: opt,
+		URLPath: fmt.Sprintf("/orgs/%v/hooks", r.Org),
 	})
 }
 
@@ -3987,10 +3985,9 @@ func (r *SetMembershipForUserReq) HTTPRequest(ctx context.Context, opt ...reques
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "PUT",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/orgs/%v/memberships/%v", r.Org, r.Username),
+		Method:  "PUT",
+		Options: opt,
+		URLPath: fmt.Sprintf("/orgs/%v/memberships/%v", r.Org, r.Username),
 	})
 }
 
@@ -4359,11 +4356,10 @@ func (r *UpdateReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*h
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "PATCH",
-		Options:         opt,
-		Previews:        map[string]bool{"surtur": r.SurturPreview},
-		URLPath:         fmt.Sprintf("/orgs/%v", r.Org),
+		Method:   "PATCH",
+		Options:  opt,
+		Previews: map[string]bool{"surtur": r.SurturPreview},
+		URLPath:  fmt.Sprintf("/orgs/%v", r.Org),
 	})
 }
 
@@ -4593,10 +4589,9 @@ func (r *UpdateMembershipForAuthenticatedUserReq) HTTPRequest(ctx context.Contex
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "PATCH",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/user/memberships/orgs/%v", r.Org),
+		Method:  "PATCH",
+		Options: opt,
+		URLPath: fmt.Sprintf("/user/memberships/orgs/%v", r.Org),
 	})
 }
 
@@ -4726,10 +4721,9 @@ func (r *UpdateWebhookReq) HTTPRequest(ctx context.Context, opt ...requests.Opti
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "PATCH",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/orgs/%v/hooks/%v", r.Org, r.HookId),
+		Method:  "PATCH",
+		Options: opt,
+		URLPath: fmt.Sprintf("/orgs/%v/hooks/%v", r.Org, r.HookId),
 	})
 }
 

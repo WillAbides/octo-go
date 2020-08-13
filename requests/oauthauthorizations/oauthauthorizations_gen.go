@@ -90,10 +90,9 @@ func (r *CreateAuthorizationReq) HTTPRequest(ctx context.Context, opt ...request
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "POST",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/authorizations"),
+		Method:  "POST",
+		Options: opt,
+		URLPath: fmt.Sprintf("/authorizations"),
 	})
 }
 
@@ -695,10 +694,9 @@ func (r *GetOrCreateAuthorizationForAppReq) HTTPRequest(ctx context.Context, opt
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "PUT",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/authorizations/clients/%v", r.ClientId),
+		Method:  "PUT",
+		Options: opt,
+		URLPath: fmt.Sprintf("/authorizations/clients/%v", r.ClientId),
 	})
 }
 
@@ -842,10 +840,9 @@ func (r *GetOrCreateAuthorizationForAppAndFingerprintReq) HTTPRequest(ctx contex
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "PUT",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/authorizations/clients/%v/%v", r.ClientId, r.Fingerprint),
+		Method:  "PUT",
+		Options: opt,
+		URLPath: fmt.Sprintf("/authorizations/clients/%v/%v", r.ClientId, r.Fingerprint),
 	})
 }
 
@@ -1245,10 +1242,9 @@ func (r *UpdateAuthorizationReq) HTTPRequest(ctx context.Context, opt ...request
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "PATCH",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/authorizations/%v", r.AuthorizationId),
+		Method:  "PATCH",
+		Options: opt,
+		URLPath: fmt.Sprintf("/authorizations/%v", r.AuthorizationId),
 	})
 }
 

@@ -201,10 +201,9 @@ func (r *CreateReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*h
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "POST",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/gists"),
+		Method:  "POST",
+		Options: opt,
+		URLPath: fmt.Sprintf("/gists"),
 	})
 }
 
@@ -348,10 +347,9 @@ func (r *CreateCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Opti
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "POST",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/gists/%v/comments", r.GistId),
+		Method:  "POST",
+		Options: opt,
+		URLPath: fmt.Sprintf("/gists/%v/comments", r.GistId),
 	})
 }
 
@@ -2367,10 +2365,9 @@ func (r *UpdateReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*h
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "PATCH",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/gists/%v", r.GistId),
+		Method:  "PATCH",
+		Options: opt,
+		URLPath: fmt.Sprintf("/gists/%v", r.GistId),
 	})
 }
 
@@ -2517,10 +2514,9 @@ func (r *UpdateCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Opti
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "PATCH",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/gists/%v/comments/%v", r.GistId, r.CommentId),
+		Method:  "PATCH",
+		Options: opt,
+		URLPath: fmt.Sprintf("/gists/%v/comments/%v", r.GistId, r.CommentId),
 	})
 }
 

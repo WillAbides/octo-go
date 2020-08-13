@@ -389,10 +389,9 @@ func (r *CheckTokenReq) HTTPRequest(ctx context.Context, opt ...requests.Option)
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "POST",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/applications/%v/token", r.ClientId),
+		Method:  "POST",
+		Options: opt,
+		URLPath: fmt.Sprintf("/applications/%v/token", r.ClientId),
 	})
 }
 
@@ -530,7 +529,6 @@ func (r *CreateContentAttachmentReq) HTTPRequest(ctx context.Context, opt ...req
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody:  true,
 		Method:           "POST",
 		Options:          opt,
 		Previews:         map[string]bool{"corsair": r.CorsairPreview},
@@ -851,7 +849,6 @@ func (r *CreateInstallationAccessTokenReq) HTTPRequest(ctx context.Context, opt 
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody:  true,
 		Method:           "POST",
 		Options:          opt,
 		Previews:         map[string]bool{"machine-man": r.MachineManPreview},
@@ -986,13 +983,12 @@ type DeleteAuthorizationReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteAuthorizationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:            r.RequestBody,
-		ExplicitURL:     r._url,
-		HeaderVals:      map[string]*string{"content-type": internal.String("application/json")},
-		JSONRequestBody: true,
-		Method:          "DELETE",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/applications/%v/grant", r.ClientId),
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"content-type": internal.String("application/json")},
+		Method:      "DELETE",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/applications/%v/grant", r.ClientId),
 	})
 }
 
@@ -1233,13 +1229,12 @@ type DeleteTokenReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteTokenReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:            r.RequestBody,
-		ExplicitURL:     r._url,
-		HeaderVals:      map[string]*string{"content-type": internal.String("application/json")},
-		JSONRequestBody: true,
-		Method:          "DELETE",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/applications/%v/token", r.ClientId),
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"content-type": internal.String("application/json")},
+		Method:      "DELETE",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/applications/%v/token", r.ClientId),
 	})
 }
 
@@ -4038,10 +4033,9 @@ func (r *ResetTokenReq) HTTPRequest(ctx context.Context, opt ...requests.Option)
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "PATCH",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/applications/%v/token", r.ClientId),
+		Method:  "PATCH",
+		Options: opt,
+		URLPath: fmt.Sprintf("/applications/%v/token", r.ClientId),
 	})
 }
 

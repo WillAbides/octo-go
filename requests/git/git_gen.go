@@ -92,10 +92,9 @@ func (r *CreateBlobReq) HTTPRequest(ctx context.Context, opt ...requests.Option)
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "POST",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/repos/%v/%v/git/blobs", r.Owner, r.Repo),
+		Method:  "POST",
+		Options: opt,
+		URLPath: fmt.Sprintf("/repos/%v/%v/git/blobs", r.Owner, r.Repo),
 	})
 }
 
@@ -228,10 +227,9 @@ func (r *CreateCommitReq) HTTPRequest(ctx context.Context, opt ...requests.Optio
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "POST",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/repos/%v/%v/git/commits", r.Owner, r.Repo),
+		Method:  "POST",
+		Options: opt,
+		URLPath: fmt.Sprintf("/repos/%v/%v/git/commits", r.Owner, r.Repo),
 	})
 }
 
@@ -433,10 +431,9 @@ func (r *CreateRefReq) HTTPRequest(ctx context.Context, opt ...requests.Option) 
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "POST",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/repos/%v/%v/git/refs", r.Owner, r.Repo),
+		Method:  "POST",
+		Options: opt,
+		URLPath: fmt.Sprintf("/repos/%v/%v/git/refs", r.Owner, r.Repo),
 	})
 }
 
@@ -573,10 +570,9 @@ func (r *CreateTagReq) HTTPRequest(ctx context.Context, opt ...requests.Option) 
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "POST",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/repos/%v/%v/git/tags", r.Owner, r.Repo),
+		Method:  "POST",
+		Options: opt,
+		URLPath: fmt.Sprintf("/repos/%v/%v/git/tags", r.Owner, r.Repo),
 	})
 }
 
@@ -734,10 +730,9 @@ func (r *CreateTreeReq) HTTPRequest(ctx context.Context, opt ...requests.Option)
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "POST",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/repos/%v/%v/git/trees", r.Owner, r.Repo),
+		Method:  "POST",
+		Options: opt,
+		URLPath: fmt.Sprintf("/repos/%v/%v/git/trees", r.Owner, r.Repo),
 	})
 }
 
@@ -1775,10 +1770,9 @@ func (r *UpdateRefReq) HTTPRequest(ctx context.Context, opt ...requests.Option) 
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "PATCH",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/repos/%v/%v/git/refs/%v", r.Owner, r.Repo, r.Ref),
+		Method:  "PATCH",
+		Options: opt,
+		URLPath: fmt.Sprintf("/repos/%v/%v/git/refs/%v", r.Owner, r.Repo, r.Ref),
 	})
 }
 

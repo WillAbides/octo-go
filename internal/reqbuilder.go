@@ -26,9 +26,7 @@ type BuildHTTPRequestOptions struct {
 	URLQuery           url.Values
 	URLPath            string
 	Options            []requests.Option
-	StreamRequestBody  bool
 	RequireExplicitURL bool
-	JSONRequestBody    bool
 }
 
 func requestHeaders(b BuildHTTPRequestOptions) http.Header {
@@ -111,22 +109,27 @@ func requestURL(b BuildHTTPRequestOptions) (string, error) {
 	return u.String(), nil
 }
 
+func makeBodyReader(body interface{}) (io.Reader, error) {
+	if body == nil {
+		return nil, nil
+	}
+	if rdr, ok := body.(io.Reader); ok {
+		return rdr, nil
+	}
+	var buf bytes.Buffer
+	err := json.NewEncoder(&buf).Encode(&body)
+	if err != nil {
+		return nil, newRequestError("error marshaling json body")
+	}
+	return &buf, nil
+}
+
 // BuildHTTPRequest builds an *http.Request. All errors are *errors.RequestError.
 func BuildHTTPRequest(ctx context.Context, b BuildHTTPRequestOptions) (*http.Request, error) {
 	opts := requests.BuildOptions(b.Options...)
-	var bodyReader io.Reader
-	var err error
-	switch {
-	case b.Body == nil:
-	case b.JSONRequestBody:
-		var buf bytes.Buffer
-		err = json.NewEncoder(&buf).Encode(&b.Body)
-		if err != nil {
-			return nil, newRequestError("error marshaling json body")
-		}
-		bodyReader = &buf
-	case b.StreamRequestBody:
-		bodyReader = b.Body.(io.Reader)
+	bodyReader, err := makeBodyReader(b.Body)
+	if err != nil {
+		return nil, err
 	}
 	urlString, err := requestURL(b)
 	if err != nil {

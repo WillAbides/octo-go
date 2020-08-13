@@ -205,10 +205,9 @@ func (r *AddOrUpdateMembershipForUserInOrgReq) HTTPRequest(ctx context.Context, 
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "PUT",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/orgs/%v/teams/%v/memberships/%v", r.Org, r.TeamSlug, r.Username),
+		Method:  "PUT",
+		Options: opt,
+		URLPath: fmt.Sprintf("/orgs/%v/teams/%v/memberships/%v", r.Org, r.TeamSlug, r.Username),
 	})
 }
 
@@ -344,10 +343,9 @@ func (r *AddOrUpdateMembershipForUserLegacyReq) HTTPRequest(ctx context.Context,
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "PUT",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/teams/%v/memberships/%v", r.TeamId, r.Username),
+		Method:  "PUT",
+		Options: opt,
+		URLPath: fmt.Sprintf("/teams/%v/memberships/%v", r.TeamId, r.Username),
 	})
 }
 
@@ -493,7 +491,6 @@ func (r *AddOrUpdateProjectPermissionsInOrgReq) HTTPRequest(ctx context.Context,
 		Body:             r.RequestBody,
 		ExplicitURL:      r._url,
 		HeaderVals:       map[string]*string{"content-type": internal.String("application/json")},
-		JSONRequestBody:  true,
 		Method:           "PUT",
 		Options:          opt,
 		Previews:         map[string]bool{"inertia": r.InertiaPreview},
@@ -638,7 +635,6 @@ func (r *AddOrUpdateProjectPermissionsLegacyReq) HTTPRequest(ctx context.Context
 		Body:             r.RequestBody,
 		ExplicitURL:      r._url,
 		HeaderVals:       map[string]*string{"content-type": internal.String("application/json")},
-		JSONRequestBody:  true,
 		Method:           "PUT",
 		Options:          opt,
 		Previews:         map[string]bool{"inertia": r.InertiaPreview},
@@ -774,13 +770,12 @@ type AddOrUpdateRepoPermissionsInOrgReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *AddOrUpdateRepoPermissionsInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:            r.RequestBody,
-		ExplicitURL:     r._url,
-		HeaderVals:      map[string]*string{"content-type": internal.String("application/json")},
-		JSONRequestBody: true,
-		Method:          "PUT",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/orgs/%v/teams/%v/repos/%v/%v", r.Org, r.TeamSlug, r.Owner, r.Repo),
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"content-type": internal.String("application/json")},
+		Method:      "PUT",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/orgs/%v/teams/%v/repos/%v/%v", r.Org, r.TeamSlug, r.Owner, r.Repo),
 	})
 }
 
@@ -913,13 +908,12 @@ type AddOrUpdateRepoPermissionsLegacyReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *AddOrUpdateRepoPermissionsLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:            r.RequestBody,
-		ExplicitURL:     r._url,
-		HeaderVals:      map[string]*string{"content-type": internal.String("application/json")},
-		JSONRequestBody: true,
-		Method:          "PUT",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/teams/%v/repos/%v/%v", r.TeamId, r.Owner, r.Repo),
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"content-type": internal.String("application/json")},
+		Method:      "PUT",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/teams/%v/repos/%v/%v", r.TeamId, r.Owner, r.Repo),
 	})
 }
 
@@ -1550,10 +1544,9 @@ func (r *CreateReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*h
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "POST",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/orgs/%v/teams", r.Org),
+		Method:  "POST",
+		Options: opt,
+		URLPath: fmt.Sprintf("/orgs/%v/teams", r.Org),
 	})
 }
 
@@ -1734,11 +1727,10 @@ func (r *CreateDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt .
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "POST",
-		Options:         opt,
-		Previews:        map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
-		URLPath:         fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/comments", r.Org, r.TeamSlug, r.DiscussionNumber),
+		Method:   "POST",
+		Options:  opt,
+		Previews: map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		URLPath:  fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/comments", r.Org, r.TeamSlug, r.DiscussionNumber),
 	})
 }
 
@@ -1880,11 +1872,10 @@ func (r *CreateDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt 
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "POST",
-		Options:         opt,
-		Previews:        map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
-		URLPath:         fmt.Sprintf("/teams/%v/discussions/%v/comments", r.TeamId, r.DiscussionNumber),
+		Method:   "POST",
+		Options:  opt,
+		Previews: map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		URLPath:  fmt.Sprintf("/teams/%v/discussions/%v/comments", r.TeamId, r.DiscussionNumber),
 	})
 }
 
@@ -2028,11 +2019,10 @@ func (r *CreateDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...reque
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "POST",
-		Options:         opt,
-		Previews:        map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
-		URLPath:         fmt.Sprintf("/orgs/%v/teams/%v/discussions", r.Org, r.TeamSlug),
+		Method:   "POST",
+		Options:  opt,
+		Previews: map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		URLPath:  fmt.Sprintf("/orgs/%v/teams/%v/discussions", r.Org, r.TeamSlug),
 	})
 }
 
@@ -2183,11 +2173,10 @@ func (r *CreateDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...requ
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "POST",
-		Options:         opt,
-		Previews:        map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
-		URLPath:         fmt.Sprintf("/teams/%v/discussions", r.TeamId),
+		Method:   "POST",
+		Options:  opt,
+		Previews: map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		URLPath:  fmt.Sprintf("/teams/%v/discussions", r.TeamId),
 	})
 }
 
@@ -2329,10 +2318,9 @@ func (r *CreateOrUpdateIdpGroupConnectionsInOrgReq) HTTPRequest(ctx context.Cont
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "PATCH",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/orgs/%v/teams/%v/team-sync/group-mappings", r.Org, r.TeamSlug),
+		Method:  "PATCH",
+		Options: opt,
+		URLPath: fmt.Sprintf("/orgs/%v/teams/%v/team-sync/group-mappings", r.Org, r.TeamSlug),
 	})
 }
 
@@ -2478,10 +2466,9 @@ func (r *CreateOrUpdateIdpGroupConnectionsLegacyReq) HTTPRequest(ctx context.Con
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "PATCH",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/teams/%v/team-sync/group-mappings", r.TeamId),
+		Method:  "PATCH",
+		Options: opt,
+		URLPath: fmt.Sprintf("/teams/%v/team-sync/group-mappings", r.TeamId),
 	})
 }
 
@@ -7824,11 +7811,10 @@ func (r *UpdateDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt .
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "PATCH",
-		Options:         opt,
-		Previews:        map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
-		URLPath:         fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/comments/%v", r.Org, r.TeamSlug, r.DiscussionNumber, r.CommentNumber),
+		Method:   "PATCH",
+		Options:  opt,
+		Previews: map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		URLPath:  fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/comments/%v", r.Org, r.TeamSlug, r.DiscussionNumber, r.CommentNumber),
 	})
 }
 
@@ -7971,11 +7957,10 @@ func (r *UpdateDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt 
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "PATCH",
-		Options:         opt,
-		Previews:        map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
-		URLPath:         fmt.Sprintf("/teams/%v/discussions/%v/comments/%v", r.TeamId, r.DiscussionNumber, r.CommentNumber),
+		Method:   "PATCH",
+		Options:  opt,
+		Previews: map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		URLPath:  fmt.Sprintf("/teams/%v/discussions/%v/comments/%v", r.TeamId, r.DiscussionNumber, r.CommentNumber),
 	})
 }
 
@@ -8120,11 +8105,10 @@ func (r *UpdateDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...reque
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "PATCH",
-		Options:         opt,
-		Previews:        map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
-		URLPath:         fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v", r.Org, r.TeamSlug, r.DiscussionNumber),
+		Method:   "PATCH",
+		Options:  opt,
+		Previews: map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		URLPath:  fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v", r.Org, r.TeamSlug, r.DiscussionNumber),
 	})
 }
 
@@ -8269,11 +8253,10 @@ func (r *UpdateDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...requ
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "PATCH",
-		Options:         opt,
-		Previews:        map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
-		URLPath:         fmt.Sprintf("/teams/%v/discussions/%v", r.TeamId, r.DiscussionNumber),
+		Method:   "PATCH",
+		Options:  opt,
+		Previews: map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		URLPath:  fmt.Sprintf("/teams/%v/discussions/%v", r.TeamId, r.DiscussionNumber),
 	})
 }
 
@@ -8408,10 +8391,9 @@ func (r *UpdateInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "PATCH",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/orgs/%v/teams/%v", r.Org, r.TeamSlug),
+		Method:  "PATCH",
+		Options: opt,
+		URLPath: fmt.Sprintf("/orgs/%v/teams/%v", r.Org, r.TeamSlug),
 	})
 }
 
@@ -8570,10 +8552,9 @@ func (r *UpdateLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Optio
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "PATCH",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/teams/%v", r.TeamId),
+		Method:  "PATCH",
+		Options: opt,
+		URLPath: fmt.Sprintf("/teams/%v", r.TeamId),
 	})
 }
 

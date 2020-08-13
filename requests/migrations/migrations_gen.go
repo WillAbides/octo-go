@@ -1845,10 +1845,9 @@ func (r *MapCommitAuthorReq) HTTPRequest(ctx context.Context, opt ...requests.Op
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "PATCH",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/repos/%v/%v/import/authors/%v", r.Owner, r.Repo, r.AuthorId),
+		Method:  "PATCH",
+		Options: opt,
+		URLPath: fmt.Sprintf("/repos/%v/%v/import/authors/%v", r.Owner, r.Repo, r.AuthorId),
 	})
 }
 
@@ -1982,10 +1981,9 @@ func (r *SetLfsPreferenceReq) HTTPRequest(ctx context.Context, opt ...requests.O
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "PATCH",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/repos/%v/%v/import/lfs", r.Owner, r.Repo),
+		Method:  "PATCH",
+		Options: opt,
+		URLPath: fmt.Sprintf("/repos/%v/%v/import/lfs", r.Owner, r.Repo),
 	})
 }
 
@@ -2116,10 +2114,9 @@ func (r *StartForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...r
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "POST",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/user/migrations"),
+		Method:  "POST",
+		Options: opt,
+		URLPath: fmt.Sprintf("/user/migrations"),
 	})
 }
 
@@ -2255,10 +2252,9 @@ func (r *StartForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "POST",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/orgs/%v/migrations", r.Org),
+		Method:  "POST",
+		Options: opt,
+		URLPath: fmt.Sprintf("/orgs/%v/migrations", r.Org),
 	})
 }
 
@@ -2395,10 +2391,9 @@ func (r *StartImportReq) HTTPRequest(ctx context.Context, opt ...requests.Option
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "PUT",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/repos/%v/%v/import", r.Owner, r.Repo),
+		Method:  "PUT",
+		Options: opt,
+		URLPath: fmt.Sprintf("/repos/%v/%v/import", r.Owner, r.Repo),
 	})
 }
 
@@ -2791,10 +2786,9 @@ func (r *UpdateImportReq) HTTPRequest(ctx context.Context, opt ...requests.Optio
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "PATCH",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/repos/%v/%v/import", r.Owner, r.Repo),
+		Method:  "PATCH",
+		Options: opt,
+		URLPath: fmt.Sprintf("/repos/%v/%v/import", r.Owner, r.Repo),
 	})
 }
 

@@ -3218,10 +3218,9 @@ func (r *MarkNotificationsAsReadReq) HTTPRequest(ctx context.Context, opt ...req
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "PUT",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/notifications"),
+		Method:  "PUT",
+		Options: opt,
+		URLPath: fmt.Sprintf("/notifications"),
 	})
 }
 
@@ -3357,13 +3356,12 @@ type MarkRepoNotificationsAsReadReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *MarkRepoNotificationsAsReadReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:            r.RequestBody,
-		ExplicitURL:     r._url,
-		HeaderVals:      map[string]*string{"content-type": internal.String("application/json")},
-		JSONRequestBody: true,
-		Method:          "PUT",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/repos/%v/%v/notifications", r.Owner, r.Repo),
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"content-type": internal.String("application/json")},
+		Method:      "PUT",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/repos/%v/%v/notifications", r.Owner, r.Repo),
 	})
 }
 
@@ -3603,10 +3601,9 @@ func (r *SetRepoSubscriptionReq) HTTPRequest(ctx context.Context, opt ...request
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "PUT",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/repos/%v/%v/subscription", r.Owner, r.Repo),
+		Method:  "PUT",
+		Options: opt,
+		URLPath: fmt.Sprintf("/repos/%v/%v/subscription", r.Owner, r.Repo),
 	})
 }
 
@@ -3740,10 +3737,9 @@ func (r *SetThreadSubscriptionReq) HTTPRequest(ctx context.Context, opt ...reque
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		JSONRequestBody: true,
-		Method:          "PUT",
-		Options:         opt,
-		URLPath:         fmt.Sprintf("/notifications/threads/%v/subscription", r.ThreadId),
+		Method:  "PUT",
+		Options: opt,
+		URLPath: fmt.Sprintf("/notifications/threads/%v/subscription", r.ThreadId),
 	})
 }
 
