@@ -47,24 +47,27 @@ func NewClient(opt ...requests.Option) Client {
 	return opt
 }
 
-type httpResponser interface{ HTTPResponse() *http.Response }
+// RelLink returns the content of lnk from the response's Link header or "" if it does not exist
+func RelLink(r *http.Response, lnk string) string {
+	return internal.RelLink(r, lnk)
+}
 
 // RateLimit - The maximum number of requests you're permitted to make per hour.
 //  returns -1 if no X-RateLimit-Limit value exists in the response header
-func RateLimit(r httpResponser) int {
-	return intResponseHeaderOrNegOne(r.HTTPResponse(), "X-RateLimit-Limit")
+func RateLimit(r *http.Response) int {
+	return intResponseHeaderOrNegOne(r, "X-RateLimit-Limit")
 }
 
 // RateLimitRemaining - The number of requests remaining in the current rate limit window.
 //  returns -1 if no X-RateLimit-Remaining value exists in the response header
-func RateLimitRemaining(r httpResponser) int {
-	return intResponseHeaderOrNegOne(r.HTTPResponse(), "X-RateLimit-Remaining")
+func RateLimitRemaining(r *http.Response) int {
+	return intResponseHeaderOrNegOne(r, "X-RateLimit-Remaining")
 }
 
-// RateLimitReset - X-RateLimit-Remaining
+// RateLimitReset - X-RateLimit-Reset
 //  returns time.Zero if no X-RateLimit-Reset value exists in the response header
-func RateLimitReset(r httpResponser) time.Time {
-	resetTS := intResponseHeaderOrNegOne(r.HTTPResponse(), "X-RateLimit-Reset")
+func RateLimitReset(r *http.Response) time.Time {
+	resetTS := intResponseHeaderOrNegOne(r, "X-RateLimit-Reset")
 	if resetTS == -1 {
 		return time.Time{}
 	}
@@ -81,14 +84,4 @@ func intResponseHeaderOrNegOne(resp *http.Response, headerName string) int {
 		return -1
 	}
 	return i
-}
-
-// RelLink returns the content of lnk from the response's Link header or "" if it does not exist
-func RelLink(r httpResponser, lnk string) string {
-	return internal.RelLink(r.HTTPResponse(), lnk)
-}
-
-// HasRelLink returns true if lnk exists in the response's Link header
-func HasRelLink(r httpResponser, lnk string) bool {
-	return RelLink(r, lnk) != ""
 }
