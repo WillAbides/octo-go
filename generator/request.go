@@ -12,17 +12,22 @@ import (
 )
 
 func reqBodyStructName(endpointID string) string {
+	endpointID = trimToFirstSlash(endpointID)
 	endpointID = strings.ReplaceAll(endpointID, "/", "-")
 	return toExportedName(fmt.Sprintf("%s-req-body", endpointID))
 }
 
 func reqStructName(endpoint *model.Endpoint) string {
-	return toExportedName(fmt.Sprintf("%s-%s-req", endpoint.Concern, endpoint.Name))
+	return toExportedName(fmt.Sprintf("%s-req", endpoint.Name))
 }
 
-func addRequestStruct(file *jen.File, endpoint *model.Endpoint) {
+func addRequestStruct(file *jen.File, pq pkgQual, endpoint *model.Endpoint) {
 	structName := reqStructName(endpoint)
-	file.Commentf("%s is request data for Client.%s\n\n%s",
+	file.Commentf(`%s is request data for Client.%s
+
+%s
+
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.`,
 		structName,
 		toExportedName(endpoint.ID),
 		endpoint.DocsURL,
@@ -33,7 +38,7 @@ func addRequestStruct(file *jen.File, endpoint *model.Endpoint) {
 			if param.HelpText != "" {
 				group.Line().Comment(wordwrap.WrapString(param.HelpText, 80))
 			}
-			group.Id(toExportedName(param.Name)).Add(paramSchemaFieldType(param.Schema, []string{endpoint.ID, "PATH_PARAMS"}, nil))
+			group.Id(toExportedName(param.Name)).Add(paramSchemaFieldType(param.Schema, []string{endpoint.ID, "PATH_PARAMS"}, pq, nil))
 		}
 		if endpointHasAttribute(endpoint, attrExplicitURL) {
 			group.Line().Comment("URL to query. This must be explicitly set for this endpoint and any base URL set in options will be ignored.")
@@ -43,7 +48,7 @@ func addRequestStruct(file *jen.File, endpoint *model.Endpoint) {
 			if param.HelpText != "" {
 				group.Line().Comment(wordwrap.WrapString(param.HelpText, 80))
 			}
-			group.Id(toExportedName(param.Name)).Op("*").Add(paramSchemaFieldType(param.Schema, []string{endpoint.ID, "QUERY_PARAMS"}, &paramSchemaFieldTypeOptions{
+			group.Id(toExportedName(param.Name)).Op("*").Add(paramSchemaFieldType(param.Schema, []string{endpoint.ID, "QUERY_PARAMS"}, pq, &paramSchemaFieldTypeOptions{
 				usePointers: true,
 			}))
 		}
@@ -61,7 +66,7 @@ func addRequestStruct(file *jen.File, endpoint *model.Endpoint) {
 			if param.HelpText != "" {
 				group.Line().Comment(wordwrap.WrapString(param.HelpText, 80))
 			}
-			group.Id(toExportedName(param.Name + "-header")).Op("*").Add(paramSchemaFieldType(param.Schema, []string{endpoint.ID, "QUERY_PARAMS"}, &paramSchemaFieldTypeOptions{
+			group.Id(toExportedName(param.Name + "-header")).Op("*").Add(paramSchemaFieldType(param.Schema, []string{endpoint.ID, "QUERY_PARAMS"}, pq, &paramSchemaFieldTypeOptions{
 				usePointers: true,
 			}))
 		}
@@ -73,89 +78,118 @@ func addRequestStruct(file *jen.File, endpoint *model.Endpoint) {
 		}
 	})
 
-	for _, fn := range []func(file *jen.File, endpoint *model.Endpoint){
-		reqUrlFunc,
-		reqURLPathFunc,
-		reqMethodFunc,
-		reqURLQueryFunc,
-		reqHeaderFunc,
-		reqBodyFunc,
-		reqDataStatusesFunc,
-		reqValidStatusesFunc,
-		reqEndpointAttributesFunc,
-		reqHTTPRequestFunc,
+	for _, fn := range []func(file *jen.File, endpoint *model.Endpoint, pq pkgQual){
+		addReqHTTPRequestFunc,
 		reqRelReqFunc,
 	} {
-		fn(file, endpoint)
+		fn(file, endpoint, pq)
 		file.Line()
 	}
 }
 
-func reqMethodFunc(fl *jen.File, endpoint *model.Endpoint) {
-	structName := reqStructName(endpoint)
-	fl.Func().Params(jen.Id("r").Id("*" + structName)).Id("method").Params().String().Block(
-		jen.Return(jen.Lit(endpoint.Method)),
-	)
-}
-
-func reqUrlFunc(fl *jen.File, endpoint *model.Endpoint) {
-	structName := reqStructName(endpoint)
-	fl.Func().Params(jen.Id("r").Id("*" + structName)).Id("url() string").BlockFunc(func(group *jen.Group) {
-		if endpointHasAttribute(endpoint, attrExplicitURL) {
-			group.If(jen.Id(`r._url != ""`)).Block(
-				jen.Id("return r._url"),
-			)
-			group.Return(jen.Id("r.URL"))
-			return
-		}
-		group.Id("return r._url")
-	})
-}
-
-func reqRelReqFunc(file *jen.File, endpoint *model.Endpoint) {
+func reqRelReqFunc(file *jen.File, endpoint *model.Endpoint, pq pkgQual) {
 	structName := reqStructName(endpoint)
 	comment := `Rel updates this request to point to a relative link from resp. Returns false if the link does not exist. Handy for paging.`
 	file.Comment(wordwrap.WrapString(comment, 80))
 	file.Func().Params(jen.Id("r").Id("*"+structName)).Id("Rel").Params(
-		jen.Id("link RelName"),
+		jen.Id("link string"),
 		jen.Id("resp").Op("*").Id(respStructName(endpoint)),
 	).Params(jen.Bool()).Block(
-		jen.Id("u := resp.RelLink(link)"),
+		jen.Id("u := ").Qual(pq.pkgPath("internal"), "RelLink").Call(jen.Id("resp.HTTPResponse(), link")),
 		jen.If(jen.Id("u").Op("==").Lit("")).Block(jen.Return(jen.False())),
 		jen.Id("r._url = u"),
 		jen.Return(jen.True()),
 	)
 }
 
-func reqDataStatusesFunc(file *jen.File, endpoint *model.Endpoint) {
+func reqBodyValue(endpoint *model.Endpoint) jen.Code {
+	switch {
+	case endpointHasAttribute(endpoint, attrJSONRequestBody):
+		return jen.Id("r.RequestBody")
+	case endpointHasAttribute(endpoint, attrBodyUploader):
+		return jen.Id("r.RequestBody")
+	default:
+		return nil
+	}
+}
+
+func addReqHTTPRequestFunc(file *jen.File, endpoint *model.Endpoint, pq pkgQual) {
+	file.Add(reqHTTPRequestFunc(endpoint, pq))
+}
+
+func reqHTTPRequestFunc(endpoint *model.Endpoint, pq pkgQual) jen.Code {
 	structName := reqStructName(endpoint)
-	file.Func().Params(jen.Id("r").Id("*" + structName)).Id("dataStatuses").Params().Params(
-		jen.Op("[]").Int(),
+	stmt := jen.Comment("HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.")
+	stmt.Line()
+	stmt.Func().Params(jen.Id("r").Id("*"+structName)).Id("HTTPRequest").Params(
+		jen.Id("ctx").Qual("context", "Context"),
+		jen.Id("opt ...").Qual(pq.pkgPath("requests"), "Option"),
+	).Params(
+		jen.Op("*").Qual("net/http", "Request"), jen.Error(),
 	).Block(
-		jen.Return().Op("[]").Int().ValuesFunc(func(group *jen.Group) {
-			for _, code := range responseCodesWithBodies(endpoint) {
-				group.Lit(code)
-			}
-		}),
+		reqURLQueryVal(endpoint),
+		jen.Return(jen.Qual(pq.pkgPath("internal"), "BuildHTTPRequest").Call(
+			jen.Id("ctx"),
+			jen.Qual(pq.pkgPath("internal"), "BuildHTTPRequestOptions").Values(
+				jen.DictFunc(func(dict jen.Dict) {
+					dict[jen.Id("ExplicitURL")] = reqExplicitURLVal(endpoint)
+					dict[jen.Id("Method")] = jen.Lit(endpoint.Method)
+					if val := requiredPreviews(endpoint); len(val) > 0 {
+						dict[jen.Id("RequiredPreviews")] = jen.Id("[]string").ValuesFunc(func(group *jen.Group) {
+							for _, preview := range val {
+								group.Lit(preview)
+							}
+						})
+					}
+					if len(endpoint.Previews) > 0 {
+						dict[jen.Id("AllPreviews")] = jen.Op("[]").String().ValuesFunc(func(group *jen.Group) {
+							for _, preview := range endpoint.Previews {
+								group.Add(jen.Lit(preview.Name))
+							}
+						})
+						dict[jen.Id("Previews")] = jen.Map(jen.String()).Bool().Values(jen.DictFunc(func(dict jen.Dict) {
+							for _, preview := range endpoint.Previews {
+								dict[jen.Lit(preview.Name)] = jen.Id("r").Dot(toExportedName(preview.Name + "-preview"))
+							}
+						}))
+					}
+					if val := reqHeaderMap(endpoint, pq); val != nil {
+						dict[jen.Id("HeaderVals")] = val
+					}
+					if val := reqBodyValue(endpoint); val != nil {
+						dict[jen.Id("Body")] = val
+					}
+					if len(endpoint.QueryParams) > 0 {
+						dict[jen.Id("URLQuery")] = jen.Id("query")
+					}
+					dict[jen.Id("Options")] = jen.Id("opt")
+					if val := reqURLPathVal(endpoint); val != nil {
+						dict[jen.Id("URLPath")] = val
+					}
+					if endpointHasAttribute(endpoint, attrExplicitURL) {
+						dict[jen.Id("RequireExplicitURL")] = jen.Lit(true)
+					}
+				}),
+			),
+		)),
 	)
+	return stmt
 }
 
-func reqEndpointAttributesFunc(file *jen.File, endpoint *model.Endpoint) {
-	structName := reqStructName(endpoint)
-	file.Func().Params(
-		jen.Id("r").Id("*" + structName),
-	).Id("endpointAttributes()").Params(
-		jen.Id("[]endpointAttribute"),
-	).Block(
-		jen.Return(jen.Id("[]endpointAttribute").ValuesFunc(func(group *jen.Group) {
-			for _, attr := range getEndpointAttributes(endpoint) {
-				group.Id(attr.String())
-			}
-		}),
-		))
+func requiredPreviews(endpoint *model.Endpoint) []string {
+	result := make([]string, 0, len(endpoint.Previews))
+	for _, preview := range endpoint.Previews {
+		if preview.Required {
+			result = append(result, preview.Name)
+		}
+	}
+	return result
 }
 
-func reqValidStatusesFunc(file *jen.File, endpoint *model.Endpoint) {
+func validCodes(endpoint *model.Endpoint) []int {
+	if endpointHasAttribute(endpoint, attrBoolean) {
+		return []int{204, 404}
+	}
 	codes := make([]int, 0, len(endpoint.Responses))
 	for code := range endpoint.Responses {
 		if code < 400 {
@@ -163,165 +197,91 @@ func reqValidStatusesFunc(file *jen.File, endpoint *model.Endpoint) {
 		}
 	}
 	sort.Ints(codes)
-	structName := reqStructName(endpoint)
-	file.Func().Params(jen.Id("r").Id("*" + structName)).Id("validStatuses").Params().Params(
-		jen.Op("[]").Int(),
-	).Block(
-		jen.Return().Op("[]").Int().ValuesFunc(func(group *jen.Group) {
-			for _, code := range codes {
-				group.Lit(code)
-			}
-		}),
-	)
+	return codes
 }
 
-func reqBodyFunc(file *jen.File, endpoint *model.Endpoint) {
-	structName := reqStructName(endpoint)
-	file.Func().Params(jen.Id("r").Id("*" + structName)).Id("body").
-		Params().
-		Interface().
-		Block(jen.Do(func(stmt *jen.Statement) {
-			switch {
-			case endpointHasAttribute(endpoint, attrJSONRequestBody):
-				stmt.Return(jen.Id("r.RequestBody"))
-			case endpointHasAttribute(endpoint, attrBodyUploader):
-				stmt.Return(jen.Id("r.RequestBody"))
-			default:
-				stmt.Return(jen.Nil())
-			}
-		}))
-}
-
-func reqHTTPRequestFunc(file *jen.File, endpoint *model.Endpoint) {
-	structName := reqStructName(endpoint)
-	file.Comment("HTTPRequest builds an *http.Request")
-	file.Func().Params(jen.Id("r").Id("*"+structName)).Id("HTTPRequest").Params(
-		jen.Id("ctx").Qual("context", "Context"),
-		jen.Id("opt ...RequestOption"),
-	).Params(
-		jen.Op("*").Qual("net/http", "Request"), jen.Error(),
-	).Block(
-		jen.Id("return buildHTTPRequest(ctx, r, opt)"),
-	)
-}
-
-func reqHeaderMap(endpoint *model.Endpoint) *jen.Statement {
-	return jen.Map(jen.String()).Op("*").String().Values(
+func reqHeaderMap(endpoint *model.Endpoint, pq pkgQual) *jen.Statement {
+	var size int
+	stmt := jen.Map(jen.String()).Op("*").String().Values(
 		jen.DictFunc(func(dict jen.Dict) {
 			headers := map[string]*jen.Statement{}
+			internalPkg := pq.pkgPath("internal")
 			if endpoint.SuccessMediaType != "" {
-				headers["accept"] = jen.Id("String").Call(jen.Lit(endpoint.SuccessMediaType))
+				size++
+				headers["accept"] = jen.Qual(internalPkg, "String").Call(jen.Lit(endpoint.SuccessMediaType))
 			}
 
 			for _, header := range endpoint.Headers {
 				if header.Name == "accept" {
 					continue
 				}
+				size++
 				headers[strings.ToLower(header.Name)] = jen.Id("r").Dot(toExportedName(header.Name + "-header"))
 			}
 
 			if headers["content-type"] == nil && endpoint.RequestBody != nil && endpoint.RequestBody.MediaType != "" {
-				headers["content-type"] = jen.Id("String").Call(jen.Lit(endpoint.RequestBody.MediaType))
+				size++
+				headers["content-type"] = jen.Qual(internalPkg, "String").Call(jen.Lit(endpoint.RequestBody.MediaType))
 			}
 
 			for k, v := range headers {
+				size++
 				dict[jen.Lit(k)] = v
 			}
 		}),
 	)
-}
-
-func reqHeaderFunc(file *jen.File, endpoint *model.Endpoint) {
-	structName := reqStructName(endpoint)
-	stmt := file.Func().Params(jen.Id("r").Id("*"+structName)).Id("header").Params(jen.Id("requiredPreviews, allPreviews bool")).Qual("net/http", "Header")
-	hasRequiredPreviews := false
-	for _, preview := range endpoint.Previews {
-		if preview.Required {
-			hasRequiredPreviews = true
-			break
-		}
+	if size == 0 {
+		return nil
 	}
-	stmt.BlockFunc(func(fnBlock *jen.Group) {
-		fnBlock.Id("headerVals").Op(":=").Add(reqHeaderMap(endpoint))
-		fnBlock.Id("previewVals").Op(":=").Map(jen.String()).Bool().Values(
-			jen.DictFunc(func(dict jen.Dict) {
-				for _, preview := range endpoint.Previews {
-					dict[jen.Lit(preview.Name)] = jen.Id("r").Dot(toExportedName(preview.Name + "-preview"))
-				}
-			}),
-		)
-
-		if hasRequiredPreviews {
-			fnBlock.If(jen.Id("requiredPreviews")).BlockFunc(func(ifGroup *jen.Group) {
-				for _, preview := range endpoint.Previews {
-					if !preview.Required {
-						continue
-					}
-					ifGroup.Id("previewVals").Index(jen.Lit(preview.Name)).Op("=").True()
-				}
-			})
-		}
-
-		if len(endpoint.Previews) > 0 {
-			fnBlock.If(jen.Id("allPreviews")).BlockFunc(func(ifGroup *jen.Group) {
-				for _, preview := range endpoint.Previews {
-					ifGroup.Id("previewVals").Index(jen.Lit(preview.Name)).Op("=").True()
-				}
-			})
-		}
-
-		fnBlock.Return(jen.Id("requestHeaders")).Params(
-			jen.Id("headerVals"),
-			jen.Id("previewVals"),
-		)
-	})
+	return stmt
 }
 
 var bracesExp = regexp.MustCompile(`{[^}]+}`)
 
-func reqURLPathFunc(file *jen.File, endpoint *model.Endpoint) {
-	structName := reqStructName(endpoint)
-	file.Func().Params(jen.Id("r").Id("*" + structName)).Id("urlPath").Params().String().
-		BlockFunc(func(group *jen.Group) {
-			if endpointHasAttribute(endpoint, attrExplicitURL) {
-				group.Return(jen.Lit(""))
-				return
-			}
-			pth := bracesExp.ReplaceAllString(endpoint.Path, "%v")
-			group.Return(jen.Qual("fmt", "Sprintf").ParamsFunc(func(group *jen.Group) {
-				group.Lit(pth)
-				for _, param := range endpoint.PathParams {
-					group.Id("r").Dot(toExportedName(param.Name))
-				}
-			}))
-		})
+func reqURLPathVal(endpoint *model.Endpoint) jen.Code {
+	if endpointHasAttribute(endpoint, attrExplicitURL) {
+		return nil
+	}
+	pth := bracesExp.ReplaceAllString(endpoint.Path, "%v")
+	return jen.Qual("fmt", "Sprintf").ParamsFunc(func(group *jen.Group) {
+		group.Lit(pth)
+		for _, param := range endpoint.PathParams {
+			group.Id("r").Dot(toExportedName(param.Name))
+		}
+	})
 }
 
-func reqURLQueryFunc(file *jen.File, endpoint *model.Endpoint) {
-	structName := reqStructName(endpoint)
-	stmt := file.Func().Params(jen.Id("r").Id("*" + structName)).Id("urlQuery").Params()
-	stmt.Qual("net/url", "Values")
-	stmt.BlockFunc(func(group *jen.Group) {
-		group.Id("query").Op(":=").Qual("net/url", "Values").Block()
+func reqExplicitURLVal(endpoint *model.Endpoint) jen.Code {
+	if endpointHasAttribute(endpoint, attrExplicitURL) {
+		return jen.Id("r.URL")
+	}
+	return jen.Id("r._url")
+}
 
-		for _, param := range endpoint.QueryParams {
-			paramArg := jen.Id("r").Dot(toExportedName(param.Name))
-			group.If(paramArg.Clone().Op("!=").Nil()).BlockFunc(func(ifGroup *jen.Group) {
-				var valStmt *jen.Statement
-				switch param.Schema.Type {
-				case model.ParamTypeString:
-					valStmt = jen.Op("*").Add(paramArg)
-				case model.ParamTypeInt:
-					valStmt = jen.Qual("strconv", "FormatInt").Params(jen.Op("*").Add(paramArg), jen.Lit(10))
-				case model.ParamTypeBool:
-					valStmt = jen.Qual("strconv", "FormatBool").Params(jen.Op("*").Add(paramArg))
-				default:
-					fmt.Println(endpoint.ID)
-					fmt.Printf("UNEXPECTED %v, %s\n", param, param.Schema.Type)
-				}
-				ifGroup.Id("query").Dot("Set").Params(jen.Lit(param.Name), valStmt)
-			})
-		}
-		group.Return(jen.Id("query"))
-	})
+func reqURLQueryVal(endpoint *model.Endpoint) jen.Code {
+	if len(endpoint.QueryParams) == 0 {
+		return nil
+	}
+	stmt := jen.Id("query := ").Qual("net/url", "Values").Op("{}")
+	stmt.Line()
+	for _, param := range endpoint.QueryParams {
+		paramArg := jen.Id("r").Dot(toExportedName(param.Name))
+		stmt.If(paramArg.Clone().Op("!= nil")).BlockFunc(func(ifGroup *jen.Group) {
+			var valStmt *jen.Statement
+			switch param.Schema.Type {
+			case model.ParamTypeString:
+				valStmt = jen.Op("*").Add(paramArg)
+			case model.ParamTypeInt:
+				valStmt = jen.Qual("strconv", "FormatInt").Params(jen.Op("*").Add(paramArg), jen.Lit(10))
+			case model.ParamTypeBool:
+				valStmt = jen.Qual("strconv", "FormatBool").Params(jen.Op("*").Add(paramArg))
+			default:
+				fmt.Println(endpoint.ID)
+				fmt.Printf("UNEXPECTED %v, %s\n", param, param.Schema.Type)
+			}
+			ifGroup.Id("query").Dot("Set").Params(jen.Lit(param.Name), valStmt)
+		})
+		stmt.Line()
+	}
+	return stmt
 }

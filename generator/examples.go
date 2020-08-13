@@ -10,10 +10,6 @@ import (
 )
 
 func componentExampleFiles(schemaPath, outputPath string) error {
-	err := os.MkdirAll(outputPath, 0o750)
-	if err != nil {
-		return err
-	}
 	schema, err := openapi3.NewSwaggerLoader().LoadSwaggerFromFile(schemaPath)
 	if err != nil {
 		return err

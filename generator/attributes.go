@@ -4,7 +4,6 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/dave/jennifer/jen"
 	"github.com/willabides/octo-go/generator/internal/model"
 )
 
@@ -21,8 +20,6 @@ const (
 	attrJSONRequestBody
 	// requires a URL parameter to be set explicitly
 	attrExplicitURL
-	// endpoint that may need some coercing to return an array response
-	attrForceArrayResponse
 	// endpoint that shouldn't have any response body
 	attrNoResponseBody
 	// attrInvalid is last so we can get a list of all valid types with a for loop
@@ -30,13 +27,12 @@ const (
 )
 
 var attrNames = map[endpointAttribute]string{
-	attrRedirectOnly:       "attrRedirectOnly",
-	attrBoolean:            "attrBoolean",
-	attrBodyUploader:       "attrBodyUploader",
-	attrJSONRequestBody:    "attrJSONRequestBody",
-	attrExplicitURL:        "attrExplicitURL",
-	attrForceArrayResponse: "attrForceArrayResponse",
-	attrNoResponseBody:     "attrNoResponseBody",
+	attrRedirectOnly:    "AttrRedirectOnly",
+	attrBoolean:         "AttrBoolean",
+	attrBodyUploader:    "AttrBodyUploader",
+	attrJSONRequestBody: "AttrJSONRequestBody",
+	attrExplicitURL:     "AttrExplicitURL",
+	attrNoResponseBody:  "AttrNoResponseBody",
 }
 
 func (e endpointAttribute) pointer() *endpointAttribute {
@@ -45,19 +41,6 @@ func (e endpointAttribute) pointer() *endpointAttribute {
 
 func (e endpointAttribute) String() string {
 	return attrNames[e]
-}
-
-func addEndpointAttributes(file *jen.File) {
-	file.Type().Id("endpointAttribute").Int()
-	file.Const().Parens(jen.Do(func(statement *jen.Statement) {
-		for i := endpointAttribute(0); i < attrInvalid; i++ {
-			statement.Id(attrNames[i])
-			if i == 0 {
-				statement.Id("endpointAttribute").Op("=").Iota()
-			}
-			statement.Line()
-		}
-	}))
 }
 
 func endpointHasAttribute(endpoint *model.Endpoint, attribute endpointAttribute) bool {
@@ -121,15 +104,33 @@ var attrChecks = []attrCheck{
 		*attrs = append(*attrs, attrBoolean)
 	},
 
-	// attrRedirectOnly if the endpoint has onlly one response: 302
+	// attrRedirectOnly if the endpoint has as least one redirect response and no success responses
 	func(endpoint *model.Endpoint, attrs *[]endpointAttribute) {
-		if len(endpoint.Responses) != 1 {
+		if len(successResponses(endpoint.Responses)) != 0 {
 			return
 		}
-		_, ok := endpoint.Responses[302]
-		if !ok {
-			return
+		if len(redirectResponses(endpoint.Responses)) != 0 {
+			*attrs = append(*attrs, attrRedirectOnly)
 		}
-		*attrs = append(*attrs, attrRedirectOnly)
 	},
+}
+
+func successResponses(responses map[int]*model.Response) map[int]*model.Response {
+	result := make(map[int]*model.Response, len(responses))
+	for k, v := range responses {
+		if k < 300 {
+			result[k] = v
+		}
+	}
+	return result
+}
+
+func redirectResponses(responses map[int]*model.Response) map[int]*model.Response {
+	result := make(map[int]*model.Response, len(responses))
+	for k, v := range responses {
+		if k >= 300 && k < 400 {
+			result[k] = v
+		}
+	}
+	return result
 }

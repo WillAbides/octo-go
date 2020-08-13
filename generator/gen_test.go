@@ -20,6 +20,9 @@ func TestAllEndpointAttributesHaveName(t *testing.T) {
 
 // Generates to a temp directory.  This is primarily to accommodate easier step-through debugging.
 func Test_run(t *testing.T) {
+	if testing.Short() {
+		t.Skip("skipping test in short mode.")
+	}
 	tmpDir, err := ioutil.TempDir("", "")
 	require.NoError(t, err)
 	t.Cleanup(func() {
@@ -52,7 +55,7 @@ func Test_respBodyType(t *testing.T) {
 	}
 	got := respBodyType(endpoint)
 	require.Equal(t, &qualifiedType{
-		pkg:   "github.com/willabides/octo-go/components",
+		pkg:   "components",
 		name:  "FooBar",
 		slice: true,
 	}, got)

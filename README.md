@@ -6,24 +6,24 @@
 octo-go is an experimental client for GitHub's v3 API. It is generated from the openapi schema published at 
 https://github.com/github/rest-api-description
 
-Project status: __BETA__
+Project status: __Experimental__
 
 ## Overview
 
-For every API endpoint, octo-cli provides a request struct and a reponse struct. The request struct is used to build 
+For every API endpoint, octo-cli provides a request struct and a response struct. The request struct is used to build 
 the http request, and the response struct is used to handle the api's response. You can use these structs as-is and 
 handle all the http details yourself, or you can let octo-go do the request for you as well. Each endpoint also has a 
 function that accepts the endpoints request struct and returns the response struct.
 
-Let's use the `issues/create` endpoint as an example. You would use `IssuesCreateReq` to build your request.
+Let's use the `issues/create` endpoint as an example. You would use `issues.CreateReq` to build your request.
 
 You can build a request like this:
 
 ```go
-req := octo.IssuesCreateReq{
+req := issues.CreateReq{
     Owner: "myorg",
     Repo:  "myrepo",
-    RequestBody: octo.IssuesCreateReqBody{
+    RequestBody: issues.CreateReqBody{
         Title: octo.String("hello world"),
         Body:  octo.String("greetings from octo-cli"),
         Labels: []string{"test", "hello-world"},
@@ -34,7 +34,7 @@ req := octo.IssuesCreateReq{
 Then you can perform the request with:
 
 ```go
-resp, err := octo.IssuesCreate(ctx, &req)
+resp, err := issues.Create(ctx, &req)
 ```
 
 And finally get the id of the newly created issue with:
@@ -89,7 +89,9 @@ if err != nil {
     log.Fatal(err)
 }
 
-auth := octo.WithAppInstallationAuth(appID, installationID, key, nil)
+instTokenClient := octo.NewClient(octo.WithAppAuth(appID, key))
+
+auth := octo.WithAppInstallationAuth(installationID, instTokenClient, nil)
 client := octo.NewClient(auth)
 ```
 
@@ -105,7 +107,9 @@ if err != nil {
     log.Fatal(err)
 }
 
-auth := octo.WithAppInstallationAuth(appID, installationID, key, &octo.AppsCreateInstallationAccessTokenReqBody{
+instTokenClient := octo.NewClient(octo.WithAppAuth(appID, key))
+
+auth := octo.WithAppInstallationAuth(installationID, instTokenClient, &apps.CreateInstallationAccessTokenReqBody{
     Permissions: map[string]string{
         "deployments": "write",
         "content":     "read",
@@ -118,11 +122,11 @@ client := octo.NewClient(auth)
 ## Pagination
 
 The GitHub API supports paging through result sets using relative links in the Link header. Octo-go makes use of
- these headers to enable paging. Every response has the methods `RelLink(lnk RelName)` and `HasRelLink(lnk RelName)` 
+ these headers to enable paging. Every response has the methods `RelLink(lnk string)` and `HasRelLink(lnk string)` 
  to get relative links. You can call this with `RelNext` for the next page of results, `RelPrev` for the previous
  page. `RelFirst` and `RelLast` point the first and last page of results.
  
-Every request has a `Rel(lnk RelName, resp *ResponseType)` method that will update the request to point to a response's
+Every request has a `Rel(lnk string, resp *ResponseType)` method that will update the request to point to a response's
  relative link.
  
 Let me demonstrate with an example. `getReleaseBlockers` will page through all open golang/go issues that are labeled
@@ -133,16 +137,16 @@ func getReleaseBlockers(ctx context.Context, client octo.Client) ([]string, erro
 	var result []string
 
 	// Build the initial request.
-	req := &octo.IssuesListForRepoReq{
-		Owner:   "golang",
-		Repo:    "go",
-		Labels:  octo.String("release-blocker"),
+	req := &issues.ListForRepoReq{
+		Owner:  "golang",
+		Repo:   "go",
+		Labels: octo.String("release-blocker"),
 	}
 
 	// ok will be true as long as there is a next page.
 	for ok := true; ok; {
 		// Get a page of issues.
-		resp, err := client.IssuesListForRepo(ctx, req)
+		resp, err := client.Issues().ListForRepo(ctx, req)
 		if err != nil {
 			return nil, err
 		}
@@ -165,13 +169,12 @@ func getReleaseBlockers(ctx context.Context, client octo.Client) ([]string, erro
 The GitHub API has a general rate limit of 5,000 requests per hour for most authenticated requests and 60 per hour per
  ip address for unauthenticated requests. More details are in the [API documentation](https://developer.github.com/v3/#rate-limiting).
 
-To check your rate limit status, these methods are available on all octo-go responses (`resp`):
+The API includes rate limit information in response headers, and octo-go provides three helper functions:
 
-`resp.RateLimitRemaining()` - returns the number of requests remaining (or -1 if the header is missing)
+`octo.RateLimitRemaining()` - returns the number of requests remaining (or -1 if the header is missing)
 
-`resp.RateLimitReset()` - returns the time when the rate limit will reset (or zero value if the header is missing)
+`octo.RateLimitReset()` - returns the time when the rate limit will reset (or zero value if the header is missing)
 
-`resp.RateLimit()` - returns the rate limit (or -1 if the header is missing)
+`octo.RateLimit()` - returns the rate limit (or -1 if the header is missing)
 
-You can also explicitly get your rate limit status with `octo.RateLimitGet()`
-
+You can also explicitly get your rate limit status with `ratelimit.Get()`

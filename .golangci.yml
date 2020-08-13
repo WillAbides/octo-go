@@ -14,7 +14,6 @@ issues:
       linters:
         - dupl
         - gosec
-        - goconst
   max-same-issues: 0
   max-issues-per-linter: 0
 linters:
@@ -24,7 +23,6 @@ linters:
     - interfacer
     - unconvert
     - gocyclo
-    - goconst
     - goimports
     - gocritic
     - gofumpt

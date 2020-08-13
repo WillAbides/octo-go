@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"path"
 	"sort"
 	"strings"
 
@@ -11,11 +12,11 @@ import (
 )
 
 func respBodyStructName(endpoint *model.Endpoint) string {
-	return toExportedName(fmt.Sprintf("%s-%s-response-body", endpoint.Concern, endpoint.Name))
+	return toExportedName(fmt.Sprintf("%s-response-body", endpoint.Name))
 }
 
 func respStructName(endpoint *model.Endpoint) string {
-	return toExportedName(fmt.Sprintf("%s-%s-response", endpoint.Concern, endpoint.Name))
+	return toExportedName(fmt.Sprintf("%s-response", endpoint.Name))
 }
 
 func sortedResponseCodes(endpoint *model.Endpoint) []int {
@@ -29,7 +30,7 @@ func sortedResponseCodes(endpoint *model.Endpoint) []int {
 	return sortedCodes
 }
 
-func addResponse(file *jen.File, endpoint *model.Endpoint) {
+func addResponse(file *jen.File, pq pkgQual, endpoint *model.Endpoint) {
 	structName := respStructName(endpoint)
 	file.Commentf("%s is a response for %s\n\n%s",
 		structName,
@@ -37,23 +38,25 @@ func addResponse(file *jen.File, endpoint *model.Endpoint) {
 		endpoint.DocsURL,
 	)
 	file.Type().Id(structName).StructFunc(func(group *jen.Group) {
-		group.Id("response")
-		group.Id("request").Op("*").Id(reqStructName(endpoint))
+		group.Id("httpResponse").Op("*").Qual("net/http", "Response")
 		if endpointHasAttribute(endpoint, attrNoResponseBody) {
 			return
 		}
 		bodyType := respBodyType(endpoint)
 		if bodyType != nil {
-			group.Id("Data").Do(func(stmt *jen.Statement) {
-				if bodyType.slice {
-					stmt.Op("[]")
-				}
-			}).Qual(bodyType.pkg, bodyType.name)
+			group.Id("Data").Add(bodyType.jenType(pq))
 		}
 		if endpointHasAttribute(endpoint, attrBoolean) {
 			group.Id("Data").Bool()
 		}
 	})
+
+	file.Comment("HTTPResponse returns the *http.Response")
+	file.Func().Params(jen.Id("r *"+structName)).Id("HTTPResponse() *").Qual("net/http", "Response").Block(
+		jen.Id("return r.httpResponse"),
+	)
+
+	file.Add(responseLoader(endpoint, pq))
 }
 
 func respBodyType(endpoint *model.Endpoint) *qualifiedType {
@@ -66,7 +69,7 @@ func respBodyType(endpoint *model.Endpoint) *qualifiedType {
 		if strings.HasPrefix(body.ItemSchema.Ref, "#/components/schemas/") {
 			nm := strings.TrimPrefix(body.ItemSchema.Ref, "#/components/schemas/")
 			return &qualifiedType{
-				pkg:   "github.com/willabides/octo-go/components",
+				pkg:   "components",
 				name:  toExportedName(nm),
 				slice: true,
 			}
@@ -76,13 +79,13 @@ func respBodyType(endpoint *model.Endpoint) *qualifiedType {
 	if strings.HasPrefix(body.Ref, "#/components/schemas/") {
 		nm := strings.TrimPrefix(body.Ref, "#/components/schemas/")
 		return &qualifiedType{
-			pkg:  "github.com/willabides/octo-go/components",
+			pkg:  "components",
 			name: toExportedName(nm),
 		}
 	}
 	return &qualifiedType{
-		pkg:  "github.com/willabides/octo-go",
-		name: toExportedName(fmt.Sprintf("%s-%s-response-body", endpoint.Concern, endpoint.Name)),
+		pkg:  path.Join("requests", concernPackage(endpoint.Concern)),
+		name: toExportedName(fmt.Sprintf("%s-response-body", endpoint.Name)),
 	}
 }
 
@@ -111,12 +114,12 @@ func responseCodesWithBodies(endpoint *model.Endpoint) []int {
 	return bodyCodes
 }
 
-func addResponseBody(file *jen.File, endpoint *model.Endpoint) {
+func addResponseBody(file *jen.File, pq pkgQual, endpoint *model.Endpoint) {
 	if endpointHasAttribute(endpoint, attrNoResponseBody) {
 		return
 	}
 	bt := respBodyType(endpoint)
-	if bt != nil && bt.pkg == "github.com/willabides/octo-go/components" {
+	if bt != nil && bt.pkg == "components" {
 		return
 	}
 	bodyCodes := responseCodesWithBodies(endpoint)
@@ -125,7 +128,7 @@ func addResponseBody(file *jen.File, endpoint *model.Endpoint) {
 	}
 	respCode := bodyCodes[0]
 	resp := endpoint.Responses[respCode]
-	tp := paramSchemaFieldType(resp.Body, []string{endpoint.ID, "responseBody"}, nil)
+	tp := paramSchemaFieldType(resp.Body, []string{endpoint.ID, "responseBody"}, pq, nil)
 	if tp == nil {
 		return
 	}
@@ -139,9 +142,9 @@ func addResponseBody(file *jen.File, endpoint *model.Endpoint) {
 
 	if resp.Body.Type == model.ParamTypeOneOf {
 		file.Line()
-		file.Add(oneOfValueFunc(structName, resp.Body))
+		file.Add(oneOfValueFunc(structName, pq, resp.Body))
 		file.Line()
-		file.Add(oneOfSetValueFunc(structName, resp.Body))
+		file.Add(oneOfSetValueFunc(structName, pq, resp.Body))
 		file.Line()
 		file.Add(oneOfMarshalJSONFunc(structName, resp.Body))
 		file.Line()

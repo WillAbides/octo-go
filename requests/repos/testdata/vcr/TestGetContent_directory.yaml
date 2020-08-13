@@ -1,0 +1,70 @@
+---
+version: 1
+interactions:
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      User-Agent:
+      - octo-go
+    url: https://api.github.com/repos/WillAbides/octo-go/contents/generator
+    method: GET
+  response:
+    body: '[{"name":"attributes.go","path":"generator/attributes.go","sha":"9bf6b5028eaa3ada6e538961f9fe6f73cc5e185d","size":3567,"url":"https://api.github.com/repos/WillAbides/octo-go/contents/generator/attributes.go?ref=main","html_url":"https://github.com/WillAbides/octo-go/blob/main/generator/attributes.go","git_url":"https://api.github.com/repos/WillAbides/octo-go/git/blobs/9bf6b5028eaa3ada6e538961f9fe6f73cc5e185d","download_url":"https://raw.githubusercontent.com/WillAbides/octo-go/main/generator/attributes.go","type":"file","_links":{"self":"https://api.github.com/repos/WillAbides/octo-go/contents/generator/attributes.go?ref=main","git":"https://api.github.com/repos/WillAbides/octo-go/git/blobs/9bf6b5028eaa3ada6e538961f9fe6f73cc5e185d","html":"https://github.com/WillAbides/octo-go/blob/main/generator/attributes.go"}},{"name":"components.go","path":"generator/components.go","sha":"28f9bdc6a2d75a25e4002ac1aa8c725ef9324942","size":6461,"url":"https://api.github.com/repos/WillAbides/octo-go/contents/generator/components.go?ref=main","html_url":"https://github.com/WillAbides/octo-go/blob/main/generator/components.go","git_url":"https://api.github.com/repos/WillAbides/octo-go/git/blobs/28f9bdc6a2d75a25e4002ac1aa8c725ef9324942","download_url":"https://raw.githubusercontent.com/WillAbides/octo-go/main/generator/components.go","type":"file","_links":{"self":"https://api.github.com/repos/WillAbides/octo-go/contents/generator/components.go?ref=main","git":"https://api.github.com/repos/WillAbides/octo-go/git/blobs/28f9bdc6a2d75a25e4002ac1aa8c725ef9324942","html":"https://github.com/WillAbides/octo-go/blob/main/generator/components.go"}},{"name":"examples.go","path":"generator/examples.go","sha":"14ef07aeea6461d1d93fa4c1e414d4d406a37af8","size":794,"url":"https://api.github.com/repos/WillAbides/octo-go/contents/generator/examples.go?ref=main","html_url":"https://github.com/WillAbides/octo-go/blob/main/generator/examples.go","git_url":"https://api.github.com/repos/WillAbides/octo-go/git/blobs/14ef07aeea6461d1d93fa4c1e414d4d406a37af8","download_url":"https://raw.githubusercontent.com/WillAbides/octo-go/main/generator/examples.go","type":"file","_links":{"self":"https://api.github.com/repos/WillAbides/octo-go/contents/generator/examples.go?ref=main","git":"https://api.github.com/repos/WillAbides/octo-go/git/blobs/14ef07aeea6461d1d93fa4c1e414d4d406a37af8","html":"https://github.com/WillAbides/octo-go/blob/main/generator/examples.go"}},{"name":"gen.go","path":"generator/gen.go","sha":"4b19de15532af20503bbb0c63aded6b74c3cfea6","size":7678,"url":"https://api.github.com/repos/WillAbides/octo-go/contents/generator/gen.go?ref=main","html_url":"https://github.com/WillAbides/octo-go/blob/main/generator/gen.go","git_url":"https://api.github.com/repos/WillAbides/octo-go/git/blobs/4b19de15532af20503bbb0c63aded6b74c3cfea6","download_url":"https://raw.githubusercontent.com/WillAbides/octo-go/main/generator/gen.go","type":"file","_links":{"self":"https://api.github.com/repos/WillAbides/octo-go/contents/generator/gen.go?ref=main","git":"https://api.github.com/repos/WillAbides/octo-go/git/blobs/4b19de15532af20503bbb0c63aded6b74c3cfea6","html":"https://github.com/WillAbides/octo-go/blob/main/generator/gen.go"}},{"name":"gen_test.go","path":"generator/gen_test.go","sha":"cd9a428ea85904dd0e8629bfeb633646b8c0c50d","size":1389,"url":"https://api.github.com/repos/WillAbides/octo-go/contents/generator/gen_test.go?ref=main","html_url":"https://github.com/WillAbides/octo-go/blob/main/generator/gen_test.go","git_url":"https://api.github.com/repos/WillAbides/octo-go/git/blobs/cd9a428ea85904dd0e8629bfeb633646b8c0c50d","download_url":"https://raw.githubusercontent.com/WillAbides/octo-go/main/generator/gen_test.go","type":"file","_links":{"self":"https://api.github.com/repos/WillAbides/octo-go/contents/generator/gen_test.go?ref=main","git":"https://api.github.com/repos/WillAbides/octo-go/git/blobs/cd9a428ea85904dd0e8629bfeb633646b8c0c50d","html":"https://github.com/WillAbides/octo-go/blob/main/generator/gen_test.go"}},{"name":"internal","path":"generator/internal","sha":"c85a6993379c059c386ac7ea80e98685ad8deb23","size":0,"url":"https://api.github.com/repos/WillAbides/octo-go/contents/generator/internal?ref=main","html_url":"https://github.com/WillAbides/octo-go/tree/main/generator/internal","git_url":"https://api.github.com/repos/WillAbides/octo-go/git/trees/c85a6993379c059c386ac7ea80e98685ad8deb23","download_url":null,"type":"dir","_links":{"self":"https://api.github.com/repos/WillAbides/octo-go/contents/generator/internal?ref=main","git":"https://api.github.com/repos/WillAbides/octo-go/git/trees/c85a6993379c059c386ac7ea80e98685ad8deb23","html":"https://github.com/WillAbides/octo-go/tree/main/generator/internal"}},{"name":"main.go","path":"generator/main.go","sha":"b602e9d7dc5f8b3ec7457f8f94c8ce028193e177","size":3645,"url":"https://api.github.com/repos/WillAbides/octo-go/contents/generator/main.go?ref=main","html_url":"https://github.com/WillAbides/octo-go/blob/main/generator/main.go","git_url":"https://api.github.com/repos/WillAbides/octo-go/git/blobs/b602e9d7dc5f8b3ec7457f8f94c8ce028193e177","download_url":"https://raw.githubusercontent.com/WillAbides/octo-go/main/generator/main.go","type":"file","_links":{"self":"https://api.github.com/repos/WillAbides/octo-go/contents/generator/main.go?ref=main","git":"https://api.github.com/repos/WillAbides/octo-go/git/blobs/b602e9d7dc5f8b3ec7457f8f94c8ce028193e177","html":"https://github.com/WillAbides/octo-go/blob/main/generator/main.go"}},{"name":"overrides.go","path":"generator/overrides.go","sha":"e72e561b87b775d962a4925853c6e223550bae90","size":9434,"url":"https://api.github.com/repos/WillAbides/octo-go/contents/generator/overrides.go?ref=main","html_url":"https://github.com/WillAbides/octo-go/blob/main/generator/overrides.go","git_url":"https://api.github.com/repos/WillAbides/octo-go/git/blobs/e72e561b87b775d962a4925853c6e223550bae90","download_url":"https://raw.githubusercontent.com/WillAbides/octo-go/main/generator/overrides.go","type":"file","_links":{"self":"https://api.github.com/repos/WillAbides/octo-go/contents/generator/overrides.go?ref=main","git":"https://api.github.com/repos/WillAbides/octo-go/git/blobs/e72e561b87b775d962a4925853c6e223550bae90","html":"https://github.com/WillAbides/octo-go/blob/main/generator/overrides.go"}},{"name":"reqbody.go","path":"generator/reqbody.go","sha":"f1c9a11078e352079764836f3651b1da3545ddd4","size":2519,"url":"https://api.github.com/repos/WillAbides/octo-go/contents/generator/reqbody.go?ref=main","html_url":"https://github.com/WillAbides/octo-go/blob/main/generator/reqbody.go","git_url":"https://api.github.com/repos/WillAbides/octo-go/git/blobs/f1c9a11078e352079764836f3651b1da3545ddd4","download_url":"https://raw.githubusercontent.com/WillAbides/octo-go/main/generator/reqbody.go","type":"file","_links":{"self":"https://api.github.com/repos/WillAbides/octo-go/contents/generator/reqbody.go?ref=main","git":"https://api.github.com/repos/WillAbides/octo-go/git/blobs/f1c9a11078e352079764836f3651b1da3545ddd4","html":"https://github.com/WillAbides/octo-go/blob/main/generator/reqbody.go"}},{"name":"request.go","path":"generator/request.go","sha":"31ae7cef586e213f867906ef1475c59e813916c4","size":10509,"url":"https://api.github.com/repos/WillAbides/octo-go/contents/generator/request.go?ref=main","html_url":"https://github.com/WillAbides/octo-go/blob/main/generator/request.go","git_url":"https://api.github.com/repos/WillAbides/octo-go/git/blobs/31ae7cef586e213f867906ef1475c59e813916c4","download_url":"https://raw.githubusercontent.com/WillAbides/octo-go/main/generator/request.go","type":"file","_links":{"self":"https://api.github.com/repos/WillAbides/octo-go/contents/generator/request.go?ref=main","git":"https://api.github.com/repos/WillAbides/octo-go/git/blobs/31ae7cef586e213f867906ef1475c59e813916c4","html":"https://github.com/WillAbides/octo-go/blob/main/generator/request.go"}},{"name":"response.go","path":"generator/response.go","sha":"ad33cabd321104de49596cfbcd0b5c066244562a","size":4277,"url":"https://api.github.com/repos/WillAbides/octo-go/contents/generator/response.go?ref=main","html_url":"https://github.com/WillAbides/octo-go/blob/main/generator/response.go","git_url":"https://api.github.com/repos/WillAbides/octo-go/git/blobs/ad33cabd321104de49596cfbcd0b5c066244562a","download_url":"https://raw.githubusercontent.com/WillAbides/octo-go/main/generator/response.go","type":"file","_links":{"self":"https://api.github.com/repos/WillAbides/octo-go/contents/generator/response.go?ref=main","git":"https://api.github.com/repos/WillAbides/octo-go/git/blobs/ad33cabd321104de49596cfbcd0b5c066244562a","html":"https://github.com/WillAbides/octo-go/blob/main/generator/response.go"}},{"name":"unmarshaltests.go","path":"generator/unmarshaltests.go","sha":"897f63a33402e85b6770303933c1ea507f6b0be6","size":2176,"url":"https://api.github.com/repos/WillAbides/octo-go/contents/generator/unmarshaltests.go?ref=main","html_url":"https://github.com/WillAbides/octo-go/blob/main/generator/unmarshaltests.go","git_url":"https://api.github.com/repos/WillAbides/octo-go/git/blobs/897f63a33402e85b6770303933c1ea507f6b0be6","download_url":"https://raw.githubusercontent.com/WillAbides/octo-go/main/generator/unmarshaltests.go","type":"file","_links":{"self":"https://api.github.com/repos/WillAbides/octo-go/contents/generator/unmarshaltests.go?ref=main","git":"https://api.github.com/repos/WillAbides/octo-go/git/blobs/897f63a33402e85b6770303933c1ea507f6b0be6","html":"https://github.com/WillAbides/octo-go/blob/main/generator/unmarshaltests.go"}}]'
+    headers:
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining,
+        X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval,
+        X-GitHub-Media-Type, Deprecation, Sunset
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Mon, 10 Aug 2020 21:38:20 GMT
+      Etag:
+      - W/"4588ead3cfb5e154cd31e8e9767a24fee9a38010"
+      Last-Modified:
+      - Sun, 02 Aug 2020 20:30:08 GMT
+      Referrer-Policy:
+      - origin-when-cross-origin, strict-origin-when-cross-origin
+      Server:
+      - GitHub.com
+      Status:
+      - 200 OK
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains; preload
+      Vary:
+      - Accept, Authorization, Cookie, X-GitHub-OTP
+      - Accept-Encoding, Accept, X-Requested-With
+      X-Accepted-Oauth-Scopes:
+      - ""
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - deny
+      X-Github-Media-Type:
+      - github.v3
+      X-Github-Request-Id:
+      - A9E1:70A0:1EB7417:4572002:5F31BE4C
+      X-Oauth-Scopes:
+      - admin:gpg_key, admin:org, admin:org_hook, admin:public_key, admin:repo_hook,
+        delete_repo, gist, notifications, read:packages, repo, user, workflow, write:discussion,
+        write:packages
+      X-Ratelimit-Limit:
+      - "5000"
+      X-Ratelimit-Remaining:
+      - "4983"
+      X-Ratelimit-Reset:
+      - "1597098628"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""

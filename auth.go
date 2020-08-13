@@ -8,12 +8,9 @@ import (
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
+	"github.com/willabides/octo-go/requests"
+	"github.com/willabides/octo-go/requests/apps"
 )
-
-// AuthProvider sets the Authorization header authenticate you with the API
-type AuthProvider interface {
-	AuthorizationHeader(ctx context.Context) (string, error)
-}
 
 type patAuthProvider struct {
 	token string
@@ -24,75 +21,68 @@ func (p *patAuthProvider) AuthorizationHeader(_ context.Context) (string, error)
 	return "token " + p.token, nil
 }
 
-// appAuthProvider provides authentication for a GitHub App. See also appInstallationAuthProvider
 type appAuthProvider struct {
+	mux        sync.Mutex
 	appID      int64
-	privateKey *rsa.PrivateKey
+	privateKey []byte
+	pk         *rsa.PrivateKey
 }
 
 // AuthorizationHeader implements AuthProvider
-func (a *appAuthProvider) AuthorizationHeader(_ context.Context) (string, error) {
+func (p *appAuthProvider) AuthorizationHeader(_ context.Context) (string, error) {
+	p.mux.Lock()
+	defer p.mux.Unlock()
+	if p.pk == nil {
+		pk, err := jwt.ParseRSAPrivateKeyFromPEM(p.privateKey)
+		if err != nil {
+			return "", fmt.Errorf("couldn't parse private key")
+		}
+		p.pk = pk
+	}
 	now := time.Now()
 	claims := &jwt.StandardClaims{
 		IssuedAt:  now.Unix(),
 		ExpiresAt: now.Add(time.Minute).Unix(),
-		Issuer:    fmt.Sprintf("%d", a.appID),
+		Issuer:    fmt.Sprintf("%d", p.appID),
 	}
-	signed, err := jwt.NewWithClaims(jwt.SigningMethodRS256, claims).SignedString(a.privateKey)
+	signed, err := jwt.NewWithClaims(jwt.SigningMethodRS256, claims).SignedString(p.pk)
 	if err != nil {
 		return "", fmt.Errorf("can't sign claims: %v", err)
 	}
 	return "bearer " + signed, nil
 }
 
-// appInstallationAuthProvider provides authentication for a GitHub App Installation
 type appInstallationAuthProvider struct {
-	appID          int64
+	mux            sync.Mutex
 	installationID int64
-	privateKey     *rsa.PrivateKey
-	requestOptions []RequestOption
-	requestBody    *AppsCreateInstallationAccessTokenReqBody
+	requestBody    *apps.CreateInstallationAccessTokenReqBody
+	opts           []requests.Option
 	tkn            string
-	tknExpiry      time.Time
-	tknMux         sync.Mutex
-	tokenClient    Client
-}
-
-func (a *appInstallationAuthProvider) getTokenClient() Client {
-	if a.tokenClient != nil {
-		return a.tokenClient
-	}
-	opts := append(a.requestOptions, WithAuthProvider(&appAuthProvider{
-		appID:      a.appID,
-		privateKey: a.privateKey,
-	}))
-	a.tokenClient = NewClient(append(opts, WithRequiredPreviews())...)
-	return a.tokenClient
+	expiry         time.Time
 }
 
 // AuthorizationHeader implements AuthProvider
-func (a *appInstallationAuthProvider) AuthorizationHeader(ctx context.Context) (string, error) {
-	a.tknMux.Lock()
-	defer a.tknMux.Unlock()
-	if time.Now().Before(a.tknExpiry.Add(-1 * time.Minute)) {
-		return a.tkn, nil
+func (p *appInstallationAuthProvider) AuthorizationHeader(ctx context.Context) (string, error) {
+	p.mux.Lock()
+	defer p.mux.Unlock()
+	if time.Now().Before(p.expiry.Add(-1 * time.Minute)) {
+		return p.tkn, nil
 	}
-	tokenClient := a.getTokenClient()
-	req := &AppsCreateInstallationAccessTokenReq{
-		InstallationId: a.installationID,
+	req := &apps.CreateInstallationAccessTokenReq{
+		InstallationId: p.installationID,
 	}
-	if a.requestBody != nil {
-		req.RequestBody = *a.requestBody
+	if p.requestBody != nil {
+		req.RequestBody = *p.requestBody
 	}
-	resp, err := tokenClient.AppsCreateInstallationAccessToken(ctx, req)
+	resp, err := apps.CreateInstallationAccessToken(ctx, req, p.opts...)
 	if err != nil {
-		return "", fmt.Errorf("error getting installation token: %v", err)
+		return "", fmt.Errorf("error creating installation token: %v", err)
 	}
 	expiry, err := time.Parse(time.RFC3339, resp.Data.ExpiresAt)
 	if err != nil {
 		return "", fmt.Errorf("error parsing token expiry: %v", err)
 	}
-	a.tkn = resp.Data.Token
-	a.tknExpiry = expiry
-	return "bearer " + a.tkn, nil
+	p.expiry = expiry
+	p.tkn = resp.Data.Token
+	return "bearer " + p.tkn, nil
 }

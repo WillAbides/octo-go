@@ -8,6 +8,7 @@ import (
 	"path/filepath"
 
 	"github.com/willabides/octo-go"
+	"github.com/willabides/octo-go/requests/repos"
 )
 
 func main() {
@@ -20,10 +21,10 @@ func main() {
 
 	ghAuth := octo.WithPATAuth(os.Getenv("GITHUB_TOKEN"))
 
-	resp, err := octo.ReposDownloadTarballArchive(ctx, &octo.ReposDownloadTarballArchiveReq{
+	resp, err := repos.DownloadTarballArchive(ctx, &repos.DownloadTarballArchiveReq{
 		Owner: "WillAbides",
 		Repo:  "octo-go",
-		Ref:   "master",
+		Ref:   "main",
 	}, ghAuth)
 	if err != nil {
 		log.Fatal(err)

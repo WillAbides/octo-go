@@ -1,0 +1,86 @@
+---
+version: 1
+interactions:
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      User-Agent:
+      - octo-go
+    url: https://api.github.com/repos/golang/go/issues/1
+    method: GET
+  response:
+    body: '{"url":"https://api.github.com/repos/golang/go/issues/1","repository_url":"https://api.github.com/repos/golang/go","labels_url":"https://api.github.com/repos/golang/go/issues/1/labels{/name}","comments_url":"https://api.github.com/repos/golang/go/issues/1/comments","events_url":"https://api.github.com/repos/golang/go/issues/1/events","html_url":"https://github.com/golang/go/issues/1","id":51275868,"node_id":"MDU6SXNzdWU1MTI3NTg2OA==","number":1,"title":"cmd/cgo:
+      fails with gcc 4.4.1","user":{"login":"gopherbot","id":8566911,"node_id":"MDQ6VXNlcjg1NjY5MTE=","avatar_url":"https://avatars1.githubusercontent.com/u/8566911?v=4","gravatar_id":"","url":"https://api.github.com/users/gopherbot","html_url":"https://github.com/gopherbot","followers_url":"https://api.github.com/users/gopherbot/followers","following_url":"https://api.github.com/users/gopherbot/following{/other_user}","gists_url":"https://api.github.com/users/gopherbot/gists{/gist_id}","starred_url":"https://api.github.com/users/gopherbot/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/gopherbot/subscriptions","organizations_url":"https://api.github.com/users/gopherbot/orgs","repos_url":"https://api.github.com/users/gopherbot/repos","events_url":"https://api.github.com/users/gopherbot/events{/privacy}","received_events_url":"https://api.github.com/users/gopherbot/received_events","type":"User","site_admin":false},"labels":[{"id":398069301,"node_id":"MDU6TGFiZWwzOTgwNjkzMDE=","url":"https://api.github.com/repos/golang/go/labels/FrozenDueToAge","name":"FrozenDueToAge","color":"1d76db","default":false,"description":null}],"state":"closed","locked":true,"assignee":{"login":"rsc","id":104030,"node_id":"MDQ6VXNlcjEwNDAzMA==","avatar_url":"https://avatars1.githubusercontent.com/u/104030?v=4","gravatar_id":"","url":"https://api.github.com/users/rsc","html_url":"https://github.com/rsc","followers_url":"https://api.github.com/users/rsc/followers","following_url":"https://api.github.com/users/rsc/following{/other_user}","gists_url":"https://api.github.com/users/rsc/gists{/gist_id}","starred_url":"https://api.github.com/users/rsc/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/rsc/subscriptions","organizations_url":"https://api.github.com/users/rsc/orgs","repos_url":"https://api.github.com/users/rsc/repos","events_url":"https://api.github.com/users/rsc/events{/privacy}","received_events_url":"https://api.github.com/users/rsc/received_events","type":"User","site_admin":false},"assignees":[{"login":"rsc","id":104030,"node_id":"MDQ6VXNlcjEwNDAzMA==","avatar_url":"https://avatars1.githubusercontent.com/u/104030?v=4","gravatar_id":"","url":"https://api.github.com/users/rsc","html_url":"https://github.com/rsc","followers_url":"https://api.github.com/users/rsc/followers","following_url":"https://api.github.com/users/rsc/following{/other_user}","gists_url":"https://api.github.com/users/rsc/gists{/gist_id}","starred_url":"https://api.github.com/users/rsc/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/rsc/subscriptions","organizations_url":"https://api.github.com/users/rsc/orgs","repos_url":"https://api.github.com/users/rsc/repos","events_url":"https://api.github.com/users/rsc/events{/privacy}","received_events_url":"https://api.github.com/users/rsc/received_events","type":"User","site_admin":false}],"milestone":{"url":"https://api.github.com/repos/golang/go/milestones/7","html_url":"https://github.com/golang/go/milestone/7","labels_url":"https://api.github.com/repos/golang/go/milestones/7/labels","id":1061233,"node_id":"MDk6TWlsZXN0b25lMTA2MTIzMw==","number":7,"title":"Go1","description":"Go
+      1\r\n","creator":{"login":"rsc","id":104030,"node_id":"MDQ6VXNlcjEwNDAzMA==","avatar_url":"https://avatars1.githubusercontent.com/u/104030?v=4","gravatar_id":"","url":"https://api.github.com/users/rsc","html_url":"https://github.com/rsc","followers_url":"https://api.github.com/users/rsc/followers","following_url":"https://api.github.com/users/rsc/following{/other_user}","gists_url":"https://api.github.com/users/rsc/gists{/gist_id}","starred_url":"https://api.github.com/users/rsc/starred{/owner}{/repo}","subscriptions_url":"https://api.github.com/users/rsc/subscriptions","organizations_url":"https://api.github.com/users/rsc/orgs","repos_url":"https://api.github.com/users/rsc/repos","events_url":"https://api.github.com/users/rsc/events{/privacy}","received_events_url":"https://api.github.com/users/rsc/received_events","type":"User","site_admin":false},"open_issues":0,"closed_issues":598,"state":"closed","created_at":"2015-04-10T00:48:55Z","updated_at":"2015-08-05T01:55:29Z","due_on":"2012-03-28T07:00:00Z","closed_at":"2015-04-14T16:17:29Z"},"comments":12,"created_at":"2009-10-22T06:07:26Z","updated_at":"2016-07-05T21:00:18Z","closed_at":"2014-12-08T10:02:16Z","author_association":"NONE","active_lock_reason":null,"body":"by
+      **rsc+personal@swtch.com**:\n\n<pre>What steps will reproduce the problem?\n1.
+      Run build on Ubuntu 9.10, which uses gcc 4.4.1\n\nWhat is the expected output?
+      What do you see instead?\n\nCgo fails with the following error:\n\n{{{\ngo/misc/cgo/stdio$
+      make\ncgo  file.go\ncould not determine kind of name for C.CString\ncould not
+      determine kind of name for C.puts\ncould not determine kind of name for C.fflushstdout\ncould
+      not determine kind of name for C.free\nthrow: sys·mapaccess1: key not in map\n\npanic
+      PC=0x2b01c2b96a08\nthrow+0x33 /media/scratch/workspace/go/src/pkg/runtime/runtime.c:71\n    throw(0x4d2daf,
+      0x0)\nsys·mapaccess1+0x74 \n/media/scratch/workspace/go/src/pkg/runtime/hashmap.c:769\n    sys·mapaccess1(0xc2b51930,
+      0x2b01)\nmain·*Prog·loadDebugInfo+0xa67 \n/media/scratch/workspace/go/src/cmd/cgo/gcc.go:164\n    main·*Prog·loadDebugInfo(0xc2bc0000,
+      0x2b01)\nmain·main+0x352 \n/media/scratch/workspace/go/src/cmd/cgo/main.go:68\n    main·main()\nmainstart+0xf
+      \n/media/scratch/workspace/go/src/pkg/runtime/amd64/asm.s:55\n    mainstart()\ngoexit
+      /media/scratch/workspace/go/src/pkg/runtime/proc.c:133\n    goexit()\nmake:
+      *** [file.cgo1.go] Error 2\n}}}\n\nPlease use labels and text to provide additional
+      information.</pre>\n","closed_by":null,"performed_via_github_app":null}'
+    headers:
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - ETag, Link, Location, Retry-After, X-GitHub-OTP, X-RateLimit-Limit, X-RateLimit-Remaining,
+        X-RateLimit-Reset, X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Poll-Interval,
+        X-GitHub-Media-Type, Deprecation, Sunset
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json; charset=utf-8
+      Date:
+      - Wed, 12 Aug 2020 16:58:51 GMT
+      Etag:
+      - W/"940ce50edbd76c73f5027ac4243d6ca3"
+      Last-Modified:
+      - Wed, 05 Aug 2020 02:33:20 GMT
+      Referrer-Policy:
+      - origin-when-cross-origin, strict-origin-when-cross-origin
+      Server:
+      - GitHub.com
+      Status:
+      - 200 OK
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubdomains; preload
+      Vary:
+      - Accept, Authorization, Cookie, X-GitHub-OTP
+      - Accept-Encoding, Accept, X-Requested-With
+      X-Accepted-Oauth-Scopes:
+      - repo
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - deny
+      X-Github-Media-Type:
+      - github.v3
+      X-Github-Request-Id:
+      - 8CA3:69DB:1BAF78:486347:5F341FCA
+      X-Oauth-Scopes:
+      - admin:gpg_key, admin:org, admin:org_hook, admin:public_key, admin:repo_hook,
+        delete_repo, gist, notifications, read:packages, repo, user, workflow, write:discussion,
+        write:packages
+      X-Ratelimit-Limit:
+      - "5000"
+      X-Ratelimit-Remaining:
+      - "4996"
+      X-Ratelimit-Reset:
+      - "1597253291"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""

@@ -12,6 +12,7 @@ import (
 
 	"github.com/willabides/octo-go"
 	"github.com/willabides/octo-go/octotest/internal"
+	"github.com/willabides/octo-go/requests"
 )
 
 const (
@@ -23,7 +24,7 @@ const (
 
 // Server is a test server that will serve requests configured with Expect()
 type Server struct {
-	opts    []octo.RequestOption
+	opts    []requests.Option
 	server  *httptest.Server
 	mu      sync.Mutex
 	finish  func()
@@ -53,7 +54,7 @@ func (s *Server) handle(w http.ResponseWriter, req *http.Request) {
 }
 
 // New returns a new *Server
-func New(opt ...octo.RequestOption) *Server {
+func New(opt ...requests.Option) *Server {
 	s := &Server{
 		opts:    opt,
 		handler: new(internal.RequestHandler),
@@ -105,7 +106,7 @@ func (s *Server) Expect(request HTTPRequester, response http.Handler) {
 
 // HTTPRequester is an interface that is met by all of octo's requests
 type HTTPRequester interface {
-	HTTPRequest(ctx context.Context, opt ...octo.RequestOption) (*http.Request, error)
+	HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error)
 }
 
 // HTTPResponder is a responder for an expected request
@@ -144,14 +145,14 @@ func JSONResponder(statusCode int, body interface{}) *HTTPResponder {
 }
 
 // RelLinkHandler adds a rel link to a response. This is useful for testing paging through results.
-func RelLinkHandler(relName octo.RelName, handler http.Handler, relLinkRequester HTTPRequester, server *Server) http.HandlerFunc {
+func RelLinkHandler(relName string, handler http.Handler, relLinkRequester HTTPRequester, server *Server) http.HandlerFunc {
 	relReq, err := relLinkRequester.HTTPRequest(context.Background(), server.Client()...)
 	if err != nil {
 		panic(fmt.Sprintf("error from relLinkRequester.HTTPRequest(ctx): %v", err))
 	}
 	linkURL := relReq.URL.String()
 	return func(w http.ResponseWriter, req *http.Request) {
-		w.Header().Add("Link", fmt.Sprintf(`<%s>; rel="%s"`, linkURL, string(relName)))
+		w.Header().Add("Link", fmt.Sprintf(`<%s>; rel="%s"`, linkURL, relName))
 		handler.ServeHTTP(w, req)
 	}
 }

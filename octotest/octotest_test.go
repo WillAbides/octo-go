@@ -7,24 +7,26 @@ import (
 	"github.com/stretchr/testify/require"
 	"github.com/willabides/octo-go"
 	"github.com/willabides/octo-go/components"
+	"github.com/willabides/octo-go/requests/checks"
+	"github.com/willabides/octo-go/requests/issues"
 )
 
 func TestPaging(t *testing.T) {
-	req1 := &octo.IssuesListForRepoReq{
+	req1 := &issues.ListForRepoReq{
 		Owner: "golang",
 		Repo:  "go",
 
 		Labels:  octo.String("release-blocker"),
 		PerPage: octo.Int64(2),
 	}
-	req2 := &octo.IssuesListForRepoReq{
+	req2 := &issues.ListForRepoReq{
 		Owner:   "golang",
 		Repo:    "go",
 		Labels:  octo.String("release-blocker"),
 		Page:    octo.Int64(2),
 		PerPage: octo.Int64(2),
 	}
-	req3 := &octo.IssuesListForRepoReq{
+	req3 := &issues.ListForRepoReq{
 		Owner:   "golang",
 		Repo:    "go",
 		Labels:  octo.String("release-blocker"),
@@ -43,7 +45,7 @@ func TestPaging(t *testing.T) {
 		{Id: 5},
 		{Id: 6},
 	}
-	server := New(octo.PreserveResponseBody())
+	server := New()
 	t.Cleanup(server.Finish)
 	server.Expect(req1, RelLinkHandler(octo.RelNext, JSONResponder(200, res1), req2, server))
 	server.Expect(req2, RelLinkHandler(octo.RelNext, JSONResponder(200, res2), req3, server))
@@ -54,7 +56,7 @@ func TestPaging(t *testing.T) {
 	req := req1
 	var got []int64
 	for ok {
-		resp, err := client.IssuesListForRepo(ctx, req)
+		resp, err := client.Issues().ListForRepo(ctx, req)
 		require.NoError(t, err)
 		for _, data := range resp.Data {
 			got = append(got, data.Id)
@@ -66,18 +68,18 @@ func TestPaging(t *testing.T) {
 }
 
 func TestDistinguishesBodies(t *testing.T) {
-	req1 := &octo.ChecksCreateReq{
+	req1 := &checks.CreateReq{
 		Owner: "foo",
 		Repo:  "bar",
-		RequestBody: octo.ChecksCreateReqBody{
+		RequestBody: checks.CreateReqBody{
 			Name:    octo.String("name 1"),
 			HeadSha: octo.String("deadbeef"),
 		},
 	}
-	req2 := &octo.ChecksCreateReq{
+	req2 := &checks.CreateReq{
 		Owner: "foo",
 		Repo:  "bar",
-		RequestBody: octo.ChecksCreateReqBody{
+		RequestBody: checks.CreateReqBody{
 			Name:    octo.String("name 2"),
 			HeadSha: octo.String("deadbeef"),
 		},
@@ -85,15 +87,15 @@ func TestDistinguishesBodies(t *testing.T) {
 	respBody1 := components.CheckRun{Conclusion: "conclusion 1"}
 	respBody2 := components.CheckRun{Conclusion: "conclusion 2"}
 	ctx := context.Background()
-	server := New(octo.PreserveResponseBody())
+	server := New()
 	t.Cleanup(server.Finish)
 	server.Expect(req2, JSONResponder(201, respBody2))
 	server.Expect(req1, JSONResponder(201, respBody1))
 	client := server.Client()
-	got1, err := client.ChecksCreate(ctx, req1)
+	got1, err := client.Checks().Create(ctx, req1)
 	require.NoError(t, err)
 	require.Equal(t, respBody1, got1.Data)
-	got2, err := client.ChecksCreate(ctx, req2)
+	got2, err := client.Checks().Create(ctx, req2)
 	require.NoError(t, err)
 	require.Equal(t, respBody2, got2.Data)
 }
