@@ -169,13 +169,12 @@ func getReleaseBlockers(ctx context.Context, client octo.Client) ([]string, erro
 The GitHub API has a general rate limit of 5,000 requests per hour for most authenticated requests and 60 per hour per
  ip address for unauthenticated requests. More details are in the [API documentation](https://developer.github.com/v3/#rate-limiting).
 
-To check your rate limit status, these methods are available on all octo-go responses (`resp`):
+The API includes rate limit information in response headers, and octo-go provides three helper functions:
 
-`resp.RateLimitRemaining()` - returns the number of requests remaining (or -1 if the header is missing)
+`octo.RateLimitRemaining()` - returns the number of requests remaining (or -1 if the header is missing)
 
-`resp.RateLimitReset()` - returns the time when the rate limit will reset (or zero value if the header is missing)
+`octo.RateLimitReset()` - returns the time when the rate limit will reset (or zero value if the header is missing)
 
-`resp.RateLimit()` - returns the rate limit (or -1 if the header is missing)
+`octo.RateLimit()` - returns the rate limit (or -1 if the header is missing)
 
-You can also explicitly get your rate limit status with `octo.RateLimitGet()`
-
+You can also explicitly get your rate limit status with `ratelimit.Get()`
