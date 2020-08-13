@@ -62,7 +62,7 @@ Get interaction restrictions for an organization.
 
 https://developer.github.com/v3/interactions/orgs/#get-interaction-restrictions-for-an-organization
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) GetRestrictionsForOrg(ctx context.Context, req *GetRestrictionsForOrgReq, opt ...requests.Option) (*GetRestrictionsForOrgResponse, error) {
 	return GetRestrictionsForOrg(ctx, req, append(c, opt...)...)
@@ -73,7 +73,7 @@ GetRestrictionsForOrgReq is request data for Client.GetRestrictionsForOrg
 
 https://developer.github.com/v3/interactions/orgs/#get-interaction-restrictions-for-an-organization
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetRestrictionsForOrgReq struct {
 	_url string
@@ -88,7 +88,7 @@ type GetRestrictionsForOrgReq struct {
 	SombraPreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetRestrictionsForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -99,7 +99,6 @@ func (r *GetRestrictionsForOrgReq) HTTPRequest(ctx context.Context, opt ...reque
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "interactions/get-restrictions-for-org",
 		Options:            opt,
 		Previews:           map[string]bool{"sombra": r.SombraPreview},
 		RequiredPreviews:   []string{"sombra"},
@@ -136,7 +135,7 @@ func (r *GetRestrictionsForOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *GetRestrictionsForOrgResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -144,7 +143,7 @@ func (r *GetRestrictionsForOrgResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -194,7 +193,7 @@ Get interaction restrictions for a repository.
 
 https://developer.github.com/v3/interactions/repos/#get-interaction-restrictions-for-a-repository
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) GetRestrictionsForRepo(ctx context.Context, req *GetRestrictionsForRepoReq, opt ...requests.Option) (*GetRestrictionsForRepoResponse, error) {
 	return GetRestrictionsForRepo(ctx, req, append(c, opt...)...)
@@ -205,7 +204,7 @@ GetRestrictionsForRepoReq is request data for Client.GetRestrictionsForRepo
 
 https://developer.github.com/v3/interactions/repos/#get-interaction-restrictions-for-a-repository
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetRestrictionsForRepoReq struct {
 	_url  string
@@ -221,7 +220,7 @@ type GetRestrictionsForRepoReq struct {
 	SombraPreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetRestrictionsForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -232,7 +231,6 @@ func (r *GetRestrictionsForRepoReq) HTTPRequest(ctx context.Context, opt ...requ
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "interactions/get-restrictions-for-repo",
 		Options:            opt,
 		Previews:           map[string]bool{"sombra": r.SombraPreview},
 		RequiredPreviews:   []string{"sombra"},
@@ -269,7 +267,7 @@ func (r *GetRestrictionsForRepoResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *GetRestrictionsForRepoResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -277,7 +275,7 @@ func (r *GetRestrictionsForRepoResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -327,7 +325,7 @@ Remove interaction restrictions for an organization.
 
 https://developer.github.com/v3/interactions/orgs/#remove-interaction-restrictions-for-an-organization
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) RemoveRestrictionsForOrg(ctx context.Context, req *RemoveRestrictionsForOrgReq, opt ...requests.Option) (*RemoveRestrictionsForOrgResponse, error) {
 	return RemoveRestrictionsForOrg(ctx, req, append(c, opt...)...)
@@ -338,7 +336,7 @@ RemoveRestrictionsForOrgReq is request data for Client.RemoveRestrictionsForOrg
 
 https://developer.github.com/v3/interactions/orgs/#remove-interaction-restrictions-for-an-organization
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type RemoveRestrictionsForOrgReq struct {
 	_url string
@@ -353,7 +351,7 @@ type RemoveRestrictionsForOrgReq struct {
 	SombraPreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *RemoveRestrictionsForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -364,7 +362,6 @@ func (r *RemoveRestrictionsForOrgReq) HTTPRequest(ctx context.Context, opt ...re
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
-		OperationID:        "interactions/remove-restrictions-for-org",
 		Options:            opt,
 		Previews:           map[string]bool{"sombra": r.SombraPreview},
 		RequiredPreviews:   []string{"sombra"},
@@ -400,7 +397,7 @@ func (r *RemoveRestrictionsForOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *RemoveRestrictionsForOrgResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{204})
@@ -452,7 +449,7 @@ Remove interaction restrictions for a repository.
 
 https://developer.github.com/v3/interactions/repos/#remove-interaction-restrictions-for-a-repository
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) RemoveRestrictionsForRepo(ctx context.Context, req *RemoveRestrictionsForRepoReq, opt ...requests.Option) (*RemoveRestrictionsForRepoResponse, error) {
 	return RemoveRestrictionsForRepo(ctx, req, append(c, opt...)...)
@@ -463,7 +460,7 @@ RemoveRestrictionsForRepoReq is request data for Client.RemoveRestrictionsForRep
 
 https://developer.github.com/v3/interactions/repos/#remove-interaction-restrictions-for-a-repository
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type RemoveRestrictionsForRepoReq struct {
 	_url  string
@@ -479,7 +476,7 @@ type RemoveRestrictionsForRepoReq struct {
 	SombraPreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *RemoveRestrictionsForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -490,7 +487,6 @@ func (r *RemoveRestrictionsForRepoReq) HTTPRequest(ctx context.Context, opt ...r
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
-		OperationID:        "interactions/remove-restrictions-for-repo",
 		Options:            opt,
 		Previews:           map[string]bool{"sombra": r.SombraPreview},
 		RequiredPreviews:   []string{"sombra"},
@@ -526,7 +522,7 @@ func (r *RemoveRestrictionsForRepoResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *RemoveRestrictionsForRepoResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{204})
@@ -578,7 +574,7 @@ Set interaction restrictions for an organization.
 
 https://developer.github.com/v3/interactions/orgs/#set-interaction-restrictions-for-an-organization
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) SetRestrictionsForOrg(ctx context.Context, req *SetRestrictionsForOrgReq, opt ...requests.Option) (*SetRestrictionsForOrgResponse, error) {
 	return SetRestrictionsForOrg(ctx, req, append(c, opt...)...)
@@ -589,7 +585,7 @@ SetRestrictionsForOrgReq is request data for Client.SetRestrictionsForOrg
 
 https://developer.github.com/v3/interactions/orgs/#set-interaction-restrictions-for-an-organization
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type SetRestrictionsForOrgReq struct {
 	_url        string
@@ -605,7 +601,7 @@ type SetRestrictionsForOrgReq struct {
 	SombraPreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *SetRestrictionsForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -619,7 +615,6 @@ func (r *SetRestrictionsForOrgReq) HTTPRequest(ctx context.Context, opt ...reque
 			"content-type": internal.String("application/json"),
 		},
 		Method:           "PUT",
-		OperationID:      "interactions/set-restrictions-for-org",
 		Options:          opt,
 		Previews:         map[string]bool{"sombra": r.SombraPreview},
 		RequiredPreviews: []string{"sombra"},
@@ -671,7 +666,7 @@ func (r *SetRestrictionsForOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *SetRestrictionsForOrgResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -679,7 +674,7 @@ func (r *SetRestrictionsForOrgResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -729,7 +724,7 @@ Set interaction restrictions for a repository.
 
 https://developer.github.com/v3/interactions/repos/#set-interaction-restrictions-for-a-repository
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) SetRestrictionsForRepo(ctx context.Context, req *SetRestrictionsForRepoReq, opt ...requests.Option) (*SetRestrictionsForRepoResponse, error) {
 	return SetRestrictionsForRepo(ctx, req, append(c, opt...)...)
@@ -740,7 +735,7 @@ SetRestrictionsForRepoReq is request data for Client.SetRestrictionsForRepo
 
 https://developer.github.com/v3/interactions/repos/#set-interaction-restrictions-for-a-repository
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type SetRestrictionsForRepoReq struct {
 	_url        string
@@ -757,7 +752,7 @@ type SetRestrictionsForRepoReq struct {
 	SombraPreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *SetRestrictionsForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -771,7 +766,6 @@ func (r *SetRestrictionsForRepoReq) HTTPRequest(ctx context.Context, opt ...requ
 			"content-type": internal.String("application/json"),
 		},
 		Method:           "PUT",
-		OperationID:      "interactions/set-restrictions-for-repo",
 		Options:          opt,
 		Previews:         map[string]bool{"sombra": r.SombraPreview},
 		RequiredPreviews: []string{"sombra"},
@@ -823,7 +817,7 @@ func (r *SetRestrictionsForRepoResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *SetRestrictionsForRepoResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -831,7 +825,7 @@ func (r *SetRestrictionsForRepoResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}

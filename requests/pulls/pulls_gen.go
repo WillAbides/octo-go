@@ -63,7 +63,7 @@ Check if a pull request has been merged.
 
 https://developer.github.com/v3/pulls/#check-if-a-pull-request-has-been-merged
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) CheckIfMerged(ctx context.Context, req *CheckIfMergedReq, opt ...requests.Option) (*CheckIfMergedResponse, error) {
 	return CheckIfMerged(ctx, req, append(c, opt...)...)
@@ -74,7 +74,7 @@ CheckIfMergedReq is request data for Client.CheckIfMerged
 
 https://developer.github.com/v3/pulls/#check-if-a-pull-request-has-been-merged
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CheckIfMergedReq struct {
 	_url       string
@@ -83,7 +83,7 @@ type CheckIfMergedReq struct {
 	PullNumber int64
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CheckIfMergedReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -94,7 +94,6 @@ func (r *CheckIfMergedReq) HTTPRequest(ctx context.Context, opt ...requests.Opti
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
 		Method:             "GET",
-		OperationID:        "pulls/check-if-merged",
 		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
@@ -131,7 +130,7 @@ func (r *CheckIfMergedResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *CheckIfMergedResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{204, 404})
@@ -187,7 +186,7 @@ Create a pull request.
 
 https://developer.github.com/v3/pulls/#create-a-pull-request
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) Create(ctx context.Context, req *CreateReq, opt ...requests.Option) (*CreateResponse, error) {
 	return Create(ctx, req, append(c, opt...)...)
@@ -198,7 +197,7 @@ CreateReq is request data for Client.Create
 
 https://developer.github.com/v3/pulls/#create-a-pull-request
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateReq struct {
 	_url        string
@@ -217,7 +216,7 @@ type CreateReq struct {
 	SailorVPreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -231,7 +230,6 @@ func (r *CreateReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*h
 			"content-type": internal.String("application/json"),
 		},
 		Method:           "POST",
-		OperationID:      "pulls/create",
 		Options:          opt,
 		Previews:         map[string]bool{"sailor-v": r.SailorVPreview},
 		RequiredPreviews: []string{},
@@ -311,7 +309,7 @@ func (r *CreateResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *CreateResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{201})
@@ -319,7 +317,7 @@ func (r *CreateResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{201}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -369,7 +367,7 @@ Create a reply for a review comment.
 
 https://developer.github.com/v3/pulls/comments/#create-a-reply-for-a-review-comment
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) CreateReplyForReviewComment(ctx context.Context, req *CreateReplyForReviewCommentReq, opt ...requests.Option) (*CreateReplyForReviewCommentResponse, error) {
 	return CreateReplyForReviewComment(ctx, req, append(c, opt...)...)
@@ -380,7 +378,7 @@ CreateReplyForReviewCommentReq is request data for Client.CreateReplyForReviewCo
 
 https://developer.github.com/v3/pulls/comments/#create-a-reply-for-a-review-comment
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateReplyForReviewCommentReq struct {
 	_url       string
@@ -393,7 +391,7 @@ type CreateReplyForReviewCommentReq struct {
 	RequestBody CreateReplyForReviewCommentReqBody
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateReplyForReviewCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -407,7 +405,6 @@ func (r *CreateReplyForReviewCommentReq) HTTPRequest(ctx context.Context, opt ..
 			"content-type": internal.String("application/json"),
 		},
 		Method:           "POST",
-		OperationID:      "pulls/create-reply-for-review-comment",
 		Options:          opt,
 		Previews:         map[string]bool{},
 		RequiredPreviews: []string{},
@@ -455,7 +452,7 @@ func (r *CreateReplyForReviewCommentResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *CreateReplyForReviewCommentResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{201})
@@ -463,7 +460,7 @@ func (r *CreateReplyForReviewCommentResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{201}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -513,7 +510,7 @@ Create a review for a pull request.
 
 https://developer.github.com/v3/pulls/reviews/#create-a-review-for-a-pull-request
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) CreateReview(ctx context.Context, req *CreateReviewReq, opt ...requests.Option) (*CreateReviewResponse, error) {
 	return CreateReview(ctx, req, append(c, opt...)...)
@@ -524,7 +521,7 @@ CreateReviewReq is request data for Client.CreateReview
 
 https://developer.github.com/v3/pulls/reviews/#create-a-review-for-a-pull-request
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateReviewReq struct {
 	_url        string
@@ -534,7 +531,7 @@ type CreateReviewReq struct {
 	RequestBody CreateReviewReqBody
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateReviewReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -548,7 +545,6 @@ func (r *CreateReviewReq) HTTPRequest(ctx context.Context, opt ...requests.Optio
 			"content-type": internal.String("application/json"),
 		},
 		Method:           "POST",
-		OperationID:      "pulls/create-review",
 		Options:          opt,
 		Previews:         map[string]bool{},
 		RequiredPreviews: []string{},
@@ -640,7 +636,7 @@ func (r *CreateReviewResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *CreateReviewResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -648,7 +644,7 @@ func (r *CreateReviewResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -698,7 +694,7 @@ Create a review comment for a pull request.
 
 https://developer.github.com/v3/pulls/comments/#create-a-review-comment-for-a-pull-request
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) CreateReviewComment(ctx context.Context, req *CreateReviewCommentReq, opt ...requests.Option) (*CreateReviewCommentResponse, error) {
 	return CreateReviewComment(ctx, req, append(c, opt...)...)
@@ -709,7 +705,7 @@ CreateReviewCommentReq is request data for Client.CreateReviewComment
 
 https://developer.github.com/v3/pulls/comments/#create-a-review-comment-for-a-pull-request
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateReviewCommentReq struct {
 	_url        string
@@ -726,7 +722,7 @@ type CreateReviewCommentReq struct {
 	ComfortFadePreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateReviewCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -740,7 +736,6 @@ func (r *CreateReviewCommentReq) HTTPRequest(ctx context.Context, opt ...request
 			"content-type": internal.String("application/json"),
 		},
 		Method:           "POST",
-		OperationID:      "pulls/create-review-comment",
 		Options:          opt,
 		Previews:         map[string]bool{"comfort-fade": r.ComfortFadePreview},
 		RequiredPreviews: []string{},
@@ -846,7 +841,7 @@ func (r *CreateReviewCommentResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *CreateReviewCommentResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{201})
@@ -854,7 +849,7 @@ func (r *CreateReviewCommentResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{201}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -904,7 +899,7 @@ Delete a pending review for a pull request.
 
 https://developer.github.com/v3/pulls/reviews/#delete-a-pending-review-for-a-pull-request
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) DeletePendingReview(ctx context.Context, req *DeletePendingReviewReq, opt ...requests.Option) (*DeletePendingReviewResponse, error) {
 	return DeletePendingReview(ctx, req, append(c, opt...)...)
@@ -915,7 +910,7 @@ DeletePendingReviewReq is request data for Client.DeletePendingReview
 
 https://developer.github.com/v3/pulls/reviews/#delete-a-pending-review-for-a-pull-request
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DeletePendingReviewReq struct {
 	_url       string
@@ -927,7 +922,7 @@ type DeletePendingReviewReq struct {
 	ReviewId int64
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeletePendingReviewReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -938,7 +933,6 @@ func (r *DeletePendingReviewReq) HTTPRequest(ctx context.Context, opt ...request
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "DELETE",
-		OperationID:        "pulls/delete-pending-review",
 		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
@@ -975,7 +969,7 @@ func (r *DeletePendingReviewResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *DeletePendingReviewResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -983,7 +977,7 @@ func (r *DeletePendingReviewResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -1033,7 +1027,7 @@ Delete a review comment for a pull request.
 
 https://developer.github.com/v3/pulls/comments/#delete-a-review-comment-for-a-pull-request
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) DeleteReviewComment(ctx context.Context, req *DeleteReviewCommentReq, opt ...requests.Option) (*DeleteReviewCommentResponse, error) {
 	return DeleteReviewComment(ctx, req, append(c, opt...)...)
@@ -1044,7 +1038,7 @@ DeleteReviewCommentReq is request data for Client.DeleteReviewComment
 
 https://developer.github.com/v3/pulls/comments/#delete-a-review-comment-for-a-pull-request
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DeleteReviewCommentReq struct {
 	_url  string
@@ -1055,7 +1049,7 @@ type DeleteReviewCommentReq struct {
 	CommentId int64
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteReviewCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -1066,7 +1060,6 @@ func (r *DeleteReviewCommentReq) HTTPRequest(ctx context.Context, opt ...request
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
-		OperationID:        "pulls/delete-review-comment",
 		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
@@ -1103,7 +1096,7 @@ func (r *DeleteReviewCommentResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *DeleteReviewCommentResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{204, 404})
@@ -1159,7 +1152,7 @@ Dismiss a review for a pull request.
 
 https://developer.github.com/v3/pulls/reviews/#dismiss-a-review-for-a-pull-request
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) DismissReview(ctx context.Context, req *DismissReviewReq, opt ...requests.Option) (*DismissReviewResponse, error) {
 	return DismissReview(ctx, req, append(c, opt...)...)
@@ -1170,7 +1163,7 @@ DismissReviewReq is request data for Client.DismissReview
 
 https://developer.github.com/v3/pulls/reviews/#dismiss-a-review-for-a-pull-request
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DismissReviewReq struct {
 	_url       string
@@ -1183,7 +1176,7 @@ type DismissReviewReq struct {
 	RequestBody DismissReviewReqBody
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DismissReviewReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -1197,7 +1190,6 @@ func (r *DismissReviewReq) HTTPRequest(ctx context.Context, opt ...requests.Opti
 			"content-type": internal.String("application/json"),
 		},
 		Method:           "PUT",
-		OperationID:      "pulls/dismiss-review",
 		Options:          opt,
 		Previews:         map[string]bool{},
 		RequiredPreviews: []string{},
@@ -1246,7 +1238,7 @@ func (r *DismissReviewResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *DismissReviewResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -1254,7 +1246,7 @@ func (r *DismissReviewResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -1304,7 +1296,7 @@ Get a pull request.
 
 https://developer.github.com/v3/pulls/#get-a-pull-request
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) Get(ctx context.Context, req *GetReq, opt ...requests.Option) (*GetResponse, error) {
 	return Get(ctx, req, append(c, opt...)...)
@@ -1315,7 +1307,7 @@ GetReq is request data for Client.Get
 
 https://developer.github.com/v3/pulls/#get-a-pull-request
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetReq struct {
 	_url       string
@@ -1334,7 +1326,7 @@ type GetReq struct {
 	SailorVPreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -1345,7 +1337,6 @@ func (r *GetReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "pulls/get",
 		Options:            opt,
 		Previews:           map[string]bool{"sailor-v": r.SailorVPreview},
 		RequiredPreviews:   []string{},
@@ -1382,7 +1373,7 @@ func (r *GetResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *GetResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200, 304})
@@ -1390,7 +1381,7 @@ func (r *GetResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -1440,7 +1431,7 @@ Get a review for a pull request.
 
 https://developer.github.com/v3/pulls/reviews/#get-a-review-for-a-pull-request
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) GetReview(ctx context.Context, req *GetReviewReq, opt ...requests.Option) (*GetReviewResponse, error) {
 	return GetReview(ctx, req, append(c, opt...)...)
@@ -1451,7 +1442,7 @@ GetReviewReq is request data for Client.GetReview
 
 https://developer.github.com/v3/pulls/reviews/#get-a-review-for-a-pull-request
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetReviewReq struct {
 	_url       string
@@ -1463,7 +1454,7 @@ type GetReviewReq struct {
 	ReviewId int64
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetReviewReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -1474,7 +1465,6 @@ func (r *GetReviewReq) HTTPRequest(ctx context.Context, opt ...requests.Option) 
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "pulls/get-review",
 		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
@@ -1511,7 +1501,7 @@ func (r *GetReviewResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *GetReviewResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -1519,7 +1509,7 @@ func (r *GetReviewResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -1569,7 +1559,7 @@ Get a review comment for a pull request.
 
 https://developer.github.com/v3/pulls/comments/#get-a-review-comment-for-a-pull-request
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) GetReviewComment(ctx context.Context, req *GetReviewCommentReq, opt ...requests.Option) (*GetReviewCommentResponse, error) {
 	return GetReviewComment(ctx, req, append(c, opt...)...)
@@ -1580,7 +1570,7 @@ GetReviewCommentReq is request data for Client.GetReviewComment
 
 https://developer.github.com/v3/pulls/comments/#get-a-review-comment-for-a-pull-request
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetReviewCommentReq struct {
 	_url  string
@@ -1609,7 +1599,7 @@ type GetReviewCommentReq struct {
 	SquirrelGirlPreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetReviewCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -1620,7 +1610,6 @@ func (r *GetReviewCommentReq) HTTPRequest(ctx context.Context, opt ...requests.O
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "pulls/get-review-comment",
 		Options:            opt,
 		Previews: map[string]bool{
 			"comfort-fade":  r.ComfortFadePreview,
@@ -1660,7 +1649,7 @@ func (r *GetReviewCommentResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *GetReviewCommentResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -1668,7 +1657,7 @@ func (r *GetReviewCommentResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -1718,7 +1707,7 @@ List pull requests.
 
 https://developer.github.com/v3/pulls/#list-pull-requests
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) List(ctx context.Context, req *ListReq, opt ...requests.Option) (*ListResponse, error) {
 	return List(ctx, req, append(c, opt...)...)
@@ -1729,7 +1718,7 @@ ListReq is request data for Client.List
 
 https://developer.github.com/v3/pulls/#list-pull-requests
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListReq struct {
 	_url  string
@@ -1779,7 +1768,7 @@ type ListReq struct {
 	SailorVPreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *ListReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 	if r.State != nil {
@@ -1811,7 +1800,6 @@ func (r *ListReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*htt
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "pulls/list",
 		Options:            opt,
 		Previews:           map[string]bool{"sailor-v": r.SailorVPreview},
 		RequiredPreviews:   []string{},
@@ -1848,7 +1836,7 @@ func (r *ListResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *ListResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200, 304})
@@ -1856,7 +1844,7 @@ func (r *ListResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -1906,7 +1894,7 @@ List comments for a pull request review.
 
 https://developer.github.com/v3/pulls/reviews/#list-comments-for-a-pull-request-review
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) ListCommentsForReview(ctx context.Context, req *ListCommentsForReviewReq, opt ...requests.Option) (*ListCommentsForReviewResponse, error) {
 	return ListCommentsForReview(ctx, req, append(c, opt...)...)
@@ -1917,7 +1905,7 @@ ListCommentsForReviewReq is request data for Client.ListCommentsForReview
 
 https://developer.github.com/v3/pulls/reviews/#list-comments-for-a-pull-request-review
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListCommentsForReviewReq struct {
 	_url       string
@@ -1935,7 +1923,7 @@ type ListCommentsForReviewReq struct {
 	Page *int64
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *ListCommentsForReviewReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 	if r.PerPage != nil {
@@ -1952,7 +1940,6 @@ func (r *ListCommentsForReviewReq) HTTPRequest(ctx context.Context, opt ...reque
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "pulls/list-comments-for-review",
 		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
@@ -1989,7 +1976,7 @@ func (r *ListCommentsForReviewResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *ListCommentsForReviewResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -1997,7 +1984,7 @@ func (r *ListCommentsForReviewResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -2047,7 +2034,7 @@ List commits on a pull request.
 
 https://developer.github.com/v3/pulls/#list-commits-on-a-pull-request
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) ListCommits(ctx context.Context, req *ListCommitsReq, opt ...requests.Option) (*ListCommitsResponse, error) {
 	return ListCommits(ctx, req, append(c, opt...)...)
@@ -2058,7 +2045,7 @@ ListCommitsReq is request data for Client.ListCommits
 
 https://developer.github.com/v3/pulls/#list-commits-on-a-pull-request
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListCommitsReq struct {
 	_url       string
@@ -2073,7 +2060,7 @@ type ListCommitsReq struct {
 	Page *int64
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *ListCommitsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 	if r.PerPage != nil {
@@ -2090,7 +2077,6 @@ func (r *ListCommitsReq) HTTPRequest(ctx context.Context, opt ...requests.Option
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "pulls/list-commits",
 		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
@@ -2127,7 +2113,7 @@ func (r *ListCommitsResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *ListCommitsResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -2135,7 +2121,7 @@ func (r *ListCommitsResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -2185,7 +2171,7 @@ List pull requests files.
 
 https://developer.github.com/v3/pulls/#list-pull-requests-files
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) ListFiles(ctx context.Context, req *ListFilesReq, opt ...requests.Option) (*ListFilesResponse, error) {
 	return ListFiles(ctx, req, append(c, opt...)...)
@@ -2196,7 +2182,7 @@ ListFilesReq is request data for Client.ListFiles
 
 https://developer.github.com/v3/pulls/#list-pull-requests-files
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListFilesReq struct {
 	_url       string
@@ -2211,7 +2197,7 @@ type ListFilesReq struct {
 	Page *int64
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *ListFilesReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 	if r.PerPage != nil {
@@ -2228,7 +2214,6 @@ func (r *ListFilesReq) HTTPRequest(ctx context.Context, opt ...requests.Option) 
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "pulls/list-files",
 		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
@@ -2265,7 +2250,7 @@ func (r *ListFilesResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *ListFilesResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -2273,7 +2258,7 @@ func (r *ListFilesResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -2323,7 +2308,7 @@ List requested reviewers for a pull request.
 
 https://developer.github.com/v3/pulls/review_requests/#list-requested-reviewers-for-a-pull-request
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) ListRequestedReviewers(ctx context.Context, req *ListRequestedReviewersReq, opt ...requests.Option) (*ListRequestedReviewersResponse, error) {
 	return ListRequestedReviewers(ctx, req, append(c, opt...)...)
@@ -2334,7 +2319,7 @@ ListRequestedReviewersReq is request data for Client.ListRequestedReviewers
 
 https://developer.github.com/v3/pulls/review_requests/#list-requested-reviewers-for-a-pull-request
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListRequestedReviewersReq struct {
 	_url       string
@@ -2349,7 +2334,7 @@ type ListRequestedReviewersReq struct {
 	Page *int64
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *ListRequestedReviewersReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 	if r.PerPage != nil {
@@ -2366,7 +2351,6 @@ func (r *ListRequestedReviewersReq) HTTPRequest(ctx context.Context, opt ...requ
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "pulls/list-requested-reviewers",
 		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
@@ -2403,7 +2387,7 @@ func (r *ListRequestedReviewersResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *ListRequestedReviewersResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -2411,7 +2395,7 @@ func (r *ListRequestedReviewersResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -2461,7 +2445,7 @@ List review comments on a pull request.
 
 https://developer.github.com/v3/pulls/comments/#list-review-comments-on-a-pull-request
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) ListReviewComments(ctx context.Context, req *ListReviewCommentsReq, opt ...requests.Option) (*ListReviewCommentsResponse, error) {
 	return ListReviewComments(ctx, req, append(c, opt...)...)
@@ -2472,7 +2456,7 @@ ListReviewCommentsReq is request data for Client.ListReviewComments
 
 https://developer.github.com/v3/pulls/comments/#list-review-comments-on-a-pull-request
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListReviewCommentsReq struct {
 	_url       string
@@ -2521,7 +2505,7 @@ type ListReviewCommentsReq struct {
 	SquirrelGirlPreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *ListReviewCommentsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 	if r.Sort != nil {
@@ -2547,7 +2531,6 @@ func (r *ListReviewCommentsReq) HTTPRequest(ctx context.Context, opt ...requests
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "pulls/list-review-comments",
 		Options:            opt,
 		Previews: map[string]bool{
 			"comfort-fade":  r.ComfortFadePreview,
@@ -2587,7 +2570,7 @@ func (r *ListReviewCommentsResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *ListReviewCommentsResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -2595,7 +2578,7 @@ func (r *ListReviewCommentsResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -2645,7 +2628,7 @@ List review comments in a repository.
 
 https://developer.github.com/v3/pulls/comments/#list-review-comments-in-a-repository
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) ListReviewCommentsForRepo(ctx context.Context, req *ListReviewCommentsForRepoReq, opt ...requests.Option) (*ListReviewCommentsForRepoResponse, error) {
 	return ListReviewCommentsForRepo(ctx, req, append(c, opt...)...)
@@ -2656,7 +2639,7 @@ ListReviewCommentsForRepoReq is request data for Client.ListReviewCommentsForRep
 
 https://developer.github.com/v3/pulls/comments/#list-review-comments-in-a-repository
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListReviewCommentsForRepoReq struct {
 	_url  string
@@ -2704,7 +2687,7 @@ type ListReviewCommentsForRepoReq struct {
 	SquirrelGirlPreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *ListReviewCommentsForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 	if r.Sort != nil {
@@ -2730,7 +2713,6 @@ func (r *ListReviewCommentsForRepoReq) HTTPRequest(ctx context.Context, opt ...r
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "pulls/list-review-comments-for-repo",
 		Options:            opt,
 		Previews: map[string]bool{
 			"comfort-fade":  r.ComfortFadePreview,
@@ -2770,7 +2752,7 @@ func (r *ListReviewCommentsForRepoResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *ListReviewCommentsForRepoResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -2778,7 +2760,7 @@ func (r *ListReviewCommentsForRepoResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -2828,7 +2810,7 @@ List reviews for a pull request.
 
 https://developer.github.com/v3/pulls/reviews/#list-reviews-for-a-pull-request
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) ListReviews(ctx context.Context, req *ListReviewsReq, opt ...requests.Option) (*ListReviewsResponse, error) {
 	return ListReviews(ctx, req, append(c, opt...)...)
@@ -2839,7 +2821,7 @@ ListReviewsReq is request data for Client.ListReviews
 
 https://developer.github.com/v3/pulls/reviews/#list-reviews-for-a-pull-request
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListReviewsReq struct {
 	_url       string
@@ -2854,7 +2836,7 @@ type ListReviewsReq struct {
 	Page *int64
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *ListReviewsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 	if r.PerPage != nil {
@@ -2871,7 +2853,6 @@ func (r *ListReviewsReq) HTTPRequest(ctx context.Context, opt ...requests.Option
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "pulls/list-reviews",
 		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
@@ -2908,7 +2889,7 @@ func (r *ListReviewsResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *ListReviewsResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -2916,7 +2897,7 @@ func (r *ListReviewsResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -2966,7 +2947,7 @@ Merge a pull request.
 
 https://developer.github.com/v3/pulls/#merge-a-pull-request
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) Merge(ctx context.Context, req *MergeReq, opt ...requests.Option) (*MergeResponse, error) {
 	return Merge(ctx, req, append(c, opt...)...)
@@ -2977,7 +2958,7 @@ MergeReq is request data for Client.Merge
 
 https://developer.github.com/v3/pulls/#merge-a-pull-request
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type MergeReq struct {
 	_url        string
@@ -2987,7 +2968,7 @@ type MergeReq struct {
 	RequestBody MergeReqBody
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *MergeReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -3001,7 +2982,6 @@ func (r *MergeReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*ht
 			"content-type": internal.String("application/json"),
 		},
 		Method:           "PUT",
-		OperationID:      "pulls/merge",
 		Options:          opt,
 		Previews:         map[string]bool{},
 		RequiredPreviews: []string{},
@@ -3058,7 +3038,7 @@ func (r *MergeResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *MergeResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -3066,7 +3046,7 @@ func (r *MergeResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -3116,7 +3096,7 @@ Remove requested reviewers from a pull request.
 
 https://developer.github.com/v3/pulls/review_requests/#remove-requested-reviewers-from-a-pull-request
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) RemoveRequestedReviewers(ctx context.Context, req *RemoveRequestedReviewersReq, opt ...requests.Option) (*RemoveRequestedReviewersResponse, error) {
 	return RemoveRequestedReviewers(ctx, req, append(c, opt...)...)
@@ -3127,7 +3107,7 @@ RemoveRequestedReviewersReq is request data for Client.RemoveRequestedReviewers
 
 https://developer.github.com/v3/pulls/review_requests/#remove-requested-reviewers-from-a-pull-request
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type RemoveRequestedReviewersReq struct {
 	_url        string
@@ -3137,7 +3117,7 @@ type RemoveRequestedReviewersReq struct {
 	RequestBody RemoveRequestedReviewersReqBody
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *RemoveRequestedReviewersReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -3148,7 +3128,6 @@ func (r *RemoveRequestedReviewersReq) HTTPRequest(ctx context.Context, opt ...re
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"content-type": internal.String("application/json")},
 		Method:             "DELETE",
-		OperationID:        "pulls/remove-requested-reviewers",
 		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
@@ -3198,7 +3177,7 @@ func (r *RemoveRequestedReviewersResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *RemoveRequestedReviewersResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -3250,7 +3229,7 @@ Request reviewers for a pull request.
 
 https://developer.github.com/v3/pulls/review_requests/#request-reviewers-for-a-pull-request
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) RequestReviewers(ctx context.Context, req *RequestReviewersReq, opt ...requests.Option) (*RequestReviewersResponse, error) {
 	return RequestReviewers(ctx, req, append(c, opt...)...)
@@ -3261,7 +3240,7 @@ RequestReviewersReq is request data for Client.RequestReviewers
 
 https://developer.github.com/v3/pulls/review_requests/#request-reviewers-for-a-pull-request
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type RequestReviewersReq struct {
 	_url        string
@@ -3271,7 +3250,7 @@ type RequestReviewersReq struct {
 	RequestBody RequestReviewersReqBody
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *RequestReviewersReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -3285,7 +3264,6 @@ func (r *RequestReviewersReq) HTTPRequest(ctx context.Context, opt ...requests.O
 			"content-type": internal.String("application/json"),
 		},
 		Method:           "POST",
-		OperationID:      "pulls/request-reviewers",
 		Options:          opt,
 		Previews:         map[string]bool{},
 		RequiredPreviews: []string{},
@@ -3336,7 +3314,7 @@ func (r *RequestReviewersResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *RequestReviewersResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{201})
@@ -3344,7 +3322,7 @@ func (r *RequestReviewersResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{201}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -3394,7 +3372,7 @@ Submit a review for a pull request.
 
 https://developer.github.com/v3/pulls/reviews/#submit-a-review-for-a-pull-request
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) SubmitReview(ctx context.Context, req *SubmitReviewReq, opt ...requests.Option) (*SubmitReviewResponse, error) {
 	return SubmitReview(ctx, req, append(c, opt...)...)
@@ -3405,7 +3383,7 @@ SubmitReviewReq is request data for Client.SubmitReview
 
 https://developer.github.com/v3/pulls/reviews/#submit-a-review-for-a-pull-request
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type SubmitReviewReq struct {
 	_url       string
@@ -3418,7 +3396,7 @@ type SubmitReviewReq struct {
 	RequestBody SubmitReviewReqBody
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *SubmitReviewReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -3432,7 +3410,6 @@ func (r *SubmitReviewReq) HTTPRequest(ctx context.Context, opt ...requests.Optio
 			"content-type": internal.String("application/json"),
 		},
 		Method:           "POST",
-		OperationID:      "pulls/submit-review",
 		Options:          opt,
 		Previews:         map[string]bool{},
 		RequiredPreviews: []string{},
@@ -3489,7 +3466,7 @@ func (r *SubmitReviewResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *SubmitReviewResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -3497,7 +3474,7 @@ func (r *SubmitReviewResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -3547,7 +3524,7 @@ Update a pull request.
 
 https://developer.github.com/v3/pulls/#update-a-pull-request
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) Update(ctx context.Context, req *UpdateReq, opt ...requests.Option) (*UpdateResponse, error) {
 	return Update(ctx, req, append(c, opt...)...)
@@ -3558,7 +3535,7 @@ UpdateReq is request data for Client.Update
 
 https://developer.github.com/v3/pulls/#update-a-pull-request
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type UpdateReq struct {
 	_url        string
@@ -3578,7 +3555,7 @@ type UpdateReq struct {
 	SailorVPreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *UpdateReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -3592,7 +3569,6 @@ func (r *UpdateReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*h
 			"content-type": internal.String("application/json"),
 		},
 		Method:           "PATCH",
-		OperationID:      "pulls/update",
 		Options:          opt,
 		Previews:         map[string]bool{"sailor-v": r.SailorVPreview},
 		RequiredPreviews: []string{},
@@ -3660,7 +3636,7 @@ func (r *UpdateResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *UpdateResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -3668,7 +3644,7 @@ func (r *UpdateResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -3718,7 +3694,7 @@ Update a pull request branch.
 
 https://developer.github.com/v3/pulls/#update-a-pull-request-branch
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) UpdateBranch(ctx context.Context, req *UpdateBranchReq, opt ...requests.Option) (*UpdateBranchResponse, error) {
 	return UpdateBranch(ctx, req, append(c, opt...)...)
@@ -3729,7 +3705,7 @@ UpdateBranchReq is request data for Client.UpdateBranch
 
 https://developer.github.com/v3/pulls/#update-a-pull-request-branch
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type UpdateBranchReq struct {
 	_url        string
@@ -3746,7 +3722,7 @@ type UpdateBranchReq struct {
 	LydianPreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *UpdateBranchReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -3760,7 +3736,6 @@ func (r *UpdateBranchReq) HTTPRequest(ctx context.Context, opt ...requests.Optio
 			"content-type": internal.String("application/json"),
 		},
 		Method:           "PUT",
-		OperationID:      "pulls/update-branch",
 		Options:          opt,
 		Previews:         map[string]bool{"lydian": r.LydianPreview},
 		RequiredPreviews: []string{"lydian"},
@@ -3826,7 +3801,7 @@ func (r *UpdateBranchResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *UpdateBranchResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{202})
@@ -3834,7 +3809,7 @@ func (r *UpdateBranchResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{202}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -3884,7 +3859,7 @@ Update a review for a pull request.
 
 https://developer.github.com/v3/pulls/reviews/#update-a-review-for-a-pull-request
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) UpdateReview(ctx context.Context, req *UpdateReviewReq, opt ...requests.Option) (*UpdateReviewResponse, error) {
 	return UpdateReview(ctx, req, append(c, opt...)...)
@@ -3895,7 +3870,7 @@ UpdateReviewReq is request data for Client.UpdateReview
 
 https://developer.github.com/v3/pulls/reviews/#update-a-review-for-a-pull-request
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type UpdateReviewReq struct {
 	_url       string
@@ -3908,7 +3883,7 @@ type UpdateReviewReq struct {
 	RequestBody UpdateReviewReqBody
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *UpdateReviewReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -3922,7 +3897,6 @@ func (r *UpdateReviewReq) HTTPRequest(ctx context.Context, opt ...requests.Optio
 			"content-type": internal.String("application/json"),
 		},
 		Method:           "PUT",
-		OperationID:      "pulls/update-review",
 		Options:          opt,
 		Previews:         map[string]bool{},
 		RequiredPreviews: []string{},
@@ -3970,7 +3944,7 @@ func (r *UpdateReviewResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *UpdateReviewResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -3978,7 +3952,7 @@ func (r *UpdateReviewResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -4028,7 +4002,7 @@ Update a review comment for a pull request.
 
 https://developer.github.com/v3/pulls/comments/#update-a-review-comment-for-a-pull-request
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) UpdateReviewComment(ctx context.Context, req *UpdateReviewCommentReq, opt ...requests.Option) (*UpdateReviewCommentResponse, error) {
 	return UpdateReviewComment(ctx, req, append(c, opt...)...)
@@ -4039,7 +4013,7 @@ UpdateReviewCommentReq is request data for Client.UpdateReviewComment
 
 https://developer.github.com/v3/pulls/comments/#update-a-review-comment-for-a-pull-request
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type UpdateReviewCommentReq struct {
 	_url  string
@@ -4058,7 +4032,7 @@ type UpdateReviewCommentReq struct {
 	ComfortFadePreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *UpdateReviewCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -4072,7 +4046,6 @@ func (r *UpdateReviewCommentReq) HTTPRequest(ctx context.Context, opt ...request
 			"content-type": internal.String("application/json"),
 		},
 		Method:           "PATCH",
-		OperationID:      "pulls/update-review-comment",
 		Options:          opt,
 		Previews:         map[string]bool{"comfort-fade": r.ComfortFadePreview},
 		RequiredPreviews: []string{},
@@ -4120,7 +4093,7 @@ func (r *UpdateReviewCommentResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *UpdateReviewCommentResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -4128,7 +4101,7 @@ func (r *UpdateReviewCommentResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}

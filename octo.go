@@ -5,6 +5,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/willabides/octo-go/components"
 	"github.com/willabides/octo-go/internal"
 	"github.com/willabides/octo-go/requests"
 )
@@ -84,4 +85,13 @@ func intResponseHeaderOrNegOne(resp *http.Response, headerName string) int {
 		return -1
 	}
 	return i
+}
+
+// ResponseError is an error from an *http.Response.
+type ResponseError interface {
+	HttpResponse() *http.Response
+	Error() string
+	Data() *components.ResponseErrorData // data from the error body if it can be unmarshalled
+	IsClientError() bool                 // true if the http status is in the 4xx range
+	IsServerError() bool                 // true if the http status is in the 5xx range
 }

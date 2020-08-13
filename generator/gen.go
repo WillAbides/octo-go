@@ -80,7 +80,7 @@ func addRequestFunc(file *jen.File, pq pkgQual, endpoint *model.Endpoint) {
 
 func responseLoader(endpoint *model.Endpoint, pq pkgQual) *jen.Statement {
 	respStruct := respStructName(endpoint)
-	stmt := jen.Commentf("Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.")
+	stmt := jen.Commentf("Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.")
 	stmt.Line()
 	stmt.Func().Params(
 		jen.Id("r *").Id(respStruct),
@@ -113,7 +113,7 @@ func responseLoader(endpoint *model.Endpoint, pq pkgQual) *jen.Statement {
 			).Block(
 				jen.Id("err = ").Qual(
 					pq.pkgPath("internal"),
-					"DecodeResponseBody(resp, &r.Data)",
+					"UnmarshalResponseBody(resp, &r.Data)",
 				),
 				jen.Id("if err != nil {return err}"),
 			)
@@ -133,7 +133,7 @@ func addClientMethod(file *jen.File, pq pkgQual, endpoint *model.Endpoint) {
 
 %s
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.`,
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.`,
 		toExportedName(endpoint.ID),
 		endpoint.ID,
 		endpoint.Summary,

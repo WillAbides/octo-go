@@ -63,7 +63,7 @@ Add a repository to an app installation.
 
 https://developer.github.com/v3/apps/installations/#add-a-repository-to-an-app-installation
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) AddRepoToInstallation(ctx context.Context, req *AddRepoToInstallationReq, opt ...requests.Option) (*AddRepoToInstallationResponse, error) {
 	return AddRepoToInstallation(ctx, req, append(c, opt...)...)
@@ -74,7 +74,7 @@ AddRepoToInstallationReq is request data for Client.AddRepoToInstallation
 
 https://developer.github.com/v3/apps/installations/#add-a-repository-to-an-app-installation
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type AddRepoToInstallationReq struct {
 	_url string
@@ -92,7 +92,7 @@ type AddRepoToInstallationReq struct {
 	MachineManPreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *AddRepoToInstallationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -103,7 +103,6 @@ func (r *AddRepoToInstallationReq) HTTPRequest(ctx context.Context, opt ...reque
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
 		Method:             "PUT",
-		OperationID:        "apps/add-repo-to-installation",
 		Options:            opt,
 		Previews:           map[string]bool{"machine-man": r.MachineManPreview},
 		RequiredPreviews:   []string{"machine-man"},
@@ -139,7 +138,7 @@ func (r *AddRepoToInstallationResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *AddRepoToInstallationResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{204, 304})
@@ -191,7 +190,7 @@ Check an authorization.
 
 https://developer.github.com/v3/apps/oauth_applications/#check-an-authorization
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) CheckAuthorization(ctx context.Context, req *CheckAuthorizationReq, opt ...requests.Option) (*CheckAuthorizationResponse, error) {
 	return CheckAuthorization(ctx, req, append(c, opt...)...)
@@ -202,7 +201,7 @@ CheckAuthorizationReq is request data for Client.CheckAuthorization
 
 https://developer.github.com/v3/apps/oauth_applications/#check-an-authorization
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CheckAuthorizationReq struct {
 	_url        string
@@ -210,7 +209,7 @@ type CheckAuthorizationReq struct {
 	AccessToken string
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CheckAuthorizationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -221,7 +220,6 @@ func (r *CheckAuthorizationReq) HTTPRequest(ctx context.Context, opt ...requests
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "apps/check-authorization",
 		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
@@ -316,7 +314,7 @@ func (r *CheckAuthorizationResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *CheckAuthorizationResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -324,7 +322,7 @@ func (r *CheckAuthorizationResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -374,7 +372,7 @@ Check a token.
 
 https://developer.github.com/v3/apps/oauth_applications/#check-a-token
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) CheckToken(ctx context.Context, req *CheckTokenReq, opt ...requests.Option) (*CheckTokenResponse, error) {
 	return CheckToken(ctx, req, append(c, opt...)...)
@@ -385,7 +383,7 @@ CheckTokenReq is request data for Client.CheckToken
 
 https://developer.github.com/v3/apps/oauth_applications/#check-a-token
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CheckTokenReq struct {
 	_url        string
@@ -393,7 +391,7 @@ type CheckTokenReq struct {
 	RequestBody CheckTokenReqBody
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CheckTokenReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -407,7 +405,6 @@ func (r *CheckTokenReq) HTTPRequest(ctx context.Context, opt ...requests.Option)
 			"content-type": internal.String("application/json"),
 		},
 		Method:           "POST",
-		OperationID:      "apps/check-token",
 		Options:          opt,
 		Previews:         map[string]bool{},
 		RequiredPreviews: []string{},
@@ -455,7 +452,7 @@ func (r *CheckTokenResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *CheckTokenResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -463,7 +460,7 @@ func (r *CheckTokenResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -513,7 +510,7 @@ Create a content attachment.
 
 https://developer.github.com/v3/apps/installations/#create-a-content-attachment
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) CreateContentAttachment(ctx context.Context, req *CreateContentAttachmentReq, opt ...requests.Option) (*CreateContentAttachmentResponse, error) {
 	return CreateContentAttachment(ctx, req, append(c, opt...)...)
@@ -524,7 +521,7 @@ CreateContentAttachmentReq is request data for Client.CreateContentAttachment
 
 https://developer.github.com/v3/apps/installations/#create-a-content-attachment
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateContentAttachmentReq struct {
 	_url string
@@ -540,7 +537,7 @@ type CreateContentAttachmentReq struct {
 	CorsairPreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateContentAttachmentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -554,7 +551,6 @@ func (r *CreateContentAttachmentReq) HTTPRequest(ctx context.Context, opt ...req
 			"content-type": internal.String("application/json"),
 		},
 		Method:           "POST",
-		OperationID:      "apps/create-content-attachment",
 		Options:          opt,
 		Previews:         map[string]bool{"corsair": r.CorsairPreview},
 		RequiredPreviews: []string{"corsair"},
@@ -605,7 +601,7 @@ func (r *CreateContentAttachmentResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *CreateContentAttachmentResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200, 304})
@@ -613,7 +609,7 @@ func (r *CreateContentAttachmentResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -663,7 +659,7 @@ Create a GitHub App from a manifest.
 
 https://developer.github.com/v3/apps/#create-a-github-app-from-a-manifest
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) CreateFromManifest(ctx context.Context, req *CreateFromManifestReq, opt ...requests.Option) (*CreateFromManifestResponse, error) {
 	return CreateFromManifest(ctx, req, append(c, opt...)...)
@@ -674,7 +670,7 @@ CreateFromManifestReq is request data for Client.CreateFromManifest
 
 https://developer.github.com/v3/apps/#create-a-github-app-from-a-manifest
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateFromManifestReq struct {
 	_url string
@@ -683,7 +679,7 @@ type CreateFromManifestReq struct {
 	Code string
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateFromManifestReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -694,7 +690,6 @@ func (r *CreateFromManifestReq) HTTPRequest(ctx context.Context, opt ...requests
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "POST",
-		OperationID:        "apps/create-from-manifest",
 		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
@@ -788,7 +783,7 @@ func (r *CreateFromManifestResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *CreateFromManifestResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{201})
@@ -796,7 +791,7 @@ func (r *CreateFromManifestResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{201}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -846,7 +841,7 @@ Create an installation access token for an app.
 
 https://developer.github.com/v3/apps/#create-an-installation-access-token-for-an-app
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) CreateInstallationAccessToken(ctx context.Context, req *CreateInstallationAccessTokenReq, opt ...requests.Option) (*CreateInstallationAccessTokenResponse, error) {
 	return CreateInstallationAccessToken(ctx, req, append(c, opt...)...)
@@ -857,7 +852,7 @@ CreateInstallationAccessTokenReq is request data for Client.CreateInstallationAc
 
 https://developer.github.com/v3/apps/#create-an-installation-access-token-for-an-app
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateInstallationAccessTokenReq struct {
 	_url string
@@ -873,7 +868,7 @@ type CreateInstallationAccessTokenReq struct {
 	MachineManPreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateInstallationAccessTokenReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -887,7 +882,6 @@ func (r *CreateInstallationAccessTokenReq) HTTPRequest(ctx context.Context, opt 
 			"content-type": internal.String("application/json"),
 		},
 		Method:           "POST",
-		OperationID:      "apps/create-installation-access-token",
 		Options:          opt,
 		Previews:         map[string]bool{"machine-man": r.MachineManPreview},
 		RequiredPreviews: []string{"machine-man"},
@@ -942,7 +936,7 @@ func (r *CreateInstallationAccessTokenResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *CreateInstallationAccessTokenResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{201})
@@ -950,7 +944,7 @@ func (r *CreateInstallationAccessTokenResponse) Load(resp *http.Response) error 
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{201}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -1000,7 +994,7 @@ Delete an app authorization.
 
 https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-authorization
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) DeleteAuthorization(ctx context.Context, req *DeleteAuthorizationReq, opt ...requests.Option) (*DeleteAuthorizationResponse, error) {
 	return DeleteAuthorization(ctx, req, append(c, opt...)...)
@@ -1011,7 +1005,7 @@ DeleteAuthorizationReq is request data for Client.DeleteAuthorization
 
 https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-authorization
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DeleteAuthorizationReq struct {
 	_url        string
@@ -1019,7 +1013,7 @@ type DeleteAuthorizationReq struct {
 	RequestBody DeleteAuthorizationReqBody
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteAuthorizationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -1030,7 +1024,6 @@ func (r *DeleteAuthorizationReq) HTTPRequest(ctx context.Context, opt ...request
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"content-type": internal.String("application/json")},
 		Method:             "DELETE",
-		OperationID:        "apps/delete-authorization",
 		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
@@ -1077,7 +1070,7 @@ func (r *DeleteAuthorizationResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *DeleteAuthorizationResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{204})
@@ -1129,7 +1122,7 @@ Delete an installation for the authenticated app.
 
 https://developer.github.com/v3/apps/#delete-an-installation-for-the-authenticated-app
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) DeleteInstallation(ctx context.Context, req *DeleteInstallationReq, opt ...requests.Option) (*DeleteInstallationResponse, error) {
 	return DeleteInstallation(ctx, req, append(c, opt...)...)
@@ -1140,7 +1133,7 @@ DeleteInstallationReq is request data for Client.DeleteInstallation
 
 https://developer.github.com/v3/apps/#delete-an-installation-for-the-authenticated-app
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DeleteInstallationReq struct {
 	_url string
@@ -1155,7 +1148,7 @@ type DeleteInstallationReq struct {
 	MachineManPreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteInstallationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -1166,7 +1159,6 @@ func (r *DeleteInstallationReq) HTTPRequest(ctx context.Context, opt ...requests
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
-		OperationID:        "apps/delete-installation",
 		Options:            opt,
 		Previews:           map[string]bool{"machine-man": r.MachineManPreview},
 		RequiredPreviews:   []string{"machine-man"},
@@ -1203,7 +1195,7 @@ func (r *DeleteInstallationResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *DeleteInstallationResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{204, 404})
@@ -1259,7 +1251,7 @@ Delete an app token.
 
 https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-token
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) DeleteToken(ctx context.Context, req *DeleteTokenReq, opt ...requests.Option) (*DeleteTokenResponse, error) {
 	return DeleteToken(ctx, req, append(c, opt...)...)
@@ -1270,7 +1262,7 @@ DeleteTokenReq is request data for Client.DeleteToken
 
 https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-token
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DeleteTokenReq struct {
 	_url        string
@@ -1278,7 +1270,7 @@ type DeleteTokenReq struct {
 	RequestBody DeleteTokenReqBody
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteTokenReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -1289,7 +1281,6 @@ func (r *DeleteTokenReq) HTTPRequest(ctx context.Context, opt ...requests.Option
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"content-type": internal.String("application/json")},
 		Method:             "DELETE",
-		OperationID:        "apps/delete-token",
 		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
@@ -1336,7 +1327,7 @@ func (r *DeleteTokenResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *DeleteTokenResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{204})
@@ -1388,7 +1379,7 @@ Get the authenticated app.
 
 https://developer.github.com/v3/apps/#get-the-authenticated-app
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) GetAuthenticated(ctx context.Context, req *GetAuthenticatedReq, opt ...requests.Option) (*GetAuthenticatedResponse, error) {
 	return GetAuthenticated(ctx, req, append(c, opt...)...)
@@ -1399,7 +1390,7 @@ GetAuthenticatedReq is request data for Client.GetAuthenticated
 
 https://developer.github.com/v3/apps/#get-the-authenticated-app
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetAuthenticatedReq struct {
 	_url string
@@ -1411,7 +1402,7 @@ type GetAuthenticatedReq struct {
 	MachineManPreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -1422,7 +1413,6 @@ func (r *GetAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...requests.O
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "apps/get-authenticated",
 		Options:            opt,
 		Previews:           map[string]bool{"machine-man": r.MachineManPreview},
 		RequiredPreviews:   []string{"machine-man"},
@@ -1459,7 +1449,7 @@ func (r *GetAuthenticatedResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *GetAuthenticatedResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -1467,7 +1457,7 @@ func (r *GetAuthenticatedResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -1517,7 +1507,7 @@ Get an app.
 
 https://developer.github.com/v3/apps/#get-an-app
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) GetBySlug(ctx context.Context, req *GetBySlugReq, opt ...requests.Option) (*GetBySlugResponse, error) {
 	return GetBySlug(ctx, req, append(c, opt...)...)
@@ -1528,7 +1518,7 @@ GetBySlugReq is request data for Client.GetBySlug
 
 https://developer.github.com/v3/apps/#get-an-app
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetBySlugReq struct {
 	_url string
@@ -1543,7 +1533,7 @@ type GetBySlugReq struct {
 	MachineManPreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetBySlugReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -1554,7 +1544,6 @@ func (r *GetBySlugReq) HTTPRequest(ctx context.Context, opt ...requests.Option) 
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "apps/get-by-slug",
 		Options:            opt,
 		Previews:           map[string]bool{"machine-man": r.MachineManPreview},
 		RequiredPreviews:   []string{"machine-man"},
@@ -1591,7 +1580,7 @@ func (r *GetBySlugResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *GetBySlugResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -1599,7 +1588,7 @@ func (r *GetBySlugResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -1649,7 +1638,7 @@ Get an installation for the authenticated app.
 
 https://developer.github.com/v3/apps/#get-an-installation-for-the-authenticated-app
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) GetInstallation(ctx context.Context, req *GetInstallationReq, opt ...requests.Option) (*GetInstallationResponse, error) {
 	return GetInstallation(ctx, req, append(c, opt...)...)
@@ -1660,7 +1649,7 @@ GetInstallationReq is request data for Client.GetInstallation
 
 https://developer.github.com/v3/apps/#get-an-installation-for-the-authenticated-app
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetInstallationReq struct {
 	_url string
@@ -1675,7 +1664,7 @@ type GetInstallationReq struct {
 	MachineManPreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetInstallationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -1686,7 +1675,6 @@ func (r *GetInstallationReq) HTTPRequest(ctx context.Context, opt ...requests.Op
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "apps/get-installation",
 		Options:            opt,
 		Previews:           map[string]bool{"machine-man": r.MachineManPreview},
 		RequiredPreviews:   []string{"machine-man"},
@@ -1723,7 +1711,7 @@ func (r *GetInstallationResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *GetInstallationResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -1731,7 +1719,7 @@ func (r *GetInstallationResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -1781,7 +1769,7 @@ Get an organization installation for the authenticated app.
 
 https://developer.github.com/v3/apps/#get-an-organization-installation-for-the-authenticated-app
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) GetOrgInstallation(ctx context.Context, req *GetOrgInstallationReq, opt ...requests.Option) (*GetOrgInstallationResponse, error) {
 	return GetOrgInstallation(ctx, req, append(c, opt...)...)
@@ -1792,7 +1780,7 @@ GetOrgInstallationReq is request data for Client.GetOrgInstallation
 
 https://developer.github.com/v3/apps/#get-an-organization-installation-for-the-authenticated-app
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetOrgInstallationReq struct {
 	_url string
@@ -1805,7 +1793,7 @@ type GetOrgInstallationReq struct {
 	MachineManPreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetOrgInstallationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -1816,7 +1804,6 @@ func (r *GetOrgInstallationReq) HTTPRequest(ctx context.Context, opt ...requests
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "apps/get-org-installation",
 		Options:            opt,
 		Previews:           map[string]bool{"machine-man": r.MachineManPreview},
 		RequiredPreviews:   []string{"machine-man"},
@@ -1853,7 +1840,7 @@ func (r *GetOrgInstallationResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *GetOrgInstallationResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -1861,7 +1848,7 @@ func (r *GetOrgInstallationResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -1911,7 +1898,7 @@ Get a repository installation for the authenticated app.
 
 https://developer.github.com/v3/apps/#get-a-repository-installation-for-the-authenticated-app
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) GetRepoInstallation(ctx context.Context, req *GetRepoInstallationReq, opt ...requests.Option) (*GetRepoInstallationResponse, error) {
 	return GetRepoInstallation(ctx, req, append(c, opt...)...)
@@ -1922,7 +1909,7 @@ GetRepoInstallationReq is request data for Client.GetRepoInstallation
 
 https://developer.github.com/v3/apps/#get-a-repository-installation-for-the-authenticated-app
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetRepoInstallationReq struct {
 	_url  string
@@ -1936,7 +1923,7 @@ type GetRepoInstallationReq struct {
 	MachineManPreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetRepoInstallationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -1947,7 +1934,6 @@ func (r *GetRepoInstallationReq) HTTPRequest(ctx context.Context, opt ...request
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "apps/get-repo-installation",
 		Options:            opt,
 		Previews:           map[string]bool{"machine-man": r.MachineManPreview},
 		RequiredPreviews:   []string{"machine-man"},
@@ -1984,7 +1970,7 @@ func (r *GetRepoInstallationResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *GetRepoInstallationResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200, 301})
@@ -1992,7 +1978,7 @@ func (r *GetRepoInstallationResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -2042,7 +2028,7 @@ Get a subscription plan for an account.
 
 https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) GetSubscriptionPlanForAccount(ctx context.Context, req *GetSubscriptionPlanForAccountReq, opt ...requests.Option) (*GetSubscriptionPlanForAccountResponse, error) {
 	return GetSubscriptionPlanForAccount(ctx, req, append(c, opt...)...)
@@ -2053,7 +2039,7 @@ GetSubscriptionPlanForAccountReq is request data for Client.GetSubscriptionPlanF
 
 https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetSubscriptionPlanForAccountReq struct {
 	_url string
@@ -2062,7 +2048,7 @@ type GetSubscriptionPlanForAccountReq struct {
 	AccountId int64
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetSubscriptionPlanForAccountReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -2073,7 +2059,6 @@ func (r *GetSubscriptionPlanForAccountReq) HTTPRequest(ctx context.Context, opt 
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "apps/get-subscription-plan-for-account",
 		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
@@ -2110,7 +2095,7 @@ func (r *GetSubscriptionPlanForAccountResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *GetSubscriptionPlanForAccountResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -2118,7 +2103,7 @@ func (r *GetSubscriptionPlanForAccountResponse) Load(resp *http.Response) error 
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -2168,7 +2153,7 @@ Get a subscription plan for an account (stubbed).
 
 https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account-stubbed
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) GetSubscriptionPlanForAccountStubbed(ctx context.Context, req *GetSubscriptionPlanForAccountStubbedReq, opt ...requests.Option) (*GetSubscriptionPlanForAccountStubbedResponse, error) {
 	return GetSubscriptionPlanForAccountStubbed(ctx, req, append(c, opt...)...)
@@ -2179,7 +2164,7 @@ GetSubscriptionPlanForAccountStubbedReq is request data for Client.GetSubscripti
 
 https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account-stubbed
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetSubscriptionPlanForAccountStubbedReq struct {
 	_url string
@@ -2188,7 +2173,7 @@ type GetSubscriptionPlanForAccountStubbedReq struct {
 	AccountId int64
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetSubscriptionPlanForAccountStubbedReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -2199,7 +2184,6 @@ func (r *GetSubscriptionPlanForAccountStubbedReq) HTTPRequest(ctx context.Contex
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "apps/get-subscription-plan-for-account-stubbed",
 		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
@@ -2236,7 +2220,7 @@ func (r *GetSubscriptionPlanForAccountStubbedResponse) HTTPResponse() *http.Resp
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *GetSubscriptionPlanForAccountStubbedResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -2244,7 +2228,7 @@ func (r *GetSubscriptionPlanForAccountStubbedResponse) Load(resp *http.Response)
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -2294,7 +2278,7 @@ Get a user installation for the authenticated app.
 
 https://developer.github.com/v3/apps/#get-a-user-installation-for-the-authenticated-app
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) GetUserInstallation(ctx context.Context, req *GetUserInstallationReq, opt ...requests.Option) (*GetUserInstallationResponse, error) {
 	return GetUserInstallation(ctx, req, append(c, opt...)...)
@@ -2305,7 +2289,7 @@ GetUserInstallationReq is request data for Client.GetUserInstallation
 
 https://developer.github.com/v3/apps/#get-a-user-installation-for-the-authenticated-app
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetUserInstallationReq struct {
 	_url     string
@@ -2318,7 +2302,7 @@ type GetUserInstallationReq struct {
 	MachineManPreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetUserInstallationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -2329,7 +2313,6 @@ func (r *GetUserInstallationReq) HTTPRequest(ctx context.Context, opt ...request
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "apps/get-user-installation",
 		Options:            opt,
 		Previews:           map[string]bool{"machine-man": r.MachineManPreview},
 		RequiredPreviews:   []string{"machine-man"},
@@ -2366,7 +2349,7 @@ func (r *GetUserInstallationResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *GetUserInstallationResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -2374,7 +2357,7 @@ func (r *GetUserInstallationResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -2424,7 +2407,7 @@ List accounts for a plan.
 
 https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) ListAccountsForPlan(ctx context.Context, req *ListAccountsForPlanReq, opt ...requests.Option) (*ListAccountsForPlanResponse, error) {
 	return ListAccountsForPlan(ctx, req, append(c, opt...)...)
@@ -2435,7 +2418,7 @@ ListAccountsForPlanReq is request data for Client.ListAccountsForPlan
 
 https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListAccountsForPlanReq struct {
 	_url string
@@ -2462,7 +2445,7 @@ type ListAccountsForPlanReq struct {
 	Page *int64
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *ListAccountsForPlanReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 	if r.Sort != nil {
@@ -2485,7 +2468,6 @@ func (r *ListAccountsForPlanReq) HTTPRequest(ctx context.Context, opt ...request
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "apps/list-accounts-for-plan",
 		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
@@ -2522,7 +2504,7 @@ func (r *ListAccountsForPlanResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *ListAccountsForPlanResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -2530,7 +2512,7 @@ func (r *ListAccountsForPlanResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -2580,7 +2562,7 @@ List accounts for a plan (stubbed).
 
 https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan-stubbed
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) ListAccountsForPlanStubbed(ctx context.Context, req *ListAccountsForPlanStubbedReq, opt ...requests.Option) (*ListAccountsForPlanStubbedResponse, error) {
 	return ListAccountsForPlanStubbed(ctx, req, append(c, opt...)...)
@@ -2591,7 +2573,7 @@ ListAccountsForPlanStubbedReq is request data for Client.ListAccountsForPlanStub
 
 https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan-stubbed
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListAccountsForPlanStubbedReq struct {
 	_url string
@@ -2618,7 +2600,7 @@ type ListAccountsForPlanStubbedReq struct {
 	Page *int64
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *ListAccountsForPlanStubbedReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 	if r.Sort != nil {
@@ -2641,7 +2623,6 @@ func (r *ListAccountsForPlanStubbedReq) HTTPRequest(ctx context.Context, opt ...
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "apps/list-accounts-for-plan-stubbed",
 		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
@@ -2678,7 +2659,7 @@ func (r *ListAccountsForPlanStubbedResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *ListAccountsForPlanStubbedResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -2686,7 +2667,7 @@ func (r *ListAccountsForPlanStubbedResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -2736,7 +2717,7 @@ List repositories accessible to the user access token.
 
 https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-access-token
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) ListInstallationReposForAuthenticatedUser(ctx context.Context, req *ListInstallationReposForAuthenticatedUserReq, opt ...requests.Option) (*ListInstallationReposForAuthenticatedUserResponse, error) {
 	return ListInstallationReposForAuthenticatedUser(ctx, req, append(c, opt...)...)
@@ -2747,7 +2728,7 @@ ListInstallationReposForAuthenticatedUserReq is request data for Client.ListInst
 
 https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-access-token
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListInstallationReposForAuthenticatedUserReq struct {
 	_url string
@@ -2775,7 +2756,7 @@ type ListInstallationReposForAuthenticatedUserReq struct {
 	MercyPreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *ListInstallationReposForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 	if r.PerPage != nil {
@@ -2792,7 +2773,6 @@ func (r *ListInstallationReposForAuthenticatedUserReq) HTTPRequest(ctx context.C
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "apps/list-installation-repos-for-authenticated-user",
 		Options:            opt,
 		Previews: map[string]bool{
 			"machine-man": r.MachineManPreview,
@@ -2843,7 +2823,7 @@ func (r *ListInstallationReposForAuthenticatedUserResponse) HTTPResponse() *http
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *ListInstallationReposForAuthenticatedUserResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200, 304})
@@ -2851,7 +2831,7 @@ func (r *ListInstallationReposForAuthenticatedUserResponse) Load(resp *http.Resp
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -2901,7 +2881,7 @@ List installations for the authenticated app.
 
 https://developer.github.com/v3/apps/#list-installations-for-the-authenticated-app
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) ListInstallations(ctx context.Context, req *ListInstallationsReq, opt ...requests.Option) (*ListInstallationsResponse, error) {
 	return ListInstallations(ctx, req, append(c, opt...)...)
@@ -2912,7 +2892,7 @@ ListInstallationsReq is request data for Client.ListInstallations
 
 https://developer.github.com/v3/apps/#list-installations-for-the-authenticated-app
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListInstallationsReq struct {
 	_url string
@@ -2938,7 +2918,7 @@ type ListInstallationsReq struct {
 	MachineManPreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *ListInstallationsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 	if r.PerPage != nil {
@@ -2961,7 +2941,6 @@ func (r *ListInstallationsReq) HTTPRequest(ctx context.Context, opt ...requests.
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "apps/list-installations",
 		Options:            opt,
 		Previews:           map[string]bool{"machine-man": r.MachineManPreview},
 		RequiredPreviews:   []string{"machine-man"},
@@ -2998,7 +2977,7 @@ func (r *ListInstallationsResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *ListInstallationsResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -3006,7 +2985,7 @@ func (r *ListInstallationsResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -3056,7 +3035,7 @@ List app installations accessible to the user access token.
 
 https://developer.github.com/v3/apps/installations/#list-app-installations-accessible-to-the-user-access-token
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) ListInstallationsForAuthenticatedUser(ctx context.Context, req *ListInstallationsForAuthenticatedUserReq, opt ...requests.Option) (*ListInstallationsForAuthenticatedUserResponse, error) {
 	return ListInstallationsForAuthenticatedUser(ctx, req, append(c, opt...)...)
@@ -3067,7 +3046,7 @@ ListInstallationsForAuthenticatedUserReq is request data for Client.ListInstalla
 
 https://developer.github.com/v3/apps/installations/#list-app-installations-accessible-to-the-user-access-token
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListInstallationsForAuthenticatedUserReq struct {
 	_url string
@@ -3085,7 +3064,7 @@ type ListInstallationsForAuthenticatedUserReq struct {
 	MachineManPreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *ListInstallationsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 	if r.PerPage != nil {
@@ -3102,7 +3081,6 @@ func (r *ListInstallationsForAuthenticatedUserReq) HTTPRequest(ctx context.Conte
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "apps/list-installations-for-authenticated-user",
 		Options:            opt,
 		Previews:           map[string]bool{"machine-man": r.MachineManPreview},
 		RequiredPreviews:   []string{"machine-man"},
@@ -3149,7 +3127,7 @@ func (r *ListInstallationsForAuthenticatedUserResponse) HTTPResponse() *http.Res
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *ListInstallationsForAuthenticatedUserResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200, 304})
@@ -3157,7 +3135,7 @@ func (r *ListInstallationsForAuthenticatedUserResponse) Load(resp *http.Response
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -3207,7 +3185,7 @@ List plans.
 
 https://developer.github.com/v3/apps/marketplace/#list-plans
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) ListPlans(ctx context.Context, req *ListPlansReq, opt ...requests.Option) (*ListPlansResponse, error) {
 	return ListPlans(ctx, req, append(c, opt...)...)
@@ -3218,7 +3196,7 @@ ListPlansReq is request data for Client.ListPlans
 
 https://developer.github.com/v3/apps/marketplace/#list-plans
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListPlansReq struct {
 	_url string
@@ -3230,7 +3208,7 @@ type ListPlansReq struct {
 	Page *int64
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *ListPlansReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 	if r.PerPage != nil {
@@ -3247,7 +3225,6 @@ func (r *ListPlansReq) HTTPRequest(ctx context.Context, opt ...requests.Option) 
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "apps/list-plans",
 		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
@@ -3284,7 +3261,7 @@ func (r *ListPlansResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *ListPlansResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -3292,7 +3269,7 @@ func (r *ListPlansResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -3342,7 +3319,7 @@ List plans (stubbed).
 
 https://developer.github.com/v3/apps/marketplace/#list-plans-stubbed
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) ListPlansStubbed(ctx context.Context, req *ListPlansStubbedReq, opt ...requests.Option) (*ListPlansStubbedResponse, error) {
 	return ListPlansStubbed(ctx, req, append(c, opt...)...)
@@ -3353,7 +3330,7 @@ ListPlansStubbedReq is request data for Client.ListPlansStubbed
 
 https://developer.github.com/v3/apps/marketplace/#list-plans-stubbed
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListPlansStubbedReq struct {
 	_url string
@@ -3365,7 +3342,7 @@ type ListPlansStubbedReq struct {
 	Page *int64
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *ListPlansStubbedReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 	if r.PerPage != nil {
@@ -3382,7 +3359,6 @@ func (r *ListPlansStubbedReq) HTTPRequest(ctx context.Context, opt ...requests.O
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "apps/list-plans-stubbed",
 		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
@@ -3419,7 +3395,7 @@ func (r *ListPlansStubbedResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *ListPlansStubbedResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -3427,7 +3403,7 @@ func (r *ListPlansStubbedResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -3477,7 +3453,7 @@ List repositories accessible to the app installation.
 
 https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-app-installation
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) ListReposAccessibleToInstallation(ctx context.Context, req *ListReposAccessibleToInstallationReq, opt ...requests.Option) (*ListReposAccessibleToInstallationResponse, error) {
 	return ListReposAccessibleToInstallation(ctx, req, append(c, opt...)...)
@@ -3488,7 +3464,7 @@ ListReposAccessibleToInstallationReq is request data for Client.ListReposAccessi
 
 https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-app-installation
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListReposAccessibleToInstallationReq struct {
 	_url string
@@ -3513,7 +3489,7 @@ type ListReposAccessibleToInstallationReq struct {
 	MercyPreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *ListReposAccessibleToInstallationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 	if r.PerPage != nil {
@@ -3530,7 +3506,6 @@ func (r *ListReposAccessibleToInstallationReq) HTTPRequest(ctx context.Context, 
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "apps/list-repos-accessible-to-installation",
 		Options:            opt,
 		Previews: map[string]bool{
 			"machine-man": r.MachineManPreview,
@@ -3581,7 +3556,7 @@ func (r *ListReposAccessibleToInstallationResponse) HTTPResponse() *http.Respons
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *ListReposAccessibleToInstallationResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200, 304})
@@ -3589,7 +3564,7 @@ func (r *ListReposAccessibleToInstallationResponse) Load(resp *http.Response) er
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -3639,7 +3614,7 @@ List subscriptions for the authenticated user.
 
 https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) ListSubscriptionsForAuthenticatedUser(ctx context.Context, req *ListSubscriptionsForAuthenticatedUserReq, opt ...requests.Option) (*ListSubscriptionsForAuthenticatedUserResponse, error) {
 	return ListSubscriptionsForAuthenticatedUser(ctx, req, append(c, opt...)...)
@@ -3650,7 +3625,7 @@ ListSubscriptionsForAuthenticatedUserReq is request data for Client.ListSubscrip
 
 https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListSubscriptionsForAuthenticatedUserReq struct {
 	_url string
@@ -3662,7 +3637,7 @@ type ListSubscriptionsForAuthenticatedUserReq struct {
 	Page *int64
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *ListSubscriptionsForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 	if r.PerPage != nil {
@@ -3679,7 +3654,6 @@ func (r *ListSubscriptionsForAuthenticatedUserReq) HTTPRequest(ctx context.Conte
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "apps/list-subscriptions-for-authenticated-user",
 		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
@@ -3716,7 +3690,7 @@ func (r *ListSubscriptionsForAuthenticatedUserResponse) HTTPResponse() *http.Res
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *ListSubscriptionsForAuthenticatedUserResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200, 304})
@@ -3724,7 +3698,7 @@ func (r *ListSubscriptionsForAuthenticatedUserResponse) Load(resp *http.Response
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -3774,7 +3748,7 @@ List subscriptions for the authenticated user (stubbed).
 
 https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user-stubbed
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) ListSubscriptionsForAuthenticatedUserStubbed(ctx context.Context, req *ListSubscriptionsForAuthenticatedUserStubbedReq, opt ...requests.Option) (*ListSubscriptionsForAuthenticatedUserStubbedResponse, error) {
 	return ListSubscriptionsForAuthenticatedUserStubbed(ctx, req, append(c, opt...)...)
@@ -3785,7 +3759,7 @@ ListSubscriptionsForAuthenticatedUserStubbedReq is request data for Client.ListS
 
 https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user-stubbed
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListSubscriptionsForAuthenticatedUserStubbedReq struct {
 	_url string
@@ -3797,7 +3771,7 @@ type ListSubscriptionsForAuthenticatedUserStubbedReq struct {
 	Page *int64
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *ListSubscriptionsForAuthenticatedUserStubbedReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 	if r.PerPage != nil {
@@ -3814,7 +3788,6 @@ func (r *ListSubscriptionsForAuthenticatedUserStubbedReq) HTTPRequest(ctx contex
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "apps/list-subscriptions-for-authenticated-user-stubbed",
 		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
@@ -3851,7 +3824,7 @@ func (r *ListSubscriptionsForAuthenticatedUserStubbedResponse) HTTPResponse() *h
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *ListSubscriptionsForAuthenticatedUserStubbedResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200, 304})
@@ -3859,7 +3832,7 @@ func (r *ListSubscriptionsForAuthenticatedUserStubbedResponse) Load(resp *http.R
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -3909,7 +3882,7 @@ Remove a repository from an app installation.
 
 https://developer.github.com/v3/apps/installations/#remove-a-repository-from-an-app-installation
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) RemoveRepoFromInstallation(ctx context.Context, req *RemoveRepoFromInstallationReq, opt ...requests.Option) (*RemoveRepoFromInstallationResponse, error) {
 	return RemoveRepoFromInstallation(ctx, req, append(c, opt...)...)
@@ -3920,7 +3893,7 @@ RemoveRepoFromInstallationReq is request data for Client.RemoveRepoFromInstallat
 
 https://developer.github.com/v3/apps/installations/#remove-a-repository-from-an-app-installation
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type RemoveRepoFromInstallationReq struct {
 	_url string
@@ -3938,7 +3911,7 @@ type RemoveRepoFromInstallationReq struct {
 	MachineManPreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *RemoveRepoFromInstallationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -3949,7 +3922,6 @@ func (r *RemoveRepoFromInstallationReq) HTTPRequest(ctx context.Context, opt ...
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
-		OperationID:        "apps/remove-repo-from-installation",
 		Options:            opt,
 		Previews:           map[string]bool{"machine-man": r.MachineManPreview},
 		RequiredPreviews:   []string{"machine-man"},
@@ -3985,7 +3957,7 @@ func (r *RemoveRepoFromInstallationResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *RemoveRepoFromInstallationResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{204, 304})
@@ -4037,7 +4009,7 @@ Reset an authorization.
 
 https://developer.github.com/v3/apps/oauth_applications/#reset-an-authorization
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) ResetAuthorization(ctx context.Context, req *ResetAuthorizationReq, opt ...requests.Option) (*ResetAuthorizationResponse, error) {
 	return ResetAuthorization(ctx, req, append(c, opt...)...)
@@ -4048,7 +4020,7 @@ ResetAuthorizationReq is request data for Client.ResetAuthorization
 
 https://developer.github.com/v3/apps/oauth_applications/#reset-an-authorization
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ResetAuthorizationReq struct {
 	_url        string
@@ -4056,7 +4028,7 @@ type ResetAuthorizationReq struct {
 	AccessToken string
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *ResetAuthorizationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -4067,7 +4039,6 @@ func (r *ResetAuthorizationReq) HTTPRequest(ctx context.Context, opt ...requests
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "POST",
-		OperationID:        "apps/reset-authorization",
 		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
@@ -4104,7 +4075,7 @@ func (r *ResetAuthorizationResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *ResetAuthorizationResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -4112,7 +4083,7 @@ func (r *ResetAuthorizationResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -4162,7 +4133,7 @@ Reset a token.
 
 https://developer.github.com/v3/apps/oauth_applications/#reset-a-token
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) ResetToken(ctx context.Context, req *ResetTokenReq, opt ...requests.Option) (*ResetTokenResponse, error) {
 	return ResetToken(ctx, req, append(c, opt...)...)
@@ -4173,7 +4144,7 @@ ResetTokenReq is request data for Client.ResetToken
 
 https://developer.github.com/v3/apps/oauth_applications/#reset-a-token
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ResetTokenReq struct {
 	_url        string
@@ -4181,7 +4152,7 @@ type ResetTokenReq struct {
 	RequestBody ResetTokenReqBody
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *ResetTokenReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -4195,7 +4166,6 @@ func (r *ResetTokenReq) HTTPRequest(ctx context.Context, opt ...requests.Option)
 			"content-type": internal.String("application/json"),
 		},
 		Method:           "PATCH",
-		OperationID:      "apps/reset-token",
 		Options:          opt,
 		Previews:         map[string]bool{},
 		RequiredPreviews: []string{},
@@ -4243,7 +4213,7 @@ func (r *ResetTokenResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *ResetTokenResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -4251,7 +4221,7 @@ func (r *ResetTokenResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -4301,7 +4271,7 @@ Revoke an authorization for an application.
 
 https://developer.github.com/v3/apps/oauth_applications/#revoke-an-authorization-for-an-application
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) RevokeAuthorizationForApplication(ctx context.Context, req *RevokeAuthorizationForApplicationReq, opt ...requests.Option) (*RevokeAuthorizationForApplicationResponse, error) {
 	return RevokeAuthorizationForApplication(ctx, req, append(c, opt...)...)
@@ -4312,7 +4282,7 @@ RevokeAuthorizationForApplicationReq is request data for Client.RevokeAuthorizat
 
 https://developer.github.com/v3/apps/oauth_applications/#revoke-an-authorization-for-an-application
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type RevokeAuthorizationForApplicationReq struct {
 	_url        string
@@ -4320,7 +4290,7 @@ type RevokeAuthorizationForApplicationReq struct {
 	AccessToken string
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *RevokeAuthorizationForApplicationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -4331,7 +4301,6 @@ func (r *RevokeAuthorizationForApplicationReq) HTTPRequest(ctx context.Context, 
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
-		OperationID:        "apps/revoke-authorization-for-application",
 		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
@@ -4367,7 +4336,7 @@ func (r *RevokeAuthorizationForApplicationResponse) HTTPResponse() *http.Respons
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *RevokeAuthorizationForApplicationResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{204})
@@ -4419,7 +4388,7 @@ Revoke a grant for an application.
 
 https://developer.github.com/v3/apps/oauth_applications/#revoke-a-grant-for-an-application
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) RevokeGrantForApplication(ctx context.Context, req *RevokeGrantForApplicationReq, opt ...requests.Option) (*RevokeGrantForApplicationResponse, error) {
 	return RevokeGrantForApplication(ctx, req, append(c, opt...)...)
@@ -4430,7 +4399,7 @@ RevokeGrantForApplicationReq is request data for Client.RevokeGrantForApplicatio
 
 https://developer.github.com/v3/apps/oauth_applications/#revoke-a-grant-for-an-application
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type RevokeGrantForApplicationReq struct {
 	_url        string
@@ -4438,7 +4407,7 @@ type RevokeGrantForApplicationReq struct {
 	AccessToken string
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *RevokeGrantForApplicationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -4449,7 +4418,6 @@ func (r *RevokeGrantForApplicationReq) HTTPRequest(ctx context.Context, opt ...r
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
-		OperationID:        "apps/revoke-grant-for-application",
 		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
@@ -4485,7 +4453,7 @@ func (r *RevokeGrantForApplicationResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *RevokeGrantForApplicationResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{204})
@@ -4537,7 +4505,7 @@ Revoke an installation access token.
 
 https://developer.github.com/v3/apps/installations/#revoke-an-installation-access-token
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) RevokeInstallationAccessToken(ctx context.Context, req *RevokeInstallationAccessTokenReq, opt ...requests.Option) (*RevokeInstallationAccessTokenResponse, error) {
 	return RevokeInstallationAccessToken(ctx, req, append(c, opt...)...)
@@ -4548,13 +4516,13 @@ RevokeInstallationAccessTokenReq is request data for Client.RevokeInstallationAc
 
 https://developer.github.com/v3/apps/installations/#revoke-an-installation-access-token
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type RevokeInstallationAccessTokenReq struct {
 	_url string
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *RevokeInstallationAccessTokenReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -4565,7 +4533,6 @@ func (r *RevokeInstallationAccessTokenReq) HTTPRequest(ctx context.Context, opt 
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
-		OperationID:        "apps/revoke-installation-access-token",
 		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
@@ -4601,7 +4568,7 @@ func (r *RevokeInstallationAccessTokenResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *RevokeInstallationAccessTokenResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{204})
@@ -4653,7 +4620,7 @@ Suspend an app installation.
 
 https://developer.github.com/v3/apps/#suspend-an-app-installation
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) SuspendInstallation(ctx context.Context, req *SuspendInstallationReq, opt ...requests.Option) (*SuspendInstallationResponse, error) {
 	return SuspendInstallation(ctx, req, append(c, opt...)...)
@@ -4664,7 +4631,7 @@ SuspendInstallationReq is request data for Client.SuspendInstallation
 
 https://developer.github.com/v3/apps/#suspend-an-app-installation
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type SuspendInstallationReq struct {
 	_url string
@@ -4673,7 +4640,7 @@ type SuspendInstallationReq struct {
 	InstallationId int64
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *SuspendInstallationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -4684,7 +4651,6 @@ func (r *SuspendInstallationReq) HTTPRequest(ctx context.Context, opt ...request
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
 		Method:             "PUT",
-		OperationID:        "apps/suspend-installation",
 		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
@@ -4721,7 +4687,7 @@ func (r *SuspendInstallationResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *SuspendInstallationResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{204, 404})
@@ -4777,7 +4743,7 @@ Unsuspend an app installation.
 
 https://developer.github.com/v3/apps/#unsuspend-an-app-installation
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) UnsuspendInstallation(ctx context.Context, req *UnsuspendInstallationReq, opt ...requests.Option) (*UnsuspendInstallationResponse, error) {
 	return UnsuspendInstallation(ctx, req, append(c, opt...)...)
@@ -4788,7 +4754,7 @@ UnsuspendInstallationReq is request data for Client.UnsuspendInstallation
 
 https://developer.github.com/v3/apps/#unsuspend-an-app-installation
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type UnsuspendInstallationReq struct {
 	_url string
@@ -4797,7 +4763,7 @@ type UnsuspendInstallationReq struct {
 	InstallationId int64
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *UnsuspendInstallationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -4808,7 +4774,6 @@ func (r *UnsuspendInstallationReq) HTTPRequest(ctx context.Context, opt ...reque
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
-		OperationID:        "apps/unsuspend-installation",
 		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
@@ -4845,7 +4810,7 @@ func (r *UnsuspendInstallationResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *UnsuspendInstallationResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{204, 404})

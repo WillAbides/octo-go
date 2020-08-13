@@ -62,7 +62,7 @@ Get all codes of conduct.
 
 https://developer.github.com/v3/codes_of_conduct/#get-all-codes-of-conduct
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) GetAllCodesOfConduct(ctx context.Context, req *GetAllCodesOfConductReq, opt ...requests.Option) (*GetAllCodesOfConductResponse, error) {
 	return GetAllCodesOfConduct(ctx, req, append(c, opt...)...)
@@ -73,7 +73,7 @@ GetAllCodesOfConductReq is request data for Client.GetAllCodesOfConduct
 
 https://developer.github.com/v3/codes_of_conduct/#get-all-codes-of-conduct
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetAllCodesOfConductReq struct {
 	_url string
@@ -86,7 +86,7 @@ type GetAllCodesOfConductReq struct {
 	ScarletWitchPreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetAllCodesOfConductReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -97,7 +97,6 @@ func (r *GetAllCodesOfConductReq) HTTPRequest(ctx context.Context, opt ...reques
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "codes-of-conduct/get-all-codes-of-conduct",
 		Options:            opt,
 		Previews:           map[string]bool{"scarlet-witch": r.ScarletWitchPreview},
 		RequiredPreviews:   []string{"scarlet-witch"},
@@ -134,7 +133,7 @@ func (r *GetAllCodesOfConductResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *GetAllCodesOfConductResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200, 304})
@@ -142,7 +141,7 @@ func (r *GetAllCodesOfConductResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -192,7 +191,7 @@ Get a code of conduct.
 
 https://developer.github.com/v3/codes_of_conduct/#get-a-code-of-conduct
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) GetConductCode(ctx context.Context, req *GetConductCodeReq, opt ...requests.Option) (*GetConductCodeResponse, error) {
 	return GetConductCode(ctx, req, append(c, opt...)...)
@@ -203,7 +202,7 @@ GetConductCodeReq is request data for Client.GetConductCode
 
 https://developer.github.com/v3/codes_of_conduct/#get-a-code-of-conduct
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetConductCodeReq struct {
 	_url string
@@ -219,7 +218,7 @@ type GetConductCodeReq struct {
 	ScarletWitchPreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetConductCodeReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -230,7 +229,6 @@ func (r *GetConductCodeReq) HTTPRequest(ctx context.Context, opt ...requests.Opt
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "codes-of-conduct/get-conduct-code",
 		Options:            opt,
 		Previews:           map[string]bool{"scarlet-witch": r.ScarletWitchPreview},
 		RequiredPreviews:   []string{"scarlet-witch"},
@@ -267,7 +265,7 @@ func (r *GetConductCodeResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *GetConductCodeResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200, 304})
@@ -275,7 +273,7 @@ func (r *GetConductCodeResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -325,7 +323,7 @@ Get the code of conduct for a repository.
 
 https://developer.github.com/v3/codes_of_conduct/#get-the-code-of-conduct-for-a-repository
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) GetForRepo(ctx context.Context, req *GetForRepoReq, opt ...requests.Option) (*GetForRepoResponse, error) {
 	return GetForRepo(ctx, req, append(c, opt...)...)
@@ -336,7 +334,7 @@ GetForRepoReq is request data for Client.GetForRepo
 
 https://developer.github.com/v3/codes_of_conduct/#get-the-code-of-conduct-for-a-repository
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetForRepoReq struct {
 	_url  string
@@ -351,7 +349,7 @@ type GetForRepoReq struct {
 	ScarletWitchPreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -362,7 +360,6 @@ func (r *GetForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option)
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "codes-of-conduct/get-for-repo",
 		Options:            opt,
 		Previews:           map[string]bool{"scarlet-witch": r.ScarletWitchPreview},
 		RequiredPreviews:   []string{"scarlet-witch"},
@@ -399,7 +396,7 @@ func (r *GetForRepoResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *GetForRepoResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -407,7 +404,7 @@ func (r *GetForRepoResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}

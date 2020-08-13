@@ -16,7 +16,6 @@ import (
 
 // BuildHTTPRequestOptions builds http requests
 type BuildHTTPRequestOptions struct {
-	OperationID        string
 	ExplicitURL        string
 	Method             string
 	RequiredPreviews   []string

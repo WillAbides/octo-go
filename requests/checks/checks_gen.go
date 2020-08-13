@@ -63,7 +63,7 @@ Create a check run.
 
 https://developer.github.com/v3/checks/runs/#create-a-check-run
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) Create(ctx context.Context, req *CreateReq, opt ...requests.Option) (*CreateResponse, error) {
 	return Create(ctx, req, append(c, opt...)...)
@@ -74,7 +74,7 @@ CreateReq is request data for Client.Create
 
 https://developer.github.com/v3/checks/runs/#create-a-check-run
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateReq struct {
 	_url        string
@@ -92,7 +92,7 @@ type CreateReq struct {
 	AntiopePreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -106,7 +106,6 @@ func (r *CreateReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*h
 			"content-type": internal.String("application/json"),
 		},
 		Method:           "POST",
-		OperationID:      "checks/create",
 		Options:          opt,
 		Previews:         map[string]bool{"antiope": r.AntiopePreview},
 		RequiredPreviews: []string{"antiope"},
@@ -321,7 +320,7 @@ func (r *CreateResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *CreateResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{201})
@@ -329,7 +328,7 @@ func (r *CreateResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{201}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -379,7 +378,7 @@ Create a check suite.
 
 https://developer.github.com/v3/checks/suites/#create-a-check-suite
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) CreateSuite(ctx context.Context, req *CreateSuiteReq, opt ...requests.Option) (*CreateSuiteResponse, error) {
 	return CreateSuite(ctx, req, append(c, opt...)...)
@@ -390,7 +389,7 @@ CreateSuiteReq is request data for Client.CreateSuite
 
 https://developer.github.com/v3/checks/suites/#create-a-check-suite
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateSuiteReq struct {
 	_url        string
@@ -408,7 +407,7 @@ type CreateSuiteReq struct {
 	AntiopePreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateSuiteReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -422,7 +421,6 @@ func (r *CreateSuiteReq) HTTPRequest(ctx context.Context, opt ...requests.Option
 			"content-type": internal.String("application/json"),
 		},
 		Method:           "POST",
-		OperationID:      "checks/create-suite",
 		Options:          opt,
 		Previews:         map[string]bool{"antiope": r.AntiopePreview},
 		RequiredPreviews: []string{"antiope"},
@@ -470,7 +468,7 @@ func (r *CreateSuiteResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *CreateSuiteResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{201})
@@ -478,7 +476,7 @@ func (r *CreateSuiteResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{201}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -528,7 +526,7 @@ Get a check run.
 
 https://developer.github.com/v3/checks/runs/#get-a-check-run
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) Get(ctx context.Context, req *GetReq, opt ...requests.Option) (*GetResponse, error) {
 	return Get(ctx, req, append(c, opt...)...)
@@ -539,7 +537,7 @@ GetReq is request data for Client.Get
 
 https://developer.github.com/v3/checks/runs/#get-a-check-run
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetReq struct {
 	_url  string
@@ -559,7 +557,7 @@ type GetReq struct {
 	AntiopePreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -570,7 +568,6 @@ func (r *GetReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "checks/get",
 		Options:            opt,
 		Previews:           map[string]bool{"antiope": r.AntiopePreview},
 		RequiredPreviews:   []string{"antiope"},
@@ -607,7 +604,7 @@ func (r *GetResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *GetResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -615,7 +612,7 @@ func (r *GetResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -665,7 +662,7 @@ Get a check suite.
 
 https://developer.github.com/v3/checks/suites/#get-a-check-suite
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) GetSuite(ctx context.Context, req *GetSuiteReq, opt ...requests.Option) (*GetSuiteResponse, error) {
 	return GetSuite(ctx, req, append(c, opt...)...)
@@ -676,7 +673,7 @@ GetSuiteReq is request data for Client.GetSuite
 
 https://developer.github.com/v3/checks/suites/#get-a-check-suite
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetSuiteReq struct {
 	_url  string
@@ -696,7 +693,7 @@ type GetSuiteReq struct {
 	AntiopePreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetSuiteReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -707,7 +704,6 @@ func (r *GetSuiteReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "checks/get-suite",
 		Options:            opt,
 		Previews:           map[string]bool{"antiope": r.AntiopePreview},
 		RequiredPreviews:   []string{"antiope"},
@@ -744,7 +740,7 @@ func (r *GetSuiteResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *GetSuiteResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -752,7 +748,7 @@ func (r *GetSuiteResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -802,7 +798,7 @@ List check run annotations.
 
 https://developer.github.com/v3/checks/runs/#list-check-run-annotations
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) ListAnnotations(ctx context.Context, req *ListAnnotationsReq, opt ...requests.Option) (*ListAnnotationsResponse, error) {
 	return ListAnnotations(ctx, req, append(c, opt...)...)
@@ -813,7 +809,7 @@ ListAnnotationsReq is request data for Client.ListAnnotations
 
 https://developer.github.com/v3/checks/runs/#list-check-run-annotations
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListAnnotationsReq struct {
 	_url  string
@@ -839,7 +835,7 @@ type ListAnnotationsReq struct {
 	AntiopePreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *ListAnnotationsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 	if r.PerPage != nil {
@@ -856,7 +852,6 @@ func (r *ListAnnotationsReq) HTTPRequest(ctx context.Context, opt ...requests.Op
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "checks/list-annotations",
 		Options:            opt,
 		Previews:           map[string]bool{"antiope": r.AntiopePreview},
 		RequiredPreviews:   []string{"antiope"},
@@ -893,7 +888,7 @@ func (r *ListAnnotationsResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *ListAnnotationsResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -901,7 +896,7 @@ func (r *ListAnnotationsResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -951,7 +946,7 @@ List check runs for a Git reference.
 
 https://developer.github.com/v3/checks/runs/#list-check-runs-for-a-git-reference
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) ListForRef(ctx context.Context, req *ListForRefReq, opt ...requests.Option) (*ListForRefResponse, error) {
 	return ListForRef(ctx, req, append(c, opt...)...)
@@ -962,7 +957,7 @@ ListForRefReq is request data for Client.ListForRef
 
 https://developer.github.com/v3/checks/runs/#list-check-runs-for-a-git-reference
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListForRefReq struct {
 	_url  string
@@ -1003,7 +998,7 @@ type ListForRefReq struct {
 	AntiopePreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *ListForRefReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 	if r.CheckName != nil {
@@ -1029,7 +1024,6 @@ func (r *ListForRefReq) HTTPRequest(ctx context.Context, opt ...requests.Option)
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "checks/list-for-ref",
 		Options:            opt,
 		Previews:           map[string]bool{"antiope": r.AntiopePreview},
 		RequiredPreviews:   []string{"antiope"},
@@ -1076,7 +1070,7 @@ func (r *ListForRefResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *ListForRefResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -1084,7 +1078,7 @@ func (r *ListForRefResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -1134,7 +1128,7 @@ List check runs in a check suite.
 
 https://developer.github.com/v3/checks/runs/#list-check-runs-in-a-check-suite
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) ListForSuite(ctx context.Context, req *ListForSuiteReq, opt ...requests.Option) (*ListForSuiteResponse, error) {
 	return ListForSuite(ctx, req, append(c, opt...)...)
@@ -1145,7 +1139,7 @@ ListForSuiteReq is request data for Client.ListForSuite
 
 https://developer.github.com/v3/checks/runs/#list-check-runs-in-a-check-suite
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListForSuiteReq struct {
 	_url  string
@@ -1186,7 +1180,7 @@ type ListForSuiteReq struct {
 	AntiopePreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *ListForSuiteReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 	if r.CheckName != nil {
@@ -1212,7 +1206,6 @@ func (r *ListForSuiteReq) HTTPRequest(ctx context.Context, opt ...requests.Optio
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "checks/list-for-suite",
 		Options:            opt,
 		Previews:           map[string]bool{"antiope": r.AntiopePreview},
 		RequiredPreviews:   []string{"antiope"},
@@ -1259,7 +1252,7 @@ func (r *ListForSuiteResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *ListForSuiteResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -1267,7 +1260,7 @@ func (r *ListForSuiteResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -1317,7 +1310,7 @@ List check suites for a Git reference.
 
 https://developer.github.com/v3/checks/suites/#list-check-suites-for-a-git-reference
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) ListSuitesForRef(ctx context.Context, req *ListSuitesForRefReq, opt ...requests.Option) (*ListSuitesForRefResponse, error) {
 	return ListSuitesForRef(ctx, req, append(c, opt...)...)
@@ -1328,7 +1321,7 @@ ListSuitesForRefReq is request data for Client.ListSuitesForRef
 
 https://developer.github.com/v3/checks/suites/#list-check-suites-for-a-git-reference
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListSuitesForRefReq struct {
 	_url  string
@@ -1360,7 +1353,7 @@ type ListSuitesForRefReq struct {
 	AntiopePreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *ListSuitesForRefReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 	if r.AppId != nil {
@@ -1383,7 +1376,6 @@ func (r *ListSuitesForRefReq) HTTPRequest(ctx context.Context, opt ...requests.O
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "checks/list-suites-for-ref",
 		Options:            opt,
 		Previews:           map[string]bool{"antiope": r.AntiopePreview},
 		RequiredPreviews:   []string{"antiope"},
@@ -1430,7 +1422,7 @@ func (r *ListSuitesForRefResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *ListSuitesForRefResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -1438,7 +1430,7 @@ func (r *ListSuitesForRefResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -1488,7 +1480,7 @@ Rerequest a check suite.
 
 https://developer.github.com/v3/checks/suites/#rerequest-a-check-suite
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) RerequestSuite(ctx context.Context, req *RerequestSuiteReq, opt ...requests.Option) (*RerequestSuiteResponse, error) {
 	return RerequestSuite(ctx, req, append(c, opt...)...)
@@ -1499,7 +1491,7 @@ RerequestSuiteReq is request data for Client.RerequestSuite
 
 https://developer.github.com/v3/checks/suites/#rerequest-a-check-suite
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type RerequestSuiteReq struct {
 	_url  string
@@ -1519,7 +1511,7 @@ type RerequestSuiteReq struct {
 	AntiopePreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *RerequestSuiteReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -1530,7 +1522,6 @@ func (r *RerequestSuiteReq) HTTPRequest(ctx context.Context, opt ...requests.Opt
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
 		Method:             "POST",
-		OperationID:        "checks/rerequest-suite",
 		Options:            opt,
 		Previews:           map[string]bool{"antiope": r.AntiopePreview},
 		RequiredPreviews:   []string{"antiope"},
@@ -1566,7 +1557,7 @@ func (r *RerequestSuiteResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *RerequestSuiteResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{201})
@@ -1618,7 +1609,7 @@ Update repository preferences for check suites.
 
 https://developer.github.com/v3/checks/suites/#update-repository-preferences-for-check-suites
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) SetSuitesPreferences(ctx context.Context, req *SetSuitesPreferencesReq, opt ...requests.Option) (*SetSuitesPreferencesResponse, error) {
 	return SetSuitesPreferences(ctx, req, append(c, opt...)...)
@@ -1629,7 +1620,7 @@ SetSuitesPreferencesReq is request data for Client.SetSuitesPreferences
 
 https://developer.github.com/v3/checks/suites/#update-repository-preferences-for-check-suites
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type SetSuitesPreferencesReq struct {
 	_url        string
@@ -1647,7 +1638,7 @@ type SetSuitesPreferencesReq struct {
 	AntiopePreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *SetSuitesPreferencesReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -1661,7 +1652,6 @@ func (r *SetSuitesPreferencesReq) HTTPRequest(ctx context.Context, opt ...reques
 			"content-type": internal.String("application/json"),
 		},
 		Method:           "PATCH",
-		OperationID:      "checks/set-suites-preferences",
 		Options:          opt,
 		Previews:         map[string]bool{"antiope": r.AntiopePreview},
 		RequiredPreviews: []string{"antiope"},
@@ -1727,7 +1717,7 @@ func (r *SetSuitesPreferencesResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *SetSuitesPreferencesResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -1735,7 +1725,7 @@ func (r *SetSuitesPreferencesResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -1785,7 +1775,7 @@ Update a check run.
 
 https://developer.github.com/v3/checks/runs/#update-a-check-run
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) Update(ctx context.Context, req *UpdateReq, opt ...requests.Option) (*UpdateResponse, error) {
 	return Update(ctx, req, append(c, opt...)...)
@@ -1796,7 +1786,7 @@ UpdateReq is request data for Client.Update
 
 https://developer.github.com/v3/checks/runs/#update-a-check-run
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type UpdateReq struct {
 	_url  string
@@ -1817,7 +1807,7 @@ type UpdateReq struct {
 	AntiopePreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *UpdateReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -1831,7 +1821,6 @@ func (r *UpdateReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*h
 			"content-type": internal.String("application/json"),
 		},
 		Method:           "PATCH",
-		OperationID:      "checks/update",
 		Options:          opt,
 		Previews:         map[string]bool{"antiope": r.AntiopePreview},
 		RequiredPreviews: []string{"antiope"},
@@ -2029,7 +2018,7 @@ func (r *UpdateResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *UpdateResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -2037,7 +2026,7 @@ func (r *UpdateResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}

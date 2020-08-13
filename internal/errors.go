@@ -8,7 +8,8 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"github.com/willabides/octo-go/errors"
+	"github.com/willabides/octo-go/components"
+	"github.com/willabides/octo-go/requests"
 )
 
 // NewResponseError returns a new *ResponseError
@@ -28,7 +29,7 @@ func NewResponseError(msg string, resp *http.Response) *ResponseError {
 type ResponseError struct {
 	resp *http.Response
 	msg  string
-	data *errors.ResponseErrorData
+	data *components.ResponseErrorData
 }
 
 // HttpResponse implements errors.ResponseError
@@ -45,7 +46,7 @@ func (r *ResponseError) Error() string {
 }
 
 // Data implements errors.ResponseError
-func (r *ResponseError) Data() *errors.ResponseErrorData {
+func (r *ResponseError) Data() *components.ResponseErrorData {
 	return r.data
 }
 
@@ -61,7 +62,7 @@ func (r *ResponseError) IsServerError() bool {
 
 // NewRequestError returns a new RequestError
 func newRequestError(msg string) error {
-	return &errors.RequestError{
+	return &requests.RequestError{
 		Message: msg,
 	}
 }
@@ -87,7 +88,7 @@ func ResponseErrorCheck(resp *http.Response, validStatuses []int) error {
 	return NewResponseError(msg, resp)
 }
 
-func unmarshalErrorData(resp *http.Response) (*errors.ResponseErrorData, error) {
+func unmarshalErrorData(resp *http.Response) (*components.ResponseErrorData, error) {
 	if resp.Body == nil {
 		return nil, fmt.Errorf("no body")
 	}
@@ -99,7 +100,7 @@ func unmarshalErrorData(resp *http.Response) (*errors.ResponseErrorData, error) 
 		_ = resp.Body.Close()
 		resp.Body = ioutil.NopCloser(&nextBody)
 	}()
-	var errorData errors.ResponseErrorData
+	var errorData components.ResponseErrorData
 	err := json.NewDecoder(bodyReader).Decode(&errorData)
 	if err != nil {
 		return nil, err

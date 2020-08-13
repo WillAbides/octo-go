@@ -62,7 +62,7 @@ Get a code scanning alert.
 
 https://developer.github.com/v3/code-scanning/#get-a-code-scanning-alert
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) GetAlert(ctx context.Context, req *GetAlertReq, opt ...requests.Option) (*GetAlertResponse, error) {
 	return GetAlert(ctx, req, append(c, opt...)...)
@@ -73,7 +73,7 @@ GetAlertReq is request data for Client.GetAlert
 
 https://developer.github.com/v3/code-scanning/#get-a-code-scanning-alert
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetAlertReq struct {
 	_url  string
@@ -84,7 +84,7 @@ type GetAlertReq struct {
 	AlertId int64
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetAlertReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -95,7 +95,6 @@ func (r *GetAlertReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "code-scanning/get-alert",
 		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
@@ -132,7 +131,7 @@ func (r *GetAlertResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *GetAlertResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -140,7 +139,7 @@ func (r *GetAlertResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -190,7 +189,7 @@ List code scanning alerts for a repository.
 
 https://developer.github.com/v3/code-scanning/#list-code-scanning-alerts-for-a-repository
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) ListAlertsForRepo(ctx context.Context, req *ListAlertsForRepoReq, opt ...requests.Option) (*ListAlertsForRepoResponse, error) {
 	return ListAlertsForRepo(ctx, req, append(c, opt...)...)
@@ -201,7 +200,7 @@ ListAlertsForRepoReq is request data for Client.ListAlertsForRepo
 
 https://developer.github.com/v3/code-scanning/#list-code-scanning-alerts-for-a-repository
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListAlertsForRepoReq struct {
 	_url  string
@@ -218,7 +217,7 @@ type ListAlertsForRepoReq struct {
 	Ref *string
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *ListAlertsForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 	if r.State != nil {
@@ -235,7 +234,6 @@ func (r *ListAlertsForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "code-scanning/list-alerts-for-repo",
 		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
@@ -272,7 +270,7 @@ func (r *ListAlertsForRepoResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *ListAlertsForRepoResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -280,7 +278,7 @@ func (r *ListAlertsForRepoResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}

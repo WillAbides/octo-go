@@ -63,7 +63,7 @@ Create reaction for a commit comment.
 
 https://developer.github.com/v3/reactions/#create-reaction-for-a-commit-comment
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) CreateForCommitComment(ctx context.Context, req *CreateForCommitCommentReq, opt ...requests.Option) (*CreateForCommitCommentResponse, error) {
 	return CreateForCommitComment(ctx, req, append(c, opt...)...)
@@ -74,7 +74,7 @@ CreateForCommitCommentReq is request data for Client.CreateForCommitComment
 
 https://developer.github.com/v3/reactions/#create-reaction-for-a-commit-comment
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateForCommitCommentReq struct {
 	_url  string
@@ -97,7 +97,7 @@ type CreateForCommitCommentReq struct {
 	SquirrelGirlPreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateForCommitCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -111,7 +111,6 @@ func (r *CreateForCommitCommentReq) HTTPRequest(ctx context.Context, opt ...requ
 			"content-type": internal.String("application/json"),
 		},
 		Method:           "POST",
-		OperationID:      "reactions/create-for-commit-comment",
 		Options:          opt,
 		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
 		RequiredPreviews: []string{"squirrel-girl"},
@@ -159,7 +158,7 @@ func (r *CreateForCommitCommentResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *CreateForCommitCommentResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200, 201})
@@ -167,7 +166,7 @@ func (r *CreateForCommitCommentResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200, 201}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -217,7 +216,7 @@ Create reaction for an issue.
 
 https://developer.github.com/v3/reactions/#create-reaction-for-an-issue
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) CreateForIssue(ctx context.Context, req *CreateForIssueReq, opt ...requests.Option) (*CreateForIssueResponse, error) {
 	return CreateForIssue(ctx, req, append(c, opt...)...)
@@ -228,7 +227,7 @@ CreateForIssueReq is request data for Client.CreateForIssue
 
 https://developer.github.com/v3/reactions/#create-reaction-for-an-issue
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateForIssueReq struct {
 	_url  string
@@ -251,7 +250,7 @@ type CreateForIssueReq struct {
 	SquirrelGirlPreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateForIssueReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -265,7 +264,6 @@ func (r *CreateForIssueReq) HTTPRequest(ctx context.Context, opt ...requests.Opt
 			"content-type": internal.String("application/json"),
 		},
 		Method:           "POST",
-		OperationID:      "reactions/create-for-issue",
 		Options:          opt,
 		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
 		RequiredPreviews: []string{"squirrel-girl"},
@@ -313,7 +311,7 @@ func (r *CreateForIssueResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *CreateForIssueResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{201})
@@ -321,7 +319,7 @@ func (r *CreateForIssueResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{201}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -371,7 +369,7 @@ Create reaction for an issue comment.
 
 https://developer.github.com/v3/reactions/#create-reaction-for-an-issue-comment
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) CreateForIssueComment(ctx context.Context, req *CreateForIssueCommentReq, opt ...requests.Option) (*CreateForIssueCommentResponse, error) {
 	return CreateForIssueComment(ctx, req, append(c, opt...)...)
@@ -382,7 +380,7 @@ CreateForIssueCommentReq is request data for Client.CreateForIssueComment
 
 https://developer.github.com/v3/reactions/#create-reaction-for-an-issue-comment
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateForIssueCommentReq struct {
 	_url  string
@@ -405,7 +403,7 @@ type CreateForIssueCommentReq struct {
 	SquirrelGirlPreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateForIssueCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -419,7 +417,6 @@ func (r *CreateForIssueCommentReq) HTTPRequest(ctx context.Context, opt ...reque
 			"content-type": internal.String("application/json"),
 		},
 		Method:           "POST",
-		OperationID:      "reactions/create-for-issue-comment",
 		Options:          opt,
 		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
 		RequiredPreviews: []string{"squirrel-girl"},
@@ -467,7 +464,7 @@ func (r *CreateForIssueCommentResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *CreateForIssueCommentResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200, 201})
@@ -475,7 +472,7 @@ func (r *CreateForIssueCommentResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200, 201}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -525,7 +522,7 @@ Create reaction for a pull request review comment.
 
 https://developer.github.com/v3/reactions/#create-reaction-for-a-pull-request-review-comment
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) CreateForPullRequestReviewComment(ctx context.Context, req *CreateForPullRequestReviewCommentReq, opt ...requests.Option) (*CreateForPullRequestReviewCommentResponse, error) {
 	return CreateForPullRequestReviewComment(ctx, req, append(c, opt...)...)
@@ -536,7 +533,7 @@ CreateForPullRequestReviewCommentReq is request data for Client.CreateForPullReq
 
 https://developer.github.com/v3/reactions/#create-reaction-for-a-pull-request-review-comment
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateForPullRequestReviewCommentReq struct {
 	_url  string
@@ -559,7 +556,7 @@ type CreateForPullRequestReviewCommentReq struct {
 	SquirrelGirlPreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateForPullRequestReviewCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -573,7 +570,6 @@ func (r *CreateForPullRequestReviewCommentReq) HTTPRequest(ctx context.Context, 
 			"content-type": internal.String("application/json"),
 		},
 		Method:           "POST",
-		OperationID:      "reactions/create-for-pull-request-review-comment",
 		Options:          opt,
 		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
 		RequiredPreviews: []string{"squirrel-girl"},
@@ -624,7 +620,7 @@ func (r *CreateForPullRequestReviewCommentResponse) HTTPResponse() *http.Respons
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *CreateForPullRequestReviewCommentResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200, 201})
@@ -632,7 +628,7 @@ func (r *CreateForPullRequestReviewCommentResponse) Load(resp *http.Response) er
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200, 201}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -682,7 +678,7 @@ Create reaction for a team discussion comment.
 
 https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-comment
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) CreateForTeamDiscussionCommentInOrg(ctx context.Context, req *CreateForTeamDiscussionCommentInOrgReq, opt ...requests.Option) (*CreateForTeamDiscussionCommentInOrgResponse, error) {
 	return CreateForTeamDiscussionCommentInOrg(ctx, req, append(c, opt...)...)
@@ -693,7 +689,7 @@ CreateForTeamDiscussionCommentInOrgReq is request data for Client.CreateForTeamD
 
 https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-comment
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateForTeamDiscussionCommentInOrgReq struct {
 	_url string
@@ -717,7 +713,7 @@ type CreateForTeamDiscussionCommentInOrgReq struct {
 	SquirrelGirlPreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateForTeamDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -731,7 +727,6 @@ func (r *CreateForTeamDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context
 			"content-type": internal.String("application/json"),
 		},
 		Method:           "POST",
-		OperationID:      "reactions/create-for-team-discussion-comment-in-org",
 		Options:          opt,
 		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
 		RequiredPreviews: []string{"squirrel-girl"},
@@ -779,7 +774,7 @@ func (r *CreateForTeamDiscussionCommentInOrgResponse) HTTPResponse() *http.Respo
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *CreateForTeamDiscussionCommentInOrgResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{201})
@@ -787,7 +782,7 @@ func (r *CreateForTeamDiscussionCommentInOrgResponse) Load(resp *http.Response) 
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{201}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -837,7 +832,7 @@ Create reaction for a team discussion comment (Legacy).
 
 https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-comment-legacy
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) CreateForTeamDiscussionCommentLegacy(ctx context.Context, req *CreateForTeamDiscussionCommentLegacyReq, opt ...requests.Option) (*CreateForTeamDiscussionCommentLegacyResponse, error) {
 	return CreateForTeamDiscussionCommentLegacy(ctx, req, append(c, opt...)...)
@@ -848,7 +843,7 @@ CreateForTeamDiscussionCommentLegacyReq is request data for Client.CreateForTeam
 
 https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-comment-legacy
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateForTeamDiscussionCommentLegacyReq struct {
 	_url             string
@@ -869,7 +864,7 @@ type CreateForTeamDiscussionCommentLegacyReq struct {
 	SquirrelGirlPreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateForTeamDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -883,7 +878,6 @@ func (r *CreateForTeamDiscussionCommentLegacyReq) HTTPRequest(ctx context.Contex
 			"content-type": internal.String("application/json"),
 		},
 		Method:           "POST",
-		OperationID:      "reactions/create-for-team-discussion-comment-legacy",
 		Options:          opt,
 		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
 		RequiredPreviews: []string{"squirrel-girl"},
@@ -931,7 +925,7 @@ func (r *CreateForTeamDiscussionCommentLegacyResponse) HTTPResponse() *http.Resp
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *CreateForTeamDiscussionCommentLegacyResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{201})
@@ -939,7 +933,7 @@ func (r *CreateForTeamDiscussionCommentLegacyResponse) Load(resp *http.Response)
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{201}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -989,7 +983,7 @@ Create reaction for a team discussion.
 
 https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) CreateForTeamDiscussionInOrg(ctx context.Context, req *CreateForTeamDiscussionInOrgReq, opt ...requests.Option) (*CreateForTeamDiscussionInOrgResponse, error) {
 	return CreateForTeamDiscussionInOrg(ctx, req, append(c, opt...)...)
@@ -1000,7 +994,7 @@ CreateForTeamDiscussionInOrgReq is request data for Client.CreateForTeamDiscussi
 
 https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateForTeamDiscussionInOrgReq struct {
 	_url string
@@ -1023,7 +1017,7 @@ type CreateForTeamDiscussionInOrgReq struct {
 	SquirrelGirlPreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateForTeamDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -1037,7 +1031,6 @@ func (r *CreateForTeamDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt .
 			"content-type": internal.String("application/json"),
 		},
 		Method:           "POST",
-		OperationID:      "reactions/create-for-team-discussion-in-org",
 		Options:          opt,
 		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
 		RequiredPreviews: []string{"squirrel-girl"},
@@ -1085,7 +1078,7 @@ func (r *CreateForTeamDiscussionInOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *CreateForTeamDiscussionInOrgResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{201})
@@ -1093,7 +1086,7 @@ func (r *CreateForTeamDiscussionInOrgResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{201}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -1143,7 +1136,7 @@ Create reaction for a team discussion (Legacy).
 
 https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-legacy
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) CreateForTeamDiscussionLegacy(ctx context.Context, req *CreateForTeamDiscussionLegacyReq, opt ...requests.Option) (*CreateForTeamDiscussionLegacyResponse, error) {
 	return CreateForTeamDiscussionLegacy(ctx, req, append(c, opt...)...)
@@ -1154,7 +1147,7 @@ CreateForTeamDiscussionLegacyReq is request data for Client.CreateForTeamDiscuss
 
 https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion-legacy
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateForTeamDiscussionLegacyReq struct {
 	_url             string
@@ -1174,7 +1167,7 @@ type CreateForTeamDiscussionLegacyReq struct {
 	SquirrelGirlPreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateForTeamDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -1188,7 +1181,6 @@ func (r *CreateForTeamDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt 
 			"content-type": internal.String("application/json"),
 		},
 		Method:           "POST",
-		OperationID:      "reactions/create-for-team-discussion-legacy",
 		Options:          opt,
 		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
 		RequiredPreviews: []string{"squirrel-girl"},
@@ -1236,7 +1228,7 @@ func (r *CreateForTeamDiscussionLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *CreateForTeamDiscussionLegacyResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{201})
@@ -1244,7 +1236,7 @@ func (r *CreateForTeamDiscussionLegacyResponse) Load(resp *http.Response) error 
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{201}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -1294,7 +1286,7 @@ Delete a commit comment reaction.
 
 https://developer.github.com/v3/reactions/#delete-a-commit-comment-reaction
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) DeleteForCommitComment(ctx context.Context, req *DeleteForCommitCommentReq, opt ...requests.Option) (*DeleteForCommitCommentResponse, error) {
 	return DeleteForCommitComment(ctx, req, append(c, opt...)...)
@@ -1305,7 +1297,7 @@ DeleteForCommitCommentReq is request data for Client.DeleteForCommitComment
 
 https://developer.github.com/v3/reactions/#delete-a-commit-comment-reaction
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DeleteForCommitCommentReq struct {
 	_url  string
@@ -1328,7 +1320,7 @@ type DeleteForCommitCommentReq struct {
 	SquirrelGirlPreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteForCommitCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -1339,7 +1331,6 @@ func (r *DeleteForCommitCommentReq) HTTPRequest(ctx context.Context, opt ...requ
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
-		OperationID:        "reactions/delete-for-commit-comment",
 		Options:            opt,
 		Previews:           map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
 		RequiredPreviews:   []string{"squirrel-girl"},
@@ -1375,7 +1366,7 @@ func (r *DeleteForCommitCommentResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *DeleteForCommitCommentResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{204})
@@ -1427,7 +1418,7 @@ Delete an issue reaction.
 
 https://developer.github.com/v3/reactions/#delete-an-issue-reaction
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) DeleteForIssue(ctx context.Context, req *DeleteForIssueReq, opt ...requests.Option) (*DeleteForIssueResponse, error) {
 	return DeleteForIssue(ctx, req, append(c, opt...)...)
@@ -1438,7 +1429,7 @@ DeleteForIssueReq is request data for Client.DeleteForIssue
 
 https://developer.github.com/v3/reactions/#delete-an-issue-reaction
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DeleteForIssueReq struct {
 	_url  string
@@ -1461,7 +1452,7 @@ type DeleteForIssueReq struct {
 	SquirrelGirlPreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteForIssueReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -1472,7 +1463,6 @@ func (r *DeleteForIssueReq) HTTPRequest(ctx context.Context, opt ...requests.Opt
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
-		OperationID:        "reactions/delete-for-issue",
 		Options:            opt,
 		Previews:           map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
 		RequiredPreviews:   []string{"squirrel-girl"},
@@ -1508,7 +1498,7 @@ func (r *DeleteForIssueResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *DeleteForIssueResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{204})
@@ -1560,7 +1550,7 @@ Delete an issue comment reaction.
 
 https://developer.github.com/v3/reactions/#delete-an-issue-comment-reaction
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) DeleteForIssueComment(ctx context.Context, req *DeleteForIssueCommentReq, opt ...requests.Option) (*DeleteForIssueCommentResponse, error) {
 	return DeleteForIssueComment(ctx, req, append(c, opt...)...)
@@ -1571,7 +1561,7 @@ DeleteForIssueCommentReq is request data for Client.DeleteForIssueComment
 
 https://developer.github.com/v3/reactions/#delete-an-issue-comment-reaction
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DeleteForIssueCommentReq struct {
 	_url  string
@@ -1594,7 +1584,7 @@ type DeleteForIssueCommentReq struct {
 	SquirrelGirlPreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteForIssueCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -1605,7 +1595,6 @@ func (r *DeleteForIssueCommentReq) HTTPRequest(ctx context.Context, opt ...reque
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
-		OperationID:        "reactions/delete-for-issue-comment",
 		Options:            opt,
 		Previews:           map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
 		RequiredPreviews:   []string{"squirrel-girl"},
@@ -1641,7 +1630,7 @@ func (r *DeleteForIssueCommentResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *DeleteForIssueCommentResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{204})
@@ -1693,7 +1682,7 @@ Delete a pull request comment reaction.
 
 https://developer.github.com/v3/reactions/#delete-a-pull-request-comment-reaction
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) DeleteForPullRequestComment(ctx context.Context, req *DeleteForPullRequestCommentReq, opt ...requests.Option) (*DeleteForPullRequestCommentResponse, error) {
 	return DeleteForPullRequestComment(ctx, req, append(c, opt...)...)
@@ -1704,7 +1693,7 @@ DeleteForPullRequestCommentReq is request data for Client.DeleteForPullRequestCo
 
 https://developer.github.com/v3/reactions/#delete-a-pull-request-comment-reaction
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DeleteForPullRequestCommentReq struct {
 	_url  string
@@ -1727,7 +1716,7 @@ type DeleteForPullRequestCommentReq struct {
 	SquirrelGirlPreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteForPullRequestCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -1738,7 +1727,6 @@ func (r *DeleteForPullRequestCommentReq) HTTPRequest(ctx context.Context, opt ..
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
-		OperationID:        "reactions/delete-for-pull-request-comment",
 		Options:            opt,
 		Previews:           map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
 		RequiredPreviews:   []string{"squirrel-girl"},
@@ -1774,7 +1762,7 @@ func (r *DeleteForPullRequestCommentResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *DeleteForPullRequestCommentResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{204})
@@ -1826,7 +1814,7 @@ Delete team discussion reaction.
 
 https://developer.github.com/v3/reactions/#delete-team-discussion-reaction
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) DeleteForTeamDiscussion(ctx context.Context, req *DeleteForTeamDiscussionReq, opt ...requests.Option) (*DeleteForTeamDiscussionResponse, error) {
 	return DeleteForTeamDiscussion(ctx, req, append(c, opt...)...)
@@ -1837,7 +1825,7 @@ DeleteForTeamDiscussionReq is request data for Client.DeleteForTeamDiscussion
 
 https://developer.github.com/v3/reactions/#delete-team-discussion-reaction
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DeleteForTeamDiscussionReq struct {
 	_url string
@@ -1860,7 +1848,7 @@ type DeleteForTeamDiscussionReq struct {
 	SquirrelGirlPreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteForTeamDiscussionReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -1871,7 +1859,6 @@ func (r *DeleteForTeamDiscussionReq) HTTPRequest(ctx context.Context, opt ...req
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
-		OperationID:        "reactions/delete-for-team-discussion",
 		Options:            opt,
 		Previews:           map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
 		RequiredPreviews:   []string{"squirrel-girl"},
@@ -1907,7 +1894,7 @@ func (r *DeleteForTeamDiscussionResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *DeleteForTeamDiscussionResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{204})
@@ -1959,7 +1946,7 @@ Delete team discussion comment reaction.
 
 https://developer.github.com/v3/reactions/#delete-team-discussion-comment-reaction
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) DeleteForTeamDiscussionComment(ctx context.Context, req *DeleteForTeamDiscussionCommentReq, opt ...requests.Option) (*DeleteForTeamDiscussionCommentResponse, error) {
 	return DeleteForTeamDiscussionComment(ctx, req, append(c, opt...)...)
@@ -1970,7 +1957,7 @@ DeleteForTeamDiscussionCommentReq is request data for Client.DeleteForTeamDiscus
 
 https://developer.github.com/v3/reactions/#delete-team-discussion-comment-reaction
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DeleteForTeamDiscussionCommentReq struct {
 	_url string
@@ -1994,7 +1981,7 @@ type DeleteForTeamDiscussionCommentReq struct {
 	SquirrelGirlPreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteForTeamDiscussionCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -2005,7 +1992,6 @@ func (r *DeleteForTeamDiscussionCommentReq) HTTPRequest(ctx context.Context, opt
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
-		OperationID:        "reactions/delete-for-team-discussion-comment",
 		Options:            opt,
 		Previews:           map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
 		RequiredPreviews:   []string{"squirrel-girl"},
@@ -2041,7 +2027,7 @@ func (r *DeleteForTeamDiscussionCommentResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *DeleteForTeamDiscussionCommentResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{204})
@@ -2093,7 +2079,7 @@ Delete a reaction (Legacy).
 
 https://developer.github.com/v3/reactions/#delete-a-reaction-legacy
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) DeleteLegacy(ctx context.Context, req *DeleteLegacyReq, opt ...requests.Option) (*DeleteLegacyResponse, error) {
 	return DeleteLegacy(ctx, req, append(c, opt...)...)
@@ -2104,7 +2090,7 @@ DeleteLegacyReq is request data for Client.DeleteLegacy
 
 https://developer.github.com/v3/reactions/#delete-a-reaction-legacy
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DeleteLegacyReq struct {
 	_url       string
@@ -2122,7 +2108,7 @@ type DeleteLegacyReq struct {
 	SquirrelGirlPreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -2133,7 +2119,6 @@ func (r *DeleteLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Optio
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
-		OperationID:        "reactions/delete-legacy",
 		Options:            opt,
 		Previews:           map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
 		RequiredPreviews:   []string{"squirrel-girl"},
@@ -2169,7 +2154,7 @@ func (r *DeleteLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *DeleteLegacyResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{204, 304})
@@ -2221,7 +2206,7 @@ List reactions for a commit comment.
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-commit-comment
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) ListForCommitComment(ctx context.Context, req *ListForCommitCommentReq, opt ...requests.Option) (*ListForCommitCommentResponse, error) {
 	return ListForCommitComment(ctx, req, append(c, opt...)...)
@@ -2232,7 +2217,7 @@ ListForCommitCommentReq is request data for Client.ListForCommitComment
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-commit-comment
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListForCommitCommentReq struct {
 	_url  string
@@ -2267,7 +2252,7 @@ type ListForCommitCommentReq struct {
 	SquirrelGirlPreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *ListForCommitCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 	if r.Content != nil {
@@ -2287,7 +2272,6 @@ func (r *ListForCommitCommentReq) HTTPRequest(ctx context.Context, opt ...reques
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "reactions/list-for-commit-comment",
 		Options:            opt,
 		Previews:           map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
 		RequiredPreviews:   []string{"squirrel-girl"},
@@ -2324,7 +2308,7 @@ func (r *ListForCommitCommentResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *ListForCommitCommentResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -2332,7 +2316,7 @@ func (r *ListForCommitCommentResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -2382,7 +2366,7 @@ List reactions for an issue.
 
 https://developer.github.com/v3/reactions/#list-reactions-for-an-issue
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) ListForIssue(ctx context.Context, req *ListForIssueReq, opt ...requests.Option) (*ListForIssueResponse, error) {
 	return ListForIssue(ctx, req, append(c, opt...)...)
@@ -2393,7 +2377,7 @@ ListForIssueReq is request data for Client.ListForIssue
 
 https://developer.github.com/v3/reactions/#list-reactions-for-an-issue
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListForIssueReq struct {
 	_url  string
@@ -2428,7 +2412,7 @@ type ListForIssueReq struct {
 	SquirrelGirlPreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *ListForIssueReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 	if r.Content != nil {
@@ -2448,7 +2432,6 @@ func (r *ListForIssueReq) HTTPRequest(ctx context.Context, opt ...requests.Optio
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "reactions/list-for-issue",
 		Options:            opt,
 		Previews:           map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
 		RequiredPreviews:   []string{"squirrel-girl"},
@@ -2485,7 +2468,7 @@ func (r *ListForIssueResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *ListForIssueResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -2493,7 +2476,7 @@ func (r *ListForIssueResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -2543,7 +2526,7 @@ List reactions for an issue comment.
 
 https://developer.github.com/v3/reactions/#list-reactions-for-an-issue-comment
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) ListForIssueComment(ctx context.Context, req *ListForIssueCommentReq, opt ...requests.Option) (*ListForIssueCommentResponse, error) {
 	return ListForIssueComment(ctx, req, append(c, opt...)...)
@@ -2554,7 +2537,7 @@ ListForIssueCommentReq is request data for Client.ListForIssueComment
 
 https://developer.github.com/v3/reactions/#list-reactions-for-an-issue-comment
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListForIssueCommentReq struct {
 	_url  string
@@ -2589,7 +2572,7 @@ type ListForIssueCommentReq struct {
 	SquirrelGirlPreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *ListForIssueCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 	if r.Content != nil {
@@ -2609,7 +2592,6 @@ func (r *ListForIssueCommentReq) HTTPRequest(ctx context.Context, opt ...request
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "reactions/list-for-issue-comment",
 		Options:            opt,
 		Previews:           map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
 		RequiredPreviews:   []string{"squirrel-girl"},
@@ -2646,7 +2628,7 @@ func (r *ListForIssueCommentResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *ListForIssueCommentResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -2654,7 +2636,7 @@ func (r *ListForIssueCommentResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -2704,7 +2686,7 @@ List reactions for a pull request review comment.
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-pull-request-review-comment
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) ListForPullRequestReviewComment(ctx context.Context, req *ListForPullRequestReviewCommentReq, opt ...requests.Option) (*ListForPullRequestReviewCommentResponse, error) {
 	return ListForPullRequestReviewComment(ctx, req, append(c, opt...)...)
@@ -2715,7 +2697,7 @@ ListForPullRequestReviewCommentReq is request data for Client.ListForPullRequest
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-pull-request-review-comment
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListForPullRequestReviewCommentReq struct {
 	_url  string
@@ -2750,7 +2732,7 @@ type ListForPullRequestReviewCommentReq struct {
 	SquirrelGirlPreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *ListForPullRequestReviewCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 	if r.Content != nil {
@@ -2770,7 +2752,6 @@ func (r *ListForPullRequestReviewCommentReq) HTTPRequest(ctx context.Context, op
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "reactions/list-for-pull-request-review-comment",
 		Options:            opt,
 		Previews:           map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
 		RequiredPreviews:   []string{"squirrel-girl"},
@@ -2807,7 +2788,7 @@ func (r *ListForPullRequestReviewCommentResponse) HTTPResponse() *http.Response 
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *ListForPullRequestReviewCommentResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -2815,7 +2796,7 @@ func (r *ListForPullRequestReviewCommentResponse) Load(resp *http.Response) erro
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -2865,7 +2846,7 @@ List reactions for a team discussion comment.
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-comment
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) ListForTeamDiscussionCommentInOrg(ctx context.Context, req *ListForTeamDiscussionCommentInOrgReq, opt ...requests.Option) (*ListForTeamDiscussionCommentInOrgResponse, error) {
 	return ListForTeamDiscussionCommentInOrg(ctx, req, append(c, opt...)...)
@@ -2876,7 +2857,7 @@ ListForTeamDiscussionCommentInOrgReq is request data for Client.ListForTeamDiscu
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-comment
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListForTeamDiscussionCommentInOrgReq struct {
 	_url string
@@ -2912,7 +2893,7 @@ type ListForTeamDiscussionCommentInOrgReq struct {
 	SquirrelGirlPreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *ListForTeamDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 	if r.Content != nil {
@@ -2932,7 +2913,6 @@ func (r *ListForTeamDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, 
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "reactions/list-for-team-discussion-comment-in-org",
 		Options:            opt,
 		Previews:           map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
 		RequiredPreviews:   []string{"squirrel-girl"},
@@ -2969,7 +2949,7 @@ func (r *ListForTeamDiscussionCommentInOrgResponse) HTTPResponse() *http.Respons
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *ListForTeamDiscussionCommentInOrgResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -2977,7 +2957,7 @@ func (r *ListForTeamDiscussionCommentInOrgResponse) Load(resp *http.Response) er
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -3027,7 +3007,7 @@ List reactions for a team discussion comment (Legacy).
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-comment-legacy
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) ListForTeamDiscussionCommentLegacy(ctx context.Context, req *ListForTeamDiscussionCommentLegacyReq, opt ...requests.Option) (*ListForTeamDiscussionCommentLegacyResponse, error) {
 	return ListForTeamDiscussionCommentLegacy(ctx, req, append(c, opt...)...)
@@ -3038,7 +3018,7 @@ ListForTeamDiscussionCommentLegacyReq is request data for Client.ListForTeamDisc
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-comment-legacy
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListForTeamDiscussionCommentLegacyReq struct {
 	_url             string
@@ -3071,7 +3051,7 @@ type ListForTeamDiscussionCommentLegacyReq struct {
 	SquirrelGirlPreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *ListForTeamDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 	if r.Content != nil {
@@ -3091,7 +3071,6 @@ func (r *ListForTeamDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context,
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "reactions/list-for-team-discussion-comment-legacy",
 		Options:            opt,
 		Previews:           map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
 		RequiredPreviews:   []string{"squirrel-girl"},
@@ -3128,7 +3107,7 @@ func (r *ListForTeamDiscussionCommentLegacyResponse) HTTPResponse() *http.Respon
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *ListForTeamDiscussionCommentLegacyResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -3136,7 +3115,7 @@ func (r *ListForTeamDiscussionCommentLegacyResponse) Load(resp *http.Response) e
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -3186,7 +3165,7 @@ List reactions for a team discussion.
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) ListForTeamDiscussionInOrg(ctx context.Context, req *ListForTeamDiscussionInOrgReq, opt ...requests.Option) (*ListForTeamDiscussionInOrgResponse, error) {
 	return ListForTeamDiscussionInOrg(ctx, req, append(c, opt...)...)
@@ -3197,7 +3176,7 @@ ListForTeamDiscussionInOrgReq is request data for Client.ListForTeamDiscussionIn
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListForTeamDiscussionInOrgReq struct {
 	_url string
@@ -3232,7 +3211,7 @@ type ListForTeamDiscussionInOrgReq struct {
 	SquirrelGirlPreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *ListForTeamDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 	if r.Content != nil {
@@ -3252,7 +3231,6 @@ func (r *ListForTeamDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "reactions/list-for-team-discussion-in-org",
 		Options:            opt,
 		Previews:           map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
 		RequiredPreviews:   []string{"squirrel-girl"},
@@ -3289,7 +3267,7 @@ func (r *ListForTeamDiscussionInOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *ListForTeamDiscussionInOrgResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -3297,7 +3275,7 @@ func (r *ListForTeamDiscussionInOrgResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -3347,7 +3325,7 @@ List reactions for a team discussion (Legacy).
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-legacy
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) ListForTeamDiscussionLegacy(ctx context.Context, req *ListForTeamDiscussionLegacyReq, opt ...requests.Option) (*ListForTeamDiscussionLegacyResponse, error) {
 	return ListForTeamDiscussionLegacy(ctx, req, append(c, opt...)...)
@@ -3358,7 +3336,7 @@ ListForTeamDiscussionLegacyReq is request data for Client.ListForTeamDiscussionL
 
 https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-legacy
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListForTeamDiscussionLegacyReq struct {
 	_url             string
@@ -3390,7 +3368,7 @@ type ListForTeamDiscussionLegacyReq struct {
 	SquirrelGirlPreview bool
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *ListForTeamDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 	if r.Content != nil {
@@ -3410,7 +3388,6 @@ func (r *ListForTeamDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ..
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "reactions/list-for-team-discussion-legacy",
 		Options:            opt,
 		Previews:           map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
 		RequiredPreviews:   []string{"squirrel-girl"},
@@ -3447,7 +3424,7 @@ func (r *ListForTeamDiscussionLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *ListForTeamDiscussionLegacyResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -3455,7 +3432,7 @@ func (r *ListForTeamDiscussionLegacyResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}

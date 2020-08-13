@@ -62,7 +62,7 @@ Get GitHub Actions billing for an enterprise.
 
 https://developer.github.com/v3/billing/#get-github-actions-billing-for-an-enterprise
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) GetGithubActionsBillingGhe(ctx context.Context, req *GetGithubActionsBillingGheReq, opt ...requests.Option) (*GetGithubActionsBillingGheResponse, error) {
 	return GetGithubActionsBillingGhe(ctx, req, append(c, opt...)...)
@@ -73,7 +73,7 @@ GetGithubActionsBillingGheReq is request data for Client.GetGithubActionsBilling
 
 https://developer.github.com/v3/billing/#get-github-actions-billing-for-an-enterprise
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetGithubActionsBillingGheReq struct {
 	_url string
@@ -82,7 +82,7 @@ type GetGithubActionsBillingGheReq struct {
 	EnterpriseId string
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetGithubActionsBillingGheReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -93,7 +93,6 @@ func (r *GetGithubActionsBillingGheReq) HTTPRequest(ctx context.Context, opt ...
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "billing/get-github-actions-billing-ghe",
 		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
@@ -130,7 +129,7 @@ func (r *GetGithubActionsBillingGheResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *GetGithubActionsBillingGheResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -138,7 +137,7 @@ func (r *GetGithubActionsBillingGheResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -188,7 +187,7 @@ Get GitHub Actions billing for an organization.
 
 https://developer.github.com/v3/billing/#get-github-actions-billing-for-an-organization
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) GetGithubActionsBillingOrg(ctx context.Context, req *GetGithubActionsBillingOrgReq, opt ...requests.Option) (*GetGithubActionsBillingOrgResponse, error) {
 	return GetGithubActionsBillingOrg(ctx, req, append(c, opt...)...)
@@ -199,14 +198,14 @@ GetGithubActionsBillingOrgReq is request data for Client.GetGithubActionsBilling
 
 https://developer.github.com/v3/billing/#get-github-actions-billing-for-an-organization
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetGithubActionsBillingOrgReq struct {
 	_url string
 	Org  string
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetGithubActionsBillingOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -217,7 +216,6 @@ func (r *GetGithubActionsBillingOrgReq) HTTPRequest(ctx context.Context, opt ...
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "billing/get-github-actions-billing-org",
 		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
@@ -254,7 +252,7 @@ func (r *GetGithubActionsBillingOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *GetGithubActionsBillingOrgResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -262,7 +260,7 @@ func (r *GetGithubActionsBillingOrgResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -312,7 +310,7 @@ Get GitHub Actions billing for a user.
 
 https://developer.github.com/v3/billing/#get-github-actions-billing-for-a-user
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) GetGithubActionsBillingUser(ctx context.Context, req *GetGithubActionsBillingUserReq, opt ...requests.Option) (*GetGithubActionsBillingUserResponse, error) {
 	return GetGithubActionsBillingUser(ctx, req, append(c, opt...)...)
@@ -323,14 +321,14 @@ GetGithubActionsBillingUserReq is request data for Client.GetGithubActionsBillin
 
 https://developer.github.com/v3/billing/#get-github-actions-billing-for-a-user
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetGithubActionsBillingUserReq struct {
 	_url     string
 	Username string
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetGithubActionsBillingUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -341,7 +339,6 @@ func (r *GetGithubActionsBillingUserReq) HTTPRequest(ctx context.Context, opt ..
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "billing/get-github-actions-billing-user",
 		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
@@ -378,7 +375,7 @@ func (r *GetGithubActionsBillingUserResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *GetGithubActionsBillingUserResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -386,7 +383,7 @@ func (r *GetGithubActionsBillingUserResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -436,7 +433,7 @@ Get GitHub Packages billing for an enterprise.
 
 https://developer.github.com/v3/billing/#get-github-packages-billing-for-an-enterprise
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) GetGithubPackagesBillingGhe(ctx context.Context, req *GetGithubPackagesBillingGheReq, opt ...requests.Option) (*GetGithubPackagesBillingGheResponse, error) {
 	return GetGithubPackagesBillingGhe(ctx, req, append(c, opt...)...)
@@ -447,7 +444,7 @@ GetGithubPackagesBillingGheReq is request data for Client.GetGithubPackagesBilli
 
 https://developer.github.com/v3/billing/#get-github-packages-billing-for-an-enterprise
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetGithubPackagesBillingGheReq struct {
 	_url string
@@ -456,7 +453,7 @@ type GetGithubPackagesBillingGheReq struct {
 	EnterpriseId string
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetGithubPackagesBillingGheReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -467,7 +464,6 @@ func (r *GetGithubPackagesBillingGheReq) HTTPRequest(ctx context.Context, opt ..
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "billing/get-github-packages-billing-ghe",
 		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
@@ -504,7 +500,7 @@ func (r *GetGithubPackagesBillingGheResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *GetGithubPackagesBillingGheResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -512,7 +508,7 @@ func (r *GetGithubPackagesBillingGheResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -562,7 +558,7 @@ Get GitHub Packages billing for an organization.
 
 https://developer.github.com/v3/billing/#get-github-packages-billing-for-an-organization
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) GetGithubPackagesBillingOrg(ctx context.Context, req *GetGithubPackagesBillingOrgReq, opt ...requests.Option) (*GetGithubPackagesBillingOrgResponse, error) {
 	return GetGithubPackagesBillingOrg(ctx, req, append(c, opt...)...)
@@ -573,14 +569,14 @@ GetGithubPackagesBillingOrgReq is request data for Client.GetGithubPackagesBilli
 
 https://developer.github.com/v3/billing/#get-github-packages-billing-for-an-organization
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetGithubPackagesBillingOrgReq struct {
 	_url string
 	Org  string
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetGithubPackagesBillingOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -591,7 +587,6 @@ func (r *GetGithubPackagesBillingOrgReq) HTTPRequest(ctx context.Context, opt ..
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "billing/get-github-packages-billing-org",
 		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
@@ -628,7 +623,7 @@ func (r *GetGithubPackagesBillingOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *GetGithubPackagesBillingOrgResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -636,7 +631,7 @@ func (r *GetGithubPackagesBillingOrgResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -686,7 +681,7 @@ Get GitHub Packages billing for a user.
 
 https://developer.github.com/v3/billing/#get-github-packages-billing-for-a-user
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) GetGithubPackagesBillingUser(ctx context.Context, req *GetGithubPackagesBillingUserReq, opt ...requests.Option) (*GetGithubPackagesBillingUserResponse, error) {
 	return GetGithubPackagesBillingUser(ctx, req, append(c, opt...)...)
@@ -697,14 +692,14 @@ GetGithubPackagesBillingUserReq is request data for Client.GetGithubPackagesBill
 
 https://developer.github.com/v3/billing/#get-github-packages-billing-for-a-user
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetGithubPackagesBillingUserReq struct {
 	_url     string
 	Username string
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetGithubPackagesBillingUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -715,7 +710,6 @@ func (r *GetGithubPackagesBillingUserReq) HTTPRequest(ctx context.Context, opt .
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "billing/get-github-packages-billing-user",
 		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
@@ -752,7 +746,7 @@ func (r *GetGithubPackagesBillingUserResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *GetGithubPackagesBillingUserResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -760,7 +754,7 @@ func (r *GetGithubPackagesBillingUserResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -810,7 +804,7 @@ Get shared storage billing for an enterprise.
 
 https://developer.github.com/v3/billing/#get-shared-storage-billing-for-an-enterprise
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) GetSharedStorageBillingGhe(ctx context.Context, req *GetSharedStorageBillingGheReq, opt ...requests.Option) (*GetSharedStorageBillingGheResponse, error) {
 	return GetSharedStorageBillingGhe(ctx, req, append(c, opt...)...)
@@ -821,7 +815,7 @@ GetSharedStorageBillingGheReq is request data for Client.GetSharedStorageBilling
 
 https://developer.github.com/v3/billing/#get-shared-storage-billing-for-an-enterprise
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetSharedStorageBillingGheReq struct {
 	_url string
@@ -830,7 +824,7 @@ type GetSharedStorageBillingGheReq struct {
 	EnterpriseId string
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetSharedStorageBillingGheReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -841,7 +835,6 @@ func (r *GetSharedStorageBillingGheReq) HTTPRequest(ctx context.Context, opt ...
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "billing/get-shared-storage-billing-ghe",
 		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
@@ -878,7 +871,7 @@ func (r *GetSharedStorageBillingGheResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *GetSharedStorageBillingGheResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -886,7 +879,7 @@ func (r *GetSharedStorageBillingGheResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -936,7 +929,7 @@ Get shared storage billing for an organization.
 
 https://developer.github.com/v3/billing/#get-shared-storage-billing-for-an-organization
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) GetSharedStorageBillingOrg(ctx context.Context, req *GetSharedStorageBillingOrgReq, opt ...requests.Option) (*GetSharedStorageBillingOrgResponse, error) {
 	return GetSharedStorageBillingOrg(ctx, req, append(c, opt...)...)
@@ -947,14 +940,14 @@ GetSharedStorageBillingOrgReq is request data for Client.GetSharedStorageBilling
 
 https://developer.github.com/v3/billing/#get-shared-storage-billing-for-an-organization
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetSharedStorageBillingOrgReq struct {
 	_url string
 	Org  string
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetSharedStorageBillingOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -965,7 +958,6 @@ func (r *GetSharedStorageBillingOrgReq) HTTPRequest(ctx context.Context, opt ...
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "billing/get-shared-storage-billing-org",
 		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
@@ -1002,7 +994,7 @@ func (r *GetSharedStorageBillingOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *GetSharedStorageBillingOrgResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -1010,7 +1002,7 @@ func (r *GetSharedStorageBillingOrgResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -1060,7 +1052,7 @@ Get shared storage billing for a user.
 
 https://developer.github.com/v3/billing/#get-shared-storage-billing-for-a-user
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) GetSharedStorageBillingUser(ctx context.Context, req *GetSharedStorageBillingUserReq, opt ...requests.Option) (*GetSharedStorageBillingUserResponse, error) {
 	return GetSharedStorageBillingUser(ctx, req, append(c, opt...)...)
@@ -1071,14 +1063,14 @@ GetSharedStorageBillingUserReq is request data for Client.GetSharedStorageBillin
 
 https://developer.github.com/v3/billing/#get-shared-storage-billing-for-a-user
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetSharedStorageBillingUserReq struct {
 	_url     string
 	Username string
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetSharedStorageBillingUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -1089,7 +1081,6 @@ func (r *GetSharedStorageBillingUserReq) HTTPRequest(ctx context.Context, opt ..
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "billing/get-shared-storage-billing-user",
 		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
@@ -1126,7 +1117,7 @@ func (r *GetSharedStorageBillingUserResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *GetSharedStorageBillingUserResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -1134,7 +1125,7 @@ func (r *GetSharedStorageBillingUserResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}

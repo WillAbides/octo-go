@@ -63,7 +63,7 @@ Delete a SCIM user from an organization.
 
 https://developer.github.com/v3/scim/#delete-a-scim-user-from-an-organization
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) DeleteUserFromOrg(ctx context.Context, req *DeleteUserFromOrgReq, opt ...requests.Option) (*DeleteUserFromOrgResponse, error) {
 	return DeleteUserFromOrg(ctx, req, append(c, opt...)...)
@@ -74,7 +74,7 @@ DeleteUserFromOrgReq is request data for Client.DeleteUserFromOrg
 
 https://developer.github.com/v3/scim/#delete-a-scim-user-from-an-organization
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DeleteUserFromOrgReq struct {
 	_url string
@@ -84,7 +84,7 @@ type DeleteUserFromOrgReq struct {
 	ScimUserId string
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteUserFromOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -95,7 +95,6 @@ func (r *DeleteUserFromOrgReq) HTTPRequest(ctx context.Context, opt ...requests.
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
-		OperationID:        "scim/delete-user-from-org",
 		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
@@ -131,7 +130,7 @@ func (r *DeleteUserFromOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *DeleteUserFromOrgResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{204, 304})
@@ -183,7 +182,7 @@ Get SCIM provisioning information for a user.
 
 https://developer.github.com/v3/scim/#get-scim-provisioning-information-for-a-user
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) GetProvisioningInformationForUser(ctx context.Context, req *GetProvisioningInformationForUserReq, opt ...requests.Option) (*GetProvisioningInformationForUserResponse, error) {
 	return GetProvisioningInformationForUser(ctx, req, append(c, opt...)...)
@@ -194,7 +193,7 @@ GetProvisioningInformationForUserReq is request data for Client.GetProvisioningI
 
 https://developer.github.com/v3/scim/#get-scim-provisioning-information-for-a-user
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetProvisioningInformationForUserReq struct {
 	_url string
@@ -204,7 +203,7 @@ type GetProvisioningInformationForUserReq struct {
 	ScimUserId string
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetProvisioningInformationForUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -215,7 +214,6 @@ func (r *GetProvisioningInformationForUserReq) HTTPRequest(ctx context.Context, 
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/scim+json")},
 		Method:             "GET",
-		OperationID:        "scim/get-provisioning-information-for-user",
 		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
@@ -252,7 +250,7 @@ func (r *GetProvisioningInformationForUserResponse) HTTPResponse() *http.Respons
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *GetProvisioningInformationForUserResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200, 304})
@@ -260,7 +258,7 @@ func (r *GetProvisioningInformationForUserResponse) Load(resp *http.Response) er
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -310,7 +308,7 @@ List SCIM provisioned identities.
 
 https://developer.github.com/v3/scim/#list-scim-provisioned-identities
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) ListProvisionedIdentities(ctx context.Context, req *ListProvisionedIdentitiesReq, opt ...requests.Option) (*ListProvisionedIdentitiesResponse, error) {
 	return ListProvisionedIdentities(ctx, req, append(c, opt...)...)
@@ -321,7 +319,7 @@ ListProvisionedIdentitiesReq is request data for Client.ListProvisionedIdentitie
 
 https://developer.github.com/v3/scim/#list-scim-provisioned-identities
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListProvisionedIdentitiesReq struct {
 	_url string
@@ -349,7 +347,7 @@ type ListProvisionedIdentitiesReq struct {
 	Filter *string
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *ListProvisionedIdentitiesReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 	if r.StartIndex != nil {
@@ -369,7 +367,6 @@ func (r *ListProvisionedIdentitiesReq) HTTPRequest(ctx context.Context, opt ...r
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/scim+json")},
 		Method:             "GET",
-		OperationID:        "scim/list-provisioned-identities",
 		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
@@ -406,7 +403,7 @@ func (r *ListProvisionedIdentitiesResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *ListProvisionedIdentitiesResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200, 304})
@@ -414,7 +411,7 @@ func (r *ListProvisionedIdentitiesResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -464,7 +461,7 @@ Provision and invite a SCIM user.
 
 https://developer.github.com/v3/scim/#provision-and-invite-a-scim-user
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) ProvisionAndInviteUser(ctx context.Context, req *ProvisionAndInviteUserReq, opt ...requests.Option) (*ProvisionAndInviteUserResponse, error) {
 	return ProvisionAndInviteUser(ctx, req, append(c, opt...)...)
@@ -475,7 +472,7 @@ ProvisionAndInviteUserReq is request data for Client.ProvisionAndInviteUser
 
 https://developer.github.com/v3/scim/#provision-and-invite-a-scim-user
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ProvisionAndInviteUserReq struct {
 	_url        string
@@ -483,7 +480,7 @@ type ProvisionAndInviteUserReq struct {
 	RequestBody ProvisionAndInviteUserReqBody
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *ProvisionAndInviteUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -497,7 +494,6 @@ func (r *ProvisionAndInviteUserReq) HTTPRequest(ctx context.Context, opt ...requ
 			"content-type": internal.String("application/json"),
 		},
 		Method:           "POST",
-		OperationID:      "scim/provision-and-invite-user",
 		Options:          opt,
 		Previews:         map[string]bool{},
 		RequiredPreviews: []string{},
@@ -567,7 +563,7 @@ func (r *ProvisionAndInviteUserResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *ProvisionAndInviteUserResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{201, 304})
@@ -575,7 +571,7 @@ func (r *ProvisionAndInviteUserResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{201}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -625,7 +621,7 @@ Update a provisioned organization membership.
 
 https://developer.github.com/v3/scim/#set-scim-information-for-a-provisioned-user
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) SetInformationForProvisionedUser(ctx context.Context, req *SetInformationForProvisionedUserReq, opt ...requests.Option) (*SetInformationForProvisionedUserResponse, error) {
 	return SetInformationForProvisionedUser(ctx, req, append(c, opt...)...)
@@ -636,7 +632,7 @@ SetInformationForProvisionedUserReq is request data for Client.SetInformationFor
 
 https://developer.github.com/v3/scim/#set-scim-information-for-a-provisioned-user
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type SetInformationForProvisionedUserReq struct {
 	_url string
@@ -647,7 +643,7 @@ type SetInformationForProvisionedUserReq struct {
 	RequestBody SetInformationForProvisionedUserReqBody
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *SetInformationForProvisionedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -661,7 +657,6 @@ func (r *SetInformationForProvisionedUserReq) HTTPRequest(ctx context.Context, o
 			"content-type": internal.String("application/json"),
 		},
 		Method:           "PUT",
-		OperationID:      "scim/set-information-for-provisioned-user",
 		Options:          opt,
 		Previews:         map[string]bool{},
 		RequiredPreviews: []string{},
@@ -731,7 +726,7 @@ func (r *SetInformationForProvisionedUserResponse) HTTPResponse() *http.Response
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *SetInformationForProvisionedUserResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200, 304})
@@ -739,7 +734,7 @@ func (r *SetInformationForProvisionedUserResponse) Load(resp *http.Response) err
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -789,7 +784,7 @@ Update an attribute for a SCIM user.
 
 https://developer.github.com/v3/scim/#update-an-attribute-for-a-scim-user
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) UpdateAttributeForUser(ctx context.Context, req *UpdateAttributeForUserReq, opt ...requests.Option) (*UpdateAttributeForUserResponse, error) {
 	return UpdateAttributeForUser(ctx, req, append(c, opt...)...)
@@ -800,7 +795,7 @@ UpdateAttributeForUserReq is request data for Client.UpdateAttributeForUser
 
 https://developer.github.com/v3/scim/#update-an-attribute-for-a-scim-user
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type UpdateAttributeForUserReq struct {
 	_url string
@@ -811,7 +806,7 @@ type UpdateAttributeForUserReq struct {
 	RequestBody UpdateAttributeForUserReqBody
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *UpdateAttributeForUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -825,7 +820,6 @@ func (r *UpdateAttributeForUserReq) HTTPRequest(ctx context.Context, opt ...requ
 			"content-type": internal.String("application/json"),
 		},
 		Method:           "PATCH",
-		OperationID:      "scim/update-attribute-for-user",
 		Options:          opt,
 		Previews:         map[string]bool{},
 		RequiredPreviews: []string{},
@@ -890,7 +884,7 @@ func (r *UpdateAttributeForUserResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *UpdateAttributeForUserResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200, 304})
@@ -898,7 +892,7 @@ func (r *UpdateAttributeForUserResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}

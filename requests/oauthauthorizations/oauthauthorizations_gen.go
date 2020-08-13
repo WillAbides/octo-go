@@ -63,7 +63,7 @@ Create a new authorization.
 
 https://developer.github.com/v3/oauth_authorizations/#create-a-new-authorization
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) CreateAuthorization(ctx context.Context, req *CreateAuthorizationReq, opt ...requests.Option) (*CreateAuthorizationResponse, error) {
 	return CreateAuthorization(ctx, req, append(c, opt...)...)
@@ -74,14 +74,14 @@ CreateAuthorizationReq is request data for Client.CreateAuthorization
 
 https://developer.github.com/v3/oauth_authorizations/#create-a-new-authorization
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateAuthorizationReq struct {
 	_url        string
 	RequestBody CreateAuthorizationReqBody
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateAuthorizationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -95,7 +95,6 @@ func (r *CreateAuthorizationReq) HTTPRequest(ctx context.Context, opt ...request
 			"content-type": internal.String("application/json"),
 		},
 		Method:           "POST",
-		OperationID:      "oauth-authorizations/create-authorization",
 		Options:          opt,
 		Previews:         map[string]bool{},
 		RequiredPreviews: []string{},
@@ -158,7 +157,7 @@ func (r *CreateAuthorizationResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *CreateAuthorizationResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{201, 304})
@@ -166,7 +165,7 @@ func (r *CreateAuthorizationResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{201}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -216,7 +215,7 @@ Delete an authorization.
 
 https://developer.github.com/v3/oauth_authorizations/#delete-an-authorization
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) DeleteAuthorization(ctx context.Context, req *DeleteAuthorizationReq, opt ...requests.Option) (*DeleteAuthorizationResponse, error) {
 	return DeleteAuthorization(ctx, req, append(c, opt...)...)
@@ -227,7 +226,7 @@ DeleteAuthorizationReq is request data for Client.DeleteAuthorization
 
 https://developer.github.com/v3/oauth_authorizations/#delete-an-authorization
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DeleteAuthorizationReq struct {
 	_url string
@@ -236,7 +235,7 @@ type DeleteAuthorizationReq struct {
 	AuthorizationId int64
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteAuthorizationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -247,7 +246,6 @@ func (r *DeleteAuthorizationReq) HTTPRequest(ctx context.Context, opt ...request
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
-		OperationID:        "oauth-authorizations/delete-authorization",
 		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
@@ -283,7 +281,7 @@ func (r *DeleteAuthorizationResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *DeleteAuthorizationResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{204, 304})
@@ -335,7 +333,7 @@ Delete a grant.
 
 https://developer.github.com/v3/oauth_authorizations/#delete-a-grant
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) DeleteGrant(ctx context.Context, req *DeleteGrantReq, opt ...requests.Option) (*DeleteGrantResponse, error) {
 	return DeleteGrant(ctx, req, append(c, opt...)...)
@@ -346,7 +344,7 @@ DeleteGrantReq is request data for Client.DeleteGrant
 
 https://developer.github.com/v3/oauth_authorizations/#delete-a-grant
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DeleteGrantReq struct {
 	_url string
@@ -355,7 +353,7 @@ type DeleteGrantReq struct {
 	GrantId int64
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteGrantReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -366,7 +364,6 @@ func (r *DeleteGrantReq) HTTPRequest(ctx context.Context, opt ...requests.Option
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
-		OperationID:        "oauth-authorizations/delete-grant",
 		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
@@ -402,7 +399,7 @@ func (r *DeleteGrantResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *DeleteGrantResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{204, 304})
@@ -454,7 +451,7 @@ Get a single authorization.
 
 https://developer.github.com/v3/oauth_authorizations/#get-a-single-authorization
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) GetAuthorization(ctx context.Context, req *GetAuthorizationReq, opt ...requests.Option) (*GetAuthorizationResponse, error) {
 	return GetAuthorization(ctx, req, append(c, opt...)...)
@@ -465,7 +462,7 @@ GetAuthorizationReq is request data for Client.GetAuthorization
 
 https://developer.github.com/v3/oauth_authorizations/#get-a-single-authorization
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetAuthorizationReq struct {
 	_url string
@@ -474,7 +471,7 @@ type GetAuthorizationReq struct {
 	AuthorizationId int64
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetAuthorizationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -485,7 +482,6 @@ func (r *GetAuthorizationReq) HTTPRequest(ctx context.Context, opt ...requests.O
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "oauth-authorizations/get-authorization",
 		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
@@ -522,7 +518,7 @@ func (r *GetAuthorizationResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *GetAuthorizationResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200, 304})
@@ -530,7 +526,7 @@ func (r *GetAuthorizationResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -580,7 +576,7 @@ Get a single grant.
 
 https://developer.github.com/v3/oauth_authorizations/#get-a-single-grant
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) GetGrant(ctx context.Context, req *GetGrantReq, opt ...requests.Option) (*GetGrantResponse, error) {
 	return GetGrant(ctx, req, append(c, opt...)...)
@@ -591,7 +587,7 @@ GetGrantReq is request data for Client.GetGrant
 
 https://developer.github.com/v3/oauth_authorizations/#get-a-single-grant
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetGrantReq struct {
 	_url string
@@ -600,7 +596,7 @@ type GetGrantReq struct {
 	GrantId int64
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetGrantReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -611,7 +607,6 @@ func (r *GetGrantReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "oauth-authorizations/get-grant",
 		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
@@ -648,7 +643,7 @@ func (r *GetGrantResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *GetGrantResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200, 304})
@@ -656,7 +651,7 @@ func (r *GetGrantResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -706,7 +701,7 @@ Get-or-create an authorization for a specific app.
 
 https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) GetOrCreateAuthorizationForApp(ctx context.Context, req *GetOrCreateAuthorizationForAppReq, opt ...requests.Option) (*GetOrCreateAuthorizationForAppResponse, error) {
 	return GetOrCreateAuthorizationForApp(ctx, req, append(c, opt...)...)
@@ -717,7 +712,7 @@ GetOrCreateAuthorizationForAppReq is request data for Client.GetOrCreateAuthoriz
 
 https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetOrCreateAuthorizationForAppReq struct {
 	_url        string
@@ -725,7 +720,7 @@ type GetOrCreateAuthorizationForAppReq struct {
 	RequestBody GetOrCreateAuthorizationForAppReqBody
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetOrCreateAuthorizationForAppReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -739,7 +734,6 @@ func (r *GetOrCreateAuthorizationForAppReq) HTTPRequest(ctx context.Context, opt
 			"content-type": internal.String("application/json"),
 		},
 		Method:           "PUT",
-		OperationID:      "oauth-authorizations/get-or-create-authorization-for-app",
 		Options:          opt,
 		Previews:         map[string]bool{},
 		RequiredPreviews: []string{},
@@ -799,7 +793,7 @@ func (r *GetOrCreateAuthorizationForAppResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *GetOrCreateAuthorizationForAppResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200, 201, 304})
@@ -807,7 +801,7 @@ func (r *GetOrCreateAuthorizationForAppResponse) Load(resp *http.Response) error
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200, 201}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -857,7 +851,7 @@ Get-or-create an authorization for a specific app and fingerprint.
 
 https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app-and-fingerprint
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) GetOrCreateAuthorizationForAppAndFingerprint(ctx context.Context, req *GetOrCreateAuthorizationForAppAndFingerprintReq, opt ...requests.Option) (*GetOrCreateAuthorizationForAppAndFingerprintResponse, error) {
 	return GetOrCreateAuthorizationForAppAndFingerprint(ctx, req, append(c, opt...)...)
@@ -868,7 +862,7 @@ GetOrCreateAuthorizationForAppAndFingerprintReq is request data for Client.GetOr
 
 https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app-and-fingerprint
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetOrCreateAuthorizationForAppAndFingerprintReq struct {
 	_url     string
@@ -879,7 +873,7 @@ type GetOrCreateAuthorizationForAppAndFingerprintReq struct {
 	RequestBody GetOrCreateAuthorizationForAppAndFingerprintReqBody
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetOrCreateAuthorizationForAppAndFingerprintReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -893,7 +887,6 @@ func (r *GetOrCreateAuthorizationForAppAndFingerprintReq) HTTPRequest(ctx contex
 			"content-type": internal.String("application/json"),
 		},
 		Method:           "PUT",
-		OperationID:      "oauth-authorizations/get-or-create-authorization-for-app-and-fingerprint",
 		Options:          opt,
 		Previews:         map[string]bool{},
 		RequiredPreviews: []string{},
@@ -950,7 +943,7 @@ func (r *GetOrCreateAuthorizationForAppAndFingerprintResponse) HTTPResponse() *h
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *GetOrCreateAuthorizationForAppAndFingerprintResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200, 201})
@@ -958,7 +951,7 @@ func (r *GetOrCreateAuthorizationForAppAndFingerprintResponse) Load(resp *http.R
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200, 201}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -1008,7 +1001,7 @@ List your authorizations.
 
 https://developer.github.com/v3/oauth_authorizations/#list-your-authorizations
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) ListAuthorizations(ctx context.Context, req *ListAuthorizationsReq, opt ...requests.Option) (*ListAuthorizationsResponse, error) {
 	return ListAuthorizations(ctx, req, append(c, opt...)...)
@@ -1019,7 +1012,7 @@ ListAuthorizationsReq is request data for Client.ListAuthorizations
 
 https://developer.github.com/v3/oauth_authorizations/#list-your-authorizations
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListAuthorizationsReq struct {
 	_url string
@@ -1031,7 +1024,7 @@ type ListAuthorizationsReq struct {
 	Page *int64
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *ListAuthorizationsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 	if r.PerPage != nil {
@@ -1048,7 +1041,6 @@ func (r *ListAuthorizationsReq) HTTPRequest(ctx context.Context, opt ...requests
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "oauth-authorizations/list-authorizations",
 		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
@@ -1085,7 +1077,7 @@ func (r *ListAuthorizationsResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *ListAuthorizationsResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200, 304})
@@ -1093,7 +1085,7 @@ func (r *ListAuthorizationsResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -1143,7 +1135,7 @@ List your grants.
 
 https://developer.github.com/v3/oauth_authorizations/#list-your-grants
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) ListGrants(ctx context.Context, req *ListGrantsReq, opt ...requests.Option) (*ListGrantsResponse, error) {
 	return ListGrants(ctx, req, append(c, opt...)...)
@@ -1154,7 +1146,7 @@ ListGrantsReq is request data for Client.ListGrants
 
 https://developer.github.com/v3/oauth_authorizations/#list-your-grants
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListGrantsReq struct {
 	_url string
@@ -1166,7 +1158,7 @@ type ListGrantsReq struct {
 	Page *int64
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *ListGrantsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 	if r.PerPage != nil {
@@ -1183,7 +1175,6 @@ func (r *ListGrantsReq) HTTPRequest(ctx context.Context, opt ...requests.Option)
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
-		OperationID:        "oauth-authorizations/list-grants",
 		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
@@ -1220,7 +1211,7 @@ func (r *ListGrantsResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *ListGrantsResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200, 304})
@@ -1228,7 +1219,7 @@ func (r *ListGrantsResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -1278,7 +1269,7 @@ Update an existing authorization.
 
 https://developer.github.com/v3/oauth_authorizations/#update-an-existing-authorization
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 func (c Client) UpdateAuthorization(ctx context.Context, req *UpdateAuthorizationReq, opt ...requests.Option) (*UpdateAuthorizationResponse, error) {
 	return UpdateAuthorization(ctx, req, append(c, opt...)...)
@@ -1289,7 +1280,7 @@ UpdateAuthorizationReq is request data for Client.UpdateAuthorization
 
 https://developer.github.com/v3/oauth_authorizations/#update-an-existing-authorization
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type UpdateAuthorizationReq struct {
 	_url string
@@ -1299,7 +1290,7 @@ type UpdateAuthorizationReq struct {
 	RequestBody     UpdateAuthorizationReqBody
 }
 
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *UpdateAuthorizationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 
@@ -1313,7 +1304,6 @@ func (r *UpdateAuthorizationReq) HTTPRequest(ctx context.Context, opt ...request
 			"content-type": internal.String("application/json"),
 		},
 		Method:           "PATCH",
-		OperationID:      "oauth-authorizations/update-authorization",
 		Options:          opt,
 		Previews:         map[string]bool{},
 		RequiredPreviews: []string{},
@@ -1376,7 +1366,7 @@ func (r *UpdateAuthorizationResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *UpdateAuthorizationResponse) Load(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
@@ -1384,7 +1374,7 @@ func (r *UpdateAuthorizationResponse) Load(resp *http.Response) error {
 		return err
 	}
 	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &r.Data)
+		err = internal.UnmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}

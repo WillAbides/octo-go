@@ -6,8 +6,8 @@ import (
 	"net/http"
 )
 
-// DecodeResponseBody unmarshalls a response body onto target. Non-nil errors will have the type *errors.ResponseError.
-func DecodeResponseBody(r *http.Response, target interface{}) error {
+// UnmarshalResponseBody unmarshalls a response body onto target. Non-nil errors will have the type *errors.ResponseError.
+func UnmarshalResponseBody(r *http.Response, target interface{}) error {
 	body := r.Body
 	bb, err := ioutil.ReadAll(body)
 	if err != nil {

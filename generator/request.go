@@ -27,7 +27,7 @@ func addRequestStruct(file *jen.File, pq pkgQual, endpoint *model.Endpoint) {
 
 %s
 
-Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.`,
+Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.`,
 		structName,
 		toExportedName(endpoint.ID),
 		endpoint.DocsURL,
@@ -119,7 +119,7 @@ func addReqHTTPRequestFunc(file *jen.File, endpoint *model.Endpoint, pq pkgQual)
 
 func reqHTTPRequestFunc(endpoint *model.Endpoint, pq pkgQual) jen.Code {
 	structName := reqStructName(endpoint)
-	stmt := jen.Comment("HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.")
+	stmt := jen.Comment("HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.")
 	stmt.Line()
 	stmt.Func().Params(jen.Id("r").Id("*"+structName)).Id("HTTPRequest").Params(
 		jen.Id("ctx").Qual("context", "Context"),
@@ -132,7 +132,6 @@ func reqHTTPRequestFunc(endpoint *model.Endpoint, pq pkgQual) jen.Code {
 			jen.Id("ctx"),
 			jen.Qual(pq.pkgPath("internal"), "BuildHTTPRequestOptions").Values(
 				jen.Dict{
-					jen.Id("OperationID"): jen.Lit(endpoint.ID),
 					jen.Id("ExplicitURL"): reqExplicitURLVal(endpoint),
 					jen.Id("Method"):      jen.Lit(endpoint.Method),
 					jen.Id("RequiredPreviews"): jen.Op("[]").String().ValuesFunc(func(group *jen.Group) {
