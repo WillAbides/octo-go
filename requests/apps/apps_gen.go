@@ -97,7 +97,6 @@ func (r *AddRepoToInstallationReq) HTTPRequest(ctx context.Context, opt ...reque
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"machine-man"},
 		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
 		Method:           "PUT",
 		Options:          opt,
 		Previews:         map[string]bool{"machine-man": r.MachineManPreview},
@@ -1110,7 +1109,6 @@ func (r *DeleteInstallationReq) HTTPRequest(ctx context.Context, opt ...requests
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"machine-man"},
 		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
 		Method:           "DELETE",
 		Options:          opt,
 		Previews:         map[string]bool{"machine-man": r.MachineManPreview},
@@ -3777,7 +3775,6 @@ func (r *RemoveRepoFromInstallationReq) HTTPRequest(ctx context.Context, opt ...
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"machine-man"},
 		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
 		Method:           "DELETE",
 		Options:          opt,
 		Previews:         map[string]bool{"machine-man": r.MachineManPreview},
@@ -4135,7 +4132,6 @@ type RevokeAuthorizationForApplicationReq struct {
 func (r *RevokeAuthorizationForApplicationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/applications/%v/tokens/%v", r.ClientId, r.AccessToken),
@@ -4244,7 +4240,6 @@ type RevokeGrantForApplicationReq struct {
 func (r *RevokeGrantForApplicationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/applications/%v/grants/%v", r.ClientId, r.AccessToken),
@@ -4351,7 +4346,6 @@ type RevokeInstallationAccessTokenReq struct {
 func (r *RevokeInstallationAccessTokenReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/installation/token"),
@@ -4461,7 +4455,6 @@ type SuspendInstallationReq struct {
 func (r *SuspendInstallationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "PUT",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/app/installations/%v/suspended", r.InstallationId),
@@ -4576,7 +4569,6 @@ type UnsuspendInstallationReq struct {
 func (r *UnsuspendInstallationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/app/installations/%v/suspended", r.InstallationId),

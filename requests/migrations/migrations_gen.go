@@ -86,7 +86,6 @@ type CancelImportReq struct {
 func (r *CancelImportReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/import", r.Owner, r.Repo),
@@ -200,7 +199,6 @@ func (r *DeleteArchiveForAuthenticatedUserReq) HTTPRequest(ctx context.Context, 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"wyandotte"},
 		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
 		Method:           "DELETE",
 		Options:          opt,
 		Previews:         map[string]bool{"wyandotte": r.WyandottePreview},
@@ -317,7 +315,6 @@ func (r *DeleteArchiveForOrgReq) HTTPRequest(ctx context.Context, opt ...request
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"wyandotte"},
 		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
 		Method:           "DELETE",
 		Options:          opt,
 		Previews:         map[string]bool{"wyandotte": r.WyandottePreview},
@@ -439,7 +436,6 @@ func (r *DownloadArchiveForOrgReq) HTTPRequest(ctx context.Context, opt ...reque
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"wyandotte"},
 		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
 		Method:           "GET",
 		Options:          opt,
 		Previews:         map[string]bool{"wyandotte": r.WyandottePreview},
@@ -555,7 +551,6 @@ func (r *GetArchiveForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"wyandotte"},
 		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
 		Method:           "GET",
 		Options:          opt,
 		Previews:         map[string]bool{"wyandotte": r.WyandottePreview},
@@ -2528,7 +2523,6 @@ func (r *UnlockRepoForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"wyandotte"},
 		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
 		Method:           "DELETE",
 		Options:          opt,
 		Previews:         map[string]bool{"wyandotte": r.WyandottePreview},
@@ -2648,7 +2642,6 @@ func (r *UnlockRepoForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.O
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"wyandotte"},
 		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
 		Method:           "DELETE",
 		Options:          opt,
 		Previews:         map[string]bool{"wyandotte": r.WyandottePreview},

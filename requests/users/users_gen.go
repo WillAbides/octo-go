@@ -221,7 +221,6 @@ type BlockReq struct {
 func (r *BlockReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "PUT",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/user/blocks/%v", r.Username),
@@ -329,7 +328,6 @@ type CheckBlockedReq struct {
 func (r *CheckBlockedReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "GET",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/user/blocks/%v", r.Username),
@@ -440,7 +438,6 @@ type CheckFollowingForUserReq struct {
 func (r *CheckFollowingForUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "GET",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/users/%v/following/%v", r.Username, r.TargetUser),
@@ -553,7 +550,6 @@ type CheckPersonIsFollowedByAuthenticatedReq struct {
 func (r *CheckPersonIsFollowedByAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "GET",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/user/following/%v", r.Username),
@@ -1046,7 +1042,6 @@ type DeleteGpgKeyForAuthenticatedReq struct {
 func (r *DeleteGpgKeyForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/user/gpg_keys/%v", r.GpgKeyId),
@@ -1156,7 +1151,6 @@ type DeletePublicSshKeyForAuthenticatedReq struct {
 func (r *DeletePublicSshKeyForAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/user/keys/%v", r.KeyId),
@@ -1264,7 +1258,6 @@ type FollowReq struct {
 func (r *FollowReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "PUT",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/user/following/%v", r.Username),
@@ -3772,7 +3765,6 @@ type UnblockReq struct {
 func (r *UnblockReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/user/blocks/%v", r.Username),
@@ -3880,7 +3872,6 @@ type UnfollowReq struct {
 func (r *UnfollowReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/user/following/%v", r.Username),

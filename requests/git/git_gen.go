@@ -901,7 +901,6 @@ type DeleteRefReq struct {
 func (r *DeleteRefReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/git/refs/%v", r.Owner, r.Repo, r.Ref),

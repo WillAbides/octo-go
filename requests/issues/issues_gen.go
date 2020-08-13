@@ -367,7 +367,6 @@ type CheckUserCanBeAssignedReq struct {
 func (r *CheckUserCanBeAssignedReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "GET",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/assignees/%v", r.Owner, r.Repo, r.Assignee),
@@ -1069,7 +1068,6 @@ type DeleteCommentReq struct {
 func (r *DeleteCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/issues/comments/%v", r.Owner, r.Repo, r.CommentId),
@@ -1181,7 +1179,6 @@ type DeleteLabelReq struct {
 func (r *DeleteLabelReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/labels/%v", r.Owner, r.Repo, r.Name),
@@ -1293,7 +1290,6 @@ type DeleteMilestoneReq struct {
 func (r *DeleteMilestoneReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/milestones/%v", r.Owner, r.Repo, r.MilestoneNumber),
@@ -4547,7 +4543,6 @@ type RemoveAllLabelsReq struct {
 func (r *RemoveAllLabelsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/issues/%v/labels", r.Owner, r.Repo, r.IssueNumber),
@@ -5060,7 +5055,6 @@ type UnlockReq struct {
 func (r *UnlockReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/issues/%v/lock", r.Owner, r.Repo, r.IssueNumber),

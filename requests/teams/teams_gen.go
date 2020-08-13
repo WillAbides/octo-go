@@ -86,7 +86,6 @@ type AddMemberLegacyReq struct {
 func (r *AddMemberLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "PUT",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/teams/%v/members/%v", r.TeamId, r.Username),
@@ -2612,7 +2611,6 @@ type DeleteDiscussionCommentInOrgReq struct {
 func (r *DeleteDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/comments/%v", r.Org, r.TeamSlug, r.DiscussionNumber, r.CommentNumber),
@@ -2722,7 +2720,6 @@ type DeleteDiscussionCommentLegacyReq struct {
 func (r *DeleteDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/teams/%v/discussions/%v/comments/%v", r.TeamId, r.DiscussionNumber, r.CommentNumber),
@@ -2834,7 +2831,6 @@ type DeleteDiscussionInOrgReq struct {
 func (r *DeleteDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v", r.Org, r.TeamSlug, r.DiscussionNumber),
@@ -2943,7 +2939,6 @@ type DeleteDiscussionLegacyReq struct {
 func (r *DeleteDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/teams/%v/discussions/%v", r.TeamId, r.DiscussionNumber),
@@ -3054,7 +3049,6 @@ type DeleteInOrgReq struct {
 func (r *DeleteInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/orgs/%v/teams/%v", r.Org, r.TeamSlug),
@@ -3162,7 +3156,6 @@ type DeleteLegacyReq struct {
 func (r *DeleteLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/teams/%v", r.TeamId),
@@ -4028,7 +4021,6 @@ type GetMemberLegacyReq struct {
 func (r *GetMemberLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "GET",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/teams/%v/members/%v", r.TeamId, r.Username),
@@ -6964,7 +6956,6 @@ type RemoveMemberLegacyReq struct {
 func (r *RemoveMemberLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/teams/%v/members/%v", r.TeamId, r.Username),
@@ -7081,7 +7072,6 @@ type RemoveMembershipForUserInOrgReq struct {
 func (r *RemoveMembershipForUserInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/orgs/%v/teams/%v/memberships/%v", r.Org, r.TeamSlug, r.Username),
@@ -7190,7 +7180,6 @@ type RemoveMembershipForUserLegacyReq struct {
 func (r *RemoveMembershipForUserLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/teams/%v/memberships/%v", r.TeamId, r.Username),
@@ -7302,7 +7291,6 @@ type RemoveProjectInOrgReq struct {
 func (r *RemoveProjectInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/orgs/%v/teams/%v/projects/%v", r.Org, r.TeamSlug, r.ProjectId),
@@ -7411,7 +7399,6 @@ type RemoveProjectLegacyReq struct {
 func (r *RemoveProjectLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/teams/%v/projects/%v", r.TeamId, r.ProjectId),
@@ -7524,7 +7511,6 @@ type RemoveRepoInOrgReq struct {
 func (r *RemoveRepoInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/orgs/%v/teams/%v/repos/%v/%v", r.Org, r.TeamSlug, r.Owner, r.Repo),
@@ -7634,7 +7620,6 @@ type RemoveRepoLegacyReq struct {
 func (r *RemoveRepoLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/teams/%v/repos/%v/%v", r.TeamId, r.Owner, r.Repo),

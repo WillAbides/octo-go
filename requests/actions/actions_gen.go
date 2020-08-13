@@ -91,7 +91,6 @@ type AddSelectedRepoToOrgSecretReq struct {
 func (r *AddSelectedRepoToOrgSecretReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "PUT",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/orgs/%v/actions/secrets/%v/repositories/%v", r.Org, r.SecretName, r.RepositoryId),
@@ -201,7 +200,6 @@ type CancelWorkflowRunReq struct {
 func (r *CancelWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "POST",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/actions/runs/%v/cancel", r.Owner, r.Repo, r.RunId),
@@ -1195,7 +1193,6 @@ type DeleteArtifactReq struct {
 func (r *DeleteArtifactReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/actions/artifacts/%v", r.Owner, r.Repo, r.ArtifactId),
@@ -1306,7 +1303,6 @@ type DeleteOrgSecretReq struct {
 func (r *DeleteOrgSecretReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/orgs/%v/actions/secrets/%v", r.Org, r.SecretName),
@@ -1418,7 +1414,6 @@ type DeleteRepoSecretReq struct {
 func (r *DeleteRepoSecretReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/actions/secrets/%v", r.Owner, r.Repo, r.SecretName),
@@ -1529,7 +1524,6 @@ type DeleteSelfHostedRunnerFromOrgReq struct {
 func (r *DeleteSelfHostedRunnerFromOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/orgs/%v/actions/runners/%v", r.Org, r.RunnerId),
@@ -1641,7 +1635,6 @@ type DeleteSelfHostedRunnerFromRepoReq struct {
 func (r *DeleteSelfHostedRunnerFromRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/actions/runners/%v", r.Owner, r.Repo, r.RunnerId),
@@ -1751,7 +1744,6 @@ type DeleteWorkflowRunReq struct {
 func (r *DeleteWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/actions/runs/%v", r.Owner, r.Repo, r.RunId),
@@ -1861,7 +1853,6 @@ type DeleteWorkflowRunLogsReq struct {
 func (r *DeleteWorkflowRunLogsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/actions/runs/%v/logs", r.Owner, r.Repo, r.RunId),
@@ -1976,7 +1967,6 @@ type DownloadArtifactReq struct {
 func (r *DownloadArtifactReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "GET",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/actions/artifacts/%v/%v", r.Owner, r.Repo, r.ArtifactId, r.ArchiveFormat),
@@ -2088,7 +2078,6 @@ type DownloadJobLogsForWorkflowRunReq struct {
 func (r *DownloadJobLogsForWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "GET",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/actions/jobs/%v/logs", r.Owner, r.Repo, r.JobId),
@@ -2198,7 +2187,6 @@ type DownloadWorkflowRunLogsReq struct {
 func (r *DownloadWorkflowRunLogsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "GET",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/actions/runs/%v/logs", r.Owner, r.Repo, r.RunId),
@@ -5580,7 +5568,6 @@ type ReRunWorkflowReq struct {
 func (r *ReRunWorkflowReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "POST",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/actions/runs/%v/rerun", r.Owner, r.Repo, r.RunId),
@@ -5694,7 +5681,6 @@ type RemoveSelectedRepoFromOrgSecretReq struct {
 func (r *RemoveSelectedRepoFromOrgSecretReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/orgs/%v/actions/secrets/%v/repositories/%v", r.Org, r.SecretName, r.RepositoryId),

@@ -87,7 +87,6 @@ type CheckIfMergedReq struct {
 func (r *CheckIfMergedReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "GET",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/pulls/%v/merge", r.Owner, r.Repo, r.PullNumber),
@@ -1013,7 +1012,6 @@ type DeleteReviewCommentReq struct {
 func (r *DeleteReviewCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/pulls/comments/%v", r.Owner, r.Repo, r.CommentId),

@@ -153,7 +153,9 @@ func reqHTTPRequestFunc(endpoint *model.Endpoint, pq pkgQual) jen.Code {
 							}
 						}))
 					}
-					dict[jen.Id("HeaderVals")] = reqHeaderMap(endpoint, pq)
+					if val := reqHeaderMap(endpoint, pq); val != nil {
+						dict[jen.Id("HeaderVals")] = val
+					}
 					if val := reqBodyValue(endpoint); val != nil {
 						dict[jen.Id("Body")] = val
 					}
@@ -199,11 +201,13 @@ func validCodes(endpoint *model.Endpoint) []int {
 }
 
 func reqHeaderMap(endpoint *model.Endpoint, pq pkgQual) *jen.Statement {
-	return jen.Map(jen.String()).Op("*").String().Values(
+	var size int
+	stmt :=  jen.Map(jen.String()).Op("*").String().Values(
 		jen.DictFunc(func(dict jen.Dict) {
 			headers := map[string]*jen.Statement{}
 			internalPkg := pq.pkgPath("internal")
 			if endpoint.SuccessMediaType != "" {
+				size++
 				headers["accept"] = jen.Qual(internalPkg, "String").Call(jen.Lit(endpoint.SuccessMediaType))
 			}
 
@@ -211,18 +215,25 @@ func reqHeaderMap(endpoint *model.Endpoint, pq pkgQual) *jen.Statement {
 				if header.Name == "accept" {
 					continue
 				}
+				size++
 				headers[strings.ToLower(header.Name)] = jen.Id("r").Dot(toExportedName(header.Name + "-header"))
 			}
 
 			if headers["content-type"] == nil && endpoint.RequestBody != nil && endpoint.RequestBody.MediaType != "" {
+				size++
 				headers["content-type"] = jen.Qual(internalPkg, "String").Call(jen.Lit(endpoint.RequestBody.MediaType))
 			}
 
 			for k, v := range headers {
+				size++
 				dict[jen.Lit(k)] = v
 			}
 		}),
 	)
+	if size == 0 {
+		return nil
+	}
+	return stmt
 }
 
 var bracesExp = regexp.MustCompile(`{[^}]+}`)

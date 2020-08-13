@@ -345,7 +345,6 @@ func (r *RemoveRestrictionsForOrgReq) HTTPRequest(ctx context.Context, opt ...re
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"sombra"},
 		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
 		Method:           "DELETE",
 		Options:          opt,
 		Previews:         map[string]bool{"sombra": r.SombraPreview},
@@ -465,7 +464,6 @@ func (r *RemoveRestrictionsForRepoReq) HTTPRequest(ctx context.Context, opt ...r
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"sombra"},
 		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
 		Method:           "DELETE",
 		Options:          opt,
 		Previews:         map[string]bool{"sombra": r.SombraPreview},

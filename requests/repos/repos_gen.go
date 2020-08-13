@@ -89,7 +89,6 @@ type AcceptInvitationReq struct {
 func (r *AcceptInvitationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "PATCH",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/user/repository_invitations/%v", r.InvitationId),
@@ -874,7 +873,6 @@ type CheckCollaboratorReq struct {
 func (r *CheckCollaboratorReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "GET",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/collaborators/%v", r.Owner, r.Repo, r.Username),
@@ -996,7 +994,6 @@ func (r *CheckVulnerabilityAlertsReq) HTTPRequest(ctx context.Context, opt ...re
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"dorian"},
 		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
 		Method:           "GET",
 		Options:          opt,
 		Previews:         map[string]bool{"dorian": r.DorianPreview},
@@ -3746,7 +3743,6 @@ type DeclineInvitationReq struct {
 func (r *DeclineInvitationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/user/repository_invitations/%v", r.InvitationId),
@@ -3855,7 +3851,6 @@ type DeleteReq struct {
 func (r *DeleteReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v", r.Owner, r.Repo),
@@ -3967,7 +3962,6 @@ type DeleteAccessRestrictionsReq struct {
 func (r *DeleteAccessRestrictionsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/branches/%v/protection/restrictions", r.Owner, r.Repo, r.Branch),
@@ -4079,7 +4073,6 @@ type DeleteAdminBranchProtectionReq struct {
 func (r *DeleteAdminBranchProtectionReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/branches/%v/protection/enforce_admins", r.Owner, r.Repo, r.Branch),
@@ -4196,7 +4189,6 @@ type DeleteBranchProtectionReq struct {
 func (r *DeleteBranchProtectionReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/branches/%v/protection", r.Owner, r.Repo, r.Branch),
@@ -4308,7 +4300,6 @@ type DeleteCommitCommentReq struct {
 func (r *DeleteCommitCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/comments/%v", r.Owner, r.Repo, r.CommentId),
@@ -4435,7 +4426,6 @@ func (r *DeleteCommitSignatureProtectionReq) HTTPRequest(ctx context.Context, op
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"zzzax"},
 		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
 		Method:           "DELETE",
 		Options:          opt,
 		Previews:         map[string]bool{"zzzax": r.ZzzaxPreview},
@@ -4554,7 +4544,6 @@ type DeleteDeployKeyReq struct {
 func (r *DeleteDeployKeyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/keys/%v", r.Owner, r.Repo, r.KeyId),
@@ -4666,7 +4655,6 @@ type DeleteDeploymentReq struct {
 func (r *DeleteDeploymentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/deployments/%v", r.Owner, r.Repo, r.DeploymentId),
@@ -4945,7 +4933,6 @@ type DeleteInvitationReq struct {
 func (r *DeleteInvitationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/invitations/%v", r.Owner, r.Repo, r.InvitationId),
@@ -5064,7 +5051,6 @@ func (r *DeletePagesSiteReq) HTTPRequest(ctx context.Context, opt ...requests.Op
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"switcheroo"},
 		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
 		Method:           "DELETE",
 		Options:          opt,
 		Previews:         map[string]bool{"switcheroo": r.SwitcherooPreview},
@@ -5178,7 +5164,6 @@ type DeletePullRequestReviewProtectionReq struct {
 func (r *DeletePullRequestReviewProtectionReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_pull_request_reviews", r.Owner, r.Repo, r.Branch),
@@ -5295,7 +5280,6 @@ type DeleteReleaseReq struct {
 func (r *DeleteReleaseReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/releases/%v", r.Owner, r.Repo, r.ReleaseId),
@@ -5407,7 +5391,6 @@ type DeleteReleaseAssetReq struct {
 func (r *DeleteReleaseAssetReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/releases/assets/%v", r.Owner, r.Repo, r.AssetId),
@@ -5517,7 +5500,6 @@ type DeleteWebhookReq struct {
 func (r *DeleteWebhookReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/hooks/%v", r.Owner, r.Repo, r.HookId),
@@ -5639,7 +5621,6 @@ func (r *DisableAutomatedSecurityFixesReq) HTTPRequest(ctx context.Context, opt 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"london"},
 		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
 		Method:           "DELETE",
 		Options:          opt,
 		Previews:         map[string]bool{"london": r.LondonPreview},
@@ -5758,7 +5739,6 @@ func (r *DisableVulnerabilityAlertsReq) HTTPRequest(ctx context.Context, opt ...
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"dorian"},
 		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
 		Method:           "DELETE",
 		Options:          opt,
 		Previews:         map[string]bool{"dorian": r.DorianPreview},
@@ -5872,7 +5852,6 @@ type DownloadTarballArchiveReq struct {
 func (r *DownloadTarballArchiveReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "GET",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/tarball/%v", r.Owner, r.Repo, r.Ref),
@@ -5984,7 +5963,6 @@ type DownloadZipballArchiveReq struct {
 func (r *DownloadZipballArchiveReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "GET",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/zipball/%v", r.Owner, r.Repo, r.Ref),
@@ -6101,7 +6079,6 @@ func (r *EnableAutomatedSecurityFixesReq) HTTPRequest(ctx context.Context, opt .
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"london"},
 		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
 		Method:           "PUT",
 		Options:          opt,
 		Previews:         map[string]bool{"london": r.LondonPreview},
@@ -6220,7 +6197,6 @@ func (r *EnableVulnerabilityAlertsReq) HTTPRequest(ctx context.Context, opt ...r
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"dorian"},
 		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
 		Method:           "PUT",
 		Options:          opt,
 		Previews:         map[string]bool{"dorian": r.DorianPreview},
@@ -15211,7 +15187,6 @@ type PingWebhookReq struct {
 func (r *PingWebhookReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "POST",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/hooks/%v/pings", r.Owner, r.Repo, r.HookId),
@@ -15457,7 +15432,6 @@ type RemoveCollaboratorReq struct {
 func (r *RemoveCollaboratorReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/collaborators/%v", r.Owner, r.Repo, r.Username),
@@ -15707,7 +15681,6 @@ type RemoveStatusCheckProtectionReq struct {
 func (r *RemoveStatusCheckProtectionReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/branches/%v/protection/required_status_checks", r.Owner, r.Repo, r.Branch),
@@ -16992,7 +16965,6 @@ type TestPushWebhookReq struct {
 func (r *TestPushWebhookReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "POST",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/hooks/%v/tests", r.Owner, r.Repo, r.HookId),

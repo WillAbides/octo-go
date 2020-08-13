@@ -86,7 +86,6 @@ type CheckRepoIsStarredByAuthenticatedUserReq struct {
 func (r *CheckRepoIsStarredByAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "GET",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/user/starred/%v/%v", r.Owner, r.Repo),
@@ -195,7 +194,6 @@ type DeleteRepoSubscriptionReq struct {
 func (r *DeleteRepoSubscriptionReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/subscription", r.Owner, r.Repo),
@@ -305,7 +303,6 @@ type DeleteThreadSubscriptionReq struct {
 func (r *DeleteThreadSubscriptionReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/notifications/threads/%v/subscription", r.ThreadId),
@@ -3461,7 +3458,6 @@ type MarkThreadAsReadReq struct {
 func (r *MarkThreadAsReadReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "PATCH",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/notifications/threads/%v", r.ThreadId),
@@ -3838,7 +3834,6 @@ type StarRepoForAuthenticatedUserReq struct {
 func (r *StarRepoForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "PUT",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/user/starred/%v/%v", r.Owner, r.Repo),
@@ -3947,7 +3942,6 @@ type UnstarRepoForAuthenticatedUserReq struct {
 func (r *UnstarRepoForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/user/starred/%v/%v", r.Owner, r.Repo),

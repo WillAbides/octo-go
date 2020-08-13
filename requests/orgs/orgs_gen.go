@@ -86,7 +86,6 @@ type BlockUserReq struct {
 func (r *BlockUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "PUT",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/orgs/%v/blocks/%v", r.Org, r.Username),
@@ -195,7 +194,6 @@ type CheckBlockedUserReq struct {
 func (r *CheckBlockedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "GET",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/orgs/%v/blocks/%v", r.Org, r.Username),
@@ -309,7 +307,6 @@ type CheckMembershipForUserReq struct {
 func (r *CheckMembershipForUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "GET",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/orgs/%v/members/%v", r.Org, r.Username),
@@ -418,7 +415,6 @@ type CheckPublicMembershipForUserReq struct {
 func (r *CheckPublicMembershipForUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "GET",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/orgs/%v/public_members/%v", r.Org, r.Username),
@@ -532,7 +528,6 @@ type ConvertMemberToOutsideCollaboratorReq struct {
 func (r *ConvertMemberToOutsideCollaboratorReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "PUT",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/orgs/%v/outside_collaborators/%v", r.Org, r.Username),
@@ -964,7 +959,6 @@ type DeleteWebhookReq struct {
 func (r *DeleteWebhookReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/orgs/%v/hooks/%v", r.Org, r.HookId),
@@ -3284,7 +3278,6 @@ type PingWebhookReq struct {
 func (r *PingWebhookReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "POST",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/orgs/%v/hooks/%v/pings", r.Org, r.HookId),
@@ -3398,7 +3391,6 @@ type RemoveMemberReq struct {
 func (r *RemoveMemberReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/orgs/%v/members/%v", r.Org, r.Username),
@@ -3507,7 +3499,6 @@ type RemoveMembershipForUserReq struct {
 func (r *RemoveMembershipForUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/orgs/%v/memberships/%v", r.Org, r.Username),
@@ -3616,7 +3607,6 @@ type RemoveOutsideCollaboratorReq struct {
 func (r *RemoveOutsideCollaboratorReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/orgs/%v/outside_collaborators/%v", r.Org, r.Username),
@@ -3725,7 +3715,6 @@ type RemovePublicMembershipForAuthenticatedUserReq struct {
 func (r *RemovePublicMembershipForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/orgs/%v/public_members/%v", r.Org, r.Username),
@@ -3836,7 +3825,6 @@ type RemoveSamlSsoAuthorizationReq struct {
 func (r *RemoveSamlSsoAuthorizationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/orgs/%v/credential-authorizations/%v", r.Org, r.CredentialId),
@@ -4086,7 +4074,6 @@ type SetPublicMembershipForAuthenticatedUserReq struct {
 func (r *SetPublicMembershipForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "PUT",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/orgs/%v/public_members/%v", r.Org, r.Username),
@@ -4195,7 +4182,6 @@ type UnblockUserReq struct {
 func (r *UnblockUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/orgs/%v/blocks/%v", r.Org, r.Username),

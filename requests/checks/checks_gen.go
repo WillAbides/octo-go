@@ -1490,7 +1490,6 @@ func (r *RerequestSuiteReq) HTTPRequest(ctx context.Context, opt ...requests.Opt
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"antiope"},
 		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
 		Method:           "POST",
 		Options:          opt,
 		Previews:         map[string]bool{"antiope": r.AntiopePreview},

@@ -88,7 +88,6 @@ type DeleteUserFromOrgReq struct {
 func (r *DeleteUserFromOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/scim/v2/organizations/%v/Users/%v", r.Org, r.ScimUserId),

@@ -1293,7 +1293,6 @@ func (r *DeleteForCommitCommentReq) HTTPRequest(ctx context.Context, opt ...requ
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"squirrel-girl"},
 		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
 		Method:           "DELETE",
 		Options:          opt,
 		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
@@ -1420,7 +1419,6 @@ func (r *DeleteForIssueReq) HTTPRequest(ctx context.Context, opt ...requests.Opt
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"squirrel-girl"},
 		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
 		Method:           "DELETE",
 		Options:          opt,
 		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
@@ -1547,7 +1545,6 @@ func (r *DeleteForIssueCommentReq) HTTPRequest(ctx context.Context, opt ...reque
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"squirrel-girl"},
 		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
 		Method:           "DELETE",
 		Options:          opt,
 		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
@@ -1674,7 +1671,6 @@ func (r *DeleteForPullRequestCommentReq) HTTPRequest(ctx context.Context, opt ..
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"squirrel-girl"},
 		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
 		Method:           "DELETE",
 		Options:          opt,
 		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
@@ -1801,7 +1797,6 @@ func (r *DeleteForTeamDiscussionReq) HTTPRequest(ctx context.Context, opt ...req
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"squirrel-girl"},
 		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
 		Method:           "DELETE",
 		Options:          opt,
 		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
@@ -1929,7 +1924,6 @@ func (r *DeleteForTeamDiscussionCommentReq) HTTPRequest(ctx context.Context, opt
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"squirrel-girl"},
 		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
 		Method:           "DELETE",
 		Options:          opt,
 		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
@@ -2051,7 +2045,6 @@ func (r *DeleteLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Optio
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"squirrel-girl"},
 		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
 		Method:           "DELETE",
 		Options:          opt,
 		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},

@@ -958,7 +958,6 @@ func (r *DeleteReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*h
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"inertia"},
 		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
 		Method:           "DELETE",
 		Options:          opt,
 		Previews:         map[string]bool{"inertia": r.InertiaPreview},
@@ -1080,7 +1079,6 @@ func (r *DeleteCardReq) HTTPRequest(ctx context.Context, opt ...requests.Option)
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"inertia"},
 		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
 		Method:           "DELETE",
 		Options:          opt,
 		Previews:         map[string]bool{"inertia": r.InertiaPreview},
@@ -1202,7 +1200,6 @@ func (r *DeleteColumnReq) HTTPRequest(ctx context.Context, opt ...requests.Optio
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"inertia"},
 		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
 		Method:           "DELETE",
 		Options:          opt,
 		Previews:         map[string]bool{"inertia": r.InertiaPreview},
@@ -3019,7 +3016,6 @@ func (r *RemoveCollaboratorReq) HTTPRequest(ctx context.Context, opt ...requests
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"inertia"},
 		ExplicitURL:      r._url,
-		HeaderVals:       map[string]*string{},
 		Method:           "DELETE",
 		Options:          opt,
 		Previews:         map[string]bool{"inertia": r.InertiaPreview},
