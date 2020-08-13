@@ -12,8 +12,6 @@ import (
 	"net/url"
 )
 
-func strPtr(s string) *string { return &s }
-
 // Client is a set of options to apply to requests
 type Client []requests.Option
 
@@ -32,39 +30,27 @@ Render a Markdown document.
 https://developer.github.com/v3/markdown/#render-a-markdown-document
 */
 func Render(ctx context.Context, req *RenderReq, opt ...requests.Option) (*RenderResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(RenderReq)
 	}
 	resp := &RenderResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewRenderResponse(r, opts.PreserveResponseBody())
-}
-
-// NewRenderResponse builds a new *RenderResponse from an *http.Response
-func NewRenderResponse(resp *http.Response, preserveBody bool) (*RenderResponse, error) {
-	var result RenderResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -75,6 +61,8 @@ Render a Markdown document.
   POST /markdown
 
 https://developer.github.com/v3/markdown/#render-a-markdown-document
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) Render(ctx context.Context, req *RenderReq, opt ...requests.Option) (*RenderResponse, error) {
 	return Render(ctx, req, append(c, opt...)...)
@@ -84,25 +72,19 @@ func (c Client) Render(ctx context.Context, req *RenderReq, opt ...requests.Opti
 RenderReq is request data for Client.Render
 
 https://developer.github.com/v3/markdown/#render-a-markdown-document
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type RenderReq struct {
 	_url        string
 	RequestBody RenderReqBody
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *RenderReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *RenderReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -110,12 +92,12 @@ func (r *RenderReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"content-type": internal.String("application/json")},
 		Method:             "POST",
 		OperationID:        "markdown/render",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/markdown"),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -157,8 +139,19 @@ type RenderResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *RenderResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *RenderResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -171,39 +164,27 @@ Render a Markdown document in raw mode.
 https://developer.github.com/v3/markdown/#render-a-markdown-document-in-raw-mode
 */
 func RenderRaw(ctx context.Context, req *RenderRawReq, opt ...requests.Option) (*RenderRawResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(RenderRawReq)
 	}
 	resp := &RenderRawResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewRenderRawResponse(r, opts.PreserveResponseBody())
-}
-
-// NewRenderRawResponse builds a new *RenderRawResponse from an *http.Response
-func NewRenderRawResponse(resp *http.Response, preserveBody bool) (*RenderRawResponse, error) {
-	var result RenderRawResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -214,6 +195,8 @@ Render a Markdown document in raw mode.
   POST /markdown/raw
 
 https://developer.github.com/v3/markdown/#render-a-markdown-document-in-raw-mode
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) RenderRaw(ctx context.Context, req *RenderRawReq, opt ...requests.Option) (*RenderRawResponse, error) {
 	return RenderRaw(ctx, req, append(c, opt...)...)
@@ -223,6 +206,8 @@ func (c Client) RenderRaw(ctx context.Context, req *RenderRawReq, opt ...request
 RenderRawReq is request data for Client.RenderRaw
 
 https://developer.github.com/v3/markdown/#render-a-markdown-document-in-raw-mode
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type RenderRawReq struct {
 	_url string
@@ -231,19 +216,11 @@ type RenderRawReq struct {
 	RequestBody io.Reader
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *RenderRawReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *RenderRawReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrBodyUploader},
@@ -251,12 +228,12 @@ func (r *RenderRawReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"content-type": internal.String("text/x-markdown")},
 		Method:             "POST",
 		OperationID:        "markdown/render-raw",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/markdown/raw"),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -281,6 +258,17 @@ type RenderRawResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *RenderRawResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *RenderRawResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return err
+	}
+	return nil
 }

@@ -13,8 +13,6 @@ import (
 	"strconv"
 )
 
-func strPtr(s string) *string { return &s }
-
 // Client is a set of options to apply to requests
 type Client []requests.Option
 
@@ -33,39 +31,27 @@ Add team member (Legacy).
 https://developer.github.com/v3/teams/members/#add-team-member-legacy
 */
 func AddMemberLegacy(ctx context.Context, req *AddMemberLegacyReq, opt ...requests.Option) (*AddMemberLegacyResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(AddMemberLegacyReq)
 	}
 	resp := &AddMemberLegacyResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewAddMemberLegacyResponse(r, opts.PreserveResponseBody())
-}
-
-// NewAddMemberLegacyResponse builds a new *AddMemberLegacyResponse from an *http.Response
-func NewAddMemberLegacyResponse(resp *http.Response, preserveBody bool) (*AddMemberLegacyResponse, error) {
-	var result AddMemberLegacyResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{204})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -76,6 +62,8 @@ Add team member (Legacy).
   PUT /teams/{team_id}/members/{username}
 
 https://developer.github.com/v3/teams/members/#add-team-member-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) AddMemberLegacy(ctx context.Context, req *AddMemberLegacyReq, opt ...requests.Option) (*AddMemberLegacyResponse, error) {
 	return AddMemberLegacy(ctx, req, append(c, opt...)...)
@@ -85,6 +73,8 @@ func (c Client) AddMemberLegacy(ctx context.Context, req *AddMemberLegacyReq, op
 AddMemberLegacyReq is request data for Client.AddMemberLegacy
 
 https://developer.github.com/v3/teams/members/#add-team-member-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type AddMemberLegacyReq struct {
 	_url     string
@@ -92,19 +82,11 @@ type AddMemberLegacyReq struct {
 	Username string
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *AddMemberLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *AddMemberLegacyReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -112,12 +94,12 @@ func (r *AddMemberLegacyReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{},
 		Method:             "PUT",
 		OperationID:        "teams/add-member-legacy",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/teams/%v/members/%v", r.TeamId, r.Username),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -142,8 +124,19 @@ type AddMemberLegacyResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *AddMemberLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *AddMemberLegacyResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{204})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -156,45 +149,27 @@ Add or update team membership for a user.
 https://developer.github.com/v3/teams/members/#add-or-update-team-membership-for-a-user
 */
 func AddOrUpdateMembershipForUserInOrg(ctx context.Context, req *AddOrUpdateMembershipForUserInOrgReq, opt ...requests.Option) (*AddOrUpdateMembershipForUserInOrgResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(AddOrUpdateMembershipForUserInOrgReq)
 	}
 	resp := &AddOrUpdateMembershipForUserInOrgResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewAddOrUpdateMembershipForUserInOrgResponse(r, opts.PreserveResponseBody())
-}
-
-// NewAddOrUpdateMembershipForUserInOrgResponse builds a new *AddOrUpdateMembershipForUserInOrgResponse from an *http.Response
-func NewAddOrUpdateMembershipForUserInOrgResponse(resp *http.Response, preserveBody bool) (*AddOrUpdateMembershipForUserInOrgResponse, error) {
-	var result AddOrUpdateMembershipForUserInOrgResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -205,6 +180,8 @@ Add or update team membership for a user.
   PUT /orgs/{org}/teams/{team_slug}/memberships/{username}
 
 https://developer.github.com/v3/teams/members/#add-or-update-team-membership-for-a-user
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) AddOrUpdateMembershipForUserInOrg(ctx context.Context, req *AddOrUpdateMembershipForUserInOrgReq, opt ...requests.Option) (*AddOrUpdateMembershipForUserInOrgResponse, error) {
 	return AddOrUpdateMembershipForUserInOrg(ctx, req, append(c, opt...)...)
@@ -214,6 +191,8 @@ func (c Client) AddOrUpdateMembershipForUserInOrg(ctx context.Context, req *AddO
 AddOrUpdateMembershipForUserInOrgReq is request data for Client.AddOrUpdateMembershipForUserInOrg
 
 https://developer.github.com/v3/teams/members/#add-or-update-team-membership-for-a-user
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type AddOrUpdateMembershipForUserInOrgReq struct {
 	_url string
@@ -225,19 +204,11 @@ type AddOrUpdateMembershipForUserInOrgReq struct {
 	RequestBody AddOrUpdateMembershipForUserInOrgReqBody
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *AddOrUpdateMembershipForUserInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *AddOrUpdateMembershipForUserInOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -248,12 +219,12 @@ func (r *AddOrUpdateMembershipForUserInOrgReq) requestBuilder() *internal.Reques
 		},
 		Method:           "PUT",
 		OperationID:      "teams/add-or-update-membership-for-user-in-org",
+		Options:          opt,
 		Previews:         map[string]bool{},
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/orgs/%v/teams/%v/memberships/%v", r.Org, r.TeamSlug, r.Username),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -296,8 +267,25 @@ type AddOrUpdateMembershipForUserInOrgResponse struct {
 	Data         components.TeamMembership
 }
 
+// HTTPResponse returns the *http.Response
 func (r *AddOrUpdateMembershipForUserInOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *AddOrUpdateMembershipForUserInOrgResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -310,45 +298,27 @@ Add or update team membership for a user (Legacy).
 https://developer.github.com/v3/teams/members/#add-or-update-team-membership-for-a-user-legacy
 */
 func AddOrUpdateMembershipForUserLegacy(ctx context.Context, req *AddOrUpdateMembershipForUserLegacyReq, opt ...requests.Option) (*AddOrUpdateMembershipForUserLegacyResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(AddOrUpdateMembershipForUserLegacyReq)
 	}
 	resp := &AddOrUpdateMembershipForUserLegacyResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewAddOrUpdateMembershipForUserLegacyResponse(r, opts.PreserveResponseBody())
-}
-
-// NewAddOrUpdateMembershipForUserLegacyResponse builds a new *AddOrUpdateMembershipForUserLegacyResponse from an *http.Response
-func NewAddOrUpdateMembershipForUserLegacyResponse(resp *http.Response, preserveBody bool) (*AddOrUpdateMembershipForUserLegacyResponse, error) {
-	var result AddOrUpdateMembershipForUserLegacyResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -359,6 +329,8 @@ Add or update team membership for a user (Legacy).
   PUT /teams/{team_id}/memberships/{username}
 
 https://developer.github.com/v3/teams/members/#add-or-update-team-membership-for-a-user-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) AddOrUpdateMembershipForUserLegacy(ctx context.Context, req *AddOrUpdateMembershipForUserLegacyReq, opt ...requests.Option) (*AddOrUpdateMembershipForUserLegacyResponse, error) {
 	return AddOrUpdateMembershipForUserLegacy(ctx, req, append(c, opt...)...)
@@ -368,6 +340,8 @@ func (c Client) AddOrUpdateMembershipForUserLegacy(ctx context.Context, req *Add
 AddOrUpdateMembershipForUserLegacyReq is request data for Client.AddOrUpdateMembershipForUserLegacy
 
 https://developer.github.com/v3/teams/members/#add-or-update-team-membership-for-a-user-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type AddOrUpdateMembershipForUserLegacyReq struct {
 	_url        string
@@ -376,19 +350,11 @@ type AddOrUpdateMembershipForUserLegacyReq struct {
 	RequestBody AddOrUpdateMembershipForUserLegacyReqBody
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *AddOrUpdateMembershipForUserLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *AddOrUpdateMembershipForUserLegacyReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -399,12 +365,12 @@ func (r *AddOrUpdateMembershipForUserLegacyReq) requestBuilder() *internal.Reque
 		},
 		Method:           "PUT",
 		OperationID:      "teams/add-or-update-membership-for-user-legacy",
+		Options:          opt,
 		Previews:         map[string]bool{},
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/teams/%v/memberships/%v", r.TeamId, r.Username),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -447,8 +413,25 @@ type AddOrUpdateMembershipForUserLegacyResponse struct {
 	Data         components.TeamMembership
 }
 
+// HTTPResponse returns the *http.Response
 func (r *AddOrUpdateMembershipForUserLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *AddOrUpdateMembershipForUserLegacyResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -461,39 +444,27 @@ Add or update team project permissions.
 https://developer.github.com/v3/teams/#add-or-update-team-project-permissions
 */
 func AddOrUpdateProjectPermissionsInOrg(ctx context.Context, req *AddOrUpdateProjectPermissionsInOrgReq, opt ...requests.Option) (*AddOrUpdateProjectPermissionsInOrgResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(AddOrUpdateProjectPermissionsInOrgReq)
 	}
 	resp := &AddOrUpdateProjectPermissionsInOrgResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewAddOrUpdateProjectPermissionsInOrgResponse(r, opts.PreserveResponseBody())
-}
-
-// NewAddOrUpdateProjectPermissionsInOrgResponse builds a new *AddOrUpdateProjectPermissionsInOrgResponse from an *http.Response
-func NewAddOrUpdateProjectPermissionsInOrgResponse(resp *http.Response, preserveBody bool) (*AddOrUpdateProjectPermissionsInOrgResponse, error) {
-	var result AddOrUpdateProjectPermissionsInOrgResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{204})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -504,6 +475,8 @@ Add or update team project permissions.
   PUT /orgs/{org}/teams/{team_slug}/projects/{project_id}
 
 https://developer.github.com/v3/teams/#add-or-update-team-project-permissions
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) AddOrUpdateProjectPermissionsInOrg(ctx context.Context, req *AddOrUpdateProjectPermissionsInOrgReq, opt ...requests.Option) (*AddOrUpdateProjectPermissionsInOrgResponse, error) {
 	return AddOrUpdateProjectPermissionsInOrg(ctx, req, append(c, opt...)...)
@@ -513,6 +486,8 @@ func (c Client) AddOrUpdateProjectPermissionsInOrg(ctx context.Context, req *Add
 AddOrUpdateProjectPermissionsInOrgReq is request data for Client.AddOrUpdateProjectPermissionsInOrg
 
 https://developer.github.com/v3/teams/#add-or-update-team-project-permissions
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type AddOrUpdateProjectPermissionsInOrgReq struct {
 	_url string
@@ -533,19 +508,11 @@ type AddOrUpdateProjectPermissionsInOrgReq struct {
 	InertiaPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *AddOrUpdateProjectPermissionsInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *AddOrUpdateProjectPermissionsInOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"inertia"},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -553,12 +520,12 @@ func (r *AddOrUpdateProjectPermissionsInOrgReq) requestBuilder() *internal.Reque
 		HeaderVals:         map[string]*string{"content-type": internal.String("application/json")},
 		Method:             "PUT",
 		OperationID:        "teams/add-or-update-project-permissions-in-org",
+		Options:            opt,
 		Previews:           map[string]bool{"inertia": r.InertiaPreview},
 		RequiredPreviews:   []string{"inertia"},
 		URLPath:            fmt.Sprintf("/orgs/%v/teams/%v/projects/%v", r.Org, r.TeamSlug, r.ProjectId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -604,8 +571,19 @@ type AddOrUpdateProjectPermissionsInOrgResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *AddOrUpdateProjectPermissionsInOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *AddOrUpdateProjectPermissionsInOrgResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{204})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -618,39 +596,27 @@ Add or update team project permissions (Legacy).
 https://developer.github.com/v3/teams/#add-or-update-team-project-permissions-legacy
 */
 func AddOrUpdateProjectPermissionsLegacy(ctx context.Context, req *AddOrUpdateProjectPermissionsLegacyReq, opt ...requests.Option) (*AddOrUpdateProjectPermissionsLegacyResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(AddOrUpdateProjectPermissionsLegacyReq)
 	}
 	resp := &AddOrUpdateProjectPermissionsLegacyResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewAddOrUpdateProjectPermissionsLegacyResponse(r, opts.PreserveResponseBody())
-}
-
-// NewAddOrUpdateProjectPermissionsLegacyResponse builds a new *AddOrUpdateProjectPermissionsLegacyResponse from an *http.Response
-func NewAddOrUpdateProjectPermissionsLegacyResponse(resp *http.Response, preserveBody bool) (*AddOrUpdateProjectPermissionsLegacyResponse, error) {
-	var result AddOrUpdateProjectPermissionsLegacyResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{204})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -661,6 +627,8 @@ Add or update team project permissions (Legacy).
   PUT /teams/{team_id}/projects/{project_id}
 
 https://developer.github.com/v3/teams/#add-or-update-team-project-permissions-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) AddOrUpdateProjectPermissionsLegacy(ctx context.Context, req *AddOrUpdateProjectPermissionsLegacyReq, opt ...requests.Option) (*AddOrUpdateProjectPermissionsLegacyResponse, error) {
 	return AddOrUpdateProjectPermissionsLegacy(ctx, req, append(c, opt...)...)
@@ -670,6 +638,8 @@ func (c Client) AddOrUpdateProjectPermissionsLegacy(ctx context.Context, req *Ad
 AddOrUpdateProjectPermissionsLegacyReq is request data for Client.AddOrUpdateProjectPermissionsLegacy
 
 https://developer.github.com/v3/teams/#add-or-update-team-project-permissions-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type AddOrUpdateProjectPermissionsLegacyReq struct {
 	_url        string
@@ -687,19 +657,11 @@ type AddOrUpdateProjectPermissionsLegacyReq struct {
 	InertiaPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *AddOrUpdateProjectPermissionsLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *AddOrUpdateProjectPermissionsLegacyReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"inertia"},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -707,12 +669,12 @@ func (r *AddOrUpdateProjectPermissionsLegacyReq) requestBuilder() *internal.Requ
 		HeaderVals:         map[string]*string{"content-type": internal.String("application/json")},
 		Method:             "PUT",
 		OperationID:        "teams/add-or-update-project-permissions-legacy",
+		Options:            opt,
 		Previews:           map[string]bool{"inertia": r.InertiaPreview},
 		RequiredPreviews:   []string{"inertia"},
 		URLPath:            fmt.Sprintf("/teams/%v/projects/%v", r.TeamId, r.ProjectId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -758,8 +720,19 @@ type AddOrUpdateProjectPermissionsLegacyResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *AddOrUpdateProjectPermissionsLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *AddOrUpdateProjectPermissionsLegacyResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{204})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -772,39 +745,27 @@ Add or update team repository permissions.
 https://developer.github.com/v3/teams/#add-or-update-team-repository-permissions
 */
 func AddOrUpdateRepoPermissionsInOrg(ctx context.Context, req *AddOrUpdateRepoPermissionsInOrgReq, opt ...requests.Option) (*AddOrUpdateRepoPermissionsInOrgResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(AddOrUpdateRepoPermissionsInOrgReq)
 	}
 	resp := &AddOrUpdateRepoPermissionsInOrgResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewAddOrUpdateRepoPermissionsInOrgResponse(r, opts.PreserveResponseBody())
-}
-
-// NewAddOrUpdateRepoPermissionsInOrgResponse builds a new *AddOrUpdateRepoPermissionsInOrgResponse from an *http.Response
-func NewAddOrUpdateRepoPermissionsInOrgResponse(resp *http.Response, preserveBody bool) (*AddOrUpdateRepoPermissionsInOrgResponse, error) {
-	var result AddOrUpdateRepoPermissionsInOrgResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{204})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -815,6 +776,8 @@ Add or update team repository permissions.
   PUT /orgs/{org}/teams/{team_slug}/repos/{owner}/{repo}
 
 https://developer.github.com/v3/teams/#add-or-update-team-repository-permissions
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) AddOrUpdateRepoPermissionsInOrg(ctx context.Context, req *AddOrUpdateRepoPermissionsInOrgReq, opt ...requests.Option) (*AddOrUpdateRepoPermissionsInOrgResponse, error) {
 	return AddOrUpdateRepoPermissionsInOrg(ctx, req, append(c, opt...)...)
@@ -824,6 +787,8 @@ func (c Client) AddOrUpdateRepoPermissionsInOrg(ctx context.Context, req *AddOrU
 AddOrUpdateRepoPermissionsInOrgReq is request data for Client.AddOrUpdateRepoPermissionsInOrg
 
 https://developer.github.com/v3/teams/#add-or-update-team-repository-permissions
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type AddOrUpdateRepoPermissionsInOrgReq struct {
 	_url string
@@ -836,19 +801,11 @@ type AddOrUpdateRepoPermissionsInOrgReq struct {
 	RequestBody AddOrUpdateRepoPermissionsInOrgReqBody
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *AddOrUpdateRepoPermissionsInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *AddOrUpdateRepoPermissionsInOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -856,12 +813,12 @@ func (r *AddOrUpdateRepoPermissionsInOrgReq) requestBuilder() *internal.RequestB
 		HeaderVals:         map[string]*string{"content-type": internal.String("application/json")},
 		Method:             "PUT",
 		OperationID:        "teams/add-or-update-repo-permissions-in-org",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/teams/%v/repos/%v/%v", r.Org, r.TeamSlug, r.Owner, r.Repo),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -912,8 +869,19 @@ type AddOrUpdateRepoPermissionsInOrgResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *AddOrUpdateRepoPermissionsInOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *AddOrUpdateRepoPermissionsInOrgResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{204})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -926,39 +894,27 @@ Add or update team repository permissions (Legacy).
 https://developer.github.com/v3/teams/#add-or-update-team-repository-permissions-legacy
 */
 func AddOrUpdateRepoPermissionsLegacy(ctx context.Context, req *AddOrUpdateRepoPermissionsLegacyReq, opt ...requests.Option) (*AddOrUpdateRepoPermissionsLegacyResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(AddOrUpdateRepoPermissionsLegacyReq)
 	}
 	resp := &AddOrUpdateRepoPermissionsLegacyResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewAddOrUpdateRepoPermissionsLegacyResponse(r, opts.PreserveResponseBody())
-}
-
-// NewAddOrUpdateRepoPermissionsLegacyResponse builds a new *AddOrUpdateRepoPermissionsLegacyResponse from an *http.Response
-func NewAddOrUpdateRepoPermissionsLegacyResponse(resp *http.Response, preserveBody bool) (*AddOrUpdateRepoPermissionsLegacyResponse, error) {
-	var result AddOrUpdateRepoPermissionsLegacyResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{204})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -969,6 +925,8 @@ Add or update team repository permissions (Legacy).
   PUT /teams/{team_id}/repos/{owner}/{repo}
 
 https://developer.github.com/v3/teams/#add-or-update-team-repository-permissions-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) AddOrUpdateRepoPermissionsLegacy(ctx context.Context, req *AddOrUpdateRepoPermissionsLegacyReq, opt ...requests.Option) (*AddOrUpdateRepoPermissionsLegacyResponse, error) {
 	return AddOrUpdateRepoPermissionsLegacy(ctx, req, append(c, opt...)...)
@@ -978,6 +936,8 @@ func (c Client) AddOrUpdateRepoPermissionsLegacy(ctx context.Context, req *AddOr
 AddOrUpdateRepoPermissionsLegacyReq is request data for Client.AddOrUpdateRepoPermissionsLegacy
 
 https://developer.github.com/v3/teams/#add-or-update-team-repository-permissions-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type AddOrUpdateRepoPermissionsLegacyReq struct {
 	_url        string
@@ -987,19 +947,11 @@ type AddOrUpdateRepoPermissionsLegacyReq struct {
 	RequestBody AddOrUpdateRepoPermissionsLegacyReqBody
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *AddOrUpdateRepoPermissionsLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *AddOrUpdateRepoPermissionsLegacyReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -1007,12 +959,12 @@ func (r *AddOrUpdateRepoPermissionsLegacyReq) requestBuilder() *internal.Request
 		HeaderVals:         map[string]*string{"content-type": internal.String("application/json")},
 		Method:             "PUT",
 		OperationID:        "teams/add-or-update-repo-permissions-legacy",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/teams/%v/repos/%v/%v", r.TeamId, r.Owner, r.Repo),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1057,8 +1009,19 @@ type AddOrUpdateRepoPermissionsLegacyResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *AddOrUpdateRepoPermissionsLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *AddOrUpdateRepoPermissionsLegacyResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{204})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -1071,45 +1034,27 @@ Check team permissions for a project.
 https://developer.github.com/v3/teams/#check-team-permissions-for-a-project
 */
 func CheckPermissionsForProjectInOrg(ctx context.Context, req *CheckPermissionsForProjectInOrgReq, opt ...requests.Option) (*CheckPermissionsForProjectInOrgResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(CheckPermissionsForProjectInOrgReq)
 	}
 	resp := &CheckPermissionsForProjectInOrgResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewCheckPermissionsForProjectInOrgResponse(r, opts.PreserveResponseBody())
-}
-
-// NewCheckPermissionsForProjectInOrgResponse builds a new *CheckPermissionsForProjectInOrgResponse from an *http.Response
-func NewCheckPermissionsForProjectInOrgResponse(resp *http.Response, preserveBody bool) (*CheckPermissionsForProjectInOrgResponse, error) {
-	var result CheckPermissionsForProjectInOrgResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -1120,6 +1065,8 @@ Check team permissions for a project.
   GET /orgs/{org}/teams/{team_slug}/projects/{project_id}
 
 https://developer.github.com/v3/teams/#check-team-permissions-for-a-project
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) CheckPermissionsForProjectInOrg(ctx context.Context, req *CheckPermissionsForProjectInOrgReq, opt ...requests.Option) (*CheckPermissionsForProjectInOrgResponse, error) {
 	return CheckPermissionsForProjectInOrg(ctx, req, append(c, opt...)...)
@@ -1129,6 +1076,8 @@ func (c Client) CheckPermissionsForProjectInOrg(ctx context.Context, req *CheckP
 CheckPermissionsForProjectInOrgReq is request data for Client.CheckPermissionsForProjectInOrg
 
 https://developer.github.com/v3/teams/#check-team-permissions-for-a-project
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type CheckPermissionsForProjectInOrgReq struct {
 	_url string
@@ -1148,19 +1097,11 @@ type CheckPermissionsForProjectInOrgReq struct {
 	InertiaPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *CheckPermissionsForProjectInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *CheckPermissionsForProjectInOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"inertia"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -1168,12 +1109,12 @@ func (r *CheckPermissionsForProjectInOrgReq) requestBuilder() *internal.RequestB
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "teams/check-permissions-for-project-in-org",
+		Options:            opt,
 		Previews:           map[string]bool{"inertia": r.InertiaPreview},
 		RequiredPreviews:   []string{"inertia"},
 		URLPath:            fmt.Sprintf("/orgs/%v/teams/%v/projects/%v", r.Org, r.TeamSlug, r.ProjectId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1199,8 +1140,25 @@ type CheckPermissionsForProjectInOrgResponse struct {
 	Data         components.TeamProject
 }
 
+// HTTPResponse returns the *http.Response
 func (r *CheckPermissionsForProjectInOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *CheckPermissionsForProjectInOrgResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -1213,45 +1171,27 @@ Check team permissions for a project (Legacy).
 https://developer.github.com/v3/teams/#check-team-permissions-for-a-project-legacy
 */
 func CheckPermissionsForProjectLegacy(ctx context.Context, req *CheckPermissionsForProjectLegacyReq, opt ...requests.Option) (*CheckPermissionsForProjectLegacyResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(CheckPermissionsForProjectLegacyReq)
 	}
 	resp := &CheckPermissionsForProjectLegacyResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewCheckPermissionsForProjectLegacyResponse(r, opts.PreserveResponseBody())
-}
-
-// NewCheckPermissionsForProjectLegacyResponse builds a new *CheckPermissionsForProjectLegacyResponse from an *http.Response
-func NewCheckPermissionsForProjectLegacyResponse(resp *http.Response, preserveBody bool) (*CheckPermissionsForProjectLegacyResponse, error) {
-	var result CheckPermissionsForProjectLegacyResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -1262,6 +1202,8 @@ Check team permissions for a project (Legacy).
   GET /teams/{team_id}/projects/{project_id}
 
 https://developer.github.com/v3/teams/#check-team-permissions-for-a-project-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) CheckPermissionsForProjectLegacy(ctx context.Context, req *CheckPermissionsForProjectLegacyReq, opt ...requests.Option) (*CheckPermissionsForProjectLegacyResponse, error) {
 	return CheckPermissionsForProjectLegacy(ctx, req, append(c, opt...)...)
@@ -1271,6 +1213,8 @@ func (c Client) CheckPermissionsForProjectLegacy(ctx context.Context, req *Check
 CheckPermissionsForProjectLegacyReq is request data for Client.CheckPermissionsForProjectLegacy
 
 https://developer.github.com/v3/teams/#check-team-permissions-for-a-project-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type CheckPermissionsForProjectLegacyReq struct {
 	_url      string
@@ -1287,19 +1231,11 @@ type CheckPermissionsForProjectLegacyReq struct {
 	InertiaPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *CheckPermissionsForProjectLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *CheckPermissionsForProjectLegacyReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"inertia"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -1307,12 +1243,12 @@ func (r *CheckPermissionsForProjectLegacyReq) requestBuilder() *internal.Request
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "teams/check-permissions-for-project-legacy",
+		Options:            opt,
 		Previews:           map[string]bool{"inertia": r.InertiaPreview},
 		RequiredPreviews:   []string{"inertia"},
 		URLPath:            fmt.Sprintf("/teams/%v/projects/%v", r.TeamId, r.ProjectId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1338,8 +1274,25 @@ type CheckPermissionsForProjectLegacyResponse struct {
 	Data         components.TeamProject
 }
 
+// HTTPResponse returns the *http.Response
 func (r *CheckPermissionsForProjectLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *CheckPermissionsForProjectLegacyResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -1352,45 +1305,27 @@ Check team permissions for a repository.
 https://developer.github.com/v3/teams/#check-team-permissions-for-a-repository
 */
 func CheckPermissionsForRepoInOrg(ctx context.Context, req *CheckPermissionsForRepoInOrgReq, opt ...requests.Option) (*CheckPermissionsForRepoInOrgResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(CheckPermissionsForRepoInOrgReq)
 	}
 	resp := &CheckPermissionsForRepoInOrgResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewCheckPermissionsForRepoInOrgResponse(r, opts.PreserveResponseBody())
-}
-
-// NewCheckPermissionsForRepoInOrgResponse builds a new *CheckPermissionsForRepoInOrgResponse from an *http.Response
-func NewCheckPermissionsForRepoInOrgResponse(resp *http.Response, preserveBody bool) (*CheckPermissionsForRepoInOrgResponse, error) {
-	var result CheckPermissionsForRepoInOrgResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200, 204})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -1401,6 +1336,8 @@ Check team permissions for a repository.
   GET /orgs/{org}/teams/{team_slug}/repos/{owner}/{repo}
 
 https://developer.github.com/v3/teams/#check-team-permissions-for-a-repository
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) CheckPermissionsForRepoInOrg(ctx context.Context, req *CheckPermissionsForRepoInOrgReq, opt ...requests.Option) (*CheckPermissionsForRepoInOrgResponse, error) {
 	return CheckPermissionsForRepoInOrg(ctx, req, append(c, opt...)...)
@@ -1410,6 +1347,8 @@ func (c Client) CheckPermissionsForRepoInOrg(ctx context.Context, req *CheckPerm
 CheckPermissionsForRepoInOrgReq is request data for Client.CheckPermissionsForRepoInOrg
 
 https://developer.github.com/v3/teams/#check-team-permissions-for-a-repository
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type CheckPermissionsForRepoInOrgReq struct {
 	_url string
@@ -1421,19 +1360,11 @@ type CheckPermissionsForRepoInOrgReq struct {
 	Repo     string
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *CheckPermissionsForRepoInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *CheckPermissionsForRepoInOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -1441,12 +1372,12 @@ func (r *CheckPermissionsForRepoInOrgReq) requestBuilder() *internal.RequestBuil
 		HeaderVals:         map[string]*string{"accept": internal.String("application/vnd.github.v3.repository+json")},
 		Method:             "GET",
 		OperationID:        "teams/check-permissions-for-repo-in-org",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/teams/%v/repos/%v/%v", r.Org, r.TeamSlug, r.Owner, r.Repo),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1472,8 +1403,25 @@ type CheckPermissionsForRepoInOrgResponse struct {
 	Data         components.TeamRepository
 }
 
+// HTTPResponse returns the *http.Response
 func (r *CheckPermissionsForRepoInOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *CheckPermissionsForRepoInOrgResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200, 204})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -1486,45 +1434,27 @@ Check team permissions for a repository (Legacy).
 https://developer.github.com/v3/teams/#check-team-permissions-for-a-repository-legacy
 */
 func CheckPermissionsForRepoLegacy(ctx context.Context, req *CheckPermissionsForRepoLegacyReq, opt ...requests.Option) (*CheckPermissionsForRepoLegacyResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(CheckPermissionsForRepoLegacyReq)
 	}
 	resp := &CheckPermissionsForRepoLegacyResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewCheckPermissionsForRepoLegacyResponse(r, opts.PreserveResponseBody())
-}
-
-// NewCheckPermissionsForRepoLegacyResponse builds a new *CheckPermissionsForRepoLegacyResponse from an *http.Response
-func NewCheckPermissionsForRepoLegacyResponse(resp *http.Response, preserveBody bool) (*CheckPermissionsForRepoLegacyResponse, error) {
-	var result CheckPermissionsForRepoLegacyResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200, 204})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -1535,6 +1465,8 @@ Check team permissions for a repository (Legacy).
   GET /teams/{team_id}/repos/{owner}/{repo}
 
 https://developer.github.com/v3/teams/#check-team-permissions-for-a-repository-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) CheckPermissionsForRepoLegacy(ctx context.Context, req *CheckPermissionsForRepoLegacyReq, opt ...requests.Option) (*CheckPermissionsForRepoLegacyResponse, error) {
 	return CheckPermissionsForRepoLegacy(ctx, req, append(c, opt...)...)
@@ -1544,6 +1476,8 @@ func (c Client) CheckPermissionsForRepoLegacy(ctx context.Context, req *CheckPer
 CheckPermissionsForRepoLegacyReq is request data for Client.CheckPermissionsForRepoLegacy
 
 https://developer.github.com/v3/teams/#check-team-permissions-for-a-repository-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type CheckPermissionsForRepoLegacyReq struct {
 	_url   string
@@ -1552,19 +1486,11 @@ type CheckPermissionsForRepoLegacyReq struct {
 	Repo   string
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *CheckPermissionsForRepoLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *CheckPermissionsForRepoLegacyReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -1572,12 +1498,12 @@ func (r *CheckPermissionsForRepoLegacyReq) requestBuilder() *internal.RequestBui
 		HeaderVals:         map[string]*string{"accept": internal.String("application/vnd.github.v3.repository+json")},
 		Method:             "GET",
 		OperationID:        "teams/check-permissions-for-repo-legacy",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/teams/%v/repos/%v/%v", r.TeamId, r.Owner, r.Repo),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1603,8 +1529,25 @@ type CheckPermissionsForRepoLegacyResponse struct {
 	Data         components.TeamRepository
 }
 
+// HTTPResponse returns the *http.Response
 func (r *CheckPermissionsForRepoLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *CheckPermissionsForRepoLegacyResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200, 204})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -1617,45 +1560,27 @@ Create a team.
 https://developer.github.com/v3/teams/#create-a-team
 */
 func Create(ctx context.Context, req *CreateReq, opt ...requests.Option) (*CreateResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(CreateReq)
 	}
 	resp := &CreateResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewCreateResponse(r, opts.PreserveResponseBody())
-}
-
-// NewCreateResponse builds a new *CreateResponse from an *http.Response
-func NewCreateResponse(resp *http.Response, preserveBody bool) (*CreateResponse, error) {
-	var result CreateResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{201})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{201}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -1666,6 +1591,8 @@ Create a team.
   POST /orgs/{org}/teams
 
 https://developer.github.com/v3/teams/#create-a-team
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) Create(ctx context.Context, req *CreateReq, opt ...requests.Option) (*CreateResponse, error) {
 	return Create(ctx, req, append(c, opt...)...)
@@ -1675,6 +1602,8 @@ func (c Client) Create(ctx context.Context, req *CreateReq, opt ...requests.Opti
 CreateReq is request data for Client.Create
 
 https://developer.github.com/v3/teams/#create-a-team
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type CreateReq struct {
 	_url        string
@@ -1682,19 +1611,11 @@ type CreateReq struct {
 	RequestBody CreateReqBody
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *CreateReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *CreateReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -1705,12 +1626,12 @@ func (r *CreateReq) requestBuilder() *internal.RequestBuilder {
 		},
 		Method:           "POST",
 		OperationID:      "teams/create",
+		Options:          opt,
 		Previews:         map[string]bool{},
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/orgs/%v/teams", r.Org),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1783,8 +1704,25 @@ type CreateResponse struct {
 	Data         components.TeamFull
 }
 
+// HTTPResponse returns the *http.Response
 func (r *CreateResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *CreateResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{201})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -1797,45 +1735,27 @@ Create a discussion comment.
 https://developer.github.com/v3/teams/discussion_comments/#create-a-discussion-comment
 */
 func CreateDiscussionCommentInOrg(ctx context.Context, req *CreateDiscussionCommentInOrgReq, opt ...requests.Option) (*CreateDiscussionCommentInOrgResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(CreateDiscussionCommentInOrgReq)
 	}
 	resp := &CreateDiscussionCommentInOrgResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewCreateDiscussionCommentInOrgResponse(r, opts.PreserveResponseBody())
-}
-
-// NewCreateDiscussionCommentInOrgResponse builds a new *CreateDiscussionCommentInOrgResponse from an *http.Response
-func NewCreateDiscussionCommentInOrgResponse(resp *http.Response, preserveBody bool) (*CreateDiscussionCommentInOrgResponse, error) {
-	var result CreateDiscussionCommentInOrgResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{201})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{201}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -1846,6 +1766,8 @@ Create a discussion comment.
   POST /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments
 
 https://developer.github.com/v3/teams/discussion_comments/#create-a-discussion-comment
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) CreateDiscussionCommentInOrg(ctx context.Context, req *CreateDiscussionCommentInOrgReq, opt ...requests.Option) (*CreateDiscussionCommentInOrgResponse, error) {
 	return CreateDiscussionCommentInOrg(ctx, req, append(c, opt...)...)
@@ -1855,6 +1777,8 @@ func (c Client) CreateDiscussionCommentInOrg(ctx context.Context, req *CreateDis
 CreateDiscussionCommentInOrgReq is request data for Client.CreateDiscussionCommentInOrg
 
 https://developer.github.com/v3/teams/discussion_comments/#create-a-discussion-comment
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type CreateDiscussionCommentInOrgReq struct {
 	_url string
@@ -1877,19 +1801,11 @@ type CreateDiscussionCommentInOrgReq struct {
 	SquirrelGirlPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *CreateDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *CreateDiscussionCommentInOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"squirrel-girl"},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -1900,12 +1816,12 @@ func (r *CreateDiscussionCommentInOrgReq) requestBuilder() *internal.RequestBuil
 		},
 		Method:           "POST",
 		OperationID:      "teams/create-discussion-comment-in-org",
+		Options:          opt,
 		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/comments", r.Org, r.TeamSlug, r.DiscussionNumber),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1942,8 +1858,25 @@ type CreateDiscussionCommentInOrgResponse struct {
 	Data         components.TeamDiscussionComment
 }
 
+// HTTPResponse returns the *http.Response
 func (r *CreateDiscussionCommentInOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *CreateDiscussionCommentInOrgResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{201})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -1956,45 +1889,27 @@ Create a discussion comment (Legacy).
 https://developer.github.com/v3/teams/discussion_comments/#create-a-discussion-comment-legacy
 */
 func CreateDiscussionCommentLegacy(ctx context.Context, req *CreateDiscussionCommentLegacyReq, opt ...requests.Option) (*CreateDiscussionCommentLegacyResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(CreateDiscussionCommentLegacyReq)
 	}
 	resp := &CreateDiscussionCommentLegacyResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewCreateDiscussionCommentLegacyResponse(r, opts.PreserveResponseBody())
-}
-
-// NewCreateDiscussionCommentLegacyResponse builds a new *CreateDiscussionCommentLegacyResponse from an *http.Response
-func NewCreateDiscussionCommentLegacyResponse(resp *http.Response, preserveBody bool) (*CreateDiscussionCommentLegacyResponse, error) {
-	var result CreateDiscussionCommentLegacyResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{201})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{201}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -2005,6 +1920,8 @@ Create a discussion comment (Legacy).
   POST /teams/{team_id}/discussions/{discussion_number}/comments
 
 https://developer.github.com/v3/teams/discussion_comments/#create-a-discussion-comment-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) CreateDiscussionCommentLegacy(ctx context.Context, req *CreateDiscussionCommentLegacyReq, opt ...requests.Option) (*CreateDiscussionCommentLegacyResponse, error) {
 	return CreateDiscussionCommentLegacy(ctx, req, append(c, opt...)...)
@@ -2014,6 +1931,8 @@ func (c Client) CreateDiscussionCommentLegacy(ctx context.Context, req *CreateDi
 CreateDiscussionCommentLegacyReq is request data for Client.CreateDiscussionCommentLegacy
 
 https://developer.github.com/v3/teams/discussion_comments/#create-a-discussion-comment-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type CreateDiscussionCommentLegacyReq struct {
 	_url             string
@@ -2033,19 +1952,11 @@ type CreateDiscussionCommentLegacyReq struct {
 	SquirrelGirlPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *CreateDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *CreateDiscussionCommentLegacyReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"squirrel-girl"},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -2056,12 +1967,12 @@ func (r *CreateDiscussionCommentLegacyReq) requestBuilder() *internal.RequestBui
 		},
 		Method:           "POST",
 		OperationID:      "teams/create-discussion-comment-legacy",
+		Options:          opt,
 		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/teams/%v/discussions/%v/comments", r.TeamId, r.DiscussionNumber),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -2098,8 +2009,25 @@ type CreateDiscussionCommentLegacyResponse struct {
 	Data         components.TeamDiscussionComment
 }
 
+// HTTPResponse returns the *http.Response
 func (r *CreateDiscussionCommentLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *CreateDiscussionCommentLegacyResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{201})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -2112,45 +2040,27 @@ Create a discussion.
 https://developer.github.com/v3/teams/discussions/#create-a-discussion
 */
 func CreateDiscussionInOrg(ctx context.Context, req *CreateDiscussionInOrgReq, opt ...requests.Option) (*CreateDiscussionInOrgResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(CreateDiscussionInOrgReq)
 	}
 	resp := &CreateDiscussionInOrgResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewCreateDiscussionInOrgResponse(r, opts.PreserveResponseBody())
-}
-
-// NewCreateDiscussionInOrgResponse builds a new *CreateDiscussionInOrgResponse from an *http.Response
-func NewCreateDiscussionInOrgResponse(resp *http.Response, preserveBody bool) (*CreateDiscussionInOrgResponse, error) {
-	var result CreateDiscussionInOrgResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{201})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{201}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -2161,6 +2071,8 @@ Create a discussion.
   POST /orgs/{org}/teams/{team_slug}/discussions
 
 https://developer.github.com/v3/teams/discussions/#create-a-discussion
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) CreateDiscussionInOrg(ctx context.Context, req *CreateDiscussionInOrgReq, opt ...requests.Option) (*CreateDiscussionInOrgResponse, error) {
 	return CreateDiscussionInOrg(ctx, req, append(c, opt...)...)
@@ -2170,6 +2082,8 @@ func (c Client) CreateDiscussionInOrg(ctx context.Context, req *CreateDiscussion
 CreateDiscussionInOrgReq is request data for Client.CreateDiscussionInOrg
 
 https://developer.github.com/v3/teams/discussions/#create-a-discussion
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type CreateDiscussionInOrgReq struct {
 	_url string
@@ -2191,19 +2105,11 @@ type CreateDiscussionInOrgReq struct {
 	SquirrelGirlPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *CreateDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *CreateDiscussionInOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"squirrel-girl"},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -2214,12 +2120,12 @@ func (r *CreateDiscussionInOrgReq) requestBuilder() *internal.RequestBuilder {
 		},
 		Method:           "POST",
 		OperationID:      "teams/create-discussion-in-org",
+		Options:          opt,
 		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/orgs/%v/teams/%v/discussions", r.Org, r.TeamSlug),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -2266,8 +2172,25 @@ type CreateDiscussionInOrgResponse struct {
 	Data         components.TeamDiscussion
 }
 
+// HTTPResponse returns the *http.Response
 func (r *CreateDiscussionInOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *CreateDiscussionInOrgResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{201})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -2280,45 +2203,27 @@ Create a discussion (Legacy).
 https://developer.github.com/v3/teams/discussions/#create-a-discussion-legacy
 */
 func CreateDiscussionLegacy(ctx context.Context, req *CreateDiscussionLegacyReq, opt ...requests.Option) (*CreateDiscussionLegacyResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(CreateDiscussionLegacyReq)
 	}
 	resp := &CreateDiscussionLegacyResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewCreateDiscussionLegacyResponse(r, opts.PreserveResponseBody())
-}
-
-// NewCreateDiscussionLegacyResponse builds a new *CreateDiscussionLegacyResponse from an *http.Response
-func NewCreateDiscussionLegacyResponse(resp *http.Response, preserveBody bool) (*CreateDiscussionLegacyResponse, error) {
-	var result CreateDiscussionLegacyResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{201})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{201}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -2329,6 +2234,8 @@ Create a discussion (Legacy).
   POST /teams/{team_id}/discussions
 
 https://developer.github.com/v3/teams/discussions/#create-a-discussion-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) CreateDiscussionLegacy(ctx context.Context, req *CreateDiscussionLegacyReq, opt ...requests.Option) (*CreateDiscussionLegacyResponse, error) {
 	return CreateDiscussionLegacy(ctx, req, append(c, opt...)...)
@@ -2338,6 +2245,8 @@ func (c Client) CreateDiscussionLegacy(ctx context.Context, req *CreateDiscussio
 CreateDiscussionLegacyReq is request data for Client.CreateDiscussionLegacy
 
 https://developer.github.com/v3/teams/discussions/#create-a-discussion-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type CreateDiscussionLegacyReq struct {
 	_url        string
@@ -2356,19 +2265,11 @@ type CreateDiscussionLegacyReq struct {
 	SquirrelGirlPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *CreateDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *CreateDiscussionLegacyReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"squirrel-girl"},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -2379,12 +2280,12 @@ func (r *CreateDiscussionLegacyReq) requestBuilder() *internal.RequestBuilder {
 		},
 		Method:           "POST",
 		OperationID:      "teams/create-discussion-legacy",
+		Options:          opt,
 		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/teams/%v/discussions", r.TeamId),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -2431,8 +2332,25 @@ type CreateDiscussionLegacyResponse struct {
 	Data         components.TeamDiscussion
 }
 
+// HTTPResponse returns the *http.Response
 func (r *CreateDiscussionLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *CreateDiscussionLegacyResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{201})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -2445,45 +2363,27 @@ Create or update IdP group connections.
 https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections
 */
 func CreateOrUpdateIdpGroupConnectionsInOrg(ctx context.Context, req *CreateOrUpdateIdpGroupConnectionsInOrgReq, opt ...requests.Option) (*CreateOrUpdateIdpGroupConnectionsInOrgResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(CreateOrUpdateIdpGroupConnectionsInOrgReq)
 	}
 	resp := &CreateOrUpdateIdpGroupConnectionsInOrgResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewCreateOrUpdateIdpGroupConnectionsInOrgResponse(r, opts.PreserveResponseBody())
-}
-
-// NewCreateOrUpdateIdpGroupConnectionsInOrgResponse builds a new *CreateOrUpdateIdpGroupConnectionsInOrgResponse from an *http.Response
-func NewCreateOrUpdateIdpGroupConnectionsInOrgResponse(resp *http.Response, preserveBody bool) (*CreateOrUpdateIdpGroupConnectionsInOrgResponse, error) {
-	var result CreateOrUpdateIdpGroupConnectionsInOrgResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -2494,6 +2394,8 @@ Create or update IdP group connections.
   PATCH /orgs/{org}/teams/{team_slug}/team-sync/group-mappings
 
 https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) CreateOrUpdateIdpGroupConnectionsInOrg(ctx context.Context, req *CreateOrUpdateIdpGroupConnectionsInOrgReq, opt ...requests.Option) (*CreateOrUpdateIdpGroupConnectionsInOrgResponse, error) {
 	return CreateOrUpdateIdpGroupConnectionsInOrg(ctx, req, append(c, opt...)...)
@@ -2503,6 +2405,8 @@ func (c Client) CreateOrUpdateIdpGroupConnectionsInOrg(ctx context.Context, req 
 CreateOrUpdateIdpGroupConnectionsInOrgReq is request data for Client.CreateOrUpdateIdpGroupConnectionsInOrg
 
 https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type CreateOrUpdateIdpGroupConnectionsInOrgReq struct {
 	_url string
@@ -2513,19 +2417,11 @@ type CreateOrUpdateIdpGroupConnectionsInOrgReq struct {
 	RequestBody CreateOrUpdateIdpGroupConnectionsInOrgReqBody
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *CreateOrUpdateIdpGroupConnectionsInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *CreateOrUpdateIdpGroupConnectionsInOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -2536,12 +2432,12 @@ func (r *CreateOrUpdateIdpGroupConnectionsInOrgReq) requestBuilder() *internal.R
 		},
 		Method:           "PATCH",
 		OperationID:      "teams/create-or-update-idp-group-connections-in-org",
+		Options:          opt,
 		Previews:         map[string]bool{},
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/orgs/%v/teams/%v/team-sync/group-mappings", r.Org, r.TeamSlug),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -2595,8 +2491,25 @@ type CreateOrUpdateIdpGroupConnectionsInOrgResponse struct {
 	Data         components.GroupMapping
 }
 
+// HTTPResponse returns the *http.Response
 func (r *CreateOrUpdateIdpGroupConnectionsInOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *CreateOrUpdateIdpGroupConnectionsInOrgResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -2609,45 +2522,27 @@ Create or update IdP group connections (Legacy).
 https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections-legacy
 */
 func CreateOrUpdateIdpGroupConnectionsLegacy(ctx context.Context, req *CreateOrUpdateIdpGroupConnectionsLegacyReq, opt ...requests.Option) (*CreateOrUpdateIdpGroupConnectionsLegacyResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(CreateOrUpdateIdpGroupConnectionsLegacyReq)
 	}
 	resp := &CreateOrUpdateIdpGroupConnectionsLegacyResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewCreateOrUpdateIdpGroupConnectionsLegacyResponse(r, opts.PreserveResponseBody())
-}
-
-// NewCreateOrUpdateIdpGroupConnectionsLegacyResponse builds a new *CreateOrUpdateIdpGroupConnectionsLegacyResponse from an *http.Response
-func NewCreateOrUpdateIdpGroupConnectionsLegacyResponse(resp *http.Response, preserveBody bool) (*CreateOrUpdateIdpGroupConnectionsLegacyResponse, error) {
-	var result CreateOrUpdateIdpGroupConnectionsLegacyResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -2658,6 +2553,8 @@ Create or update IdP group connections (Legacy).
   PATCH /teams/{team_id}/team-sync/group-mappings
 
 https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) CreateOrUpdateIdpGroupConnectionsLegacy(ctx context.Context, req *CreateOrUpdateIdpGroupConnectionsLegacyReq, opt ...requests.Option) (*CreateOrUpdateIdpGroupConnectionsLegacyResponse, error) {
 	return CreateOrUpdateIdpGroupConnectionsLegacy(ctx, req, append(c, opt...)...)
@@ -2667,6 +2564,8 @@ func (c Client) CreateOrUpdateIdpGroupConnectionsLegacy(ctx context.Context, req
 CreateOrUpdateIdpGroupConnectionsLegacyReq is request data for Client.CreateOrUpdateIdpGroupConnectionsLegacy
 
 https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type CreateOrUpdateIdpGroupConnectionsLegacyReq struct {
 	_url        string
@@ -2674,19 +2573,11 @@ type CreateOrUpdateIdpGroupConnectionsLegacyReq struct {
 	RequestBody CreateOrUpdateIdpGroupConnectionsLegacyReqBody
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *CreateOrUpdateIdpGroupConnectionsLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *CreateOrUpdateIdpGroupConnectionsLegacyReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -2697,12 +2588,12 @@ func (r *CreateOrUpdateIdpGroupConnectionsLegacyReq) requestBuilder() *internal.
 		},
 		Method:           "PATCH",
 		OperationID:      "teams/create-or-update-idp-group-connections-legacy",
+		Options:          opt,
 		Previews:         map[string]bool{},
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/teams/%v/team-sync/group-mappings", r.TeamId),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -2760,8 +2651,25 @@ type CreateOrUpdateIdpGroupConnectionsLegacyResponse struct {
 	Data         components.GroupMapping
 }
 
+// HTTPResponse returns the *http.Response
 func (r *CreateOrUpdateIdpGroupConnectionsLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *CreateOrUpdateIdpGroupConnectionsLegacyResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -2774,39 +2682,27 @@ Delete a discussion comment.
 https://developer.github.com/v3/teams/discussion_comments/#delete-a-discussion-comment
 */
 func DeleteDiscussionCommentInOrg(ctx context.Context, req *DeleteDiscussionCommentInOrgReq, opt ...requests.Option) (*DeleteDiscussionCommentInOrgResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(DeleteDiscussionCommentInOrgReq)
 	}
 	resp := &DeleteDiscussionCommentInOrgResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewDeleteDiscussionCommentInOrgResponse(r, opts.PreserveResponseBody())
-}
-
-// NewDeleteDiscussionCommentInOrgResponse builds a new *DeleteDiscussionCommentInOrgResponse from an *http.Response
-func NewDeleteDiscussionCommentInOrgResponse(resp *http.Response, preserveBody bool) (*DeleteDiscussionCommentInOrgResponse, error) {
-	var result DeleteDiscussionCommentInOrgResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{204})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -2817,6 +2713,8 @@ Delete a discussion comment.
   DELETE /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments/{comment_number}
 
 https://developer.github.com/v3/teams/discussion_comments/#delete-a-discussion-comment
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) DeleteDiscussionCommentInOrg(ctx context.Context, req *DeleteDiscussionCommentInOrgReq, opt ...requests.Option) (*DeleteDiscussionCommentInOrgResponse, error) {
 	return DeleteDiscussionCommentInOrg(ctx, req, append(c, opt...)...)
@@ -2826,6 +2724,8 @@ func (c Client) DeleteDiscussionCommentInOrg(ctx context.Context, req *DeleteDis
 DeleteDiscussionCommentInOrgReq is request data for Client.DeleteDiscussionCommentInOrg
 
 https://developer.github.com/v3/teams/discussion_comments/#delete-a-discussion-comment
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type DeleteDiscussionCommentInOrgReq struct {
 	_url string
@@ -2837,19 +2737,11 @@ type DeleteDiscussionCommentInOrgReq struct {
 	CommentNumber    int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *DeleteDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *DeleteDiscussionCommentInOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -2857,12 +2749,12 @@ func (r *DeleteDiscussionCommentInOrgReq) requestBuilder() *internal.RequestBuil
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
 		OperationID:        "teams/delete-discussion-comment-in-org",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/comments/%v", r.Org, r.TeamSlug, r.DiscussionNumber, r.CommentNumber),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -2887,8 +2779,19 @@ type DeleteDiscussionCommentInOrgResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *DeleteDiscussionCommentInOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *DeleteDiscussionCommentInOrgResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{204})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -2901,39 +2804,27 @@ Delete a discussion comment (Legacy).
 https://developer.github.com/v3/teams/discussion_comments/#delete-a-discussion-comment-legacy
 */
 func DeleteDiscussionCommentLegacy(ctx context.Context, req *DeleteDiscussionCommentLegacyReq, opt ...requests.Option) (*DeleteDiscussionCommentLegacyResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(DeleteDiscussionCommentLegacyReq)
 	}
 	resp := &DeleteDiscussionCommentLegacyResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewDeleteDiscussionCommentLegacyResponse(r, opts.PreserveResponseBody())
-}
-
-// NewDeleteDiscussionCommentLegacyResponse builds a new *DeleteDiscussionCommentLegacyResponse from an *http.Response
-func NewDeleteDiscussionCommentLegacyResponse(resp *http.Response, preserveBody bool) (*DeleteDiscussionCommentLegacyResponse, error) {
-	var result DeleteDiscussionCommentLegacyResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{204})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -2944,6 +2835,8 @@ Delete a discussion comment (Legacy).
   DELETE /teams/{team_id}/discussions/{discussion_number}/comments/{comment_number}
 
 https://developer.github.com/v3/teams/discussion_comments/#delete-a-discussion-comment-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) DeleteDiscussionCommentLegacy(ctx context.Context, req *DeleteDiscussionCommentLegacyReq, opt ...requests.Option) (*DeleteDiscussionCommentLegacyResponse, error) {
 	return DeleteDiscussionCommentLegacy(ctx, req, append(c, opt...)...)
@@ -2953,6 +2846,8 @@ func (c Client) DeleteDiscussionCommentLegacy(ctx context.Context, req *DeleteDi
 DeleteDiscussionCommentLegacyReq is request data for Client.DeleteDiscussionCommentLegacy
 
 https://developer.github.com/v3/teams/discussion_comments/#delete-a-discussion-comment-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type DeleteDiscussionCommentLegacyReq struct {
 	_url             string
@@ -2961,19 +2856,11 @@ type DeleteDiscussionCommentLegacyReq struct {
 	CommentNumber    int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *DeleteDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *DeleteDiscussionCommentLegacyReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -2981,12 +2868,12 @@ func (r *DeleteDiscussionCommentLegacyReq) requestBuilder() *internal.RequestBui
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
 		OperationID:        "teams/delete-discussion-comment-legacy",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/teams/%v/discussions/%v/comments/%v", r.TeamId, r.DiscussionNumber, r.CommentNumber),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -3011,8 +2898,19 @@ type DeleteDiscussionCommentLegacyResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *DeleteDiscussionCommentLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *DeleteDiscussionCommentLegacyResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{204})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -3025,39 +2923,27 @@ Delete a discussion.
 https://developer.github.com/v3/teams/discussions/#delete-a-discussion
 */
 func DeleteDiscussionInOrg(ctx context.Context, req *DeleteDiscussionInOrgReq, opt ...requests.Option) (*DeleteDiscussionInOrgResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(DeleteDiscussionInOrgReq)
 	}
 	resp := &DeleteDiscussionInOrgResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewDeleteDiscussionInOrgResponse(r, opts.PreserveResponseBody())
-}
-
-// NewDeleteDiscussionInOrgResponse builds a new *DeleteDiscussionInOrgResponse from an *http.Response
-func NewDeleteDiscussionInOrgResponse(resp *http.Response, preserveBody bool) (*DeleteDiscussionInOrgResponse, error) {
-	var result DeleteDiscussionInOrgResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{204})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -3068,6 +2954,8 @@ Delete a discussion.
   DELETE /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}
 
 https://developer.github.com/v3/teams/discussions/#delete-a-discussion
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) DeleteDiscussionInOrg(ctx context.Context, req *DeleteDiscussionInOrgReq, opt ...requests.Option) (*DeleteDiscussionInOrgResponse, error) {
 	return DeleteDiscussionInOrg(ctx, req, append(c, opt...)...)
@@ -3077,6 +2965,8 @@ func (c Client) DeleteDiscussionInOrg(ctx context.Context, req *DeleteDiscussion
 DeleteDiscussionInOrgReq is request data for Client.DeleteDiscussionInOrg
 
 https://developer.github.com/v3/teams/discussions/#delete-a-discussion
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type DeleteDiscussionInOrgReq struct {
 	_url string
@@ -3087,19 +2977,11 @@ type DeleteDiscussionInOrgReq struct {
 	DiscussionNumber int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *DeleteDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *DeleteDiscussionInOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -3107,12 +2989,12 @@ func (r *DeleteDiscussionInOrgReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
 		OperationID:        "teams/delete-discussion-in-org",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v", r.Org, r.TeamSlug, r.DiscussionNumber),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -3137,8 +3019,19 @@ type DeleteDiscussionInOrgResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *DeleteDiscussionInOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *DeleteDiscussionInOrgResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{204})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -3151,39 +3044,27 @@ Delete a discussion (Legacy).
 https://developer.github.com/v3/teams/discussions/#delete-a-discussion-legacy
 */
 func DeleteDiscussionLegacy(ctx context.Context, req *DeleteDiscussionLegacyReq, opt ...requests.Option) (*DeleteDiscussionLegacyResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(DeleteDiscussionLegacyReq)
 	}
 	resp := &DeleteDiscussionLegacyResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewDeleteDiscussionLegacyResponse(r, opts.PreserveResponseBody())
-}
-
-// NewDeleteDiscussionLegacyResponse builds a new *DeleteDiscussionLegacyResponse from an *http.Response
-func NewDeleteDiscussionLegacyResponse(resp *http.Response, preserveBody bool) (*DeleteDiscussionLegacyResponse, error) {
-	var result DeleteDiscussionLegacyResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{204})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -3194,6 +3075,8 @@ Delete a discussion (Legacy).
   DELETE /teams/{team_id}/discussions/{discussion_number}
 
 https://developer.github.com/v3/teams/discussions/#delete-a-discussion-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) DeleteDiscussionLegacy(ctx context.Context, req *DeleteDiscussionLegacyReq, opt ...requests.Option) (*DeleteDiscussionLegacyResponse, error) {
 	return DeleteDiscussionLegacy(ctx, req, append(c, opt...)...)
@@ -3203,6 +3086,8 @@ func (c Client) DeleteDiscussionLegacy(ctx context.Context, req *DeleteDiscussio
 DeleteDiscussionLegacyReq is request data for Client.DeleteDiscussionLegacy
 
 https://developer.github.com/v3/teams/discussions/#delete-a-discussion-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type DeleteDiscussionLegacyReq struct {
 	_url             string
@@ -3210,19 +3095,11 @@ type DeleteDiscussionLegacyReq struct {
 	DiscussionNumber int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *DeleteDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *DeleteDiscussionLegacyReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -3230,12 +3107,12 @@ func (r *DeleteDiscussionLegacyReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
 		OperationID:        "teams/delete-discussion-legacy",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/teams/%v/discussions/%v", r.TeamId, r.DiscussionNumber),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -3260,8 +3137,19 @@ type DeleteDiscussionLegacyResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *DeleteDiscussionLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *DeleteDiscussionLegacyResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{204})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -3274,39 +3162,27 @@ Delete a team.
 https://developer.github.com/v3/teams/#delete-a-team
 */
 func DeleteInOrg(ctx context.Context, req *DeleteInOrgReq, opt ...requests.Option) (*DeleteInOrgResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(DeleteInOrgReq)
 	}
 	resp := &DeleteInOrgResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewDeleteInOrgResponse(r, opts.PreserveResponseBody())
-}
-
-// NewDeleteInOrgResponse builds a new *DeleteInOrgResponse from an *http.Response
-func NewDeleteInOrgResponse(resp *http.Response, preserveBody bool) (*DeleteInOrgResponse, error) {
-	var result DeleteInOrgResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{204})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -3317,6 +3193,8 @@ Delete a team.
   DELETE /orgs/{org}/teams/{team_slug}
 
 https://developer.github.com/v3/teams/#delete-a-team
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) DeleteInOrg(ctx context.Context, req *DeleteInOrgReq, opt ...requests.Option) (*DeleteInOrgResponse, error) {
 	return DeleteInOrg(ctx, req, append(c, opt...)...)
@@ -3326,6 +3204,8 @@ func (c Client) DeleteInOrg(ctx context.Context, req *DeleteInOrgReq, opt ...req
 DeleteInOrgReq is request data for Client.DeleteInOrg
 
 https://developer.github.com/v3/teams/#delete-a-team
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type DeleteInOrgReq struct {
 	_url string
@@ -3335,19 +3215,11 @@ type DeleteInOrgReq struct {
 	TeamSlug string
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *DeleteInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *DeleteInOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -3355,12 +3227,12 @@ func (r *DeleteInOrgReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
 		OperationID:        "teams/delete-in-org",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/teams/%v", r.Org, r.TeamSlug),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -3385,8 +3257,19 @@ type DeleteInOrgResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *DeleteInOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *DeleteInOrgResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{204})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -3399,39 +3282,27 @@ Delete a team (Legacy).
 https://developer.github.com/v3/teams/#delete-a-team-legacy
 */
 func DeleteLegacy(ctx context.Context, req *DeleteLegacyReq, opt ...requests.Option) (*DeleteLegacyResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(DeleteLegacyReq)
 	}
 	resp := &DeleteLegacyResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewDeleteLegacyResponse(r, opts.PreserveResponseBody())
-}
-
-// NewDeleteLegacyResponse builds a new *DeleteLegacyResponse from an *http.Response
-func NewDeleteLegacyResponse(resp *http.Response, preserveBody bool) (*DeleteLegacyResponse, error) {
-	var result DeleteLegacyResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{204})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -3442,6 +3313,8 @@ Delete a team (Legacy).
   DELETE /teams/{team_id}
 
 https://developer.github.com/v3/teams/#delete-a-team-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) DeleteLegacy(ctx context.Context, req *DeleteLegacyReq, opt ...requests.Option) (*DeleteLegacyResponse, error) {
 	return DeleteLegacy(ctx, req, append(c, opt...)...)
@@ -3451,25 +3324,19 @@ func (c Client) DeleteLegacy(ctx context.Context, req *DeleteLegacyReq, opt ...r
 DeleteLegacyReq is request data for Client.DeleteLegacy
 
 https://developer.github.com/v3/teams/#delete-a-team-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type DeleteLegacyReq struct {
 	_url   string
 	TeamId int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *DeleteLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *DeleteLegacyReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -3477,12 +3344,12 @@ func (r *DeleteLegacyReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
 		OperationID:        "teams/delete-legacy",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/teams/%v", r.TeamId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -3507,8 +3374,19 @@ type DeleteLegacyResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *DeleteLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *DeleteLegacyResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{204})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -3521,45 +3399,27 @@ Get a team by name.
 https://developer.github.com/v3/teams/#get-a-team-by-name
 */
 func GetByName(ctx context.Context, req *GetByNameReq, opt ...requests.Option) (*GetByNameResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetByNameReq)
 	}
 	resp := &GetByNameResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetByNameResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetByNameResponse builds a new *GetByNameResponse from an *http.Response
-func NewGetByNameResponse(resp *http.Response, preserveBody bool) (*GetByNameResponse, error) {
-	var result GetByNameResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -3570,6 +3430,8 @@ Get a team by name.
   GET /orgs/{org}/teams/{team_slug}
 
 https://developer.github.com/v3/teams/#get-a-team-by-name
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) GetByName(ctx context.Context, req *GetByNameReq, opt ...requests.Option) (*GetByNameResponse, error) {
 	return GetByName(ctx, req, append(c, opt...)...)
@@ -3579,6 +3441,8 @@ func (c Client) GetByName(ctx context.Context, req *GetByNameReq, opt ...request
 GetByNameReq is request data for Client.GetByName
 
 https://developer.github.com/v3/teams/#get-a-team-by-name
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetByNameReq struct {
 	_url string
@@ -3588,19 +3452,11 @@ type GetByNameReq struct {
 	TeamSlug string
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetByNameReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetByNameReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -3608,12 +3464,12 @@ func (r *GetByNameReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "teams/get-by-name",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/teams/%v", r.Org, r.TeamSlug),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -3639,8 +3495,25 @@ type GetByNameResponse struct {
 	Data         components.TeamFull
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetByNameResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetByNameResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -3653,45 +3526,27 @@ Get a discussion comment.
 https://developer.github.com/v3/teams/discussion_comments/#get-a-discussion-comment
 */
 func GetDiscussionCommentInOrg(ctx context.Context, req *GetDiscussionCommentInOrgReq, opt ...requests.Option) (*GetDiscussionCommentInOrgResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetDiscussionCommentInOrgReq)
 	}
 	resp := &GetDiscussionCommentInOrgResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetDiscussionCommentInOrgResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetDiscussionCommentInOrgResponse builds a new *GetDiscussionCommentInOrgResponse from an *http.Response
-func NewGetDiscussionCommentInOrgResponse(resp *http.Response, preserveBody bool) (*GetDiscussionCommentInOrgResponse, error) {
-	var result GetDiscussionCommentInOrgResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -3702,6 +3557,8 @@ Get a discussion comment.
   GET /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments/{comment_number}
 
 https://developer.github.com/v3/teams/discussion_comments/#get-a-discussion-comment
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) GetDiscussionCommentInOrg(ctx context.Context, req *GetDiscussionCommentInOrgReq, opt ...requests.Option) (*GetDiscussionCommentInOrgResponse, error) {
 	return GetDiscussionCommentInOrg(ctx, req, append(c, opt...)...)
@@ -3711,6 +3568,8 @@ func (c Client) GetDiscussionCommentInOrg(ctx context.Context, req *GetDiscussio
 GetDiscussionCommentInOrgReq is request data for Client.GetDiscussionCommentInOrg
 
 https://developer.github.com/v3/teams/discussion_comments/#get-a-discussion-comment
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetDiscussionCommentInOrgReq struct {
 	_url string
@@ -3733,19 +3592,11 @@ type GetDiscussionCommentInOrgReq struct {
 	SquirrelGirlPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetDiscussionCommentInOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"squirrel-girl"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -3753,12 +3604,12 @@ func (r *GetDiscussionCommentInOrgReq) requestBuilder() *internal.RequestBuilder
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "teams/get-discussion-comment-in-org",
+		Options:            opt,
 		Previews:           map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/comments/%v", r.Org, r.TeamSlug, r.DiscussionNumber, r.CommentNumber),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -3784,8 +3635,25 @@ type GetDiscussionCommentInOrgResponse struct {
 	Data         components.TeamDiscussionComment
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetDiscussionCommentInOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetDiscussionCommentInOrgResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -3798,45 +3666,27 @@ Get a discussion comment (Legacy).
 https://developer.github.com/v3/teams/discussion_comments/#get-a-discussion-comment-legacy
 */
 func GetDiscussionCommentLegacy(ctx context.Context, req *GetDiscussionCommentLegacyReq, opt ...requests.Option) (*GetDiscussionCommentLegacyResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetDiscussionCommentLegacyReq)
 	}
 	resp := &GetDiscussionCommentLegacyResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetDiscussionCommentLegacyResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetDiscussionCommentLegacyResponse builds a new *GetDiscussionCommentLegacyResponse from an *http.Response
-func NewGetDiscussionCommentLegacyResponse(resp *http.Response, preserveBody bool) (*GetDiscussionCommentLegacyResponse, error) {
-	var result GetDiscussionCommentLegacyResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -3847,6 +3697,8 @@ Get a discussion comment (Legacy).
   GET /teams/{team_id}/discussions/{discussion_number}/comments/{comment_number}
 
 https://developer.github.com/v3/teams/discussion_comments/#get-a-discussion-comment-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) GetDiscussionCommentLegacy(ctx context.Context, req *GetDiscussionCommentLegacyReq, opt ...requests.Option) (*GetDiscussionCommentLegacyResponse, error) {
 	return GetDiscussionCommentLegacy(ctx, req, append(c, opt...)...)
@@ -3856,6 +3708,8 @@ func (c Client) GetDiscussionCommentLegacy(ctx context.Context, req *GetDiscussi
 GetDiscussionCommentLegacyReq is request data for Client.GetDiscussionCommentLegacy
 
 https://developer.github.com/v3/teams/discussion_comments/#get-a-discussion-comment-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetDiscussionCommentLegacyReq struct {
 	_url             string
@@ -3875,19 +3729,11 @@ type GetDiscussionCommentLegacyReq struct {
 	SquirrelGirlPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetDiscussionCommentLegacyReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"squirrel-girl"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -3895,12 +3741,12 @@ func (r *GetDiscussionCommentLegacyReq) requestBuilder() *internal.RequestBuilde
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "teams/get-discussion-comment-legacy",
+		Options:            opt,
 		Previews:           map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/teams/%v/discussions/%v/comments/%v", r.TeamId, r.DiscussionNumber, r.CommentNumber),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -3926,8 +3772,25 @@ type GetDiscussionCommentLegacyResponse struct {
 	Data         components.TeamDiscussionComment
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetDiscussionCommentLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetDiscussionCommentLegacyResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -3940,45 +3803,27 @@ Get a discussion.
 https://developer.github.com/v3/teams/discussions/#get-a-discussion
 */
 func GetDiscussionInOrg(ctx context.Context, req *GetDiscussionInOrgReq, opt ...requests.Option) (*GetDiscussionInOrgResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetDiscussionInOrgReq)
 	}
 	resp := &GetDiscussionInOrgResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetDiscussionInOrgResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetDiscussionInOrgResponse builds a new *GetDiscussionInOrgResponse from an *http.Response
-func NewGetDiscussionInOrgResponse(resp *http.Response, preserveBody bool) (*GetDiscussionInOrgResponse, error) {
-	var result GetDiscussionInOrgResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -3989,6 +3834,8 @@ Get a discussion.
   GET /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}
 
 https://developer.github.com/v3/teams/discussions/#get-a-discussion
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) GetDiscussionInOrg(ctx context.Context, req *GetDiscussionInOrgReq, opt ...requests.Option) (*GetDiscussionInOrgResponse, error) {
 	return GetDiscussionInOrg(ctx, req, append(c, opt...)...)
@@ -3998,6 +3845,8 @@ func (c Client) GetDiscussionInOrg(ctx context.Context, req *GetDiscussionInOrgR
 GetDiscussionInOrgReq is request data for Client.GetDiscussionInOrg
 
 https://developer.github.com/v3/teams/discussions/#get-a-discussion
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetDiscussionInOrgReq struct {
 	_url string
@@ -4019,19 +3868,11 @@ type GetDiscussionInOrgReq struct {
 	SquirrelGirlPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetDiscussionInOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"squirrel-girl"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -4039,12 +3880,12 @@ func (r *GetDiscussionInOrgReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "teams/get-discussion-in-org",
+		Options:            opt,
 		Previews:           map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v", r.Org, r.TeamSlug, r.DiscussionNumber),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -4070,8 +3911,25 @@ type GetDiscussionInOrgResponse struct {
 	Data         components.TeamDiscussion
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetDiscussionInOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetDiscussionInOrgResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -4084,45 +3942,27 @@ Get a discussion (Legacy).
 https://developer.github.com/v3/teams/discussions/#get-a-discussion-legacy
 */
 func GetDiscussionLegacy(ctx context.Context, req *GetDiscussionLegacyReq, opt ...requests.Option) (*GetDiscussionLegacyResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetDiscussionLegacyReq)
 	}
 	resp := &GetDiscussionLegacyResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetDiscussionLegacyResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetDiscussionLegacyResponse builds a new *GetDiscussionLegacyResponse from an *http.Response
-func NewGetDiscussionLegacyResponse(resp *http.Response, preserveBody bool) (*GetDiscussionLegacyResponse, error) {
-	var result GetDiscussionLegacyResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -4133,6 +3973,8 @@ Get a discussion (Legacy).
   GET /teams/{team_id}/discussions/{discussion_number}
 
 https://developer.github.com/v3/teams/discussions/#get-a-discussion-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) GetDiscussionLegacy(ctx context.Context, req *GetDiscussionLegacyReq, opt ...requests.Option) (*GetDiscussionLegacyResponse, error) {
 	return GetDiscussionLegacy(ctx, req, append(c, opt...)...)
@@ -4142,6 +3984,8 @@ func (c Client) GetDiscussionLegacy(ctx context.Context, req *GetDiscussionLegac
 GetDiscussionLegacyReq is request data for Client.GetDiscussionLegacy
 
 https://developer.github.com/v3/teams/discussions/#get-a-discussion-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetDiscussionLegacyReq struct {
 	_url             string
@@ -4160,19 +4004,11 @@ type GetDiscussionLegacyReq struct {
 	SquirrelGirlPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetDiscussionLegacyReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"squirrel-girl"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -4180,12 +4016,12 @@ func (r *GetDiscussionLegacyReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "teams/get-discussion-legacy",
+		Options:            opt,
 		Previews:           map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/teams/%v/discussions/%v", r.TeamId, r.DiscussionNumber),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -4211,8 +4047,25 @@ type GetDiscussionLegacyResponse struct {
 	Data         components.TeamDiscussion
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetDiscussionLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetDiscussionLegacyResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -4225,45 +4078,27 @@ Get a team (Legacy).
 https://developer.github.com/v3/teams/#get-a-team-legacy
 */
 func GetLegacy(ctx context.Context, req *GetLegacyReq, opt ...requests.Option) (*GetLegacyResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetLegacyReq)
 	}
 	resp := &GetLegacyResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetLegacyResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetLegacyResponse builds a new *GetLegacyResponse from an *http.Response
-func NewGetLegacyResponse(resp *http.Response, preserveBody bool) (*GetLegacyResponse, error) {
-	var result GetLegacyResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -4274,6 +4109,8 @@ Get a team (Legacy).
   GET /teams/{team_id}
 
 https://developer.github.com/v3/teams/#get-a-team-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) GetLegacy(ctx context.Context, req *GetLegacyReq, opt ...requests.Option) (*GetLegacyResponse, error) {
 	return GetLegacy(ctx, req, append(c, opt...)...)
@@ -4283,25 +4120,19 @@ func (c Client) GetLegacy(ctx context.Context, req *GetLegacyReq, opt ...request
 GetLegacyReq is request data for Client.GetLegacy
 
 https://developer.github.com/v3/teams/#get-a-team-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetLegacyReq struct {
 	_url   string
 	TeamId int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetLegacyReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -4309,12 +4140,12 @@ func (r *GetLegacyReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "teams/get-legacy",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/teams/%v", r.TeamId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -4340,8 +4171,25 @@ type GetLegacyResponse struct {
 	Data         components.TeamFull
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetLegacyResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -4354,43 +4202,27 @@ Get team member (Legacy).
 https://developer.github.com/v3/teams/members/#get-team-member-legacy
 */
 func GetMemberLegacy(ctx context.Context, req *GetMemberLegacyReq, opt ...requests.Option) (*GetMemberLegacyResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetMemberLegacyReq)
 	}
 	resp := &GetMemberLegacyResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetMemberLegacyResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetMemberLegacyResponse builds a new *GetMemberLegacyResponse from an *http.Response
-func NewGetMemberLegacyResponse(resp *http.Response, preserveBody bool) (*GetMemberLegacyResponse, error) {
-	var result GetMemberLegacyResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{204, 404})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	err = internal.SetBoolResult(resp, &result.Data)
-	if err != nil {
-		return &result, err
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -4401,6 +4233,8 @@ Get team member (Legacy).
   GET /teams/{team_id}/members/{username}
 
 https://developer.github.com/v3/teams/members/#get-team-member-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) GetMemberLegacy(ctx context.Context, req *GetMemberLegacyReq, opt ...requests.Option) (*GetMemberLegacyResponse, error) {
 	return GetMemberLegacy(ctx, req, append(c, opt...)...)
@@ -4410,6 +4244,8 @@ func (c Client) GetMemberLegacy(ctx context.Context, req *GetMemberLegacyReq, op
 GetMemberLegacyReq is request data for Client.GetMemberLegacy
 
 https://developer.github.com/v3/teams/members/#get-team-member-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetMemberLegacyReq struct {
 	_url     string
@@ -4417,19 +4253,11 @@ type GetMemberLegacyReq struct {
 	Username string
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetMemberLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetMemberLegacyReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrBoolean},
@@ -4437,12 +4265,12 @@ func (r *GetMemberLegacyReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{},
 		Method:             "GET",
 		OperationID:        "teams/get-member-legacy",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/teams/%v/members/%v", r.TeamId, r.Username),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -4468,8 +4296,23 @@ type GetMemberLegacyResponse struct {
 	Data         bool
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetMemberLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetMemberLegacyResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{204, 404})
+	if err != nil {
+		return err
+	}
+	err = internal.SetBoolResult(resp, &r.Data)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -4482,45 +4325,27 @@ Get team membership for a user.
 https://developer.github.com/v3/teams/members/#get-team-membership-for-a-user
 */
 func GetMembershipForUserInOrg(ctx context.Context, req *GetMembershipForUserInOrgReq, opt ...requests.Option) (*GetMembershipForUserInOrgResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetMembershipForUserInOrgReq)
 	}
 	resp := &GetMembershipForUserInOrgResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetMembershipForUserInOrgResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetMembershipForUserInOrgResponse builds a new *GetMembershipForUserInOrgResponse from an *http.Response
-func NewGetMembershipForUserInOrgResponse(resp *http.Response, preserveBody bool) (*GetMembershipForUserInOrgResponse, error) {
-	var result GetMembershipForUserInOrgResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -4531,6 +4356,8 @@ Get team membership for a user.
   GET /orgs/{org}/teams/{team_slug}/memberships/{username}
 
 https://developer.github.com/v3/teams/members/#get-team-membership-for-a-user
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) GetMembershipForUserInOrg(ctx context.Context, req *GetMembershipForUserInOrgReq, opt ...requests.Option) (*GetMembershipForUserInOrgResponse, error) {
 	return GetMembershipForUserInOrg(ctx, req, append(c, opt...)...)
@@ -4540,6 +4367,8 @@ func (c Client) GetMembershipForUserInOrg(ctx context.Context, req *GetMembershi
 GetMembershipForUserInOrgReq is request data for Client.GetMembershipForUserInOrg
 
 https://developer.github.com/v3/teams/members/#get-team-membership-for-a-user
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetMembershipForUserInOrgReq struct {
 	_url string
@@ -4550,19 +4379,11 @@ type GetMembershipForUserInOrgReq struct {
 	Username string
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetMembershipForUserInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetMembershipForUserInOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -4570,12 +4391,12 @@ func (r *GetMembershipForUserInOrgReq) requestBuilder() *internal.RequestBuilder
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "teams/get-membership-for-user-in-org",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/teams/%v/memberships/%v", r.Org, r.TeamSlug, r.Username),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -4601,8 +4422,25 @@ type GetMembershipForUserInOrgResponse struct {
 	Data         components.TeamMembership
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetMembershipForUserInOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetMembershipForUserInOrgResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -4615,45 +4453,27 @@ Get team membership for a user (Legacy).
 https://developer.github.com/v3/teams/members/#get-team-membership-for-a-user-legacy
 */
 func GetMembershipForUserLegacy(ctx context.Context, req *GetMembershipForUserLegacyReq, opt ...requests.Option) (*GetMembershipForUserLegacyResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetMembershipForUserLegacyReq)
 	}
 	resp := &GetMembershipForUserLegacyResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetMembershipForUserLegacyResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetMembershipForUserLegacyResponse builds a new *GetMembershipForUserLegacyResponse from an *http.Response
-func NewGetMembershipForUserLegacyResponse(resp *http.Response, preserveBody bool) (*GetMembershipForUserLegacyResponse, error) {
-	var result GetMembershipForUserLegacyResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -4664,6 +4484,8 @@ Get team membership for a user (Legacy).
   GET /teams/{team_id}/memberships/{username}
 
 https://developer.github.com/v3/teams/members/#get-team-membership-for-a-user-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) GetMembershipForUserLegacy(ctx context.Context, req *GetMembershipForUserLegacyReq, opt ...requests.Option) (*GetMembershipForUserLegacyResponse, error) {
 	return GetMembershipForUserLegacy(ctx, req, append(c, opt...)...)
@@ -4673,6 +4495,8 @@ func (c Client) GetMembershipForUserLegacy(ctx context.Context, req *GetMembersh
 GetMembershipForUserLegacyReq is request data for Client.GetMembershipForUserLegacy
 
 https://developer.github.com/v3/teams/members/#get-team-membership-for-a-user-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetMembershipForUserLegacyReq struct {
 	_url     string
@@ -4680,19 +4504,11 @@ type GetMembershipForUserLegacyReq struct {
 	Username string
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetMembershipForUserLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetMembershipForUserLegacyReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -4700,12 +4516,12 @@ func (r *GetMembershipForUserLegacyReq) requestBuilder() *internal.RequestBuilde
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "teams/get-membership-for-user-legacy",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/teams/%v/memberships/%v", r.TeamId, r.Username),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -4731,8 +4547,25 @@ type GetMembershipForUserLegacyResponse struct {
 	Data         components.TeamMembership
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetMembershipForUserLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetMembershipForUserLegacyResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -4745,45 +4578,27 @@ List teams.
 https://developer.github.com/v3/teams/#list-teams
 */
 func List(ctx context.Context, req *ListReq, opt ...requests.Option) (*ListResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListReq)
 	}
 	resp := &ListResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListResponse builds a new *ListResponse from an *http.Response
-func NewListResponse(resp *http.Response, preserveBody bool) (*ListResponse, error) {
-	var result ListResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -4794,6 +4609,8 @@ List teams.
   GET /orgs/{org}/teams
 
 https://developer.github.com/v3/teams/#list-teams
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) List(ctx context.Context, req *ListReq, opt ...requests.Option) (*ListResponse, error) {
 	return List(ctx, req, append(c, opt...)...)
@@ -4803,6 +4620,8 @@ func (c Client) List(ctx context.Context, req *ListReq, opt ...requests.Option) 
 ListReq is request data for Client.List
 
 https://developer.github.com/v3/teams/#list-teams
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListReq struct {
 	_url string
@@ -4815,16 +4634,8 @@ type ListReq struct {
 	Page *int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -4833,7 +4644,7 @@ func (r *ListReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -4841,12 +4652,12 @@ func (r *ListReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "teams/list",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/teams", r.Org),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -4872,8 +4683,25 @@ type ListResponse struct {
 	Data         []components.Team
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -4886,45 +4714,27 @@ List child teams.
 https://developer.github.com/v3/teams/#list-child-teams
 */
 func ListChildInOrg(ctx context.Context, req *ListChildInOrgReq, opt ...requests.Option) (*ListChildInOrgResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListChildInOrgReq)
 	}
 	resp := &ListChildInOrgResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListChildInOrgResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListChildInOrgResponse builds a new *ListChildInOrgResponse from an *http.Response
-func NewListChildInOrgResponse(resp *http.Response, preserveBody bool) (*ListChildInOrgResponse, error) {
-	var result ListChildInOrgResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -4935,6 +4745,8 @@ List child teams.
   GET /orgs/{org}/teams/{team_slug}/teams
 
 https://developer.github.com/v3/teams/#list-child-teams
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListChildInOrg(ctx context.Context, req *ListChildInOrgReq, opt ...requests.Option) (*ListChildInOrgResponse, error) {
 	return ListChildInOrg(ctx, req, append(c, opt...)...)
@@ -4944,6 +4756,8 @@ func (c Client) ListChildInOrg(ctx context.Context, req *ListChildInOrgReq, opt 
 ListChildInOrgReq is request data for Client.ListChildInOrg
 
 https://developer.github.com/v3/teams/#list-child-teams
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListChildInOrgReq struct {
 	_url string
@@ -4959,16 +4773,8 @@ type ListChildInOrgReq struct {
 	Page *int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListChildInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListChildInOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -4977,7 +4783,7 @@ func (r *ListChildInOrgReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -4985,12 +4791,12 @@ func (r *ListChildInOrgReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "teams/list-child-in-org",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/teams/%v/teams", r.Org, r.TeamSlug),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -5016,8 +4822,25 @@ type ListChildInOrgResponse struct {
 	Data         []components.Team
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListChildInOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListChildInOrgResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -5030,45 +4853,27 @@ List child teams (Legacy).
 https://developer.github.com/v3/teams/#list-child-teams-legacy
 */
 func ListChildLegacy(ctx context.Context, req *ListChildLegacyReq, opt ...requests.Option) (*ListChildLegacyResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListChildLegacyReq)
 	}
 	resp := &ListChildLegacyResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListChildLegacyResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListChildLegacyResponse builds a new *ListChildLegacyResponse from an *http.Response
-func NewListChildLegacyResponse(resp *http.Response, preserveBody bool) (*ListChildLegacyResponse, error) {
-	var result ListChildLegacyResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -5079,6 +4884,8 @@ List child teams (Legacy).
   GET /teams/{team_id}/teams
 
 https://developer.github.com/v3/teams/#list-child-teams-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListChildLegacy(ctx context.Context, req *ListChildLegacyReq, opt ...requests.Option) (*ListChildLegacyResponse, error) {
 	return ListChildLegacy(ctx, req, append(c, opt...)...)
@@ -5088,6 +4895,8 @@ func (c Client) ListChildLegacy(ctx context.Context, req *ListChildLegacyReq, op
 ListChildLegacyReq is request data for Client.ListChildLegacy
 
 https://developer.github.com/v3/teams/#list-child-teams-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListChildLegacyReq struct {
 	_url   string
@@ -5100,16 +4909,8 @@ type ListChildLegacyReq struct {
 	Page *int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListChildLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListChildLegacyReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -5118,7 +4919,7 @@ func (r *ListChildLegacyReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -5126,12 +4927,12 @@ func (r *ListChildLegacyReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "teams/list-child-legacy",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/teams/%v/teams", r.TeamId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -5157,8 +4958,25 @@ type ListChildLegacyResponse struct {
 	Data         []components.Team
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListChildLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListChildLegacyResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -5171,45 +4989,27 @@ List discussion comments.
 https://developer.github.com/v3/teams/discussion_comments/#list-discussion-comments
 */
 func ListDiscussionCommentsInOrg(ctx context.Context, req *ListDiscussionCommentsInOrgReq, opt ...requests.Option) (*ListDiscussionCommentsInOrgResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListDiscussionCommentsInOrgReq)
 	}
 	resp := &ListDiscussionCommentsInOrgResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListDiscussionCommentsInOrgResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListDiscussionCommentsInOrgResponse builds a new *ListDiscussionCommentsInOrgResponse from an *http.Response
-func NewListDiscussionCommentsInOrgResponse(resp *http.Response, preserveBody bool) (*ListDiscussionCommentsInOrgResponse, error) {
-	var result ListDiscussionCommentsInOrgResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -5220,6 +5020,8 @@ List discussion comments.
   GET /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments
 
 https://developer.github.com/v3/teams/discussion_comments/#list-discussion-comments
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListDiscussionCommentsInOrg(ctx context.Context, req *ListDiscussionCommentsInOrgReq, opt ...requests.Option) (*ListDiscussionCommentsInOrgResponse, error) {
 	return ListDiscussionCommentsInOrg(ctx, req, append(c, opt...)...)
@@ -5229,6 +5031,8 @@ func (c Client) ListDiscussionCommentsInOrg(ctx context.Context, req *ListDiscus
 ListDiscussionCommentsInOrgReq is request data for Client.ListDiscussionCommentsInOrg
 
 https://developer.github.com/v3/teams/discussion_comments/#list-discussion-comments
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListDiscussionCommentsInOrgReq struct {
 	_url string
@@ -5259,16 +5063,8 @@ type ListDiscussionCommentsInOrgReq struct {
 	SquirrelGirlPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListDiscussionCommentsInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListDiscussionCommentsInOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Direction != nil {
 		query.Set("direction", *r.Direction)
@@ -5280,7 +5076,7 @@ func (r *ListDiscussionCommentsInOrgReq) requestBuilder() *internal.RequestBuild
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"squirrel-girl"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -5288,12 +5084,12 @@ func (r *ListDiscussionCommentsInOrgReq) requestBuilder() *internal.RequestBuild
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "teams/list-discussion-comments-in-org",
+		Options:            opt,
 		Previews:           map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/comments", r.Org, r.TeamSlug, r.DiscussionNumber),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -5319,8 +5115,25 @@ type ListDiscussionCommentsInOrgResponse struct {
 	Data         []components.TeamDiscussionComment
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListDiscussionCommentsInOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListDiscussionCommentsInOrgResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -5333,45 +5146,27 @@ List discussion comments (Legacy).
 https://developer.github.com/v3/teams/discussion_comments/#list-discussion-comments-legacy
 */
 func ListDiscussionCommentsLegacy(ctx context.Context, req *ListDiscussionCommentsLegacyReq, opt ...requests.Option) (*ListDiscussionCommentsLegacyResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListDiscussionCommentsLegacyReq)
 	}
 	resp := &ListDiscussionCommentsLegacyResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListDiscussionCommentsLegacyResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListDiscussionCommentsLegacyResponse builds a new *ListDiscussionCommentsLegacyResponse from an *http.Response
-func NewListDiscussionCommentsLegacyResponse(resp *http.Response, preserveBody bool) (*ListDiscussionCommentsLegacyResponse, error) {
-	var result ListDiscussionCommentsLegacyResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -5382,6 +5177,8 @@ List discussion comments (Legacy).
   GET /teams/{team_id}/discussions/{discussion_number}/comments
 
 https://developer.github.com/v3/teams/discussion_comments/#list-discussion-comments-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListDiscussionCommentsLegacy(ctx context.Context, req *ListDiscussionCommentsLegacyReq, opt ...requests.Option) (*ListDiscussionCommentsLegacyResponse, error) {
 	return ListDiscussionCommentsLegacy(ctx, req, append(c, opt...)...)
@@ -5391,6 +5188,8 @@ func (c Client) ListDiscussionCommentsLegacy(ctx context.Context, req *ListDiscu
 ListDiscussionCommentsLegacyReq is request data for Client.ListDiscussionCommentsLegacy
 
 https://developer.github.com/v3/teams/discussion_comments/#list-discussion-comments-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListDiscussionCommentsLegacyReq struct {
 	_url             string
@@ -5418,16 +5217,8 @@ type ListDiscussionCommentsLegacyReq struct {
 	SquirrelGirlPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListDiscussionCommentsLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListDiscussionCommentsLegacyReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Direction != nil {
 		query.Set("direction", *r.Direction)
@@ -5439,7 +5230,7 @@ func (r *ListDiscussionCommentsLegacyReq) requestBuilder() *internal.RequestBuil
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"squirrel-girl"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -5447,12 +5238,12 @@ func (r *ListDiscussionCommentsLegacyReq) requestBuilder() *internal.RequestBuil
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "teams/list-discussion-comments-legacy",
+		Options:            opt,
 		Previews:           map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/teams/%v/discussions/%v/comments", r.TeamId, r.DiscussionNumber),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -5478,8 +5269,25 @@ type ListDiscussionCommentsLegacyResponse struct {
 	Data         []components.TeamDiscussionComment
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListDiscussionCommentsLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListDiscussionCommentsLegacyResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -5492,45 +5300,27 @@ List discussions.
 https://developer.github.com/v3/teams/discussions/#list-discussions
 */
 func ListDiscussionsInOrg(ctx context.Context, req *ListDiscussionsInOrgReq, opt ...requests.Option) (*ListDiscussionsInOrgResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListDiscussionsInOrgReq)
 	}
 	resp := &ListDiscussionsInOrgResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListDiscussionsInOrgResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListDiscussionsInOrgResponse builds a new *ListDiscussionsInOrgResponse from an *http.Response
-func NewListDiscussionsInOrgResponse(resp *http.Response, preserveBody bool) (*ListDiscussionsInOrgResponse, error) {
-	var result ListDiscussionsInOrgResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -5541,6 +5331,8 @@ List discussions.
   GET /orgs/{org}/teams/{team_slug}/discussions
 
 https://developer.github.com/v3/teams/discussions/#list-discussions
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListDiscussionsInOrg(ctx context.Context, req *ListDiscussionsInOrgReq, opt ...requests.Option) (*ListDiscussionsInOrgResponse, error) {
 	return ListDiscussionsInOrg(ctx, req, append(c, opt...)...)
@@ -5550,6 +5342,8 @@ func (c Client) ListDiscussionsInOrg(ctx context.Context, req *ListDiscussionsIn
 ListDiscussionsInOrgReq is request data for Client.ListDiscussionsInOrg
 
 https://developer.github.com/v3/teams/discussions/#list-discussions
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListDiscussionsInOrgReq struct {
 	_url string
@@ -5579,16 +5373,8 @@ type ListDiscussionsInOrgReq struct {
 	SquirrelGirlPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListDiscussionsInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListDiscussionsInOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Direction != nil {
 		query.Set("direction", *r.Direction)
@@ -5600,7 +5386,7 @@ func (r *ListDiscussionsInOrgReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"squirrel-girl"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -5608,12 +5394,12 @@ func (r *ListDiscussionsInOrgReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "teams/list-discussions-in-org",
+		Options:            opt,
 		Previews:           map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/teams/%v/discussions", r.Org, r.TeamSlug),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -5639,8 +5425,25 @@ type ListDiscussionsInOrgResponse struct {
 	Data         []components.TeamDiscussion
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListDiscussionsInOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListDiscussionsInOrgResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -5653,45 +5456,27 @@ List discussions (Legacy).
 https://developer.github.com/v3/teams/discussions/#list-discussions-legacy
 */
 func ListDiscussionsLegacy(ctx context.Context, req *ListDiscussionsLegacyReq, opt ...requests.Option) (*ListDiscussionsLegacyResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListDiscussionsLegacyReq)
 	}
 	resp := &ListDiscussionsLegacyResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListDiscussionsLegacyResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListDiscussionsLegacyResponse builds a new *ListDiscussionsLegacyResponse from an *http.Response
-func NewListDiscussionsLegacyResponse(resp *http.Response, preserveBody bool) (*ListDiscussionsLegacyResponse, error) {
-	var result ListDiscussionsLegacyResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -5702,6 +5487,8 @@ List discussions (Legacy).
   GET /teams/{team_id}/discussions
 
 https://developer.github.com/v3/teams/discussions/#list-discussions-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListDiscussionsLegacy(ctx context.Context, req *ListDiscussionsLegacyReq, opt ...requests.Option) (*ListDiscussionsLegacyResponse, error) {
 	return ListDiscussionsLegacy(ctx, req, append(c, opt...)...)
@@ -5711,6 +5498,8 @@ func (c Client) ListDiscussionsLegacy(ctx context.Context, req *ListDiscussionsL
 ListDiscussionsLegacyReq is request data for Client.ListDiscussionsLegacy
 
 https://developer.github.com/v3/teams/discussions/#list-discussions-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListDiscussionsLegacyReq struct {
 	_url   string
@@ -5737,16 +5526,8 @@ type ListDiscussionsLegacyReq struct {
 	SquirrelGirlPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListDiscussionsLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListDiscussionsLegacyReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Direction != nil {
 		query.Set("direction", *r.Direction)
@@ -5758,7 +5539,7 @@ func (r *ListDiscussionsLegacyReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"squirrel-girl"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -5766,12 +5547,12 @@ func (r *ListDiscussionsLegacyReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "teams/list-discussions-legacy",
+		Options:            opt,
 		Previews:           map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/teams/%v/discussions", r.TeamId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -5797,8 +5578,25 @@ type ListDiscussionsLegacyResponse struct {
 	Data         []components.TeamDiscussion
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListDiscussionsLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListDiscussionsLegacyResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -5811,45 +5609,27 @@ List teams for the authenticated user.
 https://developer.github.com/v3/teams/#list-teams-for-the-authenticated-user
 */
 func ListForAuthenticatedUser(ctx context.Context, req *ListForAuthenticatedUserReq, opt ...requests.Option) (*ListForAuthenticatedUserResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListForAuthenticatedUserReq)
 	}
 	resp := &ListForAuthenticatedUserResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListForAuthenticatedUserResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListForAuthenticatedUserResponse builds a new *ListForAuthenticatedUserResponse from an *http.Response
-func NewListForAuthenticatedUserResponse(resp *http.Response, preserveBody bool) (*ListForAuthenticatedUserResponse, error) {
-	var result ListForAuthenticatedUserResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -5860,6 +5640,8 @@ List teams for the authenticated user.
   GET /user/teams
 
 https://developer.github.com/v3/teams/#list-teams-for-the-authenticated-user
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListForAuthenticatedUser(ctx context.Context, req *ListForAuthenticatedUserReq, opt ...requests.Option) (*ListForAuthenticatedUserResponse, error) {
 	return ListForAuthenticatedUser(ctx, req, append(c, opt...)...)
@@ -5869,6 +5651,8 @@ func (c Client) ListForAuthenticatedUser(ctx context.Context, req *ListForAuthen
 ListForAuthenticatedUserReq is request data for Client.ListForAuthenticatedUser
 
 https://developer.github.com/v3/teams/#list-teams-for-the-authenticated-user
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListForAuthenticatedUserReq struct {
 	_url string
@@ -5880,16 +5664,8 @@ type ListForAuthenticatedUserReq struct {
 	Page *int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListForAuthenticatedUserReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -5898,7 +5674,7 @@ func (r *ListForAuthenticatedUserReq) requestBuilder() *internal.RequestBuilder 
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -5906,12 +5682,12 @@ func (r *ListForAuthenticatedUserReq) requestBuilder() *internal.RequestBuilder 
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "teams/list-for-authenticated-user",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/user/teams"),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -5937,8 +5713,25 @@ type ListForAuthenticatedUserResponse struct {
 	Data         []components.TeamFull
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListForAuthenticatedUserResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListForAuthenticatedUserResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -5951,45 +5744,27 @@ List IdP groups for a team (Legacy).
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team-legacy
 */
 func ListIdpGroupsForLegacy(ctx context.Context, req *ListIdpGroupsForLegacyReq, opt ...requests.Option) (*ListIdpGroupsForLegacyResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListIdpGroupsForLegacyReq)
 	}
 	resp := &ListIdpGroupsForLegacyResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListIdpGroupsForLegacyResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListIdpGroupsForLegacyResponse builds a new *ListIdpGroupsForLegacyResponse from an *http.Response
-func NewListIdpGroupsForLegacyResponse(resp *http.Response, preserveBody bool) (*ListIdpGroupsForLegacyResponse, error) {
-	var result ListIdpGroupsForLegacyResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -6000,6 +5775,8 @@ List IdP groups for a team (Legacy).
   GET /teams/{team_id}/team-sync/group-mappings
 
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListIdpGroupsForLegacy(ctx context.Context, req *ListIdpGroupsForLegacyReq, opt ...requests.Option) (*ListIdpGroupsForLegacyResponse, error) {
 	return ListIdpGroupsForLegacy(ctx, req, append(c, opt...)...)
@@ -6009,25 +5786,19 @@ func (c Client) ListIdpGroupsForLegacy(ctx context.Context, req *ListIdpGroupsFo
 ListIdpGroupsForLegacyReq is request data for Client.ListIdpGroupsForLegacy
 
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListIdpGroupsForLegacyReq struct {
 	_url   string
 	TeamId int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListIdpGroupsForLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListIdpGroupsForLegacyReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -6035,12 +5806,12 @@ func (r *ListIdpGroupsForLegacyReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "teams/list-idp-groups-for-legacy",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/teams/%v/team-sync/group-mappings", r.TeamId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -6066,8 +5837,25 @@ type ListIdpGroupsForLegacyResponse struct {
 	Data         components.GroupMapping
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListIdpGroupsForLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListIdpGroupsForLegacyResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -6080,45 +5868,27 @@ List IdP groups for an organization.
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-an-organization
 */
 func ListIdpGroupsForOrg(ctx context.Context, req *ListIdpGroupsForOrgReq, opt ...requests.Option) (*ListIdpGroupsForOrgResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListIdpGroupsForOrgReq)
 	}
 	resp := &ListIdpGroupsForOrgResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListIdpGroupsForOrgResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListIdpGroupsForOrgResponse builds a new *ListIdpGroupsForOrgResponse from an *http.Response
-func NewListIdpGroupsForOrgResponse(resp *http.Response, preserveBody bool) (*ListIdpGroupsForOrgResponse, error) {
-	var result ListIdpGroupsForOrgResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -6129,6 +5899,8 @@ List IdP groups for an organization.
   GET /orgs/{org}/team-sync/groups
 
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-an-organization
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListIdpGroupsForOrg(ctx context.Context, req *ListIdpGroupsForOrgReq, opt ...requests.Option) (*ListIdpGroupsForOrgResponse, error) {
 	return ListIdpGroupsForOrg(ctx, req, append(c, opt...)...)
@@ -6138,6 +5910,8 @@ func (c Client) ListIdpGroupsForOrg(ctx context.Context, req *ListIdpGroupsForOr
 ListIdpGroupsForOrgReq is request data for Client.ListIdpGroupsForOrg
 
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-an-organization
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListIdpGroupsForOrgReq struct {
 	_url string
@@ -6150,16 +5924,8 @@ type ListIdpGroupsForOrgReq struct {
 	Page *int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListIdpGroupsForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListIdpGroupsForOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -6168,7 +5934,7 @@ func (r *ListIdpGroupsForOrgReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -6176,12 +5942,12 @@ func (r *ListIdpGroupsForOrgReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "teams/list-idp-groups-for-org",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/team-sync/groups", r.Org),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -6207,8 +5973,25 @@ type ListIdpGroupsForOrgResponse struct {
 	Data         components.GroupMapping
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListIdpGroupsForOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListIdpGroupsForOrgResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -6221,45 +6004,27 @@ List IdP groups for a team.
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team
 */
 func ListIdpGroupsInOrg(ctx context.Context, req *ListIdpGroupsInOrgReq, opt ...requests.Option) (*ListIdpGroupsInOrgResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListIdpGroupsInOrgReq)
 	}
 	resp := &ListIdpGroupsInOrgResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListIdpGroupsInOrgResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListIdpGroupsInOrgResponse builds a new *ListIdpGroupsInOrgResponse from an *http.Response
-func NewListIdpGroupsInOrgResponse(resp *http.Response, preserveBody bool) (*ListIdpGroupsInOrgResponse, error) {
-	var result ListIdpGroupsInOrgResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -6270,6 +6035,8 @@ List IdP groups for a team.
   GET /orgs/{org}/teams/{team_slug}/team-sync/group-mappings
 
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListIdpGroupsInOrg(ctx context.Context, req *ListIdpGroupsInOrgReq, opt ...requests.Option) (*ListIdpGroupsInOrgResponse, error) {
 	return ListIdpGroupsInOrg(ctx, req, append(c, opt...)...)
@@ -6279,6 +6046,8 @@ func (c Client) ListIdpGroupsInOrg(ctx context.Context, req *ListIdpGroupsInOrgR
 ListIdpGroupsInOrgReq is request data for Client.ListIdpGroupsInOrg
 
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListIdpGroupsInOrgReq struct {
 	_url string
@@ -6288,19 +6057,11 @@ type ListIdpGroupsInOrgReq struct {
 	TeamSlug string
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListIdpGroupsInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListIdpGroupsInOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -6308,12 +6069,12 @@ func (r *ListIdpGroupsInOrgReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "teams/list-idp-groups-in-org",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/teams/%v/team-sync/group-mappings", r.Org, r.TeamSlug),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -6339,8 +6100,25 @@ type ListIdpGroupsInOrgResponse struct {
 	Data         components.GroupMapping
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListIdpGroupsInOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListIdpGroupsInOrgResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -6353,45 +6131,27 @@ List team members.
 https://developer.github.com/v3/teams/members/#list-team-members
 */
 func ListMembersInOrg(ctx context.Context, req *ListMembersInOrgReq, opt ...requests.Option) (*ListMembersInOrgResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListMembersInOrgReq)
 	}
 	resp := &ListMembersInOrgResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListMembersInOrgResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListMembersInOrgResponse builds a new *ListMembersInOrgResponse from an *http.Response
-func NewListMembersInOrgResponse(resp *http.Response, preserveBody bool) (*ListMembersInOrgResponse, error) {
-	var result ListMembersInOrgResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -6402,6 +6162,8 @@ List team members.
   GET /orgs/{org}/teams/{team_slug}/members
 
 https://developer.github.com/v3/teams/members/#list-team-members
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListMembersInOrg(ctx context.Context, req *ListMembersInOrgReq, opt ...requests.Option) (*ListMembersInOrgResponse, error) {
 	return ListMembersInOrg(ctx, req, append(c, opt...)...)
@@ -6411,6 +6173,8 @@ func (c Client) ListMembersInOrg(ctx context.Context, req *ListMembersInOrgReq, 
 ListMembersInOrgReq is request data for Client.ListMembersInOrg
 
 https://developer.github.com/v3/teams/members/#list-team-members
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListMembersInOrgReq struct {
 	_url string
@@ -6434,16 +6198,8 @@ type ListMembersInOrgReq struct {
 	Page *int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListMembersInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListMembersInOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Role != nil {
 		query.Set("role", *r.Role)
@@ -6455,7 +6211,7 @@ func (r *ListMembersInOrgReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -6463,12 +6219,12 @@ func (r *ListMembersInOrgReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "teams/list-members-in-org",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/teams/%v/members", r.Org, r.TeamSlug),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -6494,8 +6250,25 @@ type ListMembersInOrgResponse struct {
 	Data         []components.SimpleUser
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListMembersInOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListMembersInOrgResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -6508,45 +6281,27 @@ List team members (Legacy).
 https://developer.github.com/v3/teams/members/#list-team-members-legacy
 */
 func ListMembersLegacy(ctx context.Context, req *ListMembersLegacyReq, opt ...requests.Option) (*ListMembersLegacyResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListMembersLegacyReq)
 	}
 	resp := &ListMembersLegacyResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListMembersLegacyResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListMembersLegacyResponse builds a new *ListMembersLegacyResponse from an *http.Response
-func NewListMembersLegacyResponse(resp *http.Response, preserveBody bool) (*ListMembersLegacyResponse, error) {
-	var result ListMembersLegacyResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -6557,6 +6312,8 @@ List team members (Legacy).
   GET /teams/{team_id}/members
 
 https://developer.github.com/v3/teams/members/#list-team-members-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListMembersLegacy(ctx context.Context, req *ListMembersLegacyReq, opt ...requests.Option) (*ListMembersLegacyResponse, error) {
 	return ListMembersLegacy(ctx, req, append(c, opt...)...)
@@ -6566,6 +6323,8 @@ func (c Client) ListMembersLegacy(ctx context.Context, req *ListMembersLegacyReq
 ListMembersLegacyReq is request data for Client.ListMembersLegacy
 
 https://developer.github.com/v3/teams/members/#list-team-members-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListMembersLegacyReq struct {
 	_url   string
@@ -6586,16 +6345,8 @@ type ListMembersLegacyReq struct {
 	Page *int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListMembersLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListMembersLegacyReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Role != nil {
 		query.Set("role", *r.Role)
@@ -6607,7 +6358,7 @@ func (r *ListMembersLegacyReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -6615,12 +6366,12 @@ func (r *ListMembersLegacyReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "teams/list-members-legacy",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/teams/%v/members", r.TeamId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -6646,8 +6397,25 @@ type ListMembersLegacyResponse struct {
 	Data         []components.SimpleUser
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListMembersLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListMembersLegacyResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -6660,45 +6428,27 @@ List pending team invitations.
 https://developer.github.com/v3/teams/members/#list-pending-team-invitations
 */
 func ListPendingInvitationsInOrg(ctx context.Context, req *ListPendingInvitationsInOrgReq, opt ...requests.Option) (*ListPendingInvitationsInOrgResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListPendingInvitationsInOrgReq)
 	}
 	resp := &ListPendingInvitationsInOrgResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListPendingInvitationsInOrgResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListPendingInvitationsInOrgResponse builds a new *ListPendingInvitationsInOrgResponse from an *http.Response
-func NewListPendingInvitationsInOrgResponse(resp *http.Response, preserveBody bool) (*ListPendingInvitationsInOrgResponse, error) {
-	var result ListPendingInvitationsInOrgResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -6709,6 +6459,8 @@ List pending team invitations.
   GET /orgs/{org}/teams/{team_slug}/invitations
 
 https://developer.github.com/v3/teams/members/#list-pending-team-invitations
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListPendingInvitationsInOrg(ctx context.Context, req *ListPendingInvitationsInOrgReq, opt ...requests.Option) (*ListPendingInvitationsInOrgResponse, error) {
 	return ListPendingInvitationsInOrg(ctx, req, append(c, opt...)...)
@@ -6718,6 +6470,8 @@ func (c Client) ListPendingInvitationsInOrg(ctx context.Context, req *ListPendin
 ListPendingInvitationsInOrgReq is request data for Client.ListPendingInvitationsInOrg
 
 https://developer.github.com/v3/teams/members/#list-pending-team-invitations
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListPendingInvitationsInOrgReq struct {
 	_url string
@@ -6733,16 +6487,8 @@ type ListPendingInvitationsInOrgReq struct {
 	Page *int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListPendingInvitationsInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListPendingInvitationsInOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -6751,7 +6497,7 @@ func (r *ListPendingInvitationsInOrgReq) requestBuilder() *internal.RequestBuild
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -6759,12 +6505,12 @@ func (r *ListPendingInvitationsInOrgReq) requestBuilder() *internal.RequestBuild
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "teams/list-pending-invitations-in-org",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/teams/%v/invitations", r.Org, r.TeamSlug),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -6790,8 +6536,25 @@ type ListPendingInvitationsInOrgResponse struct {
 	Data         []components.OrganizationInvitation
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListPendingInvitationsInOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListPendingInvitationsInOrgResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -6804,45 +6567,27 @@ List pending team invitations (Legacy).
 https://developer.github.com/v3/teams/members/#list-pending-team-invitations-legacy
 */
 func ListPendingInvitationsLegacy(ctx context.Context, req *ListPendingInvitationsLegacyReq, opt ...requests.Option) (*ListPendingInvitationsLegacyResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListPendingInvitationsLegacyReq)
 	}
 	resp := &ListPendingInvitationsLegacyResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListPendingInvitationsLegacyResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListPendingInvitationsLegacyResponse builds a new *ListPendingInvitationsLegacyResponse from an *http.Response
-func NewListPendingInvitationsLegacyResponse(resp *http.Response, preserveBody bool) (*ListPendingInvitationsLegacyResponse, error) {
-	var result ListPendingInvitationsLegacyResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -6853,6 +6598,8 @@ List pending team invitations (Legacy).
   GET /teams/{team_id}/invitations
 
 https://developer.github.com/v3/teams/members/#list-pending-team-invitations-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListPendingInvitationsLegacy(ctx context.Context, req *ListPendingInvitationsLegacyReq, opt ...requests.Option) (*ListPendingInvitationsLegacyResponse, error) {
 	return ListPendingInvitationsLegacy(ctx, req, append(c, opt...)...)
@@ -6862,6 +6609,8 @@ func (c Client) ListPendingInvitationsLegacy(ctx context.Context, req *ListPendi
 ListPendingInvitationsLegacyReq is request data for Client.ListPendingInvitationsLegacy
 
 https://developer.github.com/v3/teams/members/#list-pending-team-invitations-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListPendingInvitationsLegacyReq struct {
 	_url   string
@@ -6874,16 +6623,8 @@ type ListPendingInvitationsLegacyReq struct {
 	Page *int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListPendingInvitationsLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListPendingInvitationsLegacyReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -6892,7 +6633,7 @@ func (r *ListPendingInvitationsLegacyReq) requestBuilder() *internal.RequestBuil
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -6900,12 +6641,12 @@ func (r *ListPendingInvitationsLegacyReq) requestBuilder() *internal.RequestBuil
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "teams/list-pending-invitations-legacy",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/teams/%v/invitations", r.TeamId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -6931,8 +6672,25 @@ type ListPendingInvitationsLegacyResponse struct {
 	Data         []components.OrganizationInvitation
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListPendingInvitationsLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListPendingInvitationsLegacyResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -6945,45 +6703,27 @@ List team projects.
 https://developer.github.com/v3/teams/#list-team-projects
 */
 func ListProjectsInOrg(ctx context.Context, req *ListProjectsInOrgReq, opt ...requests.Option) (*ListProjectsInOrgResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListProjectsInOrgReq)
 	}
 	resp := &ListProjectsInOrgResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListProjectsInOrgResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListProjectsInOrgResponse builds a new *ListProjectsInOrgResponse from an *http.Response
-func NewListProjectsInOrgResponse(resp *http.Response, preserveBody bool) (*ListProjectsInOrgResponse, error) {
-	var result ListProjectsInOrgResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -6994,6 +6734,8 @@ List team projects.
   GET /orgs/{org}/teams/{team_slug}/projects
 
 https://developer.github.com/v3/teams/#list-team-projects
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListProjectsInOrg(ctx context.Context, req *ListProjectsInOrgReq, opt ...requests.Option) (*ListProjectsInOrgResponse, error) {
 	return ListProjectsInOrg(ctx, req, append(c, opt...)...)
@@ -7003,6 +6745,8 @@ func (c Client) ListProjectsInOrg(ctx context.Context, req *ListProjectsInOrgReq
 ListProjectsInOrgReq is request data for Client.ListProjectsInOrg
 
 https://developer.github.com/v3/teams/#list-team-projects
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListProjectsInOrgReq struct {
 	_url string
@@ -7027,16 +6771,8 @@ type ListProjectsInOrgReq struct {
 	InertiaPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListProjectsInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListProjectsInOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -7045,7 +6781,7 @@ func (r *ListProjectsInOrgReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"inertia"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -7053,12 +6789,12 @@ func (r *ListProjectsInOrgReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "teams/list-projects-in-org",
+		Options:            opt,
 		Previews:           map[string]bool{"inertia": r.InertiaPreview},
 		RequiredPreviews:   []string{"inertia"},
 		URLPath:            fmt.Sprintf("/orgs/%v/teams/%v/projects", r.Org, r.TeamSlug),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -7084,8 +6820,25 @@ type ListProjectsInOrgResponse struct {
 	Data         []components.TeamProject
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListProjectsInOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListProjectsInOrgResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -7098,45 +6851,27 @@ List team projects (Legacy).
 https://developer.github.com/v3/teams/#list-team-projects-legacy
 */
 func ListProjectsLegacy(ctx context.Context, req *ListProjectsLegacyReq, opt ...requests.Option) (*ListProjectsLegacyResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListProjectsLegacyReq)
 	}
 	resp := &ListProjectsLegacyResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListProjectsLegacyResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListProjectsLegacyResponse builds a new *ListProjectsLegacyResponse from an *http.Response
-func NewListProjectsLegacyResponse(resp *http.Response, preserveBody bool) (*ListProjectsLegacyResponse, error) {
-	var result ListProjectsLegacyResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -7147,6 +6882,8 @@ List team projects (Legacy).
   GET /teams/{team_id}/projects
 
 https://developer.github.com/v3/teams/#list-team-projects-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListProjectsLegacy(ctx context.Context, req *ListProjectsLegacyReq, opt ...requests.Option) (*ListProjectsLegacyResponse, error) {
 	return ListProjectsLegacy(ctx, req, append(c, opt...)...)
@@ -7156,6 +6893,8 @@ func (c Client) ListProjectsLegacy(ctx context.Context, req *ListProjectsLegacyR
 ListProjectsLegacyReq is request data for Client.ListProjectsLegacy
 
 https://developer.github.com/v3/teams/#list-team-projects-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListProjectsLegacyReq struct {
 	_url   string
@@ -7177,16 +6916,8 @@ type ListProjectsLegacyReq struct {
 	InertiaPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListProjectsLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListProjectsLegacyReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -7195,7 +6926,7 @@ func (r *ListProjectsLegacyReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"inertia"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -7203,12 +6934,12 @@ func (r *ListProjectsLegacyReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "teams/list-projects-legacy",
+		Options:            opt,
 		Previews:           map[string]bool{"inertia": r.InertiaPreview},
 		RequiredPreviews:   []string{"inertia"},
 		URLPath:            fmt.Sprintf("/teams/%v/projects", r.TeamId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -7234,8 +6965,25 @@ type ListProjectsLegacyResponse struct {
 	Data         []components.TeamProject
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListProjectsLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListProjectsLegacyResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -7248,45 +6996,27 @@ List team repositories.
 https://developer.github.com/v3/teams/#list-team-repositories
 */
 func ListReposInOrg(ctx context.Context, req *ListReposInOrgReq, opt ...requests.Option) (*ListReposInOrgResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListReposInOrgReq)
 	}
 	resp := &ListReposInOrgResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListReposInOrgResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListReposInOrgResponse builds a new *ListReposInOrgResponse from an *http.Response
-func NewListReposInOrgResponse(resp *http.Response, preserveBody bool) (*ListReposInOrgResponse, error) {
-	var result ListReposInOrgResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -7297,6 +7027,8 @@ List team repositories.
   GET /orgs/{org}/teams/{team_slug}/repos
 
 https://developer.github.com/v3/teams/#list-team-repositories
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListReposInOrg(ctx context.Context, req *ListReposInOrgReq, opt ...requests.Option) (*ListReposInOrgResponse, error) {
 	return ListReposInOrg(ctx, req, append(c, opt...)...)
@@ -7306,6 +7038,8 @@ func (c Client) ListReposInOrg(ctx context.Context, req *ListReposInOrgReq, opt 
 ListReposInOrgReq is request data for Client.ListReposInOrg
 
 https://developer.github.com/v3/teams/#list-team-repositories
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListReposInOrgReq struct {
 	_url string
@@ -7321,16 +7055,8 @@ type ListReposInOrgReq struct {
 	Page *int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListReposInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListReposInOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -7339,7 +7065,7 @@ func (r *ListReposInOrgReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -7347,12 +7073,12 @@ func (r *ListReposInOrgReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "teams/list-repos-in-org",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/teams/%v/repos", r.Org, r.TeamSlug),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -7378,8 +7104,25 @@ type ListReposInOrgResponse struct {
 	Data         []components.MinimalRepository
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListReposInOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListReposInOrgResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -7392,45 +7135,27 @@ List team repositories (Legacy).
 https://developer.github.com/v3/teams/#list-team-repositories-legacy
 */
 func ListReposLegacy(ctx context.Context, req *ListReposLegacyReq, opt ...requests.Option) (*ListReposLegacyResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListReposLegacyReq)
 	}
 	resp := &ListReposLegacyResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListReposLegacyResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListReposLegacyResponse builds a new *ListReposLegacyResponse from an *http.Response
-func NewListReposLegacyResponse(resp *http.Response, preserveBody bool) (*ListReposLegacyResponse, error) {
-	var result ListReposLegacyResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -7441,6 +7166,8 @@ List team repositories (Legacy).
   GET /teams/{team_id}/repos
 
 https://developer.github.com/v3/teams/#list-team-repositories-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListReposLegacy(ctx context.Context, req *ListReposLegacyReq, opt ...requests.Option) (*ListReposLegacyResponse, error) {
 	return ListReposLegacy(ctx, req, append(c, opt...)...)
@@ -7450,6 +7177,8 @@ func (c Client) ListReposLegacy(ctx context.Context, req *ListReposLegacyReq, op
 ListReposLegacyReq is request data for Client.ListReposLegacy
 
 https://developer.github.com/v3/teams/#list-team-repositories-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListReposLegacyReq struct {
 	_url   string
@@ -7462,16 +7191,8 @@ type ListReposLegacyReq struct {
 	Page *int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListReposLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListReposLegacyReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -7480,7 +7201,7 @@ func (r *ListReposLegacyReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -7488,12 +7209,12 @@ func (r *ListReposLegacyReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "teams/list-repos-legacy",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/teams/%v/repos", r.TeamId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -7519,8 +7240,25 @@ type ListReposLegacyResponse struct {
 	Data         []components.MinimalRepository
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListReposLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListReposLegacyResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -7533,43 +7271,27 @@ Remove team member (Legacy).
 https://developer.github.com/v3/teams/members/#remove-team-member-legacy
 */
 func RemoveMemberLegacy(ctx context.Context, req *RemoveMemberLegacyReq, opt ...requests.Option) (*RemoveMemberLegacyResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(RemoveMemberLegacyReq)
 	}
 	resp := &RemoveMemberLegacyResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewRemoveMemberLegacyResponse(r, opts.PreserveResponseBody())
-}
-
-// NewRemoveMemberLegacyResponse builds a new *RemoveMemberLegacyResponse from an *http.Response
-func NewRemoveMemberLegacyResponse(resp *http.Response, preserveBody bool) (*RemoveMemberLegacyResponse, error) {
-	var result RemoveMemberLegacyResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{204, 404})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	err = internal.SetBoolResult(resp, &result.Data)
-	if err != nil {
-		return &result, err
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -7580,6 +7302,8 @@ Remove team member (Legacy).
   DELETE /teams/{team_id}/members/{username}
 
 https://developer.github.com/v3/teams/members/#remove-team-member-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) RemoveMemberLegacy(ctx context.Context, req *RemoveMemberLegacyReq, opt ...requests.Option) (*RemoveMemberLegacyResponse, error) {
 	return RemoveMemberLegacy(ctx, req, append(c, opt...)...)
@@ -7589,6 +7313,8 @@ func (c Client) RemoveMemberLegacy(ctx context.Context, req *RemoveMemberLegacyR
 RemoveMemberLegacyReq is request data for Client.RemoveMemberLegacy
 
 https://developer.github.com/v3/teams/members/#remove-team-member-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type RemoveMemberLegacyReq struct {
 	_url     string
@@ -7596,19 +7322,11 @@ type RemoveMemberLegacyReq struct {
 	Username string
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *RemoveMemberLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *RemoveMemberLegacyReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrBoolean},
@@ -7616,12 +7334,12 @@ func (r *RemoveMemberLegacyReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
 		OperationID:        "teams/remove-member-legacy",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/teams/%v/members/%v", r.TeamId, r.Username),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -7647,8 +7365,23 @@ type RemoveMemberLegacyResponse struct {
 	Data         bool
 }
 
+// HTTPResponse returns the *http.Response
 func (r *RemoveMemberLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *RemoveMemberLegacyResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{204, 404})
+	if err != nil {
+		return err
+	}
+	err = internal.SetBoolResult(resp, &r.Data)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -7661,39 +7394,27 @@ Remove team membership for a user.
 https://developer.github.com/v3/teams/members/#remove-team-membership-for-a-user
 */
 func RemoveMembershipForUserInOrg(ctx context.Context, req *RemoveMembershipForUserInOrgReq, opt ...requests.Option) (*RemoveMembershipForUserInOrgResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(RemoveMembershipForUserInOrgReq)
 	}
 	resp := &RemoveMembershipForUserInOrgResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewRemoveMembershipForUserInOrgResponse(r, opts.PreserveResponseBody())
-}
-
-// NewRemoveMembershipForUserInOrgResponse builds a new *RemoveMembershipForUserInOrgResponse from an *http.Response
-func NewRemoveMembershipForUserInOrgResponse(resp *http.Response, preserveBody bool) (*RemoveMembershipForUserInOrgResponse, error) {
-	var result RemoveMembershipForUserInOrgResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{204})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -7704,6 +7425,8 @@ Remove team membership for a user.
   DELETE /orgs/{org}/teams/{team_slug}/memberships/{username}
 
 https://developer.github.com/v3/teams/members/#remove-team-membership-for-a-user
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) RemoveMembershipForUserInOrg(ctx context.Context, req *RemoveMembershipForUserInOrgReq, opt ...requests.Option) (*RemoveMembershipForUserInOrgResponse, error) {
 	return RemoveMembershipForUserInOrg(ctx, req, append(c, opt...)...)
@@ -7713,6 +7436,8 @@ func (c Client) RemoveMembershipForUserInOrg(ctx context.Context, req *RemoveMem
 RemoveMembershipForUserInOrgReq is request data for Client.RemoveMembershipForUserInOrg
 
 https://developer.github.com/v3/teams/members/#remove-team-membership-for-a-user
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type RemoveMembershipForUserInOrgReq struct {
 	_url string
@@ -7723,19 +7448,11 @@ type RemoveMembershipForUserInOrgReq struct {
 	Username string
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *RemoveMembershipForUserInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *RemoveMembershipForUserInOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -7743,12 +7460,12 @@ func (r *RemoveMembershipForUserInOrgReq) requestBuilder() *internal.RequestBuil
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
 		OperationID:        "teams/remove-membership-for-user-in-org",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/teams/%v/memberships/%v", r.Org, r.TeamSlug, r.Username),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -7773,8 +7490,19 @@ type RemoveMembershipForUserInOrgResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *RemoveMembershipForUserInOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *RemoveMembershipForUserInOrgResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{204})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -7787,39 +7515,27 @@ Remove team membership for a user (Legacy).
 https://developer.github.com/v3/teams/members/#remove-team-membership-for-a-user-legacy
 */
 func RemoveMembershipForUserLegacy(ctx context.Context, req *RemoveMembershipForUserLegacyReq, opt ...requests.Option) (*RemoveMembershipForUserLegacyResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(RemoveMembershipForUserLegacyReq)
 	}
 	resp := &RemoveMembershipForUserLegacyResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewRemoveMembershipForUserLegacyResponse(r, opts.PreserveResponseBody())
-}
-
-// NewRemoveMembershipForUserLegacyResponse builds a new *RemoveMembershipForUserLegacyResponse from an *http.Response
-func NewRemoveMembershipForUserLegacyResponse(resp *http.Response, preserveBody bool) (*RemoveMembershipForUserLegacyResponse, error) {
-	var result RemoveMembershipForUserLegacyResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{204})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -7830,6 +7546,8 @@ Remove team membership for a user (Legacy).
   DELETE /teams/{team_id}/memberships/{username}
 
 https://developer.github.com/v3/teams/members/#remove-team-membership-for-a-user-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) RemoveMembershipForUserLegacy(ctx context.Context, req *RemoveMembershipForUserLegacyReq, opt ...requests.Option) (*RemoveMembershipForUserLegacyResponse, error) {
 	return RemoveMembershipForUserLegacy(ctx, req, append(c, opt...)...)
@@ -7839,6 +7557,8 @@ func (c Client) RemoveMembershipForUserLegacy(ctx context.Context, req *RemoveMe
 RemoveMembershipForUserLegacyReq is request data for Client.RemoveMembershipForUserLegacy
 
 https://developer.github.com/v3/teams/members/#remove-team-membership-for-a-user-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type RemoveMembershipForUserLegacyReq struct {
 	_url     string
@@ -7846,19 +7566,11 @@ type RemoveMembershipForUserLegacyReq struct {
 	Username string
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *RemoveMembershipForUserLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *RemoveMembershipForUserLegacyReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -7866,12 +7578,12 @@ func (r *RemoveMembershipForUserLegacyReq) requestBuilder() *internal.RequestBui
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
 		OperationID:        "teams/remove-membership-for-user-legacy",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/teams/%v/memberships/%v", r.TeamId, r.Username),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -7896,8 +7608,19 @@ type RemoveMembershipForUserLegacyResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *RemoveMembershipForUserLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *RemoveMembershipForUserLegacyResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{204})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -7910,39 +7633,27 @@ Remove a project from a team.
 https://developer.github.com/v3/teams/#remove-a-project-from-a-team
 */
 func RemoveProjectInOrg(ctx context.Context, req *RemoveProjectInOrgReq, opt ...requests.Option) (*RemoveProjectInOrgResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(RemoveProjectInOrgReq)
 	}
 	resp := &RemoveProjectInOrgResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewRemoveProjectInOrgResponse(r, opts.PreserveResponseBody())
-}
-
-// NewRemoveProjectInOrgResponse builds a new *RemoveProjectInOrgResponse from an *http.Response
-func NewRemoveProjectInOrgResponse(resp *http.Response, preserveBody bool) (*RemoveProjectInOrgResponse, error) {
-	var result RemoveProjectInOrgResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{204})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -7953,6 +7664,8 @@ Remove a project from a team.
   DELETE /orgs/{org}/teams/{team_slug}/projects/{project_id}
 
 https://developer.github.com/v3/teams/#remove-a-project-from-a-team
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) RemoveProjectInOrg(ctx context.Context, req *RemoveProjectInOrgReq, opt ...requests.Option) (*RemoveProjectInOrgResponse, error) {
 	return RemoveProjectInOrg(ctx, req, append(c, opt...)...)
@@ -7962,6 +7675,8 @@ func (c Client) RemoveProjectInOrg(ctx context.Context, req *RemoveProjectInOrgR
 RemoveProjectInOrgReq is request data for Client.RemoveProjectInOrg
 
 https://developer.github.com/v3/teams/#remove-a-project-from-a-team
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type RemoveProjectInOrgReq struct {
 	_url string
@@ -7972,19 +7687,11 @@ type RemoveProjectInOrgReq struct {
 	ProjectId int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *RemoveProjectInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *RemoveProjectInOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -7992,12 +7699,12 @@ func (r *RemoveProjectInOrgReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
 		OperationID:        "teams/remove-project-in-org",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/teams/%v/projects/%v", r.Org, r.TeamSlug, r.ProjectId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -8022,8 +7729,19 @@ type RemoveProjectInOrgResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *RemoveProjectInOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *RemoveProjectInOrgResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{204})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -8036,39 +7754,27 @@ Remove a project from a team (Legacy).
 https://developer.github.com/v3/teams/#remove-a-project-from-a-team-legacy
 */
 func RemoveProjectLegacy(ctx context.Context, req *RemoveProjectLegacyReq, opt ...requests.Option) (*RemoveProjectLegacyResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(RemoveProjectLegacyReq)
 	}
 	resp := &RemoveProjectLegacyResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewRemoveProjectLegacyResponse(r, opts.PreserveResponseBody())
-}
-
-// NewRemoveProjectLegacyResponse builds a new *RemoveProjectLegacyResponse from an *http.Response
-func NewRemoveProjectLegacyResponse(resp *http.Response, preserveBody bool) (*RemoveProjectLegacyResponse, error) {
-	var result RemoveProjectLegacyResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{204})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -8079,6 +7785,8 @@ Remove a project from a team (Legacy).
   DELETE /teams/{team_id}/projects/{project_id}
 
 https://developer.github.com/v3/teams/#remove-a-project-from-a-team-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) RemoveProjectLegacy(ctx context.Context, req *RemoveProjectLegacyReq, opt ...requests.Option) (*RemoveProjectLegacyResponse, error) {
 	return RemoveProjectLegacy(ctx, req, append(c, opt...)...)
@@ -8088,6 +7796,8 @@ func (c Client) RemoveProjectLegacy(ctx context.Context, req *RemoveProjectLegac
 RemoveProjectLegacyReq is request data for Client.RemoveProjectLegacy
 
 https://developer.github.com/v3/teams/#remove-a-project-from-a-team-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type RemoveProjectLegacyReq struct {
 	_url      string
@@ -8095,19 +7805,11 @@ type RemoveProjectLegacyReq struct {
 	ProjectId int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *RemoveProjectLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *RemoveProjectLegacyReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -8115,12 +7817,12 @@ func (r *RemoveProjectLegacyReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
 		OperationID:        "teams/remove-project-legacy",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/teams/%v/projects/%v", r.TeamId, r.ProjectId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -8145,8 +7847,19 @@ type RemoveProjectLegacyResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *RemoveProjectLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *RemoveProjectLegacyResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{204})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -8159,39 +7872,27 @@ Remove a repository from a team.
 https://developer.github.com/v3/teams/#remove-a-repository-from-a-team
 */
 func RemoveRepoInOrg(ctx context.Context, req *RemoveRepoInOrgReq, opt ...requests.Option) (*RemoveRepoInOrgResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(RemoveRepoInOrgReq)
 	}
 	resp := &RemoveRepoInOrgResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewRemoveRepoInOrgResponse(r, opts.PreserveResponseBody())
-}
-
-// NewRemoveRepoInOrgResponse builds a new *RemoveRepoInOrgResponse from an *http.Response
-func NewRemoveRepoInOrgResponse(resp *http.Response, preserveBody bool) (*RemoveRepoInOrgResponse, error) {
-	var result RemoveRepoInOrgResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{204})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -8202,6 +7903,8 @@ Remove a repository from a team.
   DELETE /orgs/{org}/teams/{team_slug}/repos/{owner}/{repo}
 
 https://developer.github.com/v3/teams/#remove-a-repository-from-a-team
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) RemoveRepoInOrg(ctx context.Context, req *RemoveRepoInOrgReq, opt ...requests.Option) (*RemoveRepoInOrgResponse, error) {
 	return RemoveRepoInOrg(ctx, req, append(c, opt...)...)
@@ -8211,6 +7914,8 @@ func (c Client) RemoveRepoInOrg(ctx context.Context, req *RemoveRepoInOrgReq, op
 RemoveRepoInOrgReq is request data for Client.RemoveRepoInOrg
 
 https://developer.github.com/v3/teams/#remove-a-repository-from-a-team
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type RemoveRepoInOrgReq struct {
 	_url string
@@ -8222,19 +7927,11 @@ type RemoveRepoInOrgReq struct {
 	Repo     string
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *RemoveRepoInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *RemoveRepoInOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -8242,12 +7939,12 @@ func (r *RemoveRepoInOrgReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
 		OperationID:        "teams/remove-repo-in-org",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/teams/%v/repos/%v/%v", r.Org, r.TeamSlug, r.Owner, r.Repo),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -8272,8 +7969,19 @@ type RemoveRepoInOrgResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *RemoveRepoInOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *RemoveRepoInOrgResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{204})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -8286,39 +7994,27 @@ Remove a repository from a team (Legacy).
 https://developer.github.com/v3/teams/#remove-a-repository-from-a-team-legacy
 */
 func RemoveRepoLegacy(ctx context.Context, req *RemoveRepoLegacyReq, opt ...requests.Option) (*RemoveRepoLegacyResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(RemoveRepoLegacyReq)
 	}
 	resp := &RemoveRepoLegacyResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewRemoveRepoLegacyResponse(r, opts.PreserveResponseBody())
-}
-
-// NewRemoveRepoLegacyResponse builds a new *RemoveRepoLegacyResponse from an *http.Response
-func NewRemoveRepoLegacyResponse(resp *http.Response, preserveBody bool) (*RemoveRepoLegacyResponse, error) {
-	var result RemoveRepoLegacyResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{204})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -8329,6 +8025,8 @@ Remove a repository from a team (Legacy).
   DELETE /teams/{team_id}/repos/{owner}/{repo}
 
 https://developer.github.com/v3/teams/#remove-a-repository-from-a-team-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) RemoveRepoLegacy(ctx context.Context, req *RemoveRepoLegacyReq, opt ...requests.Option) (*RemoveRepoLegacyResponse, error) {
 	return RemoveRepoLegacy(ctx, req, append(c, opt...)...)
@@ -8338,6 +8036,8 @@ func (c Client) RemoveRepoLegacy(ctx context.Context, req *RemoveRepoLegacyReq, 
 RemoveRepoLegacyReq is request data for Client.RemoveRepoLegacy
 
 https://developer.github.com/v3/teams/#remove-a-repository-from-a-team-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type RemoveRepoLegacyReq struct {
 	_url   string
@@ -8346,19 +8046,11 @@ type RemoveRepoLegacyReq struct {
 	Repo   string
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *RemoveRepoLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *RemoveRepoLegacyReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -8366,12 +8058,12 @@ func (r *RemoveRepoLegacyReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
 		OperationID:        "teams/remove-repo-legacy",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/teams/%v/repos/%v/%v", r.TeamId, r.Owner, r.Repo),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -8396,8 +8088,19 @@ type RemoveRepoLegacyResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *RemoveRepoLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *RemoveRepoLegacyResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{204})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -8410,45 +8113,27 @@ Update a discussion comment.
 https://developer.github.com/v3/teams/discussion_comments/#update-a-discussion-comment
 */
 func UpdateDiscussionCommentInOrg(ctx context.Context, req *UpdateDiscussionCommentInOrgReq, opt ...requests.Option) (*UpdateDiscussionCommentInOrgResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(UpdateDiscussionCommentInOrgReq)
 	}
 	resp := &UpdateDiscussionCommentInOrgResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewUpdateDiscussionCommentInOrgResponse(r, opts.PreserveResponseBody())
-}
-
-// NewUpdateDiscussionCommentInOrgResponse builds a new *UpdateDiscussionCommentInOrgResponse from an *http.Response
-func NewUpdateDiscussionCommentInOrgResponse(resp *http.Response, preserveBody bool) (*UpdateDiscussionCommentInOrgResponse, error) {
-	var result UpdateDiscussionCommentInOrgResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -8459,6 +8144,8 @@ Update a discussion comment.
   PATCH /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}/comments/{comment_number}
 
 https://developer.github.com/v3/teams/discussion_comments/#update-a-discussion-comment
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) UpdateDiscussionCommentInOrg(ctx context.Context, req *UpdateDiscussionCommentInOrgReq, opt ...requests.Option) (*UpdateDiscussionCommentInOrgResponse, error) {
 	return UpdateDiscussionCommentInOrg(ctx, req, append(c, opt...)...)
@@ -8468,6 +8155,8 @@ func (c Client) UpdateDiscussionCommentInOrg(ctx context.Context, req *UpdateDis
 UpdateDiscussionCommentInOrgReq is request data for Client.UpdateDiscussionCommentInOrg
 
 https://developer.github.com/v3/teams/discussion_comments/#update-a-discussion-comment
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type UpdateDiscussionCommentInOrgReq struct {
 	_url string
@@ -8491,19 +8180,11 @@ type UpdateDiscussionCommentInOrgReq struct {
 	SquirrelGirlPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *UpdateDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *UpdateDiscussionCommentInOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"squirrel-girl"},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -8514,12 +8195,12 @@ func (r *UpdateDiscussionCommentInOrgReq) requestBuilder() *internal.RequestBuil
 		},
 		Method:           "PATCH",
 		OperationID:      "teams/update-discussion-comment-in-org",
+		Options:          opt,
 		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/comments/%v", r.Org, r.TeamSlug, r.DiscussionNumber, r.CommentNumber),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -8556,8 +8237,25 @@ type UpdateDiscussionCommentInOrgResponse struct {
 	Data         components.TeamDiscussionComment
 }
 
+// HTTPResponse returns the *http.Response
 func (r *UpdateDiscussionCommentInOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *UpdateDiscussionCommentInOrgResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -8570,45 +8268,27 @@ Update a discussion comment (Legacy).
 https://developer.github.com/v3/teams/discussion_comments/#update-a-discussion-comment-legacy
 */
 func UpdateDiscussionCommentLegacy(ctx context.Context, req *UpdateDiscussionCommentLegacyReq, opt ...requests.Option) (*UpdateDiscussionCommentLegacyResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(UpdateDiscussionCommentLegacyReq)
 	}
 	resp := &UpdateDiscussionCommentLegacyResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewUpdateDiscussionCommentLegacyResponse(r, opts.PreserveResponseBody())
-}
-
-// NewUpdateDiscussionCommentLegacyResponse builds a new *UpdateDiscussionCommentLegacyResponse from an *http.Response
-func NewUpdateDiscussionCommentLegacyResponse(resp *http.Response, preserveBody bool) (*UpdateDiscussionCommentLegacyResponse, error) {
-	var result UpdateDiscussionCommentLegacyResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -8619,6 +8299,8 @@ Update a discussion comment (Legacy).
   PATCH /teams/{team_id}/discussions/{discussion_number}/comments/{comment_number}
 
 https://developer.github.com/v3/teams/discussion_comments/#update-a-discussion-comment-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) UpdateDiscussionCommentLegacy(ctx context.Context, req *UpdateDiscussionCommentLegacyReq, opt ...requests.Option) (*UpdateDiscussionCommentLegacyResponse, error) {
 	return UpdateDiscussionCommentLegacy(ctx, req, append(c, opt...)...)
@@ -8628,6 +8310,8 @@ func (c Client) UpdateDiscussionCommentLegacy(ctx context.Context, req *UpdateDi
 UpdateDiscussionCommentLegacyReq is request data for Client.UpdateDiscussionCommentLegacy
 
 https://developer.github.com/v3/teams/discussion_comments/#update-a-discussion-comment-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type UpdateDiscussionCommentLegacyReq struct {
 	_url             string
@@ -8648,19 +8332,11 @@ type UpdateDiscussionCommentLegacyReq struct {
 	SquirrelGirlPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *UpdateDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *UpdateDiscussionCommentLegacyReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"squirrel-girl"},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -8671,12 +8347,12 @@ func (r *UpdateDiscussionCommentLegacyReq) requestBuilder() *internal.RequestBui
 		},
 		Method:           "PATCH",
 		OperationID:      "teams/update-discussion-comment-legacy",
+		Options:          opt,
 		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/teams/%v/discussions/%v/comments/%v", r.TeamId, r.DiscussionNumber, r.CommentNumber),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -8713,8 +8389,25 @@ type UpdateDiscussionCommentLegacyResponse struct {
 	Data         components.TeamDiscussionComment
 }
 
+// HTTPResponse returns the *http.Response
 func (r *UpdateDiscussionCommentLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *UpdateDiscussionCommentLegacyResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -8727,45 +8420,27 @@ Update a discussion.
 https://developer.github.com/v3/teams/discussions/#update-a-discussion
 */
 func UpdateDiscussionInOrg(ctx context.Context, req *UpdateDiscussionInOrgReq, opt ...requests.Option) (*UpdateDiscussionInOrgResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(UpdateDiscussionInOrgReq)
 	}
 	resp := &UpdateDiscussionInOrgResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewUpdateDiscussionInOrgResponse(r, opts.PreserveResponseBody())
-}
-
-// NewUpdateDiscussionInOrgResponse builds a new *UpdateDiscussionInOrgResponse from an *http.Response
-func NewUpdateDiscussionInOrgResponse(resp *http.Response, preserveBody bool) (*UpdateDiscussionInOrgResponse, error) {
-	var result UpdateDiscussionInOrgResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -8776,6 +8451,8 @@ Update a discussion.
   PATCH /orgs/{org}/teams/{team_slug}/discussions/{discussion_number}
 
 https://developer.github.com/v3/teams/discussions/#update-a-discussion
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) UpdateDiscussionInOrg(ctx context.Context, req *UpdateDiscussionInOrgReq, opt ...requests.Option) (*UpdateDiscussionInOrgResponse, error) {
 	return UpdateDiscussionInOrg(ctx, req, append(c, opt...)...)
@@ -8785,6 +8462,8 @@ func (c Client) UpdateDiscussionInOrg(ctx context.Context, req *UpdateDiscussion
 UpdateDiscussionInOrgReq is request data for Client.UpdateDiscussionInOrg
 
 https://developer.github.com/v3/teams/discussions/#update-a-discussion
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type UpdateDiscussionInOrgReq struct {
 	_url string
@@ -8807,19 +8486,11 @@ type UpdateDiscussionInOrgReq struct {
 	SquirrelGirlPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *UpdateDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *UpdateDiscussionInOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"squirrel-girl"},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -8830,12 +8501,12 @@ func (r *UpdateDiscussionInOrgReq) requestBuilder() *internal.RequestBuilder {
 		},
 		Method:           "PATCH",
 		OperationID:      "teams/update-discussion-in-org",
+		Options:          opt,
 		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v", r.Org, r.TeamSlug, r.DiscussionNumber),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -8875,8 +8546,25 @@ type UpdateDiscussionInOrgResponse struct {
 	Data         components.TeamDiscussion
 }
 
+// HTTPResponse returns the *http.Response
 func (r *UpdateDiscussionInOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *UpdateDiscussionInOrgResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -8889,45 +8577,27 @@ Update a discussion (Legacy).
 https://developer.github.com/v3/teams/discussions/#update-a-discussion-legacy
 */
 func UpdateDiscussionLegacy(ctx context.Context, req *UpdateDiscussionLegacyReq, opt ...requests.Option) (*UpdateDiscussionLegacyResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(UpdateDiscussionLegacyReq)
 	}
 	resp := &UpdateDiscussionLegacyResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewUpdateDiscussionLegacyResponse(r, opts.PreserveResponseBody())
-}
-
-// NewUpdateDiscussionLegacyResponse builds a new *UpdateDiscussionLegacyResponse from an *http.Response
-func NewUpdateDiscussionLegacyResponse(resp *http.Response, preserveBody bool) (*UpdateDiscussionLegacyResponse, error) {
-	var result UpdateDiscussionLegacyResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -8938,6 +8608,8 @@ Update a discussion (Legacy).
   PATCH /teams/{team_id}/discussions/{discussion_number}
 
 https://developer.github.com/v3/teams/discussions/#update-a-discussion-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) UpdateDiscussionLegacy(ctx context.Context, req *UpdateDiscussionLegacyReq, opt ...requests.Option) (*UpdateDiscussionLegacyResponse, error) {
 	return UpdateDiscussionLegacy(ctx, req, append(c, opt...)...)
@@ -8947,6 +8619,8 @@ func (c Client) UpdateDiscussionLegacy(ctx context.Context, req *UpdateDiscussio
 UpdateDiscussionLegacyReq is request data for Client.UpdateDiscussionLegacy
 
 https://developer.github.com/v3/teams/discussions/#update-a-discussion-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type UpdateDiscussionLegacyReq struct {
 	_url             string
@@ -8966,19 +8640,11 @@ type UpdateDiscussionLegacyReq struct {
 	SquirrelGirlPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *UpdateDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *UpdateDiscussionLegacyReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"squirrel-girl"},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -8989,12 +8655,12 @@ func (r *UpdateDiscussionLegacyReq) requestBuilder() *internal.RequestBuilder {
 		},
 		Method:           "PATCH",
 		OperationID:      "teams/update-discussion-legacy",
+		Options:          opt,
 		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/teams/%v/discussions/%v", r.TeamId, r.DiscussionNumber),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -9034,8 +8700,25 @@ type UpdateDiscussionLegacyResponse struct {
 	Data         components.TeamDiscussion
 }
 
+// HTTPResponse returns the *http.Response
 func (r *UpdateDiscussionLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *UpdateDiscussionLegacyResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -9048,45 +8731,27 @@ Update a team.
 https://developer.github.com/v3/teams/#update-a-team
 */
 func UpdateInOrg(ctx context.Context, req *UpdateInOrgReq, opt ...requests.Option) (*UpdateInOrgResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(UpdateInOrgReq)
 	}
 	resp := &UpdateInOrgResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewUpdateInOrgResponse(r, opts.PreserveResponseBody())
-}
-
-// NewUpdateInOrgResponse builds a new *UpdateInOrgResponse from an *http.Response
-func NewUpdateInOrgResponse(resp *http.Response, preserveBody bool) (*UpdateInOrgResponse, error) {
-	var result UpdateInOrgResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{201})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{201}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -9097,6 +8762,8 @@ Update a team.
   PATCH /orgs/{org}/teams/{team_slug}
 
 https://developer.github.com/v3/teams/#update-a-team
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) UpdateInOrg(ctx context.Context, req *UpdateInOrgReq, opt ...requests.Option) (*UpdateInOrgResponse, error) {
 	return UpdateInOrg(ctx, req, append(c, opt...)...)
@@ -9106,6 +8773,8 @@ func (c Client) UpdateInOrg(ctx context.Context, req *UpdateInOrgReq, opt ...req
 UpdateInOrgReq is request data for Client.UpdateInOrg
 
 https://developer.github.com/v3/teams/#update-a-team
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type UpdateInOrgReq struct {
 	_url string
@@ -9116,19 +8785,11 @@ type UpdateInOrgReq struct {
 	RequestBody UpdateInOrgReqBody
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *UpdateInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *UpdateInOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -9139,12 +8800,12 @@ func (r *UpdateInOrgReq) requestBuilder() *internal.RequestBuilder {
 		},
 		Method:           "PATCH",
 		OperationID:      "teams/update-in-org",
+		Options:          opt,
 		Previews:         map[string]bool{},
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/orgs/%v/teams/%v", r.Org, r.TeamSlug),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -9211,8 +8872,25 @@ type UpdateInOrgResponse struct {
 	Data         components.TeamFull
 }
 
+// HTTPResponse returns the *http.Response
 func (r *UpdateInOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *UpdateInOrgResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{201})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -9225,45 +8903,27 @@ Update a team (Legacy).
 https://developer.github.com/v3/teams/#update-a-team-legacy
 */
 func UpdateLegacy(ctx context.Context, req *UpdateLegacyReq, opt ...requests.Option) (*UpdateLegacyResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(UpdateLegacyReq)
 	}
 	resp := &UpdateLegacyResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewUpdateLegacyResponse(r, opts.PreserveResponseBody())
-}
-
-// NewUpdateLegacyResponse builds a new *UpdateLegacyResponse from an *http.Response
-func NewUpdateLegacyResponse(resp *http.Response, preserveBody bool) (*UpdateLegacyResponse, error) {
-	var result UpdateLegacyResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{201})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{201}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -9274,6 +8934,8 @@ Update a team (Legacy).
   PATCH /teams/{team_id}
 
 https://developer.github.com/v3/teams/#update-a-team-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) UpdateLegacy(ctx context.Context, req *UpdateLegacyReq, opt ...requests.Option) (*UpdateLegacyResponse, error) {
 	return UpdateLegacy(ctx, req, append(c, opt...)...)
@@ -9283,6 +8945,8 @@ func (c Client) UpdateLegacy(ctx context.Context, req *UpdateLegacyReq, opt ...r
 UpdateLegacyReq is request data for Client.UpdateLegacy
 
 https://developer.github.com/v3/teams/#update-a-team-legacy
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type UpdateLegacyReq struct {
 	_url        string
@@ -9290,19 +8954,11 @@ type UpdateLegacyReq struct {
 	RequestBody UpdateLegacyReqBody
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *UpdateLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *UpdateLegacyReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -9313,12 +8969,12 @@ func (r *UpdateLegacyReq) requestBuilder() *internal.RequestBuilder {
 		},
 		Method:           "PATCH",
 		OperationID:      "teams/update-legacy",
+		Options:          opt,
 		Previews:         map[string]bool{},
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/teams/%v", r.TeamId),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -9384,6 +9040,23 @@ type UpdateLegacyResponse struct {
 	Data         components.TeamFull
 }
 
+// HTTPResponse returns the *http.Response
 func (r *UpdateLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *UpdateLegacyResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{201})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }

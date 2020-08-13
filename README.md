@@ -6,7 +6,7 @@
 octo-go is an experimental client for GitHub's v3 API. It is generated from the openapi schema published at 
 https://github.com/github/rest-api-description
 
-Project status: __BETA__
+Project status: __Experimental__
 
 ## Overview
 

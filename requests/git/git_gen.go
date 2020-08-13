@@ -13,8 +13,6 @@ import (
 	"strconv"
 )
 
-func strPtr(s string) *string { return &s }
-
 // Client is a set of options to apply to requests
 type Client []requests.Option
 
@@ -33,45 +31,27 @@ Create a blob.
 https://developer.github.com/v3/git/blobs/#create-a-blob
 */
 func CreateBlob(ctx context.Context, req *CreateBlobReq, opt ...requests.Option) (*CreateBlobResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(CreateBlobReq)
 	}
 	resp := &CreateBlobResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewCreateBlobResponse(r, opts.PreserveResponseBody())
-}
-
-// NewCreateBlobResponse builds a new *CreateBlobResponse from an *http.Response
-func NewCreateBlobResponse(resp *http.Response, preserveBody bool) (*CreateBlobResponse, error) {
-	var result CreateBlobResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{201})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{201}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -82,6 +62,8 @@ Create a blob.
   POST /repos/{owner}/{repo}/git/blobs
 
 https://developer.github.com/v3/git/blobs/#create-a-blob
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) CreateBlob(ctx context.Context, req *CreateBlobReq, opt ...requests.Option) (*CreateBlobResponse, error) {
 	return CreateBlob(ctx, req, append(c, opt...)...)
@@ -91,6 +73,8 @@ func (c Client) CreateBlob(ctx context.Context, req *CreateBlobReq, opt ...reque
 CreateBlobReq is request data for Client.CreateBlob
 
 https://developer.github.com/v3/git/blobs/#create-a-blob
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type CreateBlobReq struct {
 	_url        string
@@ -99,19 +83,11 @@ type CreateBlobReq struct {
 	RequestBody CreateBlobReqBody
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *CreateBlobReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *CreateBlobReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -122,12 +98,12 @@ func (r *CreateBlobReq) requestBuilder() *internal.RequestBuilder {
 		},
 		Method:           "POST",
 		OperationID:      "git/create-blob",
+		Options:          opt,
 		Previews:         map[string]bool{},
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/git/blobs", r.Owner, r.Repo),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -167,8 +143,25 @@ type CreateBlobResponse struct {
 	Data         components.ShortBlob
 }
 
+// HTTPResponse returns the *http.Response
 func (r *CreateBlobResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *CreateBlobResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{201})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -181,45 +174,27 @@ Create a commit.
 https://developer.github.com/v3/git/commits/#create-a-commit
 */
 func CreateCommit(ctx context.Context, req *CreateCommitReq, opt ...requests.Option) (*CreateCommitResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(CreateCommitReq)
 	}
 	resp := &CreateCommitResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewCreateCommitResponse(r, opts.PreserveResponseBody())
-}
-
-// NewCreateCommitResponse builds a new *CreateCommitResponse from an *http.Response
-func NewCreateCommitResponse(resp *http.Response, preserveBody bool) (*CreateCommitResponse, error) {
-	var result CreateCommitResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{201})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{201}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -230,6 +205,8 @@ Create a commit.
   POST /repos/{owner}/{repo}/git/commits
 
 https://developer.github.com/v3/git/commits/#create-a-commit
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) CreateCommit(ctx context.Context, req *CreateCommitReq, opt ...requests.Option) (*CreateCommitResponse, error) {
 	return CreateCommit(ctx, req, append(c, opt...)...)
@@ -239,6 +216,8 @@ func (c Client) CreateCommit(ctx context.Context, req *CreateCommitReq, opt ...r
 CreateCommitReq is request data for Client.CreateCommit
 
 https://developer.github.com/v3/git/commits/#create-a-commit
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type CreateCommitReq struct {
 	_url        string
@@ -247,19 +226,11 @@ type CreateCommitReq struct {
 	RequestBody CreateCommitReqBody
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *CreateCommitReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *CreateCommitReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -270,12 +241,12 @@ func (r *CreateCommitReq) requestBuilder() *internal.RequestBuilder {
 		},
 		Method:           "POST",
 		OperationID:      "git/create-commit",
+		Options:          opt,
 		Previews:         map[string]bool{},
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/git/commits", r.Owner, r.Repo),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -384,8 +355,25 @@ type CreateCommitResponse struct {
 	Data         components.GitCommit
 }
 
+// HTTPResponse returns the *http.Response
 func (r *CreateCommitResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *CreateCommitResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{201})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -398,45 +386,27 @@ Create a reference.
 https://developer.github.com/v3/git/refs/#create-a-reference
 */
 func CreateRef(ctx context.Context, req *CreateRefReq, opt ...requests.Option) (*CreateRefResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(CreateRefReq)
 	}
 	resp := &CreateRefResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewCreateRefResponse(r, opts.PreserveResponseBody())
-}
-
-// NewCreateRefResponse builds a new *CreateRefResponse from an *http.Response
-func NewCreateRefResponse(resp *http.Response, preserveBody bool) (*CreateRefResponse, error) {
-	var result CreateRefResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{201})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{201}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -447,6 +417,8 @@ Create a reference.
   POST /repos/{owner}/{repo}/git/refs
 
 https://developer.github.com/v3/git/refs/#create-a-reference
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) CreateRef(ctx context.Context, req *CreateRefReq, opt ...requests.Option) (*CreateRefResponse, error) {
 	return CreateRef(ctx, req, append(c, opt...)...)
@@ -456,6 +428,8 @@ func (c Client) CreateRef(ctx context.Context, req *CreateRefReq, opt ...request
 CreateRefReq is request data for Client.CreateRef
 
 https://developer.github.com/v3/git/refs/#create-a-reference
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type CreateRefReq struct {
 	_url        string
@@ -464,19 +438,11 @@ type CreateRefReq struct {
 	RequestBody CreateRefReqBody
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *CreateRefReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *CreateRefReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -487,12 +453,12 @@ func (r *CreateRefReq) requestBuilder() *internal.RequestBuilder {
 		},
 		Method:           "POST",
 		OperationID:      "git/create-ref",
+		Options:          opt,
 		Previews:         map[string]bool{},
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/git/refs", r.Owner, r.Repo),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -536,8 +502,25 @@ type CreateRefResponse struct {
 	Data         components.GitRef
 }
 
+// HTTPResponse returns the *http.Response
 func (r *CreateRefResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *CreateRefResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{201})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -550,45 +533,27 @@ Create a tag object.
 https://developer.github.com/v3/git/tags/#create-a-tag-object
 */
 func CreateTag(ctx context.Context, req *CreateTagReq, opt ...requests.Option) (*CreateTagResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(CreateTagReq)
 	}
 	resp := &CreateTagResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewCreateTagResponse(r, opts.PreserveResponseBody())
-}
-
-// NewCreateTagResponse builds a new *CreateTagResponse from an *http.Response
-func NewCreateTagResponse(resp *http.Response, preserveBody bool) (*CreateTagResponse, error) {
-	var result CreateTagResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{201})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{201}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -599,6 +564,8 @@ Create a tag object.
   POST /repos/{owner}/{repo}/git/tags
 
 https://developer.github.com/v3/git/tags/#create-a-tag-object
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) CreateTag(ctx context.Context, req *CreateTagReq, opt ...requests.Option) (*CreateTagResponse, error) {
 	return CreateTag(ctx, req, append(c, opt...)...)
@@ -608,6 +575,8 @@ func (c Client) CreateTag(ctx context.Context, req *CreateTagReq, opt ...request
 CreateTagReq is request data for Client.CreateTag
 
 https://developer.github.com/v3/git/tags/#create-a-tag-object
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type CreateTagReq struct {
 	_url        string
@@ -616,19 +585,11 @@ type CreateTagReq struct {
 	RequestBody CreateTagReqBody
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *CreateTagReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *CreateTagReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -639,12 +600,12 @@ func (r *CreateTagReq) requestBuilder() *internal.RequestBuilder {
 		},
 		Method:           "POST",
 		OperationID:      "git/create-tag",
+		Options:          opt,
 		Previews:         map[string]bool{},
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/git/tags", r.Owner, r.Repo),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -709,8 +670,25 @@ type CreateTagResponse struct {
 	Data         components.GitTag
 }
 
+// HTTPResponse returns the *http.Response
 func (r *CreateTagResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *CreateTagResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{201})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -723,45 +701,27 @@ Create a tree.
 https://developer.github.com/v3/git/trees/#create-a-tree
 */
 func CreateTree(ctx context.Context, req *CreateTreeReq, opt ...requests.Option) (*CreateTreeResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(CreateTreeReq)
 	}
 	resp := &CreateTreeResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewCreateTreeResponse(r, opts.PreserveResponseBody())
-}
-
-// NewCreateTreeResponse builds a new *CreateTreeResponse from an *http.Response
-func NewCreateTreeResponse(resp *http.Response, preserveBody bool) (*CreateTreeResponse, error) {
-	var result CreateTreeResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{201})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{201}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -772,6 +732,8 @@ Create a tree.
   POST /repos/{owner}/{repo}/git/trees
 
 https://developer.github.com/v3/git/trees/#create-a-tree
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) CreateTree(ctx context.Context, req *CreateTreeReq, opt ...requests.Option) (*CreateTreeResponse, error) {
 	return CreateTree(ctx, req, append(c, opt...)...)
@@ -781,6 +743,8 @@ func (c Client) CreateTree(ctx context.Context, req *CreateTreeReq, opt ...reque
 CreateTreeReq is request data for Client.CreateTree
 
 https://developer.github.com/v3/git/trees/#create-a-tree
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type CreateTreeReq struct {
 	_url        string
@@ -789,19 +753,11 @@ type CreateTreeReq struct {
 	RequestBody CreateTreeReqBody
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *CreateTreeReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *CreateTreeReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -812,12 +768,12 @@ func (r *CreateTreeReq) requestBuilder() *internal.RequestBuilder {
 		},
 		Method:           "POST",
 		OperationID:      "git/create-tree",
+		Options:          opt,
 		Previews:         map[string]bool{},
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/git/trees", r.Owner, r.Repo),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -896,8 +852,25 @@ type CreateTreeResponse struct {
 	Data         components.GitTree
 }
 
+// HTTPResponse returns the *http.Response
 func (r *CreateTreeResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *CreateTreeResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{201})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -910,39 +883,27 @@ Delete a reference.
 https://developer.github.com/v3/git/refs/#delete-a-reference
 */
 func DeleteRef(ctx context.Context, req *DeleteRefReq, opt ...requests.Option) (*DeleteRefResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(DeleteRefReq)
 	}
 	resp := &DeleteRefResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewDeleteRefResponse(r, opts.PreserveResponseBody())
-}
-
-// NewDeleteRefResponse builds a new *DeleteRefResponse from an *http.Response
-func NewDeleteRefResponse(resp *http.Response, preserveBody bool) (*DeleteRefResponse, error) {
-	var result DeleteRefResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{204})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -953,6 +914,8 @@ Delete a reference.
   DELETE /repos/{owner}/{repo}/git/refs/{ref}
 
 https://developer.github.com/v3/git/refs/#delete-a-reference
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) DeleteRef(ctx context.Context, req *DeleteRefReq, opt ...requests.Option) (*DeleteRefResponse, error) {
 	return DeleteRef(ctx, req, append(c, opt...)...)
@@ -962,6 +925,8 @@ func (c Client) DeleteRef(ctx context.Context, req *DeleteRefReq, opt ...request
 DeleteRefReq is request data for Client.DeleteRef
 
 https://developer.github.com/v3/git/refs/#delete-a-reference
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type DeleteRefReq struct {
 	_url  string
@@ -972,19 +937,11 @@ type DeleteRefReq struct {
 	Ref string
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *DeleteRefReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *DeleteRefReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -992,12 +949,12 @@ func (r *DeleteRefReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
 		OperationID:        "git/delete-ref",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/git/refs/%v", r.Owner, r.Repo, r.Ref),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1022,8 +979,19 @@ type DeleteRefResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *DeleteRefResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *DeleteRefResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{204})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -1036,45 +1004,27 @@ Get a blob.
 https://developer.github.com/v3/git/blobs/#get-a-blob
 */
 func GetBlob(ctx context.Context, req *GetBlobReq, opt ...requests.Option) (*GetBlobResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetBlobReq)
 	}
 	resp := &GetBlobResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetBlobResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetBlobResponse builds a new *GetBlobResponse from an *http.Response
-func NewGetBlobResponse(resp *http.Response, preserveBody bool) (*GetBlobResponse, error) {
-	var result GetBlobResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -1085,6 +1035,8 @@ Get a blob.
   GET /repos/{owner}/{repo}/git/blobs/{file_sha}
 
 https://developer.github.com/v3/git/blobs/#get-a-blob
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) GetBlob(ctx context.Context, req *GetBlobReq, opt ...requests.Option) (*GetBlobResponse, error) {
 	return GetBlob(ctx, req, append(c, opt...)...)
@@ -1094,6 +1046,8 @@ func (c Client) GetBlob(ctx context.Context, req *GetBlobReq, opt ...requests.Op
 GetBlobReq is request data for Client.GetBlob
 
 https://developer.github.com/v3/git/blobs/#get-a-blob
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetBlobReq struct {
 	_url  string
@@ -1104,19 +1058,11 @@ type GetBlobReq struct {
 	FileSha string
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetBlobReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetBlobReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -1124,12 +1070,12 @@ func (r *GetBlobReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "git/get-blob",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/git/blobs/%v", r.Owner, r.Repo, r.FileSha),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1155,8 +1101,25 @@ type GetBlobResponse struct {
 	Data         components.Blob
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetBlobResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetBlobResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -1169,45 +1132,27 @@ Get a commit.
 https://developer.github.com/v3/git/commits/#get-a-commit
 */
 func GetCommit(ctx context.Context, req *GetCommitReq, opt ...requests.Option) (*GetCommitResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetCommitReq)
 	}
 	resp := &GetCommitResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetCommitResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetCommitResponse builds a new *GetCommitResponse from an *http.Response
-func NewGetCommitResponse(resp *http.Response, preserveBody bool) (*GetCommitResponse, error) {
-	var result GetCommitResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -1218,6 +1163,8 @@ Get a commit.
   GET /repos/{owner}/{repo}/git/commits/{commit_sha}
 
 https://developer.github.com/v3/git/commits/#get-a-commit
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) GetCommit(ctx context.Context, req *GetCommitReq, opt ...requests.Option) (*GetCommitResponse, error) {
 	return GetCommit(ctx, req, append(c, opt...)...)
@@ -1227,6 +1174,8 @@ func (c Client) GetCommit(ctx context.Context, req *GetCommitReq, opt ...request
 GetCommitReq is request data for Client.GetCommit
 
 https://developer.github.com/v3/git/commits/#get-a-commit
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetCommitReq struct {
 	_url  string
@@ -1237,19 +1186,11 @@ type GetCommitReq struct {
 	CommitSha string
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetCommitReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetCommitReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -1257,12 +1198,12 @@ func (r *GetCommitReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "git/get-commit",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/git/commits/%v", r.Owner, r.Repo, r.CommitSha),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1288,8 +1229,25 @@ type GetCommitResponse struct {
 	Data         components.GitCommit
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetCommitResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetCommitResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -1302,45 +1260,27 @@ Get a reference.
 https://developer.github.com/v3/git/refs/#get-a-reference
 */
 func GetRef(ctx context.Context, req *GetRefReq, opt ...requests.Option) (*GetRefResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetRefReq)
 	}
 	resp := &GetRefResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetRefResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetRefResponse builds a new *GetRefResponse from an *http.Response
-func NewGetRefResponse(resp *http.Response, preserveBody bool) (*GetRefResponse, error) {
-	var result GetRefResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -1351,6 +1291,8 @@ Get a reference.
   GET /repos/{owner}/{repo}/git/ref/{ref}
 
 https://developer.github.com/v3/git/refs/#get-a-reference
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) GetRef(ctx context.Context, req *GetRefReq, opt ...requests.Option) (*GetRefResponse, error) {
 	return GetRef(ctx, req, append(c, opt...)...)
@@ -1360,6 +1302,8 @@ func (c Client) GetRef(ctx context.Context, req *GetRefReq, opt ...requests.Opti
 GetRefReq is request data for Client.GetRef
 
 https://developer.github.com/v3/git/refs/#get-a-reference
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetRefReq struct {
 	_url  string
@@ -1370,19 +1314,11 @@ type GetRefReq struct {
 	Ref string
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetRefReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetRefReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -1390,12 +1326,12 @@ func (r *GetRefReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "git/get-ref",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/git/ref/%v", r.Owner, r.Repo, r.Ref),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1421,8 +1357,25 @@ type GetRefResponse struct {
 	Data         components.GitRef
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetRefResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetRefResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -1435,45 +1388,27 @@ Get a tag.
 https://developer.github.com/v3/git/tags/#get-a-tag
 */
 func GetTag(ctx context.Context, req *GetTagReq, opt ...requests.Option) (*GetTagResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetTagReq)
 	}
 	resp := &GetTagResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetTagResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetTagResponse builds a new *GetTagResponse from an *http.Response
-func NewGetTagResponse(resp *http.Response, preserveBody bool) (*GetTagResponse, error) {
-	var result GetTagResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -1484,6 +1419,8 @@ Get a tag.
   GET /repos/{owner}/{repo}/git/tags/{tag_sha}
 
 https://developer.github.com/v3/git/tags/#get-a-tag
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) GetTag(ctx context.Context, req *GetTagReq, opt ...requests.Option) (*GetTagResponse, error) {
 	return GetTag(ctx, req, append(c, opt...)...)
@@ -1493,6 +1430,8 @@ func (c Client) GetTag(ctx context.Context, req *GetTagReq, opt ...requests.Opti
 GetTagReq is request data for Client.GetTag
 
 https://developer.github.com/v3/git/tags/#get-a-tag
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetTagReq struct {
 	_url  string
@@ -1503,19 +1442,11 @@ type GetTagReq struct {
 	TagSha string
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetTagReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetTagReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -1523,12 +1454,12 @@ func (r *GetTagReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "git/get-tag",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/git/tags/%v", r.Owner, r.Repo, r.TagSha),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1554,8 +1485,25 @@ type GetTagResponse struct {
 	Data         components.GitTag
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetTagResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetTagResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -1568,45 +1516,27 @@ Get a tree.
 https://developer.github.com/v3/git/trees/#get-a-tree
 */
 func GetTree(ctx context.Context, req *GetTreeReq, opt ...requests.Option) (*GetTreeResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetTreeReq)
 	}
 	resp := &GetTreeResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetTreeResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetTreeResponse builds a new *GetTreeResponse from an *http.Response
-func NewGetTreeResponse(resp *http.Response, preserveBody bool) (*GetTreeResponse, error) {
-	var result GetTreeResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -1617,6 +1547,8 @@ Get a tree.
   GET /repos/{owner}/{repo}/git/trees/{tree_sha}
 
 https://developer.github.com/v3/git/trees/#get-a-tree
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) GetTree(ctx context.Context, req *GetTreeReq, opt ...requests.Option) (*GetTreeResponse, error) {
 	return GetTree(ctx, req, append(c, opt...)...)
@@ -1626,6 +1558,8 @@ func (c Client) GetTree(ctx context.Context, req *GetTreeReq, opt ...requests.Op
 GetTreeReq is request data for Client.GetTree
 
 https://developer.github.com/v3/git/trees/#get-a-tree
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetTreeReq struct {
 	_url  string
@@ -1645,22 +1579,14 @@ type GetTreeReq struct {
 	Recursive *string
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetTreeReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetTreeReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Recursive != nil {
 		query.Set("recursive", *r.Recursive)
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -1668,12 +1594,12 @@ func (r *GetTreeReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "git/get-tree",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/git/trees/%v", r.Owner, r.Repo, r.TreeSha),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1699,8 +1625,25 @@ type GetTreeResponse struct {
 	Data         components.GitTree
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetTreeResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetTreeResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -1713,45 +1656,27 @@ List matching references.
 https://developer.github.com/v3/git/refs/#list-matching-references
 */
 func ListMatchingRefs(ctx context.Context, req *ListMatchingRefsReq, opt ...requests.Option) (*ListMatchingRefsResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListMatchingRefsReq)
 	}
 	resp := &ListMatchingRefsResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListMatchingRefsResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListMatchingRefsResponse builds a new *ListMatchingRefsResponse from an *http.Response
-func NewListMatchingRefsResponse(resp *http.Response, preserveBody bool) (*ListMatchingRefsResponse, error) {
-	var result ListMatchingRefsResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -1762,6 +1687,8 @@ List matching references.
   GET /repos/{owner}/{repo}/git/matching-refs/{ref}
 
 https://developer.github.com/v3/git/refs/#list-matching-references
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListMatchingRefs(ctx context.Context, req *ListMatchingRefsReq, opt ...requests.Option) (*ListMatchingRefsResponse, error) {
 	return ListMatchingRefs(ctx, req, append(c, opt...)...)
@@ -1771,6 +1698,8 @@ func (c Client) ListMatchingRefs(ctx context.Context, req *ListMatchingRefsReq, 
 ListMatchingRefsReq is request data for Client.ListMatchingRefs
 
 https://developer.github.com/v3/git/refs/#list-matching-references
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListMatchingRefsReq struct {
 	_url  string
@@ -1787,16 +1716,8 @@ type ListMatchingRefsReq struct {
 	Page *int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListMatchingRefsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListMatchingRefsReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -1805,7 +1726,7 @@ func (r *ListMatchingRefsReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -1813,12 +1734,12 @@ func (r *ListMatchingRefsReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "git/list-matching-refs",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/git/matching-refs/%v", r.Owner, r.Repo, r.Ref),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1844,8 +1765,25 @@ type ListMatchingRefsResponse struct {
 	Data         []components.GitRef
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListMatchingRefsResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListMatchingRefsResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -1858,45 +1796,27 @@ Update a reference.
 https://developer.github.com/v3/git/refs/#update-a-reference
 */
 func UpdateRef(ctx context.Context, req *UpdateRefReq, opt ...requests.Option) (*UpdateRefResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(UpdateRefReq)
 	}
 	resp := &UpdateRefResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewUpdateRefResponse(r, opts.PreserveResponseBody())
-}
-
-// NewUpdateRefResponse builds a new *UpdateRefResponse from an *http.Response
-func NewUpdateRefResponse(resp *http.Response, preserveBody bool) (*UpdateRefResponse, error) {
-	var result UpdateRefResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -1907,6 +1827,8 @@ Update a reference.
   PATCH /repos/{owner}/{repo}/git/refs/{ref}
 
 https://developer.github.com/v3/git/refs/#update-a-reference
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) UpdateRef(ctx context.Context, req *UpdateRefReq, opt ...requests.Option) (*UpdateRefResponse, error) {
 	return UpdateRef(ctx, req, append(c, opt...)...)
@@ -1916,6 +1838,8 @@ func (c Client) UpdateRef(ctx context.Context, req *UpdateRefReq, opt ...request
 UpdateRefReq is request data for Client.UpdateRef
 
 https://developer.github.com/v3/git/refs/#update-a-reference
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type UpdateRefReq struct {
 	_url  string
@@ -1927,19 +1851,11 @@ type UpdateRefReq struct {
 	RequestBody UpdateRefReqBody
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *UpdateRefReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *UpdateRefReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -1950,12 +1866,12 @@ func (r *UpdateRefReq) requestBuilder() *internal.RequestBuilder {
 		},
 		Method:           "PATCH",
 		OperationID:      "git/update-ref",
+		Options:          opt,
 		Previews:         map[string]bool{},
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/git/refs/%v", r.Owner, r.Repo, r.Ref),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1999,6 +1915,23 @@ type UpdateRefResponse struct {
 	Data         components.GitRef
 }
 
+// HTTPResponse returns the *http.Response
 func (r *UpdateRefResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *UpdateRefResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }

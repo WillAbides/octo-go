@@ -12,8 +12,6 @@ import (
 	"net/url"
 )
 
-func strPtr(s string) *string { return &s }
-
 // Client is a set of options to apply to requests
 type Client []requests.Option
 
@@ -32,45 +30,27 @@ Get interaction restrictions for an organization.
 https://developer.github.com/v3/interactions/orgs/#get-interaction-restrictions-for-an-organization
 */
 func GetRestrictionsForOrg(ctx context.Context, req *GetRestrictionsForOrgReq, opt ...requests.Option) (*GetRestrictionsForOrgResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetRestrictionsForOrgReq)
 	}
 	resp := &GetRestrictionsForOrgResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetRestrictionsForOrgResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetRestrictionsForOrgResponse builds a new *GetRestrictionsForOrgResponse from an *http.Response
-func NewGetRestrictionsForOrgResponse(resp *http.Response, preserveBody bool) (*GetRestrictionsForOrgResponse, error) {
-	var result GetRestrictionsForOrgResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -81,6 +61,8 @@ Get interaction restrictions for an organization.
   GET /orgs/{org}/interaction-limits
 
 https://developer.github.com/v3/interactions/orgs/#get-interaction-restrictions-for-an-organization
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) GetRestrictionsForOrg(ctx context.Context, req *GetRestrictionsForOrgReq, opt ...requests.Option) (*GetRestrictionsForOrgResponse, error) {
 	return GetRestrictionsForOrg(ctx, req, append(c, opt...)...)
@@ -90,6 +72,8 @@ func (c Client) GetRestrictionsForOrg(ctx context.Context, req *GetRestrictionsF
 GetRestrictionsForOrgReq is request data for Client.GetRestrictionsForOrg
 
 https://developer.github.com/v3/interactions/orgs/#get-interaction-restrictions-for-an-organization
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetRestrictionsForOrgReq struct {
 	_url string
@@ -104,19 +88,11 @@ type GetRestrictionsForOrgReq struct {
 	SombraPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetRestrictionsForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetRestrictionsForOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"sombra"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -124,12 +100,12 @@ func (r *GetRestrictionsForOrgReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "interactions/get-restrictions-for-org",
+		Options:            opt,
 		Previews:           map[string]bool{"sombra": r.SombraPreview},
 		RequiredPreviews:   []string{"sombra"},
 		URLPath:            fmt.Sprintf("/orgs/%v/interaction-limits", r.Org),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -155,8 +131,25 @@ type GetRestrictionsForOrgResponse struct {
 	Data         components.InteractionLimit
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetRestrictionsForOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetRestrictionsForOrgResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -169,45 +162,27 @@ Get interaction restrictions for a repository.
 https://developer.github.com/v3/interactions/repos/#get-interaction-restrictions-for-a-repository
 */
 func GetRestrictionsForRepo(ctx context.Context, req *GetRestrictionsForRepoReq, opt ...requests.Option) (*GetRestrictionsForRepoResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetRestrictionsForRepoReq)
 	}
 	resp := &GetRestrictionsForRepoResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetRestrictionsForRepoResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetRestrictionsForRepoResponse builds a new *GetRestrictionsForRepoResponse from an *http.Response
-func NewGetRestrictionsForRepoResponse(resp *http.Response, preserveBody bool) (*GetRestrictionsForRepoResponse, error) {
-	var result GetRestrictionsForRepoResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -218,6 +193,8 @@ Get interaction restrictions for a repository.
   GET /repos/{owner}/{repo}/interaction-limits
 
 https://developer.github.com/v3/interactions/repos/#get-interaction-restrictions-for-a-repository
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) GetRestrictionsForRepo(ctx context.Context, req *GetRestrictionsForRepoReq, opt ...requests.Option) (*GetRestrictionsForRepoResponse, error) {
 	return GetRestrictionsForRepo(ctx, req, append(c, opt...)...)
@@ -227,6 +204,8 @@ func (c Client) GetRestrictionsForRepo(ctx context.Context, req *GetRestrictions
 GetRestrictionsForRepoReq is request data for Client.GetRestrictionsForRepo
 
 https://developer.github.com/v3/interactions/repos/#get-interaction-restrictions-for-a-repository
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetRestrictionsForRepoReq struct {
 	_url  string
@@ -242,19 +221,11 @@ type GetRestrictionsForRepoReq struct {
 	SombraPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetRestrictionsForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetRestrictionsForRepoReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"sombra"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -262,12 +233,12 @@ func (r *GetRestrictionsForRepoReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "interactions/get-restrictions-for-repo",
+		Options:            opt,
 		Previews:           map[string]bool{"sombra": r.SombraPreview},
 		RequiredPreviews:   []string{"sombra"},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/interaction-limits", r.Owner, r.Repo),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -293,8 +264,25 @@ type GetRestrictionsForRepoResponse struct {
 	Data         components.InteractionLimit
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetRestrictionsForRepoResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetRestrictionsForRepoResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -307,39 +295,27 @@ Remove interaction restrictions for an organization.
 https://developer.github.com/v3/interactions/orgs/#remove-interaction-restrictions-for-an-organization
 */
 func RemoveRestrictionsForOrg(ctx context.Context, req *RemoveRestrictionsForOrgReq, opt ...requests.Option) (*RemoveRestrictionsForOrgResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(RemoveRestrictionsForOrgReq)
 	}
 	resp := &RemoveRestrictionsForOrgResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewRemoveRestrictionsForOrgResponse(r, opts.PreserveResponseBody())
-}
-
-// NewRemoveRestrictionsForOrgResponse builds a new *RemoveRestrictionsForOrgResponse from an *http.Response
-func NewRemoveRestrictionsForOrgResponse(resp *http.Response, preserveBody bool) (*RemoveRestrictionsForOrgResponse, error) {
-	var result RemoveRestrictionsForOrgResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{204})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -350,6 +326,8 @@ Remove interaction restrictions for an organization.
   DELETE /orgs/{org}/interaction-limits
 
 https://developer.github.com/v3/interactions/orgs/#remove-interaction-restrictions-for-an-organization
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) RemoveRestrictionsForOrg(ctx context.Context, req *RemoveRestrictionsForOrgReq, opt ...requests.Option) (*RemoveRestrictionsForOrgResponse, error) {
 	return RemoveRestrictionsForOrg(ctx, req, append(c, opt...)...)
@@ -359,6 +337,8 @@ func (c Client) RemoveRestrictionsForOrg(ctx context.Context, req *RemoveRestric
 RemoveRestrictionsForOrgReq is request data for Client.RemoveRestrictionsForOrg
 
 https://developer.github.com/v3/interactions/orgs/#remove-interaction-restrictions-for-an-organization
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type RemoveRestrictionsForOrgReq struct {
 	_url string
@@ -373,19 +353,11 @@ type RemoveRestrictionsForOrgReq struct {
 	SombraPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *RemoveRestrictionsForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *RemoveRestrictionsForOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"sombra"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -393,12 +365,12 @@ func (r *RemoveRestrictionsForOrgReq) requestBuilder() *internal.RequestBuilder 
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
 		OperationID:        "interactions/remove-restrictions-for-org",
+		Options:            opt,
 		Previews:           map[string]bool{"sombra": r.SombraPreview},
 		RequiredPreviews:   []string{"sombra"},
 		URLPath:            fmt.Sprintf("/orgs/%v/interaction-limits", r.Org),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -423,8 +395,19 @@ type RemoveRestrictionsForOrgResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *RemoveRestrictionsForOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *RemoveRestrictionsForOrgResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{204})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -437,39 +420,27 @@ Remove interaction restrictions for a repository.
 https://developer.github.com/v3/interactions/repos/#remove-interaction-restrictions-for-a-repository
 */
 func RemoveRestrictionsForRepo(ctx context.Context, req *RemoveRestrictionsForRepoReq, opt ...requests.Option) (*RemoveRestrictionsForRepoResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(RemoveRestrictionsForRepoReq)
 	}
 	resp := &RemoveRestrictionsForRepoResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewRemoveRestrictionsForRepoResponse(r, opts.PreserveResponseBody())
-}
-
-// NewRemoveRestrictionsForRepoResponse builds a new *RemoveRestrictionsForRepoResponse from an *http.Response
-func NewRemoveRestrictionsForRepoResponse(resp *http.Response, preserveBody bool) (*RemoveRestrictionsForRepoResponse, error) {
-	var result RemoveRestrictionsForRepoResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{204})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -480,6 +451,8 @@ Remove interaction restrictions for a repository.
   DELETE /repos/{owner}/{repo}/interaction-limits
 
 https://developer.github.com/v3/interactions/repos/#remove-interaction-restrictions-for-a-repository
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) RemoveRestrictionsForRepo(ctx context.Context, req *RemoveRestrictionsForRepoReq, opt ...requests.Option) (*RemoveRestrictionsForRepoResponse, error) {
 	return RemoveRestrictionsForRepo(ctx, req, append(c, opt...)...)
@@ -489,6 +462,8 @@ func (c Client) RemoveRestrictionsForRepo(ctx context.Context, req *RemoveRestri
 RemoveRestrictionsForRepoReq is request data for Client.RemoveRestrictionsForRepo
 
 https://developer.github.com/v3/interactions/repos/#remove-interaction-restrictions-for-a-repository
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type RemoveRestrictionsForRepoReq struct {
 	_url  string
@@ -504,19 +479,11 @@ type RemoveRestrictionsForRepoReq struct {
 	SombraPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *RemoveRestrictionsForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *RemoveRestrictionsForRepoReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"sombra"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -524,12 +491,12 @@ func (r *RemoveRestrictionsForRepoReq) requestBuilder() *internal.RequestBuilder
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
 		OperationID:        "interactions/remove-restrictions-for-repo",
+		Options:            opt,
 		Previews:           map[string]bool{"sombra": r.SombraPreview},
 		RequiredPreviews:   []string{"sombra"},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/interaction-limits", r.Owner, r.Repo),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -554,8 +521,19 @@ type RemoveRestrictionsForRepoResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *RemoveRestrictionsForRepoResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *RemoveRestrictionsForRepoResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{204})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -568,45 +546,27 @@ Set interaction restrictions for an organization.
 https://developer.github.com/v3/interactions/orgs/#set-interaction-restrictions-for-an-organization
 */
 func SetRestrictionsForOrg(ctx context.Context, req *SetRestrictionsForOrgReq, opt ...requests.Option) (*SetRestrictionsForOrgResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(SetRestrictionsForOrgReq)
 	}
 	resp := &SetRestrictionsForOrgResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewSetRestrictionsForOrgResponse(r, opts.PreserveResponseBody())
-}
-
-// NewSetRestrictionsForOrgResponse builds a new *SetRestrictionsForOrgResponse from an *http.Response
-func NewSetRestrictionsForOrgResponse(resp *http.Response, preserveBody bool) (*SetRestrictionsForOrgResponse, error) {
-	var result SetRestrictionsForOrgResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -617,6 +577,8 @@ Set interaction restrictions for an organization.
   PUT /orgs/{org}/interaction-limits
 
 https://developer.github.com/v3/interactions/orgs/#set-interaction-restrictions-for-an-organization
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) SetRestrictionsForOrg(ctx context.Context, req *SetRestrictionsForOrgReq, opt ...requests.Option) (*SetRestrictionsForOrgResponse, error) {
 	return SetRestrictionsForOrg(ctx, req, append(c, opt...)...)
@@ -626,6 +588,8 @@ func (c Client) SetRestrictionsForOrg(ctx context.Context, req *SetRestrictionsF
 SetRestrictionsForOrgReq is request data for Client.SetRestrictionsForOrg
 
 https://developer.github.com/v3/interactions/orgs/#set-interaction-restrictions-for-an-organization
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type SetRestrictionsForOrgReq struct {
 	_url        string
@@ -641,19 +605,11 @@ type SetRestrictionsForOrgReq struct {
 	SombraPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *SetRestrictionsForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *SetRestrictionsForOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"sombra"},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -664,12 +620,12 @@ func (r *SetRestrictionsForOrgReq) requestBuilder() *internal.RequestBuilder {
 		},
 		Method:           "PUT",
 		OperationID:      "interactions/set-restrictions-for-org",
+		Options:          opt,
 		Previews:         map[string]bool{"sombra": r.SombraPreview},
 		RequiredPreviews: []string{"sombra"},
 		URLPath:          fmt.Sprintf("/orgs/%v/interaction-limits", r.Org),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -710,8 +666,25 @@ type SetRestrictionsForOrgResponse struct {
 	Data         components.InteractionLimit
 }
 
+// HTTPResponse returns the *http.Response
 func (r *SetRestrictionsForOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *SetRestrictionsForOrgResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -724,45 +697,27 @@ Set interaction restrictions for a repository.
 https://developer.github.com/v3/interactions/repos/#set-interaction-restrictions-for-a-repository
 */
 func SetRestrictionsForRepo(ctx context.Context, req *SetRestrictionsForRepoReq, opt ...requests.Option) (*SetRestrictionsForRepoResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(SetRestrictionsForRepoReq)
 	}
 	resp := &SetRestrictionsForRepoResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewSetRestrictionsForRepoResponse(r, opts.PreserveResponseBody())
-}
-
-// NewSetRestrictionsForRepoResponse builds a new *SetRestrictionsForRepoResponse from an *http.Response
-func NewSetRestrictionsForRepoResponse(resp *http.Response, preserveBody bool) (*SetRestrictionsForRepoResponse, error) {
-	var result SetRestrictionsForRepoResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -773,6 +728,8 @@ Set interaction restrictions for a repository.
   PUT /repos/{owner}/{repo}/interaction-limits
 
 https://developer.github.com/v3/interactions/repos/#set-interaction-restrictions-for-a-repository
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) SetRestrictionsForRepo(ctx context.Context, req *SetRestrictionsForRepoReq, opt ...requests.Option) (*SetRestrictionsForRepoResponse, error) {
 	return SetRestrictionsForRepo(ctx, req, append(c, opt...)...)
@@ -782,6 +739,8 @@ func (c Client) SetRestrictionsForRepo(ctx context.Context, req *SetRestrictions
 SetRestrictionsForRepoReq is request data for Client.SetRestrictionsForRepo
 
 https://developer.github.com/v3/interactions/repos/#set-interaction-restrictions-for-a-repository
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type SetRestrictionsForRepoReq struct {
 	_url        string
@@ -798,19 +757,11 @@ type SetRestrictionsForRepoReq struct {
 	SombraPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *SetRestrictionsForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *SetRestrictionsForRepoReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"sombra"},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -821,12 +772,12 @@ func (r *SetRestrictionsForRepoReq) requestBuilder() *internal.RequestBuilder {
 		},
 		Method:           "PUT",
 		OperationID:      "interactions/set-restrictions-for-repo",
+		Options:          opt,
 		Previews:         map[string]bool{"sombra": r.SombraPreview},
 		RequiredPreviews: []string{"sombra"},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/interaction-limits", r.Owner, r.Repo),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -867,6 +818,23 @@ type SetRestrictionsForRepoResponse struct {
 	Data         components.InteractionLimit
 }
 
+// HTTPResponse returns the *http.Response
 func (r *SetRestrictionsForRepoResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *SetRestrictionsForRepoResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }

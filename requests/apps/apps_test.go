@@ -6,6 +6,7 @@ import (
 
 	"github.com/stretchr/testify/require"
 	"github.com/willabides/octo-go"
+	"github.com/willabides/octo-go/errors"
 	"github.com/willabides/octo-go/internal/testutil"
 	"github.com/willabides/octo-go/requests"
 	"github.com/willabides/octo-go/requests/apps"
@@ -48,7 +49,10 @@ func TestGetRepoInstallation(t *testing.T) {
 			MachineManPreview: true,
 		})
 		require.Error(t, err)
-		require.Empty(t, installation.Data)
+		require.Nil(t, installation)
+		responseError, ok := err.(errors.ResponseError)
+		require.True(t, ok)
+		require.True(t, responseError.IsClientError())
 	})
 }
 

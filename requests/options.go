@@ -12,7 +12,7 @@ type AuthProvider interface {
 }
 
 // Option is a request option
-type Option func(opts *Options) error
+type Option func(opts *Options)
 
 var defaultOptions = Options{
 	baseURL: url.URL{
@@ -24,29 +24,25 @@ var defaultOptions = Options{
 }
 
 // BuildOptions turns a list of opt into *Options
-func BuildOptions(opt ...Option) (*Options, error) {
+func BuildOptions(opt ...Option) *Options {
 	result := defaultOptions
 	for _, o := range opt {
 		if o == nil {
 			continue
 		}
-		err := o(&result)
-		if err != nil {
-			return nil, nil
-		}
+		o(&result)
 	}
-	return &result, nil
+	return &result
 }
 
 // Options is options
 type Options struct {
-	baseURL              url.URL
-	userAgent            string
-	requiredPreviews     bool
-	allPreviews          bool
-	preserveResponseBody bool
-	authProvider         AuthProvider
-	httpClient           *http.Client
+	baseURL          url.URL
+	userAgent        string
+	requiredPreviews bool
+	allPreviews      bool
+	authProvider     AuthProvider
+	httpClient       *http.Client
 }
 
 // HttpClient return httpClient
@@ -67,16 +63,6 @@ func (o *Options) AuthProvider() AuthProvider {
 // SetAuthProvider sets AuthProvider
 func (o *Options) SetAuthProvider(authProvider AuthProvider) {
 	o.authProvider = authProvider
-}
-
-// PreserveResponseBody returns bool
-func (o *Options) PreserveResponseBody() bool {
-	return o.preserveResponseBody
-}
-
-// SetPreserveResponseBody sets bool
-func (o *Options) SetPreserveResponseBody(preserveResponseBody bool) {
-	o.preserveResponseBody = preserveResponseBody
 }
 
 // AllPreviews returns bool

@@ -25,15 +25,12 @@ func TestGet(t *testing.T) {
 	}
 	httpReq, err := req.HTTPRequest(ctx, client...)
 	require.NoError(t, err)
-	opts, err := requests.BuildOptions(client...)
-	require.NoError(t, err)
+	opts := requests.BuildOptions(client...)
 	httpClient := opts.HttpClient()
 	httpResp, err := httpClient.Do(httpReq)
 	require.NoError(t, err)
-	resp, err := issues.NewGetResponse(httpResp, true)
-	require.NoError(t, err)
-	require.Equal(t, int64(1), resp.Data.Number)
-	resp, err = issues.NewGetResponse(httpResp, false)
+	resp := new(issues.GetResponse)
+	err = resp.Load(httpResp)
 	require.NoError(t, err)
 	require.Equal(t, int64(1), resp.Data.Number)
 }

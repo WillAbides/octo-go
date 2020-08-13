@@ -12,8 +12,6 @@ import (
 	"net/url"
 )
 
-func strPtr(s string) *string { return &s }
-
 // Client is a set of options to apply to requests
 type Client []requests.Option
 
@@ -32,45 +30,27 @@ Get GitHub meta information.
 https://developer.github.com/v3/meta/#get-github-meta-information
 */
 func Get(ctx context.Context, req *GetReq, opt ...requests.Option) (*GetResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetReq)
 	}
 	resp := &GetResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetResponse builds a new *GetResponse from an *http.Response
-func NewGetResponse(resp *http.Response, preserveBody bool) (*GetResponse, error) {
-	var result GetResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -81,6 +61,8 @@ Get GitHub meta information.
   GET /meta
 
 https://developer.github.com/v3/meta/#get-github-meta-information
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) Get(ctx context.Context, req *GetReq, opt ...requests.Option) (*GetResponse, error) {
 	return Get(ctx, req, append(c, opt...)...)
@@ -90,24 +72,18 @@ func (c Client) Get(ctx context.Context, req *GetReq, opt ...requests.Option) (*
 GetReq is request data for Client.Get
 
 https://developer.github.com/v3/meta/#get-github-meta-information
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetReq struct {
 	_url string
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -115,12 +91,12 @@ func (r *GetReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "meta/get",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/meta"),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -146,8 +122,25 @@ type GetResponse struct {
 	Data         components.ApiOverview
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -159,39 +152,27 @@ Get Octocat.
 
 */
 func GetOctocat(ctx context.Context, req *GetOctocatReq, opt ...requests.Option) (*GetOctocatResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetOctocatReq)
 	}
 	resp := &GetOctocatResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetOctocatResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetOctocatResponse builds a new *GetOctocatResponse from an *http.Response
-func NewGetOctocatResponse(resp *http.Response, preserveBody bool) (*GetOctocatResponse, error) {
-	var result GetOctocatResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -201,6 +182,9 @@ Get Octocat.
 
   GET /octocat
 
+
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) GetOctocat(ctx context.Context, req *GetOctocatReq, opt ...requests.Option) (*GetOctocatResponse, error) {
 	return GetOctocat(ctx, req, append(c, opt...)...)
@@ -209,6 +193,9 @@ func (c Client) GetOctocat(ctx context.Context, req *GetOctocatReq, opt ...reque
 /*
 GetOctocatReq is request data for Client.GetOctocat
 
+
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetOctocatReq struct {
 	_url string
@@ -217,22 +204,14 @@ type GetOctocatReq struct {
 	S *string
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetOctocatReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetOctocatReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.S != nil {
 		query.Set("s", *r.S)
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -240,12 +219,12 @@ func (r *GetOctocatReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{},
 		Method:             "GET",
 		OperationID:        "meta/get-octocat",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/octocat"),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -269,8 +248,19 @@ type GetOctocatResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetOctocatResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetOctocatResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -282,39 +272,27 @@ Get the Zen of GitHub.
 
 */
 func GetZen(ctx context.Context, req *GetZenReq, opt ...requests.Option) (*GetZenResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetZenReq)
 	}
 	resp := &GetZenResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetZenResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetZenResponse builds a new *GetZenResponse from an *http.Response
-func NewGetZenResponse(resp *http.Response, preserveBody bool) (*GetZenResponse, error) {
-	var result GetZenResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -324,6 +302,9 @@ Get the Zen of GitHub.
 
   GET /zen
 
+
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) GetZen(ctx context.Context, req *GetZenReq, opt ...requests.Option) (*GetZenResponse, error) {
 	return GetZen(ctx, req, append(c, opt...)...)
@@ -332,24 +313,19 @@ func (c Client) GetZen(ctx context.Context, req *GetZenReq, opt ...requests.Opti
 /*
 GetZenReq is request data for Client.GetZen
 
+
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetZenReq struct {
 	_url string
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetZenReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetZenReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -357,12 +333,12 @@ func (r *GetZenReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{},
 		Method:             "GET",
 		OperationID:        "meta/get-zen",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/zen"),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -386,8 +362,19 @@ type GetZenResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetZenResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetZenResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -399,45 +386,27 @@ GitHub API Root.
 
 */
 func Root(ctx context.Context, req *RootReq, opt ...requests.Option) (*RootResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(RootReq)
 	}
 	resp := &RootResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewRootResponse(r, opts.PreserveResponseBody())
-}
-
-// NewRootResponse builds a new *RootResponse from an *http.Response
-func NewRootResponse(resp *http.Response, preserveBody bool) (*RootResponse, error) {
-	var result RootResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -447,6 +416,9 @@ GitHub API Root.
 
   GET /
 
+
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) Root(ctx context.Context, req *RootReq, opt ...requests.Option) (*RootResponse, error) {
 	return Root(ctx, req, append(c, opt...)...)
@@ -455,24 +427,19 @@ func (c Client) Root(ctx context.Context, req *RootReq, opt ...requests.Option) 
 /*
 RootReq is request data for Client.Root
 
+
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type RootReq struct {
 	_url string
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *RootReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *RootReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -480,12 +447,12 @@ func (r *RootReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "meta/root",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/"),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -550,6 +517,23 @@ type RootResponse struct {
 	Data         RootResponseBody
 }
 
+// HTTPResponse returns the *http.Response
 func (r *RootResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *RootResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }

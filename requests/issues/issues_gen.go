@@ -13,8 +13,6 @@ import (
 	"strconv"
 )
 
-func strPtr(s string) *string { return &s }
-
 // Client is a set of options to apply to requests
 type Client []requests.Option
 
@@ -33,45 +31,27 @@ Add assignees to an issue.
 https://developer.github.com/v3/issues/assignees/#add-assignees-to-an-issue
 */
 func AddAssignees(ctx context.Context, req *AddAssigneesReq, opt ...requests.Option) (*AddAssigneesResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(AddAssigneesReq)
 	}
 	resp := &AddAssigneesResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewAddAssigneesResponse(r, opts.PreserveResponseBody())
-}
-
-// NewAddAssigneesResponse builds a new *AddAssigneesResponse from an *http.Response
-func NewAddAssigneesResponse(resp *http.Response, preserveBody bool) (*AddAssigneesResponse, error) {
-	var result AddAssigneesResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{201})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{201}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -82,6 +62,8 @@ Add assignees to an issue.
   POST /repos/{owner}/{repo}/issues/{issue_number}/assignees
 
 https://developer.github.com/v3/issues/assignees/#add-assignees-to-an-issue
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) AddAssignees(ctx context.Context, req *AddAssigneesReq, opt ...requests.Option) (*AddAssigneesResponse, error) {
 	return AddAssignees(ctx, req, append(c, opt...)...)
@@ -91,6 +73,8 @@ func (c Client) AddAssignees(ctx context.Context, req *AddAssigneesReq, opt ...r
 AddAssigneesReq is request data for Client.AddAssignees
 
 https://developer.github.com/v3/issues/assignees/#add-assignees-to-an-issue
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type AddAssigneesReq struct {
 	_url  string
@@ -102,19 +86,11 @@ type AddAssigneesReq struct {
 	RequestBody AddAssigneesReqBody
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *AddAssigneesReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *AddAssigneesReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -125,12 +101,12 @@ func (r *AddAssigneesReq) requestBuilder() *internal.RequestBuilder {
 		},
 		Method:           "POST",
 		OperationID:      "issues/add-assignees",
+		Options:          opt,
 		Previews:         map[string]bool{},
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/%v/assignees", r.Owner, r.Repo, r.IssueNumber),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -170,8 +146,25 @@ type AddAssigneesResponse struct {
 	Data         components.IssueSimple
 }
 
+// HTTPResponse returns the *http.Response
 func (r *AddAssigneesResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *AddAssigneesResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{201})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -184,45 +177,27 @@ Add labels to an issue.
 https://developer.github.com/v3/issues/labels/#add-labels-to-an-issue
 */
 func AddLabels(ctx context.Context, req *AddLabelsReq, opt ...requests.Option) (*AddLabelsResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(AddLabelsReq)
 	}
 	resp := &AddLabelsResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewAddLabelsResponse(r, opts.PreserveResponseBody())
-}
-
-// NewAddLabelsResponse builds a new *AddLabelsResponse from an *http.Response
-func NewAddLabelsResponse(resp *http.Response, preserveBody bool) (*AddLabelsResponse, error) {
-	var result AddLabelsResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -233,6 +208,8 @@ Add labels to an issue.
   POST /repos/{owner}/{repo}/issues/{issue_number}/labels
 
 https://developer.github.com/v3/issues/labels/#add-labels-to-an-issue
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) AddLabels(ctx context.Context, req *AddLabelsReq, opt ...requests.Option) (*AddLabelsResponse, error) {
 	return AddLabels(ctx, req, append(c, opt...)...)
@@ -242,6 +219,8 @@ func (c Client) AddLabels(ctx context.Context, req *AddLabelsReq, opt ...request
 AddLabelsReq is request data for Client.AddLabels
 
 https://developer.github.com/v3/issues/labels/#add-labels-to-an-issue
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type AddLabelsReq struct {
 	_url  string
@@ -253,19 +232,11 @@ type AddLabelsReq struct {
 	RequestBody AddLabelsReqBody
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *AddLabelsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *AddLabelsReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -276,12 +247,12 @@ func (r *AddLabelsReq) requestBuilder() *internal.RequestBuilder {
 		},
 		Method:           "POST",
 		OperationID:      "issues/add-labels",
+		Options:          opt,
 		Previews:         map[string]bool{},
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/%v/labels", r.Owner, r.Repo, r.IssueNumber),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -323,8 +294,25 @@ type AddLabelsResponse struct {
 	Data         []components.Label
 }
 
+// HTTPResponse returns the *http.Response
 func (r *AddLabelsResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *AddLabelsResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -337,43 +325,27 @@ Check if a user can be assigned.
 https://developer.github.com/v3/issues/assignees/#check-if-a-user-can-be-assigned
 */
 func CheckUserCanBeAssigned(ctx context.Context, req *CheckUserCanBeAssignedReq, opt ...requests.Option) (*CheckUserCanBeAssignedResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(CheckUserCanBeAssignedReq)
 	}
 	resp := &CheckUserCanBeAssignedResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewCheckUserCanBeAssignedResponse(r, opts.PreserveResponseBody())
-}
-
-// NewCheckUserCanBeAssignedResponse builds a new *CheckUserCanBeAssignedResponse from an *http.Response
-func NewCheckUserCanBeAssignedResponse(resp *http.Response, preserveBody bool) (*CheckUserCanBeAssignedResponse, error) {
-	var result CheckUserCanBeAssignedResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{204, 404})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	err = internal.SetBoolResult(resp, &result.Data)
-	if err != nil {
-		return &result, err
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -384,6 +356,8 @@ Check if a user can be assigned.
   GET /repos/{owner}/{repo}/assignees/{assignee}
 
 https://developer.github.com/v3/issues/assignees/#check-if-a-user-can-be-assigned
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) CheckUserCanBeAssigned(ctx context.Context, req *CheckUserCanBeAssignedReq, opt ...requests.Option) (*CheckUserCanBeAssignedResponse, error) {
 	return CheckUserCanBeAssigned(ctx, req, append(c, opt...)...)
@@ -393,6 +367,8 @@ func (c Client) CheckUserCanBeAssigned(ctx context.Context, req *CheckUserCanBeA
 CheckUserCanBeAssignedReq is request data for Client.CheckUserCanBeAssigned
 
 https://developer.github.com/v3/issues/assignees/#check-if-a-user-can-be-assigned
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type CheckUserCanBeAssignedReq struct {
 	_url  string
@@ -403,19 +379,11 @@ type CheckUserCanBeAssignedReq struct {
 	Assignee string
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *CheckUserCanBeAssignedReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *CheckUserCanBeAssignedReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrBoolean},
@@ -423,12 +391,12 @@ func (r *CheckUserCanBeAssignedReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{},
 		Method:             "GET",
 		OperationID:        "issues/check-user-can-be-assigned",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/assignees/%v", r.Owner, r.Repo, r.Assignee),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -454,8 +422,23 @@ type CheckUserCanBeAssignedResponse struct {
 	Data         bool
 }
 
+// HTTPResponse returns the *http.Response
 func (r *CheckUserCanBeAssignedResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *CheckUserCanBeAssignedResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{204, 404})
+	if err != nil {
+		return err
+	}
+	err = internal.SetBoolResult(resp, &r.Data)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -468,45 +451,27 @@ Create an issue.
 https://developer.github.com/v3/issues/#create-an-issue
 */
 func Create(ctx context.Context, req *CreateReq, opt ...requests.Option) (*CreateResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(CreateReq)
 	}
 	resp := &CreateResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewCreateResponse(r, opts.PreserveResponseBody())
-}
-
-// NewCreateResponse builds a new *CreateResponse from an *http.Response
-func NewCreateResponse(resp *http.Response, preserveBody bool) (*CreateResponse, error) {
-	var result CreateResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{201})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{201}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -517,6 +482,8 @@ Create an issue.
   POST /repos/{owner}/{repo}/issues
 
 https://developer.github.com/v3/issues/#create-an-issue
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) Create(ctx context.Context, req *CreateReq, opt ...requests.Option) (*CreateResponse, error) {
 	return Create(ctx, req, append(c, opt...)...)
@@ -526,6 +493,8 @@ func (c Client) Create(ctx context.Context, req *CreateReq, opt ...requests.Opti
 CreateReq is request data for Client.Create
 
 https://developer.github.com/v3/issues/#create-an-issue
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type CreateReq struct {
 	_url        string
@@ -534,19 +503,11 @@ type CreateReq struct {
 	RequestBody CreateReqBody
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *CreateReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *CreateReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -557,12 +518,12 @@ func (r *CreateReq) requestBuilder() *internal.RequestBuilder {
 		},
 		Method:           "POST",
 		OperationID:      "issues/create",
+		Options:          opt,
 		Previews:         map[string]bool{},
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/issues", r.Owner, r.Repo),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -628,8 +589,25 @@ type CreateResponse struct {
 	Data         components.Issue
 }
 
+// HTTPResponse returns the *http.Response
 func (r *CreateResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *CreateResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{201})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -642,45 +620,27 @@ Create an issue comment.
 https://developer.github.com/v3/issues/comments/#create-an-issue-comment
 */
 func CreateComment(ctx context.Context, req *CreateCommentReq, opt ...requests.Option) (*CreateCommentResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(CreateCommentReq)
 	}
 	resp := &CreateCommentResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewCreateCommentResponse(r, opts.PreserveResponseBody())
-}
-
-// NewCreateCommentResponse builds a new *CreateCommentResponse from an *http.Response
-func NewCreateCommentResponse(resp *http.Response, preserveBody bool) (*CreateCommentResponse, error) {
-	var result CreateCommentResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{201})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{201}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -691,6 +651,8 @@ Create an issue comment.
   POST /repos/{owner}/{repo}/issues/{issue_number}/comments
 
 https://developer.github.com/v3/issues/comments/#create-an-issue-comment
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) CreateComment(ctx context.Context, req *CreateCommentReq, opt ...requests.Option) (*CreateCommentResponse, error) {
 	return CreateComment(ctx, req, append(c, opt...)...)
@@ -700,6 +662,8 @@ func (c Client) CreateComment(ctx context.Context, req *CreateCommentReq, opt ..
 CreateCommentReq is request data for Client.CreateComment
 
 https://developer.github.com/v3/issues/comments/#create-an-issue-comment
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type CreateCommentReq struct {
 	_url  string
@@ -711,19 +675,11 @@ type CreateCommentReq struct {
 	RequestBody CreateCommentReqBody
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *CreateCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *CreateCommentReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -734,12 +690,12 @@ func (r *CreateCommentReq) requestBuilder() *internal.RequestBuilder {
 		},
 		Method:           "POST",
 		OperationID:      "issues/create-comment",
+		Options:          opt,
 		Previews:         map[string]bool{},
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/%v/comments", r.Owner, r.Repo, r.IssueNumber),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -776,8 +732,25 @@ type CreateCommentResponse struct {
 	Data         components.IssueComment
 }
 
+// HTTPResponse returns the *http.Response
 func (r *CreateCommentResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *CreateCommentResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{201})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -790,45 +763,27 @@ Create a label.
 https://developer.github.com/v3/issues/labels/#create-a-label
 */
 func CreateLabel(ctx context.Context, req *CreateLabelReq, opt ...requests.Option) (*CreateLabelResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(CreateLabelReq)
 	}
 	resp := &CreateLabelResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewCreateLabelResponse(r, opts.PreserveResponseBody())
-}
-
-// NewCreateLabelResponse builds a new *CreateLabelResponse from an *http.Response
-func NewCreateLabelResponse(resp *http.Response, preserveBody bool) (*CreateLabelResponse, error) {
-	var result CreateLabelResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{201})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{201}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -839,6 +794,8 @@ Create a label.
   POST /repos/{owner}/{repo}/labels
 
 https://developer.github.com/v3/issues/labels/#create-a-label
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) CreateLabel(ctx context.Context, req *CreateLabelReq, opt ...requests.Option) (*CreateLabelResponse, error) {
 	return CreateLabel(ctx, req, append(c, opt...)...)
@@ -848,6 +805,8 @@ func (c Client) CreateLabel(ctx context.Context, req *CreateLabelReq, opt ...req
 CreateLabelReq is request data for Client.CreateLabel
 
 https://developer.github.com/v3/issues/labels/#create-a-label
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type CreateLabelReq struct {
 	_url        string
@@ -856,19 +815,11 @@ type CreateLabelReq struct {
 	RequestBody CreateLabelReqBody
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *CreateLabelReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *CreateLabelReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -879,12 +830,12 @@ func (r *CreateLabelReq) requestBuilder() *internal.RequestBuilder {
 		},
 		Method:           "POST",
 		OperationID:      "issues/create-label",
+		Options:          opt,
 		Previews:         map[string]bool{},
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/labels", r.Owner, r.Repo),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -934,8 +885,25 @@ type CreateLabelResponse struct {
 	Data         components.Label
 }
 
+// HTTPResponse returns the *http.Response
 func (r *CreateLabelResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *CreateLabelResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{201})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -948,45 +916,27 @@ Create a milestone.
 https://developer.github.com/v3/issues/milestones/#create-a-milestone
 */
 func CreateMilestone(ctx context.Context, req *CreateMilestoneReq, opt ...requests.Option) (*CreateMilestoneResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(CreateMilestoneReq)
 	}
 	resp := &CreateMilestoneResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewCreateMilestoneResponse(r, opts.PreserveResponseBody())
-}
-
-// NewCreateMilestoneResponse builds a new *CreateMilestoneResponse from an *http.Response
-func NewCreateMilestoneResponse(resp *http.Response, preserveBody bool) (*CreateMilestoneResponse, error) {
-	var result CreateMilestoneResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{201})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{201}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -997,6 +947,8 @@ Create a milestone.
   POST /repos/{owner}/{repo}/milestones
 
 https://developer.github.com/v3/issues/milestones/#create-a-milestone
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) CreateMilestone(ctx context.Context, req *CreateMilestoneReq, opt ...requests.Option) (*CreateMilestoneResponse, error) {
 	return CreateMilestone(ctx, req, append(c, opt...)...)
@@ -1006,6 +958,8 @@ func (c Client) CreateMilestone(ctx context.Context, req *CreateMilestoneReq, op
 CreateMilestoneReq is request data for Client.CreateMilestone
 
 https://developer.github.com/v3/issues/milestones/#create-a-milestone
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type CreateMilestoneReq struct {
 	_url        string
@@ -1014,19 +968,11 @@ type CreateMilestoneReq struct {
 	RequestBody CreateMilestoneReqBody
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *CreateMilestoneReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *CreateMilestoneReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -1037,12 +983,12 @@ func (r *CreateMilestoneReq) requestBuilder() *internal.RequestBuilder {
 		},
 		Method:           "POST",
 		OperationID:      "issues/create-milestone",
+		Options:          opt,
 		Previews:         map[string]bool{},
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/milestones", r.Owner, r.Repo),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1091,8 +1037,25 @@ type CreateMilestoneResponse struct {
 	Data         components.Milestone
 }
 
+// HTTPResponse returns the *http.Response
 func (r *CreateMilestoneResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *CreateMilestoneResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{201})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -1105,39 +1068,27 @@ Delete an issue comment.
 https://developer.github.com/v3/issues/comments/#delete-an-issue-comment
 */
 func DeleteComment(ctx context.Context, req *DeleteCommentReq, opt ...requests.Option) (*DeleteCommentResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(DeleteCommentReq)
 	}
 	resp := &DeleteCommentResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewDeleteCommentResponse(r, opts.PreserveResponseBody())
-}
-
-// NewDeleteCommentResponse builds a new *DeleteCommentResponse from an *http.Response
-func NewDeleteCommentResponse(resp *http.Response, preserveBody bool) (*DeleteCommentResponse, error) {
-	var result DeleteCommentResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{204})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -1148,6 +1099,8 @@ Delete an issue comment.
   DELETE /repos/{owner}/{repo}/issues/comments/{comment_id}
 
 https://developer.github.com/v3/issues/comments/#delete-an-issue-comment
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) DeleteComment(ctx context.Context, req *DeleteCommentReq, opt ...requests.Option) (*DeleteCommentResponse, error) {
 	return DeleteComment(ctx, req, append(c, opt...)...)
@@ -1157,6 +1110,8 @@ func (c Client) DeleteComment(ctx context.Context, req *DeleteCommentReq, opt ..
 DeleteCommentReq is request data for Client.DeleteComment
 
 https://developer.github.com/v3/issues/comments/#delete-an-issue-comment
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type DeleteCommentReq struct {
 	_url  string
@@ -1167,19 +1122,11 @@ type DeleteCommentReq struct {
 	CommentId int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *DeleteCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *DeleteCommentReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -1187,12 +1134,12 @@ func (r *DeleteCommentReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
 		OperationID:        "issues/delete-comment",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/issues/comments/%v", r.Owner, r.Repo, r.CommentId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1217,8 +1164,19 @@ type DeleteCommentResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *DeleteCommentResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *DeleteCommentResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{204})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -1231,39 +1189,27 @@ Delete a label.
 https://developer.github.com/v3/issues/labels/#delete-a-label
 */
 func DeleteLabel(ctx context.Context, req *DeleteLabelReq, opt ...requests.Option) (*DeleteLabelResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(DeleteLabelReq)
 	}
 	resp := &DeleteLabelResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewDeleteLabelResponse(r, opts.PreserveResponseBody())
-}
-
-// NewDeleteLabelResponse builds a new *DeleteLabelResponse from an *http.Response
-func NewDeleteLabelResponse(resp *http.Response, preserveBody bool) (*DeleteLabelResponse, error) {
-	var result DeleteLabelResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{204})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -1274,6 +1220,8 @@ Delete a label.
   DELETE /repos/{owner}/{repo}/labels/{name}
 
 https://developer.github.com/v3/issues/labels/#delete-a-label
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) DeleteLabel(ctx context.Context, req *DeleteLabelReq, opt ...requests.Option) (*DeleteLabelResponse, error) {
 	return DeleteLabel(ctx, req, append(c, opt...)...)
@@ -1283,6 +1231,8 @@ func (c Client) DeleteLabel(ctx context.Context, req *DeleteLabelReq, opt ...req
 DeleteLabelReq is request data for Client.DeleteLabel
 
 https://developer.github.com/v3/issues/labels/#delete-a-label
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type DeleteLabelReq struct {
 	_url  string
@@ -1293,19 +1243,11 @@ type DeleteLabelReq struct {
 	Name string
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *DeleteLabelReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *DeleteLabelReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -1313,12 +1255,12 @@ func (r *DeleteLabelReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
 		OperationID:        "issues/delete-label",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/labels/%v", r.Owner, r.Repo, r.Name),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1343,8 +1285,19 @@ type DeleteLabelResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *DeleteLabelResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *DeleteLabelResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{204})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -1357,43 +1310,27 @@ Delete a milestone.
 https://developer.github.com/v3/issues/milestones/#delete-a-milestone
 */
 func DeleteMilestone(ctx context.Context, req *DeleteMilestoneReq, opt ...requests.Option) (*DeleteMilestoneResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(DeleteMilestoneReq)
 	}
 	resp := &DeleteMilestoneResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewDeleteMilestoneResponse(r, opts.PreserveResponseBody())
-}
-
-// NewDeleteMilestoneResponse builds a new *DeleteMilestoneResponse from an *http.Response
-func NewDeleteMilestoneResponse(resp *http.Response, preserveBody bool) (*DeleteMilestoneResponse, error) {
-	var result DeleteMilestoneResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{204, 404})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	err = internal.SetBoolResult(resp, &result.Data)
-	if err != nil {
-		return &result, err
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -1404,6 +1341,8 @@ Delete a milestone.
   DELETE /repos/{owner}/{repo}/milestones/{milestone_number}
 
 https://developer.github.com/v3/issues/milestones/#delete-a-milestone
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) DeleteMilestone(ctx context.Context, req *DeleteMilestoneReq, opt ...requests.Option) (*DeleteMilestoneResponse, error) {
 	return DeleteMilestone(ctx, req, append(c, opt...)...)
@@ -1413,6 +1352,8 @@ func (c Client) DeleteMilestone(ctx context.Context, req *DeleteMilestoneReq, op
 DeleteMilestoneReq is request data for Client.DeleteMilestone
 
 https://developer.github.com/v3/issues/milestones/#delete-a-milestone
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type DeleteMilestoneReq struct {
 	_url  string
@@ -1423,19 +1364,11 @@ type DeleteMilestoneReq struct {
 	MilestoneNumber int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *DeleteMilestoneReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *DeleteMilestoneReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrBoolean},
@@ -1443,12 +1376,12 @@ func (r *DeleteMilestoneReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
 		OperationID:        "issues/delete-milestone",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/milestones/%v", r.Owner, r.Repo, r.MilestoneNumber),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1474,8 +1407,23 @@ type DeleteMilestoneResponse struct {
 	Data         bool
 }
 
+// HTTPResponse returns the *http.Response
 func (r *DeleteMilestoneResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *DeleteMilestoneResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{204, 404})
+	if err != nil {
+		return err
+	}
+	err = internal.SetBoolResult(resp, &r.Data)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -1488,45 +1436,27 @@ Get an issue.
 https://developer.github.com/v3/issues/#get-an-issue
 */
 func Get(ctx context.Context, req *GetReq, opt ...requests.Option) (*GetResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetReq)
 	}
 	resp := &GetResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetResponse builds a new *GetResponse from an *http.Response
-func NewGetResponse(resp *http.Response, preserveBody bool) (*GetResponse, error) {
-	var result GetResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200, 301, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -1537,6 +1467,8 @@ Get an issue.
   GET /repos/{owner}/{repo}/issues/{issue_number}
 
 https://developer.github.com/v3/issues/#get-an-issue
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) Get(ctx context.Context, req *GetReq, opt ...requests.Option) (*GetResponse, error) {
 	return Get(ctx, req, append(c, opt...)...)
@@ -1546,6 +1478,8 @@ func (c Client) Get(ctx context.Context, req *GetReq, opt ...requests.Option) (*
 GetReq is request data for Client.Get
 
 https://developer.github.com/v3/issues/#get-an-issue
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetReq struct {
 	_url  string
@@ -1567,19 +1501,11 @@ type GetReq struct {
 	SquirrelGirlPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"squirrel-girl"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -1587,12 +1513,12 @@ func (r *GetReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "issues/get",
+		Options:            opt,
 		Previews:           map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/issues/%v", r.Owner, r.Repo, r.IssueNumber),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1618,8 +1544,25 @@ type GetResponse struct {
 	Data         components.Issue
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200, 301, 304})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -1632,45 +1575,27 @@ Get an issue comment.
 https://developer.github.com/v3/issues/comments/#get-an-issue-comment
 */
 func GetComment(ctx context.Context, req *GetCommentReq, opt ...requests.Option) (*GetCommentResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetCommentReq)
 	}
 	resp := &GetCommentResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetCommentResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetCommentResponse builds a new *GetCommentResponse from an *http.Response
-func NewGetCommentResponse(resp *http.Response, preserveBody bool) (*GetCommentResponse, error) {
-	var result GetCommentResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -1681,6 +1606,8 @@ Get an issue comment.
   GET /repos/{owner}/{repo}/issues/comments/{comment_id}
 
 https://developer.github.com/v3/issues/comments/#get-an-issue-comment
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) GetComment(ctx context.Context, req *GetCommentReq, opt ...requests.Option) (*GetCommentResponse, error) {
 	return GetComment(ctx, req, append(c, opt...)...)
@@ -1690,6 +1617,8 @@ func (c Client) GetComment(ctx context.Context, req *GetCommentReq, opt ...reque
 GetCommentReq is request data for Client.GetComment
 
 https://developer.github.com/v3/issues/comments/#get-an-issue-comment
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetCommentReq struct {
 	_url  string
@@ -1717,19 +1646,11 @@ type GetCommentReq struct {
 	SquirrelGirlPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetCommentReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"machine-man", "squirrel-girl"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -1737,6 +1658,7 @@ func (r *GetCommentReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "issues/get-comment",
+		Options:            opt,
 		Previews: map[string]bool{
 			"machine-man":   r.MachineManPreview,
 			"squirrel-girl": r.SquirrelGirlPreview,
@@ -1744,8 +1666,7 @@ func (r *GetCommentReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/comments/%v", r.Owner, r.Repo, r.CommentId),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1771,8 +1692,25 @@ type GetCommentResponse struct {
 	Data         components.IssueComment
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetCommentResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetCommentResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -1785,45 +1723,27 @@ Get an issue event.
 https://developer.github.com/v3/issues/events/#get-an-issue-event
 */
 func GetEvent(ctx context.Context, req *GetEventReq, opt ...requests.Option) (*GetEventResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetEventReq)
 	}
 	resp := &GetEventResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetEventResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetEventResponse builds a new *GetEventResponse from an *http.Response
-func NewGetEventResponse(resp *http.Response, preserveBody bool) (*GetEventResponse, error) {
-	var result GetEventResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -1834,6 +1754,8 @@ Get an issue event.
   GET /repos/{owner}/{repo}/issues/events/{event_id}
 
 https://developer.github.com/v3/issues/events/#get-an-issue-event
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) GetEvent(ctx context.Context, req *GetEventReq, opt ...requests.Option) (*GetEventResponse, error) {
 	return GetEvent(ctx, req, append(c, opt...)...)
@@ -1843,6 +1765,8 @@ func (c Client) GetEvent(ctx context.Context, req *GetEventReq, opt ...requests.
 GetEventReq is request data for Client.GetEvent
 
 https://developer.github.com/v3/issues/events/#get-an-issue-event
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetEventReq struct {
 	_url  string
@@ -1881,19 +1805,11 @@ type GetEventReq struct {
 	SailorVPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetEventReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetEventReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"starfox", "machine-man", "sailor-v"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -1901,6 +1817,7 @@ func (r *GetEventReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "issues/get-event",
+		Options:            opt,
 		Previews: map[string]bool{
 			"machine-man": r.MachineManPreview,
 			"sailor-v":    r.SailorVPreview,
@@ -1909,8 +1826,7 @@ func (r *GetEventReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/events/%v", r.Owner, r.Repo, r.EventId),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1936,8 +1852,25 @@ type GetEventResponse struct {
 	Data         components.IssueEvent
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetEventResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetEventResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -1950,45 +1883,27 @@ Get a label.
 https://developer.github.com/v3/issues/labels/#get-a-label
 */
 func GetLabel(ctx context.Context, req *GetLabelReq, opt ...requests.Option) (*GetLabelResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetLabelReq)
 	}
 	resp := &GetLabelResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetLabelResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetLabelResponse builds a new *GetLabelResponse from an *http.Response
-func NewGetLabelResponse(resp *http.Response, preserveBody bool) (*GetLabelResponse, error) {
-	var result GetLabelResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -1999,6 +1914,8 @@ Get a label.
   GET /repos/{owner}/{repo}/labels/{name}
 
 https://developer.github.com/v3/issues/labels/#get-a-label
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) GetLabel(ctx context.Context, req *GetLabelReq, opt ...requests.Option) (*GetLabelResponse, error) {
 	return GetLabel(ctx, req, append(c, opt...)...)
@@ -2008,6 +1925,8 @@ func (c Client) GetLabel(ctx context.Context, req *GetLabelReq, opt ...requests.
 GetLabelReq is request data for Client.GetLabel
 
 https://developer.github.com/v3/issues/labels/#get-a-label
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetLabelReq struct {
 	_url  string
@@ -2018,19 +1937,11 @@ type GetLabelReq struct {
 	Name string
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetLabelReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetLabelReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -2038,12 +1949,12 @@ func (r *GetLabelReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "issues/get-label",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/labels/%v", r.Owner, r.Repo, r.Name),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -2069,8 +1980,25 @@ type GetLabelResponse struct {
 	Data         components.Label
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetLabelResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetLabelResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -2083,45 +2011,27 @@ Get a milestone.
 https://developer.github.com/v3/issues/milestones/#get-a-milestone
 */
 func GetMilestone(ctx context.Context, req *GetMilestoneReq, opt ...requests.Option) (*GetMilestoneResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetMilestoneReq)
 	}
 	resp := &GetMilestoneResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetMilestoneResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetMilestoneResponse builds a new *GetMilestoneResponse from an *http.Response
-func NewGetMilestoneResponse(resp *http.Response, preserveBody bool) (*GetMilestoneResponse, error) {
-	var result GetMilestoneResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -2132,6 +2042,8 @@ Get a milestone.
   GET /repos/{owner}/{repo}/milestones/{milestone_number}
 
 https://developer.github.com/v3/issues/milestones/#get-a-milestone
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) GetMilestone(ctx context.Context, req *GetMilestoneReq, opt ...requests.Option) (*GetMilestoneResponse, error) {
 	return GetMilestone(ctx, req, append(c, opt...)...)
@@ -2141,6 +2053,8 @@ func (c Client) GetMilestone(ctx context.Context, req *GetMilestoneReq, opt ...r
 GetMilestoneReq is request data for Client.GetMilestone
 
 https://developer.github.com/v3/issues/milestones/#get-a-milestone
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetMilestoneReq struct {
 	_url  string
@@ -2151,19 +2065,11 @@ type GetMilestoneReq struct {
 	MilestoneNumber int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetMilestoneReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetMilestoneReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -2171,12 +2077,12 @@ func (r *GetMilestoneReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "issues/get-milestone",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/milestones/%v", r.Owner, r.Repo, r.MilestoneNumber),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -2202,8 +2108,25 @@ type GetMilestoneResponse struct {
 	Data         components.Milestone
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetMilestoneResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetMilestoneResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -2216,45 +2139,27 @@ List issues assigned to the authenticated user.
 https://developer.github.com/v3/issues/#list-issues-assigned-to-the-authenticated-user
 */
 func List(ctx context.Context, req *ListReq, opt ...requests.Option) (*ListResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListReq)
 	}
 	resp := &ListResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListResponse builds a new *ListResponse from an *http.Response
-func NewListResponse(resp *http.Response, preserveBody bool) (*ListResponse, error) {
-	var result ListResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -2265,6 +2170,8 @@ List issues assigned to the authenticated user.
   GET /issues
 
 https://developer.github.com/v3/issues/#list-issues-assigned-to-the-authenticated-user
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) List(ctx context.Context, req *ListReq, opt ...requests.Option) (*ListResponse, error) {
 	return List(ctx, req, append(c, opt...)...)
@@ -2274,6 +2181,8 @@ func (c Client) List(ctx context.Context, req *ListReq, opt ...requests.Option) 
 ListReq is request data for Client.List
 
 https://developer.github.com/v3/issues/#list-issues-assigned-to-the-authenticated-user
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListReq struct {
 	_url string
@@ -2339,16 +2248,8 @@ type ListReq struct {
 	SquirrelGirlPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Filter != nil {
 		query.Set("filter", *r.Filter)
@@ -2387,7 +2288,7 @@ func (r *ListReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"machine-man", "squirrel-girl"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -2395,6 +2296,7 @@ func (r *ListReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "issues/list",
+		Options:            opt,
 		Previews: map[string]bool{
 			"machine-man":   r.MachineManPreview,
 			"squirrel-girl": r.SquirrelGirlPreview,
@@ -2402,8 +2304,7 @@ func (r *ListReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/issues"),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -2429,8 +2330,25 @@ type ListResponse struct {
 	Data         []components.Issue
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -2443,45 +2361,27 @@ List assignees.
 https://developer.github.com/v3/issues/assignees/#list-assignees
 */
 func ListAssignees(ctx context.Context, req *ListAssigneesReq, opt ...requests.Option) (*ListAssigneesResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListAssigneesReq)
 	}
 	resp := &ListAssigneesResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListAssigneesResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListAssigneesResponse builds a new *ListAssigneesResponse from an *http.Response
-func NewListAssigneesResponse(resp *http.Response, preserveBody bool) (*ListAssigneesResponse, error) {
-	var result ListAssigneesResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -2492,6 +2392,8 @@ List assignees.
   GET /repos/{owner}/{repo}/assignees
 
 https://developer.github.com/v3/issues/assignees/#list-assignees
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListAssignees(ctx context.Context, req *ListAssigneesReq, opt ...requests.Option) (*ListAssigneesResponse, error) {
 	return ListAssignees(ctx, req, append(c, opt...)...)
@@ -2501,6 +2403,8 @@ func (c Client) ListAssignees(ctx context.Context, req *ListAssigneesReq, opt ..
 ListAssigneesReq is request data for Client.ListAssignees
 
 https://developer.github.com/v3/issues/assignees/#list-assignees
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListAssigneesReq struct {
 	_url  string
@@ -2514,16 +2418,8 @@ type ListAssigneesReq struct {
 	Page *int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListAssigneesReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListAssigneesReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -2532,7 +2428,7 @@ func (r *ListAssigneesReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -2540,12 +2436,12 @@ func (r *ListAssigneesReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "issues/list-assignees",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/assignees", r.Owner, r.Repo),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -2571,8 +2467,25 @@ type ListAssigneesResponse struct {
 	Data         []components.SimpleUser
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListAssigneesResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListAssigneesResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -2585,45 +2498,27 @@ List issue comments.
 https://developer.github.com/v3/issues/comments/#list-issue-comments
 */
 func ListComments(ctx context.Context, req *ListCommentsReq, opt ...requests.Option) (*ListCommentsResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListCommentsReq)
 	}
 	resp := &ListCommentsResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListCommentsResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListCommentsResponse builds a new *ListCommentsResponse from an *http.Response
-func NewListCommentsResponse(resp *http.Response, preserveBody bool) (*ListCommentsResponse, error) {
-	var result ListCommentsResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -2634,6 +2529,8 @@ List issue comments.
   GET /repos/{owner}/{repo}/issues/{issue_number}/comments
 
 https://developer.github.com/v3/issues/comments/#list-issue-comments
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListComments(ctx context.Context, req *ListCommentsReq, opt ...requests.Option) (*ListCommentsResponse, error) {
 	return ListComments(ctx, req, append(c, opt...)...)
@@ -2643,6 +2540,8 @@ func (c Client) ListComments(ctx context.Context, req *ListCommentsReq, opt ...r
 ListCommentsReq is request data for Client.ListComments
 
 https://developer.github.com/v3/issues/comments/#list-issue-comments
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListCommentsReq struct {
 	_url  string
@@ -2677,16 +2576,8 @@ type ListCommentsReq struct {
 	SquirrelGirlPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListCommentsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListCommentsReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Since != nil {
 		query.Set("since", *r.Since)
@@ -2698,7 +2589,7 @@ func (r *ListCommentsReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"squirrel-girl"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -2706,12 +2597,12 @@ func (r *ListCommentsReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "issues/list-comments",
+		Options:            opt,
 		Previews:           map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/issues/%v/comments", r.Owner, r.Repo, r.IssueNumber),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -2737,8 +2628,25 @@ type ListCommentsResponse struct {
 	Data         []components.IssueComment
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListCommentsResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListCommentsResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -2751,45 +2659,27 @@ List issue comments for a repository.
 https://developer.github.com/v3/issues/comments/#list-issue-comments-for-a-repository
 */
 func ListCommentsForRepo(ctx context.Context, req *ListCommentsForRepoReq, opt ...requests.Option) (*ListCommentsForRepoResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListCommentsForRepoReq)
 	}
 	resp := &ListCommentsForRepoResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListCommentsForRepoResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListCommentsForRepoResponse builds a new *ListCommentsForRepoResponse from an *http.Response
-func NewListCommentsForRepoResponse(resp *http.Response, preserveBody bool) (*ListCommentsForRepoResponse, error) {
-	var result ListCommentsForRepoResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -2800,6 +2690,8 @@ List issue comments for a repository.
   GET /repos/{owner}/{repo}/issues/comments
 
 https://developer.github.com/v3/issues/comments/#list-issue-comments-for-a-repository
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListCommentsForRepo(ctx context.Context, req *ListCommentsForRepoReq, opt ...requests.Option) (*ListCommentsForRepoResponse, error) {
 	return ListCommentsForRepo(ctx, req, append(c, opt...)...)
@@ -2809,6 +2701,8 @@ func (c Client) ListCommentsForRepo(ctx context.Context, req *ListCommentsForRep
 ListCommentsForRepoReq is request data for Client.ListCommentsForRepo
 
 https://developer.github.com/v3/issues/comments/#list-issue-comments-for-a-repository
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListCommentsForRepoReq struct {
 	_url  string
@@ -2849,16 +2743,8 @@ type ListCommentsForRepoReq struct {
 	SquirrelGirlPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListCommentsForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListCommentsForRepoReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Sort != nil {
 		query.Set("sort", *r.Sort)
@@ -2876,7 +2762,7 @@ func (r *ListCommentsForRepoReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"squirrel-girl"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -2884,12 +2770,12 @@ func (r *ListCommentsForRepoReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "issues/list-comments-for-repo",
+		Options:            opt,
 		Previews:           map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/issues/comments", r.Owner, r.Repo),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -2915,8 +2801,25 @@ type ListCommentsForRepoResponse struct {
 	Data         []components.IssueComment
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListCommentsForRepoResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListCommentsForRepoResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -2929,45 +2832,27 @@ List issue events.
 https://developer.github.com/v3/issues/events/#list-issue-events
 */
 func ListEvents(ctx context.Context, req *ListEventsReq, opt ...requests.Option) (*ListEventsResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListEventsReq)
 	}
 	resp := &ListEventsResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListEventsResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListEventsResponse builds a new *ListEventsResponse from an *http.Response
-func NewListEventsResponse(resp *http.Response, preserveBody bool) (*ListEventsResponse, error) {
-	var result ListEventsResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -2978,6 +2863,8 @@ List issue events.
   GET /repos/{owner}/{repo}/issues/{issue_number}/events
 
 https://developer.github.com/v3/issues/events/#list-issue-events
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListEvents(ctx context.Context, req *ListEventsReq, opt ...requests.Option) (*ListEventsResponse, error) {
 	return ListEvents(ctx, req, append(c, opt...)...)
@@ -2987,6 +2874,8 @@ func (c Client) ListEvents(ctx context.Context, req *ListEventsReq, opt ...reque
 ListEventsReq is request data for Client.ListEvents
 
 https://developer.github.com/v3/issues/events/#list-issue-events
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListEventsReq struct {
 	_url  string
@@ -3025,16 +2914,8 @@ type ListEventsReq struct {
 	SailorVPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListEventsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListEventsReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -3043,7 +2924,7 @@ func (r *ListEventsReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"starfox", "sailor-v"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -3051,6 +2932,7 @@ func (r *ListEventsReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "issues/list-events",
+		Options:            opt,
 		Previews: map[string]bool{
 			"sailor-v": r.SailorVPreview,
 			"starfox":  r.StarfoxPreview,
@@ -3058,8 +2940,7 @@ func (r *ListEventsReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/%v/events", r.Owner, r.Repo, r.IssueNumber),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -3085,8 +2966,25 @@ type ListEventsResponse struct {
 	Data         []components.IssueEventForIssue
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListEventsResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListEventsResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -3099,45 +2997,27 @@ List issue events for a repository.
 https://developer.github.com/v3/issues/events/#list-issue-events-for-a-repository
 */
 func ListEventsForRepo(ctx context.Context, req *ListEventsForRepoReq, opt ...requests.Option) (*ListEventsForRepoResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListEventsForRepoReq)
 	}
 	resp := &ListEventsForRepoResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListEventsForRepoResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListEventsForRepoResponse builds a new *ListEventsForRepoResponse from an *http.Response
-func NewListEventsForRepoResponse(resp *http.Response, preserveBody bool) (*ListEventsForRepoResponse, error) {
-	var result ListEventsForRepoResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -3148,6 +3028,8 @@ List issue events for a repository.
   GET /repos/{owner}/{repo}/issues/events
 
 https://developer.github.com/v3/issues/events/#list-issue-events-for-a-repository
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListEventsForRepo(ctx context.Context, req *ListEventsForRepoReq, opt ...requests.Option) (*ListEventsForRepoResponse, error) {
 	return ListEventsForRepo(ctx, req, append(c, opt...)...)
@@ -3157,6 +3039,8 @@ func (c Client) ListEventsForRepo(ctx context.Context, req *ListEventsForRepoReq
 ListEventsForRepoReq is request data for Client.ListEventsForRepo
 
 https://developer.github.com/v3/issues/events/#list-issue-events-for-a-repository
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListEventsForRepoReq struct {
 	_url  string
@@ -3192,16 +3076,8 @@ type ListEventsForRepoReq struct {
 	SailorVPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListEventsForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListEventsForRepoReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -3210,7 +3086,7 @@ func (r *ListEventsForRepoReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"starfox", "sailor-v"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -3218,6 +3094,7 @@ func (r *ListEventsForRepoReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "issues/list-events-for-repo",
+		Options:            opt,
 		Previews: map[string]bool{
 			"sailor-v": r.SailorVPreview,
 			"starfox":  r.StarfoxPreview,
@@ -3225,8 +3102,7 @@ func (r *ListEventsForRepoReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/events", r.Owner, r.Repo),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -3252,8 +3128,25 @@ type ListEventsForRepoResponse struct {
 	Data         []components.IssueEvent
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListEventsForRepoResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListEventsForRepoResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -3266,45 +3159,27 @@ List timeline events for an issue.
 https://developer.github.com/v3/issues/timeline/#list-timeline-events-for-an-issue
 */
 func ListEventsForTimeline(ctx context.Context, req *ListEventsForTimelineReq, opt ...requests.Option) (*ListEventsForTimelineResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListEventsForTimelineReq)
 	}
 	resp := &ListEventsForTimelineResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListEventsForTimelineResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListEventsForTimelineResponse builds a new *ListEventsForTimelineResponse from an *http.Response
-func NewListEventsForTimelineResponse(resp *http.Response, preserveBody bool) (*ListEventsForTimelineResponse, error) {
-	var result ListEventsForTimelineResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -3315,6 +3190,8 @@ List timeline events for an issue.
   GET /repos/{owner}/{repo}/issues/{issue_number}/timeline
 
 https://developer.github.com/v3/issues/timeline/#list-timeline-events-for-an-issue
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListEventsForTimeline(ctx context.Context, req *ListEventsForTimelineReq, opt ...requests.Option) (*ListEventsForTimelineResponse, error) {
 	return ListEventsForTimeline(ctx, req, append(c, opt...)...)
@@ -3324,6 +3201,8 @@ func (c Client) ListEventsForTimeline(ctx context.Context, req *ListEventsForTim
 ListEventsForTimelineReq is request data for Client.ListEventsForTimeline
 
 https://developer.github.com/v3/issues/timeline/#list-timeline-events-for-an-issue
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListEventsForTimelineReq struct {
 	_url  string
@@ -3361,16 +3240,8 @@ type ListEventsForTimelineReq struct {
 	StarfoxPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListEventsForTimelineReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListEventsForTimelineReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -3379,7 +3250,7 @@ func (r *ListEventsForTimelineReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"mockingbird", "starfox"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -3387,6 +3258,7 @@ func (r *ListEventsForTimelineReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "issues/list-events-for-timeline",
+		Options:            opt,
 		Previews: map[string]bool{
 			"mockingbird": r.MockingbirdPreview,
 			"starfox":     r.StarfoxPreview,
@@ -3394,8 +3266,7 @@ func (r *ListEventsForTimelineReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews: []string{"mockingbird"},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/%v/timeline", r.Owner, r.Repo, r.IssueNumber),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -3421,8 +3292,25 @@ type ListEventsForTimelineResponse struct {
 	Data         []components.IssueEventForIssue
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListEventsForTimelineResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListEventsForTimelineResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -3435,45 +3323,27 @@ List user account issues assigned to the authenticated user.
 https://developer.github.com/v3/issues/#list-user-account-issues-assigned-to-the-authenticated-user
 */
 func ListForAuthenticatedUser(ctx context.Context, req *ListForAuthenticatedUserReq, opt ...requests.Option) (*ListForAuthenticatedUserResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListForAuthenticatedUserReq)
 	}
 	resp := &ListForAuthenticatedUserResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListForAuthenticatedUserResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListForAuthenticatedUserResponse builds a new *ListForAuthenticatedUserResponse from an *http.Response
-func NewListForAuthenticatedUserResponse(resp *http.Response, preserveBody bool) (*ListForAuthenticatedUserResponse, error) {
-	var result ListForAuthenticatedUserResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -3484,6 +3354,8 @@ List user account issues assigned to the authenticated user.
   GET /user/issues
 
 https://developer.github.com/v3/issues/#list-user-account-issues-assigned-to-the-authenticated-user
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListForAuthenticatedUser(ctx context.Context, req *ListForAuthenticatedUserReq, opt ...requests.Option) (*ListForAuthenticatedUserResponse, error) {
 	return ListForAuthenticatedUser(ctx, req, append(c, opt...)...)
@@ -3493,6 +3365,8 @@ func (c Client) ListForAuthenticatedUser(ctx context.Context, req *ListForAuthen
 ListForAuthenticatedUserReq is request data for Client.ListForAuthenticatedUser
 
 https://developer.github.com/v3/issues/#list-user-account-issues-assigned-to-the-authenticated-user
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListForAuthenticatedUserReq struct {
 	_url string
@@ -3554,16 +3428,8 @@ type ListForAuthenticatedUserReq struct {
 	SquirrelGirlPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListForAuthenticatedUserReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Filter != nil {
 		query.Set("filter", *r.Filter)
@@ -3590,7 +3456,7 @@ func (r *ListForAuthenticatedUserReq) requestBuilder() *internal.RequestBuilder 
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"machine-man", "squirrel-girl"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -3598,6 +3464,7 @@ func (r *ListForAuthenticatedUserReq) requestBuilder() *internal.RequestBuilder 
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "issues/list-for-authenticated-user",
+		Options:            opt,
 		Previews: map[string]bool{
 			"machine-man":   r.MachineManPreview,
 			"squirrel-girl": r.SquirrelGirlPreview,
@@ -3605,8 +3472,7 @@ func (r *ListForAuthenticatedUserReq) requestBuilder() *internal.RequestBuilder 
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/user/issues"),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -3632,8 +3498,25 @@ type ListForAuthenticatedUserResponse struct {
 	Data         []components.Issue
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListForAuthenticatedUserResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListForAuthenticatedUserResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -3646,45 +3529,27 @@ List organization issues assigned to the authenticated user.
 https://developer.github.com/v3/issues/#list-organization-issues-assigned-to-the-authenticated-user
 */
 func ListForOrg(ctx context.Context, req *ListForOrgReq, opt ...requests.Option) (*ListForOrgResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListForOrgReq)
 	}
 	resp := &ListForOrgResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListForOrgResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListForOrgResponse builds a new *ListForOrgResponse from an *http.Response
-func NewListForOrgResponse(resp *http.Response, preserveBody bool) (*ListForOrgResponse, error) {
-	var result ListForOrgResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -3695,6 +3560,8 @@ List organization issues assigned to the authenticated user.
   GET /orgs/{org}/issues
 
 https://developer.github.com/v3/issues/#list-organization-issues-assigned-to-the-authenticated-user
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListForOrg(ctx context.Context, req *ListForOrgReq, opt ...requests.Option) (*ListForOrgResponse, error) {
 	return ListForOrg(ctx, req, append(c, opt...)...)
@@ -3704,6 +3571,8 @@ func (c Client) ListForOrg(ctx context.Context, req *ListForOrgReq, opt ...reque
 ListForOrgReq is request data for Client.ListForOrg
 
 https://developer.github.com/v3/issues/#list-organization-issues-assigned-to-the-authenticated-user
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListForOrgReq struct {
 	_url string
@@ -3766,16 +3635,8 @@ type ListForOrgReq struct {
 	SquirrelGirlPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListForOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Filter != nil {
 		query.Set("filter", *r.Filter)
@@ -3802,7 +3663,7 @@ func (r *ListForOrgReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"machine-man", "squirrel-girl"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -3810,6 +3671,7 @@ func (r *ListForOrgReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "issues/list-for-org",
+		Options:            opt,
 		Previews: map[string]bool{
 			"machine-man":   r.MachineManPreview,
 			"squirrel-girl": r.SquirrelGirlPreview,
@@ -3817,8 +3679,7 @@ func (r *ListForOrgReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/orgs/%v/issues", r.Org),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -3844,8 +3705,25 @@ type ListForOrgResponse struct {
 	Data         []components.Issue
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListForOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListForOrgResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -3858,45 +3736,27 @@ List repository issues.
 https://developer.github.com/v3/issues/#list-repository-issues
 */
 func ListForRepo(ctx context.Context, req *ListForRepoReq, opt ...requests.Option) (*ListForRepoResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListForRepoReq)
 	}
 	resp := &ListForRepoResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListForRepoResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListForRepoResponse builds a new *ListForRepoResponse from an *http.Response
-func NewListForRepoResponse(resp *http.Response, preserveBody bool) (*ListForRepoResponse, error) {
-	var result ListForRepoResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200, 301})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -3907,6 +3767,8 @@ List repository issues.
   GET /repos/{owner}/{repo}/issues
 
 https://developer.github.com/v3/issues/#list-repository-issues
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListForRepo(ctx context.Context, req *ListForRepoReq, opt ...requests.Option) (*ListForRepoResponse, error) {
 	return ListForRepo(ctx, req, append(c, opt...)...)
@@ -3916,6 +3778,8 @@ func (c Client) ListForRepo(ctx context.Context, req *ListForRepoReq, opt ...req
 ListForRepoReq is request data for Client.ListForRepo
 
 https://developer.github.com/v3/issues/#list-repository-issues
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListForRepoReq struct {
 	_url  string
@@ -3987,16 +3851,8 @@ type ListForRepoReq struct {
 	SquirrelGirlPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListForRepoReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Milestone != nil {
 		query.Set("milestone", *r.Milestone)
@@ -4032,7 +3888,7 @@ func (r *ListForRepoReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"machine-man", "squirrel-girl"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -4040,6 +3896,7 @@ func (r *ListForRepoReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "issues/list-for-repo",
+		Options:            opt,
 		Previews: map[string]bool{
 			"machine-man":   r.MachineManPreview,
 			"squirrel-girl": r.SquirrelGirlPreview,
@@ -4047,8 +3904,7 @@ func (r *ListForRepoReq) requestBuilder() *internal.RequestBuilder {
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/issues", r.Owner, r.Repo),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -4074,8 +3930,25 @@ type ListForRepoResponse struct {
 	Data         []components.IssueSimple
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListForRepoResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListForRepoResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200, 301})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -4088,45 +3961,27 @@ List labels for issues in a milestone.
 https://developer.github.com/v3/issues/labels/#list-labels-for-issues-in-a-milestone
 */
 func ListLabelsForMilestone(ctx context.Context, req *ListLabelsForMilestoneReq, opt ...requests.Option) (*ListLabelsForMilestoneResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListLabelsForMilestoneReq)
 	}
 	resp := &ListLabelsForMilestoneResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListLabelsForMilestoneResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListLabelsForMilestoneResponse builds a new *ListLabelsForMilestoneResponse from an *http.Response
-func NewListLabelsForMilestoneResponse(resp *http.Response, preserveBody bool) (*ListLabelsForMilestoneResponse, error) {
-	var result ListLabelsForMilestoneResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -4137,6 +3992,8 @@ List labels for issues in a milestone.
   GET /repos/{owner}/{repo}/milestones/{milestone_number}/labels
 
 https://developer.github.com/v3/issues/labels/#list-labels-for-issues-in-a-milestone
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListLabelsForMilestone(ctx context.Context, req *ListLabelsForMilestoneReq, opt ...requests.Option) (*ListLabelsForMilestoneResponse, error) {
 	return ListLabelsForMilestone(ctx, req, append(c, opt...)...)
@@ -4146,6 +4003,8 @@ func (c Client) ListLabelsForMilestone(ctx context.Context, req *ListLabelsForMi
 ListLabelsForMilestoneReq is request data for Client.ListLabelsForMilestone
 
 https://developer.github.com/v3/issues/labels/#list-labels-for-issues-in-a-milestone
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListLabelsForMilestoneReq struct {
 	_url  string
@@ -4162,16 +4021,8 @@ type ListLabelsForMilestoneReq struct {
 	Page *int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListLabelsForMilestoneReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListLabelsForMilestoneReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -4180,7 +4031,7 @@ func (r *ListLabelsForMilestoneReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -4188,12 +4039,12 @@ func (r *ListLabelsForMilestoneReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "issues/list-labels-for-milestone",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/milestones/%v/labels", r.Owner, r.Repo, r.MilestoneNumber),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -4219,8 +4070,25 @@ type ListLabelsForMilestoneResponse struct {
 	Data         []components.Label
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListLabelsForMilestoneResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListLabelsForMilestoneResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -4233,45 +4101,27 @@ List labels for a repository.
 https://developer.github.com/v3/issues/labels/#list-labels-for-a-repository
 */
 func ListLabelsForRepo(ctx context.Context, req *ListLabelsForRepoReq, opt ...requests.Option) (*ListLabelsForRepoResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListLabelsForRepoReq)
 	}
 	resp := &ListLabelsForRepoResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListLabelsForRepoResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListLabelsForRepoResponse builds a new *ListLabelsForRepoResponse from an *http.Response
-func NewListLabelsForRepoResponse(resp *http.Response, preserveBody bool) (*ListLabelsForRepoResponse, error) {
-	var result ListLabelsForRepoResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -4282,6 +4132,8 @@ List labels for a repository.
   GET /repos/{owner}/{repo}/labels
 
 https://developer.github.com/v3/issues/labels/#list-labels-for-a-repository
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListLabelsForRepo(ctx context.Context, req *ListLabelsForRepoReq, opt ...requests.Option) (*ListLabelsForRepoResponse, error) {
 	return ListLabelsForRepo(ctx, req, append(c, opt...)...)
@@ -4291,6 +4143,8 @@ func (c Client) ListLabelsForRepo(ctx context.Context, req *ListLabelsForRepoReq
 ListLabelsForRepoReq is request data for Client.ListLabelsForRepo
 
 https://developer.github.com/v3/issues/labels/#list-labels-for-a-repository
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListLabelsForRepoReq struct {
 	_url  string
@@ -4304,16 +4158,8 @@ type ListLabelsForRepoReq struct {
 	Page *int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListLabelsForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListLabelsForRepoReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -4322,7 +4168,7 @@ func (r *ListLabelsForRepoReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -4330,12 +4176,12 @@ func (r *ListLabelsForRepoReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "issues/list-labels-for-repo",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/labels", r.Owner, r.Repo),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -4361,8 +4207,25 @@ type ListLabelsForRepoResponse struct {
 	Data         []components.Label
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListLabelsForRepoResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListLabelsForRepoResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -4375,45 +4238,27 @@ List labels for an issue.
 https://developer.github.com/v3/issues/labels/#list-labels-for-an-issue
 */
 func ListLabelsOnIssue(ctx context.Context, req *ListLabelsOnIssueReq, opt ...requests.Option) (*ListLabelsOnIssueResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListLabelsOnIssueReq)
 	}
 	resp := &ListLabelsOnIssueResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListLabelsOnIssueResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListLabelsOnIssueResponse builds a new *ListLabelsOnIssueResponse from an *http.Response
-func NewListLabelsOnIssueResponse(resp *http.Response, preserveBody bool) (*ListLabelsOnIssueResponse, error) {
-	var result ListLabelsOnIssueResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -4424,6 +4269,8 @@ List labels for an issue.
   GET /repos/{owner}/{repo}/issues/{issue_number}/labels
 
 https://developer.github.com/v3/issues/labels/#list-labels-for-an-issue
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListLabelsOnIssue(ctx context.Context, req *ListLabelsOnIssueReq, opt ...requests.Option) (*ListLabelsOnIssueResponse, error) {
 	return ListLabelsOnIssue(ctx, req, append(c, opt...)...)
@@ -4433,6 +4280,8 @@ func (c Client) ListLabelsOnIssue(ctx context.Context, req *ListLabelsOnIssueReq
 ListLabelsOnIssueReq is request data for Client.ListLabelsOnIssue
 
 https://developer.github.com/v3/issues/labels/#list-labels-for-an-issue
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListLabelsOnIssueReq struct {
 	_url  string
@@ -4449,16 +4298,8 @@ type ListLabelsOnIssueReq struct {
 	Page *int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListLabelsOnIssueReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListLabelsOnIssueReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -4467,7 +4308,7 @@ func (r *ListLabelsOnIssueReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -4475,12 +4316,12 @@ func (r *ListLabelsOnIssueReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "issues/list-labels-on-issue",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/issues/%v/labels", r.Owner, r.Repo, r.IssueNumber),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -4506,8 +4347,25 @@ type ListLabelsOnIssueResponse struct {
 	Data         []components.Label
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListLabelsOnIssueResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListLabelsOnIssueResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -4520,45 +4378,27 @@ List milestones.
 https://developer.github.com/v3/issues/milestones/#list-milestones
 */
 func ListMilestones(ctx context.Context, req *ListMilestonesReq, opt ...requests.Option) (*ListMilestonesResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListMilestonesReq)
 	}
 	resp := &ListMilestonesResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListMilestonesResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListMilestonesResponse builds a new *ListMilestonesResponse from an *http.Response
-func NewListMilestonesResponse(resp *http.Response, preserveBody bool) (*ListMilestonesResponse, error) {
-	var result ListMilestonesResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -4569,6 +4409,8 @@ List milestones.
   GET /repos/{owner}/{repo}/milestones
 
 https://developer.github.com/v3/issues/milestones/#list-milestones
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListMilestones(ctx context.Context, req *ListMilestonesReq, opt ...requests.Option) (*ListMilestonesResponse, error) {
 	return ListMilestones(ctx, req, append(c, opt...)...)
@@ -4578,6 +4420,8 @@ func (c Client) ListMilestones(ctx context.Context, req *ListMilestonesReq, opt 
 ListMilestonesReq is request data for Client.ListMilestones
 
 https://developer.github.com/v3/issues/milestones/#list-milestones
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListMilestonesReq struct {
 	_url  string
@@ -4600,16 +4444,8 @@ type ListMilestonesReq struct {
 	Page *int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListMilestonesReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListMilestonesReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.State != nil {
 		query.Set("state", *r.State)
@@ -4627,7 +4463,7 @@ func (r *ListMilestonesReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -4635,12 +4471,12 @@ func (r *ListMilestonesReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "issues/list-milestones",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/milestones", r.Owner, r.Repo),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -4666,8 +4502,25 @@ type ListMilestonesResponse struct {
 	Data         []components.Milestone
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListMilestonesResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListMilestonesResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -4680,39 +4533,27 @@ Lock an issue.
 https://developer.github.com/v3/issues/#lock-an-issue
 */
 func Lock(ctx context.Context, req *LockReq, opt ...requests.Option) (*LockResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(LockReq)
 	}
 	resp := &LockResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewLockResponse(r, opts.PreserveResponseBody())
-}
-
-// NewLockResponse builds a new *LockResponse from an *http.Response
-func NewLockResponse(resp *http.Response, preserveBody bool) (*LockResponse, error) {
-	var result LockResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{204})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -4723,6 +4564,8 @@ Lock an issue.
   PUT /repos/{owner}/{repo}/issues/{issue_number}/lock
 
 https://developer.github.com/v3/issues/#lock-an-issue
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) Lock(ctx context.Context, req *LockReq, opt ...requests.Option) (*LockResponse, error) {
 	return Lock(ctx, req, append(c, opt...)...)
@@ -4732,6 +4575,8 @@ func (c Client) Lock(ctx context.Context, req *LockReq, opt ...requests.Option) 
 LockReq is request data for Client.Lock
 
 https://developer.github.com/v3/issues/#lock-an-issue
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type LockReq struct {
 	_url  string
@@ -4753,19 +4598,11 @@ type LockReq struct {
 	SailorVPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *LockReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *LockReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"sailor-v"},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -4773,12 +4610,12 @@ func (r *LockReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"content-type": internal.String("application/json")},
 		Method:             "PUT",
 		OperationID:        "issues/lock",
+		Options:            opt,
 		Previews:           map[string]bool{"sailor-v": r.SailorVPreview},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/issues/%v/lock", r.Owner, r.Repo, r.IssueNumber),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -4821,8 +4658,19 @@ type LockResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *LockResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *LockResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{204})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -4835,39 +4683,27 @@ Remove all labels from an issue.
 https://developer.github.com/v3/issues/labels/#remove-all-labels-from-an-issue
 */
 func RemoveAllLabels(ctx context.Context, req *RemoveAllLabelsReq, opt ...requests.Option) (*RemoveAllLabelsResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(RemoveAllLabelsReq)
 	}
 	resp := &RemoveAllLabelsResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewRemoveAllLabelsResponse(r, opts.PreserveResponseBody())
-}
-
-// NewRemoveAllLabelsResponse builds a new *RemoveAllLabelsResponse from an *http.Response
-func NewRemoveAllLabelsResponse(resp *http.Response, preserveBody bool) (*RemoveAllLabelsResponse, error) {
-	var result RemoveAllLabelsResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{204})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -4878,6 +4714,8 @@ Remove all labels from an issue.
   DELETE /repos/{owner}/{repo}/issues/{issue_number}/labels
 
 https://developer.github.com/v3/issues/labels/#remove-all-labels-from-an-issue
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) RemoveAllLabels(ctx context.Context, req *RemoveAllLabelsReq, opt ...requests.Option) (*RemoveAllLabelsResponse, error) {
 	return RemoveAllLabels(ctx, req, append(c, opt...)...)
@@ -4887,6 +4725,8 @@ func (c Client) RemoveAllLabels(ctx context.Context, req *RemoveAllLabelsReq, op
 RemoveAllLabelsReq is request data for Client.RemoveAllLabels
 
 https://developer.github.com/v3/issues/labels/#remove-all-labels-from-an-issue
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type RemoveAllLabelsReq struct {
 	_url  string
@@ -4897,19 +4737,11 @@ type RemoveAllLabelsReq struct {
 	IssueNumber int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *RemoveAllLabelsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *RemoveAllLabelsReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -4917,12 +4749,12 @@ func (r *RemoveAllLabelsReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
 		OperationID:        "issues/remove-all-labels",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/issues/%v/labels", r.Owner, r.Repo, r.IssueNumber),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -4947,8 +4779,19 @@ type RemoveAllLabelsResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *RemoveAllLabelsResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *RemoveAllLabelsResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{204})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -4961,45 +4804,27 @@ Remove assignees from an issue.
 https://developer.github.com/v3/issues/assignees/#remove-assignees-from-an-issue
 */
 func RemoveAssignees(ctx context.Context, req *RemoveAssigneesReq, opt ...requests.Option) (*RemoveAssigneesResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(RemoveAssigneesReq)
 	}
 	resp := &RemoveAssigneesResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewRemoveAssigneesResponse(r, opts.PreserveResponseBody())
-}
-
-// NewRemoveAssigneesResponse builds a new *RemoveAssigneesResponse from an *http.Response
-func NewRemoveAssigneesResponse(resp *http.Response, preserveBody bool) (*RemoveAssigneesResponse, error) {
-	var result RemoveAssigneesResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -5010,6 +4835,8 @@ Remove assignees from an issue.
   DELETE /repos/{owner}/{repo}/issues/{issue_number}/assignees
 
 https://developer.github.com/v3/issues/assignees/#remove-assignees-from-an-issue
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) RemoveAssignees(ctx context.Context, req *RemoveAssigneesReq, opt ...requests.Option) (*RemoveAssigneesResponse, error) {
 	return RemoveAssignees(ctx, req, append(c, opt...)...)
@@ -5019,6 +4846,8 @@ func (c Client) RemoveAssignees(ctx context.Context, req *RemoveAssigneesReq, op
 RemoveAssigneesReq is request data for Client.RemoveAssignees
 
 https://developer.github.com/v3/issues/assignees/#remove-assignees-from-an-issue
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type RemoveAssigneesReq struct {
 	_url  string
@@ -5030,19 +4859,11 @@ type RemoveAssigneesReq struct {
 	RequestBody RemoveAssigneesReqBody
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *RemoveAssigneesReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *RemoveAssigneesReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -5053,12 +4874,12 @@ func (r *RemoveAssigneesReq) requestBuilder() *internal.RequestBuilder {
 		},
 		Method:           "DELETE",
 		OperationID:      "issues/remove-assignees",
+		Options:          opt,
 		Previews:         map[string]bool{},
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/%v/assignees", r.Owner, r.Repo, r.IssueNumber),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -5099,8 +4920,25 @@ type RemoveAssigneesResponse struct {
 	Data         components.IssueSimple
 }
 
+// HTTPResponse returns the *http.Response
 func (r *RemoveAssigneesResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *RemoveAssigneesResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -5113,45 +4951,27 @@ Remove a label from an issue.
 https://developer.github.com/v3/issues/labels/#remove-a-label-from-an-issue
 */
 func RemoveLabel(ctx context.Context, req *RemoveLabelReq, opt ...requests.Option) (*RemoveLabelResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(RemoveLabelReq)
 	}
 	resp := &RemoveLabelResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewRemoveLabelResponse(r, opts.PreserveResponseBody())
-}
-
-// NewRemoveLabelResponse builds a new *RemoveLabelResponse from an *http.Response
-func NewRemoveLabelResponse(resp *http.Response, preserveBody bool) (*RemoveLabelResponse, error) {
-	var result RemoveLabelResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -5162,6 +4982,8 @@ Remove a label from an issue.
   DELETE /repos/{owner}/{repo}/issues/{issue_number}/labels/{name}
 
 https://developer.github.com/v3/issues/labels/#remove-a-label-from-an-issue
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) RemoveLabel(ctx context.Context, req *RemoveLabelReq, opt ...requests.Option) (*RemoveLabelResponse, error) {
 	return RemoveLabel(ctx, req, append(c, opt...)...)
@@ -5171,6 +4993,8 @@ func (c Client) RemoveLabel(ctx context.Context, req *RemoveLabelReq, opt ...req
 RemoveLabelReq is request data for Client.RemoveLabel
 
 https://developer.github.com/v3/issues/labels/#remove-a-label-from-an-issue
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type RemoveLabelReq struct {
 	_url  string
@@ -5184,19 +5008,11 @@ type RemoveLabelReq struct {
 	Name string
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *RemoveLabelReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *RemoveLabelReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -5204,12 +5020,12 @@ func (r *RemoveLabelReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "DELETE",
 		OperationID:        "issues/remove-label",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/issues/%v/labels/%v", r.Owner, r.Repo, r.IssueNumber, r.Name),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -5235,8 +5051,25 @@ type RemoveLabelResponse struct {
 	Data         []components.Label
 }
 
+// HTTPResponse returns the *http.Response
 func (r *RemoveLabelResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *RemoveLabelResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -5249,45 +5082,27 @@ Set labels for an issue.
 https://developer.github.com/v3/issues/labels/#set-labels-for-an-issue
 */
 func SetLabels(ctx context.Context, req *SetLabelsReq, opt ...requests.Option) (*SetLabelsResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(SetLabelsReq)
 	}
 	resp := &SetLabelsResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewSetLabelsResponse(r, opts.PreserveResponseBody())
-}
-
-// NewSetLabelsResponse builds a new *SetLabelsResponse from an *http.Response
-func NewSetLabelsResponse(resp *http.Response, preserveBody bool) (*SetLabelsResponse, error) {
-	var result SetLabelsResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -5298,6 +5113,8 @@ Set labels for an issue.
   PUT /repos/{owner}/{repo}/issues/{issue_number}/labels
 
 https://developer.github.com/v3/issues/labels/#set-labels-for-an-issue
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) SetLabels(ctx context.Context, req *SetLabelsReq, opt ...requests.Option) (*SetLabelsResponse, error) {
 	return SetLabels(ctx, req, append(c, opt...)...)
@@ -5307,6 +5124,8 @@ func (c Client) SetLabels(ctx context.Context, req *SetLabelsReq, opt ...request
 SetLabelsReq is request data for Client.SetLabels
 
 https://developer.github.com/v3/issues/labels/#set-labels-for-an-issue
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type SetLabelsReq struct {
 	_url  string
@@ -5318,19 +5137,11 @@ type SetLabelsReq struct {
 	RequestBody SetLabelsReqBody
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *SetLabelsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *SetLabelsReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -5341,12 +5152,12 @@ func (r *SetLabelsReq) requestBuilder() *internal.RequestBuilder {
 		},
 		Method:           "PUT",
 		OperationID:      "issues/set-labels",
+		Options:          opt,
 		Previews:         map[string]bool{},
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/%v/labels", r.Owner, r.Repo, r.IssueNumber),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -5388,8 +5199,25 @@ type SetLabelsResponse struct {
 	Data         []components.Label
 }
 
+// HTTPResponse returns the *http.Response
 func (r *SetLabelsResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *SetLabelsResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -5402,39 +5230,27 @@ Unlock an issue.
 https://developer.github.com/v3/issues/#unlock-an-issue
 */
 func Unlock(ctx context.Context, req *UnlockReq, opt ...requests.Option) (*UnlockResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(UnlockReq)
 	}
 	resp := &UnlockResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewUnlockResponse(r, opts.PreserveResponseBody())
-}
-
-// NewUnlockResponse builds a new *UnlockResponse from an *http.Response
-func NewUnlockResponse(resp *http.Response, preserveBody bool) (*UnlockResponse, error) {
-	var result UnlockResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{204})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -5445,6 +5261,8 @@ Unlock an issue.
   DELETE /repos/{owner}/{repo}/issues/{issue_number}/lock
 
 https://developer.github.com/v3/issues/#unlock-an-issue
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) Unlock(ctx context.Context, req *UnlockReq, opt ...requests.Option) (*UnlockResponse, error) {
 	return Unlock(ctx, req, append(c, opt...)...)
@@ -5454,6 +5272,8 @@ func (c Client) Unlock(ctx context.Context, req *UnlockReq, opt ...requests.Opti
 UnlockReq is request data for Client.Unlock
 
 https://developer.github.com/v3/issues/#unlock-an-issue
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type UnlockReq struct {
 	_url  string
@@ -5464,19 +5284,11 @@ type UnlockReq struct {
 	IssueNumber int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *UnlockReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *UnlockReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -5484,12 +5296,12 @@ func (r *UnlockReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
 		OperationID:        "issues/unlock",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/issues/%v/lock", r.Owner, r.Repo, r.IssueNumber),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -5514,8 +5326,19 @@ type UnlockResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *UnlockResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *UnlockResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{204})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -5528,45 +5351,27 @@ Update an issue.
 https://developer.github.com/v3/issues/#update-an-issue
 */
 func Update(ctx context.Context, req *UpdateReq, opt ...requests.Option) (*UpdateResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(UpdateReq)
 	}
 	resp := &UpdateResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewUpdateResponse(r, opts.PreserveResponseBody())
-}
-
-// NewUpdateResponse builds a new *UpdateResponse from an *http.Response
-func NewUpdateResponse(resp *http.Response, preserveBody bool) (*UpdateResponse, error) {
-	var result UpdateResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200, 301})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -5577,6 +5382,8 @@ Update an issue.
   PATCH /repos/{owner}/{repo}/issues/{issue_number}
 
 https://developer.github.com/v3/issues/#update-an-issue
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) Update(ctx context.Context, req *UpdateReq, opt ...requests.Option) (*UpdateResponse, error) {
 	return Update(ctx, req, append(c, opt...)...)
@@ -5586,6 +5393,8 @@ func (c Client) Update(ctx context.Context, req *UpdateReq, opt ...requests.Opti
 UpdateReq is request data for Client.Update
 
 https://developer.github.com/v3/issues/#update-an-issue
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type UpdateReq struct {
 	_url  string
@@ -5597,19 +5406,11 @@ type UpdateReq struct {
 	RequestBody UpdateReqBody
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *UpdateReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *UpdateReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -5620,12 +5421,12 @@ func (r *UpdateReq) requestBuilder() *internal.RequestBuilder {
 		},
 		Method:           "PATCH",
 		OperationID:      "issues/update",
+		Options:          opt,
 		Previews:         map[string]bool{},
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/%v", r.Owner, r.Repo, r.IssueNumber),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -5694,8 +5495,25 @@ type UpdateResponse struct {
 	Data         components.Issue
 }
 
+// HTTPResponse returns the *http.Response
 func (r *UpdateResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *UpdateResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200, 301})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -5708,45 +5526,27 @@ Update an issue comment.
 https://developer.github.com/v3/issues/comments/#update-an-issue-comment
 */
 func UpdateComment(ctx context.Context, req *UpdateCommentReq, opt ...requests.Option) (*UpdateCommentResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(UpdateCommentReq)
 	}
 	resp := &UpdateCommentResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewUpdateCommentResponse(r, opts.PreserveResponseBody())
-}
-
-// NewUpdateCommentResponse builds a new *UpdateCommentResponse from an *http.Response
-func NewUpdateCommentResponse(resp *http.Response, preserveBody bool) (*UpdateCommentResponse, error) {
-	var result UpdateCommentResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -5757,6 +5557,8 @@ Update an issue comment.
   PATCH /repos/{owner}/{repo}/issues/comments/{comment_id}
 
 https://developer.github.com/v3/issues/comments/#update-an-issue-comment
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) UpdateComment(ctx context.Context, req *UpdateCommentReq, opt ...requests.Option) (*UpdateCommentResponse, error) {
 	return UpdateComment(ctx, req, append(c, opt...)...)
@@ -5766,6 +5568,8 @@ func (c Client) UpdateComment(ctx context.Context, req *UpdateCommentReq, opt ..
 UpdateCommentReq is request data for Client.UpdateComment
 
 https://developer.github.com/v3/issues/comments/#update-an-issue-comment
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type UpdateCommentReq struct {
 	_url  string
@@ -5777,19 +5581,11 @@ type UpdateCommentReq struct {
 	RequestBody UpdateCommentReqBody
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *UpdateCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *UpdateCommentReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -5800,12 +5596,12 @@ func (r *UpdateCommentReq) requestBuilder() *internal.RequestBuilder {
 		},
 		Method:           "PATCH",
 		OperationID:      "issues/update-comment",
+		Options:          opt,
 		Previews:         map[string]bool{},
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/comments/%v", r.Owner, r.Repo, r.CommentId),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -5842,8 +5638,25 @@ type UpdateCommentResponse struct {
 	Data         components.IssueComment
 }
 
+// HTTPResponse returns the *http.Response
 func (r *UpdateCommentResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *UpdateCommentResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -5856,45 +5669,27 @@ Update a label.
 https://developer.github.com/v3/issues/labels/#update-a-label
 */
 func UpdateLabel(ctx context.Context, req *UpdateLabelReq, opt ...requests.Option) (*UpdateLabelResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(UpdateLabelReq)
 	}
 	resp := &UpdateLabelResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewUpdateLabelResponse(r, opts.PreserveResponseBody())
-}
-
-// NewUpdateLabelResponse builds a new *UpdateLabelResponse from an *http.Response
-func NewUpdateLabelResponse(resp *http.Response, preserveBody bool) (*UpdateLabelResponse, error) {
-	var result UpdateLabelResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -5905,6 +5700,8 @@ Update a label.
   PATCH /repos/{owner}/{repo}/labels/{name}
 
 https://developer.github.com/v3/issues/labels/#update-a-label
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) UpdateLabel(ctx context.Context, req *UpdateLabelReq, opt ...requests.Option) (*UpdateLabelResponse, error) {
 	return UpdateLabel(ctx, req, append(c, opt...)...)
@@ -5914,6 +5711,8 @@ func (c Client) UpdateLabel(ctx context.Context, req *UpdateLabelReq, opt ...req
 UpdateLabelReq is request data for Client.UpdateLabel
 
 https://developer.github.com/v3/issues/labels/#update-a-label
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type UpdateLabelReq struct {
 	_url  string
@@ -5925,19 +5724,11 @@ type UpdateLabelReq struct {
 	RequestBody UpdateLabelReqBody
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *UpdateLabelReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *UpdateLabelReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -5948,12 +5739,12 @@ func (r *UpdateLabelReq) requestBuilder() *internal.RequestBuilder {
 		},
 		Method:           "PATCH",
 		OperationID:      "issues/update-label",
+		Options:          opt,
 		Previews:         map[string]bool{},
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/labels/%v", r.Owner, r.Repo, r.Name),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -6003,8 +5794,25 @@ type UpdateLabelResponse struct {
 	Data         components.Label
 }
 
+// HTTPResponse returns the *http.Response
 func (r *UpdateLabelResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *UpdateLabelResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -6017,45 +5825,27 @@ Update a milestone.
 https://developer.github.com/v3/issues/milestones/#update-a-milestone
 */
 func UpdateMilestone(ctx context.Context, req *UpdateMilestoneReq, opt ...requests.Option) (*UpdateMilestoneResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(UpdateMilestoneReq)
 	}
 	resp := &UpdateMilestoneResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewUpdateMilestoneResponse(r, opts.PreserveResponseBody())
-}
-
-// NewUpdateMilestoneResponse builds a new *UpdateMilestoneResponse from an *http.Response
-func NewUpdateMilestoneResponse(resp *http.Response, preserveBody bool) (*UpdateMilestoneResponse, error) {
-	var result UpdateMilestoneResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -6066,6 +5856,8 @@ Update a milestone.
   PATCH /repos/{owner}/{repo}/milestones/{milestone_number}
 
 https://developer.github.com/v3/issues/milestones/#update-a-milestone
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) UpdateMilestone(ctx context.Context, req *UpdateMilestoneReq, opt ...requests.Option) (*UpdateMilestoneResponse, error) {
 	return UpdateMilestone(ctx, req, append(c, opt...)...)
@@ -6075,6 +5867,8 @@ func (c Client) UpdateMilestone(ctx context.Context, req *UpdateMilestoneReq, op
 UpdateMilestoneReq is request data for Client.UpdateMilestone
 
 https://developer.github.com/v3/issues/milestones/#update-a-milestone
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type UpdateMilestoneReq struct {
 	_url  string
@@ -6086,19 +5880,11 @@ type UpdateMilestoneReq struct {
 	RequestBody     UpdateMilestoneReqBody
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *UpdateMilestoneReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *UpdateMilestoneReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -6109,12 +5895,12 @@ func (r *UpdateMilestoneReq) requestBuilder() *internal.RequestBuilder {
 		},
 		Method:           "PATCH",
 		OperationID:      "issues/update-milestone",
+		Options:          opt,
 		Previews:         map[string]bool{},
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/milestones/%v", r.Owner, r.Repo, r.MilestoneNumber),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -6163,6 +5949,23 @@ type UpdateMilestoneResponse struct {
 	Data         components.Milestone
 }
 
+// HTTPResponse returns the *http.Response
 func (r *UpdateMilestoneResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *UpdateMilestoneResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }

@@ -49,26 +49,27 @@ func requestFunc(endpoint *model.Endpoint, pq pkgQual) jen.Code {
 		jen.Op("*").Id(respStructName(endpoint)),
 		jen.Id("error"),
 	).BlockFunc(func(group *jen.Group) {
-		group.Id("opts, err := ").Qual(pq.pkgPath("requests"), "BuildOptions").Call(jen.Id("opt..."))
-		group.Id("if err != nil {return nil, err}")
+		group.Id("opts := ").Qual(pq.pkgPath("requests"), "BuildOptions").Call(jen.Id("opt..."))
 		group.If(jen.Id("req == nil")).Block(
 			jen.Id("req").Op("=").New(jen.Id(reqStructName(endpoint))),
 		)
 		group.Id("resp").Op(":=").Op("&").Id(respStructName(endpoint)).Values()
-		group.Id("builder := req.requestBuilder()")
 		group.Id(`
-httpReq, err := builder.HTTPRequest(ctx, opts)
+httpReq, err := req.HTTPRequest(ctx, opt...)
 if err != nil {
-	return resp, err
+	return nil, err
 }
 
 r, err := opts.HttpClient().Do(httpReq)
 if err != nil {
-	return resp, err
+	return nil, err
 }
-resp.httpResponse = r
-`)
-		group.Return(jen.Id("New" + respStructName(endpoint)).Id("(r,opts.PreserveResponseBody() )"))
+
+err = resp.Load(r)
+if err != nil {
+	return nil, err
+}
+return resp, nil`)
 	})
 	return stmt
 }
@@ -77,26 +78,17 @@ func addRequestFunc(file *jen.File, pq pkgQual, endpoint *model.Endpoint) {
 	file.Add(requestFunc(endpoint, pq))
 }
 
-func addResponseFunc(file *jen.File, pq pkgQual, endpoint *model.Endpoint) {
-	file.Add(responseFunc(endpoint, pq))
-}
-
-func responseFunc(endpoint *model.Endpoint, pq pkgQual) *jen.Statement {
+func responseLoader(endpoint *model.Endpoint, pq pkgQual) *jen.Statement {
 	respStruct := respStructName(endpoint)
-	fnName := "New" + respStruct
-	stmt := jen.Commentf(`%s builds a new *%s from an *http.Response`, fnName, respStruct)
+	stmt := jen.Commentf("Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.")
 	stmt.Line()
-	stmt.Func().Id(fnName).Params(
+	stmt.Func().Params(
+		jen.Id("r *").Id(respStruct),
+	).Id("Load").Params(
 		jen.Id("resp").Op("*").Qual("net/http", "Response"),
-		jen.Id("preserveBody").Bool(),
-	).Params(
-		jen.Op("*").Id(respStruct),
-		jen.Error(),
-	)
-	stmt.BlockFunc(func(group *jen.Group) {
-		group.Id("var result").Id(respStruct)
-		group.Id("result.httpResponse = resp")
-		group.Id("err := ").Qual(pq.pkgPath("internal"), "ErrorCheck").Call(
+	).Error().BlockFunc(func(group *jen.Group) {
+		group.Id("r.httpResponse = resp")
+		group.Id("err := ").Qual(pq.pkgPath("internal"), "ResponseErrorCheck").Call(
 			jen.Id("resp"),
 			jen.Id("[]int").ValuesFunc(func(group *jen.Group) {
 				for _, code := range validCodes(endpoint) {
@@ -104,12 +96,12 @@ func responseFunc(endpoint *model.Endpoint, pq pkgQual) *jen.Statement {
 				}
 			}),
 		)
-		group.Id("if err != nil {return &result, err}")
+		group.Id("if err != nil {return err}")
 		switch {
 		case endpointHasAttribute(endpoint, attrNoResponseBody):
 		case endpointHasAttribute(endpoint, attrBoolean):
-			group.Id("err = ").Qual(pq.pkgPath("internal"), "SetBoolResult").Id("(resp, &result.Data)")
-			group.Id("if err != nil {return &result, err}")
+			group.Id("err = ").Qual(pq.pkgPath("internal"), "SetBoolResult").Id("(resp, &r.Data)")
+			group.Id("if err != nil {return err}")
 		case len(responseCodesWithBodies(endpoint)) > 0:
 			dataStatuses := jen.Id("[]int").ValuesFunc(func(group *jen.Group) {
 				for _, code := range responseCodesWithBodies(endpoint) {
@@ -121,18 +113,27 @@ func responseFunc(endpoint *model.Endpoint, pq pkgQual) *jen.Statement {
 			).Block(
 				jen.Id("err = ").Qual(
 					pq.pkgPath("internal"),
-					"DecodeResponseBody(resp, &result.Data, preserveBody)",
+					"DecodeResponseBody(resp, &r.Data)",
 				),
-				jen.Id("if err != nil {return &result, err}"),
+				jen.Id("if err != nil {return err}"),
 			)
 		}
-		group.Id("return &result, nil")
+		group.Id("return nil")
 	})
+
 	return stmt
 }
 
 func addClientMethod(file *jen.File, pq pkgQual, endpoint *model.Endpoint) {
-	file.Commentf("%s performs requests for \"%s\"\n\n%s.\n\n  %s %s\n\n%s",
+	file.Commentf(`%s performs requests for "%s"
+
+%s.
+
+  %s %s
+
+%s
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.`,
 		toExportedName(endpoint.ID),
 		endpoint.ID,
 		endpoint.Summary,

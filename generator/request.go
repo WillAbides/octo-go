@@ -23,7 +23,11 @@ func reqStructName(endpoint *model.Endpoint) string {
 
 func addRequestStruct(file *jen.File, pq pkgQual, endpoint *model.Endpoint) {
 	structName := reqStructName(endpoint)
-	file.Commentf("%s is request data for Client.%s\n\n%s",
+	file.Commentf(`%s is request data for Client.%s
+
+%s
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.`,
 		structName,
 		toExportedName(endpoint.ID),
 		endpoint.DocsURL,
@@ -76,7 +80,6 @@ func addRequestStruct(file *jen.File, pq pkgQual, endpoint *model.Endpoint) {
 
 	for _, fn := range []func(file *jen.File, endpoint *model.Endpoint, pq pkgQual){
 		addReqHTTPRequestFunc,
-		addReqBuilderFunc,
 		reqRelReqFunc,
 	} {
 		fn(file, endpoint, pq)
@@ -116,7 +119,7 @@ func addReqHTTPRequestFunc(file *jen.File, endpoint *model.Endpoint, pq pkgQual)
 
 func reqHTTPRequestFunc(endpoint *model.Endpoint, pq pkgQual) jen.Code {
 	structName := reqStructName(endpoint)
-	stmt := jen.Comment("HTTPRequest builds an *http.Request")
+	stmt := jen.Comment("HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.")
 	stmt.Line()
 	stmt.Func().Params(jen.Id("r").Id("*"+structName)).Id("HTTPRequest").Params(
 		jen.Id("ctx").Qual("context", "Context"),
@@ -124,55 +127,43 @@ func reqHTTPRequestFunc(endpoint *model.Endpoint, pq pkgQual) jen.Code {
 	).Params(
 		jen.Op("*").Qual("net/http", "Request"), jen.Error(),
 	).Block(
-		jen.Id("opts, err := ").Qual(pq.pkgPath("requests"), "BuildOptions").Call(jen.Id("opt...")),
-		jen.Id("if err != nil {return nil, err}"),
-		jen.Id("return r.requestBuilder().HTTPRequest(ctx, opts)"),
+		reqURLQueryVal(endpoint),
+		jen.Return(jen.Qual(pq.pkgPath("internal"), "BuildHTTPRequest").Call(
+			jen.Id("ctx"),
+			jen.Qual(pq.pkgPath("internal"), "BuildHTTPRequestOptions").Values(
+				jen.Dict{
+					jen.Id("OperationID"): jen.Lit(endpoint.ID),
+					jen.Id("ExplicitURL"): reqExplicitURLVal(endpoint),
+					jen.Id("Method"):      jen.Lit(endpoint.Method),
+					jen.Id("RequiredPreviews"): jen.Op("[]").String().ValuesFunc(func(group *jen.Group) {
+						for _, preview := range endpoint.Previews {
+							if !preview.Required {
+								continue
+							}
+							group.Add(jen.Lit(preview.Name))
+						}
+					}),
+					jen.Id("AllPreviews"): jen.Op("[]").String().ValuesFunc(func(group *jen.Group) {
+						for _, preview := range endpoint.Previews {
+							group.Add(jen.Lit(preview.Name))
+						}
+					}),
+					jen.Id("HeaderVals"): reqHeaderMap(endpoint, pq),
+					jen.Id("Previews"): jen.Map(jen.String()).Bool().Values(jen.DictFunc(func(dict jen.Dict) {
+						for _, preview := range endpoint.Previews {
+							dict[jen.Lit(preview.Name)] = jen.Id("r").Dot(toExportedName(preview.Name + "-preview"))
+						}
+					})),
+					jen.Id("Body"):               reqBodyValue(endpoint),
+					jen.Id("URLQuery"):           jen.Id("query"),
+					jen.Id("URLPath"):            reqURLPathVal(endpoint),
+					jen.Id("EndpointAttributes"): reqEndpointAttributesValue(endpoint, pq),
+					jen.Id("Options"):            jen.Id("opt"),
+				},
+			),
+		)),
 	)
 	return stmt
-}
-
-func addReqBuilderFunc(file *jen.File, endpoint *model.Endpoint, pq pkgQual) {
-	file.Add(reqBuilderFunc(endpoint, pq))
-}
-
-func reqBuilderFunc(endpoint *model.Endpoint, pq pkgQual) jen.Code {
-	structName := reqStructName(endpoint)
-	return jen.Func().Params(jen.Id("r").Id("*"+structName)).Id("requestBuilder()").Params(
-		jen.Op("*").Qual(pq.pkgPath("internal"), "RequestBuilder"),
-	).Block(
-		reqURLQueryVal(endpoint),
-		jen.Id("builder := &").Qual(pq.pkgPath("internal"), "RequestBuilder").Values(
-			jen.Dict{
-				jen.Id("OperationID"): jen.Lit(endpoint.ID),
-				jen.Id("ExplicitURL"): reqExplicitURLVal(endpoint),
-				jen.Id("Method"):      jen.Lit(endpoint.Method),
-				jen.Id("RequiredPreviews"): jen.Op("[]").String().ValuesFunc(func(group *jen.Group) {
-					for _, preview := range endpoint.Previews {
-						if !preview.Required {
-							continue
-						}
-						group.Add(jen.Lit(preview.Name))
-					}
-				}),
-				jen.Id("AllPreviews"): jen.Op("[]").String().ValuesFunc(func(group *jen.Group) {
-					for _, preview := range endpoint.Previews {
-						group.Add(jen.Lit(preview.Name))
-					}
-				}),
-				jen.Id("HeaderVals"): reqHeaderMap(endpoint, pq),
-				jen.Id("Previews"): jen.Map(jen.String()).Bool().Values(jen.DictFunc(func(dict jen.Dict) {
-					for _, preview := range endpoint.Previews {
-						dict[jen.Lit(preview.Name)] = jen.Id("r").Dot(toExportedName(preview.Name + "-preview"))
-					}
-				})),
-				jen.Id("Body"):               reqBodyValue(endpoint),
-				jen.Id("URLQuery"):           jen.Id("query"),
-				jen.Id("URLPath"):            reqURLPathVal(endpoint),
-				jen.Id("EndpointAttributes"): reqEndpointAttributesValue(endpoint, pq),
-			},
-		),
-		jen.Return(jen.Id("builder")),
-	)
 }
 
 func reqEndpointAttributesValue(endpoint *model.Endpoint, pq pkgQual) *jen.Statement {

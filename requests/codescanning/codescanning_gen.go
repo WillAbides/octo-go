@@ -12,8 +12,6 @@ import (
 	"net/url"
 )
 
-func strPtr(s string) *string { return &s }
-
 // Client is a set of options to apply to requests
 type Client []requests.Option
 
@@ -32,45 +30,27 @@ Get a code scanning alert.
 https://developer.github.com/v3/code-scanning/#get-a-code-scanning-alert
 */
 func GetAlert(ctx context.Context, req *GetAlertReq, opt ...requests.Option) (*GetAlertResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetAlertReq)
 	}
 	resp := &GetAlertResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetAlertResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetAlertResponse builds a new *GetAlertResponse from an *http.Response
-func NewGetAlertResponse(resp *http.Response, preserveBody bool) (*GetAlertResponse, error) {
-	var result GetAlertResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -81,6 +61,8 @@ Get a code scanning alert.
   GET /repos/{owner}/{repo}/code-scanning/alerts/{alert_id}
 
 https://developer.github.com/v3/code-scanning/#get-a-code-scanning-alert
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) GetAlert(ctx context.Context, req *GetAlertReq, opt ...requests.Option) (*GetAlertResponse, error) {
 	return GetAlert(ctx, req, append(c, opt...)...)
@@ -90,6 +72,8 @@ func (c Client) GetAlert(ctx context.Context, req *GetAlertReq, opt ...requests.
 GetAlertReq is request data for Client.GetAlert
 
 https://developer.github.com/v3/code-scanning/#get-a-code-scanning-alert
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetAlertReq struct {
 	_url  string
@@ -100,19 +84,11 @@ type GetAlertReq struct {
 	AlertId int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetAlertReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetAlertReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -120,12 +96,12 @@ func (r *GetAlertReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "code-scanning/get-alert",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/code-scanning/alerts/%v", r.Owner, r.Repo, r.AlertId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -151,8 +127,25 @@ type GetAlertResponse struct {
 	Data         components.CodeScanningAlert
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetAlertResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetAlertResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -165,45 +158,27 @@ List code scanning alerts for a repository.
 https://developer.github.com/v3/code-scanning/#list-code-scanning-alerts-for-a-repository
 */
 func ListAlertsForRepo(ctx context.Context, req *ListAlertsForRepoReq, opt ...requests.Option) (*ListAlertsForRepoResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListAlertsForRepoReq)
 	}
 	resp := &ListAlertsForRepoResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListAlertsForRepoResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListAlertsForRepoResponse builds a new *ListAlertsForRepoResponse from an *http.Response
-func NewListAlertsForRepoResponse(resp *http.Response, preserveBody bool) (*ListAlertsForRepoResponse, error) {
-	var result ListAlertsForRepoResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -214,6 +189,8 @@ List code scanning alerts for a repository.
   GET /repos/{owner}/{repo}/code-scanning/alerts
 
 https://developer.github.com/v3/code-scanning/#list-code-scanning-alerts-for-a-repository
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListAlertsForRepo(ctx context.Context, req *ListAlertsForRepoReq, opt ...requests.Option) (*ListAlertsForRepoResponse, error) {
 	return ListAlertsForRepo(ctx, req, append(c, opt...)...)
@@ -223,6 +200,8 @@ func (c Client) ListAlertsForRepo(ctx context.Context, req *ListAlertsForRepoReq
 ListAlertsForRepoReq is request data for Client.ListAlertsForRepo
 
 https://developer.github.com/v3/code-scanning/#list-code-scanning-alerts-for-a-repository
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListAlertsForRepoReq struct {
 	_url  string
@@ -239,16 +218,8 @@ type ListAlertsForRepoReq struct {
 	Ref *string
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListAlertsForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListAlertsForRepoReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.State != nil {
 		query.Set("state", *r.State)
@@ -257,7 +228,7 @@ func (r *ListAlertsForRepoReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("ref", *r.Ref)
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -265,12 +236,12 @@ func (r *ListAlertsForRepoReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "code-scanning/list-alerts-for-repo",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/code-scanning/alerts", r.Owner, r.Repo),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -296,6 +267,23 @@ type ListAlertsForRepoResponse struct {
 	Data         []components.CodeScanningAlert
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListAlertsForRepoResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListAlertsForRepoResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }

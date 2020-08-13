@@ -11,8 +11,63 @@ import (
 	"github.com/willabides/octo-go/errors"
 )
 
-// ErrorCheck checks for error responses
-func ErrorCheck(resp *http.Response, validStatuses []int) error {
+// NewResponseError returns a new *ResponseError
+func NewResponseError(msg string, resp *http.Response) *ResponseError {
+	data, err := unmarshalErrorData(resp)
+	if err != nil {
+		data = nil
+	}
+	return &ResponseError{
+		resp: resp,
+		msg:  msg,
+		data: data,
+	}
+}
+
+// ResponseError implements errors.ResponseError
+type ResponseError struct {
+	resp *http.Response
+	msg  string
+	data *errors.ResponseErrorData
+}
+
+// HttpResponse implements errors.ResponseError
+func (r *ResponseError) HttpResponse() *http.Response {
+	return r.resp
+}
+
+func (r *ResponseError) Error() string {
+	msg := r.msg
+	if r.data != nil && r.data.Message != "" {
+		msg += ": " + r.data.Message
+	}
+	return msg
+}
+
+// Data implements errors.ResponseError
+func (r *ResponseError) Data() *errors.ResponseErrorData {
+	return r.data
+}
+
+// IsClientError implements errors.ResponseError
+func (r *ResponseError) IsClientError() bool {
+	return r.resp != nil && r.resp.StatusCode >= 400 && r.resp.StatusCode < 500
+}
+
+// IsServerError implements errors.ResponseError
+func (r *ResponseError) IsServerError() bool {
+	return r.resp != nil && r.resp.StatusCode >= 500 && r.resp.StatusCode < 600
+}
+
+// NewRequestError returns a new RequestError
+func newRequestError(msg string) error {
+	return &errors.RequestError{
+		Message: msg,
+	}
+}
+
+// ResponseErrorCheck checks for error responses
+func ResponseErrorCheck(resp *http.Response, validStatuses []int) error {
 	code := resp.StatusCode
 	for _, wantStatus := range validStatuses {
 		if code == wantStatus {
@@ -20,67 +75,19 @@ func ErrorCheck(resp *http.Response, validStatuses []int) error {
 		}
 	}
 	switch {
-	case code >= 400 && code < 500:
-		return newClientError(resp)
+	case code >= 400 && code < 600:
+		return NewResponseError(fmt.Sprintf("client error %d", resp.StatusCode), resp)
 	case code >= 500 && code < 600:
-		return newServerError(resp)
+		return NewResponseError(fmt.Sprintf("server error %d", resp.StatusCode), resp)
 	}
 	if isRedirectOnly(validStatuses) && code < 300 {
 		return nil
 	}
 	msg := fmt.Sprintf("received unexpected http status code %d, expected codes are %v", code, validStatuses)
-	return &errors.UnexpectedStatusCodeError{
-		HTTPResponse: resp,
-		Message:      msg,
-	}
+	return NewResponseError(msg, resp)
 }
 
-func newClientError(resp *http.Response) error {
-	msg := fmt.Sprintf("client error %d", resp.StatusCode)
-	errorData, err := unmarshalErrorData(resp)
-	if err != nil {
-		errorData = nil
-	}
-	if errorData != nil && errorData.Message != "" {
-		msg += ": " + errorData.Message
-	}
-	return &errors.ClientError{
-		HTTPResponse: resp,
-		Message:      msg,
-	}
-}
-
-func newServerError(resp *http.Response) error {
-	msg := fmt.Sprintf("client error %d", resp.StatusCode)
-	errorData, err := unmarshalErrorData(resp)
-	if err != nil {
-		errorData = nil
-	}
-	if errorData != nil && errorData.Message != "" {
-		msg += ": " + errorData.Message
-	}
-	return &errors.ServerError{
-		HTTPResponse: resp,
-		Message:      msg,
-	}
-}
-
-// ErrorData all 4xx response bodies and maybe some 5xx should unmarshal to this
-type ErrorData struct {
-	DocumentationUrl string           `json:"documentation_url,omitempty"`
-	Message          string           `json:"message,omitempty"`
-	Errors           []ErrorDataError `json:"errors,omitempty"`
-}
-
-// ErrorDataError an Error field in ErrorData
-type ErrorDataError struct {
-	Code     string `json:"code,omitempty"`
-	Field    string `json:"field,omitempty"`
-	Message  string `json:"message,omitempty"`
-	Resource string `json:"resource,omitempty"`
-}
-
-func unmarshalErrorData(resp *http.Response) (*ErrorData, error) {
+func unmarshalErrorData(resp *http.Response) (*errors.ResponseErrorData, error) {
 	if resp.Body == nil {
 		return nil, fmt.Errorf("no body")
 	}
@@ -92,7 +99,7 @@ func unmarshalErrorData(resp *http.Response) (*ErrorData, error) {
 		_ = resp.Body.Close()
 		resp.Body = ioutil.NopCloser(&nextBody)
 	}()
-	var errorData ErrorData
+	var errorData errors.ResponseErrorData
 	err := json.NewDecoder(bodyReader).Decode(&errorData)
 	if err != nil {
 		return nil, err

@@ -12,8 +12,6 @@ import (
 	"net/url"
 )
 
-func strPtr(s string) *string { return &s }
-
 // Client is a set of options to apply to requests
 type Client []requests.Option
 
@@ -32,45 +30,27 @@ Get all gitignore templates.
 https://developer.github.com/v3/gitignore/#get-all-gitignore-templates
 */
 func GetAllTemplates(ctx context.Context, req *GetAllTemplatesReq, opt ...requests.Option) (*GetAllTemplatesResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetAllTemplatesReq)
 	}
 	resp := &GetAllTemplatesResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetAllTemplatesResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetAllTemplatesResponse builds a new *GetAllTemplatesResponse from an *http.Response
-func NewGetAllTemplatesResponse(resp *http.Response, preserveBody bool) (*GetAllTemplatesResponse, error) {
-	var result GetAllTemplatesResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -81,6 +61,8 @@ Get all gitignore templates.
   GET /gitignore/templates
 
 https://developer.github.com/v3/gitignore/#get-all-gitignore-templates
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) GetAllTemplates(ctx context.Context, req *GetAllTemplatesReq, opt ...requests.Option) (*GetAllTemplatesResponse, error) {
 	return GetAllTemplates(ctx, req, append(c, opt...)...)
@@ -90,24 +72,18 @@ func (c Client) GetAllTemplates(ctx context.Context, req *GetAllTemplatesReq, op
 GetAllTemplatesReq is request data for Client.GetAllTemplates
 
 https://developer.github.com/v3/gitignore/#get-all-gitignore-templates
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetAllTemplatesReq struct {
 	_url string
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetAllTemplatesReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetAllTemplatesReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -115,12 +91,12 @@ func (r *GetAllTemplatesReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "gitignore/get-all-templates",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/gitignore/templates"),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -153,8 +129,25 @@ type GetAllTemplatesResponse struct {
 	Data         GetAllTemplatesResponseBody
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetAllTemplatesResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetAllTemplatesResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -167,45 +160,27 @@ Get a gitignore template.
 https://developer.github.com/v3/gitignore/#get-a-gitignore-template
 */
 func GetTemplate(ctx context.Context, req *GetTemplateReq, opt ...requests.Option) (*GetTemplateResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetTemplateReq)
 	}
 	resp := &GetTemplateResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetTemplateResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetTemplateResponse builds a new *GetTemplateResponse from an *http.Response
-func NewGetTemplateResponse(resp *http.Response, preserveBody bool) (*GetTemplateResponse, error) {
-	var result GetTemplateResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -216,6 +191,8 @@ Get a gitignore template.
   GET /gitignore/templates/{name}
 
 https://developer.github.com/v3/gitignore/#get-a-gitignore-template
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) GetTemplate(ctx context.Context, req *GetTemplateReq, opt ...requests.Option) (*GetTemplateResponse, error) {
 	return GetTemplate(ctx, req, append(c, opt...)...)
@@ -225,6 +202,8 @@ func (c Client) GetTemplate(ctx context.Context, req *GetTemplateReq, opt ...req
 GetTemplateReq is request data for Client.GetTemplate
 
 https://developer.github.com/v3/gitignore/#get-a-gitignore-template
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetTemplateReq struct {
 	_url string
@@ -233,19 +212,11 @@ type GetTemplateReq struct {
 	Name string
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetTemplateReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetTemplateReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -253,12 +224,12 @@ func (r *GetTemplateReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "gitignore/get-template",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/gitignore/templates/%v", r.Name),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -284,6 +255,23 @@ type GetTemplateResponse struct {
 	Data         components.GitignoreTemplate
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetTemplateResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetTemplateResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }

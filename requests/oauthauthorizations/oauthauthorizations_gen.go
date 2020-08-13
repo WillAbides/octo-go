@@ -13,8 +13,6 @@ import (
 	"strconv"
 )
 
-func strPtr(s string) *string { return &s }
-
 // Client is a set of options to apply to requests
 type Client []requests.Option
 
@@ -33,45 +31,27 @@ Create a new authorization.
 https://developer.github.com/v3/oauth_authorizations/#create-a-new-authorization
 */
 func CreateAuthorization(ctx context.Context, req *CreateAuthorizationReq, opt ...requests.Option) (*CreateAuthorizationResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(CreateAuthorizationReq)
 	}
 	resp := &CreateAuthorizationResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewCreateAuthorizationResponse(r, opts.PreserveResponseBody())
-}
-
-// NewCreateAuthorizationResponse builds a new *CreateAuthorizationResponse from an *http.Response
-func NewCreateAuthorizationResponse(resp *http.Response, preserveBody bool) (*CreateAuthorizationResponse, error) {
-	var result CreateAuthorizationResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{201, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{201}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -82,6 +62,8 @@ Create a new authorization.
   POST /authorizations
 
 https://developer.github.com/v3/oauth_authorizations/#create-a-new-authorization
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) CreateAuthorization(ctx context.Context, req *CreateAuthorizationReq, opt ...requests.Option) (*CreateAuthorizationResponse, error) {
 	return CreateAuthorization(ctx, req, append(c, opt...)...)
@@ -91,25 +73,19 @@ func (c Client) CreateAuthorization(ctx context.Context, req *CreateAuthorizatio
 CreateAuthorizationReq is request data for Client.CreateAuthorization
 
 https://developer.github.com/v3/oauth_authorizations/#create-a-new-authorization
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type CreateAuthorizationReq struct {
 	_url        string
 	RequestBody CreateAuthorizationReqBody
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *CreateAuthorizationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *CreateAuthorizationReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -120,12 +96,12 @@ func (r *CreateAuthorizationReq) requestBuilder() *internal.RequestBuilder {
 		},
 		Method:           "POST",
 		OperationID:      "oauth-authorizations/create-authorization",
+		Options:          opt,
 		Previews:         map[string]bool{},
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/authorizations"),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -177,8 +153,25 @@ type CreateAuthorizationResponse struct {
 	Data         components.Authorization
 }
 
+// HTTPResponse returns the *http.Response
 func (r *CreateAuthorizationResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *CreateAuthorizationResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{201, 304})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -191,39 +184,27 @@ Delete an authorization.
 https://developer.github.com/v3/oauth_authorizations/#delete-an-authorization
 */
 func DeleteAuthorization(ctx context.Context, req *DeleteAuthorizationReq, opt ...requests.Option) (*DeleteAuthorizationResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(DeleteAuthorizationReq)
 	}
 	resp := &DeleteAuthorizationResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewDeleteAuthorizationResponse(r, opts.PreserveResponseBody())
-}
-
-// NewDeleteAuthorizationResponse builds a new *DeleteAuthorizationResponse from an *http.Response
-func NewDeleteAuthorizationResponse(resp *http.Response, preserveBody bool) (*DeleteAuthorizationResponse, error) {
-	var result DeleteAuthorizationResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{204, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -234,6 +215,8 @@ Delete an authorization.
   DELETE /authorizations/{authorization_id}
 
 https://developer.github.com/v3/oauth_authorizations/#delete-an-authorization
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) DeleteAuthorization(ctx context.Context, req *DeleteAuthorizationReq, opt ...requests.Option) (*DeleteAuthorizationResponse, error) {
 	return DeleteAuthorization(ctx, req, append(c, opt...)...)
@@ -243,6 +226,8 @@ func (c Client) DeleteAuthorization(ctx context.Context, req *DeleteAuthorizatio
 DeleteAuthorizationReq is request data for Client.DeleteAuthorization
 
 https://developer.github.com/v3/oauth_authorizations/#delete-an-authorization
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type DeleteAuthorizationReq struct {
 	_url string
@@ -251,19 +236,11 @@ type DeleteAuthorizationReq struct {
 	AuthorizationId int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *DeleteAuthorizationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *DeleteAuthorizationReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -271,12 +248,12 @@ func (r *DeleteAuthorizationReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
 		OperationID:        "oauth-authorizations/delete-authorization",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/authorizations/%v", r.AuthorizationId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -301,8 +278,19 @@ type DeleteAuthorizationResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *DeleteAuthorizationResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *DeleteAuthorizationResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{204, 304})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -315,39 +303,27 @@ Delete a grant.
 https://developer.github.com/v3/oauth_authorizations/#delete-a-grant
 */
 func DeleteGrant(ctx context.Context, req *DeleteGrantReq, opt ...requests.Option) (*DeleteGrantResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(DeleteGrantReq)
 	}
 	resp := &DeleteGrantResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewDeleteGrantResponse(r, opts.PreserveResponseBody())
-}
-
-// NewDeleteGrantResponse builds a new *DeleteGrantResponse from an *http.Response
-func NewDeleteGrantResponse(resp *http.Response, preserveBody bool) (*DeleteGrantResponse, error) {
-	var result DeleteGrantResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{204, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -358,6 +334,8 @@ Delete a grant.
   DELETE /applications/grants/{grant_id}
 
 https://developer.github.com/v3/oauth_authorizations/#delete-a-grant
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) DeleteGrant(ctx context.Context, req *DeleteGrantReq, opt ...requests.Option) (*DeleteGrantResponse, error) {
 	return DeleteGrant(ctx, req, append(c, opt...)...)
@@ -367,6 +345,8 @@ func (c Client) DeleteGrant(ctx context.Context, req *DeleteGrantReq, opt ...req
 DeleteGrantReq is request data for Client.DeleteGrant
 
 https://developer.github.com/v3/oauth_authorizations/#delete-a-grant
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type DeleteGrantReq struct {
 	_url string
@@ -375,19 +355,11 @@ type DeleteGrantReq struct {
 	GrantId int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *DeleteGrantReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *DeleteGrantReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -395,12 +367,12 @@ func (r *DeleteGrantReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
 		OperationID:        "oauth-authorizations/delete-grant",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/applications/grants/%v", r.GrantId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -425,8 +397,19 @@ type DeleteGrantResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *DeleteGrantResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *DeleteGrantResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{204, 304})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -439,45 +422,27 @@ Get a single authorization.
 https://developer.github.com/v3/oauth_authorizations/#get-a-single-authorization
 */
 func GetAuthorization(ctx context.Context, req *GetAuthorizationReq, opt ...requests.Option) (*GetAuthorizationResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetAuthorizationReq)
 	}
 	resp := &GetAuthorizationResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetAuthorizationResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetAuthorizationResponse builds a new *GetAuthorizationResponse from an *http.Response
-func NewGetAuthorizationResponse(resp *http.Response, preserveBody bool) (*GetAuthorizationResponse, error) {
-	var result GetAuthorizationResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -488,6 +453,8 @@ Get a single authorization.
   GET /authorizations/{authorization_id}
 
 https://developer.github.com/v3/oauth_authorizations/#get-a-single-authorization
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) GetAuthorization(ctx context.Context, req *GetAuthorizationReq, opt ...requests.Option) (*GetAuthorizationResponse, error) {
 	return GetAuthorization(ctx, req, append(c, opt...)...)
@@ -497,6 +464,8 @@ func (c Client) GetAuthorization(ctx context.Context, req *GetAuthorizationReq, 
 GetAuthorizationReq is request data for Client.GetAuthorization
 
 https://developer.github.com/v3/oauth_authorizations/#get-a-single-authorization
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetAuthorizationReq struct {
 	_url string
@@ -505,19 +474,11 @@ type GetAuthorizationReq struct {
 	AuthorizationId int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetAuthorizationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetAuthorizationReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -525,12 +486,12 @@ func (r *GetAuthorizationReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "oauth-authorizations/get-authorization",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/authorizations/%v", r.AuthorizationId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -556,8 +517,25 @@ type GetAuthorizationResponse struct {
 	Data         components.Authorization
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetAuthorizationResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetAuthorizationResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -570,45 +548,27 @@ Get a single grant.
 https://developer.github.com/v3/oauth_authorizations/#get-a-single-grant
 */
 func GetGrant(ctx context.Context, req *GetGrantReq, opt ...requests.Option) (*GetGrantResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetGrantReq)
 	}
 	resp := &GetGrantResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetGrantResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetGrantResponse builds a new *GetGrantResponse from an *http.Response
-func NewGetGrantResponse(resp *http.Response, preserveBody bool) (*GetGrantResponse, error) {
-	var result GetGrantResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -619,6 +579,8 @@ Get a single grant.
   GET /applications/grants/{grant_id}
 
 https://developer.github.com/v3/oauth_authorizations/#get-a-single-grant
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) GetGrant(ctx context.Context, req *GetGrantReq, opt ...requests.Option) (*GetGrantResponse, error) {
 	return GetGrant(ctx, req, append(c, opt...)...)
@@ -628,6 +590,8 @@ func (c Client) GetGrant(ctx context.Context, req *GetGrantReq, opt ...requests.
 GetGrantReq is request data for Client.GetGrant
 
 https://developer.github.com/v3/oauth_authorizations/#get-a-single-grant
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetGrantReq struct {
 	_url string
@@ -636,19 +600,11 @@ type GetGrantReq struct {
 	GrantId int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetGrantReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetGrantReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -656,12 +612,12 @@ func (r *GetGrantReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "oauth-authorizations/get-grant",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/applications/grants/%v", r.GrantId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -687,8 +643,25 @@ type GetGrantResponse struct {
 	Data         components.ApplicationGrant
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetGrantResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetGrantResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -701,45 +674,27 @@ Get-or-create an authorization for a specific app.
 https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app
 */
 func GetOrCreateAuthorizationForApp(ctx context.Context, req *GetOrCreateAuthorizationForAppReq, opt ...requests.Option) (*GetOrCreateAuthorizationForAppResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetOrCreateAuthorizationForAppReq)
 	}
 	resp := &GetOrCreateAuthorizationForAppResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetOrCreateAuthorizationForAppResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetOrCreateAuthorizationForAppResponse builds a new *GetOrCreateAuthorizationForAppResponse from an *http.Response
-func NewGetOrCreateAuthorizationForAppResponse(resp *http.Response, preserveBody bool) (*GetOrCreateAuthorizationForAppResponse, error) {
-	var result GetOrCreateAuthorizationForAppResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200, 201, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200, 201}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -750,6 +705,8 @@ Get-or-create an authorization for a specific app.
   PUT /authorizations/clients/{client_id}
 
 https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) GetOrCreateAuthorizationForApp(ctx context.Context, req *GetOrCreateAuthorizationForAppReq, opt ...requests.Option) (*GetOrCreateAuthorizationForAppResponse, error) {
 	return GetOrCreateAuthorizationForApp(ctx, req, append(c, opt...)...)
@@ -759,6 +716,8 @@ func (c Client) GetOrCreateAuthorizationForApp(ctx context.Context, req *GetOrCr
 GetOrCreateAuthorizationForAppReq is request data for Client.GetOrCreateAuthorizationForApp
 
 https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetOrCreateAuthorizationForAppReq struct {
 	_url        string
@@ -766,19 +725,11 @@ type GetOrCreateAuthorizationForAppReq struct {
 	RequestBody GetOrCreateAuthorizationForAppReqBody
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetOrCreateAuthorizationForAppReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetOrCreateAuthorizationForAppReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -789,12 +740,12 @@ func (r *GetOrCreateAuthorizationForAppReq) requestBuilder() *internal.RequestBu
 		},
 		Method:           "PUT",
 		OperationID:      "oauth-authorizations/get-or-create-authorization-for-app",
+		Options:          opt,
 		Previews:         map[string]bool{},
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/authorizations/clients/%v", r.ClientId),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -843,8 +794,25 @@ type GetOrCreateAuthorizationForAppResponse struct {
 	Data         components.Authorization
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetOrCreateAuthorizationForAppResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetOrCreateAuthorizationForAppResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200, 201, 304})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200, 201}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -857,45 +825,27 @@ Get-or-create an authorization for a specific app and fingerprint.
 https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app-and-fingerprint
 */
 func GetOrCreateAuthorizationForAppAndFingerprint(ctx context.Context, req *GetOrCreateAuthorizationForAppAndFingerprintReq, opt ...requests.Option) (*GetOrCreateAuthorizationForAppAndFingerprintResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetOrCreateAuthorizationForAppAndFingerprintReq)
 	}
 	resp := &GetOrCreateAuthorizationForAppAndFingerprintResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetOrCreateAuthorizationForAppAndFingerprintResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetOrCreateAuthorizationForAppAndFingerprintResponse builds a new *GetOrCreateAuthorizationForAppAndFingerprintResponse from an *http.Response
-func NewGetOrCreateAuthorizationForAppAndFingerprintResponse(resp *http.Response, preserveBody bool) (*GetOrCreateAuthorizationForAppAndFingerprintResponse, error) {
-	var result GetOrCreateAuthorizationForAppAndFingerprintResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200, 201})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200, 201}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -906,6 +856,8 @@ Get-or-create an authorization for a specific app and fingerprint.
   PUT /authorizations/clients/{client_id}/{fingerprint}
 
 https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app-and-fingerprint
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) GetOrCreateAuthorizationForAppAndFingerprint(ctx context.Context, req *GetOrCreateAuthorizationForAppAndFingerprintReq, opt ...requests.Option) (*GetOrCreateAuthorizationForAppAndFingerprintResponse, error) {
 	return GetOrCreateAuthorizationForAppAndFingerprint(ctx, req, append(c, opt...)...)
@@ -915,6 +867,8 @@ func (c Client) GetOrCreateAuthorizationForAppAndFingerprint(ctx context.Context
 GetOrCreateAuthorizationForAppAndFingerprintReq is request data for Client.GetOrCreateAuthorizationForAppAndFingerprint
 
 https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authorization-for-a-specific-app-and-fingerprint
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetOrCreateAuthorizationForAppAndFingerprintReq struct {
 	_url     string
@@ -925,19 +879,11 @@ type GetOrCreateAuthorizationForAppAndFingerprintReq struct {
 	RequestBody GetOrCreateAuthorizationForAppAndFingerprintReqBody
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetOrCreateAuthorizationForAppAndFingerprintReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetOrCreateAuthorizationForAppAndFingerprintReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -948,12 +894,12 @@ func (r *GetOrCreateAuthorizationForAppAndFingerprintReq) requestBuilder() *inte
 		},
 		Method:           "PUT",
 		OperationID:      "oauth-authorizations/get-or-create-authorization-for-app-and-fingerprint",
+		Options:          opt,
 		Previews:         map[string]bool{},
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/authorizations/clients/%v/%v", r.ClientId, r.Fingerprint),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -999,8 +945,25 @@ type GetOrCreateAuthorizationForAppAndFingerprintResponse struct {
 	Data         components.Authorization
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetOrCreateAuthorizationForAppAndFingerprintResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetOrCreateAuthorizationForAppAndFingerprintResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200, 201})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200, 201}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -1013,45 +976,27 @@ List your authorizations.
 https://developer.github.com/v3/oauth_authorizations/#list-your-authorizations
 */
 func ListAuthorizations(ctx context.Context, req *ListAuthorizationsReq, opt ...requests.Option) (*ListAuthorizationsResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListAuthorizationsReq)
 	}
 	resp := &ListAuthorizationsResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListAuthorizationsResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListAuthorizationsResponse builds a new *ListAuthorizationsResponse from an *http.Response
-func NewListAuthorizationsResponse(resp *http.Response, preserveBody bool) (*ListAuthorizationsResponse, error) {
-	var result ListAuthorizationsResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -1062,6 +1007,8 @@ List your authorizations.
   GET /authorizations
 
 https://developer.github.com/v3/oauth_authorizations/#list-your-authorizations
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListAuthorizations(ctx context.Context, req *ListAuthorizationsReq, opt ...requests.Option) (*ListAuthorizationsResponse, error) {
 	return ListAuthorizations(ctx, req, append(c, opt...)...)
@@ -1071,6 +1018,8 @@ func (c Client) ListAuthorizations(ctx context.Context, req *ListAuthorizationsR
 ListAuthorizationsReq is request data for Client.ListAuthorizations
 
 https://developer.github.com/v3/oauth_authorizations/#list-your-authorizations
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListAuthorizationsReq struct {
 	_url string
@@ -1082,16 +1031,8 @@ type ListAuthorizationsReq struct {
 	Page *int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListAuthorizationsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListAuthorizationsReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -1100,7 +1041,7 @@ func (r *ListAuthorizationsReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -1108,12 +1049,12 @@ func (r *ListAuthorizationsReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "oauth-authorizations/list-authorizations",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/authorizations"),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1139,8 +1080,25 @@ type ListAuthorizationsResponse struct {
 	Data         []components.Authorization
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListAuthorizationsResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListAuthorizationsResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -1153,45 +1111,27 @@ List your grants.
 https://developer.github.com/v3/oauth_authorizations/#list-your-grants
 */
 func ListGrants(ctx context.Context, req *ListGrantsReq, opt ...requests.Option) (*ListGrantsResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListGrantsReq)
 	}
 	resp := &ListGrantsResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListGrantsResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListGrantsResponse builds a new *ListGrantsResponse from an *http.Response
-func NewListGrantsResponse(resp *http.Response, preserveBody bool) (*ListGrantsResponse, error) {
-	var result ListGrantsResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -1202,6 +1142,8 @@ List your grants.
   GET /applications/grants
 
 https://developer.github.com/v3/oauth_authorizations/#list-your-grants
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListGrants(ctx context.Context, req *ListGrantsReq, opt ...requests.Option) (*ListGrantsResponse, error) {
 	return ListGrants(ctx, req, append(c, opt...)...)
@@ -1211,6 +1153,8 @@ func (c Client) ListGrants(ctx context.Context, req *ListGrantsReq, opt ...reque
 ListGrantsReq is request data for Client.ListGrants
 
 https://developer.github.com/v3/oauth_authorizations/#list-your-grants
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListGrantsReq struct {
 	_url string
@@ -1222,16 +1166,8 @@ type ListGrantsReq struct {
 	Page *int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListGrantsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListGrantsReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -1240,7 +1176,7 @@ func (r *ListGrantsReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -1248,12 +1184,12 @@ func (r *ListGrantsReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "oauth-authorizations/list-grants",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/applications/grants"),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1279,8 +1215,25 @@ type ListGrantsResponse struct {
 	Data         []components.ApplicationGrant
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListGrantsResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListGrantsResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -1293,45 +1246,27 @@ Update an existing authorization.
 https://developer.github.com/v3/oauth_authorizations/#update-an-existing-authorization
 */
 func UpdateAuthorization(ctx context.Context, req *UpdateAuthorizationReq, opt ...requests.Option) (*UpdateAuthorizationResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(UpdateAuthorizationReq)
 	}
 	resp := &UpdateAuthorizationResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewUpdateAuthorizationResponse(r, opts.PreserveResponseBody())
-}
-
-// NewUpdateAuthorizationResponse builds a new *UpdateAuthorizationResponse from an *http.Response
-func NewUpdateAuthorizationResponse(resp *http.Response, preserveBody bool) (*UpdateAuthorizationResponse, error) {
-	var result UpdateAuthorizationResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -1342,6 +1277,8 @@ Update an existing authorization.
   PATCH /authorizations/{authorization_id}
 
 https://developer.github.com/v3/oauth_authorizations/#update-an-existing-authorization
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) UpdateAuthorization(ctx context.Context, req *UpdateAuthorizationReq, opt ...requests.Option) (*UpdateAuthorizationResponse, error) {
 	return UpdateAuthorization(ctx, req, append(c, opt...)...)
@@ -1351,6 +1288,8 @@ func (c Client) UpdateAuthorization(ctx context.Context, req *UpdateAuthorizatio
 UpdateAuthorizationReq is request data for Client.UpdateAuthorization
 
 https://developer.github.com/v3/oauth_authorizations/#update-an-existing-authorization
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type UpdateAuthorizationReq struct {
 	_url string
@@ -1360,19 +1299,11 @@ type UpdateAuthorizationReq struct {
 	RequestBody     UpdateAuthorizationReqBody
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *UpdateAuthorizationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *UpdateAuthorizationReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -1383,12 +1314,12 @@ func (r *UpdateAuthorizationReq) requestBuilder() *internal.RequestBuilder {
 		},
 		Method:           "PATCH",
 		OperationID:      "oauth-authorizations/update-authorization",
+		Options:          opt,
 		Previews:         map[string]bool{},
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/authorizations/%v", r.AuthorizationId),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1440,6 +1371,23 @@ type UpdateAuthorizationResponse struct {
 	Data         components.Authorization
 }
 
+// HTTPResponse returns the *http.Response
 func (r *UpdateAuthorizationResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *UpdateAuthorizationResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }

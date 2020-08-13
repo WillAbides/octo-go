@@ -45,7 +45,7 @@ func TestPaging(t *testing.T) {
 		{Id: 5},
 		{Id: 6},
 	}
-	server := New(octo.PreserveResponseBody())
+	server := New()
 	t.Cleanup(server.Finish)
 	server.Expect(req1, RelLinkHandler(octo.RelNext, JSONResponder(200, res1), req2, server))
 	server.Expect(req2, RelLinkHandler(octo.RelNext, JSONResponder(200, res2), req3, server))
@@ -87,7 +87,7 @@ func TestDistinguishesBodies(t *testing.T) {
 	respBody1 := components.CheckRun{Conclusion: "conclusion 1"}
 	respBody2 := components.CheckRun{Conclusion: "conclusion 2"}
 	ctx := context.Background()
-	server := New(octo.PreserveResponseBody())
+	server := New()
 	t.Cleanup(server.Finish)
 	server.Expect(req2, JSONResponder(201, respBody2))
 	server.Expect(req1, JSONResponder(201, respBody1))

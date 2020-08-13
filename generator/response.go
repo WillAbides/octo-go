@@ -51,9 +51,12 @@ func addResponse(file *jen.File, pq pkgQual, endpoint *model.Endpoint) {
 		}
 	})
 
+	file.Comment("HTTPResponse returns the *http.Response")
 	file.Func().Params(jen.Id("r *"+structName)).Id("HTTPResponse() *").Qual("net/http", "Response").Block(
 		jen.Id("return r.httpResponse"),
 	)
+
+	file.Add(responseLoader(endpoint, pq))
 }
 
 func respBodyType(endpoint *model.Endpoint) *qualifiedType {

@@ -13,8 +13,6 @@ import (
 	"strconv"
 )
 
-func strPtr(s string) *string { return &s }
-
 // Client is a set of options to apply to requests
 type Client []requests.Option
 
@@ -33,39 +31,27 @@ Add selected repository to an organization secret.
 https://developer.github.com/v3/actions/secrets/#add-selected-repository-to-an-organization-secret
 */
 func AddSelectedRepoToOrgSecret(ctx context.Context, req *AddSelectedRepoToOrgSecretReq, opt ...requests.Option) (*AddSelectedRepoToOrgSecretResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(AddSelectedRepoToOrgSecretReq)
 	}
 	resp := &AddSelectedRepoToOrgSecretResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewAddSelectedRepoToOrgSecretResponse(r, opts.PreserveResponseBody())
-}
-
-// NewAddSelectedRepoToOrgSecretResponse builds a new *AddSelectedRepoToOrgSecretResponse from an *http.Response
-func NewAddSelectedRepoToOrgSecretResponse(resp *http.Response, preserveBody bool) (*AddSelectedRepoToOrgSecretResponse, error) {
-	var result AddSelectedRepoToOrgSecretResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{204})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -76,6 +62,8 @@ Add selected repository to an organization secret.
   PUT /orgs/{org}/actions/secrets/{secret_name}/repositories/{repository_id}
 
 https://developer.github.com/v3/actions/secrets/#add-selected-repository-to-an-organization-secret
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) AddSelectedRepoToOrgSecret(ctx context.Context, req *AddSelectedRepoToOrgSecretReq, opt ...requests.Option) (*AddSelectedRepoToOrgSecretResponse, error) {
 	return AddSelectedRepoToOrgSecret(ctx, req, append(c, opt...)...)
@@ -85,6 +73,8 @@ func (c Client) AddSelectedRepoToOrgSecret(ctx context.Context, req *AddSelected
 AddSelectedRepoToOrgSecretReq is request data for Client.AddSelectedRepoToOrgSecret
 
 https://developer.github.com/v3/actions/secrets/#add-selected-repository-to-an-organization-secret
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type AddSelectedRepoToOrgSecretReq struct {
 	_url string
@@ -97,19 +87,11 @@ type AddSelectedRepoToOrgSecretReq struct {
 	RepositoryId int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *AddSelectedRepoToOrgSecretReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *AddSelectedRepoToOrgSecretReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -117,12 +99,12 @@ func (r *AddSelectedRepoToOrgSecretReq) requestBuilder() *internal.RequestBuilde
 		HeaderVals:         map[string]*string{},
 		Method:             "PUT",
 		OperationID:        "actions/add-selected-repo-to-org-secret",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/actions/secrets/%v/repositories/%v", r.Org, r.SecretName, r.RepositoryId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -147,8 +129,19 @@ type AddSelectedRepoToOrgSecretResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *AddSelectedRepoToOrgSecretResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *AddSelectedRepoToOrgSecretResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{204})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -161,39 +154,27 @@ Cancel a workflow run.
 https://developer.github.com/v3/actions/workflow-runs/#cancel-a-workflow-run
 */
 func CancelWorkflowRun(ctx context.Context, req *CancelWorkflowRunReq, opt ...requests.Option) (*CancelWorkflowRunResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(CancelWorkflowRunReq)
 	}
 	resp := &CancelWorkflowRunResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewCancelWorkflowRunResponse(r, opts.PreserveResponseBody())
-}
-
-// NewCancelWorkflowRunResponse builds a new *CancelWorkflowRunResponse from an *http.Response
-func NewCancelWorkflowRunResponse(resp *http.Response, preserveBody bool) (*CancelWorkflowRunResponse, error) {
-	var result CancelWorkflowRunResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{202})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -204,6 +185,8 @@ Cancel a workflow run.
   POST /repos/{owner}/{repo}/actions/runs/{run_id}/cancel
 
 https://developer.github.com/v3/actions/workflow-runs/#cancel-a-workflow-run
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) CancelWorkflowRun(ctx context.Context, req *CancelWorkflowRunReq, opt ...requests.Option) (*CancelWorkflowRunResponse, error) {
 	return CancelWorkflowRun(ctx, req, append(c, opt...)...)
@@ -213,6 +196,8 @@ func (c Client) CancelWorkflowRun(ctx context.Context, req *CancelWorkflowRunReq
 CancelWorkflowRunReq is request data for Client.CancelWorkflowRun
 
 https://developer.github.com/v3/actions/workflow-runs/#cancel-a-workflow-run
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type CancelWorkflowRunReq struct {
 	_url  string
@@ -221,19 +206,11 @@ type CancelWorkflowRunReq struct {
 	RunId int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *CancelWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *CancelWorkflowRunReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -241,12 +218,12 @@ func (r *CancelWorkflowRunReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{},
 		Method:             "POST",
 		OperationID:        "actions/cancel-workflow-run",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/actions/runs/%v/cancel", r.Owner, r.Repo, r.RunId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -271,8 +248,19 @@ type CancelWorkflowRunResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *CancelWorkflowRunResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *CancelWorkflowRunResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{202})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -285,39 +273,27 @@ Create or update an organization secret.
 https://developer.github.com/v3/actions/secrets/#create-or-update-an-organization-secret
 */
 func CreateOrUpdateOrgSecret(ctx context.Context, req *CreateOrUpdateOrgSecretReq, opt ...requests.Option) (*CreateOrUpdateOrgSecretResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(CreateOrUpdateOrgSecretReq)
 	}
 	resp := &CreateOrUpdateOrgSecretResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewCreateOrUpdateOrgSecretResponse(r, opts.PreserveResponseBody())
-}
-
-// NewCreateOrUpdateOrgSecretResponse builds a new *CreateOrUpdateOrgSecretResponse from an *http.Response
-func NewCreateOrUpdateOrgSecretResponse(resp *http.Response, preserveBody bool) (*CreateOrUpdateOrgSecretResponse, error) {
-	var result CreateOrUpdateOrgSecretResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{201, 204})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -328,6 +304,8 @@ Create or update an organization secret.
   PUT /orgs/{org}/actions/secrets/{secret_name}
 
 https://developer.github.com/v3/actions/secrets/#create-or-update-an-organization-secret
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) CreateOrUpdateOrgSecret(ctx context.Context, req *CreateOrUpdateOrgSecretReq, opt ...requests.Option) (*CreateOrUpdateOrgSecretResponse, error) {
 	return CreateOrUpdateOrgSecret(ctx, req, append(c, opt...)...)
@@ -337,6 +315,8 @@ func (c Client) CreateOrUpdateOrgSecret(ctx context.Context, req *CreateOrUpdate
 CreateOrUpdateOrgSecretReq is request data for Client.CreateOrUpdateOrgSecret
 
 https://developer.github.com/v3/actions/secrets/#create-or-update-an-organization-secret
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type CreateOrUpdateOrgSecretReq struct {
 	_url string
@@ -347,19 +327,11 @@ type CreateOrUpdateOrgSecretReq struct {
 	RequestBody CreateOrUpdateOrgSecretReqBody
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *CreateOrUpdateOrgSecretReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *CreateOrUpdateOrgSecretReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -367,12 +339,12 @@ func (r *CreateOrUpdateOrgSecretReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"content-type": internal.String("application/json")},
 		Method:             "PUT",
 		OperationID:        "actions/create-or-update-org-secret",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/actions/secrets/%v", r.Org, r.SecretName),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -440,8 +412,19 @@ type CreateOrUpdateOrgSecretResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *CreateOrUpdateOrgSecretResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *CreateOrUpdateOrgSecretResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{201, 204})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -454,39 +437,27 @@ Create or update a repository secret.
 https://developer.github.com/v3/actions/secrets/#create-or-update-a-repository-secret
 */
 func CreateOrUpdateRepoSecret(ctx context.Context, req *CreateOrUpdateRepoSecretReq, opt ...requests.Option) (*CreateOrUpdateRepoSecretResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(CreateOrUpdateRepoSecretReq)
 	}
 	resp := &CreateOrUpdateRepoSecretResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewCreateOrUpdateRepoSecretResponse(r, opts.PreserveResponseBody())
-}
-
-// NewCreateOrUpdateRepoSecretResponse builds a new *CreateOrUpdateRepoSecretResponse from an *http.Response
-func NewCreateOrUpdateRepoSecretResponse(resp *http.Response, preserveBody bool) (*CreateOrUpdateRepoSecretResponse, error) {
-	var result CreateOrUpdateRepoSecretResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{201, 204})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -497,6 +468,8 @@ Create or update a repository secret.
   PUT /repos/{owner}/{repo}/actions/secrets/{secret_name}
 
 https://developer.github.com/v3/actions/secrets/#create-or-update-a-repository-secret
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) CreateOrUpdateRepoSecret(ctx context.Context, req *CreateOrUpdateRepoSecretReq, opt ...requests.Option) (*CreateOrUpdateRepoSecretResponse, error) {
 	return CreateOrUpdateRepoSecret(ctx, req, append(c, opt...)...)
@@ -506,6 +479,8 @@ func (c Client) CreateOrUpdateRepoSecret(ctx context.Context, req *CreateOrUpdat
 CreateOrUpdateRepoSecretReq is request data for Client.CreateOrUpdateRepoSecret
 
 https://developer.github.com/v3/actions/secrets/#create-or-update-a-repository-secret
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type CreateOrUpdateRepoSecretReq struct {
 	_url  string
@@ -517,19 +492,11 @@ type CreateOrUpdateRepoSecretReq struct {
 	RequestBody CreateOrUpdateRepoSecretReqBody
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *CreateOrUpdateRepoSecretReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *CreateOrUpdateRepoSecretReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -537,12 +504,12 @@ func (r *CreateOrUpdateRepoSecretReq) requestBuilder() *internal.RequestBuilder 
 		HeaderVals:         map[string]*string{"content-type": internal.String("application/json")},
 		Method:             "PUT",
 		OperationID:        "actions/create-or-update-repo-secret",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/actions/secrets/%v", r.Owner, r.Repo, r.SecretName),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -587,8 +554,19 @@ type CreateOrUpdateRepoSecretResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *CreateOrUpdateRepoSecretResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *CreateOrUpdateRepoSecretResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{201, 204})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -601,45 +579,27 @@ Create a registration token for an organization.
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-registration-token-for-an-organization
 */
 func CreateRegistrationTokenForOrg(ctx context.Context, req *CreateRegistrationTokenForOrgReq, opt ...requests.Option) (*CreateRegistrationTokenForOrgResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(CreateRegistrationTokenForOrgReq)
 	}
 	resp := &CreateRegistrationTokenForOrgResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewCreateRegistrationTokenForOrgResponse(r, opts.PreserveResponseBody())
-}
-
-// NewCreateRegistrationTokenForOrgResponse builds a new *CreateRegistrationTokenForOrgResponse from an *http.Response
-func NewCreateRegistrationTokenForOrgResponse(resp *http.Response, preserveBody bool) (*CreateRegistrationTokenForOrgResponse, error) {
-	var result CreateRegistrationTokenForOrgResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{201})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{201}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -650,6 +610,8 @@ Create a registration token for an organization.
   POST /orgs/{org}/actions/runners/registration-token
 
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-registration-token-for-an-organization
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) CreateRegistrationTokenForOrg(ctx context.Context, req *CreateRegistrationTokenForOrgReq, opt ...requests.Option) (*CreateRegistrationTokenForOrgResponse, error) {
 	return CreateRegistrationTokenForOrg(ctx, req, append(c, opt...)...)
@@ -659,25 +621,19 @@ func (c Client) CreateRegistrationTokenForOrg(ctx context.Context, req *CreateRe
 CreateRegistrationTokenForOrgReq is request data for Client.CreateRegistrationTokenForOrg
 
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-registration-token-for-an-organization
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type CreateRegistrationTokenForOrgReq struct {
 	_url string
 	Org  string
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *CreateRegistrationTokenForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *CreateRegistrationTokenForOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -685,12 +641,12 @@ func (r *CreateRegistrationTokenForOrgReq) requestBuilder() *internal.RequestBui
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "POST",
 		OperationID:        "actions/create-registration-token-for-org",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/actions/runners/registration-token", r.Org),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -716,8 +672,25 @@ type CreateRegistrationTokenForOrgResponse struct {
 	Data         components.AuthenticationToken
 }
 
+// HTTPResponse returns the *http.Response
 func (r *CreateRegistrationTokenForOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *CreateRegistrationTokenForOrgResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{201})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -730,45 +703,27 @@ Create a registration token for a repository.
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-registration-token-for-a-repository
 */
 func CreateRegistrationTokenForRepo(ctx context.Context, req *CreateRegistrationTokenForRepoReq, opt ...requests.Option) (*CreateRegistrationTokenForRepoResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(CreateRegistrationTokenForRepoReq)
 	}
 	resp := &CreateRegistrationTokenForRepoResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewCreateRegistrationTokenForRepoResponse(r, opts.PreserveResponseBody())
-}
-
-// NewCreateRegistrationTokenForRepoResponse builds a new *CreateRegistrationTokenForRepoResponse from an *http.Response
-func NewCreateRegistrationTokenForRepoResponse(resp *http.Response, preserveBody bool) (*CreateRegistrationTokenForRepoResponse, error) {
-	var result CreateRegistrationTokenForRepoResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{201})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{201}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -779,6 +734,8 @@ Create a registration token for a repository.
   POST /repos/{owner}/{repo}/actions/runners/registration-token
 
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-registration-token-for-a-repository
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) CreateRegistrationTokenForRepo(ctx context.Context, req *CreateRegistrationTokenForRepoReq, opt ...requests.Option) (*CreateRegistrationTokenForRepoResponse, error) {
 	return CreateRegistrationTokenForRepo(ctx, req, append(c, opt...)...)
@@ -788,6 +745,8 @@ func (c Client) CreateRegistrationTokenForRepo(ctx context.Context, req *CreateR
 CreateRegistrationTokenForRepoReq is request data for Client.CreateRegistrationTokenForRepo
 
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-registration-token-for-a-repository
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type CreateRegistrationTokenForRepoReq struct {
 	_url  string
@@ -795,19 +754,11 @@ type CreateRegistrationTokenForRepoReq struct {
 	Repo  string
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *CreateRegistrationTokenForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *CreateRegistrationTokenForRepoReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -815,12 +766,12 @@ func (r *CreateRegistrationTokenForRepoReq) requestBuilder() *internal.RequestBu
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "POST",
 		OperationID:        "actions/create-registration-token-for-repo",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/actions/runners/registration-token", r.Owner, r.Repo),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -846,8 +797,25 @@ type CreateRegistrationTokenForRepoResponse struct {
 	Data         components.AuthenticationToken
 }
 
+// HTTPResponse returns the *http.Response
 func (r *CreateRegistrationTokenForRepoResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *CreateRegistrationTokenForRepoResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{201})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -860,45 +828,27 @@ Create a remove token for an organization.
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-remove-token-for-an-organization
 */
 func CreateRemoveTokenForOrg(ctx context.Context, req *CreateRemoveTokenForOrgReq, opt ...requests.Option) (*CreateRemoveTokenForOrgResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(CreateRemoveTokenForOrgReq)
 	}
 	resp := &CreateRemoveTokenForOrgResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewCreateRemoveTokenForOrgResponse(r, opts.PreserveResponseBody())
-}
-
-// NewCreateRemoveTokenForOrgResponse builds a new *CreateRemoveTokenForOrgResponse from an *http.Response
-func NewCreateRemoveTokenForOrgResponse(resp *http.Response, preserveBody bool) (*CreateRemoveTokenForOrgResponse, error) {
-	var result CreateRemoveTokenForOrgResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{201})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{201}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -909,6 +859,8 @@ Create a remove token for an organization.
   POST /orgs/{org}/actions/runners/remove-token
 
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-remove-token-for-an-organization
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) CreateRemoveTokenForOrg(ctx context.Context, req *CreateRemoveTokenForOrgReq, opt ...requests.Option) (*CreateRemoveTokenForOrgResponse, error) {
 	return CreateRemoveTokenForOrg(ctx, req, append(c, opt...)...)
@@ -918,25 +870,19 @@ func (c Client) CreateRemoveTokenForOrg(ctx context.Context, req *CreateRemoveTo
 CreateRemoveTokenForOrgReq is request data for Client.CreateRemoveTokenForOrg
 
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-remove-token-for-an-organization
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type CreateRemoveTokenForOrgReq struct {
 	_url string
 	Org  string
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *CreateRemoveTokenForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *CreateRemoveTokenForOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -944,12 +890,12 @@ func (r *CreateRemoveTokenForOrgReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "POST",
 		OperationID:        "actions/create-remove-token-for-org",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/actions/runners/remove-token", r.Org),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -975,8 +921,25 @@ type CreateRemoveTokenForOrgResponse struct {
 	Data         components.AuthenticationToken
 }
 
+// HTTPResponse returns the *http.Response
 func (r *CreateRemoveTokenForOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *CreateRemoveTokenForOrgResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{201})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -989,45 +952,27 @@ Create a remove token for a repository.
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-remove-token-for-a-repository
 */
 func CreateRemoveTokenForRepo(ctx context.Context, req *CreateRemoveTokenForRepoReq, opt ...requests.Option) (*CreateRemoveTokenForRepoResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(CreateRemoveTokenForRepoReq)
 	}
 	resp := &CreateRemoveTokenForRepoResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewCreateRemoveTokenForRepoResponse(r, opts.PreserveResponseBody())
-}
-
-// NewCreateRemoveTokenForRepoResponse builds a new *CreateRemoveTokenForRepoResponse from an *http.Response
-func NewCreateRemoveTokenForRepoResponse(resp *http.Response, preserveBody bool) (*CreateRemoveTokenForRepoResponse, error) {
-	var result CreateRemoveTokenForRepoResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{201})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{201}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -1038,6 +983,8 @@ Create a remove token for a repository.
   POST /repos/{owner}/{repo}/actions/runners/remove-token
 
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-remove-token-for-a-repository
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) CreateRemoveTokenForRepo(ctx context.Context, req *CreateRemoveTokenForRepoReq, opt ...requests.Option) (*CreateRemoveTokenForRepoResponse, error) {
 	return CreateRemoveTokenForRepo(ctx, req, append(c, opt...)...)
@@ -1047,6 +994,8 @@ func (c Client) CreateRemoveTokenForRepo(ctx context.Context, req *CreateRemoveT
 CreateRemoveTokenForRepoReq is request data for Client.CreateRemoveTokenForRepo
 
 https://developer.github.com/v3/actions/self-hosted-runners/#create-a-remove-token-for-a-repository
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type CreateRemoveTokenForRepoReq struct {
 	_url  string
@@ -1054,19 +1003,11 @@ type CreateRemoveTokenForRepoReq struct {
 	Repo  string
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *CreateRemoveTokenForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *CreateRemoveTokenForRepoReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -1074,12 +1015,12 @@ func (r *CreateRemoveTokenForRepoReq) requestBuilder() *internal.RequestBuilder 
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "POST",
 		OperationID:        "actions/create-remove-token-for-repo",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/actions/runners/remove-token", r.Owner, r.Repo),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1105,8 +1046,25 @@ type CreateRemoveTokenForRepoResponse struct {
 	Data         components.AuthenticationToken
 }
 
+// HTTPResponse returns the *http.Response
 func (r *CreateRemoveTokenForRepoResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *CreateRemoveTokenForRepoResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{201})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -1119,39 +1077,27 @@ Create a workflow dispatch event.
 https://developer.github.com/v3/actions/workflows/#create-a-workflow-dispatch-event
 */
 func CreateWorkflowDispatch(ctx context.Context, req *CreateWorkflowDispatchReq, opt ...requests.Option) (*CreateWorkflowDispatchResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(CreateWorkflowDispatchReq)
 	}
 	resp := &CreateWorkflowDispatchResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewCreateWorkflowDispatchResponse(r, opts.PreserveResponseBody())
-}
-
-// NewCreateWorkflowDispatchResponse builds a new *CreateWorkflowDispatchResponse from an *http.Response
-func NewCreateWorkflowDispatchResponse(resp *http.Response, preserveBody bool) (*CreateWorkflowDispatchResponse, error) {
-	var result CreateWorkflowDispatchResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{204})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -1162,6 +1108,8 @@ Create a workflow dispatch event.
   POST /repos/{owner}/{repo}/actions/workflows/{workflow_id}/dispatches
 
 https://developer.github.com/v3/actions/workflows/#create-a-workflow-dispatch-event
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) CreateWorkflowDispatch(ctx context.Context, req *CreateWorkflowDispatchReq, opt ...requests.Option) (*CreateWorkflowDispatchResponse, error) {
 	return CreateWorkflowDispatch(ctx, req, append(c, opt...)...)
@@ -1171,6 +1119,8 @@ func (c Client) CreateWorkflowDispatch(ctx context.Context, req *CreateWorkflowD
 CreateWorkflowDispatchReq is request data for Client.CreateWorkflowDispatch
 
 https://developer.github.com/v3/actions/workflows/#create-a-workflow-dispatch-event
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type CreateWorkflowDispatchReq struct {
 	_url        string
@@ -1180,19 +1130,11 @@ type CreateWorkflowDispatchReq struct {
 	RequestBody CreateWorkflowDispatchReqBody
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *CreateWorkflowDispatchReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *CreateWorkflowDispatchReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -1200,12 +1142,12 @@ func (r *CreateWorkflowDispatchReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"content-type": internal.String("application/json")},
 		Method:             "POST",
 		OperationID:        "actions/create-workflow-dispatch",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/actions/workflows/%v/dispatches", r.Owner, r.Repo, r.WorkflowId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1248,8 +1190,19 @@ type CreateWorkflowDispatchResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *CreateWorkflowDispatchResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *CreateWorkflowDispatchResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{204})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -1262,39 +1215,27 @@ Delete an artifact.
 https://developer.github.com/v3/actions/artifacts/#delete-an-artifact
 */
 func DeleteArtifact(ctx context.Context, req *DeleteArtifactReq, opt ...requests.Option) (*DeleteArtifactResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(DeleteArtifactReq)
 	}
 	resp := &DeleteArtifactResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewDeleteArtifactResponse(r, opts.PreserveResponseBody())
-}
-
-// NewDeleteArtifactResponse builds a new *DeleteArtifactResponse from an *http.Response
-func NewDeleteArtifactResponse(resp *http.Response, preserveBody bool) (*DeleteArtifactResponse, error) {
-	var result DeleteArtifactResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{204})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -1305,6 +1246,8 @@ Delete an artifact.
   DELETE /repos/{owner}/{repo}/actions/artifacts/{artifact_id}
 
 https://developer.github.com/v3/actions/artifacts/#delete-an-artifact
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) DeleteArtifact(ctx context.Context, req *DeleteArtifactReq, opt ...requests.Option) (*DeleteArtifactResponse, error) {
 	return DeleteArtifact(ctx, req, append(c, opt...)...)
@@ -1314,6 +1257,8 @@ func (c Client) DeleteArtifact(ctx context.Context, req *DeleteArtifactReq, opt 
 DeleteArtifactReq is request data for Client.DeleteArtifact
 
 https://developer.github.com/v3/actions/artifacts/#delete-an-artifact
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type DeleteArtifactReq struct {
 	_url  string
@@ -1324,19 +1269,11 @@ type DeleteArtifactReq struct {
 	ArtifactId int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *DeleteArtifactReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *DeleteArtifactReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -1344,12 +1281,12 @@ func (r *DeleteArtifactReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
 		OperationID:        "actions/delete-artifact",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/actions/artifacts/%v", r.Owner, r.Repo, r.ArtifactId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1374,8 +1311,19 @@ type DeleteArtifactResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *DeleteArtifactResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *DeleteArtifactResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{204})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -1388,39 +1336,27 @@ Delete an organization secret.
 https://developer.github.com/v3/actions/secrets/#delete-an-organization-secret
 */
 func DeleteOrgSecret(ctx context.Context, req *DeleteOrgSecretReq, opt ...requests.Option) (*DeleteOrgSecretResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(DeleteOrgSecretReq)
 	}
 	resp := &DeleteOrgSecretResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewDeleteOrgSecretResponse(r, opts.PreserveResponseBody())
-}
-
-// NewDeleteOrgSecretResponse builds a new *DeleteOrgSecretResponse from an *http.Response
-func NewDeleteOrgSecretResponse(resp *http.Response, preserveBody bool) (*DeleteOrgSecretResponse, error) {
-	var result DeleteOrgSecretResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{204})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -1431,6 +1367,8 @@ Delete an organization secret.
   DELETE /orgs/{org}/actions/secrets/{secret_name}
 
 https://developer.github.com/v3/actions/secrets/#delete-an-organization-secret
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) DeleteOrgSecret(ctx context.Context, req *DeleteOrgSecretReq, opt ...requests.Option) (*DeleteOrgSecretResponse, error) {
 	return DeleteOrgSecret(ctx, req, append(c, opt...)...)
@@ -1440,6 +1378,8 @@ func (c Client) DeleteOrgSecret(ctx context.Context, req *DeleteOrgSecretReq, op
 DeleteOrgSecretReq is request data for Client.DeleteOrgSecret
 
 https://developer.github.com/v3/actions/secrets/#delete-an-organization-secret
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type DeleteOrgSecretReq struct {
 	_url string
@@ -1449,19 +1389,11 @@ type DeleteOrgSecretReq struct {
 	SecretName string
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *DeleteOrgSecretReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *DeleteOrgSecretReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -1469,12 +1401,12 @@ func (r *DeleteOrgSecretReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
 		OperationID:        "actions/delete-org-secret",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/actions/secrets/%v", r.Org, r.SecretName),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1499,8 +1431,19 @@ type DeleteOrgSecretResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *DeleteOrgSecretResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *DeleteOrgSecretResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{204})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -1513,39 +1456,27 @@ Delete a repository secret.
 https://developer.github.com/v3/actions/secrets/#delete-a-repository-secret
 */
 func DeleteRepoSecret(ctx context.Context, req *DeleteRepoSecretReq, opt ...requests.Option) (*DeleteRepoSecretResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(DeleteRepoSecretReq)
 	}
 	resp := &DeleteRepoSecretResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewDeleteRepoSecretResponse(r, opts.PreserveResponseBody())
-}
-
-// NewDeleteRepoSecretResponse builds a new *DeleteRepoSecretResponse from an *http.Response
-func NewDeleteRepoSecretResponse(resp *http.Response, preserveBody bool) (*DeleteRepoSecretResponse, error) {
-	var result DeleteRepoSecretResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{204})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -1556,6 +1487,8 @@ Delete a repository secret.
   DELETE /repos/{owner}/{repo}/actions/secrets/{secret_name}
 
 https://developer.github.com/v3/actions/secrets/#delete-a-repository-secret
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) DeleteRepoSecret(ctx context.Context, req *DeleteRepoSecretReq, opt ...requests.Option) (*DeleteRepoSecretResponse, error) {
 	return DeleteRepoSecret(ctx, req, append(c, opt...)...)
@@ -1565,6 +1498,8 @@ func (c Client) DeleteRepoSecret(ctx context.Context, req *DeleteRepoSecretReq, 
 DeleteRepoSecretReq is request data for Client.DeleteRepoSecret
 
 https://developer.github.com/v3/actions/secrets/#delete-a-repository-secret
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type DeleteRepoSecretReq struct {
 	_url  string
@@ -1575,19 +1510,11 @@ type DeleteRepoSecretReq struct {
 	SecretName string
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *DeleteRepoSecretReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *DeleteRepoSecretReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -1595,12 +1522,12 @@ func (r *DeleteRepoSecretReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
 		OperationID:        "actions/delete-repo-secret",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/actions/secrets/%v", r.Owner, r.Repo, r.SecretName),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1625,8 +1552,19 @@ type DeleteRepoSecretResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *DeleteRepoSecretResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *DeleteRepoSecretResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{204})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -1639,39 +1577,27 @@ Delete a self-hosted runner from an organization.
 https://developer.github.com/v3/actions/self-hosted-runners/#delete-a-self-hosted-runner-from-an-organization
 */
 func DeleteSelfHostedRunnerFromOrg(ctx context.Context, req *DeleteSelfHostedRunnerFromOrgReq, opt ...requests.Option) (*DeleteSelfHostedRunnerFromOrgResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(DeleteSelfHostedRunnerFromOrgReq)
 	}
 	resp := &DeleteSelfHostedRunnerFromOrgResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewDeleteSelfHostedRunnerFromOrgResponse(r, opts.PreserveResponseBody())
-}
-
-// NewDeleteSelfHostedRunnerFromOrgResponse builds a new *DeleteSelfHostedRunnerFromOrgResponse from an *http.Response
-func NewDeleteSelfHostedRunnerFromOrgResponse(resp *http.Response, preserveBody bool) (*DeleteSelfHostedRunnerFromOrgResponse, error) {
-	var result DeleteSelfHostedRunnerFromOrgResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{204})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -1682,6 +1608,8 @@ Delete a self-hosted runner from an organization.
   DELETE /orgs/{org}/actions/runners/{runner_id}
 
 https://developer.github.com/v3/actions/self-hosted-runners/#delete-a-self-hosted-runner-from-an-organization
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) DeleteSelfHostedRunnerFromOrg(ctx context.Context, req *DeleteSelfHostedRunnerFromOrgReq, opt ...requests.Option) (*DeleteSelfHostedRunnerFromOrgResponse, error) {
 	return DeleteSelfHostedRunnerFromOrg(ctx, req, append(c, opt...)...)
@@ -1691,6 +1619,8 @@ func (c Client) DeleteSelfHostedRunnerFromOrg(ctx context.Context, req *DeleteSe
 DeleteSelfHostedRunnerFromOrgReq is request data for Client.DeleteSelfHostedRunnerFromOrg
 
 https://developer.github.com/v3/actions/self-hosted-runners/#delete-a-self-hosted-runner-from-an-organization
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type DeleteSelfHostedRunnerFromOrgReq struct {
 	_url string
@@ -1700,19 +1630,11 @@ type DeleteSelfHostedRunnerFromOrgReq struct {
 	RunnerId int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *DeleteSelfHostedRunnerFromOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *DeleteSelfHostedRunnerFromOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -1720,12 +1642,12 @@ func (r *DeleteSelfHostedRunnerFromOrgReq) requestBuilder() *internal.RequestBui
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
 		OperationID:        "actions/delete-self-hosted-runner-from-org",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/actions/runners/%v", r.Org, r.RunnerId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1750,8 +1672,19 @@ type DeleteSelfHostedRunnerFromOrgResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *DeleteSelfHostedRunnerFromOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *DeleteSelfHostedRunnerFromOrgResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{204})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -1764,39 +1697,27 @@ Delete a self-hosted runner from a repository.
 https://developer.github.com/v3/actions/self-hosted-runners/#delete-a-self-hosted-runner-from-a-repository
 */
 func DeleteSelfHostedRunnerFromRepo(ctx context.Context, req *DeleteSelfHostedRunnerFromRepoReq, opt ...requests.Option) (*DeleteSelfHostedRunnerFromRepoResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(DeleteSelfHostedRunnerFromRepoReq)
 	}
 	resp := &DeleteSelfHostedRunnerFromRepoResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewDeleteSelfHostedRunnerFromRepoResponse(r, opts.PreserveResponseBody())
-}
-
-// NewDeleteSelfHostedRunnerFromRepoResponse builds a new *DeleteSelfHostedRunnerFromRepoResponse from an *http.Response
-func NewDeleteSelfHostedRunnerFromRepoResponse(resp *http.Response, preserveBody bool) (*DeleteSelfHostedRunnerFromRepoResponse, error) {
-	var result DeleteSelfHostedRunnerFromRepoResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{204})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -1807,6 +1728,8 @@ Delete a self-hosted runner from a repository.
   DELETE /repos/{owner}/{repo}/actions/runners/{runner_id}
 
 https://developer.github.com/v3/actions/self-hosted-runners/#delete-a-self-hosted-runner-from-a-repository
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) DeleteSelfHostedRunnerFromRepo(ctx context.Context, req *DeleteSelfHostedRunnerFromRepoReq, opt ...requests.Option) (*DeleteSelfHostedRunnerFromRepoResponse, error) {
 	return DeleteSelfHostedRunnerFromRepo(ctx, req, append(c, opt...)...)
@@ -1816,6 +1739,8 @@ func (c Client) DeleteSelfHostedRunnerFromRepo(ctx context.Context, req *DeleteS
 DeleteSelfHostedRunnerFromRepoReq is request data for Client.DeleteSelfHostedRunnerFromRepo
 
 https://developer.github.com/v3/actions/self-hosted-runners/#delete-a-self-hosted-runner-from-a-repository
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type DeleteSelfHostedRunnerFromRepoReq struct {
 	_url  string
@@ -1826,19 +1751,11 @@ type DeleteSelfHostedRunnerFromRepoReq struct {
 	RunnerId int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *DeleteSelfHostedRunnerFromRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *DeleteSelfHostedRunnerFromRepoReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -1846,12 +1763,12 @@ func (r *DeleteSelfHostedRunnerFromRepoReq) requestBuilder() *internal.RequestBu
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
 		OperationID:        "actions/delete-self-hosted-runner-from-repo",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/actions/runners/%v", r.Owner, r.Repo, r.RunnerId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1876,8 +1793,19 @@ type DeleteSelfHostedRunnerFromRepoResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *DeleteSelfHostedRunnerFromRepoResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *DeleteSelfHostedRunnerFromRepoResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{204})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -1890,39 +1818,27 @@ Delete a workflow run.
 https://developer.github.com/v3/actions/workflow-runs/#delete-a-workflow-run
 */
 func DeleteWorkflowRun(ctx context.Context, req *DeleteWorkflowRunReq, opt ...requests.Option) (*DeleteWorkflowRunResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(DeleteWorkflowRunReq)
 	}
 	resp := &DeleteWorkflowRunResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewDeleteWorkflowRunResponse(r, opts.PreserveResponseBody())
-}
-
-// NewDeleteWorkflowRunResponse builds a new *DeleteWorkflowRunResponse from an *http.Response
-func NewDeleteWorkflowRunResponse(resp *http.Response, preserveBody bool) (*DeleteWorkflowRunResponse, error) {
-	var result DeleteWorkflowRunResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{204})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -1933,6 +1849,8 @@ Delete a workflow run.
   DELETE /repos/{owner}/{repo}/actions/runs/{run_id}
 
 https://developer.github.com/v3/actions/workflow-runs/#delete-a-workflow-run
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) DeleteWorkflowRun(ctx context.Context, req *DeleteWorkflowRunReq, opt ...requests.Option) (*DeleteWorkflowRunResponse, error) {
 	return DeleteWorkflowRun(ctx, req, append(c, opt...)...)
@@ -1942,6 +1860,8 @@ func (c Client) DeleteWorkflowRun(ctx context.Context, req *DeleteWorkflowRunReq
 DeleteWorkflowRunReq is request data for Client.DeleteWorkflowRun
 
 https://developer.github.com/v3/actions/workflow-runs/#delete-a-workflow-run
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type DeleteWorkflowRunReq struct {
 	_url  string
@@ -1950,19 +1870,11 @@ type DeleteWorkflowRunReq struct {
 	RunId int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *DeleteWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *DeleteWorkflowRunReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -1970,12 +1882,12 @@ func (r *DeleteWorkflowRunReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
 		OperationID:        "actions/delete-workflow-run",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/actions/runs/%v", r.Owner, r.Repo, r.RunId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -2000,8 +1912,19 @@ type DeleteWorkflowRunResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *DeleteWorkflowRunResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *DeleteWorkflowRunResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{204})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -2014,39 +1937,27 @@ Delete workflow run logs.
 https://developer.github.com/v3/actions/workflow-runs/#delete-workflow-run-logs
 */
 func DeleteWorkflowRunLogs(ctx context.Context, req *DeleteWorkflowRunLogsReq, opt ...requests.Option) (*DeleteWorkflowRunLogsResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(DeleteWorkflowRunLogsReq)
 	}
 	resp := &DeleteWorkflowRunLogsResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewDeleteWorkflowRunLogsResponse(r, opts.PreserveResponseBody())
-}
-
-// NewDeleteWorkflowRunLogsResponse builds a new *DeleteWorkflowRunLogsResponse from an *http.Response
-func NewDeleteWorkflowRunLogsResponse(resp *http.Response, preserveBody bool) (*DeleteWorkflowRunLogsResponse, error) {
-	var result DeleteWorkflowRunLogsResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{204})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -2057,6 +1968,8 @@ Delete workflow run logs.
   DELETE /repos/{owner}/{repo}/actions/runs/{run_id}/logs
 
 https://developer.github.com/v3/actions/workflow-runs/#delete-workflow-run-logs
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) DeleteWorkflowRunLogs(ctx context.Context, req *DeleteWorkflowRunLogsReq, opt ...requests.Option) (*DeleteWorkflowRunLogsResponse, error) {
 	return DeleteWorkflowRunLogs(ctx, req, append(c, opt...)...)
@@ -2066,6 +1979,8 @@ func (c Client) DeleteWorkflowRunLogs(ctx context.Context, req *DeleteWorkflowRu
 DeleteWorkflowRunLogsReq is request data for Client.DeleteWorkflowRunLogs
 
 https://developer.github.com/v3/actions/workflow-runs/#delete-workflow-run-logs
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type DeleteWorkflowRunLogsReq struct {
 	_url  string
@@ -2074,19 +1989,11 @@ type DeleteWorkflowRunLogsReq struct {
 	RunId int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *DeleteWorkflowRunLogsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *DeleteWorkflowRunLogsReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -2094,12 +2001,12 @@ func (r *DeleteWorkflowRunLogsReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
 		OperationID:        "actions/delete-workflow-run-logs",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/actions/runs/%v/logs", r.Owner, r.Repo, r.RunId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -2124,8 +2031,19 @@ type DeleteWorkflowRunLogsResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *DeleteWorkflowRunLogsResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *DeleteWorkflowRunLogsResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{204})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -2138,39 +2056,27 @@ Download an artifact.
 https://developer.github.com/v3/actions/artifacts/#download-an-artifact
 */
 func DownloadArtifact(ctx context.Context, req *DownloadArtifactReq, opt ...requests.Option) (*DownloadArtifactResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(DownloadArtifactReq)
 	}
 	resp := &DownloadArtifactResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewDownloadArtifactResponse(r, opts.PreserveResponseBody())
-}
-
-// NewDownloadArtifactResponse builds a new *DownloadArtifactResponse from an *http.Response
-func NewDownloadArtifactResponse(resp *http.Response, preserveBody bool) (*DownloadArtifactResponse, error) {
-	var result DownloadArtifactResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{302})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -2181,6 +2087,8 @@ Download an artifact.
   GET /repos/{owner}/{repo}/actions/artifacts/{artifact_id}/{archive_format}
 
 https://developer.github.com/v3/actions/artifacts/#download-an-artifact
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) DownloadArtifact(ctx context.Context, req *DownloadArtifactReq, opt ...requests.Option) (*DownloadArtifactResponse, error) {
 	return DownloadArtifact(ctx, req, append(c, opt...)...)
@@ -2190,6 +2098,8 @@ func (c Client) DownloadArtifact(ctx context.Context, req *DownloadArtifactReq, 
 DownloadArtifactReq is request data for Client.DownloadArtifact
 
 https://developer.github.com/v3/actions/artifacts/#download-an-artifact
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type DownloadArtifactReq struct {
 	_url  string
@@ -2203,19 +2113,11 @@ type DownloadArtifactReq struct {
 	ArchiveFormat string
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *DownloadArtifactReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *DownloadArtifactReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrRedirectOnly},
@@ -2223,12 +2125,12 @@ func (r *DownloadArtifactReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{},
 		Method:             "GET",
 		OperationID:        "actions/download-artifact",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/actions/artifacts/%v/%v", r.Owner, r.Repo, r.ArtifactId, r.ArchiveFormat),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -2253,8 +2155,19 @@ type DownloadArtifactResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *DownloadArtifactResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *DownloadArtifactResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{302})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -2267,39 +2180,27 @@ Download job logs for a workflow run.
 https://developer.github.com/v3/actions/workflow-jobs/#download-job-logs-for-a-workflow-run
 */
 func DownloadJobLogsForWorkflowRun(ctx context.Context, req *DownloadJobLogsForWorkflowRunReq, opt ...requests.Option) (*DownloadJobLogsForWorkflowRunResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(DownloadJobLogsForWorkflowRunReq)
 	}
 	resp := &DownloadJobLogsForWorkflowRunResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewDownloadJobLogsForWorkflowRunResponse(r, opts.PreserveResponseBody())
-}
-
-// NewDownloadJobLogsForWorkflowRunResponse builds a new *DownloadJobLogsForWorkflowRunResponse from an *http.Response
-func NewDownloadJobLogsForWorkflowRunResponse(resp *http.Response, preserveBody bool) (*DownloadJobLogsForWorkflowRunResponse, error) {
-	var result DownloadJobLogsForWorkflowRunResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{302})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -2310,6 +2211,8 @@ Download job logs for a workflow run.
   GET /repos/{owner}/{repo}/actions/jobs/{job_id}/logs
 
 https://developer.github.com/v3/actions/workflow-jobs/#download-job-logs-for-a-workflow-run
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) DownloadJobLogsForWorkflowRun(ctx context.Context, req *DownloadJobLogsForWorkflowRunReq, opt ...requests.Option) (*DownloadJobLogsForWorkflowRunResponse, error) {
 	return DownloadJobLogsForWorkflowRun(ctx, req, append(c, opt...)...)
@@ -2319,6 +2222,8 @@ func (c Client) DownloadJobLogsForWorkflowRun(ctx context.Context, req *Download
 DownloadJobLogsForWorkflowRunReq is request data for Client.DownloadJobLogsForWorkflowRun
 
 https://developer.github.com/v3/actions/workflow-jobs/#download-job-logs-for-a-workflow-run
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type DownloadJobLogsForWorkflowRunReq struct {
 	_url  string
@@ -2329,19 +2234,11 @@ type DownloadJobLogsForWorkflowRunReq struct {
 	JobId int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *DownloadJobLogsForWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *DownloadJobLogsForWorkflowRunReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrRedirectOnly},
@@ -2349,12 +2246,12 @@ func (r *DownloadJobLogsForWorkflowRunReq) requestBuilder() *internal.RequestBui
 		HeaderVals:         map[string]*string{},
 		Method:             "GET",
 		OperationID:        "actions/download-job-logs-for-workflow-run",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/actions/jobs/%v/logs", r.Owner, r.Repo, r.JobId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -2379,8 +2276,19 @@ type DownloadJobLogsForWorkflowRunResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *DownloadJobLogsForWorkflowRunResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *DownloadJobLogsForWorkflowRunResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{302})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -2393,39 +2301,27 @@ Download workflow run logs.
 https://developer.github.com/v3/actions/workflow-runs/#download-workflow-run-logs
 */
 func DownloadWorkflowRunLogs(ctx context.Context, req *DownloadWorkflowRunLogsReq, opt ...requests.Option) (*DownloadWorkflowRunLogsResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(DownloadWorkflowRunLogsReq)
 	}
 	resp := &DownloadWorkflowRunLogsResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewDownloadWorkflowRunLogsResponse(r, opts.PreserveResponseBody())
-}
-
-// NewDownloadWorkflowRunLogsResponse builds a new *DownloadWorkflowRunLogsResponse from an *http.Response
-func NewDownloadWorkflowRunLogsResponse(resp *http.Response, preserveBody bool) (*DownloadWorkflowRunLogsResponse, error) {
-	var result DownloadWorkflowRunLogsResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{302})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -2436,6 +2332,8 @@ Download workflow run logs.
   GET /repos/{owner}/{repo}/actions/runs/{run_id}/logs
 
 https://developer.github.com/v3/actions/workflow-runs/#download-workflow-run-logs
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) DownloadWorkflowRunLogs(ctx context.Context, req *DownloadWorkflowRunLogsReq, opt ...requests.Option) (*DownloadWorkflowRunLogsResponse, error) {
 	return DownloadWorkflowRunLogs(ctx, req, append(c, opt...)...)
@@ -2445,6 +2343,8 @@ func (c Client) DownloadWorkflowRunLogs(ctx context.Context, req *DownloadWorkfl
 DownloadWorkflowRunLogsReq is request data for Client.DownloadWorkflowRunLogs
 
 https://developer.github.com/v3/actions/workflow-runs/#download-workflow-run-logs
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type DownloadWorkflowRunLogsReq struct {
 	_url  string
@@ -2453,19 +2353,11 @@ type DownloadWorkflowRunLogsReq struct {
 	RunId int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *DownloadWorkflowRunLogsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *DownloadWorkflowRunLogsReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrRedirectOnly},
@@ -2473,12 +2365,12 @@ func (r *DownloadWorkflowRunLogsReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{},
 		Method:             "GET",
 		OperationID:        "actions/download-workflow-run-logs",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/actions/runs/%v/logs", r.Owner, r.Repo, r.RunId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -2503,8 +2395,19 @@ type DownloadWorkflowRunLogsResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *DownloadWorkflowRunLogsResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *DownloadWorkflowRunLogsResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{302})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -2517,45 +2420,27 @@ Get an artifact.
 https://developer.github.com/v3/actions/artifacts/#get-an-artifact
 */
 func GetArtifact(ctx context.Context, req *GetArtifactReq, opt ...requests.Option) (*GetArtifactResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetArtifactReq)
 	}
 	resp := &GetArtifactResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetArtifactResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetArtifactResponse builds a new *GetArtifactResponse from an *http.Response
-func NewGetArtifactResponse(resp *http.Response, preserveBody bool) (*GetArtifactResponse, error) {
-	var result GetArtifactResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -2566,6 +2451,8 @@ Get an artifact.
   GET /repos/{owner}/{repo}/actions/artifacts/{artifact_id}
 
 https://developer.github.com/v3/actions/artifacts/#get-an-artifact
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) GetArtifact(ctx context.Context, req *GetArtifactReq, opt ...requests.Option) (*GetArtifactResponse, error) {
 	return GetArtifact(ctx, req, append(c, opt...)...)
@@ -2575,6 +2462,8 @@ func (c Client) GetArtifact(ctx context.Context, req *GetArtifactReq, opt ...req
 GetArtifactReq is request data for Client.GetArtifact
 
 https://developer.github.com/v3/actions/artifacts/#get-an-artifact
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetArtifactReq struct {
 	_url  string
@@ -2585,19 +2474,11 @@ type GetArtifactReq struct {
 	ArtifactId int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetArtifactReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetArtifactReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -2605,12 +2486,12 @@ func (r *GetArtifactReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "actions/get-artifact",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/actions/artifacts/%v", r.Owner, r.Repo, r.ArtifactId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -2636,8 +2517,25 @@ type GetArtifactResponse struct {
 	Data         components.Artifact
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetArtifactResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetArtifactResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -2650,45 +2548,27 @@ Get a job for a workflow run.
 https://developer.github.com/v3/actions/workflow-jobs/#get-a-job-for-a-workflow-run
 */
 func GetJobForWorkflowRun(ctx context.Context, req *GetJobForWorkflowRunReq, opt ...requests.Option) (*GetJobForWorkflowRunResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetJobForWorkflowRunReq)
 	}
 	resp := &GetJobForWorkflowRunResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetJobForWorkflowRunResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetJobForWorkflowRunResponse builds a new *GetJobForWorkflowRunResponse from an *http.Response
-func NewGetJobForWorkflowRunResponse(resp *http.Response, preserveBody bool) (*GetJobForWorkflowRunResponse, error) {
-	var result GetJobForWorkflowRunResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{202})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{202}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -2699,6 +2579,8 @@ Get a job for a workflow run.
   GET /repos/{owner}/{repo}/actions/jobs/{job_id}
 
 https://developer.github.com/v3/actions/workflow-jobs/#get-a-job-for-a-workflow-run
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) GetJobForWorkflowRun(ctx context.Context, req *GetJobForWorkflowRunReq, opt ...requests.Option) (*GetJobForWorkflowRunResponse, error) {
 	return GetJobForWorkflowRun(ctx, req, append(c, opt...)...)
@@ -2708,6 +2590,8 @@ func (c Client) GetJobForWorkflowRun(ctx context.Context, req *GetJobForWorkflow
 GetJobForWorkflowRunReq is request data for Client.GetJobForWorkflowRun
 
 https://developer.github.com/v3/actions/workflow-jobs/#get-a-job-for-a-workflow-run
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetJobForWorkflowRunReq struct {
 	_url  string
@@ -2718,19 +2602,11 @@ type GetJobForWorkflowRunReq struct {
 	JobId int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetJobForWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetJobForWorkflowRunReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -2738,12 +2614,12 @@ func (r *GetJobForWorkflowRunReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "actions/get-job-for-workflow-run",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/actions/jobs/%v", r.Owner, r.Repo, r.JobId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -2769,8 +2645,25 @@ type GetJobForWorkflowRunResponse struct {
 	Data         components.Job
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetJobForWorkflowRunResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetJobForWorkflowRunResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{202})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{202}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -2783,45 +2676,27 @@ Get an organization public key.
 https://developer.github.com/v3/actions/secrets/#get-an-organization-public-key
 */
 func GetOrgPublicKey(ctx context.Context, req *GetOrgPublicKeyReq, opt ...requests.Option) (*GetOrgPublicKeyResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetOrgPublicKeyReq)
 	}
 	resp := &GetOrgPublicKeyResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetOrgPublicKeyResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetOrgPublicKeyResponse builds a new *GetOrgPublicKeyResponse from an *http.Response
-func NewGetOrgPublicKeyResponse(resp *http.Response, preserveBody bool) (*GetOrgPublicKeyResponse, error) {
-	var result GetOrgPublicKeyResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -2832,6 +2707,8 @@ Get an organization public key.
   GET /orgs/{org}/actions/secrets/public-key
 
 https://developer.github.com/v3/actions/secrets/#get-an-organization-public-key
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) GetOrgPublicKey(ctx context.Context, req *GetOrgPublicKeyReq, opt ...requests.Option) (*GetOrgPublicKeyResponse, error) {
 	return GetOrgPublicKey(ctx, req, append(c, opt...)...)
@@ -2841,25 +2718,19 @@ func (c Client) GetOrgPublicKey(ctx context.Context, req *GetOrgPublicKeyReq, op
 GetOrgPublicKeyReq is request data for Client.GetOrgPublicKey
 
 https://developer.github.com/v3/actions/secrets/#get-an-organization-public-key
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetOrgPublicKeyReq struct {
 	_url string
 	Org  string
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetOrgPublicKeyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetOrgPublicKeyReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -2867,12 +2738,12 @@ func (r *GetOrgPublicKeyReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "actions/get-org-public-key",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/actions/secrets/public-key", r.Org),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -2898,8 +2769,25 @@ type GetOrgPublicKeyResponse struct {
 	Data         components.ActionsPublicKey
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetOrgPublicKeyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetOrgPublicKeyResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -2912,45 +2800,27 @@ Get an organization secret.
 https://developer.github.com/v3/actions/secrets/#get-an-organization-secret
 */
 func GetOrgSecret(ctx context.Context, req *GetOrgSecretReq, opt ...requests.Option) (*GetOrgSecretResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetOrgSecretReq)
 	}
 	resp := &GetOrgSecretResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetOrgSecretResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetOrgSecretResponse builds a new *GetOrgSecretResponse from an *http.Response
-func NewGetOrgSecretResponse(resp *http.Response, preserveBody bool) (*GetOrgSecretResponse, error) {
-	var result GetOrgSecretResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -2961,6 +2831,8 @@ Get an organization secret.
   GET /orgs/{org}/actions/secrets/{secret_name}
 
 https://developer.github.com/v3/actions/secrets/#get-an-organization-secret
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) GetOrgSecret(ctx context.Context, req *GetOrgSecretReq, opt ...requests.Option) (*GetOrgSecretResponse, error) {
 	return GetOrgSecret(ctx, req, append(c, opt...)...)
@@ -2970,6 +2842,8 @@ func (c Client) GetOrgSecret(ctx context.Context, req *GetOrgSecretReq, opt ...r
 GetOrgSecretReq is request data for Client.GetOrgSecret
 
 https://developer.github.com/v3/actions/secrets/#get-an-organization-secret
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetOrgSecretReq struct {
 	_url string
@@ -2979,19 +2853,11 @@ type GetOrgSecretReq struct {
 	SecretName string
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetOrgSecretReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetOrgSecretReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -2999,12 +2865,12 @@ func (r *GetOrgSecretReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "actions/get-org-secret",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/actions/secrets/%v", r.Org, r.SecretName),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -3030,8 +2896,25 @@ type GetOrgSecretResponse struct {
 	Data         components.OrganizationActionsSecret
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetOrgSecretResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetOrgSecretResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -3044,45 +2927,27 @@ Get a repository public key.
 https://developer.github.com/v3/actions/secrets/#get-a-repository-public-key
 */
 func GetRepoPublicKey(ctx context.Context, req *GetRepoPublicKeyReq, opt ...requests.Option) (*GetRepoPublicKeyResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetRepoPublicKeyReq)
 	}
 	resp := &GetRepoPublicKeyResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetRepoPublicKeyResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetRepoPublicKeyResponse builds a new *GetRepoPublicKeyResponse from an *http.Response
-func NewGetRepoPublicKeyResponse(resp *http.Response, preserveBody bool) (*GetRepoPublicKeyResponse, error) {
-	var result GetRepoPublicKeyResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -3093,6 +2958,8 @@ Get a repository public key.
   GET /repos/{owner}/{repo}/actions/secrets/public-key
 
 https://developer.github.com/v3/actions/secrets/#get-a-repository-public-key
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) GetRepoPublicKey(ctx context.Context, req *GetRepoPublicKeyReq, opt ...requests.Option) (*GetRepoPublicKeyResponse, error) {
 	return GetRepoPublicKey(ctx, req, append(c, opt...)...)
@@ -3102,6 +2969,8 @@ func (c Client) GetRepoPublicKey(ctx context.Context, req *GetRepoPublicKeyReq, 
 GetRepoPublicKeyReq is request data for Client.GetRepoPublicKey
 
 https://developer.github.com/v3/actions/secrets/#get-a-repository-public-key
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetRepoPublicKeyReq struct {
 	_url  string
@@ -3109,19 +2978,11 @@ type GetRepoPublicKeyReq struct {
 	Repo  string
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetRepoPublicKeyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetRepoPublicKeyReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -3129,12 +2990,12 @@ func (r *GetRepoPublicKeyReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "actions/get-repo-public-key",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/actions/secrets/public-key", r.Owner, r.Repo),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -3160,8 +3021,25 @@ type GetRepoPublicKeyResponse struct {
 	Data         components.ActionsPublicKey
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetRepoPublicKeyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetRepoPublicKeyResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -3174,45 +3052,27 @@ Get a repository secret.
 https://developer.github.com/v3/actions/secrets/#get-a-repository-secret
 */
 func GetRepoSecret(ctx context.Context, req *GetRepoSecretReq, opt ...requests.Option) (*GetRepoSecretResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetRepoSecretReq)
 	}
 	resp := &GetRepoSecretResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetRepoSecretResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetRepoSecretResponse builds a new *GetRepoSecretResponse from an *http.Response
-func NewGetRepoSecretResponse(resp *http.Response, preserveBody bool) (*GetRepoSecretResponse, error) {
-	var result GetRepoSecretResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -3223,6 +3083,8 @@ Get a repository secret.
   GET /repos/{owner}/{repo}/actions/secrets/{secret_name}
 
 https://developer.github.com/v3/actions/secrets/#get-a-repository-secret
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) GetRepoSecret(ctx context.Context, req *GetRepoSecretReq, opt ...requests.Option) (*GetRepoSecretResponse, error) {
 	return GetRepoSecret(ctx, req, append(c, opt...)...)
@@ -3232,6 +3094,8 @@ func (c Client) GetRepoSecret(ctx context.Context, req *GetRepoSecretReq, opt ..
 GetRepoSecretReq is request data for Client.GetRepoSecret
 
 https://developer.github.com/v3/actions/secrets/#get-a-repository-secret
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetRepoSecretReq struct {
 	_url  string
@@ -3242,19 +3106,11 @@ type GetRepoSecretReq struct {
 	SecretName string
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetRepoSecretReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetRepoSecretReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -3262,12 +3118,12 @@ func (r *GetRepoSecretReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "actions/get-repo-secret",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/actions/secrets/%v", r.Owner, r.Repo, r.SecretName),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -3293,8 +3149,25 @@ type GetRepoSecretResponse struct {
 	Data         components.ActionsSecret
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetRepoSecretResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetRepoSecretResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -3307,45 +3180,27 @@ Get a self-hosted runner for an organization.
 https://developer.github.com/v3/actions/self-hosted-runners/#get-a-self-hosted-runner-for-an-organization
 */
 func GetSelfHostedRunnerForOrg(ctx context.Context, req *GetSelfHostedRunnerForOrgReq, opt ...requests.Option) (*GetSelfHostedRunnerForOrgResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetSelfHostedRunnerForOrgReq)
 	}
 	resp := &GetSelfHostedRunnerForOrgResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetSelfHostedRunnerForOrgResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetSelfHostedRunnerForOrgResponse builds a new *GetSelfHostedRunnerForOrgResponse from an *http.Response
-func NewGetSelfHostedRunnerForOrgResponse(resp *http.Response, preserveBody bool) (*GetSelfHostedRunnerForOrgResponse, error) {
-	var result GetSelfHostedRunnerForOrgResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -3356,6 +3211,8 @@ Get a self-hosted runner for an organization.
   GET /orgs/{org}/actions/runners/{runner_id}
 
 https://developer.github.com/v3/actions/self-hosted-runners/#get-a-self-hosted-runner-for-an-organization
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) GetSelfHostedRunnerForOrg(ctx context.Context, req *GetSelfHostedRunnerForOrgReq, opt ...requests.Option) (*GetSelfHostedRunnerForOrgResponse, error) {
 	return GetSelfHostedRunnerForOrg(ctx, req, append(c, opt...)...)
@@ -3365,6 +3222,8 @@ func (c Client) GetSelfHostedRunnerForOrg(ctx context.Context, req *GetSelfHoste
 GetSelfHostedRunnerForOrgReq is request data for Client.GetSelfHostedRunnerForOrg
 
 https://developer.github.com/v3/actions/self-hosted-runners/#get-a-self-hosted-runner-for-an-organization
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetSelfHostedRunnerForOrgReq struct {
 	_url string
@@ -3374,19 +3233,11 @@ type GetSelfHostedRunnerForOrgReq struct {
 	RunnerId int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetSelfHostedRunnerForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetSelfHostedRunnerForOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -3394,12 +3245,12 @@ func (r *GetSelfHostedRunnerForOrgReq) requestBuilder() *internal.RequestBuilder
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "actions/get-self-hosted-runner-for-org",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/actions/runners/%v", r.Org, r.RunnerId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -3425,8 +3276,25 @@ type GetSelfHostedRunnerForOrgResponse struct {
 	Data         components.Runner
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetSelfHostedRunnerForOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetSelfHostedRunnerForOrgResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -3439,45 +3307,27 @@ Get a self-hosted runner for a repository.
 https://developer.github.com/v3/actions/self-hosted-runners/#get-a-self-hosted-runner-for-a-repository
 */
 func GetSelfHostedRunnerForRepo(ctx context.Context, req *GetSelfHostedRunnerForRepoReq, opt ...requests.Option) (*GetSelfHostedRunnerForRepoResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetSelfHostedRunnerForRepoReq)
 	}
 	resp := &GetSelfHostedRunnerForRepoResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetSelfHostedRunnerForRepoResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetSelfHostedRunnerForRepoResponse builds a new *GetSelfHostedRunnerForRepoResponse from an *http.Response
-func NewGetSelfHostedRunnerForRepoResponse(resp *http.Response, preserveBody bool) (*GetSelfHostedRunnerForRepoResponse, error) {
-	var result GetSelfHostedRunnerForRepoResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -3488,6 +3338,8 @@ Get a self-hosted runner for a repository.
   GET /repos/{owner}/{repo}/actions/runners/{runner_id}
 
 https://developer.github.com/v3/actions/self-hosted-runners/#get-a-self-hosted-runner-for-a-repository
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) GetSelfHostedRunnerForRepo(ctx context.Context, req *GetSelfHostedRunnerForRepoReq, opt ...requests.Option) (*GetSelfHostedRunnerForRepoResponse, error) {
 	return GetSelfHostedRunnerForRepo(ctx, req, append(c, opt...)...)
@@ -3497,6 +3349,8 @@ func (c Client) GetSelfHostedRunnerForRepo(ctx context.Context, req *GetSelfHost
 GetSelfHostedRunnerForRepoReq is request data for Client.GetSelfHostedRunnerForRepo
 
 https://developer.github.com/v3/actions/self-hosted-runners/#get-a-self-hosted-runner-for-a-repository
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetSelfHostedRunnerForRepoReq struct {
 	_url  string
@@ -3507,19 +3361,11 @@ type GetSelfHostedRunnerForRepoReq struct {
 	RunnerId int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetSelfHostedRunnerForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetSelfHostedRunnerForRepoReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -3527,12 +3373,12 @@ func (r *GetSelfHostedRunnerForRepoReq) requestBuilder() *internal.RequestBuilde
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "actions/get-self-hosted-runner-for-repo",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/actions/runners/%v", r.Owner, r.Repo, r.RunnerId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -3558,8 +3404,25 @@ type GetSelfHostedRunnerForRepoResponse struct {
 	Data         components.Runner
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetSelfHostedRunnerForRepoResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetSelfHostedRunnerForRepoResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -3572,45 +3435,27 @@ Get a workflow.
 https://developer.github.com/v3/actions/workflows/#get-a-workflow
 */
 func GetWorkflow(ctx context.Context, req *GetWorkflowReq, opt ...requests.Option) (*GetWorkflowResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetWorkflowReq)
 	}
 	resp := &GetWorkflowResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetWorkflowResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetWorkflowResponse builds a new *GetWorkflowResponse from an *http.Response
-func NewGetWorkflowResponse(resp *http.Response, preserveBody bool) (*GetWorkflowResponse, error) {
-	var result GetWorkflowResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -3621,6 +3466,8 @@ Get a workflow.
   GET /repos/{owner}/{repo}/actions/workflows/{workflow_id}
 
 https://developer.github.com/v3/actions/workflows/#get-a-workflow
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) GetWorkflow(ctx context.Context, req *GetWorkflowReq, opt ...requests.Option) (*GetWorkflowResponse, error) {
 	return GetWorkflow(ctx, req, append(c, opt...)...)
@@ -3630,6 +3477,8 @@ func (c Client) GetWorkflow(ctx context.Context, req *GetWorkflowReq, opt ...req
 GetWorkflowReq is request data for Client.GetWorkflow
 
 https://developer.github.com/v3/actions/workflows/#get-a-workflow
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetWorkflowReq struct {
 	_url       string
@@ -3638,19 +3487,11 @@ type GetWorkflowReq struct {
 	WorkflowId int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetWorkflowReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetWorkflowReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -3658,12 +3499,12 @@ func (r *GetWorkflowReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "actions/get-workflow",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/actions/workflows/%v", r.Owner, r.Repo, r.WorkflowId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -3689,8 +3530,25 @@ type GetWorkflowResponse struct {
 	Data         components.Workflow
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetWorkflowResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetWorkflowResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -3703,45 +3561,27 @@ Get a workflow run.
 https://developer.github.com/v3/actions/workflow-runs/#get-a-workflow-run
 */
 func GetWorkflowRun(ctx context.Context, req *GetWorkflowRunReq, opt ...requests.Option) (*GetWorkflowRunResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetWorkflowRunReq)
 	}
 	resp := &GetWorkflowRunResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetWorkflowRunResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetWorkflowRunResponse builds a new *GetWorkflowRunResponse from an *http.Response
-func NewGetWorkflowRunResponse(resp *http.Response, preserveBody bool) (*GetWorkflowRunResponse, error) {
-	var result GetWorkflowRunResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -3752,6 +3592,8 @@ Get a workflow run.
   GET /repos/{owner}/{repo}/actions/runs/{run_id}
 
 https://developer.github.com/v3/actions/workflow-runs/#get-a-workflow-run
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) GetWorkflowRun(ctx context.Context, req *GetWorkflowRunReq, opt ...requests.Option) (*GetWorkflowRunResponse, error) {
 	return GetWorkflowRun(ctx, req, append(c, opt...)...)
@@ -3761,6 +3603,8 @@ func (c Client) GetWorkflowRun(ctx context.Context, req *GetWorkflowRunReq, opt 
 GetWorkflowRunReq is request data for Client.GetWorkflowRun
 
 https://developer.github.com/v3/actions/workflow-runs/#get-a-workflow-run
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetWorkflowRunReq struct {
 	_url  string
@@ -3769,19 +3613,11 @@ type GetWorkflowRunReq struct {
 	RunId int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetWorkflowRunReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -3789,12 +3625,12 @@ func (r *GetWorkflowRunReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "actions/get-workflow-run",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/actions/runs/%v", r.Owner, r.Repo, r.RunId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -3820,8 +3656,25 @@ type GetWorkflowRunResponse struct {
 	Data         components.WorkflowRun
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetWorkflowRunResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetWorkflowRunResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -3834,45 +3687,27 @@ Get workflow run usage.
 https://developer.github.com/v3/actions/workflow-runs/#get-workflow-run-usage
 */
 func GetWorkflowRunUsage(ctx context.Context, req *GetWorkflowRunUsageReq, opt ...requests.Option) (*GetWorkflowRunUsageResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetWorkflowRunUsageReq)
 	}
 	resp := &GetWorkflowRunUsageResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetWorkflowRunUsageResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetWorkflowRunUsageResponse builds a new *GetWorkflowRunUsageResponse from an *http.Response
-func NewGetWorkflowRunUsageResponse(resp *http.Response, preserveBody bool) (*GetWorkflowRunUsageResponse, error) {
-	var result GetWorkflowRunUsageResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -3883,6 +3718,8 @@ Get workflow run usage.
   GET /repos/{owner}/{repo}/actions/runs/{run_id}/timing
 
 https://developer.github.com/v3/actions/workflow-runs/#get-workflow-run-usage
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) GetWorkflowRunUsage(ctx context.Context, req *GetWorkflowRunUsageReq, opt ...requests.Option) (*GetWorkflowRunUsageResponse, error) {
 	return GetWorkflowRunUsage(ctx, req, append(c, opt...)...)
@@ -3892,6 +3729,8 @@ func (c Client) GetWorkflowRunUsage(ctx context.Context, req *GetWorkflowRunUsag
 GetWorkflowRunUsageReq is request data for Client.GetWorkflowRunUsage
 
 https://developer.github.com/v3/actions/workflow-runs/#get-workflow-run-usage
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetWorkflowRunUsageReq struct {
 	_url  string
@@ -3900,19 +3739,11 @@ type GetWorkflowRunUsageReq struct {
 	RunId int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetWorkflowRunUsageReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetWorkflowRunUsageReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -3920,12 +3751,12 @@ func (r *GetWorkflowRunUsageReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "actions/get-workflow-run-usage",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/actions/runs/%v/timing", r.Owner, r.Repo, r.RunId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -3951,8 +3782,25 @@ type GetWorkflowRunUsageResponse struct {
 	Data         components.WorkflowRunUsage
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetWorkflowRunUsageResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetWorkflowRunUsageResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -3965,45 +3813,27 @@ Get workflow usage.
 https://developer.github.com/v3/actions/workflows/#get-workflow-usage
 */
 func GetWorkflowUsage(ctx context.Context, req *GetWorkflowUsageReq, opt ...requests.Option) (*GetWorkflowUsageResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetWorkflowUsageReq)
 	}
 	resp := &GetWorkflowUsageResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetWorkflowUsageResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetWorkflowUsageResponse builds a new *GetWorkflowUsageResponse from an *http.Response
-func NewGetWorkflowUsageResponse(resp *http.Response, preserveBody bool) (*GetWorkflowUsageResponse, error) {
-	var result GetWorkflowUsageResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -4014,6 +3844,8 @@ Get workflow usage.
   GET /repos/{owner}/{repo}/actions/workflows/{workflow_id}/timing
 
 https://developer.github.com/v3/actions/workflows/#get-workflow-usage
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) GetWorkflowUsage(ctx context.Context, req *GetWorkflowUsageReq, opt ...requests.Option) (*GetWorkflowUsageResponse, error) {
 	return GetWorkflowUsage(ctx, req, append(c, opt...)...)
@@ -4023,6 +3855,8 @@ func (c Client) GetWorkflowUsage(ctx context.Context, req *GetWorkflowUsageReq, 
 GetWorkflowUsageReq is request data for Client.GetWorkflowUsage
 
 https://developer.github.com/v3/actions/workflows/#get-workflow-usage
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetWorkflowUsageReq struct {
 	_url       string
@@ -4031,19 +3865,11 @@ type GetWorkflowUsageReq struct {
 	WorkflowId int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetWorkflowUsageReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetWorkflowUsageReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -4051,12 +3877,12 @@ func (r *GetWorkflowUsageReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "actions/get-workflow-usage",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/actions/workflows/%v/timing", r.Owner, r.Repo, r.WorkflowId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -4082,8 +3908,25 @@ type GetWorkflowUsageResponse struct {
 	Data         components.WorkflowUsage
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetWorkflowUsageResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetWorkflowUsageResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -4096,45 +3939,27 @@ List artifacts for a repository.
 https://developer.github.com/v3/actions/artifacts/#list-artifacts-for-a-repository
 */
 func ListArtifactsForRepo(ctx context.Context, req *ListArtifactsForRepoReq, opt ...requests.Option) (*ListArtifactsForRepoResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListArtifactsForRepoReq)
 	}
 	resp := &ListArtifactsForRepoResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListArtifactsForRepoResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListArtifactsForRepoResponse builds a new *ListArtifactsForRepoResponse from an *http.Response
-func NewListArtifactsForRepoResponse(resp *http.Response, preserveBody bool) (*ListArtifactsForRepoResponse, error) {
-	var result ListArtifactsForRepoResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -4145,6 +3970,8 @@ List artifacts for a repository.
   GET /repos/{owner}/{repo}/actions/artifacts
 
 https://developer.github.com/v3/actions/artifacts/#list-artifacts-for-a-repository
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListArtifactsForRepo(ctx context.Context, req *ListArtifactsForRepoReq, opt ...requests.Option) (*ListArtifactsForRepoResponse, error) {
 	return ListArtifactsForRepo(ctx, req, append(c, opt...)...)
@@ -4154,6 +3981,8 @@ func (c Client) ListArtifactsForRepo(ctx context.Context, req *ListArtifactsForR
 ListArtifactsForRepoReq is request data for Client.ListArtifactsForRepo
 
 https://developer.github.com/v3/actions/artifacts/#list-artifacts-for-a-repository
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListArtifactsForRepoReq struct {
 	_url  string
@@ -4167,16 +3996,8 @@ type ListArtifactsForRepoReq struct {
 	Page *int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListArtifactsForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListArtifactsForRepoReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -4185,7 +4006,7 @@ func (r *ListArtifactsForRepoReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -4193,12 +4014,12 @@ func (r *ListArtifactsForRepoReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "actions/list-artifacts-for-repo",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/actions/artifacts", r.Owner, r.Repo),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -4234,8 +4055,25 @@ type ListArtifactsForRepoResponse struct {
 	Data         ListArtifactsForRepoResponseBody
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListArtifactsForRepoResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListArtifactsForRepoResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -4248,45 +4086,27 @@ List jobs for a workflow run.
 https://developer.github.com/v3/actions/workflow-jobs/#list-jobs-for-a-workflow-run
 */
 func ListJobsForWorkflowRun(ctx context.Context, req *ListJobsForWorkflowRunReq, opt ...requests.Option) (*ListJobsForWorkflowRunResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListJobsForWorkflowRunReq)
 	}
 	resp := &ListJobsForWorkflowRunResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListJobsForWorkflowRunResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListJobsForWorkflowRunResponse builds a new *ListJobsForWorkflowRunResponse from an *http.Response
-func NewListJobsForWorkflowRunResponse(resp *http.Response, preserveBody bool) (*ListJobsForWorkflowRunResponse, error) {
-	var result ListJobsForWorkflowRunResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -4297,6 +4117,8 @@ List jobs for a workflow run.
   GET /repos/{owner}/{repo}/actions/runs/{run_id}/jobs
 
 https://developer.github.com/v3/actions/workflow-jobs/#list-jobs-for-a-workflow-run
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListJobsForWorkflowRun(ctx context.Context, req *ListJobsForWorkflowRunReq, opt ...requests.Option) (*ListJobsForWorkflowRunResponse, error) {
 	return ListJobsForWorkflowRun(ctx, req, append(c, opt...)...)
@@ -4306,6 +4128,8 @@ func (c Client) ListJobsForWorkflowRun(ctx context.Context, req *ListJobsForWork
 ListJobsForWorkflowRunReq is request data for Client.ListJobsForWorkflowRun
 
 https://developer.github.com/v3/actions/workflow-jobs/#list-jobs-for-a-workflow-run
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListJobsForWorkflowRunReq struct {
 	_url  string
@@ -4328,16 +4152,8 @@ type ListJobsForWorkflowRunReq struct {
 	Page *int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListJobsForWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListJobsForWorkflowRunReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Filter != nil {
 		query.Set("filter", *r.Filter)
@@ -4349,7 +4165,7 @@ func (r *ListJobsForWorkflowRunReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -4357,12 +4173,12 @@ func (r *ListJobsForWorkflowRunReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "actions/list-jobs-for-workflow-run",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/actions/runs/%v/jobs", r.Owner, r.Repo, r.RunId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -4398,8 +4214,25 @@ type ListJobsForWorkflowRunResponse struct {
 	Data         ListJobsForWorkflowRunResponseBody
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListJobsForWorkflowRunResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListJobsForWorkflowRunResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -4412,45 +4245,27 @@ List organization secrets.
 https://developer.github.com/v3/actions/secrets/#list-organization-secrets
 */
 func ListOrgSecrets(ctx context.Context, req *ListOrgSecretsReq, opt ...requests.Option) (*ListOrgSecretsResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListOrgSecretsReq)
 	}
 	resp := &ListOrgSecretsResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListOrgSecretsResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListOrgSecretsResponse builds a new *ListOrgSecretsResponse from an *http.Response
-func NewListOrgSecretsResponse(resp *http.Response, preserveBody bool) (*ListOrgSecretsResponse, error) {
-	var result ListOrgSecretsResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -4461,6 +4276,8 @@ List organization secrets.
   GET /orgs/{org}/actions/secrets
 
 https://developer.github.com/v3/actions/secrets/#list-organization-secrets
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListOrgSecrets(ctx context.Context, req *ListOrgSecretsReq, opt ...requests.Option) (*ListOrgSecretsResponse, error) {
 	return ListOrgSecrets(ctx, req, append(c, opt...)...)
@@ -4470,6 +4287,8 @@ func (c Client) ListOrgSecrets(ctx context.Context, req *ListOrgSecretsReq, opt 
 ListOrgSecretsReq is request data for Client.ListOrgSecrets
 
 https://developer.github.com/v3/actions/secrets/#list-organization-secrets
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListOrgSecretsReq struct {
 	_url string
@@ -4482,16 +4301,8 @@ type ListOrgSecretsReq struct {
 	Page *int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListOrgSecretsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListOrgSecretsReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -4500,7 +4311,7 @@ func (r *ListOrgSecretsReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -4508,12 +4319,12 @@ func (r *ListOrgSecretsReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "actions/list-org-secrets",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/actions/secrets", r.Org),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -4549,8 +4360,25 @@ type ListOrgSecretsResponse struct {
 	Data         ListOrgSecretsResponseBody
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListOrgSecretsResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListOrgSecretsResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -4563,45 +4391,27 @@ List repository secrets.
 https://developer.github.com/v3/actions/secrets/#list-repository-secrets
 */
 func ListRepoSecrets(ctx context.Context, req *ListRepoSecretsReq, opt ...requests.Option) (*ListRepoSecretsResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListRepoSecretsReq)
 	}
 	resp := &ListRepoSecretsResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListRepoSecretsResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListRepoSecretsResponse builds a new *ListRepoSecretsResponse from an *http.Response
-func NewListRepoSecretsResponse(resp *http.Response, preserveBody bool) (*ListRepoSecretsResponse, error) {
-	var result ListRepoSecretsResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -4612,6 +4422,8 @@ List repository secrets.
   GET /repos/{owner}/{repo}/actions/secrets
 
 https://developer.github.com/v3/actions/secrets/#list-repository-secrets
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListRepoSecrets(ctx context.Context, req *ListRepoSecretsReq, opt ...requests.Option) (*ListRepoSecretsResponse, error) {
 	return ListRepoSecrets(ctx, req, append(c, opt...)...)
@@ -4621,6 +4433,8 @@ func (c Client) ListRepoSecrets(ctx context.Context, req *ListRepoSecretsReq, op
 ListRepoSecretsReq is request data for Client.ListRepoSecrets
 
 https://developer.github.com/v3/actions/secrets/#list-repository-secrets
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListRepoSecretsReq struct {
 	_url  string
@@ -4634,16 +4448,8 @@ type ListRepoSecretsReq struct {
 	Page *int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListRepoSecretsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListRepoSecretsReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -4652,7 +4458,7 @@ func (r *ListRepoSecretsReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -4660,12 +4466,12 @@ func (r *ListRepoSecretsReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "actions/list-repo-secrets",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/actions/secrets", r.Owner, r.Repo),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -4701,8 +4507,25 @@ type ListRepoSecretsResponse struct {
 	Data         ListRepoSecretsResponseBody
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListRepoSecretsResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListRepoSecretsResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -4715,45 +4538,27 @@ List repository workflows.
 https://developer.github.com/v3/actions/workflows/#list-repository-workflows
 */
 func ListRepoWorkflows(ctx context.Context, req *ListRepoWorkflowsReq, opt ...requests.Option) (*ListRepoWorkflowsResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListRepoWorkflowsReq)
 	}
 	resp := &ListRepoWorkflowsResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListRepoWorkflowsResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListRepoWorkflowsResponse builds a new *ListRepoWorkflowsResponse from an *http.Response
-func NewListRepoWorkflowsResponse(resp *http.Response, preserveBody bool) (*ListRepoWorkflowsResponse, error) {
-	var result ListRepoWorkflowsResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -4764,6 +4569,8 @@ List repository workflows.
   GET /repos/{owner}/{repo}/actions/workflows
 
 https://developer.github.com/v3/actions/workflows/#list-repository-workflows
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListRepoWorkflows(ctx context.Context, req *ListRepoWorkflowsReq, opt ...requests.Option) (*ListRepoWorkflowsResponse, error) {
 	return ListRepoWorkflows(ctx, req, append(c, opt...)...)
@@ -4773,6 +4580,8 @@ func (c Client) ListRepoWorkflows(ctx context.Context, req *ListRepoWorkflowsReq
 ListRepoWorkflowsReq is request data for Client.ListRepoWorkflows
 
 https://developer.github.com/v3/actions/workflows/#list-repository-workflows
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListRepoWorkflowsReq struct {
 	_url  string
@@ -4786,16 +4595,8 @@ type ListRepoWorkflowsReq struct {
 	Page *int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListRepoWorkflowsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListRepoWorkflowsReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -4804,7 +4605,7 @@ func (r *ListRepoWorkflowsReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -4812,12 +4613,12 @@ func (r *ListRepoWorkflowsReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "actions/list-repo-workflows",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/actions/workflows", r.Owner, r.Repo),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -4853,8 +4654,25 @@ type ListRepoWorkflowsResponse struct {
 	Data         ListRepoWorkflowsResponseBody
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListRepoWorkflowsResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListRepoWorkflowsResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -4867,45 +4685,27 @@ List runner applications for an organization.
 https://developer.github.com/v3/actions/self-hosted-runners/#list-runner-applications-for-an-organization
 */
 func ListRunnerApplicationsForOrg(ctx context.Context, req *ListRunnerApplicationsForOrgReq, opt ...requests.Option) (*ListRunnerApplicationsForOrgResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListRunnerApplicationsForOrgReq)
 	}
 	resp := &ListRunnerApplicationsForOrgResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListRunnerApplicationsForOrgResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListRunnerApplicationsForOrgResponse builds a new *ListRunnerApplicationsForOrgResponse from an *http.Response
-func NewListRunnerApplicationsForOrgResponse(resp *http.Response, preserveBody bool) (*ListRunnerApplicationsForOrgResponse, error) {
-	var result ListRunnerApplicationsForOrgResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -4916,6 +4716,8 @@ List runner applications for an organization.
   GET /orgs/{org}/actions/runners/downloads
 
 https://developer.github.com/v3/actions/self-hosted-runners/#list-runner-applications-for-an-organization
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListRunnerApplicationsForOrg(ctx context.Context, req *ListRunnerApplicationsForOrgReq, opt ...requests.Option) (*ListRunnerApplicationsForOrgResponse, error) {
 	return ListRunnerApplicationsForOrg(ctx, req, append(c, opt...)...)
@@ -4925,25 +4727,19 @@ func (c Client) ListRunnerApplicationsForOrg(ctx context.Context, req *ListRunne
 ListRunnerApplicationsForOrgReq is request data for Client.ListRunnerApplicationsForOrg
 
 https://developer.github.com/v3/actions/self-hosted-runners/#list-runner-applications-for-an-organization
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListRunnerApplicationsForOrgReq struct {
 	_url string
 	Org  string
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListRunnerApplicationsForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListRunnerApplicationsForOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -4951,12 +4747,12 @@ func (r *ListRunnerApplicationsForOrgReq) requestBuilder() *internal.RequestBuil
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "actions/list-runner-applications-for-org",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/actions/runners/downloads", r.Org),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -4982,8 +4778,25 @@ type ListRunnerApplicationsForOrgResponse struct {
 	Data         []components.RunnerApplication
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListRunnerApplicationsForOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListRunnerApplicationsForOrgResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -4996,45 +4809,27 @@ List runner applications for a repository.
 https://developer.github.com/v3/actions/self-hosted-runners/#list-runner-applications-for-a-repository
 */
 func ListRunnerApplicationsForRepo(ctx context.Context, req *ListRunnerApplicationsForRepoReq, opt ...requests.Option) (*ListRunnerApplicationsForRepoResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListRunnerApplicationsForRepoReq)
 	}
 	resp := &ListRunnerApplicationsForRepoResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListRunnerApplicationsForRepoResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListRunnerApplicationsForRepoResponse builds a new *ListRunnerApplicationsForRepoResponse from an *http.Response
-func NewListRunnerApplicationsForRepoResponse(resp *http.Response, preserveBody bool) (*ListRunnerApplicationsForRepoResponse, error) {
-	var result ListRunnerApplicationsForRepoResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -5045,6 +4840,8 @@ List runner applications for a repository.
   GET /repos/{owner}/{repo}/actions/runners/downloads
 
 https://developer.github.com/v3/actions/self-hosted-runners/#list-runner-applications-for-a-repository
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListRunnerApplicationsForRepo(ctx context.Context, req *ListRunnerApplicationsForRepoReq, opt ...requests.Option) (*ListRunnerApplicationsForRepoResponse, error) {
 	return ListRunnerApplicationsForRepo(ctx, req, append(c, opt...)...)
@@ -5054,6 +4851,8 @@ func (c Client) ListRunnerApplicationsForRepo(ctx context.Context, req *ListRunn
 ListRunnerApplicationsForRepoReq is request data for Client.ListRunnerApplicationsForRepo
 
 https://developer.github.com/v3/actions/self-hosted-runners/#list-runner-applications-for-a-repository
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListRunnerApplicationsForRepoReq struct {
 	_url  string
@@ -5061,19 +4860,11 @@ type ListRunnerApplicationsForRepoReq struct {
 	Repo  string
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListRunnerApplicationsForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListRunnerApplicationsForRepoReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -5081,12 +4872,12 @@ func (r *ListRunnerApplicationsForRepoReq) requestBuilder() *internal.RequestBui
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "actions/list-runner-applications-for-repo",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/actions/runners/downloads", r.Owner, r.Repo),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -5112,8 +4903,25 @@ type ListRunnerApplicationsForRepoResponse struct {
 	Data         []components.RunnerApplication
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListRunnerApplicationsForRepoResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListRunnerApplicationsForRepoResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -5126,45 +4934,27 @@ List selected repositories for an organization secret.
 https://developer.github.com/v3/actions/secrets/#list-selected-repositories-for-an-organization-secret
 */
 func ListSelectedReposForOrgSecret(ctx context.Context, req *ListSelectedReposForOrgSecretReq, opt ...requests.Option) (*ListSelectedReposForOrgSecretResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListSelectedReposForOrgSecretReq)
 	}
 	resp := &ListSelectedReposForOrgSecretResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListSelectedReposForOrgSecretResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListSelectedReposForOrgSecretResponse builds a new *ListSelectedReposForOrgSecretResponse from an *http.Response
-func NewListSelectedReposForOrgSecretResponse(resp *http.Response, preserveBody bool) (*ListSelectedReposForOrgSecretResponse, error) {
-	var result ListSelectedReposForOrgSecretResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -5175,6 +4965,8 @@ List selected repositories for an organization secret.
   GET /orgs/{org}/actions/secrets/{secret_name}/repositories
 
 https://developer.github.com/v3/actions/secrets/#list-selected-repositories-for-an-organization-secret
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListSelectedReposForOrgSecret(ctx context.Context, req *ListSelectedReposForOrgSecretReq, opt ...requests.Option) (*ListSelectedReposForOrgSecretResponse, error) {
 	return ListSelectedReposForOrgSecret(ctx, req, append(c, opt...)...)
@@ -5184,6 +4976,8 @@ func (c Client) ListSelectedReposForOrgSecret(ctx context.Context, req *ListSele
 ListSelectedReposForOrgSecretReq is request data for Client.ListSelectedReposForOrgSecret
 
 https://developer.github.com/v3/actions/secrets/#list-selected-repositories-for-an-organization-secret
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListSelectedReposForOrgSecretReq struct {
 	_url string
@@ -5193,19 +4987,11 @@ type ListSelectedReposForOrgSecretReq struct {
 	SecretName string
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListSelectedReposForOrgSecretReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListSelectedReposForOrgSecretReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -5213,12 +4999,12 @@ func (r *ListSelectedReposForOrgSecretReq) requestBuilder() *internal.RequestBui
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "actions/list-selected-repos-for-org-secret",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/actions/secrets/%v/repositories", r.Org, r.SecretName),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -5254,8 +5040,25 @@ type ListSelectedReposForOrgSecretResponse struct {
 	Data         ListSelectedReposForOrgSecretResponseBody
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListSelectedReposForOrgSecretResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListSelectedReposForOrgSecretResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -5268,45 +5071,27 @@ List self-hosted runners for an organization.
 https://developer.github.com/v3/actions/self-hosted-runners/#list-self-hosted-runners-for-an-organization
 */
 func ListSelfHostedRunnersForOrg(ctx context.Context, req *ListSelfHostedRunnersForOrgReq, opt ...requests.Option) (*ListSelfHostedRunnersForOrgResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListSelfHostedRunnersForOrgReq)
 	}
 	resp := &ListSelfHostedRunnersForOrgResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListSelfHostedRunnersForOrgResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListSelfHostedRunnersForOrgResponse builds a new *ListSelfHostedRunnersForOrgResponse from an *http.Response
-func NewListSelfHostedRunnersForOrgResponse(resp *http.Response, preserveBody bool) (*ListSelfHostedRunnersForOrgResponse, error) {
-	var result ListSelfHostedRunnersForOrgResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -5317,6 +5102,8 @@ List self-hosted runners for an organization.
   GET /orgs/{org}/actions/runners
 
 https://developer.github.com/v3/actions/self-hosted-runners/#list-self-hosted-runners-for-an-organization
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListSelfHostedRunnersForOrg(ctx context.Context, req *ListSelfHostedRunnersForOrgReq, opt ...requests.Option) (*ListSelfHostedRunnersForOrgResponse, error) {
 	return ListSelfHostedRunnersForOrg(ctx, req, append(c, opt...)...)
@@ -5326,6 +5113,8 @@ func (c Client) ListSelfHostedRunnersForOrg(ctx context.Context, req *ListSelfHo
 ListSelfHostedRunnersForOrgReq is request data for Client.ListSelfHostedRunnersForOrg
 
 https://developer.github.com/v3/actions/self-hosted-runners/#list-self-hosted-runners-for-an-organization
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListSelfHostedRunnersForOrgReq struct {
 	_url string
@@ -5338,16 +5127,8 @@ type ListSelfHostedRunnersForOrgReq struct {
 	Page *int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListSelfHostedRunnersForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListSelfHostedRunnersForOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -5356,7 +5137,7 @@ func (r *ListSelfHostedRunnersForOrgReq) requestBuilder() *internal.RequestBuild
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -5364,12 +5145,12 @@ func (r *ListSelfHostedRunnersForOrgReq) requestBuilder() *internal.RequestBuild
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "actions/list-self-hosted-runners-for-org",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/actions/runners", r.Org),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -5405,8 +5186,25 @@ type ListSelfHostedRunnersForOrgResponse struct {
 	Data         ListSelfHostedRunnersForOrgResponseBody
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListSelfHostedRunnersForOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListSelfHostedRunnersForOrgResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -5419,45 +5217,27 @@ List self-hosted runners for a repository.
 https://developer.github.com/v3/actions/self-hosted-runners/#list-self-hosted-runners-for-a-repository
 */
 func ListSelfHostedRunnersForRepo(ctx context.Context, req *ListSelfHostedRunnersForRepoReq, opt ...requests.Option) (*ListSelfHostedRunnersForRepoResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListSelfHostedRunnersForRepoReq)
 	}
 	resp := &ListSelfHostedRunnersForRepoResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListSelfHostedRunnersForRepoResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListSelfHostedRunnersForRepoResponse builds a new *ListSelfHostedRunnersForRepoResponse from an *http.Response
-func NewListSelfHostedRunnersForRepoResponse(resp *http.Response, preserveBody bool) (*ListSelfHostedRunnersForRepoResponse, error) {
-	var result ListSelfHostedRunnersForRepoResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -5468,6 +5248,8 @@ List self-hosted runners for a repository.
   GET /repos/{owner}/{repo}/actions/runners
 
 https://developer.github.com/v3/actions/self-hosted-runners/#list-self-hosted-runners-for-a-repository
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListSelfHostedRunnersForRepo(ctx context.Context, req *ListSelfHostedRunnersForRepoReq, opt ...requests.Option) (*ListSelfHostedRunnersForRepoResponse, error) {
 	return ListSelfHostedRunnersForRepo(ctx, req, append(c, opt...)...)
@@ -5477,6 +5259,8 @@ func (c Client) ListSelfHostedRunnersForRepo(ctx context.Context, req *ListSelfH
 ListSelfHostedRunnersForRepoReq is request data for Client.ListSelfHostedRunnersForRepo
 
 https://developer.github.com/v3/actions/self-hosted-runners/#list-self-hosted-runners-for-a-repository
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListSelfHostedRunnersForRepoReq struct {
 	_url  string
@@ -5490,16 +5274,8 @@ type ListSelfHostedRunnersForRepoReq struct {
 	Page *int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListSelfHostedRunnersForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListSelfHostedRunnersForRepoReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -5508,7 +5284,7 @@ func (r *ListSelfHostedRunnersForRepoReq) requestBuilder() *internal.RequestBuil
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -5516,12 +5292,12 @@ func (r *ListSelfHostedRunnersForRepoReq) requestBuilder() *internal.RequestBuil
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "actions/list-self-hosted-runners-for-repo",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/actions/runners", r.Owner, r.Repo),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -5557,8 +5333,25 @@ type ListSelfHostedRunnersForRepoResponse struct {
 	Data         ListSelfHostedRunnersForRepoResponseBody
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListSelfHostedRunnersForRepoResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListSelfHostedRunnersForRepoResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -5571,45 +5364,27 @@ List workflow run artifacts.
 https://developer.github.com/v3/actions/artifacts/#list-workflow-run-artifacts
 */
 func ListWorkflowRunArtifacts(ctx context.Context, req *ListWorkflowRunArtifactsReq, opt ...requests.Option) (*ListWorkflowRunArtifactsResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListWorkflowRunArtifactsReq)
 	}
 	resp := &ListWorkflowRunArtifactsResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListWorkflowRunArtifactsResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListWorkflowRunArtifactsResponse builds a new *ListWorkflowRunArtifactsResponse from an *http.Response
-func NewListWorkflowRunArtifactsResponse(resp *http.Response, preserveBody bool) (*ListWorkflowRunArtifactsResponse, error) {
-	var result ListWorkflowRunArtifactsResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -5620,6 +5395,8 @@ List workflow run artifacts.
   GET /repos/{owner}/{repo}/actions/runs/{run_id}/artifacts
 
 https://developer.github.com/v3/actions/artifacts/#list-workflow-run-artifacts
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListWorkflowRunArtifacts(ctx context.Context, req *ListWorkflowRunArtifactsReq, opt ...requests.Option) (*ListWorkflowRunArtifactsResponse, error) {
 	return ListWorkflowRunArtifacts(ctx, req, append(c, opt...)...)
@@ -5629,6 +5406,8 @@ func (c Client) ListWorkflowRunArtifacts(ctx context.Context, req *ListWorkflowR
 ListWorkflowRunArtifactsReq is request data for Client.ListWorkflowRunArtifacts
 
 https://developer.github.com/v3/actions/artifacts/#list-workflow-run-artifacts
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListWorkflowRunArtifactsReq struct {
 	_url  string
@@ -5643,16 +5422,8 @@ type ListWorkflowRunArtifactsReq struct {
 	Page *int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListWorkflowRunArtifactsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListWorkflowRunArtifactsReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -5661,7 +5432,7 @@ func (r *ListWorkflowRunArtifactsReq) requestBuilder() *internal.RequestBuilder 
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -5669,12 +5440,12 @@ func (r *ListWorkflowRunArtifactsReq) requestBuilder() *internal.RequestBuilder 
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "actions/list-workflow-run-artifacts",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/actions/runs/%v/artifacts", r.Owner, r.Repo, r.RunId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -5710,8 +5481,25 @@ type ListWorkflowRunArtifactsResponse struct {
 	Data         ListWorkflowRunArtifactsResponseBody
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListWorkflowRunArtifactsResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListWorkflowRunArtifactsResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -5724,45 +5512,27 @@ List workflow runs.
 https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs
 */
 func ListWorkflowRuns(ctx context.Context, req *ListWorkflowRunsReq, opt ...requests.Option) (*ListWorkflowRunsResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListWorkflowRunsReq)
 	}
 	resp := &ListWorkflowRunsResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListWorkflowRunsResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListWorkflowRunsResponse builds a new *ListWorkflowRunsResponse from an *http.Response
-func NewListWorkflowRunsResponse(resp *http.Response, preserveBody bool) (*ListWorkflowRunsResponse, error) {
-	var result ListWorkflowRunsResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -5773,6 +5543,8 @@ List workflow runs.
   GET /repos/{owner}/{repo}/actions/workflows/{workflow_id}/runs
 
 https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListWorkflowRuns(ctx context.Context, req *ListWorkflowRunsReq, opt ...requests.Option) (*ListWorkflowRunsResponse, error) {
 	return ListWorkflowRuns(ctx, req, append(c, opt...)...)
@@ -5782,6 +5554,8 @@ func (c Client) ListWorkflowRuns(ctx context.Context, req *ListWorkflowRunsReq, 
 ListWorkflowRunsReq is request data for Client.ListWorkflowRuns
 
 https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListWorkflowRunsReq struct {
 	_url       string
@@ -5824,16 +5598,8 @@ type ListWorkflowRunsReq struct {
 	Page *int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListWorkflowRunsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListWorkflowRunsReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Actor != nil {
 		query.Set("actor", *r.Actor)
@@ -5854,7 +5620,7 @@ func (r *ListWorkflowRunsReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -5862,12 +5628,12 @@ func (r *ListWorkflowRunsReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "actions/list-workflow-runs",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/actions/workflows/%v/runs", r.Owner, r.Repo, r.WorkflowId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -5903,8 +5669,25 @@ type ListWorkflowRunsResponse struct {
 	Data         ListWorkflowRunsResponseBody
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListWorkflowRunsResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListWorkflowRunsResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -5917,45 +5700,27 @@ List workflow runs for a repository.
 https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs-for-a-repository
 */
 func ListWorkflowRunsForRepo(ctx context.Context, req *ListWorkflowRunsForRepoReq, opt ...requests.Option) (*ListWorkflowRunsForRepoResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListWorkflowRunsForRepoReq)
 	}
 	resp := &ListWorkflowRunsForRepoResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListWorkflowRunsForRepoResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListWorkflowRunsForRepoResponse builds a new *ListWorkflowRunsForRepoResponse from an *http.Response
-func NewListWorkflowRunsForRepoResponse(resp *http.Response, preserveBody bool) (*ListWorkflowRunsForRepoResponse, error) {
-	var result ListWorkflowRunsForRepoResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -5966,6 +5731,8 @@ List workflow runs for a repository.
   GET /repos/{owner}/{repo}/actions/runs
 
 https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs-for-a-repository
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListWorkflowRunsForRepo(ctx context.Context, req *ListWorkflowRunsForRepoReq, opt ...requests.Option) (*ListWorkflowRunsForRepoResponse, error) {
 	return ListWorkflowRunsForRepo(ctx, req, append(c, opt...)...)
@@ -5975,6 +5742,8 @@ func (c Client) ListWorkflowRunsForRepo(ctx context.Context, req *ListWorkflowRu
 ListWorkflowRunsForRepoReq is request data for Client.ListWorkflowRunsForRepo
 
 https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs-for-a-repository
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListWorkflowRunsForRepoReq struct {
 	_url  string
@@ -6016,16 +5785,8 @@ type ListWorkflowRunsForRepoReq struct {
 	Page *int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListWorkflowRunsForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListWorkflowRunsForRepoReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Actor != nil {
 		query.Set("actor", *r.Actor)
@@ -6046,7 +5807,7 @@ func (r *ListWorkflowRunsForRepoReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -6054,12 +5815,12 @@ func (r *ListWorkflowRunsForRepoReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "actions/list-workflow-runs-for-repo",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/actions/runs", r.Owner, r.Repo),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -6095,8 +5856,25 @@ type ListWorkflowRunsForRepoResponse struct {
 	Data         ListWorkflowRunsForRepoResponseBody
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListWorkflowRunsForRepoResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListWorkflowRunsForRepoResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -6109,39 +5887,27 @@ Re-run a workflow.
 https://developer.github.com/v3/actions/workflow-runs/#re-run-a-workflow
 */
 func ReRunWorkflow(ctx context.Context, req *ReRunWorkflowReq, opt ...requests.Option) (*ReRunWorkflowResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ReRunWorkflowReq)
 	}
 	resp := &ReRunWorkflowResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewReRunWorkflowResponse(r, opts.PreserveResponseBody())
-}
-
-// NewReRunWorkflowResponse builds a new *ReRunWorkflowResponse from an *http.Response
-func NewReRunWorkflowResponse(resp *http.Response, preserveBody bool) (*ReRunWorkflowResponse, error) {
-	var result ReRunWorkflowResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{201})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -6152,6 +5918,8 @@ Re-run a workflow.
   POST /repos/{owner}/{repo}/actions/runs/{run_id}/rerun
 
 https://developer.github.com/v3/actions/workflow-runs/#re-run-a-workflow
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ReRunWorkflow(ctx context.Context, req *ReRunWorkflowReq, opt ...requests.Option) (*ReRunWorkflowResponse, error) {
 	return ReRunWorkflow(ctx, req, append(c, opt...)...)
@@ -6161,6 +5929,8 @@ func (c Client) ReRunWorkflow(ctx context.Context, req *ReRunWorkflowReq, opt ..
 ReRunWorkflowReq is request data for Client.ReRunWorkflow
 
 https://developer.github.com/v3/actions/workflow-runs/#re-run-a-workflow
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ReRunWorkflowReq struct {
 	_url  string
@@ -6169,19 +5939,11 @@ type ReRunWorkflowReq struct {
 	RunId int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ReRunWorkflowReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ReRunWorkflowReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -6189,12 +5951,12 @@ func (r *ReRunWorkflowReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{},
 		Method:             "POST",
 		OperationID:        "actions/re-run-workflow",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/actions/runs/%v/rerun", r.Owner, r.Repo, r.RunId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -6219,8 +5981,19 @@ type ReRunWorkflowResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ReRunWorkflowResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ReRunWorkflowResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{201})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -6233,39 +6006,27 @@ Remove selected repository from an organization secret.
 https://developer.github.com/v3/actions/secrets/#remove-selected-repository-from-an-organization-secret
 */
 func RemoveSelectedRepoFromOrgSecret(ctx context.Context, req *RemoveSelectedRepoFromOrgSecretReq, opt ...requests.Option) (*RemoveSelectedRepoFromOrgSecretResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(RemoveSelectedRepoFromOrgSecretReq)
 	}
 	resp := &RemoveSelectedRepoFromOrgSecretResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewRemoveSelectedRepoFromOrgSecretResponse(r, opts.PreserveResponseBody())
-}
-
-// NewRemoveSelectedRepoFromOrgSecretResponse builds a new *RemoveSelectedRepoFromOrgSecretResponse from an *http.Response
-func NewRemoveSelectedRepoFromOrgSecretResponse(resp *http.Response, preserveBody bool) (*RemoveSelectedRepoFromOrgSecretResponse, error) {
-	var result RemoveSelectedRepoFromOrgSecretResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{204})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -6276,6 +6037,8 @@ Remove selected repository from an organization secret.
   DELETE /orgs/{org}/actions/secrets/{secret_name}/repositories/{repository_id}
 
 https://developer.github.com/v3/actions/secrets/#remove-selected-repository-from-an-organization-secret
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) RemoveSelectedRepoFromOrgSecret(ctx context.Context, req *RemoveSelectedRepoFromOrgSecretReq, opt ...requests.Option) (*RemoveSelectedRepoFromOrgSecretResponse, error) {
 	return RemoveSelectedRepoFromOrgSecret(ctx, req, append(c, opt...)...)
@@ -6285,6 +6048,8 @@ func (c Client) RemoveSelectedRepoFromOrgSecret(ctx context.Context, req *Remove
 RemoveSelectedRepoFromOrgSecretReq is request data for Client.RemoveSelectedRepoFromOrgSecret
 
 https://developer.github.com/v3/actions/secrets/#remove-selected-repository-from-an-organization-secret
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type RemoveSelectedRepoFromOrgSecretReq struct {
 	_url string
@@ -6297,19 +6062,11 @@ type RemoveSelectedRepoFromOrgSecretReq struct {
 	RepositoryId int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *RemoveSelectedRepoFromOrgSecretReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *RemoveSelectedRepoFromOrgSecretReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -6317,12 +6074,12 @@ func (r *RemoveSelectedRepoFromOrgSecretReq) requestBuilder() *internal.RequestB
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
 		OperationID:        "actions/remove-selected-repo-from-org-secret",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/actions/secrets/%v/repositories/%v", r.Org, r.SecretName, r.RepositoryId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -6347,8 +6104,19 @@ type RemoveSelectedRepoFromOrgSecretResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *RemoveSelectedRepoFromOrgSecretResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *RemoveSelectedRepoFromOrgSecretResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{204})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -6361,39 +6129,27 @@ Set selected repositories for an organization secret.
 https://developer.github.com/v3/actions/secrets/#set-selected-repositories-for-an-organization-secret
 */
 func SetSelectedReposForOrgSecret(ctx context.Context, req *SetSelectedReposForOrgSecretReq, opt ...requests.Option) (*SetSelectedReposForOrgSecretResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(SetSelectedReposForOrgSecretReq)
 	}
 	resp := &SetSelectedReposForOrgSecretResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewSetSelectedReposForOrgSecretResponse(r, opts.PreserveResponseBody())
-}
-
-// NewSetSelectedReposForOrgSecretResponse builds a new *SetSelectedReposForOrgSecretResponse from an *http.Response
-func NewSetSelectedReposForOrgSecretResponse(resp *http.Response, preserveBody bool) (*SetSelectedReposForOrgSecretResponse, error) {
-	var result SetSelectedReposForOrgSecretResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{204})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -6404,6 +6160,8 @@ Set selected repositories for an organization secret.
   PUT /orgs/{org}/actions/secrets/{secret_name}/repositories
 
 https://developer.github.com/v3/actions/secrets/#set-selected-repositories-for-an-organization-secret
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) SetSelectedReposForOrgSecret(ctx context.Context, req *SetSelectedReposForOrgSecretReq, opt ...requests.Option) (*SetSelectedReposForOrgSecretResponse, error) {
 	return SetSelectedReposForOrgSecret(ctx, req, append(c, opt...)...)
@@ -6413,6 +6171,8 @@ func (c Client) SetSelectedReposForOrgSecret(ctx context.Context, req *SetSelect
 SetSelectedReposForOrgSecretReq is request data for Client.SetSelectedReposForOrgSecret
 
 https://developer.github.com/v3/actions/secrets/#set-selected-repositories-for-an-organization-secret
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type SetSelectedReposForOrgSecretReq struct {
 	_url string
@@ -6423,19 +6183,11 @@ type SetSelectedReposForOrgSecretReq struct {
 	RequestBody SetSelectedReposForOrgSecretReqBody
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *SetSelectedReposForOrgSecretReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *SetSelectedReposForOrgSecretReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -6443,12 +6195,12 @@ func (r *SetSelectedReposForOrgSecretReq) requestBuilder() *internal.RequestBuil
 		HeaderVals:         map[string]*string{"content-type": internal.String("application/json")},
 		Method:             "PUT",
 		OperationID:        "actions/set-selected-repos-for-org-secret",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/orgs/%v/actions/secrets/%v/repositories", r.Org, r.SecretName),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -6493,6 +6245,17 @@ type SetSelectedReposForOrgSecretResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *SetSelectedReposForOrgSecretResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *SetSelectedReposForOrgSecretResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{204})
+	if err != nil {
+		return err
+	}
+	return nil
 }

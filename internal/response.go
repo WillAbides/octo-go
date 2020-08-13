@@ -1,28 +1,27 @@
 package internal
 
 import (
-	"bytes"
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 )
 
-// DecodeResponseBody unmarshalls a response body onto target
-func DecodeResponseBody(r *http.Response, target interface{}, preserveResponseBody bool) error {
+// DecodeResponseBody unmarshalls a response body onto target. Non-nil errors will have the type *errors.ResponseError.
+func DecodeResponseBody(r *http.Response, target interface{}) error {
 	body := r.Body
 	bb, err := ioutil.ReadAll(body)
 	if err != nil {
-		return fmt.Errorf("error reading body")
+		return NewResponseError("could not read response body", r)
 	}
 	err = body.Close()
 	if err != nil {
-		return fmt.Errorf("error closing body")
+		return NewResponseError("could not close response body", r)
 	}
-	if preserveResponseBody {
-		r.Body = ioutil.NopCloser(bytes.NewReader(bb))
+	err = json.Unmarshal(bb, &target)
+	if err != nil {
+		return NewResponseError("could not unmarshal json from response body", r)
 	}
-	return json.Unmarshal(bb, &target)
+	return nil
 }
 
 // IntInSlice returns true if i is in want
@@ -44,7 +43,7 @@ func SetBoolResult(r *http.Response, ptr *bool) error {
 	case 404:
 		*ptr = false
 	default:
-		return fmt.Errorf("non-boolean response status")
+		return NewResponseError("non-boolean response status", r)
 	}
 	return nil
 }

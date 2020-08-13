@@ -13,8 +13,6 @@ import (
 	"strconv"
 )
 
-func strPtr(s string) *string { return &s }
-
 // Client is a set of options to apply to requests
 type Client []requests.Option
 
@@ -33,45 +31,27 @@ Search code.
 https://developer.github.com/v3/search/#search-code
 */
 func Code(ctx context.Context, req *CodeReq, opt ...requests.Option) (*CodeResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(CodeReq)
 	}
 	resp := &CodeResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewCodeResponse(r, opts.PreserveResponseBody())
-}
-
-// NewCodeResponse builds a new *CodeResponse from an *http.Response
-func NewCodeResponse(resp *http.Response, preserveBody bool) (*CodeResponse, error) {
-	var result CodeResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -82,6 +62,8 @@ Search code.
   GET /search/code
 
 https://developer.github.com/v3/search/#search-code
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) Code(ctx context.Context, req *CodeReq, opt ...requests.Option) (*CodeResponse, error) {
 	return Code(ctx, req, append(c, opt...)...)
@@ -91,6 +73,8 @@ func (c Client) Code(ctx context.Context, req *CodeReq, opt ...requests.Option) 
 CodeReq is request data for Client.Code
 
 https://developer.github.com/v3/search/#search-code
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type CodeReq struct {
 	_url string
@@ -127,16 +111,8 @@ type CodeReq struct {
 	Page *int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *CodeReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *CodeReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Q != nil {
 		query.Set("q", *r.Q)
@@ -154,7 +130,7 @@ func (r *CodeReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -162,12 +138,12 @@ func (r *CodeReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "search/code",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/search/code"),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -204,8 +180,25 @@ type CodeResponse struct {
 	Data         CodeResponseBody
 }
 
+// HTTPResponse returns the *http.Response
 func (r *CodeResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *CodeResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -218,45 +211,27 @@ Search commits.
 https://developer.github.com/v3/search/#search-commits
 */
 func Commits(ctx context.Context, req *CommitsReq, opt ...requests.Option) (*CommitsResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(CommitsReq)
 	}
 	resp := &CommitsResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewCommitsResponse(r, opts.PreserveResponseBody())
-}
-
-// NewCommitsResponse builds a new *CommitsResponse from an *http.Response
-func NewCommitsResponse(resp *http.Response, preserveBody bool) (*CommitsResponse, error) {
-	var result CommitsResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -267,6 +242,8 @@ Search commits.
   GET /search/commits
 
 https://developer.github.com/v3/search/#search-commits
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) Commits(ctx context.Context, req *CommitsReq, opt ...requests.Option) (*CommitsResponse, error) {
 	return Commits(ctx, req, append(c, opt...)...)
@@ -276,6 +253,8 @@ func (c Client) Commits(ctx context.Context, req *CommitsReq, opt ...requests.Op
 CommitsReq is request data for Client.Commits
 
 https://developer.github.com/v3/search/#search-commits
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type CommitsReq struct {
 	_url string
@@ -321,16 +300,8 @@ type CommitsReq struct {
 	CloakPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *CommitsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *CommitsReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Q != nil {
 		query.Set("q", *r.Q)
@@ -348,7 +319,7 @@ func (r *CommitsReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"cloak"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -356,12 +327,12 @@ func (r *CommitsReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "search/commits",
+		Options:            opt,
 		Previews:           map[string]bool{"cloak": r.CloakPreview},
 		RequiredPreviews:   []string{"cloak"},
 		URLPath:            fmt.Sprintf("/search/commits"),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -398,8 +369,25 @@ type CommitsResponse struct {
 	Data         CommitsResponseBody
 }
 
+// HTTPResponse returns the *http.Response
 func (r *CommitsResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *CommitsResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -412,45 +400,27 @@ Search issues and pull requests.
 https://developer.github.com/v3/search/#search-issues-and-pull-requests
 */
 func IssuesAndPullRequests(ctx context.Context, req *IssuesAndPullRequestsReq, opt ...requests.Option) (*IssuesAndPullRequestsResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(IssuesAndPullRequestsReq)
 	}
 	resp := &IssuesAndPullRequestsResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewIssuesAndPullRequestsResponse(r, opts.PreserveResponseBody())
-}
-
-// NewIssuesAndPullRequestsResponse builds a new *IssuesAndPullRequestsResponse from an *http.Response
-func NewIssuesAndPullRequestsResponse(resp *http.Response, preserveBody bool) (*IssuesAndPullRequestsResponse, error) {
-	var result IssuesAndPullRequestsResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -461,6 +431,8 @@ Search issues and pull requests.
   GET /search/issues
 
 https://developer.github.com/v3/search/#search-issues-and-pull-requests
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) IssuesAndPullRequests(ctx context.Context, req *IssuesAndPullRequestsReq, opt ...requests.Option) (*IssuesAndPullRequestsResponse, error) {
 	return IssuesAndPullRequests(ctx, req, append(c, opt...)...)
@@ -470,6 +442,8 @@ func (c Client) IssuesAndPullRequests(ctx context.Context, req *IssuesAndPullReq
 IssuesAndPullRequestsReq is request data for Client.IssuesAndPullRequests
 
 https://developer.github.com/v3/search/#search-issues-and-pull-requests
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type IssuesAndPullRequestsReq struct {
 	_url string
@@ -509,16 +483,8 @@ type IssuesAndPullRequestsReq struct {
 	Page *int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *IssuesAndPullRequestsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *IssuesAndPullRequestsReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Q != nil {
 		query.Set("q", *r.Q)
@@ -536,7 +502,7 @@ func (r *IssuesAndPullRequestsReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -544,12 +510,12 @@ func (r *IssuesAndPullRequestsReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "search/issues-and-pull-requests",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/search/issues"),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -586,8 +552,25 @@ type IssuesAndPullRequestsResponse struct {
 	Data         IssuesAndPullRequestsResponseBody
 }
 
+// HTTPResponse returns the *http.Response
 func (r *IssuesAndPullRequestsResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *IssuesAndPullRequestsResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -600,45 +583,27 @@ Search labels.
 https://developer.github.com/v3/search/#search-labels
 */
 func Labels(ctx context.Context, req *LabelsReq, opt ...requests.Option) (*LabelsResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(LabelsReq)
 	}
 	resp := &LabelsResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewLabelsResponse(r, opts.PreserveResponseBody())
-}
-
-// NewLabelsResponse builds a new *LabelsResponse from an *http.Response
-func NewLabelsResponse(resp *http.Response, preserveBody bool) (*LabelsResponse, error) {
-	var result LabelsResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -649,6 +614,8 @@ Search labels.
   GET /search/labels
 
 https://developer.github.com/v3/search/#search-labels
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) Labels(ctx context.Context, req *LabelsReq, opt ...requests.Option) (*LabelsResponse, error) {
 	return Labels(ctx, req, append(c, opt...)...)
@@ -658,6 +625,8 @@ func (c Client) Labels(ctx context.Context, req *LabelsReq, opt ...requests.Opti
 LabelsReq is request data for Client.Labels
 
 https://developer.github.com/v3/search/#search-labels
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type LabelsReq struct {
 	_url string
@@ -687,16 +656,8 @@ type LabelsReq struct {
 	Order *string
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *LabelsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *LabelsReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.RepositoryId != nil {
 		query.Set("repository_id", strconv.FormatInt(*r.RepositoryId, 10))
@@ -711,7 +672,7 @@ func (r *LabelsReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("order", *r.Order)
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -719,12 +680,12 @@ func (r *LabelsReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "search/labels",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/search/labels"),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -761,8 +722,25 @@ type LabelsResponse struct {
 	Data         LabelsResponseBody
 }
 
+// HTTPResponse returns the *http.Response
 func (r *LabelsResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *LabelsResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -775,45 +753,27 @@ Search repositories.
 https://developer.github.com/v3/search/#search-repositories
 */
 func Repos(ctx context.Context, req *ReposReq, opt ...requests.Option) (*ReposResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ReposReq)
 	}
 	resp := &ReposResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewReposResponse(r, opts.PreserveResponseBody())
-}
-
-// NewReposResponse builds a new *ReposResponse from an *http.Response
-func NewReposResponse(resp *http.Response, preserveBody bool) (*ReposResponse, error) {
-	var result ReposResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -824,6 +784,8 @@ Search repositories.
   GET /search/repositories
 
 https://developer.github.com/v3/search/#search-repositories
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) Repos(ctx context.Context, req *ReposReq, opt ...requests.Option) (*ReposResponse, error) {
 	return Repos(ctx, req, append(c, opt...)...)
@@ -833,6 +795,8 @@ func (c Client) Repos(ctx context.Context, req *ReposReq, opt ...requests.Option
 ReposReq is request data for Client.Repos
 
 https://developer.github.com/v3/search/#search-repositories
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ReposReq struct {
 	_url string
@@ -877,16 +841,8 @@ type ReposReq struct {
 	MercyPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ReposReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ReposReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Q != nil {
 		query.Set("q", *r.Q)
@@ -904,7 +860,7 @@ func (r *ReposReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"mercy"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -912,12 +868,12 @@ func (r *ReposReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "search/repos",
+		Options:            opt,
 		Previews:           map[string]bool{"mercy": r.MercyPreview},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/search/repositories"),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -954,8 +910,25 @@ type ReposResponse struct {
 	Data         ReposResponseBody
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ReposResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ReposResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -968,45 +941,27 @@ Search topics.
 https://developer.github.com/v3/search/#search-topics
 */
 func Topics(ctx context.Context, req *TopicsReq, opt ...requests.Option) (*TopicsResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(TopicsReq)
 	}
 	resp := &TopicsResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewTopicsResponse(r, opts.PreserveResponseBody())
-}
-
-// NewTopicsResponse builds a new *TopicsResponse from an *http.Response
-func NewTopicsResponse(resp *http.Response, preserveBody bool) (*TopicsResponse, error) {
-	var result TopicsResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -1017,6 +972,8 @@ Search topics.
   GET /search/topics
 
 https://developer.github.com/v3/search/#search-topics
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) Topics(ctx context.Context, req *TopicsReq, opt ...requests.Option) (*TopicsResponse, error) {
 	return Topics(ctx, req, append(c, opt...)...)
@@ -1026,6 +983,8 @@ func (c Client) Topics(ctx context.Context, req *TopicsReq, opt ...requests.Opti
 TopicsReq is request data for Client.Topics
 
 https://developer.github.com/v3/search/#search-topics
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type TopicsReq struct {
 	_url string
@@ -1047,22 +1006,14 @@ type TopicsReq struct {
 	MercyPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *TopicsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *TopicsReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Q != nil {
 		query.Set("q", *r.Q)
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"mercy"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -1070,12 +1021,12 @@ func (r *TopicsReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "search/topics",
+		Options:            opt,
 		Previews:           map[string]bool{"mercy": r.MercyPreview},
 		RequiredPreviews:   []string{"mercy"},
 		URLPath:            fmt.Sprintf("/search/topics"),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1112,8 +1063,25 @@ type TopicsResponse struct {
 	Data         TopicsResponseBody
 }
 
+// HTTPResponse returns the *http.Response
 func (r *TopicsResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *TopicsResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -1126,45 +1094,27 @@ Search users.
 https://developer.github.com/v3/search/#search-users
 */
 func Users(ctx context.Context, req *UsersReq, opt ...requests.Option) (*UsersResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(UsersReq)
 	}
 	resp := &UsersResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewUsersResponse(r, opts.PreserveResponseBody())
-}
-
-// NewUsersResponse builds a new *UsersResponse from an *http.Response
-func NewUsersResponse(resp *http.Response, preserveBody bool) (*UsersResponse, error) {
-	var result UsersResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -1175,6 +1125,8 @@ Search users.
   GET /search/users
 
 https://developer.github.com/v3/search/#search-users
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) Users(ctx context.Context, req *UsersReq, opt ...requests.Option) (*UsersResponse, error) {
 	return Users(ctx, req, append(c, opt...)...)
@@ -1184,6 +1136,8 @@ func (c Client) Users(ctx context.Context, req *UsersReq, opt ...requests.Option
 UsersReq is request data for Client.Users
 
 https://developer.github.com/v3/search/#search-users
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type UsersReq struct {
 	_url string
@@ -1220,16 +1174,8 @@ type UsersReq struct {
 	Page *int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *UsersReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *UsersReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Q != nil {
 		query.Set("q", *r.Q)
@@ -1247,7 +1193,7 @@ func (r *UsersReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -1255,12 +1201,12 @@ func (r *UsersReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "search/users",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/search/users"),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1297,6 +1243,23 @@ type UsersResponse struct {
 	Data         UsersResponseBody
 }
 
+// HTTPResponse returns the *http.Response
 func (r *UsersResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *UsersResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }

@@ -14,8 +14,8 @@ import (
 	"github.com/willabides/octo-go/requests"
 )
 
-// RequestBuilder builds http requests
-type RequestBuilder struct {
+// BuildHTTPRequestOptions builds http requests
+type BuildHTTPRequestOptions struct {
 	OperationID        string
 	ExplicitURL        string
 	Method             string
@@ -27,9 +27,11 @@ type RequestBuilder struct {
 	URLQuery           url.Values
 	URLPath            string
 	EndpointAttributes []EndpointAttribute
+	Options            []requests.Option
 }
 
-func (b *RequestBuilder) requestHeaders(opts requests.Options) http.Header {
+func requestHeaders(b BuildHTTPRequestOptions) http.Header {
+	opts := requests.BuildOptions(b.Options...)
 	previews := b.Previews
 	headers := b.HeaderVals
 	if opts.RequiredPreviews() {
@@ -61,26 +63,14 @@ func (b *RequestBuilder) requestHeaders(opts requests.Options) http.Header {
 	return header
 }
 
-// HasAttribute return true if the endpoint has the attribute
-func (b *RequestBuilder) HasAttribute(attribute EndpointAttribute) bool {
-	for _, endpointAttribute := range b.EndpointAttributes {
-		if endpointAttribute == attribute {
-			return true
-		}
-	}
-	return false
-}
-
-func (b *RequestBuilder) setURLQuery(u *url.URL) {
-	if b.URLQuery == nil {
-		return
-	}
+// updateURLQuery updates u's query with vals
+func updateURLQuery(u *url.URL, vals url.Values) {
 	q := u.Query()
 	if len(q) == 0 {
-		u.RawQuery = b.URLQuery.Encode()
+		u.RawQuery = vals.Encode()
 		return
 	}
-	for key, vals := range b.URLQuery {
+	for key, vals := range vals {
 		q.Del(key)
 		for _, val := range vals {
 			q.Add(key, val)
@@ -89,10 +79,10 @@ func (b *RequestBuilder) setURLQuery(u *url.URL) {
 	u.RawQuery = q.Encode()
 }
 
-func (b *RequestBuilder) requestURL(opts requests.Options) (string, error) {
+func requestURL(b BuildHTTPRequestOptions) (string, error) {
 	expURL := b.ExplicitURL
 	if expURL != "" {
-		if !b.HasAttribute(AttrExplicitURL) {
+		if !hasAttribute(AttrExplicitURL, b.EndpointAttributes) {
 			return expURL, nil
 		}
 
@@ -103,44 +93,46 @@ func (b *RequestBuilder) requestURL(opts requests.Options) (string, error) {
 		if err != nil {
 			return "", err
 		}
-		b.setURLQuery(u)
+		updateURLQuery(u, b.URLQuery)
 		return u.String(), nil
 	}
-	if b.HasAttribute(AttrExplicitURL) {
+	if hasAttribute(AttrExplicitURL, b.EndpointAttributes) {
 		return "", fmt.Errorf("ExplicitURL must be set")
 	}
+	opts := requests.BuildOptions(b.Options...)
 	u := new(url.URL)
 	*u = opts.BaseURL()
 	u.Path = path.Join(u.Path, b.URLPath)
-	b.setURLQuery(u)
+	updateURLQuery(u, b.URLQuery)
 	return u.String(), nil
 }
 
-// HTTPRequest returns an http request
-func (b *RequestBuilder) HTTPRequest(ctx context.Context, opts *requests.Options) (*http.Request, error) {
+// BuildHTTPRequest builds an *http.Request. All errors are *errors.RequestError.
+func BuildHTTPRequest(ctx context.Context, b BuildHTTPRequestOptions) (*http.Request, error) {
+	opts := requests.BuildOptions(b.Options...)
 	var bodyReader io.Reader
 	var err error
 	switch {
 	case b.Body == nil:
-	case b.HasAttribute(AttrJSONRequestBody):
+	case hasAttribute(AttrJSONRequestBody, b.EndpointAttributes):
 		var buf bytes.Buffer
 		err = json.NewEncoder(&buf).Encode(&b.Body)
 		if err != nil {
-			return nil, err
+			return nil, newRequestError("error marshaling json body")
 		}
 		bodyReader = &buf
-	case b.HasAttribute(AttrBodyUploader):
+	case hasAttribute(AttrBodyUploader, b.EndpointAttributes):
 		bodyReader = b.Body.(io.Reader)
 	}
-	urlString, err := b.requestURL(*opts)
+	urlString, err := requestURL(b)
 	if err != nil {
-		return nil, err
+		return nil, newRequestError(err.Error())
 	}
 	req, err := http.NewRequestWithContext(ctx, b.Method, urlString, bodyReader)
 	if err != nil {
-		return nil, err
+		return nil, newRequestError(err.Error())
 	}
-	req.Header = b.requestHeaders(*opts)
+	req.Header = requestHeaders(b)
 	req.Header.Set("User-Agent", opts.UserAgent())
 
 	authProvider := opts.AuthProvider()
@@ -148,10 +140,19 @@ func (b *RequestBuilder) HTTPRequest(ctx context.Context, opts *requests.Options
 		var authHeader string
 		authHeader, err = authProvider.AuthorizationHeader(ctx)
 		if err != nil {
-			return nil, fmt.Errorf("error setting authorization header: %v", err)
+			return nil, newRequestError("error setting Authorization header")
 		}
 		req.Header.Set("Authorization", authHeader)
 	}
 
 	return req, nil
+}
+
+func hasAttribute(want EndpointAttribute, attributes []EndpointAttribute) bool {
+	for _, attr := range attributes {
+		if want == attr {
+			return true
+		}
+	}
+	return false
 }

@@ -19,7 +19,7 @@ func vcrClient(t *testing.T, cas string, opts ...requests.Option) markdown.Clien
 
 func TestRender(t *testing.T) {
 	ctx := context.Background()
-	client := vcrClient(t, t.Name(), octo.PreserveResponseBody())
+	client := vcrClient(t, t.Name())
 	response, err := client.Render(ctx, &markdown.RenderReq{
 		RequestBody: markdown.RenderReqBody{
 			Text: octo.String("this is my body"),
@@ -33,7 +33,7 @@ func TestRender(t *testing.T) {
 
 func TestRenderRaw(t *testing.T) {
 	ctx := context.Background()
-	client := vcrClient(t, t.Name(), octo.PreserveResponseBody())
+	client := vcrClient(t, t.Name())
 	response, err := client.RenderRaw(ctx, &markdown.RenderRawReq{
 		RequestBody: strings.NewReader("this is my body"),
 	})

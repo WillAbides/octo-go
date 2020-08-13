@@ -10,49 +10,36 @@ import (
 
 // WithBaseURL set the baseURL to use. Default is https://api.github.com
 func WithBaseURL(baseURL url.URL) requests.Option {
-	return func(opts *requests.Options) error {
+	return func(opts *requests.Options) {
 		opts.SetBaseURL(baseURL)
-		return nil
 	}
 }
 
 // WithRequiredPreviews enables any previews that are required for your request
 func WithRequiredPreviews() requests.Option {
-	return func(opts *requests.Options) error {
+	return func(opts *requests.Options) {
 		opts.SetRequiredPreviews(true)
-		return nil
 	}
 }
 
 // WithAllPreviews enables all previews that are available for your request
 func WithAllPreviews() requests.Option {
-	return func(opts *requests.Options) error {
+	return func(opts *requests.Options) {
 		opts.SetAllPreviews(true)
-		return nil
-	}
-}
-
-// PreserveResponseBody rewrite the body back to the http response for later inspection
-func PreserveResponseBody() requests.Option {
-	return func(opts *requests.Options) error {
-		opts.SetPreserveResponseBody(true)
-		return nil
 	}
 }
 
 // WithHTTPClient sets an http client to use for requests. If unset, http.DefaultClient is used
 func WithHTTPClient(client *http.Client) requests.Option {
-	return func(opts *requests.Options) error {
+	return func(opts *requests.Options) {
 		opts.SetHttpClient(client)
-		return nil
 	}
 }
 
 // WithUserAgent sets the User-Agent header in requests
 func WithUserAgent(userAgent string) requests.Option {
-	return func(opts *requests.Options) error {
+	return func(opts *requests.Options) {
 		opts.SetUserAgent(userAgent)
-		return nil
 	}
 }
 
@@ -90,8 +77,7 @@ func WithAppInstallationAuth(installationID int64, client Client, requestBody *a
 // This is for custom providers. You will typically want to use WithPATAuth, WithAppAuth or WithAppInstallationAuth
 // instead.
 func WithAuthProvider(authProvider requests.AuthProvider) requests.Option {
-	return func(opts *requests.Options) error {
+	return func(opts *requests.Options) {
 		opts.SetAuthProvider(authProvider)
-		return nil
 	}
 }

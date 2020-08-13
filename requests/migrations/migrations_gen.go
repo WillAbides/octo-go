@@ -13,8 +13,6 @@ import (
 	"strconv"
 )
 
-func strPtr(s string) *string { return &s }
-
 // Client is a set of options to apply to requests
 type Client []requests.Option
 
@@ -33,39 +31,27 @@ Cancel an import.
 https://developer.github.com/v3/migrations/source_imports/#cancel-an-import
 */
 func CancelImport(ctx context.Context, req *CancelImportReq, opt ...requests.Option) (*CancelImportResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(CancelImportReq)
 	}
 	resp := &CancelImportResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewCancelImportResponse(r, opts.PreserveResponseBody())
-}
-
-// NewCancelImportResponse builds a new *CancelImportResponse from an *http.Response
-func NewCancelImportResponse(resp *http.Response, preserveBody bool) (*CancelImportResponse, error) {
-	var result CancelImportResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{204})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -76,6 +62,8 @@ Cancel an import.
   DELETE /repos/{owner}/{repo}/import
 
 https://developer.github.com/v3/migrations/source_imports/#cancel-an-import
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) CancelImport(ctx context.Context, req *CancelImportReq, opt ...requests.Option) (*CancelImportResponse, error) {
 	return CancelImport(ctx, req, append(c, opt...)...)
@@ -85,6 +73,8 @@ func (c Client) CancelImport(ctx context.Context, req *CancelImportReq, opt ...r
 CancelImportReq is request data for Client.CancelImport
 
 https://developer.github.com/v3/migrations/source_imports/#cancel-an-import
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type CancelImportReq struct {
 	_url  string
@@ -92,19 +82,11 @@ type CancelImportReq struct {
 	Repo  string
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *CancelImportReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *CancelImportReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -112,12 +94,12 @@ func (r *CancelImportReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
 		OperationID:        "migrations/cancel-import",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/import", r.Owner, r.Repo),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -142,8 +124,19 @@ type CancelImportResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *CancelImportResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *CancelImportResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{204})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -156,39 +149,27 @@ Delete a user migration archive.
 https://developer.github.com/v3/migrations/users/#delete-a-user-migration-archive
 */
 func DeleteArchiveForAuthenticatedUser(ctx context.Context, req *DeleteArchiveForAuthenticatedUserReq, opt ...requests.Option) (*DeleteArchiveForAuthenticatedUserResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(DeleteArchiveForAuthenticatedUserReq)
 	}
 	resp := &DeleteArchiveForAuthenticatedUserResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewDeleteArchiveForAuthenticatedUserResponse(r, opts.PreserveResponseBody())
-}
-
-// NewDeleteArchiveForAuthenticatedUserResponse builds a new *DeleteArchiveForAuthenticatedUserResponse from an *http.Response
-func NewDeleteArchiveForAuthenticatedUserResponse(resp *http.Response, preserveBody bool) (*DeleteArchiveForAuthenticatedUserResponse, error) {
-	var result DeleteArchiveForAuthenticatedUserResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{204, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -199,6 +180,8 @@ Delete a user migration archive.
   DELETE /user/migrations/{migration_id}/archive
 
 https://developer.github.com/v3/migrations/users/#delete-a-user-migration-archive
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) DeleteArchiveForAuthenticatedUser(ctx context.Context, req *DeleteArchiveForAuthenticatedUserReq, opt ...requests.Option) (*DeleteArchiveForAuthenticatedUserResponse, error) {
 	return DeleteArchiveForAuthenticatedUser(ctx, req, append(c, opt...)...)
@@ -208,6 +191,8 @@ func (c Client) DeleteArchiveForAuthenticatedUser(ctx context.Context, req *Dele
 DeleteArchiveForAuthenticatedUserReq is request data for Client.DeleteArchiveForAuthenticatedUser
 
 https://developer.github.com/v3/migrations/users/#delete-a-user-migration-archive
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type DeleteArchiveForAuthenticatedUserReq struct {
 	_url string
@@ -219,19 +204,11 @@ type DeleteArchiveForAuthenticatedUserReq struct {
 	WyandottePreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *DeleteArchiveForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *DeleteArchiveForAuthenticatedUserReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"wyandotte"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -239,12 +216,12 @@ func (r *DeleteArchiveForAuthenticatedUserReq) requestBuilder() *internal.Reques
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
 		OperationID:        "migrations/delete-archive-for-authenticated-user",
+		Options:            opt,
 		Previews:           map[string]bool{"wyandotte": r.WyandottePreview},
 		RequiredPreviews:   []string{"wyandotte"},
 		URLPath:            fmt.Sprintf("/user/migrations/%v/archive", r.MigrationId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -269,8 +246,19 @@ type DeleteArchiveForAuthenticatedUserResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *DeleteArchiveForAuthenticatedUserResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *DeleteArchiveForAuthenticatedUserResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{204, 304})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -283,43 +271,27 @@ Delete an organization migration archive.
 https://developer.github.com/v3/migrations/orgs/#delete-an-organization-migration-archive
 */
 func DeleteArchiveForOrg(ctx context.Context, req *DeleteArchiveForOrgReq, opt ...requests.Option) (*DeleteArchiveForOrgResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(DeleteArchiveForOrgReq)
 	}
 	resp := &DeleteArchiveForOrgResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewDeleteArchiveForOrgResponse(r, opts.PreserveResponseBody())
-}
-
-// NewDeleteArchiveForOrgResponse builds a new *DeleteArchiveForOrgResponse from an *http.Response
-func NewDeleteArchiveForOrgResponse(resp *http.Response, preserveBody bool) (*DeleteArchiveForOrgResponse, error) {
-	var result DeleteArchiveForOrgResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{204, 404})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	err = internal.SetBoolResult(resp, &result.Data)
-	if err != nil {
-		return &result, err
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -330,6 +302,8 @@ Delete an organization migration archive.
   DELETE /orgs/{org}/migrations/{migration_id}/archive
 
 https://developer.github.com/v3/migrations/orgs/#delete-an-organization-migration-archive
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) DeleteArchiveForOrg(ctx context.Context, req *DeleteArchiveForOrgReq, opt ...requests.Option) (*DeleteArchiveForOrgResponse, error) {
 	return DeleteArchiveForOrg(ctx, req, append(c, opt...)...)
@@ -339,6 +313,8 @@ func (c Client) DeleteArchiveForOrg(ctx context.Context, req *DeleteArchiveForOr
 DeleteArchiveForOrgReq is request data for Client.DeleteArchiveForOrg
 
 https://developer.github.com/v3/migrations/orgs/#delete-an-organization-migration-archive
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type DeleteArchiveForOrgReq struct {
 	_url string
@@ -351,19 +327,11 @@ type DeleteArchiveForOrgReq struct {
 	WyandottePreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *DeleteArchiveForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *DeleteArchiveForOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"wyandotte"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrBoolean},
@@ -371,12 +339,12 @@ func (r *DeleteArchiveForOrgReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
 		OperationID:        "migrations/delete-archive-for-org",
+		Options:            opt,
 		Previews:           map[string]bool{"wyandotte": r.WyandottePreview},
 		RequiredPreviews:   []string{"wyandotte"},
 		URLPath:            fmt.Sprintf("/orgs/%v/migrations/%v/archive", r.Org, r.MigrationId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -402,8 +370,23 @@ type DeleteArchiveForOrgResponse struct {
 	Data         bool
 }
 
+// HTTPResponse returns the *http.Response
 func (r *DeleteArchiveForOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *DeleteArchiveForOrgResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{204, 404})
+	if err != nil {
+		return err
+	}
+	err = internal.SetBoolResult(resp, &r.Data)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -416,39 +399,27 @@ Download an organization migration archive.
 https://developer.github.com/v3/migrations/orgs/#download-an-organization-migration-archive
 */
 func DownloadArchiveForOrg(ctx context.Context, req *DownloadArchiveForOrgReq, opt ...requests.Option) (*DownloadArchiveForOrgResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(DownloadArchiveForOrgReq)
 	}
 	resp := &DownloadArchiveForOrgResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewDownloadArchiveForOrgResponse(r, opts.PreserveResponseBody())
-}
-
-// NewDownloadArchiveForOrgResponse builds a new *DownloadArchiveForOrgResponse from an *http.Response
-func NewDownloadArchiveForOrgResponse(resp *http.Response, preserveBody bool) (*DownloadArchiveForOrgResponse, error) {
-	var result DownloadArchiveForOrgResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{302})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -459,6 +430,8 @@ Download an organization migration archive.
   GET /orgs/{org}/migrations/{migration_id}/archive
 
 https://developer.github.com/v3/migrations/orgs/#download-an-organization-migration-archive
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) DownloadArchiveForOrg(ctx context.Context, req *DownloadArchiveForOrgReq, opt ...requests.Option) (*DownloadArchiveForOrgResponse, error) {
 	return DownloadArchiveForOrg(ctx, req, append(c, opt...)...)
@@ -468,6 +441,8 @@ func (c Client) DownloadArchiveForOrg(ctx context.Context, req *DownloadArchiveF
 DownloadArchiveForOrgReq is request data for Client.DownloadArchiveForOrg
 
 https://developer.github.com/v3/migrations/orgs/#download-an-organization-migration-archive
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type DownloadArchiveForOrgReq struct {
 	_url string
@@ -480,19 +455,11 @@ type DownloadArchiveForOrgReq struct {
 	WyandottePreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *DownloadArchiveForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *DownloadArchiveForOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"wyandotte"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -500,12 +467,12 @@ func (r *DownloadArchiveForOrgReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{},
 		Method:             "GET",
 		OperationID:        "migrations/download-archive-for-org",
+		Options:            opt,
 		Previews:           map[string]bool{"wyandotte": r.WyandottePreview},
 		RequiredPreviews:   []string{"wyandotte"},
 		URLPath:            fmt.Sprintf("/orgs/%v/migrations/%v/archive", r.Org, r.MigrationId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -530,8 +497,19 @@ type DownloadArchiveForOrgResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *DownloadArchiveForOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *DownloadArchiveForOrgResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{302})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -544,39 +522,27 @@ Download a user migration archive.
 https://developer.github.com/v3/migrations/users/#download-a-user-migration-archive
 */
 func GetArchiveForAuthenticatedUser(ctx context.Context, req *GetArchiveForAuthenticatedUserReq, opt ...requests.Option) (*GetArchiveForAuthenticatedUserResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetArchiveForAuthenticatedUserReq)
 	}
 	resp := &GetArchiveForAuthenticatedUserResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetArchiveForAuthenticatedUserResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetArchiveForAuthenticatedUserResponse builds a new *GetArchiveForAuthenticatedUserResponse from an *http.Response
-func NewGetArchiveForAuthenticatedUserResponse(resp *http.Response, preserveBody bool) (*GetArchiveForAuthenticatedUserResponse, error) {
-	var result GetArchiveForAuthenticatedUserResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{302, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -587,6 +553,8 @@ Download a user migration archive.
   GET /user/migrations/{migration_id}/archive
 
 https://developer.github.com/v3/migrations/users/#download-a-user-migration-archive
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) GetArchiveForAuthenticatedUser(ctx context.Context, req *GetArchiveForAuthenticatedUserReq, opt ...requests.Option) (*GetArchiveForAuthenticatedUserResponse, error) {
 	return GetArchiveForAuthenticatedUser(ctx, req, append(c, opt...)...)
@@ -596,6 +564,8 @@ func (c Client) GetArchiveForAuthenticatedUser(ctx context.Context, req *GetArch
 GetArchiveForAuthenticatedUserReq is request data for Client.GetArchiveForAuthenticatedUser
 
 https://developer.github.com/v3/migrations/users/#download-a-user-migration-archive
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetArchiveForAuthenticatedUserReq struct {
 	_url string
@@ -607,19 +577,11 @@ type GetArchiveForAuthenticatedUserReq struct {
 	WyandottePreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetArchiveForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetArchiveForAuthenticatedUserReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"wyandotte"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -627,12 +589,12 @@ func (r *GetArchiveForAuthenticatedUserReq) requestBuilder() *internal.RequestBu
 		HeaderVals:         map[string]*string{},
 		Method:             "GET",
 		OperationID:        "migrations/get-archive-for-authenticated-user",
+		Options:            opt,
 		Previews:           map[string]bool{"wyandotte": r.WyandottePreview},
 		RequiredPreviews:   []string{"wyandotte"},
 		URLPath:            fmt.Sprintf("/user/migrations/%v/archive", r.MigrationId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -657,8 +619,19 @@ type GetArchiveForAuthenticatedUserResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetArchiveForAuthenticatedUserResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetArchiveForAuthenticatedUserResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{302, 304})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -671,45 +644,27 @@ Get commit authors.
 https://developer.github.com/v3/migrations/source_imports/#get-commit-authors
 */
 func GetCommitAuthors(ctx context.Context, req *GetCommitAuthorsReq, opt ...requests.Option) (*GetCommitAuthorsResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetCommitAuthorsReq)
 	}
 	resp := &GetCommitAuthorsResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetCommitAuthorsResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetCommitAuthorsResponse builds a new *GetCommitAuthorsResponse from an *http.Response
-func NewGetCommitAuthorsResponse(resp *http.Response, preserveBody bool) (*GetCommitAuthorsResponse, error) {
-	var result GetCommitAuthorsResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -720,6 +675,8 @@ Get commit authors.
   GET /repos/{owner}/{repo}/import/authors
 
 https://developer.github.com/v3/migrations/source_imports/#get-commit-authors
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) GetCommitAuthors(ctx context.Context, req *GetCommitAuthorsReq, opt ...requests.Option) (*GetCommitAuthorsResponse, error) {
 	return GetCommitAuthors(ctx, req, append(c, opt...)...)
@@ -729,6 +686,8 @@ func (c Client) GetCommitAuthors(ctx context.Context, req *GetCommitAuthorsReq, 
 GetCommitAuthorsReq is request data for Client.GetCommitAuthors
 
 https://developer.github.com/v3/migrations/source_imports/#get-commit-authors
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetCommitAuthorsReq struct {
 	_url  string
@@ -743,22 +702,14 @@ type GetCommitAuthorsReq struct {
 	Since *string
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetCommitAuthorsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetCommitAuthorsReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Since != nil {
 		query.Set("since", *r.Since)
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -766,12 +717,12 @@ func (r *GetCommitAuthorsReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "migrations/get-commit-authors",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/import/authors", r.Owner, r.Repo),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -797,8 +748,25 @@ type GetCommitAuthorsResponse struct {
 	Data         []components.PorterAuthor
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetCommitAuthorsResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetCommitAuthorsResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -811,45 +779,27 @@ Get an import status.
 https://developer.github.com/v3/migrations/source_imports/#get-an-import-status
 */
 func GetImportStatus(ctx context.Context, req *GetImportStatusReq, opt ...requests.Option) (*GetImportStatusResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetImportStatusReq)
 	}
 	resp := &GetImportStatusResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetImportStatusResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetImportStatusResponse builds a new *GetImportStatusResponse from an *http.Response
-func NewGetImportStatusResponse(resp *http.Response, preserveBody bool) (*GetImportStatusResponse, error) {
-	var result GetImportStatusResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -860,6 +810,8 @@ Get an import status.
   GET /repos/{owner}/{repo}/import
 
 https://developer.github.com/v3/migrations/source_imports/#get-an-import-status
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) GetImportStatus(ctx context.Context, req *GetImportStatusReq, opt ...requests.Option) (*GetImportStatusResponse, error) {
 	return GetImportStatus(ctx, req, append(c, opt...)...)
@@ -869,6 +821,8 @@ func (c Client) GetImportStatus(ctx context.Context, req *GetImportStatusReq, op
 GetImportStatusReq is request data for Client.GetImportStatus
 
 https://developer.github.com/v3/migrations/source_imports/#get-an-import-status
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetImportStatusReq struct {
 	_url  string
@@ -876,19 +830,11 @@ type GetImportStatusReq struct {
 	Repo  string
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetImportStatusReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetImportStatusReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -896,12 +842,12 @@ func (r *GetImportStatusReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "migrations/get-import-status",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/import", r.Owner, r.Repo),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -927,8 +873,25 @@ type GetImportStatusResponse struct {
 	Data         components.Import
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetImportStatusResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetImportStatusResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -941,45 +904,27 @@ Get large files.
 https://developer.github.com/v3/migrations/source_imports/#get-large-files
 */
 func GetLargeFiles(ctx context.Context, req *GetLargeFilesReq, opt ...requests.Option) (*GetLargeFilesResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetLargeFilesReq)
 	}
 	resp := &GetLargeFilesResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetLargeFilesResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetLargeFilesResponse builds a new *GetLargeFilesResponse from an *http.Response
-func NewGetLargeFilesResponse(resp *http.Response, preserveBody bool) (*GetLargeFilesResponse, error) {
-	var result GetLargeFilesResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -990,6 +935,8 @@ Get large files.
   GET /repos/{owner}/{repo}/import/large_files
 
 https://developer.github.com/v3/migrations/source_imports/#get-large-files
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) GetLargeFiles(ctx context.Context, req *GetLargeFilesReq, opt ...requests.Option) (*GetLargeFilesResponse, error) {
 	return GetLargeFiles(ctx, req, append(c, opt...)...)
@@ -999,6 +946,8 @@ func (c Client) GetLargeFiles(ctx context.Context, req *GetLargeFilesReq, opt ..
 GetLargeFilesReq is request data for Client.GetLargeFiles
 
 https://developer.github.com/v3/migrations/source_imports/#get-large-files
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetLargeFilesReq struct {
 	_url  string
@@ -1006,19 +955,11 @@ type GetLargeFilesReq struct {
 	Repo  string
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetLargeFilesReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetLargeFilesReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -1026,12 +967,12 @@ func (r *GetLargeFilesReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "migrations/get-large-files",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/import/large_files", r.Owner, r.Repo),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1057,8 +998,25 @@ type GetLargeFilesResponse struct {
 	Data         []components.PorterLargeFile
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetLargeFilesResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetLargeFilesResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -1071,45 +1029,27 @@ Get a user migration status.
 https://developer.github.com/v3/migrations/users/#get-a-user-migration-status
 */
 func GetStatusForAuthenticatedUser(ctx context.Context, req *GetStatusForAuthenticatedUserReq, opt ...requests.Option) (*GetStatusForAuthenticatedUserResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetStatusForAuthenticatedUserReq)
 	}
 	resp := &GetStatusForAuthenticatedUserResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetStatusForAuthenticatedUserResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetStatusForAuthenticatedUserResponse builds a new *GetStatusForAuthenticatedUserResponse from an *http.Response
-func NewGetStatusForAuthenticatedUserResponse(resp *http.Response, preserveBody bool) (*GetStatusForAuthenticatedUserResponse, error) {
-	var result GetStatusForAuthenticatedUserResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -1120,6 +1060,8 @@ Get a user migration status.
   GET /user/migrations/{migration_id}
 
 https://developer.github.com/v3/migrations/users/#get-a-user-migration-status
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) GetStatusForAuthenticatedUser(ctx context.Context, req *GetStatusForAuthenticatedUserReq, opt ...requests.Option) (*GetStatusForAuthenticatedUserResponse, error) {
 	return GetStatusForAuthenticatedUser(ctx, req, append(c, opt...)...)
@@ -1129,6 +1071,8 @@ func (c Client) GetStatusForAuthenticatedUser(ctx context.Context, req *GetStatu
 GetStatusForAuthenticatedUserReq is request data for Client.GetStatusForAuthenticatedUser
 
 https://developer.github.com/v3/migrations/users/#get-a-user-migration-status
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetStatusForAuthenticatedUserReq struct {
 	_url string
@@ -1140,19 +1084,11 @@ type GetStatusForAuthenticatedUserReq struct {
 	WyandottePreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetStatusForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetStatusForAuthenticatedUserReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"wyandotte"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -1160,12 +1096,12 @@ func (r *GetStatusForAuthenticatedUserReq) requestBuilder() *internal.RequestBui
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "migrations/get-status-for-authenticated-user",
+		Options:            opt,
 		Previews:           map[string]bool{"wyandotte": r.WyandottePreview},
 		RequiredPreviews:   []string{"wyandotte"},
 		URLPath:            fmt.Sprintf("/user/migrations/%v", r.MigrationId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1191,8 +1127,25 @@ type GetStatusForAuthenticatedUserResponse struct {
 	Data         components.Migration
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetStatusForAuthenticatedUserResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetStatusForAuthenticatedUserResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -1205,45 +1158,27 @@ Get an organization migration status.
 https://developer.github.com/v3/migrations/orgs/#get-an-organization-migration-status
 */
 func GetStatusForOrg(ctx context.Context, req *GetStatusForOrgReq, opt ...requests.Option) (*GetStatusForOrgResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetStatusForOrgReq)
 	}
 	resp := &GetStatusForOrgResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetStatusForOrgResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetStatusForOrgResponse builds a new *GetStatusForOrgResponse from an *http.Response
-func NewGetStatusForOrgResponse(resp *http.Response, preserveBody bool) (*GetStatusForOrgResponse, error) {
-	var result GetStatusForOrgResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -1254,6 +1189,8 @@ Get an organization migration status.
   GET /orgs/{org}/migrations/{migration_id}
 
 https://developer.github.com/v3/migrations/orgs/#get-an-organization-migration-status
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) GetStatusForOrg(ctx context.Context, req *GetStatusForOrgReq, opt ...requests.Option) (*GetStatusForOrgResponse, error) {
 	return GetStatusForOrg(ctx, req, append(c, opt...)...)
@@ -1263,6 +1200,8 @@ func (c Client) GetStatusForOrg(ctx context.Context, req *GetStatusForOrgReq, op
 GetStatusForOrgReq is request data for Client.GetStatusForOrg
 
 https://developer.github.com/v3/migrations/orgs/#get-an-organization-migration-status
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetStatusForOrgReq struct {
 	_url string
@@ -1275,19 +1214,11 @@ type GetStatusForOrgReq struct {
 	WyandottePreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetStatusForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetStatusForOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"wyandotte"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -1295,12 +1226,12 @@ func (r *GetStatusForOrgReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "migrations/get-status-for-org",
+		Options:            opt,
 		Previews:           map[string]bool{"wyandotte": r.WyandottePreview},
 		RequiredPreviews:   []string{"wyandotte"},
 		URLPath:            fmt.Sprintf("/orgs/%v/migrations/%v", r.Org, r.MigrationId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1326,8 +1257,25 @@ type GetStatusForOrgResponse struct {
 	Data         components.Migration
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetStatusForOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetStatusForOrgResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -1340,45 +1288,27 @@ List user migrations.
 https://developer.github.com/v3/migrations/users/#list-user-migrations
 */
 func ListForAuthenticatedUser(ctx context.Context, req *ListForAuthenticatedUserReq, opt ...requests.Option) (*ListForAuthenticatedUserResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListForAuthenticatedUserReq)
 	}
 	resp := &ListForAuthenticatedUserResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListForAuthenticatedUserResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListForAuthenticatedUserResponse builds a new *ListForAuthenticatedUserResponse from an *http.Response
-func NewListForAuthenticatedUserResponse(resp *http.Response, preserveBody bool) (*ListForAuthenticatedUserResponse, error) {
-	var result ListForAuthenticatedUserResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -1389,6 +1319,8 @@ List user migrations.
   GET /user/migrations
 
 https://developer.github.com/v3/migrations/users/#list-user-migrations
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListForAuthenticatedUser(ctx context.Context, req *ListForAuthenticatedUserReq, opt ...requests.Option) (*ListForAuthenticatedUserResponse, error) {
 	return ListForAuthenticatedUser(ctx, req, append(c, opt...)...)
@@ -1398,6 +1330,8 @@ func (c Client) ListForAuthenticatedUser(ctx context.Context, req *ListForAuthen
 ListForAuthenticatedUserReq is request data for Client.ListForAuthenticatedUser
 
 https://developer.github.com/v3/migrations/users/#list-user-migrations
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListForAuthenticatedUserReq struct {
 	_url string
@@ -1412,16 +1346,8 @@ type ListForAuthenticatedUserReq struct {
 	WyandottePreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListForAuthenticatedUserReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -1430,7 +1356,7 @@ func (r *ListForAuthenticatedUserReq) requestBuilder() *internal.RequestBuilder 
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"wyandotte"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -1438,12 +1364,12 @@ func (r *ListForAuthenticatedUserReq) requestBuilder() *internal.RequestBuilder 
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "migrations/list-for-authenticated-user",
+		Options:            opt,
 		Previews:           map[string]bool{"wyandotte": r.WyandottePreview},
 		RequiredPreviews:   []string{"wyandotte"},
 		URLPath:            fmt.Sprintf("/user/migrations"),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1469,8 +1395,25 @@ type ListForAuthenticatedUserResponse struct {
 	Data         []components.Migration
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListForAuthenticatedUserResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListForAuthenticatedUserResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -1483,45 +1426,27 @@ List organization migrations.
 https://developer.github.com/v3/migrations/orgs/#list-organization-migrations
 */
 func ListForOrg(ctx context.Context, req *ListForOrgReq, opt ...requests.Option) (*ListForOrgResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListForOrgReq)
 	}
 	resp := &ListForOrgResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListForOrgResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListForOrgResponse builds a new *ListForOrgResponse from an *http.Response
-func NewListForOrgResponse(resp *http.Response, preserveBody bool) (*ListForOrgResponse, error) {
-	var result ListForOrgResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -1532,6 +1457,8 @@ List organization migrations.
   GET /orgs/{org}/migrations
 
 https://developer.github.com/v3/migrations/orgs/#list-organization-migrations
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListForOrg(ctx context.Context, req *ListForOrgReq, opt ...requests.Option) (*ListForOrgResponse, error) {
 	return ListForOrg(ctx, req, append(c, opt...)...)
@@ -1541,6 +1468,8 @@ func (c Client) ListForOrg(ctx context.Context, req *ListForOrgReq, opt ...reque
 ListForOrgReq is request data for Client.ListForOrg
 
 https://developer.github.com/v3/migrations/orgs/#list-organization-migrations
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListForOrgReq struct {
 	_url string
@@ -1556,16 +1485,8 @@ type ListForOrgReq struct {
 	WyandottePreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListForOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -1574,7 +1495,7 @@ func (r *ListForOrgReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"wyandotte"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -1582,12 +1503,12 @@ func (r *ListForOrgReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "migrations/list-for-org",
+		Options:            opt,
 		Previews:           map[string]bool{"wyandotte": r.WyandottePreview},
 		RequiredPreviews:   []string{"wyandotte"},
 		URLPath:            fmt.Sprintf("/orgs/%v/migrations", r.Org),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1613,8 +1534,25 @@ type ListForOrgResponse struct {
 	Data         []components.Migration
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListForOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListForOrgResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -1627,45 +1565,27 @@ List repositories in an organization migration.
 https://developer.github.com/v3/migrations/orgs/#list-repositories-in-an-organization-migration
 */
 func ListReposForOrg(ctx context.Context, req *ListReposForOrgReq, opt ...requests.Option) (*ListReposForOrgResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListReposForOrgReq)
 	}
 	resp := &ListReposForOrgResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListReposForOrgResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListReposForOrgResponse builds a new *ListReposForOrgResponse from an *http.Response
-func NewListReposForOrgResponse(resp *http.Response, preserveBody bool) (*ListReposForOrgResponse, error) {
-	var result ListReposForOrgResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -1676,6 +1596,8 @@ List repositories in an organization migration.
   GET /orgs/{org}/migrations/{migration_id}/repositories
 
 https://developer.github.com/v3/migrations/orgs/#list-repositories-in-an-organization-migration
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListReposForOrg(ctx context.Context, req *ListReposForOrgReq, opt ...requests.Option) (*ListReposForOrgResponse, error) {
 	return ListReposForOrg(ctx, req, append(c, opt...)...)
@@ -1685,6 +1607,8 @@ func (c Client) ListReposForOrg(ctx context.Context, req *ListReposForOrgReq, op
 ListReposForOrgReq is request data for Client.ListReposForOrg
 
 https://developer.github.com/v3/migrations/orgs/#list-repositories-in-an-organization-migration
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListReposForOrgReq struct {
 	_url string
@@ -1703,16 +1627,8 @@ type ListReposForOrgReq struct {
 	WyandottePreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListReposForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListReposForOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -1721,7 +1637,7 @@ func (r *ListReposForOrgReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"wyandotte"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -1729,12 +1645,12 @@ func (r *ListReposForOrgReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "migrations/list-repos-for-org",
+		Options:            opt,
 		Previews:           map[string]bool{"wyandotte": r.WyandottePreview},
 		RequiredPreviews:   []string{"wyandotte"},
 		URLPath:            fmt.Sprintf("/orgs/%v/migrations/%v/repositories", r.Org, r.MigrationId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1760,8 +1676,25 @@ type ListReposForOrgResponse struct {
 	Data         []components.MinimalRepository
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListReposForOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListReposForOrgResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -1774,45 +1707,27 @@ List repositories for a user migration.
 https://developer.github.com/v3/migrations/users/#list-repositories-for-a-user-migration
 */
 func ListReposForUser(ctx context.Context, req *ListReposForUserReq, opt ...requests.Option) (*ListReposForUserResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListReposForUserReq)
 	}
 	resp := &ListReposForUserResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListReposForUserResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListReposForUserResponse builds a new *ListReposForUserResponse from an *http.Response
-func NewListReposForUserResponse(resp *http.Response, preserveBody bool) (*ListReposForUserResponse, error) {
-	var result ListReposForUserResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -1823,6 +1738,8 @@ List repositories for a user migration.
   GET /user/migrations/{migration_id}/repositories
 
 https://developer.github.com/v3/migrations/users/#list-repositories-for-a-user-migration
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListReposForUser(ctx context.Context, req *ListReposForUserReq, opt ...requests.Option) (*ListReposForUserResponse, error) {
 	return ListReposForUser(ctx, req, append(c, opt...)...)
@@ -1832,6 +1749,8 @@ func (c Client) ListReposForUser(ctx context.Context, req *ListReposForUserReq, 
 ListReposForUserReq is request data for Client.ListReposForUser
 
 https://developer.github.com/v3/migrations/users/#list-repositories-for-a-user-migration
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListReposForUserReq struct {
 	_url string
@@ -1849,16 +1768,8 @@ type ListReposForUserReq struct {
 	WyandottePreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListReposForUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListReposForUserReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -1867,7 +1778,7 @@ func (r *ListReposForUserReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"wyandotte"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -1875,12 +1786,12 @@ func (r *ListReposForUserReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "migrations/list-repos-for-user",
+		Options:            opt,
 		Previews:           map[string]bool{"wyandotte": r.WyandottePreview},
 		RequiredPreviews:   []string{"wyandotte"},
 		URLPath:            fmt.Sprintf("/user/migrations/%v/repositories", r.MigrationId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1906,8 +1817,25 @@ type ListReposForUserResponse struct {
 	Data         []components.MinimalRepository
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListReposForUserResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListReposForUserResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -1920,45 +1848,27 @@ Map a commit author.
 https://developer.github.com/v3/migrations/source_imports/#map-a-commit-author
 */
 func MapCommitAuthor(ctx context.Context, req *MapCommitAuthorReq, opt ...requests.Option) (*MapCommitAuthorResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(MapCommitAuthorReq)
 	}
 	resp := &MapCommitAuthorResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewMapCommitAuthorResponse(r, opts.PreserveResponseBody())
-}
-
-// NewMapCommitAuthorResponse builds a new *MapCommitAuthorResponse from an *http.Response
-func NewMapCommitAuthorResponse(resp *http.Response, preserveBody bool) (*MapCommitAuthorResponse, error) {
-	var result MapCommitAuthorResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -1969,6 +1879,8 @@ Map a commit author.
   PATCH /repos/{owner}/{repo}/import/authors/{author_id}
 
 https://developer.github.com/v3/migrations/source_imports/#map-a-commit-author
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) MapCommitAuthor(ctx context.Context, req *MapCommitAuthorReq, opt ...requests.Option) (*MapCommitAuthorResponse, error) {
 	return MapCommitAuthor(ctx, req, append(c, opt...)...)
@@ -1978,6 +1890,8 @@ func (c Client) MapCommitAuthor(ctx context.Context, req *MapCommitAuthorReq, op
 MapCommitAuthorReq is request data for Client.MapCommitAuthor
 
 https://developer.github.com/v3/migrations/source_imports/#map-a-commit-author
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type MapCommitAuthorReq struct {
 	_url  string
@@ -1989,19 +1903,11 @@ type MapCommitAuthorReq struct {
 	RequestBody MapCommitAuthorReqBody
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *MapCommitAuthorReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *MapCommitAuthorReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -2012,12 +1918,12 @@ func (r *MapCommitAuthorReq) requestBuilder() *internal.RequestBuilder {
 		},
 		Method:           "PATCH",
 		OperationID:      "migrations/map-commit-author",
+		Options:          opt,
 		Previews:         map[string]bool{},
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/import/authors/%v", r.Owner, r.Repo, r.AuthorId),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -2058,8 +1964,25 @@ type MapCommitAuthorResponse struct {
 	Data         components.PorterAuthor
 }
 
+// HTTPResponse returns the *http.Response
 func (r *MapCommitAuthorResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *MapCommitAuthorResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -2072,45 +1995,27 @@ Update Git LFS preference.
 https://developer.github.com/v3/migrations/source_imports/#update-git-lfs-preference
 */
 func SetLfsPreference(ctx context.Context, req *SetLfsPreferenceReq, opt ...requests.Option) (*SetLfsPreferenceResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(SetLfsPreferenceReq)
 	}
 	resp := &SetLfsPreferenceResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewSetLfsPreferenceResponse(r, opts.PreserveResponseBody())
-}
-
-// NewSetLfsPreferenceResponse builds a new *SetLfsPreferenceResponse from an *http.Response
-func NewSetLfsPreferenceResponse(resp *http.Response, preserveBody bool) (*SetLfsPreferenceResponse, error) {
-	var result SetLfsPreferenceResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -2121,6 +2026,8 @@ Update Git LFS preference.
   PATCH /repos/{owner}/{repo}/import/lfs
 
 https://developer.github.com/v3/migrations/source_imports/#update-git-lfs-preference
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) SetLfsPreference(ctx context.Context, req *SetLfsPreferenceReq, opt ...requests.Option) (*SetLfsPreferenceResponse, error) {
 	return SetLfsPreference(ctx, req, append(c, opt...)...)
@@ -2130,6 +2037,8 @@ func (c Client) SetLfsPreference(ctx context.Context, req *SetLfsPreferenceReq, 
 SetLfsPreferenceReq is request data for Client.SetLfsPreference
 
 https://developer.github.com/v3/migrations/source_imports/#update-git-lfs-preference
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type SetLfsPreferenceReq struct {
 	_url        string
@@ -2138,19 +2047,11 @@ type SetLfsPreferenceReq struct {
 	RequestBody SetLfsPreferenceReqBody
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *SetLfsPreferenceReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *SetLfsPreferenceReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -2161,12 +2062,12 @@ func (r *SetLfsPreferenceReq) requestBuilder() *internal.RequestBuilder {
 		},
 		Method:           "PATCH",
 		OperationID:      "migrations/set-lfs-preference",
+		Options:          opt,
 		Previews:         map[string]bool{},
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/import/lfs", r.Owner, r.Repo),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -2206,8 +2107,25 @@ type SetLfsPreferenceResponse struct {
 	Data         components.Import
 }
 
+// HTTPResponse returns the *http.Response
 func (r *SetLfsPreferenceResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *SetLfsPreferenceResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -2220,45 +2138,27 @@ Start a user migration.
 https://developer.github.com/v3/migrations/users/#start-a-user-migration
 */
 func StartForAuthenticatedUser(ctx context.Context, req *StartForAuthenticatedUserReq, opt ...requests.Option) (*StartForAuthenticatedUserResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(StartForAuthenticatedUserReq)
 	}
 	resp := &StartForAuthenticatedUserResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewStartForAuthenticatedUserResponse(r, opts.PreserveResponseBody())
-}
-
-// NewStartForAuthenticatedUserResponse builds a new *StartForAuthenticatedUserResponse from an *http.Response
-func NewStartForAuthenticatedUserResponse(resp *http.Response, preserveBody bool) (*StartForAuthenticatedUserResponse, error) {
-	var result StartForAuthenticatedUserResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{201, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{201}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -2269,6 +2169,8 @@ Start a user migration.
   POST /user/migrations
 
 https://developer.github.com/v3/migrations/users/#start-a-user-migration
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) StartForAuthenticatedUser(ctx context.Context, req *StartForAuthenticatedUserReq, opt ...requests.Option) (*StartForAuthenticatedUserResponse, error) {
 	return StartForAuthenticatedUser(ctx, req, append(c, opt...)...)
@@ -2278,25 +2180,19 @@ func (c Client) StartForAuthenticatedUser(ctx context.Context, req *StartForAuth
 StartForAuthenticatedUserReq is request data for Client.StartForAuthenticatedUser
 
 https://developer.github.com/v3/migrations/users/#start-a-user-migration
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type StartForAuthenticatedUserReq struct {
 	_url        string
 	RequestBody StartForAuthenticatedUserReqBody
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *StartForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *StartForAuthenticatedUserReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -2307,12 +2203,12 @@ func (r *StartForAuthenticatedUserReq) requestBuilder() *internal.RequestBuilder
 		},
 		Method:           "POST",
 		OperationID:      "migrations/start-for-authenticated-user",
+		Options:          opt,
 		Previews:         map[string]bool{},
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/user/migrations"),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -2356,8 +2252,25 @@ type StartForAuthenticatedUserResponse struct {
 	Data         components.Migration
 }
 
+// HTTPResponse returns the *http.Response
 func (r *StartForAuthenticatedUserResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *StartForAuthenticatedUserResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{201, 304})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -2370,45 +2283,27 @@ Start an organization migration.
 https://developer.github.com/v3/migrations/orgs/#start-an-organization-migration
 */
 func StartForOrg(ctx context.Context, req *StartForOrgReq, opt ...requests.Option) (*StartForOrgResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(StartForOrgReq)
 	}
 	resp := &StartForOrgResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewStartForOrgResponse(r, opts.PreserveResponseBody())
-}
-
-// NewStartForOrgResponse builds a new *StartForOrgResponse from an *http.Response
-func NewStartForOrgResponse(resp *http.Response, preserveBody bool) (*StartForOrgResponse, error) {
-	var result StartForOrgResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{201})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{201}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -2419,6 +2314,8 @@ Start an organization migration.
   POST /orgs/{org}/migrations
 
 https://developer.github.com/v3/migrations/orgs/#start-an-organization-migration
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) StartForOrg(ctx context.Context, req *StartForOrgReq, opt ...requests.Option) (*StartForOrgResponse, error) {
 	return StartForOrg(ctx, req, append(c, opt...)...)
@@ -2428,6 +2325,8 @@ func (c Client) StartForOrg(ctx context.Context, req *StartForOrgReq, opt ...req
 StartForOrgReq is request data for Client.StartForOrg
 
 https://developer.github.com/v3/migrations/orgs/#start-an-organization-migration
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type StartForOrgReq struct {
 	_url        string
@@ -2435,19 +2334,11 @@ type StartForOrgReq struct {
 	RequestBody StartForOrgReqBody
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *StartForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *StartForOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -2458,12 +2349,12 @@ func (r *StartForOrgReq) requestBuilder() *internal.RequestBuilder {
 		},
 		Method:           "POST",
 		OperationID:      "migrations/start-for-org",
+		Options:          opt,
 		Previews:         map[string]bool{},
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/orgs/%v/migrations", r.Org),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -2507,8 +2398,25 @@ type StartForOrgResponse struct {
 	Data         components.Migration
 }
 
+// HTTPResponse returns the *http.Response
 func (r *StartForOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *StartForOrgResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{201})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -2521,45 +2429,27 @@ Start an import.
 https://developer.github.com/v3/migrations/source_imports/#start-an-import
 */
 func StartImport(ctx context.Context, req *StartImportReq, opt ...requests.Option) (*StartImportResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(StartImportReq)
 	}
 	resp := &StartImportResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewStartImportResponse(r, opts.PreserveResponseBody())
-}
-
-// NewStartImportResponse builds a new *StartImportResponse from an *http.Response
-func NewStartImportResponse(resp *http.Response, preserveBody bool) (*StartImportResponse, error) {
-	var result StartImportResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{201})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{201}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -2570,6 +2460,8 @@ Start an import.
   PUT /repos/{owner}/{repo}/import
 
 https://developer.github.com/v3/migrations/source_imports/#start-an-import
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) StartImport(ctx context.Context, req *StartImportReq, opt ...requests.Option) (*StartImportResponse, error) {
 	return StartImport(ctx, req, append(c, opt...)...)
@@ -2579,6 +2471,8 @@ func (c Client) StartImport(ctx context.Context, req *StartImportReq, opt ...req
 StartImportReq is request data for Client.StartImport
 
 https://developer.github.com/v3/migrations/source_imports/#start-an-import
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type StartImportReq struct {
 	_url        string
@@ -2587,19 +2481,11 @@ type StartImportReq struct {
 	RequestBody StartImportReqBody
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *StartImportReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *StartImportReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -2610,12 +2496,12 @@ func (r *StartImportReq) requestBuilder() *internal.RequestBuilder {
 		},
 		Method:           "PUT",
 		OperationID:      "migrations/start-import",
+		Options:          opt,
 		Previews:         map[string]bool{},
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/import", r.Owner, r.Repo),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -2669,8 +2555,25 @@ type StartImportResponse struct {
 	Data         components.Import
 }
 
+// HTTPResponse returns the *http.Response
 func (r *StartImportResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *StartImportResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{201})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -2683,39 +2586,27 @@ Unlock a user repository.
 https://developer.github.com/v3/migrations/users/#unlock-a-user-repository
 */
 func UnlockRepoForAuthenticatedUser(ctx context.Context, req *UnlockRepoForAuthenticatedUserReq, opt ...requests.Option) (*UnlockRepoForAuthenticatedUserResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(UnlockRepoForAuthenticatedUserReq)
 	}
 	resp := &UnlockRepoForAuthenticatedUserResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewUnlockRepoForAuthenticatedUserResponse(r, opts.PreserveResponseBody())
-}
-
-// NewUnlockRepoForAuthenticatedUserResponse builds a new *UnlockRepoForAuthenticatedUserResponse from an *http.Response
-func NewUnlockRepoForAuthenticatedUserResponse(resp *http.Response, preserveBody bool) (*UnlockRepoForAuthenticatedUserResponse, error) {
-	var result UnlockRepoForAuthenticatedUserResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{204, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -2726,6 +2617,8 @@ Unlock a user repository.
   DELETE /user/migrations/{migration_id}/repos/{repo_name}/lock
 
 https://developer.github.com/v3/migrations/users/#unlock-a-user-repository
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) UnlockRepoForAuthenticatedUser(ctx context.Context, req *UnlockRepoForAuthenticatedUserReq, opt ...requests.Option) (*UnlockRepoForAuthenticatedUserResponse, error) {
 	return UnlockRepoForAuthenticatedUser(ctx, req, append(c, opt...)...)
@@ -2735,6 +2628,8 @@ func (c Client) UnlockRepoForAuthenticatedUser(ctx context.Context, req *UnlockR
 UnlockRepoForAuthenticatedUserReq is request data for Client.UnlockRepoForAuthenticatedUser
 
 https://developer.github.com/v3/migrations/users/#unlock-a-user-repository
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type UnlockRepoForAuthenticatedUserReq struct {
 	_url string
@@ -2749,19 +2644,11 @@ type UnlockRepoForAuthenticatedUserReq struct {
 	WyandottePreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *UnlockRepoForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *UnlockRepoForAuthenticatedUserReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"wyandotte"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -2769,12 +2656,12 @@ func (r *UnlockRepoForAuthenticatedUserReq) requestBuilder() *internal.RequestBu
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
 		OperationID:        "migrations/unlock-repo-for-authenticated-user",
+		Options:            opt,
 		Previews:           map[string]bool{"wyandotte": r.WyandottePreview},
 		RequiredPreviews:   []string{"wyandotte"},
 		URLPath:            fmt.Sprintf("/user/migrations/%v/repos/%v/lock", r.MigrationId, r.RepoName),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -2799,8 +2686,19 @@ type UnlockRepoForAuthenticatedUserResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *UnlockRepoForAuthenticatedUserResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *UnlockRepoForAuthenticatedUserResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{204, 304})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -2813,43 +2711,27 @@ Unlock an organization repository.
 https://developer.github.com/v3/migrations/orgs/#unlock-an-organization-repository
 */
 func UnlockRepoForOrg(ctx context.Context, req *UnlockRepoForOrgReq, opt ...requests.Option) (*UnlockRepoForOrgResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(UnlockRepoForOrgReq)
 	}
 	resp := &UnlockRepoForOrgResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewUnlockRepoForOrgResponse(r, opts.PreserveResponseBody())
-}
-
-// NewUnlockRepoForOrgResponse builds a new *UnlockRepoForOrgResponse from an *http.Response
-func NewUnlockRepoForOrgResponse(resp *http.Response, preserveBody bool) (*UnlockRepoForOrgResponse, error) {
-	var result UnlockRepoForOrgResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{204, 404})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	err = internal.SetBoolResult(resp, &result.Data)
-	if err != nil {
-		return &result, err
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -2860,6 +2742,8 @@ Unlock an organization repository.
   DELETE /orgs/{org}/migrations/{migration_id}/repos/{repo_name}/lock
 
 https://developer.github.com/v3/migrations/orgs/#unlock-an-organization-repository
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) UnlockRepoForOrg(ctx context.Context, req *UnlockRepoForOrgReq, opt ...requests.Option) (*UnlockRepoForOrgResponse, error) {
 	return UnlockRepoForOrg(ctx, req, append(c, opt...)...)
@@ -2869,6 +2753,8 @@ func (c Client) UnlockRepoForOrg(ctx context.Context, req *UnlockRepoForOrgReq, 
 UnlockRepoForOrgReq is request data for Client.UnlockRepoForOrg
 
 https://developer.github.com/v3/migrations/orgs/#unlock-an-organization-repository
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type UnlockRepoForOrgReq struct {
 	_url string
@@ -2884,19 +2770,11 @@ type UnlockRepoForOrgReq struct {
 	WyandottePreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *UnlockRepoForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *UnlockRepoForOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"wyandotte"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrBoolean},
@@ -2904,12 +2782,12 @@ func (r *UnlockRepoForOrgReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
 		OperationID:        "migrations/unlock-repo-for-org",
+		Options:            opt,
 		Previews:           map[string]bool{"wyandotte": r.WyandottePreview},
 		RequiredPreviews:   []string{"wyandotte"},
 		URLPath:            fmt.Sprintf("/orgs/%v/migrations/%v/repos/%v/lock", r.Org, r.MigrationId, r.RepoName),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -2935,8 +2813,23 @@ type UnlockRepoForOrgResponse struct {
 	Data         bool
 }
 
+// HTTPResponse returns the *http.Response
 func (r *UnlockRepoForOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *UnlockRepoForOrgResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{204, 404})
+	if err != nil {
+		return err
+	}
+	err = internal.SetBoolResult(resp, &r.Data)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -2949,45 +2842,27 @@ Update an import.
 https://developer.github.com/v3/migrations/source_imports/#update-an-import
 */
 func UpdateImport(ctx context.Context, req *UpdateImportReq, opt ...requests.Option) (*UpdateImportResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(UpdateImportReq)
 	}
 	resp := &UpdateImportResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewUpdateImportResponse(r, opts.PreserveResponseBody())
-}
-
-// NewUpdateImportResponse builds a new *UpdateImportResponse from an *http.Response
-func NewUpdateImportResponse(resp *http.Response, preserveBody bool) (*UpdateImportResponse, error) {
-	var result UpdateImportResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -2998,6 +2873,8 @@ Update an import.
   PATCH /repos/{owner}/{repo}/import
 
 https://developer.github.com/v3/migrations/source_imports/#update-an-import
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) UpdateImport(ctx context.Context, req *UpdateImportReq, opt ...requests.Option) (*UpdateImportResponse, error) {
 	return UpdateImport(ctx, req, append(c, opt...)...)
@@ -3007,6 +2884,8 @@ func (c Client) UpdateImport(ctx context.Context, req *UpdateImportReq, opt ...r
 UpdateImportReq is request data for Client.UpdateImport
 
 https://developer.github.com/v3/migrations/source_imports/#update-an-import
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type UpdateImportReq struct {
 	_url        string
@@ -3015,19 +2894,11 @@ type UpdateImportReq struct {
 	RequestBody UpdateImportReqBody
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *UpdateImportReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *UpdateImportReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -3038,12 +2909,12 @@ func (r *UpdateImportReq) requestBuilder() *internal.RequestBuilder {
 		},
 		Method:           "PATCH",
 		OperationID:      "migrations/update-import",
+		Options:          opt,
 		Previews:         map[string]bool{},
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/import", r.Owner, r.Repo),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -3085,6 +2956,23 @@ type UpdateImportResponse struct {
 	Data         components.Import
 }
 
+// HTTPResponse returns the *http.Response
 func (r *UpdateImportResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *UpdateImportResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }

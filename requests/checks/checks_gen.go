@@ -13,8 +13,6 @@ import (
 	"strconv"
 )
 
-func strPtr(s string) *string { return &s }
-
 // Client is a set of options to apply to requests
 type Client []requests.Option
 
@@ -33,45 +31,27 @@ Create a check run.
 https://developer.github.com/v3/checks/runs/#create-a-check-run
 */
 func Create(ctx context.Context, req *CreateReq, opt ...requests.Option) (*CreateResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(CreateReq)
 	}
 	resp := &CreateResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewCreateResponse(r, opts.PreserveResponseBody())
-}
-
-// NewCreateResponse builds a new *CreateResponse from an *http.Response
-func NewCreateResponse(resp *http.Response, preserveBody bool) (*CreateResponse, error) {
-	var result CreateResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{201})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{201}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -82,6 +62,8 @@ Create a check run.
   POST /repos/{owner}/{repo}/check-runs
 
 https://developer.github.com/v3/checks/runs/#create-a-check-run
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) Create(ctx context.Context, req *CreateReq, opt ...requests.Option) (*CreateResponse, error) {
 	return Create(ctx, req, append(c, opt...)...)
@@ -91,6 +73,8 @@ func (c Client) Create(ctx context.Context, req *CreateReq, opt ...requests.Opti
 CreateReq is request data for Client.Create
 
 https://developer.github.com/v3/checks/runs/#create-a-check-run
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type CreateReq struct {
 	_url        string
@@ -108,19 +92,11 @@ type CreateReq struct {
 	AntiopePreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *CreateReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *CreateReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"antiope"},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -131,12 +107,12 @@ func (r *CreateReq) requestBuilder() *internal.RequestBuilder {
 		},
 		Method:           "POST",
 		OperationID:      "checks/create",
+		Options:          opt,
 		Previews:         map[string]bool{"antiope": r.AntiopePreview},
 		RequiredPreviews: []string{"antiope"},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/check-runs", r.Owner, r.Repo),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -340,8 +316,25 @@ type CreateResponse struct {
 	Data         components.CheckRun
 }
 
+// HTTPResponse returns the *http.Response
 func (r *CreateResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *CreateResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{201})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -354,45 +347,27 @@ Create a check suite.
 https://developer.github.com/v3/checks/suites/#create-a-check-suite
 */
 func CreateSuite(ctx context.Context, req *CreateSuiteReq, opt ...requests.Option) (*CreateSuiteResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(CreateSuiteReq)
 	}
 	resp := &CreateSuiteResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewCreateSuiteResponse(r, opts.PreserveResponseBody())
-}
-
-// NewCreateSuiteResponse builds a new *CreateSuiteResponse from an *http.Response
-func NewCreateSuiteResponse(resp *http.Response, preserveBody bool) (*CreateSuiteResponse, error) {
-	var result CreateSuiteResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{201})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{201}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -403,6 +378,8 @@ Create a check suite.
   POST /repos/{owner}/{repo}/check-suites
 
 https://developer.github.com/v3/checks/suites/#create-a-check-suite
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) CreateSuite(ctx context.Context, req *CreateSuiteReq, opt ...requests.Option) (*CreateSuiteResponse, error) {
 	return CreateSuite(ctx, req, append(c, opt...)...)
@@ -412,6 +389,8 @@ func (c Client) CreateSuite(ctx context.Context, req *CreateSuiteReq, opt ...req
 CreateSuiteReq is request data for Client.CreateSuite
 
 https://developer.github.com/v3/checks/suites/#create-a-check-suite
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type CreateSuiteReq struct {
 	_url        string
@@ -429,19 +408,11 @@ type CreateSuiteReq struct {
 	AntiopePreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *CreateSuiteReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *CreateSuiteReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"antiope"},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -452,12 +423,12 @@ func (r *CreateSuiteReq) requestBuilder() *internal.RequestBuilder {
 		},
 		Method:           "POST",
 		OperationID:      "checks/create-suite",
+		Options:          opt,
 		Previews:         map[string]bool{"antiope": r.AntiopePreview},
 		RequiredPreviews: []string{"antiope"},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/check-suites", r.Owner, r.Repo),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -494,8 +465,25 @@ type CreateSuiteResponse struct {
 	Data         components.CheckSuite
 }
 
+// HTTPResponse returns the *http.Response
 func (r *CreateSuiteResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *CreateSuiteResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{201})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -508,45 +496,27 @@ Get a check run.
 https://developer.github.com/v3/checks/runs/#get-a-check-run
 */
 func Get(ctx context.Context, req *GetReq, opt ...requests.Option) (*GetResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetReq)
 	}
 	resp := &GetResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetResponse builds a new *GetResponse from an *http.Response
-func NewGetResponse(resp *http.Response, preserveBody bool) (*GetResponse, error) {
-	var result GetResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -557,6 +527,8 @@ Get a check run.
   GET /repos/{owner}/{repo}/check-runs/{check_run_id}
 
 https://developer.github.com/v3/checks/runs/#get-a-check-run
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) Get(ctx context.Context, req *GetReq, opt ...requests.Option) (*GetResponse, error) {
 	return Get(ctx, req, append(c, opt...)...)
@@ -566,6 +538,8 @@ func (c Client) Get(ctx context.Context, req *GetReq, opt ...requests.Option) (*
 GetReq is request data for Client.Get
 
 https://developer.github.com/v3/checks/runs/#get-a-check-run
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetReq struct {
 	_url  string
@@ -585,19 +559,11 @@ type GetReq struct {
 	AntiopePreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"antiope"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -605,12 +571,12 @@ func (r *GetReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "checks/get",
+		Options:            opt,
 		Previews:           map[string]bool{"antiope": r.AntiopePreview},
 		RequiredPreviews:   []string{"antiope"},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/check-runs/%v", r.Owner, r.Repo, r.CheckRunId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -636,8 +602,25 @@ type GetResponse struct {
 	Data         components.CheckRun
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -650,45 +633,27 @@ Get a check suite.
 https://developer.github.com/v3/checks/suites/#get-a-check-suite
 */
 func GetSuite(ctx context.Context, req *GetSuiteReq, opt ...requests.Option) (*GetSuiteResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetSuiteReq)
 	}
 	resp := &GetSuiteResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetSuiteResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetSuiteResponse builds a new *GetSuiteResponse from an *http.Response
-func NewGetSuiteResponse(resp *http.Response, preserveBody bool) (*GetSuiteResponse, error) {
-	var result GetSuiteResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -699,6 +664,8 @@ Get a check suite.
   GET /repos/{owner}/{repo}/check-suites/{check_suite_id}
 
 https://developer.github.com/v3/checks/suites/#get-a-check-suite
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) GetSuite(ctx context.Context, req *GetSuiteReq, opt ...requests.Option) (*GetSuiteResponse, error) {
 	return GetSuite(ctx, req, append(c, opt...)...)
@@ -708,6 +675,8 @@ func (c Client) GetSuite(ctx context.Context, req *GetSuiteReq, opt ...requests.
 GetSuiteReq is request data for Client.GetSuite
 
 https://developer.github.com/v3/checks/suites/#get-a-check-suite
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetSuiteReq struct {
 	_url  string
@@ -727,19 +696,11 @@ type GetSuiteReq struct {
 	AntiopePreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetSuiteReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetSuiteReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"antiope"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -747,12 +708,12 @@ func (r *GetSuiteReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "checks/get-suite",
+		Options:            opt,
 		Previews:           map[string]bool{"antiope": r.AntiopePreview},
 		RequiredPreviews:   []string{"antiope"},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/check-suites/%v", r.Owner, r.Repo, r.CheckSuiteId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -778,8 +739,25 @@ type GetSuiteResponse struct {
 	Data         components.CheckSuite
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetSuiteResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetSuiteResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -792,45 +770,27 @@ List check run annotations.
 https://developer.github.com/v3/checks/runs/#list-check-run-annotations
 */
 func ListAnnotations(ctx context.Context, req *ListAnnotationsReq, opt ...requests.Option) (*ListAnnotationsResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListAnnotationsReq)
 	}
 	resp := &ListAnnotationsResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListAnnotationsResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListAnnotationsResponse builds a new *ListAnnotationsResponse from an *http.Response
-func NewListAnnotationsResponse(resp *http.Response, preserveBody bool) (*ListAnnotationsResponse, error) {
-	var result ListAnnotationsResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -841,6 +801,8 @@ List check run annotations.
   GET /repos/{owner}/{repo}/check-runs/{check_run_id}/annotations
 
 https://developer.github.com/v3/checks/runs/#list-check-run-annotations
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListAnnotations(ctx context.Context, req *ListAnnotationsReq, opt ...requests.Option) (*ListAnnotationsResponse, error) {
 	return ListAnnotations(ctx, req, append(c, opt...)...)
@@ -850,6 +812,8 @@ func (c Client) ListAnnotations(ctx context.Context, req *ListAnnotationsReq, op
 ListAnnotationsReq is request data for Client.ListAnnotations
 
 https://developer.github.com/v3/checks/runs/#list-check-run-annotations
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListAnnotationsReq struct {
 	_url  string
@@ -875,16 +839,8 @@ type ListAnnotationsReq struct {
 	AntiopePreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListAnnotationsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListAnnotationsReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -893,7 +849,7 @@ func (r *ListAnnotationsReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"antiope"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -901,12 +857,12 @@ func (r *ListAnnotationsReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "checks/list-annotations",
+		Options:            opt,
 		Previews:           map[string]bool{"antiope": r.AntiopePreview},
 		RequiredPreviews:   []string{"antiope"},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/check-runs/%v/annotations", r.Owner, r.Repo, r.CheckRunId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -932,8 +888,25 @@ type ListAnnotationsResponse struct {
 	Data         []components.CheckAnnotation
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListAnnotationsResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListAnnotationsResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -946,45 +919,27 @@ List check runs for a Git reference.
 https://developer.github.com/v3/checks/runs/#list-check-runs-for-a-git-reference
 */
 func ListForRef(ctx context.Context, req *ListForRefReq, opt ...requests.Option) (*ListForRefResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListForRefReq)
 	}
 	resp := &ListForRefResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListForRefResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListForRefResponse builds a new *ListForRefResponse from an *http.Response
-func NewListForRefResponse(resp *http.Response, preserveBody bool) (*ListForRefResponse, error) {
-	var result ListForRefResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -995,6 +950,8 @@ List check runs for a Git reference.
   GET /repos/{owner}/{repo}/commits/{ref}/check-runs
 
 https://developer.github.com/v3/checks/runs/#list-check-runs-for-a-git-reference
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListForRef(ctx context.Context, req *ListForRefReq, opt ...requests.Option) (*ListForRefResponse, error) {
 	return ListForRef(ctx, req, append(c, opt...)...)
@@ -1004,6 +961,8 @@ func (c Client) ListForRef(ctx context.Context, req *ListForRefReq, opt ...reque
 ListForRefReq is request data for Client.ListForRef
 
 https://developer.github.com/v3/checks/runs/#list-check-runs-for-a-git-reference
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListForRefReq struct {
 	_url  string
@@ -1044,16 +1003,8 @@ type ListForRefReq struct {
 	AntiopePreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListForRefReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListForRefReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.CheckName != nil {
 		query.Set("check_name", *r.CheckName)
@@ -1071,7 +1022,7 @@ func (r *ListForRefReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"antiope"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -1079,12 +1030,12 @@ func (r *ListForRefReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "checks/list-for-ref",
+		Options:            opt,
 		Previews:           map[string]bool{"antiope": r.AntiopePreview},
 		RequiredPreviews:   []string{"antiope"},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/commits/%v/check-runs", r.Owner, r.Repo, r.Ref),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1120,8 +1071,25 @@ type ListForRefResponse struct {
 	Data         ListForRefResponseBody
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListForRefResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListForRefResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -1134,45 +1102,27 @@ List check runs in a check suite.
 https://developer.github.com/v3/checks/runs/#list-check-runs-in-a-check-suite
 */
 func ListForSuite(ctx context.Context, req *ListForSuiteReq, opt ...requests.Option) (*ListForSuiteResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListForSuiteReq)
 	}
 	resp := &ListForSuiteResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListForSuiteResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListForSuiteResponse builds a new *ListForSuiteResponse from an *http.Response
-func NewListForSuiteResponse(resp *http.Response, preserveBody bool) (*ListForSuiteResponse, error) {
-	var result ListForSuiteResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -1183,6 +1133,8 @@ List check runs in a check suite.
   GET /repos/{owner}/{repo}/check-suites/{check_suite_id}/check-runs
 
 https://developer.github.com/v3/checks/runs/#list-check-runs-in-a-check-suite
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListForSuite(ctx context.Context, req *ListForSuiteReq, opt ...requests.Option) (*ListForSuiteResponse, error) {
 	return ListForSuite(ctx, req, append(c, opt...)...)
@@ -1192,6 +1144,8 @@ func (c Client) ListForSuite(ctx context.Context, req *ListForSuiteReq, opt ...r
 ListForSuiteReq is request data for Client.ListForSuite
 
 https://developer.github.com/v3/checks/runs/#list-check-runs-in-a-check-suite
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListForSuiteReq struct {
 	_url  string
@@ -1232,16 +1186,8 @@ type ListForSuiteReq struct {
 	AntiopePreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListForSuiteReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListForSuiteReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.CheckName != nil {
 		query.Set("check_name", *r.CheckName)
@@ -1259,7 +1205,7 @@ func (r *ListForSuiteReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"antiope"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -1267,12 +1213,12 @@ func (r *ListForSuiteReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "checks/list-for-suite",
+		Options:            opt,
 		Previews:           map[string]bool{"antiope": r.AntiopePreview},
 		RequiredPreviews:   []string{"antiope"},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/check-suites/%v/check-runs", r.Owner, r.Repo, r.CheckSuiteId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1308,8 +1254,25 @@ type ListForSuiteResponse struct {
 	Data         ListForSuiteResponseBody
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListForSuiteResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListForSuiteResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -1322,45 +1285,27 @@ List check suites for a Git reference.
 https://developer.github.com/v3/checks/suites/#list-check-suites-for-a-git-reference
 */
 func ListSuitesForRef(ctx context.Context, req *ListSuitesForRefReq, opt ...requests.Option) (*ListSuitesForRefResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListSuitesForRefReq)
 	}
 	resp := &ListSuitesForRefResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListSuitesForRefResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListSuitesForRefResponse builds a new *ListSuitesForRefResponse from an *http.Response
-func NewListSuitesForRefResponse(resp *http.Response, preserveBody bool) (*ListSuitesForRefResponse, error) {
-	var result ListSuitesForRefResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -1371,6 +1316,8 @@ List check suites for a Git reference.
   GET /repos/{owner}/{repo}/commits/{ref}/check-suites
 
 https://developer.github.com/v3/checks/suites/#list-check-suites-for-a-git-reference
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListSuitesForRef(ctx context.Context, req *ListSuitesForRefReq, opt ...requests.Option) (*ListSuitesForRefResponse, error) {
 	return ListSuitesForRef(ctx, req, append(c, opt...)...)
@@ -1380,6 +1327,8 @@ func (c Client) ListSuitesForRef(ctx context.Context, req *ListSuitesForRefReq, 
 ListSuitesForRefReq is request data for Client.ListSuitesForRef
 
 https://developer.github.com/v3/checks/suites/#list-check-suites-for-a-git-reference
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListSuitesForRefReq struct {
 	_url  string
@@ -1411,16 +1360,8 @@ type ListSuitesForRefReq struct {
 	AntiopePreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListSuitesForRefReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListSuitesForRefReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.AppId != nil {
 		query.Set("app_id", strconv.FormatInt(*r.AppId, 10))
@@ -1435,7 +1376,7 @@ func (r *ListSuitesForRefReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"antiope"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -1443,12 +1384,12 @@ func (r *ListSuitesForRefReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "checks/list-suites-for-ref",
+		Options:            opt,
 		Previews:           map[string]bool{"antiope": r.AntiopePreview},
 		RequiredPreviews:   []string{"antiope"},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/commits/%v/check-suites", r.Owner, r.Repo, r.Ref),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1484,8 +1425,25 @@ type ListSuitesForRefResponse struct {
 	Data         ListSuitesForRefResponseBody
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListSuitesForRefResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListSuitesForRefResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -1498,39 +1456,27 @@ Rerequest a check suite.
 https://developer.github.com/v3/checks/suites/#rerequest-a-check-suite
 */
 func RerequestSuite(ctx context.Context, req *RerequestSuiteReq, opt ...requests.Option) (*RerequestSuiteResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(RerequestSuiteReq)
 	}
 	resp := &RerequestSuiteResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewRerequestSuiteResponse(r, opts.PreserveResponseBody())
-}
-
-// NewRerequestSuiteResponse builds a new *RerequestSuiteResponse from an *http.Response
-func NewRerequestSuiteResponse(resp *http.Response, preserveBody bool) (*RerequestSuiteResponse, error) {
-	var result RerequestSuiteResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{201})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -1541,6 +1487,8 @@ Rerequest a check suite.
   POST /repos/{owner}/{repo}/check-suites/{check_suite_id}/rerequest
 
 https://developer.github.com/v3/checks/suites/#rerequest-a-check-suite
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) RerequestSuite(ctx context.Context, req *RerequestSuiteReq, opt ...requests.Option) (*RerequestSuiteResponse, error) {
 	return RerequestSuite(ctx, req, append(c, opt...)...)
@@ -1550,6 +1498,8 @@ func (c Client) RerequestSuite(ctx context.Context, req *RerequestSuiteReq, opt 
 RerequestSuiteReq is request data for Client.RerequestSuite
 
 https://developer.github.com/v3/checks/suites/#rerequest-a-check-suite
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type RerequestSuiteReq struct {
 	_url  string
@@ -1569,19 +1519,11 @@ type RerequestSuiteReq struct {
 	AntiopePreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *RerequestSuiteReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *RerequestSuiteReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"antiope"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -1589,12 +1531,12 @@ func (r *RerequestSuiteReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{},
 		Method:             "POST",
 		OperationID:        "checks/rerequest-suite",
+		Options:            opt,
 		Previews:           map[string]bool{"antiope": r.AntiopePreview},
 		RequiredPreviews:   []string{"antiope"},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/check-suites/%v/rerequest", r.Owner, r.Repo, r.CheckSuiteId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1619,8 +1561,19 @@ type RerequestSuiteResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *RerequestSuiteResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *RerequestSuiteResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{201})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -1633,45 +1586,27 @@ Update repository preferences for check suites.
 https://developer.github.com/v3/checks/suites/#update-repository-preferences-for-check-suites
 */
 func SetSuitesPreferences(ctx context.Context, req *SetSuitesPreferencesReq, opt ...requests.Option) (*SetSuitesPreferencesResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(SetSuitesPreferencesReq)
 	}
 	resp := &SetSuitesPreferencesResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewSetSuitesPreferencesResponse(r, opts.PreserveResponseBody())
-}
-
-// NewSetSuitesPreferencesResponse builds a new *SetSuitesPreferencesResponse from an *http.Response
-func NewSetSuitesPreferencesResponse(resp *http.Response, preserveBody bool) (*SetSuitesPreferencesResponse, error) {
-	var result SetSuitesPreferencesResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -1682,6 +1617,8 @@ Update repository preferences for check suites.
   PATCH /repos/{owner}/{repo}/check-suites/preferences
 
 https://developer.github.com/v3/checks/suites/#update-repository-preferences-for-check-suites
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) SetSuitesPreferences(ctx context.Context, req *SetSuitesPreferencesReq, opt ...requests.Option) (*SetSuitesPreferencesResponse, error) {
 	return SetSuitesPreferences(ctx, req, append(c, opt...)...)
@@ -1691,6 +1628,8 @@ func (c Client) SetSuitesPreferences(ctx context.Context, req *SetSuitesPreferen
 SetSuitesPreferencesReq is request data for Client.SetSuitesPreferences
 
 https://developer.github.com/v3/checks/suites/#update-repository-preferences-for-check-suites
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type SetSuitesPreferencesReq struct {
 	_url        string
@@ -1708,19 +1647,11 @@ type SetSuitesPreferencesReq struct {
 	AntiopePreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *SetSuitesPreferencesReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *SetSuitesPreferencesReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"antiope"},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -1731,12 +1662,12 @@ func (r *SetSuitesPreferencesReq) requestBuilder() *internal.RequestBuilder {
 		},
 		Method:           "PATCH",
 		OperationID:      "checks/set-suites-preferences",
+		Options:          opt,
 		Previews:         map[string]bool{"antiope": r.AntiopePreview},
 		RequiredPreviews: []string{"antiope"},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/check-suites/preferences", r.Owner, r.Repo),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1791,8 +1722,25 @@ type SetSuitesPreferencesResponse struct {
 	Data         components.CheckSuitePreference
 }
 
+// HTTPResponse returns the *http.Response
 func (r *SetSuitesPreferencesResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *SetSuitesPreferencesResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -1805,45 +1753,27 @@ Update a check run.
 https://developer.github.com/v3/checks/runs/#update-a-check-run
 */
 func Update(ctx context.Context, req *UpdateReq, opt ...requests.Option) (*UpdateResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(UpdateReq)
 	}
 	resp := &UpdateResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewUpdateResponse(r, opts.PreserveResponseBody())
-}
-
-// NewUpdateResponse builds a new *UpdateResponse from an *http.Response
-func NewUpdateResponse(resp *http.Response, preserveBody bool) (*UpdateResponse, error) {
-	var result UpdateResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -1854,6 +1784,8 @@ Update a check run.
   PATCH /repos/{owner}/{repo}/check-runs/{check_run_id}
 
 https://developer.github.com/v3/checks/runs/#update-a-check-run
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) Update(ctx context.Context, req *UpdateReq, opt ...requests.Option) (*UpdateResponse, error) {
 	return Update(ctx, req, append(c, opt...)...)
@@ -1863,6 +1795,8 @@ func (c Client) Update(ctx context.Context, req *UpdateReq, opt ...requests.Opti
 UpdateReq is request data for Client.Update
 
 https://developer.github.com/v3/checks/runs/#update-a-check-run
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type UpdateReq struct {
 	_url  string
@@ -1883,19 +1817,11 @@ type UpdateReq struct {
 	AntiopePreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *UpdateReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *UpdateReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"antiope"},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -1906,12 +1832,12 @@ func (r *UpdateReq) requestBuilder() *internal.RequestBuilder {
 		},
 		Method:           "PATCH",
 		OperationID:      "checks/update",
+		Options:          opt,
 		Previews:         map[string]bool{"antiope": r.AntiopePreview},
 		RequiredPreviews: []string{"antiope"},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/check-runs/%v", r.Owner, r.Repo, r.CheckRunId),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -2098,6 +2024,23 @@ type UpdateResponse struct {
 	Data         components.CheckRun
 }
 
+// HTTPResponse returns the *http.Response
 func (r *UpdateResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *UpdateResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }

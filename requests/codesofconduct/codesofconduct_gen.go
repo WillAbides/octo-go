@@ -12,8 +12,6 @@ import (
 	"net/url"
 )
 
-func strPtr(s string) *string { return &s }
-
 // Client is a set of options to apply to requests
 type Client []requests.Option
 
@@ -32,45 +30,27 @@ Get all codes of conduct.
 https://developer.github.com/v3/codes_of_conduct/#get-all-codes-of-conduct
 */
 func GetAllCodesOfConduct(ctx context.Context, req *GetAllCodesOfConductReq, opt ...requests.Option) (*GetAllCodesOfConductResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetAllCodesOfConductReq)
 	}
 	resp := &GetAllCodesOfConductResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetAllCodesOfConductResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetAllCodesOfConductResponse builds a new *GetAllCodesOfConductResponse from an *http.Response
-func NewGetAllCodesOfConductResponse(resp *http.Response, preserveBody bool) (*GetAllCodesOfConductResponse, error) {
-	var result GetAllCodesOfConductResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -81,6 +61,8 @@ Get all codes of conduct.
   GET /codes_of_conduct
 
 https://developer.github.com/v3/codes_of_conduct/#get-all-codes-of-conduct
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) GetAllCodesOfConduct(ctx context.Context, req *GetAllCodesOfConductReq, opt ...requests.Option) (*GetAllCodesOfConductResponse, error) {
 	return GetAllCodesOfConduct(ctx, req, append(c, opt...)...)
@@ -90,6 +72,8 @@ func (c Client) GetAllCodesOfConduct(ctx context.Context, req *GetAllCodesOfCond
 GetAllCodesOfConductReq is request data for Client.GetAllCodesOfConduct
 
 https://developer.github.com/v3/codes_of_conduct/#get-all-codes-of-conduct
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetAllCodesOfConductReq struct {
 	_url string
@@ -102,19 +86,11 @@ type GetAllCodesOfConductReq struct {
 	ScarletWitchPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetAllCodesOfConductReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetAllCodesOfConductReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"scarlet-witch"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -122,12 +98,12 @@ func (r *GetAllCodesOfConductReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "codes-of-conduct/get-all-codes-of-conduct",
+		Options:            opt,
 		Previews:           map[string]bool{"scarlet-witch": r.ScarletWitchPreview},
 		RequiredPreviews:   []string{"scarlet-witch"},
 		URLPath:            fmt.Sprintf("/codes_of_conduct"),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -153,8 +129,25 @@ type GetAllCodesOfConductResponse struct {
 	Data         []components.CodeOfConduct
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetAllCodesOfConductResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetAllCodesOfConductResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -167,45 +160,27 @@ Get a code of conduct.
 https://developer.github.com/v3/codes_of_conduct/#get-a-code-of-conduct
 */
 func GetConductCode(ctx context.Context, req *GetConductCodeReq, opt ...requests.Option) (*GetConductCodeResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetConductCodeReq)
 	}
 	resp := &GetConductCodeResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetConductCodeResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetConductCodeResponse builds a new *GetConductCodeResponse from an *http.Response
-func NewGetConductCodeResponse(resp *http.Response, preserveBody bool) (*GetConductCodeResponse, error) {
-	var result GetConductCodeResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -216,6 +191,8 @@ Get a code of conduct.
   GET /codes_of_conduct/{key}
 
 https://developer.github.com/v3/codes_of_conduct/#get-a-code-of-conduct
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) GetConductCode(ctx context.Context, req *GetConductCodeReq, opt ...requests.Option) (*GetConductCodeResponse, error) {
 	return GetConductCode(ctx, req, append(c, opt...)...)
@@ -225,6 +202,8 @@ func (c Client) GetConductCode(ctx context.Context, req *GetConductCodeReq, opt 
 GetConductCodeReq is request data for Client.GetConductCode
 
 https://developer.github.com/v3/codes_of_conduct/#get-a-code-of-conduct
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetConductCodeReq struct {
 	_url string
@@ -240,19 +219,11 @@ type GetConductCodeReq struct {
 	ScarletWitchPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetConductCodeReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetConductCodeReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"scarlet-witch"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -260,12 +231,12 @@ func (r *GetConductCodeReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "codes-of-conduct/get-conduct-code",
+		Options:            opt,
 		Previews:           map[string]bool{"scarlet-witch": r.ScarletWitchPreview},
 		RequiredPreviews:   []string{"scarlet-witch"},
 		URLPath:            fmt.Sprintf("/codes_of_conduct/%v", r.Key),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -291,8 +262,25 @@ type GetConductCodeResponse struct {
 	Data         components.CodeOfConduct
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetConductCodeResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetConductCodeResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -305,45 +293,27 @@ Get the code of conduct for a repository.
 https://developer.github.com/v3/codes_of_conduct/#get-the-code-of-conduct-for-a-repository
 */
 func GetForRepo(ctx context.Context, req *GetForRepoReq, opt ...requests.Option) (*GetForRepoResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetForRepoReq)
 	}
 	resp := &GetForRepoResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetForRepoResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetForRepoResponse builds a new *GetForRepoResponse from an *http.Response
-func NewGetForRepoResponse(resp *http.Response, preserveBody bool) (*GetForRepoResponse, error) {
-	var result GetForRepoResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -354,6 +324,8 @@ Get the code of conduct for a repository.
   GET /repos/{owner}/{repo}/community/code_of_conduct
 
 https://developer.github.com/v3/codes_of_conduct/#get-the-code-of-conduct-for-a-repository
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) GetForRepo(ctx context.Context, req *GetForRepoReq, opt ...requests.Option) (*GetForRepoResponse, error) {
 	return GetForRepo(ctx, req, append(c, opt...)...)
@@ -363,6 +335,8 @@ func (c Client) GetForRepo(ctx context.Context, req *GetForRepoReq, opt ...reque
 GetForRepoReq is request data for Client.GetForRepo
 
 https://developer.github.com/v3/codes_of_conduct/#get-the-code-of-conduct-for-a-repository
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetForRepoReq struct {
 	_url  string
@@ -377,19 +351,11 @@ type GetForRepoReq struct {
 	ScarletWitchPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetForRepoReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"scarlet-witch"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -397,12 +363,12 @@ func (r *GetForRepoReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "codes-of-conduct/get-for-repo",
+		Options:            opt,
 		Previews:           map[string]bool{"scarlet-witch": r.ScarletWitchPreview},
 		RequiredPreviews:   []string{"scarlet-witch"},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/community/code_of_conduct", r.Owner, r.Repo),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -428,6 +394,23 @@ type GetForRepoResponse struct {
 	Data         components.CodeOfConduct
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetForRepoResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetForRepoResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }

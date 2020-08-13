@@ -13,8 +13,6 @@ import (
 	"strconv"
 )
 
-func strPtr(s string) *string { return &s }
-
 // Client is a set of options to apply to requests
 type Client []requests.Option
 
@@ -33,39 +31,27 @@ Add project collaborator.
 https://developer.github.com/v3/projects/collaborators/#add-project-collaborator
 */
 func AddCollaborator(ctx context.Context, req *AddCollaboratorReq, opt ...requests.Option) (*AddCollaboratorResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(AddCollaboratorReq)
 	}
 	resp := &AddCollaboratorResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewAddCollaboratorResponse(r, opts.PreserveResponseBody())
-}
-
-// NewAddCollaboratorResponse builds a new *AddCollaboratorResponse from an *http.Response
-func NewAddCollaboratorResponse(resp *http.Response, preserveBody bool) (*AddCollaboratorResponse, error) {
-	var result AddCollaboratorResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{204, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -76,6 +62,8 @@ Add project collaborator.
   PUT /projects/{project_id}/collaborators/{username}
 
 https://developer.github.com/v3/projects/collaborators/#add-project-collaborator
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) AddCollaborator(ctx context.Context, req *AddCollaboratorReq, opt ...requests.Option) (*AddCollaboratorResponse, error) {
 	return AddCollaborator(ctx, req, append(c, opt...)...)
@@ -85,6 +73,8 @@ func (c Client) AddCollaborator(ctx context.Context, req *AddCollaboratorReq, op
 AddCollaboratorReq is request data for Client.AddCollaborator
 
 https://developer.github.com/v3/projects/collaborators/#add-project-collaborator
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type AddCollaboratorReq struct {
 	_url        string
@@ -102,19 +92,11 @@ type AddCollaboratorReq struct {
 	InertiaPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *AddCollaboratorReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *AddCollaboratorReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"inertia"},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -122,12 +104,12 @@ func (r *AddCollaboratorReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"content-type": internal.String("application/json")},
 		Method:             "PUT",
 		OperationID:        "projects/add-collaborator",
+		Options:            opt,
 		Previews:           map[string]bool{"inertia": r.InertiaPreview},
 		RequiredPreviews:   []string{"inertia"},
 		URLPath:            fmt.Sprintf("/projects/%v/collaborators/%v", r.ProjectId, r.Username),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -163,8 +145,19 @@ type AddCollaboratorResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *AddCollaboratorResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *AddCollaboratorResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{204, 304})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -177,45 +170,27 @@ Create a project card.
 https://developer.github.com/v3/projects/cards/#create-a-project-card
 */
 func CreateCard(ctx context.Context, req *CreateCardReq, opt ...requests.Option) (*CreateCardResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(CreateCardReq)
 	}
 	resp := &CreateCardResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewCreateCardResponse(r, opts.PreserveResponseBody())
-}
-
-// NewCreateCardResponse builds a new *CreateCardResponse from an *http.Response
-func NewCreateCardResponse(resp *http.Response, preserveBody bool) (*CreateCardResponse, error) {
-	var result CreateCardResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{201, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{201}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -226,6 +201,8 @@ Create a project card.
   POST /projects/columns/{column_id}/cards
 
 https://developer.github.com/v3/projects/cards/#create-a-project-card
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) CreateCard(ctx context.Context, req *CreateCardReq, opt ...requests.Option) (*CreateCardResponse, error) {
 	return CreateCard(ctx, req, append(c, opt...)...)
@@ -235,6 +212,8 @@ func (c Client) CreateCard(ctx context.Context, req *CreateCardReq, opt ...reque
 CreateCardReq is request data for Client.CreateCard
 
 https://developer.github.com/v3/projects/cards/#create-a-project-card
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type CreateCardReq struct {
 	_url string
@@ -253,19 +232,11 @@ type CreateCardReq struct {
 	InertiaPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *CreateCardReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *CreateCardReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"inertia"},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -276,12 +247,12 @@ func (r *CreateCardReq) requestBuilder() *internal.RequestBuilder {
 		},
 		Method:           "POST",
 		OperationID:      "projects/create-card",
+		Options:          opt,
 		Previews:         map[string]bool{"inertia": r.InertiaPreview},
 		RequiredPreviews: []string{"inertia"},
 		URLPath:          fmt.Sprintf("/projects/columns/%v/cards", r.ColumnId),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -321,8 +292,25 @@ type CreateCardResponse struct {
 	Data         components.ProjectCard
 }
 
+// HTTPResponse returns the *http.Response
 func (r *CreateCardResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *CreateCardResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{201, 304})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -335,45 +323,27 @@ Create a project column.
 https://developer.github.com/v3/projects/columns/#create-a-project-column
 */
 func CreateColumn(ctx context.Context, req *CreateColumnReq, opt ...requests.Option) (*CreateColumnResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(CreateColumnReq)
 	}
 	resp := &CreateColumnResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewCreateColumnResponse(r, opts.PreserveResponseBody())
-}
-
-// NewCreateColumnResponse builds a new *CreateColumnResponse from an *http.Response
-func NewCreateColumnResponse(resp *http.Response, preserveBody bool) (*CreateColumnResponse, error) {
-	var result CreateColumnResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{201, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{201}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -384,6 +354,8 @@ Create a project column.
   POST /projects/{project_id}/columns
 
 https://developer.github.com/v3/projects/columns/#create-a-project-column
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) CreateColumn(ctx context.Context, req *CreateColumnReq, opt ...requests.Option) (*CreateColumnResponse, error) {
 	return CreateColumn(ctx, req, append(c, opt...)...)
@@ -393,6 +365,8 @@ func (c Client) CreateColumn(ctx context.Context, req *CreateColumnReq, opt ...r
 CreateColumnReq is request data for Client.CreateColumn
 
 https://developer.github.com/v3/projects/columns/#create-a-project-column
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type CreateColumnReq struct {
 	_url        string
@@ -409,19 +383,11 @@ type CreateColumnReq struct {
 	InertiaPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *CreateColumnReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *CreateColumnReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"inertia"},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -432,12 +398,12 @@ func (r *CreateColumnReq) requestBuilder() *internal.RequestBuilder {
 		},
 		Method:           "POST",
 		OperationID:      "projects/create-column",
+		Options:          opt,
 		Previews:         map[string]bool{"inertia": r.InertiaPreview},
 		RequiredPreviews: []string{"inertia"},
 		URLPath:          fmt.Sprintf("/projects/%v/columns", r.ProjectId),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -474,8 +440,25 @@ type CreateColumnResponse struct {
 	Data         components.ProjectColumn
 }
 
+// HTTPResponse returns the *http.Response
 func (r *CreateColumnResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *CreateColumnResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{201, 304})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -488,45 +471,27 @@ Create a user project.
 https://developer.github.com/v3/projects/#create-a-user-project
 */
 func CreateForAuthenticatedUser(ctx context.Context, req *CreateForAuthenticatedUserReq, opt ...requests.Option) (*CreateForAuthenticatedUserResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(CreateForAuthenticatedUserReq)
 	}
 	resp := &CreateForAuthenticatedUserResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewCreateForAuthenticatedUserResponse(r, opts.PreserveResponseBody())
-}
-
-// NewCreateForAuthenticatedUserResponse builds a new *CreateForAuthenticatedUserResponse from an *http.Response
-func NewCreateForAuthenticatedUserResponse(resp *http.Response, preserveBody bool) (*CreateForAuthenticatedUserResponse, error) {
-	var result CreateForAuthenticatedUserResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{201, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{201}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -537,6 +502,8 @@ Create a user project.
   POST /user/projects
 
 https://developer.github.com/v3/projects/#create-a-user-project
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) CreateForAuthenticatedUser(ctx context.Context, req *CreateForAuthenticatedUserReq, opt ...requests.Option) (*CreateForAuthenticatedUserResponse, error) {
 	return CreateForAuthenticatedUser(ctx, req, append(c, opt...)...)
@@ -546,6 +513,8 @@ func (c Client) CreateForAuthenticatedUser(ctx context.Context, req *CreateForAu
 CreateForAuthenticatedUserReq is request data for Client.CreateForAuthenticatedUser
 
 https://developer.github.com/v3/projects/#create-a-user-project
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type CreateForAuthenticatedUserReq struct {
 	_url        string
@@ -561,19 +530,11 @@ type CreateForAuthenticatedUserReq struct {
 	InertiaPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *CreateForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *CreateForAuthenticatedUserReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"inertia"},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -584,12 +545,12 @@ func (r *CreateForAuthenticatedUserReq) requestBuilder() *internal.RequestBuilde
 		},
 		Method:           "POST",
 		OperationID:      "projects/create-for-authenticated-user",
+		Options:          opt,
 		Previews:         map[string]bool{"inertia": r.InertiaPreview},
 		RequiredPreviews: []string{"inertia"},
 		URLPath:          fmt.Sprintf("/user/projects"),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -629,8 +590,25 @@ type CreateForAuthenticatedUserResponse struct {
 	Data         components.Project
 }
 
+// HTTPResponse returns the *http.Response
 func (r *CreateForAuthenticatedUserResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *CreateForAuthenticatedUserResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{201, 304})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -643,45 +621,27 @@ Create an organization project.
 https://developer.github.com/v3/projects/#create-an-organization-project
 */
 func CreateForOrg(ctx context.Context, req *CreateForOrgReq, opt ...requests.Option) (*CreateForOrgResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(CreateForOrgReq)
 	}
 	resp := &CreateForOrgResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewCreateForOrgResponse(r, opts.PreserveResponseBody())
-}
-
-// NewCreateForOrgResponse builds a new *CreateForOrgResponse from an *http.Response
-func NewCreateForOrgResponse(resp *http.Response, preserveBody bool) (*CreateForOrgResponse, error) {
-	var result CreateForOrgResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{201})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{201}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -692,6 +652,8 @@ Create an organization project.
   POST /orgs/{org}/projects
 
 https://developer.github.com/v3/projects/#create-an-organization-project
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) CreateForOrg(ctx context.Context, req *CreateForOrgReq, opt ...requests.Option) (*CreateForOrgResponse, error) {
 	return CreateForOrg(ctx, req, append(c, opt...)...)
@@ -701,6 +663,8 @@ func (c Client) CreateForOrg(ctx context.Context, req *CreateForOrgReq, opt ...r
 CreateForOrgReq is request data for Client.CreateForOrg
 
 https://developer.github.com/v3/projects/#create-an-organization-project
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type CreateForOrgReq struct {
 	_url        string
@@ -717,19 +681,11 @@ type CreateForOrgReq struct {
 	InertiaPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *CreateForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *CreateForOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"inertia"},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -740,12 +696,12 @@ func (r *CreateForOrgReq) requestBuilder() *internal.RequestBuilder {
 		},
 		Method:           "POST",
 		OperationID:      "projects/create-for-org",
+		Options:          opt,
 		Previews:         map[string]bool{"inertia": r.InertiaPreview},
 		RequiredPreviews: []string{"inertia"},
 		URLPath:          fmt.Sprintf("/orgs/%v/projects", r.Org),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -785,8 +741,25 @@ type CreateForOrgResponse struct {
 	Data         components.Project
 }
 
+// HTTPResponse returns the *http.Response
 func (r *CreateForOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *CreateForOrgResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{201})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -799,45 +772,27 @@ Create a repository project.
 https://developer.github.com/v3/projects/#create-a-repository-project
 */
 func CreateForRepo(ctx context.Context, req *CreateForRepoReq, opt ...requests.Option) (*CreateForRepoResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(CreateForRepoReq)
 	}
 	resp := &CreateForRepoResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewCreateForRepoResponse(r, opts.PreserveResponseBody())
-}
-
-// NewCreateForRepoResponse builds a new *CreateForRepoResponse from an *http.Response
-func NewCreateForRepoResponse(resp *http.Response, preserveBody bool) (*CreateForRepoResponse, error) {
-	var result CreateForRepoResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{201})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{201}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -848,6 +803,8 @@ Create a repository project.
   POST /repos/{owner}/{repo}/projects
 
 https://developer.github.com/v3/projects/#create-a-repository-project
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) CreateForRepo(ctx context.Context, req *CreateForRepoReq, opt ...requests.Option) (*CreateForRepoResponse, error) {
 	return CreateForRepo(ctx, req, append(c, opt...)...)
@@ -857,6 +814,8 @@ func (c Client) CreateForRepo(ctx context.Context, req *CreateForRepoReq, opt ..
 CreateForRepoReq is request data for Client.CreateForRepo
 
 https://developer.github.com/v3/projects/#create-a-repository-project
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type CreateForRepoReq struct {
 	_url        string
@@ -874,19 +833,11 @@ type CreateForRepoReq struct {
 	InertiaPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *CreateForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *CreateForRepoReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"inertia"},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -897,12 +848,12 @@ func (r *CreateForRepoReq) requestBuilder() *internal.RequestBuilder {
 		},
 		Method:           "POST",
 		OperationID:      "projects/create-for-repo",
+		Options:          opt,
 		Previews:         map[string]bool{"inertia": r.InertiaPreview},
 		RequiredPreviews: []string{"inertia"},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/projects", r.Owner, r.Repo),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -942,8 +893,25 @@ type CreateForRepoResponse struct {
 	Data         components.Project
 }
 
+// HTTPResponse returns the *http.Response
 func (r *CreateForRepoResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *CreateForRepoResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{201})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -956,39 +924,27 @@ Delete a project.
 https://developer.github.com/v3/projects/#delete-a-project
 */
 func Delete(ctx context.Context, req *DeleteReq, opt ...requests.Option) (*DeleteResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(DeleteReq)
 	}
 	resp := &DeleteResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewDeleteResponse(r, opts.PreserveResponseBody())
-}
-
-// NewDeleteResponse builds a new *DeleteResponse from an *http.Response
-func NewDeleteResponse(resp *http.Response, preserveBody bool) (*DeleteResponse, error) {
-	var result DeleteResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{204, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -999,6 +955,8 @@ Delete a project.
   DELETE /projects/{project_id}
 
 https://developer.github.com/v3/projects/#delete-a-project
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) Delete(ctx context.Context, req *DeleteReq, opt ...requests.Option) (*DeleteResponse, error) {
 	return Delete(ctx, req, append(c, opt...)...)
@@ -1008,6 +966,8 @@ func (c Client) Delete(ctx context.Context, req *DeleteReq, opt ...requests.Opti
 DeleteReq is request data for Client.Delete
 
 https://developer.github.com/v3/projects/#delete-a-project
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type DeleteReq struct {
 	_url      string
@@ -1023,19 +983,11 @@ type DeleteReq struct {
 	InertiaPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *DeleteReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *DeleteReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"inertia"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -1043,12 +995,12 @@ func (r *DeleteReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
 		OperationID:        "projects/delete",
+		Options:            opt,
 		Previews:           map[string]bool{"inertia": r.InertiaPreview},
 		RequiredPreviews:   []string{"inertia"},
 		URLPath:            fmt.Sprintf("/projects/%v", r.ProjectId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1073,8 +1025,19 @@ type DeleteResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *DeleteResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *DeleteResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{204, 304})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -1087,39 +1050,27 @@ Delete a project card.
 https://developer.github.com/v3/projects/cards/#delete-a-project-card
 */
 func DeleteCard(ctx context.Context, req *DeleteCardReq, opt ...requests.Option) (*DeleteCardResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(DeleteCardReq)
 	}
 	resp := &DeleteCardResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewDeleteCardResponse(r, opts.PreserveResponseBody())
-}
-
-// NewDeleteCardResponse builds a new *DeleteCardResponse from an *http.Response
-func NewDeleteCardResponse(resp *http.Response, preserveBody bool) (*DeleteCardResponse, error) {
-	var result DeleteCardResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{204, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -1130,6 +1081,8 @@ Delete a project card.
   DELETE /projects/columns/cards/{card_id}
 
 https://developer.github.com/v3/projects/cards/#delete-a-project-card
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) DeleteCard(ctx context.Context, req *DeleteCardReq, opt ...requests.Option) (*DeleteCardResponse, error) {
 	return DeleteCard(ctx, req, append(c, opt...)...)
@@ -1139,6 +1092,8 @@ func (c Client) DeleteCard(ctx context.Context, req *DeleteCardReq, opt ...reque
 DeleteCardReq is request data for Client.DeleteCard
 
 https://developer.github.com/v3/projects/cards/#delete-a-project-card
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type DeleteCardReq struct {
 	_url string
@@ -1156,19 +1111,11 @@ type DeleteCardReq struct {
 	InertiaPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *DeleteCardReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *DeleteCardReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"inertia"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -1176,12 +1123,12 @@ func (r *DeleteCardReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
 		OperationID:        "projects/delete-card",
+		Options:            opt,
 		Previews:           map[string]bool{"inertia": r.InertiaPreview},
 		RequiredPreviews:   []string{"inertia"},
 		URLPath:            fmt.Sprintf("/projects/columns/cards/%v", r.CardId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1206,8 +1153,19 @@ type DeleteCardResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *DeleteCardResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *DeleteCardResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{204, 304})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -1220,39 +1178,27 @@ Delete a project column.
 https://developer.github.com/v3/projects/columns/#delete-a-project-column
 */
 func DeleteColumn(ctx context.Context, req *DeleteColumnReq, opt ...requests.Option) (*DeleteColumnResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(DeleteColumnReq)
 	}
 	resp := &DeleteColumnResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewDeleteColumnResponse(r, opts.PreserveResponseBody())
-}
-
-// NewDeleteColumnResponse builds a new *DeleteColumnResponse from an *http.Response
-func NewDeleteColumnResponse(resp *http.Response, preserveBody bool) (*DeleteColumnResponse, error) {
-	var result DeleteColumnResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{204, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -1263,6 +1209,8 @@ Delete a project column.
   DELETE /projects/columns/{column_id}
 
 https://developer.github.com/v3/projects/columns/#delete-a-project-column
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) DeleteColumn(ctx context.Context, req *DeleteColumnReq, opt ...requests.Option) (*DeleteColumnResponse, error) {
 	return DeleteColumn(ctx, req, append(c, opt...)...)
@@ -1272,6 +1220,8 @@ func (c Client) DeleteColumn(ctx context.Context, req *DeleteColumnReq, opt ...r
 DeleteColumnReq is request data for Client.DeleteColumn
 
 https://developer.github.com/v3/projects/columns/#delete-a-project-column
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type DeleteColumnReq struct {
 	_url string
@@ -1289,19 +1239,11 @@ type DeleteColumnReq struct {
 	InertiaPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *DeleteColumnReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *DeleteColumnReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"inertia"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -1309,12 +1251,12 @@ func (r *DeleteColumnReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
 		OperationID:        "projects/delete-column",
+		Options:            opt,
 		Previews:           map[string]bool{"inertia": r.InertiaPreview},
 		RequiredPreviews:   []string{"inertia"},
 		URLPath:            fmt.Sprintf("/projects/columns/%v", r.ColumnId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1339,8 +1281,19 @@ type DeleteColumnResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *DeleteColumnResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *DeleteColumnResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{204, 304})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -1353,45 +1306,27 @@ Get a project.
 https://developer.github.com/v3/projects/#get-a-project
 */
 func Get(ctx context.Context, req *GetReq, opt ...requests.Option) (*GetResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetReq)
 	}
 	resp := &GetResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetResponse builds a new *GetResponse from an *http.Response
-func NewGetResponse(resp *http.Response, preserveBody bool) (*GetResponse, error) {
-	var result GetResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -1402,6 +1337,8 @@ Get a project.
   GET /projects/{project_id}
 
 https://developer.github.com/v3/projects/#get-a-project
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) Get(ctx context.Context, req *GetReq, opt ...requests.Option) (*GetResponse, error) {
 	return Get(ctx, req, append(c, opt...)...)
@@ -1411,6 +1348,8 @@ func (c Client) Get(ctx context.Context, req *GetReq, opt ...requests.Option) (*
 GetReq is request data for Client.Get
 
 https://developer.github.com/v3/projects/#get-a-project
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetReq struct {
 	_url      string
@@ -1426,19 +1365,11 @@ type GetReq struct {
 	InertiaPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"inertia"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -1446,12 +1377,12 @@ func (r *GetReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "projects/get",
+		Options:            opt,
 		Previews:           map[string]bool{"inertia": r.InertiaPreview},
 		RequiredPreviews:   []string{"inertia"},
 		URLPath:            fmt.Sprintf("/projects/%v", r.ProjectId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1477,8 +1408,25 @@ type GetResponse struct {
 	Data         components.Project
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -1491,45 +1439,27 @@ Get a project card.
 https://developer.github.com/v3/projects/cards/#get-a-project-card
 */
 func GetCard(ctx context.Context, req *GetCardReq, opt ...requests.Option) (*GetCardResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetCardReq)
 	}
 	resp := &GetCardResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetCardResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetCardResponse builds a new *GetCardResponse from an *http.Response
-func NewGetCardResponse(resp *http.Response, preserveBody bool) (*GetCardResponse, error) {
-	var result GetCardResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -1540,6 +1470,8 @@ Get a project card.
   GET /projects/columns/cards/{card_id}
 
 https://developer.github.com/v3/projects/cards/#get-a-project-card
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) GetCard(ctx context.Context, req *GetCardReq, opt ...requests.Option) (*GetCardResponse, error) {
 	return GetCard(ctx, req, append(c, opt...)...)
@@ -1549,6 +1481,8 @@ func (c Client) GetCard(ctx context.Context, req *GetCardReq, opt ...requests.Op
 GetCardReq is request data for Client.GetCard
 
 https://developer.github.com/v3/projects/cards/#get-a-project-card
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetCardReq struct {
 	_url string
@@ -1566,19 +1500,11 @@ type GetCardReq struct {
 	InertiaPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetCardReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetCardReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"inertia"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -1586,12 +1512,12 @@ func (r *GetCardReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "projects/get-card",
+		Options:            opt,
 		Previews:           map[string]bool{"inertia": r.InertiaPreview},
 		RequiredPreviews:   []string{"inertia"},
 		URLPath:            fmt.Sprintf("/projects/columns/cards/%v", r.CardId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1617,8 +1543,25 @@ type GetCardResponse struct {
 	Data         components.ProjectCard
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetCardResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetCardResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -1631,45 +1574,27 @@ Get a project column.
 https://developer.github.com/v3/projects/columns/#get-a-project-column
 */
 func GetColumn(ctx context.Context, req *GetColumnReq, opt ...requests.Option) (*GetColumnResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetColumnReq)
 	}
 	resp := &GetColumnResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetColumnResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetColumnResponse builds a new *GetColumnResponse from an *http.Response
-func NewGetColumnResponse(resp *http.Response, preserveBody bool) (*GetColumnResponse, error) {
-	var result GetColumnResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -1680,6 +1605,8 @@ Get a project column.
   GET /projects/columns/{column_id}
 
 https://developer.github.com/v3/projects/columns/#get-a-project-column
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) GetColumn(ctx context.Context, req *GetColumnReq, opt ...requests.Option) (*GetColumnResponse, error) {
 	return GetColumn(ctx, req, append(c, opt...)...)
@@ -1689,6 +1616,8 @@ func (c Client) GetColumn(ctx context.Context, req *GetColumnReq, opt ...request
 GetColumnReq is request data for Client.GetColumn
 
 https://developer.github.com/v3/projects/columns/#get-a-project-column
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetColumnReq struct {
 	_url string
@@ -1706,19 +1635,11 @@ type GetColumnReq struct {
 	InertiaPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetColumnReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetColumnReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"inertia"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -1726,12 +1647,12 @@ func (r *GetColumnReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "projects/get-column",
+		Options:            opt,
 		Previews:           map[string]bool{"inertia": r.InertiaPreview},
 		RequiredPreviews:   []string{"inertia"},
 		URLPath:            fmt.Sprintf("/projects/columns/%v", r.ColumnId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1757,8 +1678,25 @@ type GetColumnResponse struct {
 	Data         components.ProjectColumn
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetColumnResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetColumnResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -1771,45 +1709,27 @@ Get project permission for a user.
 https://developer.github.com/v3/projects/collaborators/#get-project-permission-for-a-user
 */
 func GetPermissionForUser(ctx context.Context, req *GetPermissionForUserReq, opt ...requests.Option) (*GetPermissionForUserResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetPermissionForUserReq)
 	}
 	resp := &GetPermissionForUserResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetPermissionForUserResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetPermissionForUserResponse builds a new *GetPermissionForUserResponse from an *http.Response
-func NewGetPermissionForUserResponse(resp *http.Response, preserveBody bool) (*GetPermissionForUserResponse, error) {
-	var result GetPermissionForUserResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -1820,6 +1740,8 @@ Get project permission for a user.
   GET /projects/{project_id}/collaborators/{username}/permission
 
 https://developer.github.com/v3/projects/collaborators/#get-project-permission-for-a-user
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) GetPermissionForUser(ctx context.Context, req *GetPermissionForUserReq, opt ...requests.Option) (*GetPermissionForUserResponse, error) {
 	return GetPermissionForUser(ctx, req, append(c, opt...)...)
@@ -1829,6 +1751,8 @@ func (c Client) GetPermissionForUser(ctx context.Context, req *GetPermissionForU
 GetPermissionForUserReq is request data for Client.GetPermissionForUser
 
 https://developer.github.com/v3/projects/collaborators/#get-project-permission-for-a-user
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetPermissionForUserReq struct {
 	_url      string
@@ -1845,19 +1769,11 @@ type GetPermissionForUserReq struct {
 	InertiaPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetPermissionForUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetPermissionForUserReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"inertia"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -1865,12 +1781,12 @@ func (r *GetPermissionForUserReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "projects/get-permission-for-user",
+		Options:            opt,
 		Previews:           map[string]bool{"inertia": r.InertiaPreview},
 		RequiredPreviews:   []string{"inertia"},
 		URLPath:            fmt.Sprintf("/projects/%v/collaborators/%v/permission", r.ProjectId, r.Username),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1896,8 +1812,25 @@ type GetPermissionForUserResponse struct {
 	Data         components.RepositoryCollaboratorPermission
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetPermissionForUserResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetPermissionForUserResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -1910,45 +1843,27 @@ List project cards.
 https://developer.github.com/v3/projects/cards/#list-project-cards
 */
 func ListCards(ctx context.Context, req *ListCardsReq, opt ...requests.Option) (*ListCardsResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListCardsReq)
 	}
 	resp := &ListCardsResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListCardsResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListCardsResponse builds a new *ListCardsResponse from an *http.Response
-func NewListCardsResponse(resp *http.Response, preserveBody bool) (*ListCardsResponse, error) {
-	var result ListCardsResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -1959,6 +1874,8 @@ List project cards.
   GET /projects/columns/{column_id}/cards
 
 https://developer.github.com/v3/projects/cards/#list-project-cards
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListCards(ctx context.Context, req *ListCardsReq, opt ...requests.Option) (*ListCardsResponse, error) {
 	return ListCards(ctx, req, append(c, opt...)...)
@@ -1968,6 +1885,8 @@ func (c Client) ListCards(ctx context.Context, req *ListCardsReq, opt ...request
 ListCardsReq is request data for Client.ListCards
 
 https://developer.github.com/v3/projects/cards/#list-project-cards
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListCardsReq struct {
 	_url string
@@ -1997,16 +1916,8 @@ type ListCardsReq struct {
 	InertiaPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListCardsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListCardsReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.ArchivedState != nil {
 		query.Set("archived_state", *r.ArchivedState)
@@ -2018,7 +1929,7 @@ func (r *ListCardsReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"inertia"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -2026,12 +1937,12 @@ func (r *ListCardsReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "projects/list-cards",
+		Options:            opt,
 		Previews:           map[string]bool{"inertia": r.InertiaPreview},
 		RequiredPreviews:   []string{"inertia"},
 		URLPath:            fmt.Sprintf("/projects/columns/%v/cards", r.ColumnId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -2057,8 +1968,25 @@ type ListCardsResponse struct {
 	Data         []components.ProjectCard
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListCardsResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListCardsResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -2071,45 +1999,27 @@ List project collaborators.
 https://developer.github.com/v3/projects/collaborators/#list-project-collaborators
 */
 func ListCollaborators(ctx context.Context, req *ListCollaboratorsReq, opt ...requests.Option) (*ListCollaboratorsResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListCollaboratorsReq)
 	}
 	resp := &ListCollaboratorsResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListCollaboratorsResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListCollaboratorsResponse builds a new *ListCollaboratorsResponse from an *http.Response
-func NewListCollaboratorsResponse(resp *http.Response, preserveBody bool) (*ListCollaboratorsResponse, error) {
-	var result ListCollaboratorsResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -2120,6 +2030,8 @@ List project collaborators.
   GET /projects/{project_id}/collaborators
 
 https://developer.github.com/v3/projects/collaborators/#list-project-collaborators
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListCollaborators(ctx context.Context, req *ListCollaboratorsReq, opt ...requests.Option) (*ListCollaboratorsResponse, error) {
 	return ListCollaborators(ctx, req, append(c, opt...)...)
@@ -2129,6 +2041,8 @@ func (c Client) ListCollaborators(ctx context.Context, req *ListCollaboratorsReq
 ListCollaboratorsReq is request data for Client.ListCollaborators
 
 https://developer.github.com/v3/projects/collaborators/#list-project-collaborators
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListCollaboratorsReq struct {
 	_url      string
@@ -2160,16 +2074,8 @@ type ListCollaboratorsReq struct {
 	InertiaPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListCollaboratorsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListCollaboratorsReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Affiliation != nil {
 		query.Set("affiliation", *r.Affiliation)
@@ -2181,7 +2087,7 @@ func (r *ListCollaboratorsReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"inertia"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -2189,12 +2095,12 @@ func (r *ListCollaboratorsReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "projects/list-collaborators",
+		Options:            opt,
 		Previews:           map[string]bool{"inertia": r.InertiaPreview},
 		RequiredPreviews:   []string{"inertia"},
 		URLPath:            fmt.Sprintf("/projects/%v/collaborators", r.ProjectId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -2220,8 +2126,25 @@ type ListCollaboratorsResponse struct {
 	Data         []components.SimpleUser
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListCollaboratorsResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListCollaboratorsResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -2234,45 +2157,27 @@ List project columns.
 https://developer.github.com/v3/projects/columns/#list-project-columns
 */
 func ListColumns(ctx context.Context, req *ListColumnsReq, opt ...requests.Option) (*ListColumnsResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListColumnsReq)
 	}
 	resp := &ListColumnsResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListColumnsResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListColumnsResponse builds a new *ListColumnsResponse from an *http.Response
-func NewListColumnsResponse(resp *http.Response, preserveBody bool) (*ListColumnsResponse, error) {
-	var result ListColumnsResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -2283,6 +2188,8 @@ List project columns.
   GET /projects/{project_id}/columns
 
 https://developer.github.com/v3/projects/columns/#list-project-columns
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListColumns(ctx context.Context, req *ListColumnsReq, opt ...requests.Option) (*ListColumnsResponse, error) {
 	return ListColumns(ctx, req, append(c, opt...)...)
@@ -2292,6 +2199,8 @@ func (c Client) ListColumns(ctx context.Context, req *ListColumnsReq, opt ...req
 ListColumnsReq is request data for Client.ListColumns
 
 https://developer.github.com/v3/projects/columns/#list-project-columns
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListColumnsReq struct {
 	_url      string
@@ -2313,16 +2222,8 @@ type ListColumnsReq struct {
 	InertiaPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListColumnsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListColumnsReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -2331,7 +2232,7 @@ func (r *ListColumnsReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"inertia"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -2339,12 +2240,12 @@ func (r *ListColumnsReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "projects/list-columns",
+		Options:            opt,
 		Previews:           map[string]bool{"inertia": r.InertiaPreview},
 		RequiredPreviews:   []string{"inertia"},
 		URLPath:            fmt.Sprintf("/projects/%v/columns", r.ProjectId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -2370,8 +2271,25 @@ type ListColumnsResponse struct {
 	Data         []components.ProjectColumn
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListColumnsResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListColumnsResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -2384,45 +2302,27 @@ List organization projects.
 https://developer.github.com/v3/projects/#list-organization-projects
 */
 func ListForOrg(ctx context.Context, req *ListForOrgReq, opt ...requests.Option) (*ListForOrgResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListForOrgReq)
 	}
 	resp := &ListForOrgResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListForOrgResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListForOrgResponse builds a new *ListForOrgResponse from an *http.Response
-func NewListForOrgResponse(resp *http.Response, preserveBody bool) (*ListForOrgResponse, error) {
-	var result ListForOrgResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -2433,6 +2333,8 @@ List organization projects.
   GET /orgs/{org}/projects
 
 https://developer.github.com/v3/projects/#list-organization-projects
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListForOrg(ctx context.Context, req *ListForOrgReq, opt ...requests.Option) (*ListForOrgResponse, error) {
 	return ListForOrg(ctx, req, append(c, opt...)...)
@@ -2442,6 +2344,8 @@ func (c Client) ListForOrg(ctx context.Context, req *ListForOrgReq, opt ...reque
 ListForOrgReq is request data for Client.ListForOrg
 
 https://developer.github.com/v3/projects/#list-organization-projects
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListForOrgReq struct {
 	_url string
@@ -2469,16 +2373,8 @@ type ListForOrgReq struct {
 	InertiaPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListForOrgReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.State != nil {
 		query.Set("state", *r.State)
@@ -2490,7 +2386,7 @@ func (r *ListForOrgReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"inertia"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -2498,12 +2394,12 @@ func (r *ListForOrgReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "projects/list-for-org",
+		Options:            opt,
 		Previews:           map[string]bool{"inertia": r.InertiaPreview},
 		RequiredPreviews:   []string{"inertia"},
 		URLPath:            fmt.Sprintf("/orgs/%v/projects", r.Org),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -2529,8 +2425,25 @@ type ListForOrgResponse struct {
 	Data         []components.Project
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListForOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListForOrgResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -2543,45 +2456,27 @@ List repository projects.
 https://developer.github.com/v3/projects/#list-repository-projects
 */
 func ListForRepo(ctx context.Context, req *ListForRepoReq, opt ...requests.Option) (*ListForRepoResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListForRepoReq)
 	}
 	resp := &ListForRepoResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListForRepoResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListForRepoResponse builds a new *ListForRepoResponse from an *http.Response
-func NewListForRepoResponse(resp *http.Response, preserveBody bool) (*ListForRepoResponse, error) {
-	var result ListForRepoResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -2592,6 +2487,8 @@ List repository projects.
   GET /repos/{owner}/{repo}/projects
 
 https://developer.github.com/v3/projects/#list-repository-projects
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListForRepo(ctx context.Context, req *ListForRepoReq, opt ...requests.Option) (*ListForRepoResponse, error) {
 	return ListForRepo(ctx, req, append(c, opt...)...)
@@ -2601,6 +2498,8 @@ func (c Client) ListForRepo(ctx context.Context, req *ListForRepoReq, opt ...req
 ListForRepoReq is request data for Client.ListForRepo
 
 https://developer.github.com/v3/projects/#list-repository-projects
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListForRepoReq struct {
 	_url  string
@@ -2629,16 +2528,8 @@ type ListForRepoReq struct {
 	InertiaPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListForRepoReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.State != nil {
 		query.Set("state", *r.State)
@@ -2650,7 +2541,7 @@ func (r *ListForRepoReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"inertia"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -2658,12 +2549,12 @@ func (r *ListForRepoReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "projects/list-for-repo",
+		Options:            opt,
 		Previews:           map[string]bool{"inertia": r.InertiaPreview},
 		RequiredPreviews:   []string{"inertia"},
 		URLPath:            fmt.Sprintf("/repos/%v/%v/projects", r.Owner, r.Repo),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -2689,8 +2580,25 @@ type ListForRepoResponse struct {
 	Data         []components.Project
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListForRepoResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListForRepoResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -2703,45 +2611,27 @@ List user projects.
 https://developer.github.com/v3/projects/#list-user-projects
 */
 func ListForUser(ctx context.Context, req *ListForUserReq, opt ...requests.Option) (*ListForUserResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListForUserReq)
 	}
 	resp := &ListForUserResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListForUserResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListForUserResponse builds a new *ListForUserResponse from an *http.Response
-func NewListForUserResponse(resp *http.Response, preserveBody bool) (*ListForUserResponse, error) {
-	var result ListForUserResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -2752,6 +2642,8 @@ List user projects.
   GET /users/{username}/projects
 
 https://developer.github.com/v3/projects/#list-user-projects
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListForUser(ctx context.Context, req *ListForUserReq, opt ...requests.Option) (*ListForUserResponse, error) {
 	return ListForUser(ctx, req, append(c, opt...)...)
@@ -2761,6 +2653,8 @@ func (c Client) ListForUser(ctx context.Context, req *ListForUserReq, opt ...req
 ListForUserReq is request data for Client.ListForUser
 
 https://developer.github.com/v3/projects/#list-user-projects
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListForUserReq struct {
 	_url     string
@@ -2788,16 +2682,8 @@ type ListForUserReq struct {
 	InertiaPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListForUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListForUserReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.State != nil {
 		query.Set("state", *r.State)
@@ -2809,7 +2695,7 @@ func (r *ListForUserReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"inertia"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -2817,12 +2703,12 @@ func (r *ListForUserReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "projects/list-for-user",
+		Options:            opt,
 		Previews:           map[string]bool{"inertia": r.InertiaPreview},
 		RequiredPreviews:   []string{"inertia"},
 		URLPath:            fmt.Sprintf("/users/%v/projects", r.Username),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -2848,8 +2734,25 @@ type ListForUserResponse struct {
 	Data         []components.Project
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListForUserResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListForUserResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -2862,39 +2765,27 @@ Move a project card.
 https://developer.github.com/v3/projects/cards/#move-a-project-card
 */
 func MoveCard(ctx context.Context, req *MoveCardReq, opt ...requests.Option) (*MoveCardResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(MoveCardReq)
 	}
 	resp := &MoveCardResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewMoveCardResponse(r, opts.PreserveResponseBody())
-}
-
-// NewMoveCardResponse builds a new *MoveCardResponse from an *http.Response
-func NewMoveCardResponse(resp *http.Response, preserveBody bool) (*MoveCardResponse, error) {
-	var result MoveCardResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{201, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -2905,6 +2796,8 @@ Move a project card.
   POST /projects/columns/cards/{card_id}/moves
 
 https://developer.github.com/v3/projects/cards/#move-a-project-card
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) MoveCard(ctx context.Context, req *MoveCardReq, opt ...requests.Option) (*MoveCardResponse, error) {
 	return MoveCard(ctx, req, append(c, opt...)...)
@@ -2914,6 +2807,8 @@ func (c Client) MoveCard(ctx context.Context, req *MoveCardReq, opt ...requests.
 MoveCardReq is request data for Client.MoveCard
 
 https://developer.github.com/v3/projects/cards/#move-a-project-card
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type MoveCardReq struct {
 	_url string
@@ -2932,19 +2827,11 @@ type MoveCardReq struct {
 	InertiaPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *MoveCardReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *MoveCardReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"inertia"},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody, internal.AttrNoResponseBody},
@@ -2955,12 +2842,12 @@ func (r *MoveCardReq) requestBuilder() *internal.RequestBuilder {
 		},
 		Method:           "POST",
 		OperationID:      "projects/move-card",
+		Options:          opt,
 		Previews:         map[string]bool{"inertia": r.InertiaPreview},
 		RequiredPreviews: []string{"inertia"},
 		URLPath:          fmt.Sprintf("/projects/columns/cards/%v/moves", r.CardId),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -2999,8 +2886,19 @@ type MoveCardResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *MoveCardResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *MoveCardResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{201, 304})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -3013,39 +2911,27 @@ Move a project column.
 https://developer.github.com/v3/projects/columns/#move-a-project-column
 */
 func MoveColumn(ctx context.Context, req *MoveColumnReq, opt ...requests.Option) (*MoveColumnResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(MoveColumnReq)
 	}
 	resp := &MoveColumnResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewMoveColumnResponse(r, opts.PreserveResponseBody())
-}
-
-// NewMoveColumnResponse builds a new *MoveColumnResponse from an *http.Response
-func NewMoveColumnResponse(resp *http.Response, preserveBody bool) (*MoveColumnResponse, error) {
-	var result MoveColumnResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{201, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -3056,6 +2942,8 @@ Move a project column.
   POST /projects/columns/{column_id}/moves
 
 https://developer.github.com/v3/projects/columns/#move-a-project-column
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) MoveColumn(ctx context.Context, req *MoveColumnReq, opt ...requests.Option) (*MoveColumnResponse, error) {
 	return MoveColumn(ctx, req, append(c, opt...)...)
@@ -3065,6 +2953,8 @@ func (c Client) MoveColumn(ctx context.Context, req *MoveColumnReq, opt ...reque
 MoveColumnReq is request data for Client.MoveColumn
 
 https://developer.github.com/v3/projects/columns/#move-a-project-column
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type MoveColumnReq struct {
 	_url string
@@ -3083,19 +2973,11 @@ type MoveColumnReq struct {
 	InertiaPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *MoveColumnReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *MoveColumnReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"inertia"},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody, internal.AttrNoResponseBody},
@@ -3106,12 +2988,12 @@ func (r *MoveColumnReq) requestBuilder() *internal.RequestBuilder {
 		},
 		Method:           "POST",
 		OperationID:      "projects/move-column",
+		Options:          opt,
 		Previews:         map[string]bool{"inertia": r.InertiaPreview},
 		RequiredPreviews: []string{"inertia"},
 		URLPath:          fmt.Sprintf("/projects/columns/%v/moves", r.ColumnId),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -3147,8 +3029,19 @@ type MoveColumnResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *MoveColumnResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *MoveColumnResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{201, 304})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -3161,39 +3054,27 @@ Remove user as a collaborator.
 https://developer.github.com/v3/projects/collaborators/#remove-project-collaborator
 */
 func RemoveCollaborator(ctx context.Context, req *RemoveCollaboratorReq, opt ...requests.Option) (*RemoveCollaboratorResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(RemoveCollaboratorReq)
 	}
 	resp := &RemoveCollaboratorResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewRemoveCollaboratorResponse(r, opts.PreserveResponseBody())
-}
-
-// NewRemoveCollaboratorResponse builds a new *RemoveCollaboratorResponse from an *http.Response
-func NewRemoveCollaboratorResponse(resp *http.Response, preserveBody bool) (*RemoveCollaboratorResponse, error) {
-	var result RemoveCollaboratorResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{204, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -3204,6 +3085,8 @@ Remove user as a collaborator.
   DELETE /projects/{project_id}/collaborators/{username}
 
 https://developer.github.com/v3/projects/collaborators/#remove-project-collaborator
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) RemoveCollaborator(ctx context.Context, req *RemoveCollaboratorReq, opt ...requests.Option) (*RemoveCollaboratorResponse, error) {
 	return RemoveCollaborator(ctx, req, append(c, opt...)...)
@@ -3213,6 +3096,8 @@ func (c Client) RemoveCollaborator(ctx context.Context, req *RemoveCollaboratorR
 RemoveCollaboratorReq is request data for Client.RemoveCollaborator
 
 https://developer.github.com/v3/projects/collaborators/#remove-project-collaborator
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type RemoveCollaboratorReq struct {
 	_url      string
@@ -3229,19 +3114,11 @@ type RemoveCollaboratorReq struct {
 	InertiaPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *RemoveCollaboratorReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *RemoveCollaboratorReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"inertia"},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -3249,12 +3126,12 @@ func (r *RemoveCollaboratorReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
 		OperationID:        "projects/remove-collaborator",
+		Options:            opt,
 		Previews:           map[string]bool{"inertia": r.InertiaPreview},
 		RequiredPreviews:   []string{"inertia"},
 		URLPath:            fmt.Sprintf("/projects/%v/collaborators/%v", r.ProjectId, r.Username),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -3279,8 +3156,19 @@ type RemoveCollaboratorResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *RemoveCollaboratorResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *RemoveCollaboratorResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{204, 304})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -3293,45 +3181,27 @@ Update a project.
 https://developer.github.com/v3/projects/#update-a-project
 */
 func Update(ctx context.Context, req *UpdateReq, opt ...requests.Option) (*UpdateResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(UpdateReq)
 	}
 	resp := &UpdateResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewUpdateResponse(r, opts.PreserveResponseBody())
-}
-
-// NewUpdateResponse builds a new *UpdateResponse from an *http.Response
-func NewUpdateResponse(resp *http.Response, preserveBody bool) (*UpdateResponse, error) {
-	var result UpdateResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -3342,6 +3212,8 @@ Update a project.
   PATCH /projects/{project_id}
 
 https://developer.github.com/v3/projects/#update-a-project
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) Update(ctx context.Context, req *UpdateReq, opt ...requests.Option) (*UpdateResponse, error) {
 	return Update(ctx, req, append(c, opt...)...)
@@ -3351,6 +3223,8 @@ func (c Client) Update(ctx context.Context, req *UpdateReq, opt ...requests.Opti
 UpdateReq is request data for Client.Update
 
 https://developer.github.com/v3/projects/#update-a-project
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type UpdateReq struct {
 	_url        string
@@ -3367,19 +3241,11 @@ type UpdateReq struct {
 	InertiaPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *UpdateReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *UpdateReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"inertia"},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -3390,12 +3256,12 @@ func (r *UpdateReq) requestBuilder() *internal.RequestBuilder {
 		},
 		Method:           "PATCH",
 		OperationID:      "projects/update",
+		Options:          opt,
 		Previews:         map[string]bool{"inertia": r.InertiaPreview},
 		RequiredPreviews: []string{"inertia"},
 		URLPath:          fmt.Sprintf("/projects/%v", r.ProjectId),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -3444,8 +3310,25 @@ type UpdateResponse struct {
 	Data         components.Project
 }
 
+// HTTPResponse returns the *http.Response
 func (r *UpdateResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *UpdateResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -3458,45 +3341,27 @@ Update an existing project card.
 https://developer.github.com/v3/projects/cards/#update-a-project-card
 */
 func UpdateCard(ctx context.Context, req *UpdateCardReq, opt ...requests.Option) (*UpdateCardResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(UpdateCardReq)
 	}
 	resp := &UpdateCardResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewUpdateCardResponse(r, opts.PreserveResponseBody())
-}
-
-// NewUpdateCardResponse builds a new *UpdateCardResponse from an *http.Response
-func NewUpdateCardResponse(resp *http.Response, preserveBody bool) (*UpdateCardResponse, error) {
-	var result UpdateCardResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -3507,6 +3372,8 @@ Update an existing project card.
   PATCH /projects/columns/cards/{card_id}
 
 https://developer.github.com/v3/projects/cards/#update-a-project-card
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) UpdateCard(ctx context.Context, req *UpdateCardReq, opt ...requests.Option) (*UpdateCardResponse, error) {
 	return UpdateCard(ctx, req, append(c, opt...)...)
@@ -3516,6 +3383,8 @@ func (c Client) UpdateCard(ctx context.Context, req *UpdateCardReq, opt ...reque
 UpdateCardReq is request data for Client.UpdateCard
 
 https://developer.github.com/v3/projects/cards/#update-a-project-card
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type UpdateCardReq struct {
 	_url string
@@ -3534,19 +3403,11 @@ type UpdateCardReq struct {
 	InertiaPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *UpdateCardReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *UpdateCardReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"inertia"},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -3557,12 +3418,12 @@ func (r *UpdateCardReq) requestBuilder() *internal.RequestBuilder {
 		},
 		Method:           "PATCH",
 		OperationID:      "projects/update-card",
+		Options:          opt,
 		Previews:         map[string]bool{"inertia": r.InertiaPreview},
 		RequiredPreviews: []string{"inertia"},
 		URLPath:          fmt.Sprintf("/projects/columns/cards/%v", r.CardId),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -3602,8 +3463,25 @@ type UpdateCardResponse struct {
 	Data         components.ProjectCard
 }
 
+// HTTPResponse returns the *http.Response
 func (r *UpdateCardResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *UpdateCardResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -3616,45 +3494,27 @@ Update an existing project column.
 https://developer.github.com/v3/projects/columns/#update-a-project-column
 */
 func UpdateColumn(ctx context.Context, req *UpdateColumnReq, opt ...requests.Option) (*UpdateColumnResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(UpdateColumnReq)
 	}
 	resp := &UpdateColumnResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewUpdateColumnResponse(r, opts.PreserveResponseBody())
-}
-
-// NewUpdateColumnResponse builds a new *UpdateColumnResponse from an *http.Response
-func NewUpdateColumnResponse(resp *http.Response, preserveBody bool) (*UpdateColumnResponse, error) {
-	var result UpdateColumnResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -3665,6 +3525,8 @@ Update an existing project column.
   PATCH /projects/columns/{column_id}
 
 https://developer.github.com/v3/projects/columns/#update-a-project-column
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) UpdateColumn(ctx context.Context, req *UpdateColumnReq, opt ...requests.Option) (*UpdateColumnResponse, error) {
 	return UpdateColumn(ctx, req, append(c, opt...)...)
@@ -3674,6 +3536,8 @@ func (c Client) UpdateColumn(ctx context.Context, req *UpdateColumnReq, opt ...r
 UpdateColumnReq is request data for Client.UpdateColumn
 
 https://developer.github.com/v3/projects/columns/#update-a-project-column
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type UpdateColumnReq struct {
 	_url string
@@ -3692,19 +3556,11 @@ type UpdateColumnReq struct {
 	InertiaPreview bool
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *UpdateColumnReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *UpdateColumnReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"inertia"},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -3715,12 +3571,12 @@ func (r *UpdateColumnReq) requestBuilder() *internal.RequestBuilder {
 		},
 		Method:           "PATCH",
 		OperationID:      "projects/update-column",
+		Options:          opt,
 		Previews:         map[string]bool{"inertia": r.InertiaPreview},
 		RequiredPreviews: []string{"inertia"},
 		URLPath:          fmt.Sprintf("/projects/columns/%v", r.ColumnId),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -3757,6 +3613,23 @@ type UpdateColumnResponse struct {
 	Data         components.ProjectColumn
 }
 
+// HTTPResponse returns the *http.Response
 func (r *UpdateColumnResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *UpdateColumnResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }

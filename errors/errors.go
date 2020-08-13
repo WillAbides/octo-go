@@ -4,33 +4,32 @@ import (
 	"net/http"
 )
 
-// UnexpectedStatusCodeError is returned when an unexpected status code is received, but
-// the status is not in the 4xx or 5xx range.
-type UnexpectedStatusCodeError struct {
-	HTTPResponse *http.Response
-	Message      string
+// RequestError is an error building an *http.Request
+type RequestError struct {
+	Message string
 }
 
-func (e *UnexpectedStatusCodeError) Error() string {
+func (e *RequestError) Error() string {
 	return e.Message
 }
 
-// ClientError is returned when the http status is in the 4xx range
-type ClientError struct {
-	HTTPResponse *http.Response
-	Message      string
+// ResponseError is an error from an *http.Response.
+type ResponseError interface {
+	HttpResponse() *http.Response
+	Error() string
+	Data() *ResponseErrorData // data from the error body if it can be unmarshalled
+	IsClientError() bool      // true if the http status is in the 4xx range
+	IsServerError() bool      // true if the http status is in the 5xx range
 }
 
-func (e *ClientError) Error() string {
-	return e.Message
-}
-
-// ServerError is returned when the http status is in the 5xx range
-type ServerError struct {
-	HTTPResponse *http.Response
-	Message      string
-}
-
-func (e *ServerError) Error() string {
-	return e.Message
+// ResponseErrorData all 4xx response bodies and maybe some 5xx should unmarshal to this
+type ResponseErrorData struct {
+	DocumentationUrl string `json:"documentation_url,omitempty"`
+	Message          string `json:"message,omitempty"`
+	Errors           []struct {
+		Code     string `json:"code,omitempty"`
+		Field    string `json:"field,omitempty"`
+		Message  string `json:"message,omitempty"`
+		Resource string `json:"resource,omitempty"`
+	} `json:"errors,omitempty"`
 }

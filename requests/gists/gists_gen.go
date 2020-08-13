@@ -13,8 +13,6 @@ import (
 	"strconv"
 )
 
-func strPtr(s string) *string { return &s }
-
 // Client is a set of options to apply to requests
 type Client []requests.Option
 
@@ -33,39 +31,27 @@ Check if a gist is starred.
 https://developer.github.com/v3/gists/#check-if-a-gist-is-starred
 */
 func CheckIsStarred(ctx context.Context, req *CheckIsStarredReq, opt ...requests.Option) (*CheckIsStarredResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(CheckIsStarredReq)
 	}
 	resp := &CheckIsStarredResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewCheckIsStarredResponse(r, opts.PreserveResponseBody())
-}
-
-// NewCheckIsStarredResponse builds a new *CheckIsStarredResponse from an *http.Response
-func NewCheckIsStarredResponse(resp *http.Response, preserveBody bool) (*CheckIsStarredResponse, error) {
-	var result CheckIsStarredResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{204, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -76,6 +62,8 @@ Check if a gist is starred.
   GET /gists/{gist_id}/star
 
 https://developer.github.com/v3/gists/#check-if-a-gist-is-starred
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) CheckIsStarred(ctx context.Context, req *CheckIsStarredReq, opt ...requests.Option) (*CheckIsStarredResponse, error) {
 	return CheckIsStarred(ctx, req, append(c, opt...)...)
@@ -85,6 +73,8 @@ func (c Client) CheckIsStarred(ctx context.Context, req *CheckIsStarredReq, opt 
 CheckIsStarredReq is request data for Client.CheckIsStarred
 
 https://developer.github.com/v3/gists/#check-if-a-gist-is-starred
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type CheckIsStarredReq struct {
 	_url string
@@ -93,19 +83,11 @@ type CheckIsStarredReq struct {
 	GistId string
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *CheckIsStarredReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *CheckIsStarredReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -113,12 +95,12 @@ func (r *CheckIsStarredReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{},
 		Method:             "GET",
 		OperationID:        "gists/check-is-starred",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/gists/%v/star", r.GistId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -143,8 +125,19 @@ type CheckIsStarredResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *CheckIsStarredResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *CheckIsStarredResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{204, 304})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -157,45 +150,27 @@ Create a gist.
 https://developer.github.com/v3/gists/#create-a-gist
 */
 func Create(ctx context.Context, req *CreateReq, opt ...requests.Option) (*CreateResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(CreateReq)
 	}
 	resp := &CreateResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewCreateResponse(r, opts.PreserveResponseBody())
-}
-
-// NewCreateResponse builds a new *CreateResponse from an *http.Response
-func NewCreateResponse(resp *http.Response, preserveBody bool) (*CreateResponse, error) {
-	var result CreateResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{201, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{201}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -206,6 +181,8 @@ Create a gist.
   POST /gists
 
 https://developer.github.com/v3/gists/#create-a-gist
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) Create(ctx context.Context, req *CreateReq, opt ...requests.Option) (*CreateResponse, error) {
 	return Create(ctx, req, append(c, opt...)...)
@@ -215,25 +192,19 @@ func (c Client) Create(ctx context.Context, req *CreateReq, opt ...requests.Opti
 CreateReq is request data for Client.Create
 
 https://developer.github.com/v3/gists/#create-a-gist
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type CreateReq struct {
 	_url        string
 	RequestBody CreateReqBody
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *CreateReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *CreateReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -244,12 +215,12 @@ func (r *CreateReq) requestBuilder() *internal.RequestBuilder {
 		},
 		Method:           "POST",
 		OperationID:      "gists/create",
+		Options:          opt,
 		Previews:         map[string]bool{},
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/gists"),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -299,8 +270,25 @@ type CreateResponse struct {
 	Data         components.GistFull
 }
 
+// HTTPResponse returns the *http.Response
 func (r *CreateResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *CreateResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{201, 304})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -313,45 +301,27 @@ Create a gist comment.
 https://developer.github.com/v3/gists/comments/#create-a-gist-comment
 */
 func CreateComment(ctx context.Context, req *CreateCommentReq, opt ...requests.Option) (*CreateCommentResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(CreateCommentReq)
 	}
 	resp := &CreateCommentResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewCreateCommentResponse(r, opts.PreserveResponseBody())
-}
-
-// NewCreateCommentResponse builds a new *CreateCommentResponse from an *http.Response
-func NewCreateCommentResponse(resp *http.Response, preserveBody bool) (*CreateCommentResponse, error) {
-	var result CreateCommentResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{201, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{201}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -362,6 +332,8 @@ Create a gist comment.
   POST /gists/{gist_id}/comments
 
 https://developer.github.com/v3/gists/comments/#create-a-gist-comment
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) CreateComment(ctx context.Context, req *CreateCommentReq, opt ...requests.Option) (*CreateCommentResponse, error) {
 	return CreateComment(ctx, req, append(c, opt...)...)
@@ -371,6 +343,8 @@ func (c Client) CreateComment(ctx context.Context, req *CreateCommentReq, opt ..
 CreateCommentReq is request data for Client.CreateComment
 
 https://developer.github.com/v3/gists/comments/#create-a-gist-comment
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type CreateCommentReq struct {
 	_url string
@@ -380,19 +354,11 @@ type CreateCommentReq struct {
 	RequestBody CreateCommentReqBody
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *CreateCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *CreateCommentReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -403,12 +369,12 @@ func (r *CreateCommentReq) requestBuilder() *internal.RequestBuilder {
 		},
 		Method:           "POST",
 		OperationID:      "gists/create-comment",
+		Options:          opt,
 		Previews:         map[string]bool{},
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/gists/%v/comments", r.GistId),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -445,8 +411,25 @@ type CreateCommentResponse struct {
 	Data         components.GistComment
 }
 
+// HTTPResponse returns the *http.Response
 func (r *CreateCommentResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *CreateCommentResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{201, 304})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -459,39 +442,27 @@ Delete a gist.
 https://developer.github.com/v3/gists/#delete-a-gist
 */
 func Delete(ctx context.Context, req *DeleteReq, opt ...requests.Option) (*DeleteResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(DeleteReq)
 	}
 	resp := &DeleteResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewDeleteResponse(r, opts.PreserveResponseBody())
-}
-
-// NewDeleteResponse builds a new *DeleteResponse from an *http.Response
-func NewDeleteResponse(resp *http.Response, preserveBody bool) (*DeleteResponse, error) {
-	var result DeleteResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{204, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -502,6 +473,8 @@ Delete a gist.
   DELETE /gists/{gist_id}
 
 https://developer.github.com/v3/gists/#delete-a-gist
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) Delete(ctx context.Context, req *DeleteReq, opt ...requests.Option) (*DeleteResponse, error) {
 	return Delete(ctx, req, append(c, opt...)...)
@@ -511,6 +484,8 @@ func (c Client) Delete(ctx context.Context, req *DeleteReq, opt ...requests.Opti
 DeleteReq is request data for Client.Delete
 
 https://developer.github.com/v3/gists/#delete-a-gist
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type DeleteReq struct {
 	_url string
@@ -519,19 +494,11 @@ type DeleteReq struct {
 	GistId string
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *DeleteReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *DeleteReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -539,12 +506,12 @@ func (r *DeleteReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
 		OperationID:        "gists/delete",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/gists/%v", r.GistId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -569,8 +536,19 @@ type DeleteResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *DeleteResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *DeleteResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{204, 304})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -583,39 +561,27 @@ Delete a gist comment.
 https://developer.github.com/v3/gists/comments/#delete-a-gist-comment
 */
 func DeleteComment(ctx context.Context, req *DeleteCommentReq, opt ...requests.Option) (*DeleteCommentResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(DeleteCommentReq)
 	}
 	resp := &DeleteCommentResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewDeleteCommentResponse(r, opts.PreserveResponseBody())
-}
-
-// NewDeleteCommentResponse builds a new *DeleteCommentResponse from an *http.Response
-func NewDeleteCommentResponse(resp *http.Response, preserveBody bool) (*DeleteCommentResponse, error) {
-	var result DeleteCommentResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{204, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -626,6 +592,8 @@ Delete a gist comment.
   DELETE /gists/{gist_id}/comments/{comment_id}
 
 https://developer.github.com/v3/gists/comments/#delete-a-gist-comment
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) DeleteComment(ctx context.Context, req *DeleteCommentReq, opt ...requests.Option) (*DeleteCommentResponse, error) {
 	return DeleteComment(ctx, req, append(c, opt...)...)
@@ -635,6 +603,8 @@ func (c Client) DeleteComment(ctx context.Context, req *DeleteCommentReq, opt ..
 DeleteCommentReq is request data for Client.DeleteComment
 
 https://developer.github.com/v3/gists/comments/#delete-a-gist-comment
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type DeleteCommentReq struct {
 	_url string
@@ -646,19 +616,11 @@ type DeleteCommentReq struct {
 	CommentId int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *DeleteCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *DeleteCommentReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -666,12 +628,12 @@ func (r *DeleteCommentReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
 		OperationID:        "gists/delete-comment",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/gists/%v/comments/%v", r.GistId, r.CommentId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -696,8 +658,19 @@ type DeleteCommentResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *DeleteCommentResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *DeleteCommentResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{204, 304})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -710,45 +683,27 @@ Fork a gist.
 https://developer.github.com/v3/gists/#fork-a-gist
 */
 func Fork(ctx context.Context, req *ForkReq, opt ...requests.Option) (*ForkResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ForkReq)
 	}
 	resp := &ForkResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewForkResponse(r, opts.PreserveResponseBody())
-}
-
-// NewForkResponse builds a new *ForkResponse from an *http.Response
-func NewForkResponse(resp *http.Response, preserveBody bool) (*ForkResponse, error) {
-	var result ForkResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{201, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{201}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -759,6 +714,8 @@ Fork a gist.
   POST /gists/{gist_id}/forks
 
 https://developer.github.com/v3/gists/#fork-a-gist
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) Fork(ctx context.Context, req *ForkReq, opt ...requests.Option) (*ForkResponse, error) {
 	return Fork(ctx, req, append(c, opt...)...)
@@ -768,6 +725,8 @@ func (c Client) Fork(ctx context.Context, req *ForkReq, opt ...requests.Option) 
 ForkReq is request data for Client.Fork
 
 https://developer.github.com/v3/gists/#fork-a-gist
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ForkReq struct {
 	_url string
@@ -776,19 +735,11 @@ type ForkReq struct {
 	GistId string
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ForkReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ForkReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -796,12 +747,12 @@ func (r *ForkReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "POST",
 		OperationID:        "gists/fork",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/gists/%v/forks", r.GistId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -827,8 +778,25 @@ type ForkResponse struct {
 	Data         components.BaseGist
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ForkResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ForkResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{201, 304})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{201}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -841,45 +809,27 @@ Get a gist.
 https://developer.github.com/v3/gists/#get-a-gist
 */
 func Get(ctx context.Context, req *GetReq, opt ...requests.Option) (*GetResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetReq)
 	}
 	resp := &GetResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetResponse builds a new *GetResponse from an *http.Response
-func NewGetResponse(resp *http.Response, preserveBody bool) (*GetResponse, error) {
-	var result GetResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -890,6 +840,8 @@ Get a gist.
   GET /gists/{gist_id}
 
 https://developer.github.com/v3/gists/#get-a-gist
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) Get(ctx context.Context, req *GetReq, opt ...requests.Option) (*GetResponse, error) {
 	return Get(ctx, req, append(c, opt...)...)
@@ -899,6 +851,8 @@ func (c Client) Get(ctx context.Context, req *GetReq, opt ...requests.Option) (*
 GetReq is request data for Client.Get
 
 https://developer.github.com/v3/gists/#get-a-gist
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetReq struct {
 	_url string
@@ -907,19 +861,11 @@ type GetReq struct {
 	GistId string
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -927,12 +873,12 @@ func (r *GetReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "gists/get",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/gists/%v", r.GistId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -958,8 +904,25 @@ type GetResponse struct {
 	Data         components.GistFull
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -972,45 +935,27 @@ Get a gist comment.
 https://developer.github.com/v3/gists/comments/#get-a-gist-comment
 */
 func GetComment(ctx context.Context, req *GetCommentReq, opt ...requests.Option) (*GetCommentResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetCommentReq)
 	}
 	resp := &GetCommentResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetCommentResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetCommentResponse builds a new *GetCommentResponse from an *http.Response
-func NewGetCommentResponse(resp *http.Response, preserveBody bool) (*GetCommentResponse, error) {
-	var result GetCommentResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -1021,6 +966,8 @@ Get a gist comment.
   GET /gists/{gist_id}/comments/{comment_id}
 
 https://developer.github.com/v3/gists/comments/#get-a-gist-comment
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) GetComment(ctx context.Context, req *GetCommentReq, opt ...requests.Option) (*GetCommentResponse, error) {
 	return GetComment(ctx, req, append(c, opt...)...)
@@ -1030,6 +977,8 @@ func (c Client) GetComment(ctx context.Context, req *GetCommentReq, opt ...reque
 GetCommentReq is request data for Client.GetComment
 
 https://developer.github.com/v3/gists/comments/#get-a-gist-comment
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetCommentReq struct {
 	_url string
@@ -1041,19 +990,11 @@ type GetCommentReq struct {
 	CommentId int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetCommentReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -1061,12 +1002,12 @@ func (r *GetCommentReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "gists/get-comment",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/gists/%v/comments/%v", r.GistId, r.CommentId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1092,8 +1033,25 @@ type GetCommentResponse struct {
 	Data         components.GistComment
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetCommentResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetCommentResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -1106,45 +1064,27 @@ Get a gist revision.
 https://developer.github.com/v3/gists/#get-a-gist-revision
 */
 func GetRevision(ctx context.Context, req *GetRevisionReq, opt ...requests.Option) (*GetRevisionResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(GetRevisionReq)
 	}
 	resp := &GetRevisionResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewGetRevisionResponse(r, opts.PreserveResponseBody())
-}
-
-// NewGetRevisionResponse builds a new *GetRevisionResponse from an *http.Response
-func NewGetRevisionResponse(resp *http.Response, preserveBody bool) (*GetRevisionResponse, error) {
-	var result GetRevisionResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -1155,6 +1095,8 @@ Get a gist revision.
   GET /gists/{gist_id}/{sha}
 
 https://developer.github.com/v3/gists/#get-a-gist-revision
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) GetRevision(ctx context.Context, req *GetRevisionReq, opt ...requests.Option) (*GetRevisionResponse, error) {
 	return GetRevision(ctx, req, append(c, opt...)...)
@@ -1164,6 +1106,8 @@ func (c Client) GetRevision(ctx context.Context, req *GetRevisionReq, opt ...req
 GetRevisionReq is request data for Client.GetRevision
 
 https://developer.github.com/v3/gists/#get-a-gist-revision
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type GetRevisionReq struct {
 	_url string
@@ -1175,19 +1119,11 @@ type GetRevisionReq struct {
 	Sha string
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *GetRevisionReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *GetRevisionReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -1195,12 +1131,12 @@ func (r *GetRevisionReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "gists/get-revision",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/gists/%v/%v", r.GistId, r.Sha),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1226,8 +1162,25 @@ type GetRevisionResponse struct {
 	Data         components.GistFull
 }
 
+// HTTPResponse returns the *http.Response
 func (r *GetRevisionResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *GetRevisionResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -1240,45 +1193,27 @@ List gists for the authenticated user.
 https://developer.github.com/v3/gists/#list-gists-for-the-authenticated-user
 */
 func List(ctx context.Context, req *ListReq, opt ...requests.Option) (*ListResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListReq)
 	}
 	resp := &ListResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListResponse builds a new *ListResponse from an *http.Response
-func NewListResponse(resp *http.Response, preserveBody bool) (*ListResponse, error) {
-	var result ListResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -1289,6 +1224,8 @@ List gists for the authenticated user.
   GET /gists
 
 https://developer.github.com/v3/gists/#list-gists-for-the-authenticated-user
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) List(ctx context.Context, req *ListReq, opt ...requests.Option) (*ListResponse, error) {
 	return List(ctx, req, append(c, opt...)...)
@@ -1298,6 +1235,8 @@ func (c Client) List(ctx context.Context, req *ListReq, opt ...requests.Option) 
 ListReq is request data for Client.List
 
 https://developer.github.com/v3/gists/#list-gists-for-the-authenticated-user
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListReq struct {
 	_url string
@@ -1316,16 +1255,8 @@ type ListReq struct {
 	Page *int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Since != nil {
 		query.Set("since", *r.Since)
@@ -1337,7 +1268,7 @@ func (r *ListReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -1345,12 +1276,12 @@ func (r *ListReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "gists/list",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/gists"),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1376,8 +1307,25 @@ type ListResponse struct {
 	Data         []components.BaseGist
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -1390,45 +1338,27 @@ List gist comments.
 https://developer.github.com/v3/gists/comments/#list-gist-comments
 */
 func ListComments(ctx context.Context, req *ListCommentsReq, opt ...requests.Option) (*ListCommentsResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListCommentsReq)
 	}
 	resp := &ListCommentsResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListCommentsResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListCommentsResponse builds a new *ListCommentsResponse from an *http.Response
-func NewListCommentsResponse(resp *http.Response, preserveBody bool) (*ListCommentsResponse, error) {
-	var result ListCommentsResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -1439,6 +1369,8 @@ List gist comments.
   GET /gists/{gist_id}/comments
 
 https://developer.github.com/v3/gists/comments/#list-gist-comments
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListComments(ctx context.Context, req *ListCommentsReq, opt ...requests.Option) (*ListCommentsResponse, error) {
 	return ListComments(ctx, req, append(c, opt...)...)
@@ -1448,6 +1380,8 @@ func (c Client) ListComments(ctx context.Context, req *ListCommentsReq, opt ...r
 ListCommentsReq is request data for Client.ListComments
 
 https://developer.github.com/v3/gists/comments/#list-gist-comments
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListCommentsReq struct {
 	_url string
@@ -1462,16 +1396,8 @@ type ListCommentsReq struct {
 	Page *int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListCommentsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListCommentsReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -1480,7 +1406,7 @@ func (r *ListCommentsReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -1488,12 +1414,12 @@ func (r *ListCommentsReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "gists/list-comments",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/gists/%v/comments", r.GistId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1519,8 +1445,25 @@ type ListCommentsResponse struct {
 	Data         []components.GistComment
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListCommentsResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListCommentsResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -1533,45 +1476,27 @@ List gist commits.
 https://developer.github.com/v3/gists/#list-gist-commits
 */
 func ListCommits(ctx context.Context, req *ListCommitsReq, opt ...requests.Option) (*ListCommitsResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListCommitsReq)
 	}
 	resp := &ListCommitsResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListCommitsResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListCommitsResponse builds a new *ListCommitsResponse from an *http.Response
-func NewListCommitsResponse(resp *http.Response, preserveBody bool) (*ListCommitsResponse, error) {
-	var result ListCommitsResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -1582,6 +1507,8 @@ List gist commits.
   GET /gists/{gist_id}/commits
 
 https://developer.github.com/v3/gists/#list-gist-commits
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListCommits(ctx context.Context, req *ListCommitsReq, opt ...requests.Option) (*ListCommitsResponse, error) {
 	return ListCommits(ctx, req, append(c, opt...)...)
@@ -1591,6 +1518,8 @@ func (c Client) ListCommits(ctx context.Context, req *ListCommitsReq, opt ...req
 ListCommitsReq is request data for Client.ListCommits
 
 https://developer.github.com/v3/gists/#list-gist-commits
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListCommitsReq struct {
 	_url string
@@ -1605,16 +1534,8 @@ type ListCommitsReq struct {
 	Page *int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListCommitsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListCommitsReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -1623,7 +1544,7 @@ func (r *ListCommitsReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -1631,12 +1552,12 @@ func (r *ListCommitsReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "gists/list-commits",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/gists/%v/commits", r.GistId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1662,8 +1583,25 @@ type ListCommitsResponse struct {
 	Data         []components.GistCommit
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListCommitsResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListCommitsResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -1676,45 +1614,27 @@ List gists for a user.
 https://developer.github.com/v3/gists/#list-gists-for-a-user
 */
 func ListForUser(ctx context.Context, req *ListForUserReq, opt ...requests.Option) (*ListForUserResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListForUserReq)
 	}
 	resp := &ListForUserResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListForUserResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListForUserResponse builds a new *ListForUserResponse from an *http.Response
-func NewListForUserResponse(resp *http.Response, preserveBody bool) (*ListForUserResponse, error) {
-	var result ListForUserResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -1725,6 +1645,8 @@ List gists for a user.
   GET /users/{username}/gists
 
 https://developer.github.com/v3/gists/#list-gists-for-a-user
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListForUser(ctx context.Context, req *ListForUserReq, opt ...requests.Option) (*ListForUserResponse, error) {
 	return ListForUser(ctx, req, append(c, opt...)...)
@@ -1734,6 +1656,8 @@ func (c Client) ListForUser(ctx context.Context, req *ListForUserReq, opt ...req
 ListForUserReq is request data for Client.ListForUser
 
 https://developer.github.com/v3/gists/#list-gists-for-a-user
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListForUserReq struct {
 	_url     string
@@ -1753,16 +1677,8 @@ type ListForUserReq struct {
 	Page *int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListForUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListForUserReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Since != nil {
 		query.Set("since", *r.Since)
@@ -1774,7 +1690,7 @@ func (r *ListForUserReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -1782,12 +1698,12 @@ func (r *ListForUserReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "gists/list-for-user",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/users/%v/gists", r.Username),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1813,8 +1729,25 @@ type ListForUserResponse struct {
 	Data         []components.BaseGist
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListForUserResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListForUserResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -1827,45 +1760,27 @@ List gist forks.
 https://developer.github.com/v3/gists/#list-gist-forks
 */
 func ListForks(ctx context.Context, req *ListForksReq, opt ...requests.Option) (*ListForksResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListForksReq)
 	}
 	resp := &ListForksResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListForksResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListForksResponse builds a new *ListForksResponse from an *http.Response
-func NewListForksResponse(resp *http.Response, preserveBody bool) (*ListForksResponse, error) {
-	var result ListForksResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -1876,6 +1791,8 @@ List gist forks.
   GET /gists/{gist_id}/forks
 
 https://developer.github.com/v3/gists/#list-gist-forks
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListForks(ctx context.Context, req *ListForksReq, opt ...requests.Option) (*ListForksResponse, error) {
 	return ListForks(ctx, req, append(c, opt...)...)
@@ -1885,6 +1802,8 @@ func (c Client) ListForks(ctx context.Context, req *ListForksReq, opt ...request
 ListForksReq is request data for Client.ListForks
 
 https://developer.github.com/v3/gists/#list-gist-forks
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListForksReq struct {
 	_url string
@@ -1899,16 +1818,8 @@ type ListForksReq struct {
 	Page *int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListForksReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListForksReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -1917,7 +1828,7 @@ func (r *ListForksReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -1925,12 +1836,12 @@ func (r *ListForksReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "gists/list-forks",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/gists/%v/forks", r.GistId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -1956,8 +1867,25 @@ type ListForksResponse struct {
 	Data         []components.GistFull
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListForksResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListForksResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -1970,45 +1898,27 @@ List public gists.
 https://developer.github.com/v3/gists/#list-public-gists
 */
 func ListPublic(ctx context.Context, req *ListPublicReq, opt ...requests.Option) (*ListPublicResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListPublicReq)
 	}
 	resp := &ListPublicResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListPublicResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListPublicResponse builds a new *ListPublicResponse from an *http.Response
-func NewListPublicResponse(resp *http.Response, preserveBody bool) (*ListPublicResponse, error) {
-	var result ListPublicResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -2019,6 +1929,8 @@ List public gists.
   GET /gists/public
 
 https://developer.github.com/v3/gists/#list-public-gists
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListPublic(ctx context.Context, req *ListPublicReq, opt ...requests.Option) (*ListPublicResponse, error) {
 	return ListPublic(ctx, req, append(c, opt...)...)
@@ -2028,6 +1940,8 @@ func (c Client) ListPublic(ctx context.Context, req *ListPublicReq, opt ...reque
 ListPublicReq is request data for Client.ListPublic
 
 https://developer.github.com/v3/gists/#list-public-gists
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListPublicReq struct {
 	_url string
@@ -2046,16 +1960,8 @@ type ListPublicReq struct {
 	Page *int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListPublicReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListPublicReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Since != nil {
 		query.Set("since", *r.Since)
@@ -2067,7 +1973,7 @@ func (r *ListPublicReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -2075,12 +1981,12 @@ func (r *ListPublicReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "gists/list-public",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/gists/public"),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -2106,8 +2012,25 @@ type ListPublicResponse struct {
 	Data         []components.BaseGist
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListPublicResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListPublicResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -2120,45 +2043,27 @@ List starred gists.
 https://developer.github.com/v3/gists/#list-starred-gists
 */
 func ListStarred(ctx context.Context, req *ListStarredReq, opt ...requests.Option) (*ListStarredResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(ListStarredReq)
 	}
 	resp := &ListStarredResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewListStarredResponse(r, opts.PreserveResponseBody())
-}
-
-// NewListStarredResponse builds a new *ListStarredResponse from an *http.Response
-func NewListStarredResponse(resp *http.Response, preserveBody bool) (*ListStarredResponse, error) {
-	var result ListStarredResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -2169,6 +2074,8 @@ List starred gists.
   GET /gists/starred
 
 https://developer.github.com/v3/gists/#list-starred-gists
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) ListStarred(ctx context.Context, req *ListStarredReq, opt ...requests.Option) (*ListStarredResponse, error) {
 	return ListStarred(ctx, req, append(c, opt...)...)
@@ -2178,6 +2085,8 @@ func (c Client) ListStarred(ctx context.Context, req *ListStarredReq, opt ...req
 ListStarredReq is request data for Client.ListStarred
 
 https://developer.github.com/v3/gists/#list-starred-gists
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type ListStarredReq struct {
 	_url string
@@ -2196,16 +2105,8 @@ type ListStarredReq struct {
 	Page *int64
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *ListStarredReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *ListStarredReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 	if r.Since != nil {
 		query.Set("since", *r.Since)
@@ -2217,7 +2118,7 @@ func (r *ListStarredReq) requestBuilder() *internal.RequestBuilder {
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -2225,12 +2126,12 @@ func (r *ListStarredReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
 		Method:             "GET",
 		OperationID:        "gists/list-starred",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/gists/starred"),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -2256,8 +2157,25 @@ type ListStarredResponse struct {
 	Data         []components.BaseGist
 }
 
+// HTTPResponse returns the *http.Response
 func (r *ListStarredResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *ListStarredResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200, 304})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -2270,39 +2188,27 @@ Star a gist.
 https://developer.github.com/v3/gists/#star-a-gist
 */
 func Star(ctx context.Context, req *StarReq, opt ...requests.Option) (*StarResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(StarReq)
 	}
 	resp := &StarResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewStarResponse(r, opts.PreserveResponseBody())
-}
-
-// NewStarResponse builds a new *StarResponse from an *http.Response
-func NewStarResponse(resp *http.Response, preserveBody bool) (*StarResponse, error) {
-	var result StarResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{204, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -2313,6 +2219,8 @@ Star a gist.
   PUT /gists/{gist_id}/star
 
 https://developer.github.com/v3/gists/#star-a-gist
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) Star(ctx context.Context, req *StarReq, opt ...requests.Option) (*StarResponse, error) {
 	return Star(ctx, req, append(c, opt...)...)
@@ -2322,6 +2230,8 @@ func (c Client) Star(ctx context.Context, req *StarReq, opt ...requests.Option) 
 StarReq is request data for Client.Star
 
 https://developer.github.com/v3/gists/#star-a-gist
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type StarReq struct {
 	_url string
@@ -2330,19 +2240,11 @@ type StarReq struct {
 	GistId string
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *StarReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *StarReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -2350,12 +2252,12 @@ func (r *StarReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{},
 		Method:             "PUT",
 		OperationID:        "gists/star",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/gists/%v/star", r.GistId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -2380,8 +2282,19 @@ type StarResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *StarResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *StarResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{204, 304})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -2394,39 +2307,27 @@ Unstar a gist.
 https://developer.github.com/v3/gists/#unstar-a-gist
 */
 func Unstar(ctx context.Context, req *UnstarReq, opt ...requests.Option) (*UnstarResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(UnstarReq)
 	}
 	resp := &UnstarResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewUnstarResponse(r, opts.PreserveResponseBody())
-}
-
-// NewUnstarResponse builds a new *UnstarResponse from an *http.Response
-func NewUnstarResponse(resp *http.Response, preserveBody bool) (*UnstarResponse, error) {
-	var result UnstarResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{204, 304})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -2437,6 +2338,8 @@ Unstar a gist.
   DELETE /gists/{gist_id}/star
 
 https://developer.github.com/v3/gists/#unstar-a-gist
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) Unstar(ctx context.Context, req *UnstarReq, opt ...requests.Option) (*UnstarResponse, error) {
 	return Unstar(ctx, req, append(c, opt...)...)
@@ -2446,6 +2349,8 @@ func (c Client) Unstar(ctx context.Context, req *UnstarReq, opt ...requests.Opti
 UnstarReq is request data for Client.Unstar
 
 https://developer.github.com/v3/gists/#unstar-a-gist
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type UnstarReq struct {
 	_url string
@@ -2454,19 +2359,11 @@ type UnstarReq struct {
 	GistId string
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *UnstarReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *UnstarReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               nil,
 		EndpointAttributes: []internal.EndpointAttribute{},
@@ -2474,12 +2371,12 @@ func (r *UnstarReq) requestBuilder() *internal.RequestBuilder {
 		HeaderVals:         map[string]*string{},
 		Method:             "DELETE",
 		OperationID:        "gists/unstar",
+		Options:            opt,
 		Previews:           map[string]bool{},
 		RequiredPreviews:   []string{},
 		URLPath:            fmt.Sprintf("/gists/%v/star", r.GistId),
 		URLQuery:           query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -2504,8 +2401,19 @@ type UnstarResponse struct {
 	httpResponse *http.Response
 }
 
+// HTTPResponse returns the *http.Response
 func (r *UnstarResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *UnstarResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{204, 304})
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 /*
@@ -2518,45 +2426,27 @@ Update a gist.
 https://developer.github.com/v3/gists/#update-a-gist
 */
 func Update(ctx context.Context, req *UpdateReq, opt ...requests.Option) (*UpdateResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(UpdateReq)
 	}
 	resp := &UpdateResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewUpdateResponse(r, opts.PreserveResponseBody())
-}
-
-// NewUpdateResponse builds a new *UpdateResponse from an *http.Response
-func NewUpdateResponse(resp *http.Response, preserveBody bool) (*UpdateResponse, error) {
-	var result UpdateResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -2567,6 +2457,8 @@ Update a gist.
   PATCH /gists/{gist_id}
 
 https://developer.github.com/v3/gists/#update-a-gist
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) Update(ctx context.Context, req *UpdateReq, opt ...requests.Option) (*UpdateResponse, error) {
 	return Update(ctx, req, append(c, opt...)...)
@@ -2576,6 +2468,8 @@ func (c Client) Update(ctx context.Context, req *UpdateReq, opt ...requests.Opti
 UpdateReq is request data for Client.Update
 
 https://developer.github.com/v3/gists/#update-a-gist
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type UpdateReq struct {
 	_url string
@@ -2585,19 +2479,11 @@ type UpdateReq struct {
 	RequestBody UpdateReqBody
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *UpdateReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *UpdateReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -2608,12 +2494,12 @@ func (r *UpdateReq) requestBuilder() *internal.RequestBuilder {
 		},
 		Method:           "PATCH",
 		OperationID:      "gists/update",
+		Options:          opt,
 		Previews:         map[string]bool{},
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/gists/%v", r.GistId),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -2663,8 +2549,25 @@ type UpdateResponse struct {
 	Data         components.GistFull
 }
 
+// HTTPResponse returns the *http.Response
 func (r *UpdateResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *UpdateResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 /*
@@ -2677,45 +2580,27 @@ Update a gist comment.
 https://developer.github.com/v3/gists/comments/#update-a-gist-comment
 */
 func UpdateComment(ctx context.Context, req *UpdateCommentReq, opt ...requests.Option) (*UpdateCommentResponse, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
+	opts := requests.BuildOptions(opt...)
 	if req == nil {
 		req = new(UpdateCommentReq)
 	}
 	resp := &UpdateCommentResponse{}
-	builder := req.requestBuilder()
 
-	httpReq, err := builder.HTTPRequest(ctx, opts)
+	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
 
 	r, err := opts.HttpClient().Do(httpReq)
 	if err != nil {
-		return resp, err
+		return nil, err
 	}
-	resp.httpResponse = r
 
-	return NewUpdateCommentResponse(r, opts.PreserveResponseBody())
-}
-
-// NewUpdateCommentResponse builds a new *UpdateCommentResponse from an *http.Response
-func NewUpdateCommentResponse(resp *http.Response, preserveBody bool) (*UpdateCommentResponse, error) {
-	var result UpdateCommentResponse
-	result.httpResponse = resp
-	err := internal.ErrorCheck(resp, []int{200})
+	err = resp.Load(r)
 	if err != nil {
-		return &result, err
+		return nil, err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.DecodeResponseBody(resp, &result.Data, preserveBody)
-		if err != nil {
-			return &result, err
-		}
-	}
-	return &result, nil
+	return resp, nil
 }
 
 /*
@@ -2726,6 +2611,8 @@ Update a gist comment.
   PATCH /gists/{gist_id}/comments/{comment_id}
 
 https://developer.github.com/v3/gists/comments/#update-a-gist-comment
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 func (c Client) UpdateComment(ctx context.Context, req *UpdateCommentReq, opt ...requests.Option) (*UpdateCommentResponse, error) {
 	return UpdateComment(ctx, req, append(c, opt...)...)
@@ -2735,6 +2622,8 @@ func (c Client) UpdateComment(ctx context.Context, req *UpdateCommentReq, opt ..
 UpdateCommentReq is request data for Client.UpdateComment
 
 https://developer.github.com/v3/gists/comments/#update-a-gist-comment
+
+Non-nil errors will have the type *errors.RequestError, errors.ResponseError or url.Error.
 */
 type UpdateCommentReq struct {
 	_url string
@@ -2747,19 +2636,11 @@ type UpdateCommentReq struct {
 	RequestBody UpdateCommentReqBody
 }
 
-// HTTPRequest builds an *http.Request
+// HTTPRequest builds an *http.Request. Non-nil errors will have the type *errors.RequestError.
 func (r *UpdateCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	opts, err := requests.BuildOptions(opt...)
-	if err != nil {
-		return nil, err
-	}
-	return r.requestBuilder().HTTPRequest(ctx, opts)
-}
-
-func (r *UpdateCommentReq) requestBuilder() *internal.RequestBuilder {
 	query := url.Values{}
 
-	builder := &internal.RequestBuilder{
+	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{},
 		Body:               r.RequestBody,
 		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
@@ -2770,12 +2651,12 @@ func (r *UpdateCommentReq) requestBuilder() *internal.RequestBuilder {
 		},
 		Method:           "PATCH",
 		OperationID:      "gists/update-comment",
+		Options:          opt,
 		Previews:         map[string]bool{},
 		RequiredPreviews: []string{},
 		URLPath:          fmt.Sprintf("/gists/%v/comments/%v", r.GistId, r.CommentId),
 		URLQuery:         query,
-	}
-	return builder
+	})
 }
 
 /*
@@ -2812,6 +2693,23 @@ type UpdateCommentResponse struct {
 	Data         components.GistComment
 }
 
+// HTTPResponse returns the *http.Response
 func (r *UpdateCommentResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
+}
+
+// Load loads an *http.Response. Non-nil errors will have the type errors.ResponseError.
+func (r *UpdateCommentResponse) Load(resp *http.Response) error {
+	r.httpResponse = resp
+	err := internal.ResponseErrorCheck(resp, []int{200})
+	if err != nil {
+		return err
+	}
+	if internal.IntInSlice(resp.StatusCode, []int{200}) {
+		err = internal.DecodeResponseBody(resp, &r.Data)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
