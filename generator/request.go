@@ -202,7 +202,7 @@ func validCodes(endpoint *model.Endpoint) []int {
 
 func reqHeaderMap(endpoint *model.Endpoint, pq pkgQual) *jen.Statement {
 	var size int
-	stmt :=  jen.Map(jen.String()).Op("*").String().Values(
+	stmt := jen.Map(jen.String()).Op("*").String().Values(
 		jen.DictFunc(func(dict jen.Dict) {
 			headers := map[string]*jen.Statement{}
 			internalPkg := pq.pkgPath("internal")
