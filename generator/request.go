@@ -109,7 +109,7 @@ func reqBodyValue(endpoint *model.Endpoint) jen.Code {
 	case endpointHasAttribute(endpoint, attrBodyUploader):
 		return jen.Id("r.RequestBody")
 	default:
-		return jen.Nil()
+		return nil
 	}
 }
 

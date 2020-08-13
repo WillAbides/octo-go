@@ -1292,7 +1292,6 @@ type DeleteForCommitCommentReq struct {
 func (r *DeleteForCommitCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"squirrel-girl"},
-		Body:             nil,
 		ExplicitURL:      r._url,
 		HeaderVals:       map[string]*string{},
 		Method:           "DELETE",
@@ -1420,7 +1419,6 @@ type DeleteForIssueReq struct {
 func (r *DeleteForIssueReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"squirrel-girl"},
-		Body:             nil,
 		ExplicitURL:      r._url,
 		HeaderVals:       map[string]*string{},
 		Method:           "DELETE",
@@ -1548,7 +1546,6 @@ type DeleteForIssueCommentReq struct {
 func (r *DeleteForIssueCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"squirrel-girl"},
-		Body:             nil,
 		ExplicitURL:      r._url,
 		HeaderVals:       map[string]*string{},
 		Method:           "DELETE",
@@ -1676,7 +1673,6 @@ type DeleteForPullRequestCommentReq struct {
 func (r *DeleteForPullRequestCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"squirrel-girl"},
-		Body:             nil,
 		ExplicitURL:      r._url,
 		HeaderVals:       map[string]*string{},
 		Method:           "DELETE",
@@ -1804,7 +1800,6 @@ type DeleteForTeamDiscussionReq struct {
 func (r *DeleteForTeamDiscussionReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"squirrel-girl"},
-		Body:             nil,
 		ExplicitURL:      r._url,
 		HeaderVals:       map[string]*string{},
 		Method:           "DELETE",
@@ -1933,7 +1928,6 @@ type DeleteForTeamDiscussionCommentReq struct {
 func (r *DeleteForTeamDiscussionCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"squirrel-girl"},
-		Body:             nil,
 		ExplicitURL:      r._url,
 		HeaderVals:       map[string]*string{},
 		Method:           "DELETE",
@@ -2056,7 +2050,6 @@ type DeleteLegacyReq struct {
 func (r *DeleteLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"squirrel-girl"},
-		Body:             nil,
 		ExplicitURL:      r._url,
 		HeaderVals:       map[string]*string{},
 		Method:           "DELETE",
@@ -2207,7 +2200,6 @@ func (r *ListForCommitCommentReq) HTTPRequest(ctx context.Context, opt ...reques
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"squirrel-girl"},
-		Body:             nil,
 		ExplicitURL:      r._url,
 		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
 		Method:           "GET",
@@ -2366,7 +2358,6 @@ func (r *ListForIssueReq) HTTPRequest(ctx context.Context, opt ...requests.Optio
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"squirrel-girl"},
-		Body:             nil,
 		ExplicitURL:      r._url,
 		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
 		Method:           "GET",
@@ -2525,7 +2516,6 @@ func (r *ListForIssueCommentReq) HTTPRequest(ctx context.Context, opt ...request
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"squirrel-girl"},
-		Body:             nil,
 		ExplicitURL:      r._url,
 		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
 		Method:           "GET",
@@ -2684,7 +2674,6 @@ func (r *ListForPullRequestReviewCommentReq) HTTPRequest(ctx context.Context, op
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"squirrel-girl"},
-		Body:             nil,
 		ExplicitURL:      r._url,
 		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
 		Method:           "GET",
@@ -2844,7 +2833,6 @@ func (r *ListForTeamDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, 
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"squirrel-girl"},
-		Body:             nil,
 		ExplicitURL:      r._url,
 		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
 		Method:           "GET",
@@ -3001,7 +2989,6 @@ func (r *ListForTeamDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context,
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"squirrel-girl"},
-		Body:             nil,
 		ExplicitURL:      r._url,
 		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
 		Method:           "GET",
@@ -3160,7 +3147,6 @@ func (r *ListForTeamDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"squirrel-girl"},
-		Body:             nil,
 		ExplicitURL:      r._url,
 		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
 		Method:           "GET",
@@ -3316,7 +3302,6 @@ func (r *ListForTeamDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ..
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"squirrel-girl"},
-		Body:             nil,
 		ExplicitURL:      r._url,
 		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
 		Method:           "GET",

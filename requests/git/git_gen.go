@@ -900,7 +900,6 @@ type DeleteRefReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteRefReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
@@ -1013,7 +1012,6 @@ type GetBlobReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetBlobReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",
@@ -1133,7 +1131,6 @@ type GetCommitReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetCommitReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",
@@ -1253,7 +1250,6 @@ type GetRefReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetRefReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",
@@ -1373,7 +1369,6 @@ type GetTagReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetTagReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",
@@ -1507,7 +1502,6 @@ func (r *GetTreeReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",
@@ -1642,7 +1636,6 @@ func (r *ListMatchingRefsReq) HTTPRequest(ctx context.Context, opt ...requests.O
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",

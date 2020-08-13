@@ -85,7 +85,6 @@ type AddMemberLegacyReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *AddMemberLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{},
 		Method:      "PUT",
@@ -1051,7 +1050,6 @@ type CheckPermissionsForProjectInOrgReq struct {
 func (r *CheckPermissionsForProjectInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"inertia"},
-		Body:             nil,
 		ExplicitURL:      r._url,
 		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
 		Method:           "GET",
@@ -1180,7 +1178,6 @@ type CheckPermissionsForProjectLegacyReq struct {
 func (r *CheckPermissionsForProjectLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"inertia"},
-		Body:             nil,
 		ExplicitURL:      r._url,
 		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
 		Method:           "GET",
@@ -1303,7 +1300,6 @@ type CheckPermissionsForRepoInOrgReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CheckPermissionsForRepoInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/vnd.github.v3.repository+json")},
 		Method:      "GET",
@@ -1421,7 +1417,6 @@ type CheckPermissionsForRepoLegacyReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CheckPermissionsForRepoLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/vnd.github.v3.repository+json")},
 		Method:      "GET",
@@ -2616,7 +2611,6 @@ type DeleteDiscussionCommentInOrgReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
@@ -2727,7 +2721,6 @@ type DeleteDiscussionCommentLegacyReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
@@ -2840,7 +2833,6 @@ type DeleteDiscussionInOrgReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
@@ -2950,7 +2942,6 @@ type DeleteDiscussionLegacyReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
@@ -3062,7 +3053,6 @@ type DeleteInOrgReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
@@ -3171,7 +3161,6 @@ type DeleteLegacyReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
@@ -3283,7 +3272,6 @@ type GetByNameReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetByNameReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",
@@ -3416,7 +3404,6 @@ type GetDiscussionCommentInOrgReq struct {
 func (r *GetDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews: []string{"squirrel-girl"},
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",
@@ -3547,7 +3534,6 @@ type GetDiscussionCommentLegacyReq struct {
 func (r *GetDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews: []string{"squirrel-girl"},
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",
@@ -3680,7 +3666,6 @@ type GetDiscussionInOrgReq struct {
 func (r *GetDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews: []string{"squirrel-girl"},
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",
@@ -3810,7 +3795,6 @@ type GetDiscussionLegacyReq struct {
 func (r *GetDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews: []string{"squirrel-girl"},
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",
@@ -3927,7 +3911,6 @@ type GetLegacyReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",
@@ -4044,7 +4027,6 @@ type GetMemberLegacyReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetMemberLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{},
 		Method:      "GET",
@@ -4162,7 +4144,6 @@ type GetMembershipForUserInOrgReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetMembershipForUserInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",
@@ -4279,7 +4260,6 @@ type GetMembershipForUserLegacyReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetMembershipForUserLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",
@@ -4409,7 +4389,6 @@ func (r *ListReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*htt
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",
@@ -4543,7 +4522,6 @@ func (r *ListChildInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Opt
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",
@@ -4674,7 +4652,6 @@ func (r *ListChildLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Op
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",
@@ -4827,7 +4804,6 @@ func (r *ListDiscussionCommentsInOrgReq) HTTPRequest(ctx context.Context, opt ..
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews: []string{"squirrel-girl"},
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",
@@ -4978,7 +4954,6 @@ func (r *ListDiscussionCommentsLegacyReq) HTTPRequest(ctx context.Context, opt .
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews: []string{"squirrel-girl"},
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",
@@ -5131,7 +5106,6 @@ func (r *ListDiscussionsInOrgReq) HTTPRequest(ctx context.Context, opt ...reques
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews: []string{"squirrel-girl"},
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",
@@ -5281,7 +5255,6 @@ func (r *ListDiscussionsLegacyReq) HTTPRequest(ctx context.Context, opt ...reque
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews: []string{"squirrel-girl"},
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",
@@ -5412,7 +5385,6 @@ func (r *ListForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...re
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",
@@ -5529,7 +5501,6 @@ type ListIdpGroupsForLegacyReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *ListIdpGroupsForLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",
@@ -5659,7 +5630,6 @@ func (r *ListIdpGroupsForOrgReq) HTTPRequest(ctx context.Context, opt ...request
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",
@@ -5779,7 +5749,6 @@ type ListIdpGroupsInOrgReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *ListIdpGroupsInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",
@@ -5923,7 +5892,6 @@ func (r *ListMembersInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.O
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",
@@ -6065,7 +6033,6 @@ func (r *ListMembersLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",
@@ -6199,7 +6166,6 @@ func (r *ListPendingInvitationsInOrgReq) HTTPRequest(ctx context.Context, opt ..
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",
@@ -6330,7 +6296,6 @@ func (r *ListPendingInvitationsLegacyReq) HTTPRequest(ctx context.Context, opt .
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",
@@ -6474,7 +6439,6 @@ func (r *ListProjectsInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"inertia"},
-		Body:             nil,
 		ExplicitURL:      r._url,
 		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
 		Method:           "GET",
@@ -6617,7 +6581,6 @@ func (r *ListProjectsLegacyReq) HTTPRequest(ctx context.Context, opt ...requests
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"inertia"},
-		Body:             nil,
 		ExplicitURL:      r._url,
 		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
 		Method:           "GET",
@@ -6753,7 +6716,6 @@ func (r *ListReposInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Opt
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",
@@ -6884,7 +6846,6 @@ func (r *ListReposLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Op
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",
@@ -7002,7 +6963,6 @@ type RemoveMemberLegacyReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *RemoveMemberLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
@@ -7120,7 +7080,6 @@ type RemoveMembershipForUserInOrgReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *RemoveMembershipForUserInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
@@ -7230,7 +7189,6 @@ type RemoveMembershipForUserLegacyReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *RemoveMembershipForUserLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
@@ -7343,7 +7301,6 @@ type RemoveProjectInOrgReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *RemoveProjectInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
@@ -7453,7 +7410,6 @@ type RemoveProjectLegacyReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *RemoveProjectLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
@@ -7567,7 +7523,6 @@ type RemoveRepoInOrgReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *RemoveRepoInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
@@ -7678,7 +7633,6 @@ type RemoveRepoLegacyReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *RemoveRepoLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",

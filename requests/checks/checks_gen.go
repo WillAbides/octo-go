@@ -553,7 +553,6 @@ type GetReq struct {
 func (r *GetReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"antiope"},
-		Body:             nil,
 		ExplicitURL:      r._url,
 		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
 		Method:           "GET",
@@ -685,7 +684,6 @@ type GetSuiteReq struct {
 func (r *GetSuiteReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"antiope"},
-		Body:             nil,
 		ExplicitURL:      r._url,
 		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
 		Method:           "GET",
@@ -831,7 +829,6 @@ func (r *ListAnnotationsReq) HTTPRequest(ctx context.Context, opt ...requests.Op
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"antiope"},
-		Body:             nil,
 		ExplicitURL:      r._url,
 		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
 		Method:           "GET",
@@ -1002,7 +999,6 @@ func (r *ListForRefReq) HTTPRequest(ctx context.Context, opt ...requests.Option)
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"antiope"},
-		Body:             nil,
 		ExplicitURL:      r._url,
 		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
 		Method:           "GET",
@@ -1183,7 +1179,6 @@ func (r *ListForSuiteReq) HTTPRequest(ctx context.Context, opt ...requests.Optio
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"antiope"},
-		Body:             nil,
 		ExplicitURL:      r._url,
 		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
 		Method:           "GET",
@@ -1352,7 +1347,6 @@ func (r *ListSuitesForRefReq) HTTPRequest(ctx context.Context, opt ...requests.O
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"antiope"},
-		Body:             nil,
 		ExplicitURL:      r._url,
 		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
 		Method:           "GET",
@@ -1495,7 +1489,6 @@ type RerequestSuiteReq struct {
 func (r *RerequestSuiteReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"antiope"},
-		Body:             nil,
 		ExplicitURL:      r._url,
 		HeaderVals:       map[string]*string{},
 		Method:           "POST",

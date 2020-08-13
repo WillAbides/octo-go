@@ -90,7 +90,6 @@ type AddSelectedRepoToOrgSecretReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *AddSelectedRepoToOrgSecretReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{},
 		Method:      "PUT",
@@ -201,7 +200,6 @@ type CancelWorkflowRunReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CancelWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{},
 		Method:      "POST",
@@ -600,7 +598,6 @@ type CreateRegistrationTokenForOrgReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateRegistrationTokenForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "POST",
@@ -717,7 +714,6 @@ type CreateRegistrationTokenForRepoReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateRegistrationTokenForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "POST",
@@ -833,7 +829,6 @@ type CreateRemoveTokenForOrgReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateRemoveTokenForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "POST",
@@ -950,7 +945,6 @@ type CreateRemoveTokenForRepoReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateRemoveTokenForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "POST",
@@ -1200,7 +1194,6 @@ type DeleteArtifactReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteArtifactReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
@@ -1312,7 +1305,6 @@ type DeleteOrgSecretReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteOrgSecretReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
@@ -1425,7 +1417,6 @@ type DeleteRepoSecretReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteRepoSecretReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
@@ -1537,7 +1528,6 @@ type DeleteSelfHostedRunnerFromOrgReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteSelfHostedRunnerFromOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
@@ -1650,7 +1640,6 @@ type DeleteSelfHostedRunnerFromRepoReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteSelfHostedRunnerFromRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
@@ -1761,7 +1750,6 @@ type DeleteWorkflowRunReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
@@ -1872,7 +1860,6 @@ type DeleteWorkflowRunLogsReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteWorkflowRunLogsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
@@ -1988,7 +1975,6 @@ type DownloadArtifactReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DownloadArtifactReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{},
 		Method:      "GET",
@@ -2101,7 +2087,6 @@ type DownloadJobLogsForWorkflowRunReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DownloadJobLogsForWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{},
 		Method:      "GET",
@@ -2212,7 +2197,6 @@ type DownloadWorkflowRunLogsReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DownloadWorkflowRunLogsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{},
 		Method:      "GET",
@@ -2325,7 +2309,6 @@ type GetArtifactReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetArtifactReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",
@@ -2445,7 +2428,6 @@ type GetJobForWorkflowRunReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetJobForWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",
@@ -2561,7 +2543,6 @@ type GetOrgPublicKeyReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetOrgPublicKeyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",
@@ -2680,7 +2661,6 @@ type GetOrgSecretReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetOrgSecretReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",
@@ -2797,7 +2777,6 @@ type GetRepoPublicKeyReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetRepoPublicKeyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",
@@ -2917,7 +2896,6 @@ type GetRepoSecretReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetRepoSecretReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",
@@ -3036,7 +3014,6 @@ type GetSelfHostedRunnerForOrgReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetSelfHostedRunnerForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",
@@ -3156,7 +3133,6 @@ type GetSelfHostedRunnerForRepoReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetSelfHostedRunnerForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",
@@ -3274,7 +3250,6 @@ type GetWorkflowReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetWorkflowReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",
@@ -3392,7 +3367,6 @@ type GetWorkflowRunReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",
@@ -3510,7 +3484,6 @@ type GetWorkflowRunUsageReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetWorkflowRunUsageReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",
@@ -3628,7 +3601,6 @@ type GetWorkflowUsageReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetWorkflowUsageReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",
@@ -3759,7 +3731,6 @@ func (r *ListArtifactsForRepoReq) HTTPRequest(ctx context.Context, opt ...reques
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",
@@ -3913,7 +3884,6 @@ func (r *ListJobsForWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...requ
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",
@@ -4054,7 +4024,6 @@ func (r *ListOrgSecretsReq) HTTPRequest(ctx context.Context, opt ...requests.Opt
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",
@@ -4196,7 +4165,6 @@ func (r *ListRepoSecretsReq) HTTPRequest(ctx context.Context, opt ...requests.Op
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",
@@ -4338,7 +4306,6 @@ func (r *ListRepoWorkflowsReq) HTTPRequest(ctx context.Context, opt ...requests.
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",
@@ -4465,7 +4432,6 @@ type ListRunnerApplicationsForOrgReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *ListRunnerApplicationsForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",
@@ -4582,7 +4548,6 @@ type ListRunnerApplicationsForRepoReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *ListRunnerApplicationsForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",
@@ -4701,7 +4666,6 @@ type ListSelectedReposForOrgSecretReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *ListSelectedReposForOrgSecretReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",
@@ -4841,7 +4805,6 @@ func (r *ListSelfHostedRunnersForOrgReq) HTTPRequest(ctx context.Context, opt ..
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",
@@ -4983,7 +4946,6 @@ func (r *ListSelfHostedRunnersForRepoReq) HTTPRequest(ctx context.Context, opt .
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",
@@ -5126,7 +5088,6 @@ func (r *ListWorkflowRunArtifactsReq) HTTPRequest(ctx context.Context, opt ...re
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",
@@ -5309,7 +5270,6 @@ func (r *ListWorkflowRunsReq) HTTPRequest(ctx context.Context, opt ...requests.O
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",
@@ -5491,7 +5451,6 @@ func (r *ListWorkflowRunsForRepoReq) HTTPRequest(ctx context.Context, opt ...req
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",
@@ -5620,7 +5579,6 @@ type ReRunWorkflowReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *ReRunWorkflowReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{},
 		Method:      "POST",
@@ -5735,7 +5693,6 @@ type RemoveSelectedRepoFromOrgSecretReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *RemoveSelectedRepoFromOrgSecretReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",

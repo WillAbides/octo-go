@@ -89,7 +89,6 @@ type GetAllCodesOfConductReq struct {
 func (r *GetAllCodesOfConductReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"scarlet-witch"},
-		Body:             nil,
 		ExplicitURL:      r._url,
 		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
 		Method:           "GET",
@@ -217,7 +216,6 @@ type GetConductCodeReq struct {
 func (r *GetConductCodeReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"scarlet-witch"},
-		Body:             nil,
 		ExplicitURL:      r._url,
 		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
 		Method:           "GET",
@@ -344,7 +342,6 @@ type GetForRepoReq struct {
 func (r *GetForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"scarlet-witch"},
-		Body:             nil,
 		ExplicitURL:      r._url,
 		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
 		Method:           "GET",

@@ -131,7 +131,6 @@ func (r *CodeReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*htt
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",
@@ -316,7 +315,6 @@ func (r *CommitsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"cloak"},
-		Body:             nil,
 		ExplicitURL:      r._url,
 		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
 		Method:           "GET",
@@ -496,7 +494,6 @@ func (r *IssuesAndPullRequestsReq) HTTPRequest(ctx context.Context, opt ...reque
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",
@@ -661,7 +658,6 @@ func (r *LabelsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*h
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",
@@ -845,7 +841,6 @@ func (r *ReposReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*ht
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews: []string{"mercy"},
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",
@@ -995,7 +990,6 @@ func (r *TopicsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*h
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:      []string{"mercy"},
-		Body:             nil,
 		ExplicitURL:      r._url,
 		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
 		Method:           "GET",
@@ -1172,7 +1166,6 @@ func (r *UsersReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*ht
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
 		Method:      "GET",

@@ -87,7 +87,6 @@ type DeleteUserFromOrgReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteUserFromOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{},
 		Method:      "DELETE",
@@ -199,7 +198,6 @@ type GetProvisioningInformationForUserReq struct {
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetProvisioningInformationForUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/scim+json")},
 		Method:      "GET",
@@ -347,7 +345,6 @@ func (r *ListProvisionedIdentitiesReq) HTTPRequest(ctx context.Context, opt ...r
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		Body:        nil,
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": internal.String("application/scim+json")},
 		Method:      "GET",
