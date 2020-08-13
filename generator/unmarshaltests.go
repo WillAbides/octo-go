@@ -10,7 +10,7 @@ import (
 )
 
 func generateUnmarshalTests(outputPath string, pq pkgQual, endpoints []*model.Endpoint) error {
-	f, err := os.Create(filepath.Join(outputPath, "zz_unmarshal_gen_test.go"))
+	f, err := os.Create(filepath.Join(outputPath, "unmarshal_gen_test.go"))
 	if err != nil {
 		return err
 	}
