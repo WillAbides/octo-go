@@ -85,23 +85,17 @@ type CreateBlobReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateBlobReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		Method:           "POST",
-		Options:          opt,
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/git/blobs", r.Owner, r.Repo),
-		URLQuery:         query,
+		JSONRequestBody: true,
+		Method:          "POST",
+		Options:         opt,
+		URLPath:         fmt.Sprintf("/repos/%v/%v/git/blobs", r.Owner, r.Repo),
 	})
 }
 
@@ -227,23 +221,17 @@ type CreateCommitReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateCommitReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		Method:           "POST",
-		Options:          opt,
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/git/commits", r.Owner, r.Repo),
-		URLQuery:         query,
+		JSONRequestBody: true,
+		Method:          "POST",
+		Options:         opt,
+		URLPath:         fmt.Sprintf("/repos/%v/%v/git/commits", r.Owner, r.Repo),
 	})
 }
 
@@ -438,23 +426,17 @@ type CreateRefReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateRefReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		Method:           "POST",
-		Options:          opt,
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/git/refs", r.Owner, r.Repo),
-		URLQuery:         query,
+		JSONRequestBody: true,
+		Method:          "POST",
+		Options:         opt,
+		URLPath:         fmt.Sprintf("/repos/%v/%v/git/refs", r.Owner, r.Repo),
 	})
 }
 
@@ -584,23 +566,17 @@ type CreateTagReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateTagReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		Method:           "POST",
-		Options:          opt,
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/git/tags", r.Owner, r.Repo),
-		URLQuery:         query,
+		JSONRequestBody: true,
+		Method:          "POST",
+		Options:         opt,
+		URLPath:         fmt.Sprintf("/repos/%v/%v/git/tags", r.Owner, r.Repo),
 	})
 }
 
@@ -751,23 +727,17 @@ type CreateTreeReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateTreeReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		Method:           "POST",
-		Options:          opt,
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/git/trees", r.Owner, r.Repo),
-		URLQuery:         query,
+		JSONRequestBody: true,
+		Method:          "POST",
+		Options:         opt,
+		URLPath:         fmt.Sprintf("/repos/%v/%v/git/trees", r.Owner, r.Repo),
 	})
 }
 
@@ -934,20 +904,13 @@ type DeleteRefReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteRefReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{},
-		Method:             "DELETE",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/git/refs/%v", r.Owner, r.Repo, r.Ref),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{},
+		Method:      "DELETE",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/repos/%v/%v/git/refs/%v", r.Owner, r.Repo, r.Ref),
 	})
 }
 
@@ -1054,20 +1017,13 @@ type GetBlobReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetBlobReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/git/blobs/%v", r.Owner, r.Repo, r.FileSha),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/repos/%v/%v/git/blobs/%v", r.Owner, r.Repo, r.FileSha),
 	})
 }
 
@@ -1181,20 +1137,13 @@ type GetCommitReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetCommitReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/git/commits/%v", r.Owner, r.Repo, r.CommitSha),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/repos/%v/%v/git/commits/%v", r.Owner, r.Repo, r.CommitSha),
 	})
 }
 
@@ -1308,20 +1257,13 @@ type GetRefReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetRefReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/git/ref/%v", r.Owner, r.Repo, r.Ref),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/repos/%v/%v/git/ref/%v", r.Owner, r.Repo, r.Ref),
 	})
 }
 
@@ -1435,20 +1377,13 @@ type GetTagReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetTagReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/git/tags/%v", r.Owner, r.Repo, r.TagSha),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/repos/%v/%v/git/tags/%v", r.Owner, r.Repo, r.TagSha),
 	})
 }
 
@@ -1577,17 +1512,13 @@ func (r *GetTreeReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/git/trees/%v", r.Owner, r.Repo, r.TreeSha),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/repos/%v/%v/git/trees/%v", r.Owner, r.Repo, r.TreeSha),
+		URLQuery:    query,
 	})
 }
 
@@ -1716,17 +1647,13 @@ func (r *ListMatchingRefsReq) HTTPRequest(ctx context.Context, opt ...requests.O
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/git/matching-refs/%v", r.Owner, r.Repo, r.Ref),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/repos/%v/%v/git/matching-refs/%v", r.Owner, r.Repo, r.Ref),
+		URLQuery:    query,
 	})
 }
 
@@ -1841,23 +1768,17 @@ type UpdateRefReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *UpdateRefReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		Method:           "PATCH",
-		Options:          opt,
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/git/refs/%v", r.Owner, r.Repo, r.Ref),
-		URLQuery:         query,
+		JSONRequestBody: true,
+		Method:          "PATCH",
+		Options:         opt,
+		URLPath:         fmt.Sprintf("/repos/%v/%v/git/refs/%v", r.Owner, r.Repo, r.Ref),
 	})
 }
 

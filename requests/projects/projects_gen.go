@@ -94,20 +94,17 @@ type AddCollaboratorReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *AddCollaboratorReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"inertia"},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"content-type": internal.String("application/json")},
-		Method:             "PUT",
-		Options:            opt,
-		Previews:           map[string]bool{"inertia": r.InertiaPreview},
-		RequiredPreviews:   []string{"inertia"},
-		URLPath:            fmt.Sprintf("/projects/%v/collaborators/%v", r.ProjectId, r.Username),
-		URLQuery:           query,
+		AllPreviews:      []string{"inertia"},
+		Body:             r.RequestBody,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"content-type": internal.String("application/json")},
+		JSONRequestBody:  true,
+		Method:           "PUT",
+		Options:          opt,
+		Previews:         map[string]bool{"inertia": r.InertiaPreview},
+		RequiredPreviews: []string{"inertia"},
+		URLPath:          fmt.Sprintf("/projects/%v/collaborators/%v", r.ProjectId, r.Username),
 	})
 }
 
@@ -233,23 +230,20 @@ type CreateCardReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateCardReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"inertia"},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		AllPreviews: []string{"inertia"},
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
+		JSONRequestBody:  true,
 		Method:           "POST",
 		Options:          opt,
 		Previews:         map[string]bool{"inertia": r.InertiaPreview},
 		RequiredPreviews: []string{"inertia"},
 		URLPath:          fmt.Sprintf("/projects/columns/%v/cards", r.ColumnId),
-		URLQuery:         query,
 	})
 }
 
@@ -383,23 +377,20 @@ type CreateColumnReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateColumnReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"inertia"},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		AllPreviews: []string{"inertia"},
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
+		JSONRequestBody:  true,
 		Method:           "POST",
 		Options:          opt,
 		Previews:         map[string]bool{"inertia": r.InertiaPreview},
 		RequiredPreviews: []string{"inertia"},
 		URLPath:          fmt.Sprintf("/projects/%v/columns", r.ProjectId),
-		URLQuery:         query,
 	})
 }
 
@@ -529,23 +520,20 @@ type CreateForAuthenticatedUserReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"inertia"},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		AllPreviews: []string{"inertia"},
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
+		JSONRequestBody:  true,
 		Method:           "POST",
 		Options:          opt,
 		Previews:         map[string]bool{"inertia": r.InertiaPreview},
 		RequiredPreviews: []string{"inertia"},
 		URLPath:          fmt.Sprintf("/user/projects"),
-		URLQuery:         query,
 	})
 }
 
@@ -679,23 +667,20 @@ type CreateForOrgReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"inertia"},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		AllPreviews: []string{"inertia"},
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
+		JSONRequestBody:  true,
 		Method:           "POST",
 		Options:          opt,
 		Previews:         map[string]bool{"inertia": r.InertiaPreview},
 		RequiredPreviews: []string{"inertia"},
 		URLPath:          fmt.Sprintf("/orgs/%v/projects", r.Org),
-		URLQuery:         query,
 	})
 }
 
@@ -830,23 +815,20 @@ type CreateForRepoReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"inertia"},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		AllPreviews: []string{"inertia"},
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
+		JSONRequestBody:  true,
 		Method:           "POST",
 		Options:          opt,
 		Previews:         map[string]bool{"inertia": r.InertiaPreview},
 		RequiredPreviews: []string{"inertia"},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/projects", r.Owner, r.Repo),
-		URLQuery:         query,
 	})
 }
 
@@ -979,20 +961,16 @@ type DeleteReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"inertia"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{},
-		Method:             "DELETE",
-		Options:            opt,
-		Previews:           map[string]bool{"inertia": r.InertiaPreview},
-		RequiredPreviews:   []string{"inertia"},
-		URLPath:            fmt.Sprintf("/projects/%v", r.ProjectId),
-		URLQuery:           query,
+		AllPreviews:      []string{"inertia"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		Options:          opt,
+		Previews:         map[string]bool{"inertia": r.InertiaPreview},
+		RequiredPreviews: []string{"inertia"},
+		URLPath:          fmt.Sprintf("/projects/%v", r.ProjectId),
 	})
 }
 
@@ -1106,20 +1084,16 @@ type DeleteCardReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteCardReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"inertia"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{},
-		Method:             "DELETE",
-		Options:            opt,
-		Previews:           map[string]bool{"inertia": r.InertiaPreview},
-		RequiredPreviews:   []string{"inertia"},
-		URLPath:            fmt.Sprintf("/projects/columns/cards/%v", r.CardId),
-		URLQuery:           query,
+		AllPreviews:      []string{"inertia"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		Options:          opt,
+		Previews:         map[string]bool{"inertia": r.InertiaPreview},
+		RequiredPreviews: []string{"inertia"},
+		URLPath:          fmt.Sprintf("/projects/columns/cards/%v", r.CardId),
 	})
 }
 
@@ -1233,20 +1207,16 @@ type DeleteColumnReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteColumnReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"inertia"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{},
-		Method:             "DELETE",
-		Options:            opt,
-		Previews:           map[string]bool{"inertia": r.InertiaPreview},
-		RequiredPreviews:   []string{"inertia"},
-		URLPath:            fmt.Sprintf("/projects/columns/%v", r.ColumnId),
-		URLQuery:           query,
+		AllPreviews:      []string{"inertia"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		Options:          opt,
+		Previews:         map[string]bool{"inertia": r.InertiaPreview},
+		RequiredPreviews: []string{"inertia"},
+		URLPath:          fmt.Sprintf("/projects/columns/%v", r.ColumnId),
 	})
 }
 
@@ -1358,20 +1328,16 @@ type GetReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"inertia"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{"inertia": r.InertiaPreview},
-		RequiredPreviews:   []string{"inertia"},
-		URLPath:            fmt.Sprintf("/projects/%v", r.ProjectId),
-		URLQuery:           query,
+		AllPreviews:      []string{"inertia"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
+		Method:           "GET",
+		Options:          opt,
+		Previews:         map[string]bool{"inertia": r.InertiaPreview},
+		RequiredPreviews: []string{"inertia"},
+		URLPath:          fmt.Sprintf("/projects/%v", r.ProjectId),
 	})
 }
 
@@ -1492,20 +1458,16 @@ type GetCardReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetCardReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"inertia"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{"inertia": r.InertiaPreview},
-		RequiredPreviews:   []string{"inertia"},
-		URLPath:            fmt.Sprintf("/projects/columns/cards/%v", r.CardId),
-		URLQuery:           query,
+		AllPreviews:      []string{"inertia"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
+		Method:           "GET",
+		Options:          opt,
+		Previews:         map[string]bool{"inertia": r.InertiaPreview},
+		RequiredPreviews: []string{"inertia"},
+		URLPath:          fmt.Sprintf("/projects/columns/cards/%v", r.CardId),
 	})
 }
 
@@ -1626,20 +1588,16 @@ type GetColumnReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetColumnReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"inertia"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{"inertia": r.InertiaPreview},
-		RequiredPreviews:   []string{"inertia"},
-		URLPath:            fmt.Sprintf("/projects/columns/%v", r.ColumnId),
-		URLQuery:           query,
+		AllPreviews:      []string{"inertia"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
+		Method:           "GET",
+		Options:          opt,
+		Previews:         map[string]bool{"inertia": r.InertiaPreview},
+		RequiredPreviews: []string{"inertia"},
+		URLPath:          fmt.Sprintf("/projects/columns/%v", r.ColumnId),
 	})
 }
 
@@ -1759,20 +1717,16 @@ type GetPermissionForUserReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetPermissionForUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"inertia"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{"inertia": r.InertiaPreview},
-		RequiredPreviews:   []string{"inertia"},
-		URLPath:            fmt.Sprintf("/projects/%v/collaborators/%v/permission", r.ProjectId, r.Username),
-		URLQuery:           query,
+		AllPreviews:      []string{"inertia"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
+		Method:           "GET",
+		Options:          opt,
+		Previews:         map[string]bool{"inertia": r.InertiaPreview},
+		RequiredPreviews: []string{"inertia"},
+		URLPath:          fmt.Sprintf("/projects/%v/collaborators/%v/permission", r.ProjectId, r.Username),
 	})
 }
 
@@ -1917,17 +1871,16 @@ func (r *ListCardsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) 
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"inertia"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{"inertia": r.InertiaPreview},
-		RequiredPreviews:   []string{"inertia"},
-		URLPath:            fmt.Sprintf("/projects/columns/%v/cards", r.ColumnId),
-		URLQuery:           query,
+		AllPreviews:      []string{"inertia"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
+		Method:           "GET",
+		Options:          opt,
+		Previews:         map[string]bool{"inertia": r.InertiaPreview},
+		RequiredPreviews: []string{"inertia"},
+		URLPath:          fmt.Sprintf("/projects/columns/%v/cards", r.ColumnId),
+		URLQuery:         query,
 	})
 }
 
@@ -2074,17 +2027,16 @@ func (r *ListCollaboratorsReq) HTTPRequest(ctx context.Context, opt ...requests.
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"inertia"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{"inertia": r.InertiaPreview},
-		RequiredPreviews:   []string{"inertia"},
-		URLPath:            fmt.Sprintf("/projects/%v/collaborators", r.ProjectId),
-		URLQuery:           query,
+		AllPreviews:      []string{"inertia"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
+		Method:           "GET",
+		Options:          opt,
+		Previews:         map[string]bool{"inertia": r.InertiaPreview},
+		RequiredPreviews: []string{"inertia"},
+		URLPath:          fmt.Sprintf("/projects/%v/collaborators", r.ProjectId),
+		URLQuery:         query,
 	})
 }
 
@@ -2218,17 +2170,16 @@ func (r *ListColumnsReq) HTTPRequest(ctx context.Context, opt ...requests.Option
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"inertia"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{"inertia": r.InertiaPreview},
-		RequiredPreviews:   []string{"inertia"},
-		URLPath:            fmt.Sprintf("/projects/%v/columns", r.ProjectId),
-		URLQuery:           query,
+		AllPreviews:      []string{"inertia"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
+		Method:           "GET",
+		Options:          opt,
+		Previews:         map[string]bool{"inertia": r.InertiaPreview},
+		RequiredPreviews: []string{"inertia"},
+		URLPath:          fmt.Sprintf("/projects/%v/columns", r.ProjectId),
+		URLQuery:         query,
 	})
 }
 
@@ -2371,17 +2322,16 @@ func (r *ListForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option)
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"inertia"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{"inertia": r.InertiaPreview},
-		RequiredPreviews:   []string{"inertia"},
-		URLPath:            fmt.Sprintf("/orgs/%v/projects", r.Org),
-		URLQuery:           query,
+		AllPreviews:      []string{"inertia"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
+		Method:           "GET",
+		Options:          opt,
+		Previews:         map[string]bool{"inertia": r.InertiaPreview},
+		RequiredPreviews: []string{"inertia"},
+		URLPath:          fmt.Sprintf("/orgs/%v/projects", r.Org),
+		URLQuery:         query,
 	})
 }
 
@@ -2525,17 +2475,16 @@ func (r *ListForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"inertia"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{"inertia": r.InertiaPreview},
-		RequiredPreviews:   []string{"inertia"},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/projects", r.Owner, r.Repo),
-		URLQuery:           query,
+		AllPreviews:      []string{"inertia"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
+		Method:           "GET",
+		Options:          opt,
+		Previews:         map[string]bool{"inertia": r.InertiaPreview},
+		RequiredPreviews: []string{"inertia"},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/projects", r.Owner, r.Repo),
+		URLQuery:         query,
 	})
 }
 
@@ -2678,17 +2627,16 @@ func (r *ListForUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"inertia"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{"inertia": r.InertiaPreview},
-		RequiredPreviews:   []string{"inertia"},
-		URLPath:            fmt.Sprintf("/users/%v/projects", r.Username),
-		URLQuery:           query,
+		AllPreviews:      []string{"inertia"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
+		Method:           "GET",
+		Options:          opt,
+		Previews:         map[string]bool{"inertia": r.InertiaPreview},
+		RequiredPreviews: []string{"inertia"},
+		URLPath:          fmt.Sprintf("/users/%v/projects", r.Username),
+		URLQuery:         query,
 	})
 }
 
@@ -2810,23 +2758,20 @@ type MoveCardReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *MoveCardReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"inertia"},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody, internal.AttrNoResponseBody},
-		ExplicitURL:        r._url,
+		AllPreviews: []string{"inertia"},
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
+		JSONRequestBody:  true,
 		Method:           "POST",
 		Options:          opt,
 		Previews:         map[string]bool{"inertia": r.InertiaPreview},
 		RequiredPreviews: []string{"inertia"},
 		URLPath:          fmt.Sprintf("/projects/columns/cards/%v/moves", r.CardId),
-		URLQuery:         query,
 	})
 }
 
@@ -2955,23 +2900,20 @@ type MoveColumnReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *MoveColumnReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"inertia"},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody, internal.AttrNoResponseBody},
-		ExplicitURL:        r._url,
+		AllPreviews: []string{"inertia"},
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
+		JSONRequestBody:  true,
 		Method:           "POST",
 		Options:          opt,
 		Previews:         map[string]bool{"inertia": r.InertiaPreview},
 		RequiredPreviews: []string{"inertia"},
 		URLPath:          fmt.Sprintf("/projects/columns/%v/moves", r.ColumnId),
-		URLQuery:         query,
 	})
 }
 
@@ -3095,20 +3037,16 @@ type RemoveCollaboratorReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *RemoveCollaboratorReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"inertia"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{},
-		Method:             "DELETE",
-		Options:            opt,
-		Previews:           map[string]bool{"inertia": r.InertiaPreview},
-		RequiredPreviews:   []string{"inertia"},
-		URLPath:            fmt.Sprintf("/projects/%v/collaborators/%v", r.ProjectId, r.Username),
-		URLQuery:           query,
+		AllPreviews:      []string{"inertia"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		Options:          opt,
+		Previews:         map[string]bool{"inertia": r.InertiaPreview},
+		RequiredPreviews: []string{"inertia"},
+		URLPath:          fmt.Sprintf("/projects/%v/collaborators/%v", r.ProjectId, r.Username),
 	})
 }
 
@@ -3221,23 +3159,20 @@ type UpdateReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *UpdateReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"inertia"},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		AllPreviews: []string{"inertia"},
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
+		JSONRequestBody:  true,
 		Method:           "PATCH",
 		Options:          opt,
 		Previews:         map[string]bool{"inertia": r.InertiaPreview},
 		RequiredPreviews: []string{"inertia"},
 		URLPath:          fmt.Sprintf("/projects/%v", r.ProjectId),
-		URLQuery:         query,
 	})
 }
 
@@ -3382,23 +3317,20 @@ type UpdateCardReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *UpdateCardReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"inertia"},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		AllPreviews: []string{"inertia"},
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
+		JSONRequestBody:  true,
 		Method:           "PATCH",
 		Options:          opt,
 		Previews:         map[string]bool{"inertia": r.InertiaPreview},
 		RequiredPreviews: []string{"inertia"},
 		URLPath:          fmt.Sprintf("/projects/columns/cards/%v", r.CardId),
-		URLQuery:         query,
 	})
 }
 
@@ -3534,23 +3466,20 @@ type UpdateColumnReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *UpdateColumnReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"inertia"},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		AllPreviews: []string{"inertia"},
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
+		JSONRequestBody:  true,
 		Method:           "PATCH",
 		Options:          opt,
 		Previews:         map[string]bool{"inertia": r.InertiaPreview},
 		RequiredPreviews: []string{"inertia"},
 		URLPath:          fmt.Sprintf("/projects/columns/%v", r.ColumnId),
-		URLQuery:         query,
 	})
 }
 

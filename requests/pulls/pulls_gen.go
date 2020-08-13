@@ -85,20 +85,13 @@ type CheckIfMergedReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CheckIfMergedReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrBoolean},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/pulls/%v/merge", r.Owner, r.Repo, r.PullNumber),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{},
+		Method:      "GET",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/repos/%v/%v/pulls/%v/merge", r.Owner, r.Repo, r.PullNumber),
 	})
 }
 
@@ -218,23 +211,19 @@ type CreateReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"sailor-v"},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		AllPreviews: []string{"sailor-v"},
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		Method:           "POST",
-		Options:          opt,
-		Previews:         map[string]bool{"sailor-v": r.SailorVPreview},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/pulls", r.Owner, r.Repo),
-		URLQuery:         query,
+		JSONRequestBody: true,
+		Method:          "POST",
+		Options:         opt,
+		Previews:        map[string]bool{"sailor-v": r.SailorVPreview},
+		URLPath:         fmt.Sprintf("/repos/%v/%v/pulls", r.Owner, r.Repo),
 	})
 }
 
@@ -393,23 +382,17 @@ type CreateReplyForReviewCommentReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateReplyForReviewCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		Method:           "POST",
-		Options:          opt,
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/pulls/%v/comments/%v/replies", r.Owner, r.Repo, r.PullNumber, r.CommentId),
-		URLQuery:         query,
+		JSONRequestBody: true,
+		Method:          "POST",
+		Options:         opt,
+		URLPath:         fmt.Sprintf("/repos/%v/%v/pulls/%v/comments/%v/replies", r.Owner, r.Repo, r.PullNumber, r.CommentId),
 	})
 }
 
@@ -533,23 +516,17 @@ type CreateReviewReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateReviewReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		Method:           "POST",
-		Options:          opt,
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/pulls/%v/reviews", r.Owner, r.Repo, r.PullNumber),
-		URLQuery:         query,
+		JSONRequestBody: true,
+		Method:          "POST",
+		Options:         opt,
+		URLPath:         fmt.Sprintf("/repos/%v/%v/pulls/%v/reviews", r.Owner, r.Repo, r.PullNumber),
 	})
 }
 
@@ -724,23 +701,19 @@ type CreateReviewCommentReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateReviewCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"comfort-fade"},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		AllPreviews: []string{"comfort-fade"},
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		Method:           "POST",
-		Options:          opt,
-		Previews:         map[string]bool{"comfort-fade": r.ComfortFadePreview},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/pulls/%v/comments", r.Owner, r.Repo, r.PullNumber),
-		URLQuery:         query,
+		JSONRequestBody: true,
+		Method:          "POST",
+		Options:         opt,
+		Previews:        map[string]bool{"comfort-fade": r.ComfortFadePreview},
+		URLPath:         fmt.Sprintf("/repos/%v/%v/pulls/%v/comments", r.Owner, r.Repo, r.PullNumber),
 	})
 }
 
@@ -924,20 +897,13 @@ type DeletePendingReviewReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeletePendingReviewReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "DELETE",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/pulls/%v/reviews/%v", r.Owner, r.Repo, r.PullNumber, r.ReviewId),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "DELETE",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/repos/%v/%v/pulls/%v/reviews/%v", r.Owner, r.Repo, r.PullNumber, r.ReviewId),
 	})
 }
 
@@ -1051,20 +1017,13 @@ type DeleteReviewCommentReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteReviewCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrBoolean},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{},
-		Method:             "DELETE",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/pulls/comments/%v", r.Owner, r.Repo, r.CommentId),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{},
+		Method:      "DELETE",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/repos/%v/%v/pulls/comments/%v", r.Owner, r.Repo, r.CommentId),
 	})
 }
 
@@ -1178,23 +1137,17 @@ type DismissReviewReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DismissReviewReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		Method:           "PUT",
-		Options:          opt,
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/pulls/%v/reviews/%v/dismissals", r.Owner, r.Repo, r.PullNumber, r.ReviewId),
-		URLQuery:         query,
+		JSONRequestBody: true,
+		Method:          "PUT",
+		Options:         opt,
+		URLPath:         fmt.Sprintf("/repos/%v/%v/pulls/%v/reviews/%v/dismissals", r.Owner, r.Repo, r.PullNumber, r.ReviewId),
 	})
 }
 
@@ -1328,20 +1281,15 @@ type GetReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"sailor-v"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{"sailor-v": r.SailorVPreview},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/pulls/%v", r.Owner, r.Repo, r.PullNumber),
-		URLQuery:           query,
+		AllPreviews: []string{"sailor-v"},
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
+		Previews:    map[string]bool{"sailor-v": r.SailorVPreview},
+		URLPath:     fmt.Sprintf("/repos/%v/%v/pulls/%v", r.Owner, r.Repo, r.PullNumber),
 	})
 }
 
@@ -1456,20 +1404,13 @@ type GetReviewReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetReviewReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/pulls/%v/reviews/%v", r.Owner, r.Repo, r.PullNumber, r.ReviewId),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/repos/%v/%v/pulls/%v/reviews/%v", r.Owner, r.Repo, r.PullNumber, r.ReviewId),
 	})
 }
 
@@ -1601,23 +1542,18 @@ type GetReviewCommentReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetReviewCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"comfort-fade", "squirrel-girl"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
+		AllPreviews: []string{"comfort-fade", "squirrel-girl"},
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
 		Previews: map[string]bool{
 			"comfort-fade":  r.ComfortFadePreview,
 			"squirrel-girl": r.SquirrelGirlPreview,
 		},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/pulls/comments/%v", r.Owner, r.Repo, r.CommentId),
-		URLQuery:         query,
+		URLPath: fmt.Sprintf("/repos/%v/%v/pulls/comments/%v", r.Owner, r.Repo, r.CommentId),
 	})
 }
 
@@ -1794,17 +1730,15 @@ func (r *ListReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*htt
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"sailor-v"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{"sailor-v": r.SailorVPreview},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/pulls", r.Owner, r.Repo),
-		URLQuery:           query,
+		AllPreviews: []string{"sailor-v"},
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
+		Previews:    map[string]bool{"sailor-v": r.SailorVPreview},
+		URLPath:     fmt.Sprintf("/repos/%v/%v/pulls", r.Owner, r.Repo),
+		URLQuery:    query,
 	})
 }
 
@@ -1934,17 +1868,13 @@ func (r *ListCommentsForReviewReq) HTTPRequest(ctx context.Context, opt ...reque
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/pulls/%v/reviews/%v/comments", r.Owner, r.Repo, r.PullNumber, r.ReviewId),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/repos/%v/%v/pulls/%v/reviews/%v/comments", r.Owner, r.Repo, r.PullNumber, r.ReviewId),
+		URLQuery:    query,
 	})
 }
 
@@ -2071,17 +2001,13 @@ func (r *ListCommitsReq) HTTPRequest(ctx context.Context, opt ...requests.Option
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/pulls/%v/commits", r.Owner, r.Repo, r.PullNumber),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/repos/%v/%v/pulls/%v/commits", r.Owner, r.Repo, r.PullNumber),
+		URLQuery:    query,
 	})
 }
 
@@ -2208,17 +2134,13 @@ func (r *ListFilesReq) HTTPRequest(ctx context.Context, opt ...requests.Option) 
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/pulls/%v/files", r.Owner, r.Repo, r.PullNumber),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/repos/%v/%v/pulls/%v/files", r.Owner, r.Repo, r.PullNumber),
+		URLQuery:    query,
 	})
 }
 
@@ -2345,17 +2267,13 @@ func (r *ListRequestedReviewersReq) HTTPRequest(ctx context.Context, opt ...requ
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/pulls/%v/requested_reviewers", r.Owner, r.Repo, r.PullNumber),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/repos/%v/%v/pulls/%v/requested_reviewers", r.Owner, r.Repo, r.PullNumber),
+		URLQuery:    query,
 	})
 }
 
@@ -2525,20 +2443,18 @@ func (r *ListReviewCommentsReq) HTTPRequest(ctx context.Context, opt ...requests
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"comfort-fade", "squirrel-girl"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
+		AllPreviews: []string{"comfort-fade", "squirrel-girl"},
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
 		Previews: map[string]bool{
 			"comfort-fade":  r.ComfortFadePreview,
 			"squirrel-girl": r.SquirrelGirlPreview,
 		},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/pulls/%v/comments", r.Owner, r.Repo, r.PullNumber),
-		URLQuery:         query,
+		URLPath:  fmt.Sprintf("/repos/%v/%v/pulls/%v/comments", r.Owner, r.Repo, r.PullNumber),
+		URLQuery: query,
 	})
 }
 
@@ -2707,20 +2623,18 @@ func (r *ListReviewCommentsForRepoReq) HTTPRequest(ctx context.Context, opt ...r
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"comfort-fade", "squirrel-girl"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
+		AllPreviews: []string{"comfort-fade", "squirrel-girl"},
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
 		Previews: map[string]bool{
 			"comfort-fade":  r.ComfortFadePreview,
 			"squirrel-girl": r.SquirrelGirlPreview,
 		},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/pulls/comments", r.Owner, r.Repo),
-		URLQuery:         query,
+		URLPath:  fmt.Sprintf("/repos/%v/%v/pulls/comments", r.Owner, r.Repo),
+		URLQuery: query,
 	})
 }
 
@@ -2847,17 +2761,13 @@ func (r *ListReviewsReq) HTTPRequest(ctx context.Context, opt ...requests.Option
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/pulls/%v/reviews", r.Owner, r.Repo, r.PullNumber),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/repos/%v/%v/pulls/%v/reviews", r.Owner, r.Repo, r.PullNumber),
+		URLQuery:    query,
 	})
 }
 
@@ -2970,23 +2880,17 @@ type MergeReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *MergeReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		Method:           "PUT",
-		Options:          opt,
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/pulls/%v/merge", r.Owner, r.Repo, r.PullNumber),
-		URLQuery:         query,
+		JSONRequestBody: true,
+		Method:          "PUT",
+		Options:         opt,
+		URLPath:         fmt.Sprintf("/repos/%v/%v/pulls/%v/merge", r.Owner, r.Repo, r.PullNumber),
 	})
 }
 
@@ -3119,20 +3023,14 @@ type RemoveRequestedReviewersReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *RemoveRequestedReviewersReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"content-type": internal.String("application/json")},
-		Method:             "DELETE",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/pulls/%v/requested_reviewers", r.Owner, r.Repo, r.PullNumber),
-		URLQuery:           query,
+		Body:            r.RequestBody,
+		ExplicitURL:     r._url,
+		HeaderVals:      map[string]*string{"content-type": internal.String("application/json")},
+		JSONRequestBody: true,
+		Method:          "DELETE",
+		Options:         opt,
+		URLPath:         fmt.Sprintf("/repos/%v/%v/pulls/%v/requested_reviewers", r.Owner, r.Repo, r.PullNumber),
 	})
 }
 
@@ -3252,23 +3150,17 @@ type RequestReviewersReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *RequestReviewersReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		Method:           "POST",
-		Options:          opt,
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/pulls/%v/requested_reviewers", r.Owner, r.Repo, r.PullNumber),
-		URLQuery:         query,
+		JSONRequestBody: true,
+		Method:          "POST",
+		Options:         opt,
+		URLPath:         fmt.Sprintf("/repos/%v/%v/pulls/%v/requested_reviewers", r.Owner, r.Repo, r.PullNumber),
 	})
 }
 
@@ -3398,23 +3290,17 @@ type SubmitReviewReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *SubmitReviewReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		Method:           "POST",
-		Options:          opt,
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/pulls/%v/reviews/%v/events", r.Owner, r.Repo, r.PullNumber, r.ReviewId),
-		URLQuery:         query,
+		JSONRequestBody: true,
+		Method:          "POST",
+		Options:         opt,
+		URLPath:         fmt.Sprintf("/repos/%v/%v/pulls/%v/reviews/%v/events", r.Owner, r.Repo, r.PullNumber, r.ReviewId),
 	})
 }
 
@@ -3557,23 +3443,19 @@ type UpdateReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *UpdateReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"sailor-v"},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		AllPreviews: []string{"sailor-v"},
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		Method:           "PATCH",
-		Options:          opt,
-		Previews:         map[string]bool{"sailor-v": r.SailorVPreview},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/pulls/%v", r.Owner, r.Repo, r.PullNumber),
-		URLQuery:         query,
+		JSONRequestBody: true,
+		Method:          "PATCH",
+		Options:         opt,
+		Previews:        map[string]bool{"sailor-v": r.SailorVPreview},
+		URLPath:         fmt.Sprintf("/repos/%v/%v/pulls/%v", r.Owner, r.Repo, r.PullNumber),
 	})
 }
 
@@ -3724,23 +3606,20 @@ type UpdateBranchReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *UpdateBranchReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"lydian"},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		AllPreviews: []string{"lydian"},
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
+		JSONRequestBody:  true,
 		Method:           "PUT",
 		Options:          opt,
 		Previews:         map[string]bool{"lydian": r.LydianPreview},
 		RequiredPreviews: []string{"lydian"},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/pulls/%v/update-branch", r.Owner, r.Repo, r.PullNumber),
-		URLQuery:         query,
 	})
 }
 
@@ -3885,23 +3764,17 @@ type UpdateReviewReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *UpdateReviewReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		Method:           "PUT",
-		Options:          opt,
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/pulls/%v/reviews/%v", r.Owner, r.Repo, r.PullNumber, r.ReviewId),
-		URLQuery:         query,
+		JSONRequestBody: true,
+		Method:          "PUT",
+		Options:         opt,
+		URLPath:         fmt.Sprintf("/repos/%v/%v/pulls/%v/reviews/%v", r.Owner, r.Repo, r.PullNumber, r.ReviewId),
 	})
 }
 
@@ -4034,23 +3907,19 @@ type UpdateReviewCommentReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *UpdateReviewCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"comfort-fade"},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		AllPreviews: []string{"comfort-fade"},
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		Method:           "PATCH",
-		Options:          opt,
-		Previews:         map[string]bool{"comfort-fade": r.ComfortFadePreview},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/pulls/comments/%v", r.Owner, r.Repo, r.CommentId),
-		URLQuery:         query,
+		JSONRequestBody: true,
+		Method:          "PATCH",
+		Options:         opt,
+		Previews:        map[string]bool{"comfort-fade": r.ComfortFadePreview},
+		URLPath:         fmt.Sprintf("/repos/%v/%v/pulls/comments/%v", r.Owner, r.Repo, r.CommentId),
 	})
 }
 

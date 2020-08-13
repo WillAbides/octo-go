@@ -85,20 +85,13 @@ type CheckIsStarredReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CheckIsStarredReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/gists/%v/star", r.GistId),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{},
+		Method:      "GET",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/gists/%v/star", r.GistId),
 	})
 }
 
@@ -201,23 +194,17 @@ type CreateReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		Method:           "POST",
-		Options:          opt,
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/gists"),
-		URLQuery:         query,
+		JSONRequestBody: true,
+		Method:          "POST",
+		Options:         opt,
+		URLPath:         fmt.Sprintf("/gists"),
 	})
 }
 
@@ -354,23 +341,17 @@ type CreateCommentReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		Method:           "POST",
-		Options:          opt,
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/gists/%v/comments", r.GistId),
-		URLQuery:         query,
+		JSONRequestBody: true,
+		Method:          "POST",
+		Options:         opt,
+		URLPath:         fmt.Sprintf("/gists/%v/comments", r.GistId),
 	})
 }
 
@@ -493,20 +474,13 @@ type DeleteReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{},
-		Method:             "DELETE",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/gists/%v", r.GistId),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{},
+		Method:      "DELETE",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/gists/%v", r.GistId),
 	})
 }
 
@@ -614,20 +588,13 @@ type DeleteCommentReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{},
-		Method:             "DELETE",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/gists/%v/comments/%v", r.GistId, r.CommentId),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{},
+		Method:      "DELETE",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/gists/%v/comments/%v", r.GistId, r.CommentId),
 	})
 }
 
@@ -732,20 +699,13 @@ type ForkReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *ForkReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "POST",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/gists/%v/forks", r.GistId),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "POST",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/gists/%v/forks", r.GistId),
 	})
 }
 
@@ -857,20 +817,13 @@ type GetReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/gists/%v", r.GistId),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/gists/%v", r.GistId),
 	})
 }
 
@@ -985,20 +938,13 @@ type GetCommentReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/gists/%v/comments/%v", r.GistId, r.CommentId),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/gists/%v/comments/%v", r.GistId, r.CommentId),
 	})
 }
 
@@ -1113,20 +1059,13 @@ type GetRevisionReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetRevisionReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/gists/%v/%v", r.GistId, r.Sha),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/gists/%v/%v", r.GistId, r.Sha),
 	})
 }
 
@@ -1260,17 +1199,13 @@ func (r *ListReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*htt
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/gists"),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/gists"),
+		URLQuery:    query,
 	})
 }
 
@@ -1397,17 +1332,13 @@ func (r *ListCommentsReq) HTTPRequest(ctx context.Context, opt ...requests.Optio
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/gists/%v/comments", r.GistId),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/gists/%v/comments", r.GistId),
+		URLQuery:    query,
 	})
 }
 
@@ -1534,17 +1465,13 @@ func (r *ListCommitsReq) HTTPRequest(ctx context.Context, opt ...requests.Option
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/gists/%v/commits", r.GistId),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/gists/%v/commits", r.GistId),
+		URLQuery:    query,
 	})
 }
 
@@ -1679,17 +1606,13 @@ func (r *ListForUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/users/%v/gists", r.Username),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/users/%v/gists", r.Username),
+		URLQuery:    query,
 	})
 }
 
@@ -1816,17 +1739,13 @@ func (r *ListForksReq) HTTPRequest(ctx context.Context, opt ...requests.Option) 
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/gists/%v/forks", r.GistId),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/gists/%v/forks", r.GistId),
+		URLQuery:    query,
 	})
 }
 
@@ -1960,17 +1879,13 @@ func (r *ListPublicReq) HTTPRequest(ctx context.Context, opt ...requests.Option)
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/gists/public"),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/gists/public"),
+		URLQuery:    query,
 	})
 }
 
@@ -2104,17 +2019,13 @@ func (r *ListStarredReq) HTTPRequest(ctx context.Context, opt ...requests.Option
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/gists/starred"),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/gists/starred"),
+		URLQuery:    query,
 	})
 }
 
@@ -2226,20 +2137,13 @@ type StarReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *StarReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{},
-		Method:             "PUT",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/gists/%v/star", r.GistId),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{},
+		Method:      "PUT",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/gists/%v/star", r.GistId),
 	})
 }
 
@@ -2344,20 +2248,13 @@ type UnstarReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *UnstarReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{},
-		Method:             "DELETE",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/gists/%v/star", r.GistId),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{},
+		Method:      "DELETE",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/gists/%v/star", r.GistId),
 	})
 }
 
@@ -2463,23 +2360,17 @@ type UpdateReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *UpdateReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		Method:           "PATCH",
-		Options:          opt,
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/gists/%v", r.GistId),
-		URLQuery:         query,
+		JSONRequestBody: true,
+		Method:          "PATCH",
+		Options:         opt,
+		URLPath:         fmt.Sprintf("/gists/%v", r.GistId),
 	})
 }
 
@@ -2619,23 +2510,17 @@ type UpdateCommentReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *UpdateCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		Method:           "PATCH",
-		Options:          opt,
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/gists/%v/comments/%v", r.GistId, r.CommentId),
-		URLQuery:         query,
+		JSONRequestBody: true,
+		Method:          "PATCH",
+		Options:         opt,
+		URLPath:         fmt.Sprintf("/gists/%v/comments/%v", r.GistId, r.CommentId),
 	})
 }
 

@@ -99,23 +99,20 @@ type CreateForCommitCommentReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateForCommitCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"squirrel-girl"},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		AllPreviews: []string{"squirrel-girl"},
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
+		JSONRequestBody:  true,
 		Method:           "POST",
 		Options:          opt,
 		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
 		RequiredPreviews: []string{"squirrel-girl"},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/comments/%v/reactions", r.Owner, r.Repo, r.CommentId),
-		URLQuery:         query,
 	})
 }
 
@@ -252,23 +249,20 @@ type CreateForIssueReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateForIssueReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"squirrel-girl"},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		AllPreviews: []string{"squirrel-girl"},
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
+		JSONRequestBody:  true,
 		Method:           "POST",
 		Options:          opt,
 		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
 		RequiredPreviews: []string{"squirrel-girl"},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/%v/reactions", r.Owner, r.Repo, r.IssueNumber),
-		URLQuery:         query,
 	})
 }
 
@@ -405,23 +399,20 @@ type CreateForIssueCommentReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateForIssueCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"squirrel-girl"},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		AllPreviews: []string{"squirrel-girl"},
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
+		JSONRequestBody:  true,
 		Method:           "POST",
 		Options:          opt,
 		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
 		RequiredPreviews: []string{"squirrel-girl"},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/comments/%v/reactions", r.Owner, r.Repo, r.CommentId),
-		URLQuery:         query,
 	})
 }
 
@@ -558,23 +549,20 @@ type CreateForPullRequestReviewCommentReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateForPullRequestReviewCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"squirrel-girl"},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		AllPreviews: []string{"squirrel-girl"},
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
+		JSONRequestBody:  true,
 		Method:           "POST",
 		Options:          opt,
 		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
 		RequiredPreviews: []string{"squirrel-girl"},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/pulls/comments/%v/reactions", r.Owner, r.Repo, r.CommentId),
-		URLQuery:         query,
 	})
 }
 
@@ -715,23 +703,20 @@ type CreateForTeamDiscussionCommentInOrgReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateForTeamDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"squirrel-girl"},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		AllPreviews: []string{"squirrel-girl"},
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
+		JSONRequestBody:  true,
 		Method:           "POST",
 		Options:          opt,
 		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
 		RequiredPreviews: []string{"squirrel-girl"},
 		URLPath:          fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/comments/%v/reactions", r.Org, r.TeamSlug, r.DiscussionNumber, r.CommentNumber),
-		URLQuery:         query,
 	})
 }
 
@@ -866,23 +851,20 @@ type CreateForTeamDiscussionCommentLegacyReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateForTeamDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"squirrel-girl"},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		AllPreviews: []string{"squirrel-girl"},
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
+		JSONRequestBody:  true,
 		Method:           "POST",
 		Options:          opt,
 		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
 		RequiredPreviews: []string{"squirrel-girl"},
 		URLPath:          fmt.Sprintf("/teams/%v/discussions/%v/comments/%v/reactions", r.TeamId, r.DiscussionNumber, r.CommentNumber),
-		URLQuery:         query,
 	})
 }
 
@@ -1019,23 +1001,20 @@ type CreateForTeamDiscussionInOrgReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateForTeamDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"squirrel-girl"},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		AllPreviews: []string{"squirrel-girl"},
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
+		JSONRequestBody:  true,
 		Method:           "POST",
 		Options:          opt,
 		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
 		RequiredPreviews: []string{"squirrel-girl"},
 		URLPath:          fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/reactions", r.Org, r.TeamSlug, r.DiscussionNumber),
-		URLQuery:         query,
 	})
 }
 
@@ -1169,23 +1148,20 @@ type CreateForTeamDiscussionLegacyReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateForTeamDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"squirrel-girl"},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		AllPreviews: []string{"squirrel-girl"},
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
+		JSONRequestBody:  true,
 		Method:           "POST",
 		Options:          opt,
 		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
 		RequiredPreviews: []string{"squirrel-girl"},
 		URLPath:          fmt.Sprintf("/teams/%v/discussions/%v/reactions", r.TeamId, r.DiscussionNumber),
-		URLQuery:         query,
 	})
 }
 
@@ -1322,20 +1298,16 @@ type DeleteForCommitCommentReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteForCommitCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"squirrel-girl"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{},
-		Method:             "DELETE",
-		Options:            opt,
-		Previews:           map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
-		RequiredPreviews:   []string{"squirrel-girl"},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/comments/%v/reactions/%v", r.Owner, r.Repo, r.CommentId, r.ReactionId),
-		URLQuery:           query,
+		AllPreviews:      []string{"squirrel-girl"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		Options:          opt,
+		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		RequiredPreviews: []string{"squirrel-girl"},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/comments/%v/reactions/%v", r.Owner, r.Repo, r.CommentId, r.ReactionId),
 	})
 }
 
@@ -1454,20 +1426,16 @@ type DeleteForIssueReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteForIssueReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"squirrel-girl"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{},
-		Method:             "DELETE",
-		Options:            opt,
-		Previews:           map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
-		RequiredPreviews:   []string{"squirrel-girl"},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/issues/%v/reactions/%v", r.Owner, r.Repo, r.IssueNumber, r.ReactionId),
-		URLQuery:           query,
+		AllPreviews:      []string{"squirrel-girl"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		Options:          opt,
+		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		RequiredPreviews: []string{"squirrel-girl"},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/%v/reactions/%v", r.Owner, r.Repo, r.IssueNumber, r.ReactionId),
 	})
 }
 
@@ -1586,20 +1554,16 @@ type DeleteForIssueCommentReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteForIssueCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"squirrel-girl"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{},
-		Method:             "DELETE",
-		Options:            opt,
-		Previews:           map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
-		RequiredPreviews:   []string{"squirrel-girl"},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/issues/comments/%v/reactions/%v", r.Owner, r.Repo, r.CommentId, r.ReactionId),
-		URLQuery:           query,
+		AllPreviews:      []string{"squirrel-girl"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		Options:          opt,
+		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		RequiredPreviews: []string{"squirrel-girl"},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/comments/%v/reactions/%v", r.Owner, r.Repo, r.CommentId, r.ReactionId),
 	})
 }
 
@@ -1718,20 +1682,16 @@ type DeleteForPullRequestCommentReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteForPullRequestCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"squirrel-girl"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{},
-		Method:             "DELETE",
-		Options:            opt,
-		Previews:           map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
-		RequiredPreviews:   []string{"squirrel-girl"},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/pulls/comments/%v/reactions/%v", r.Owner, r.Repo, r.CommentId, r.ReactionId),
-		URLQuery:           query,
+		AllPreviews:      []string{"squirrel-girl"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		Options:          opt,
+		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		RequiredPreviews: []string{"squirrel-girl"},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/pulls/comments/%v/reactions/%v", r.Owner, r.Repo, r.CommentId, r.ReactionId),
 	})
 }
 
@@ -1850,20 +1810,16 @@ type DeleteForTeamDiscussionReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteForTeamDiscussionReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"squirrel-girl"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{},
-		Method:             "DELETE",
-		Options:            opt,
-		Previews:           map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
-		RequiredPreviews:   []string{"squirrel-girl"},
-		URLPath:            fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/reactions/%v", r.Org, r.TeamSlug, r.DiscussionNumber, r.ReactionId),
-		URLQuery:           query,
+		AllPreviews:      []string{"squirrel-girl"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		Options:          opt,
+		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		RequiredPreviews: []string{"squirrel-girl"},
+		URLPath:          fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/reactions/%v", r.Org, r.TeamSlug, r.DiscussionNumber, r.ReactionId),
 	})
 }
 
@@ -1983,20 +1939,16 @@ type DeleteForTeamDiscussionCommentReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteForTeamDiscussionCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"squirrel-girl"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{},
-		Method:             "DELETE",
-		Options:            opt,
-		Previews:           map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
-		RequiredPreviews:   []string{"squirrel-girl"},
-		URLPath:            fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/comments/%v/reactions/%v", r.Org, r.TeamSlug, r.DiscussionNumber, r.CommentNumber, r.ReactionId),
-		URLQuery:           query,
+		AllPreviews:      []string{"squirrel-girl"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		Options:          opt,
+		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		RequiredPreviews: []string{"squirrel-girl"},
+		URLPath:          fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/comments/%v/reactions/%v", r.Org, r.TeamSlug, r.DiscussionNumber, r.CommentNumber, r.ReactionId),
 	})
 }
 
@@ -2110,20 +2062,16 @@ type DeleteLegacyReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"squirrel-girl"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{},
-		Method:             "DELETE",
-		Options:            opt,
-		Previews:           map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
-		RequiredPreviews:   []string{"squirrel-girl"},
-		URLPath:            fmt.Sprintf("/reactions/%v", r.ReactionId),
-		URLQuery:           query,
+		AllPreviews:      []string{"squirrel-girl"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		Options:          opt,
+		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		RequiredPreviews: []string{"squirrel-girl"},
+		URLPath:          fmt.Sprintf("/reactions/%v", r.ReactionId),
 	})
 }
 
@@ -2266,17 +2214,16 @@ func (r *ListForCommitCommentReq) HTTPRequest(ctx context.Context, opt ...reques
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"squirrel-girl"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
-		RequiredPreviews:   []string{"squirrel-girl"},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/comments/%v/reactions", r.Owner, r.Repo, r.CommentId),
-		URLQuery:           query,
+		AllPreviews:      []string{"squirrel-girl"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
+		Method:           "GET",
+		Options:          opt,
+		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		RequiredPreviews: []string{"squirrel-girl"},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/comments/%v/reactions", r.Owner, r.Repo, r.CommentId),
+		URLQuery:         query,
 	})
 }
 
@@ -2426,17 +2373,16 @@ func (r *ListForIssueReq) HTTPRequest(ctx context.Context, opt ...requests.Optio
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"squirrel-girl"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
-		RequiredPreviews:   []string{"squirrel-girl"},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/issues/%v/reactions", r.Owner, r.Repo, r.IssueNumber),
-		URLQuery:           query,
+		AllPreviews:      []string{"squirrel-girl"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
+		Method:           "GET",
+		Options:          opt,
+		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		RequiredPreviews: []string{"squirrel-girl"},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/%v/reactions", r.Owner, r.Repo, r.IssueNumber),
+		URLQuery:         query,
 	})
 }
 
@@ -2586,17 +2532,16 @@ func (r *ListForIssueCommentReq) HTTPRequest(ctx context.Context, opt ...request
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"squirrel-girl"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
-		RequiredPreviews:   []string{"squirrel-girl"},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/issues/comments/%v/reactions", r.Owner, r.Repo, r.CommentId),
-		URLQuery:           query,
+		AllPreviews:      []string{"squirrel-girl"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
+		Method:           "GET",
+		Options:          opt,
+		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		RequiredPreviews: []string{"squirrel-girl"},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/comments/%v/reactions", r.Owner, r.Repo, r.CommentId),
+		URLQuery:         query,
 	})
 }
 
@@ -2746,17 +2691,16 @@ func (r *ListForPullRequestReviewCommentReq) HTTPRequest(ctx context.Context, op
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"squirrel-girl"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
-		RequiredPreviews:   []string{"squirrel-girl"},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/pulls/comments/%v/reactions", r.Owner, r.Repo, r.CommentId),
-		URLQuery:           query,
+		AllPreviews:      []string{"squirrel-girl"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
+		Method:           "GET",
+		Options:          opt,
+		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		RequiredPreviews: []string{"squirrel-girl"},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/pulls/comments/%v/reactions", r.Owner, r.Repo, r.CommentId),
+		URLQuery:         query,
 	})
 }
 
@@ -2907,17 +2851,16 @@ func (r *ListForTeamDiscussionCommentInOrgReq) HTTPRequest(ctx context.Context, 
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"squirrel-girl"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
-		RequiredPreviews:   []string{"squirrel-girl"},
-		URLPath:            fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/comments/%v/reactions", r.Org, r.TeamSlug, r.DiscussionNumber, r.CommentNumber),
-		URLQuery:           query,
+		AllPreviews:      []string{"squirrel-girl"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
+		Method:           "GET",
+		Options:          opt,
+		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		RequiredPreviews: []string{"squirrel-girl"},
+		URLPath:          fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/comments/%v/reactions", r.Org, r.TeamSlug, r.DiscussionNumber, r.CommentNumber),
+		URLQuery:         query,
 	})
 }
 
@@ -3065,17 +3008,16 @@ func (r *ListForTeamDiscussionCommentLegacyReq) HTTPRequest(ctx context.Context,
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"squirrel-girl"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
-		RequiredPreviews:   []string{"squirrel-girl"},
-		URLPath:            fmt.Sprintf("/teams/%v/discussions/%v/comments/%v/reactions", r.TeamId, r.DiscussionNumber, r.CommentNumber),
-		URLQuery:           query,
+		AllPreviews:      []string{"squirrel-girl"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
+		Method:           "GET",
+		Options:          opt,
+		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		RequiredPreviews: []string{"squirrel-girl"},
+		URLPath:          fmt.Sprintf("/teams/%v/discussions/%v/comments/%v/reactions", r.TeamId, r.DiscussionNumber, r.CommentNumber),
+		URLQuery:         query,
 	})
 }
 
@@ -3225,17 +3167,16 @@ func (r *ListForTeamDiscussionInOrgReq) HTTPRequest(ctx context.Context, opt ...
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"squirrel-girl"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
-		RequiredPreviews:   []string{"squirrel-girl"},
-		URLPath:            fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/reactions", r.Org, r.TeamSlug, r.DiscussionNumber),
-		URLQuery:           query,
+		AllPreviews:      []string{"squirrel-girl"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
+		Method:           "GET",
+		Options:          opt,
+		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		RequiredPreviews: []string{"squirrel-girl"},
+		URLPath:          fmt.Sprintf("/orgs/%v/teams/%v/discussions/%v/reactions", r.Org, r.TeamSlug, r.DiscussionNumber),
+		URLQuery:         query,
 	})
 }
 
@@ -3382,17 +3323,16 @@ func (r *ListForTeamDiscussionLegacyReq) HTTPRequest(ctx context.Context, opt ..
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"squirrel-girl"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
-		RequiredPreviews:   []string{"squirrel-girl"},
-		URLPath:            fmt.Sprintf("/teams/%v/discussions/%v/reactions", r.TeamId, r.DiscussionNumber),
-		URLQuery:           query,
+		AllPreviews:      []string{"squirrel-girl"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
+		Method:           "GET",
+		Options:          opt,
+		Previews:         map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		RequiredPreviews: []string{"squirrel-girl"},
+		URLPath:          fmt.Sprintf("/teams/%v/discussions/%v/reactions", r.TeamId, r.DiscussionNumber),
+		URLQuery:         query,
 	})
 }
 

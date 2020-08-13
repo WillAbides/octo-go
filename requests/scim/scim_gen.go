@@ -86,20 +86,13 @@ type DeleteUserFromOrgReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteUserFromOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{},
-		Method:             "DELETE",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/scim/v2/organizations/%v/Users/%v", r.Org, r.ScimUserId),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{},
+		Method:      "DELETE",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/scim/v2/organizations/%v/Users/%v", r.Org, r.ScimUserId),
 	})
 }
 
@@ -205,20 +198,13 @@ type GetProvisioningInformationForUserReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetProvisioningInformationForUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/scim+json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/scim/v2/organizations/%v/Users/%v", r.Org, r.ScimUserId),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/scim+json")},
+		Method:      "GET",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/scim/v2/organizations/%v/Users/%v", r.Org, r.ScimUserId),
 	})
 }
 
@@ -361,17 +347,13 @@ func (r *ListProvisionedIdentitiesReq) HTTPRequest(ctx context.Context, opt ...r
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/scim+json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/scim/v2/organizations/%v/Users", r.Org),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/scim+json")},
+		Method:      "GET",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/scim/v2/organizations/%v/Users", r.Org),
+		URLQuery:    query,
 	})
 }
 
@@ -482,23 +464,17 @@ type ProvisionAndInviteUserReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *ProvisionAndInviteUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/scim+json"),
 			"content-type": internal.String("application/json"),
 		},
-		Method:           "POST",
-		Options:          opt,
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/scim/v2/organizations/%v/Users", r.Org),
-		URLQuery:         query,
+		JSONRequestBody: true,
+		Method:          "POST",
+		Options:         opt,
+		URLPath:         fmt.Sprintf("/scim/v2/organizations/%v/Users", r.Org),
 	})
 }
 
@@ -645,23 +621,17 @@ type SetInformationForProvisionedUserReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *SetInformationForProvisionedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/scim+json"),
 			"content-type": internal.String("application/json"),
 		},
-		Method:           "PUT",
-		Options:          opt,
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/scim/v2/organizations/%v/Users/%v", r.Org, r.ScimUserId),
-		URLQuery:         query,
+		JSONRequestBody: true,
+		Method:          "PUT",
+		Options:         opt,
+		URLPath:         fmt.Sprintf("/scim/v2/organizations/%v/Users/%v", r.Org, r.ScimUserId),
 	})
 }
 
@@ -808,23 +778,17 @@ type UpdateAttributeForUserReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *UpdateAttributeForUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/scim+json"),
 			"content-type": internal.String("application/json"),
 		},
-		Method:           "PATCH",
-		Options:          opt,
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/scim/v2/organizations/%v/Users/%v", r.Org, r.ScimUserId),
-		URLQuery:         query,
+		JSONRequestBody: true,
+		Method:          "PATCH",
+		Options:         opt,
+		URLPath:         fmt.Sprintf("/scim/v2/organizations/%v/Users/%v", r.Org, r.ScimUserId),
 	})
 }
 

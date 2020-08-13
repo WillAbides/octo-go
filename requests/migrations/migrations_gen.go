@@ -84,20 +84,13 @@ type CancelImportReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CancelImportReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{},
-		Method:             "DELETE",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/import", r.Owner, r.Repo),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{},
+		Method:      "DELETE",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/repos/%v/%v/import", r.Owner, r.Repo),
 	})
 }
 
@@ -205,20 +198,16 @@ type DeleteArchiveForAuthenticatedUserReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteArchiveForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"wyandotte"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{},
-		Method:             "DELETE",
-		Options:            opt,
-		Previews:           map[string]bool{"wyandotte": r.WyandottePreview},
-		RequiredPreviews:   []string{"wyandotte"},
-		URLPath:            fmt.Sprintf("/user/migrations/%v/archive", r.MigrationId),
-		URLQuery:           query,
+		AllPreviews:      []string{"wyandotte"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		Options:          opt,
+		Previews:         map[string]bool{"wyandotte": r.WyandottePreview},
+		RequiredPreviews: []string{"wyandotte"},
+		URLPath:          fmt.Sprintf("/user/migrations/%v/archive", r.MigrationId),
 	})
 }
 
@@ -327,20 +316,16 @@ type DeleteArchiveForOrgReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteArchiveForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"wyandotte"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrBoolean},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{},
-		Method:             "DELETE",
-		Options:            opt,
-		Previews:           map[string]bool{"wyandotte": r.WyandottePreview},
-		RequiredPreviews:   []string{"wyandotte"},
-		URLPath:            fmt.Sprintf("/orgs/%v/migrations/%v/archive", r.Org, r.MigrationId),
-		URLQuery:           query,
+		AllPreviews:      []string{"wyandotte"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		Options:          opt,
+		Previews:         map[string]bool{"wyandotte": r.WyandottePreview},
+		RequiredPreviews: []string{"wyandotte"},
+		URLPath:          fmt.Sprintf("/orgs/%v/migrations/%v/archive", r.Org, r.MigrationId),
 	})
 }
 
@@ -454,20 +439,16 @@ type DownloadArchiveForOrgReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DownloadArchiveForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"wyandotte"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrRedirectOnly},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{"wyandotte": r.WyandottePreview},
-		RequiredPreviews:   []string{"wyandotte"},
-		URLPath:            fmt.Sprintf("/orgs/%v/migrations/%v/archive", r.Org, r.MigrationId),
-		URLQuery:           query,
+		AllPreviews:      []string{"wyandotte"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "GET",
+		Options:          opt,
+		Previews:         map[string]bool{"wyandotte": r.WyandottePreview},
+		RequiredPreviews: []string{"wyandotte"},
+		URLPath:          fmt.Sprintf("/orgs/%v/migrations/%v/archive", r.Org, r.MigrationId),
 	})
 }
 
@@ -575,20 +556,16 @@ type GetArchiveForAuthenticatedUserReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetArchiveForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"wyandotte"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrRedirectOnly},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{"wyandotte": r.WyandottePreview},
-		RequiredPreviews:   []string{"wyandotte"},
-		URLPath:            fmt.Sprintf("/user/migrations/%v/archive", r.MigrationId),
-		URLQuery:           query,
+		AllPreviews:      []string{"wyandotte"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "GET",
+		Options:          opt,
+		Previews:         map[string]bool{"wyandotte": r.WyandottePreview},
+		RequiredPreviews: []string{"wyandotte"},
+		URLPath:          fmt.Sprintf("/user/migrations/%v/archive", r.MigrationId),
 	})
 }
 
@@ -705,17 +682,13 @@ func (r *GetCommitAuthorsReq) HTTPRequest(ctx context.Context, opt ...requests.O
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/import/authors", r.Owner, r.Repo),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/repos/%v/%v/import/authors", r.Owner, r.Repo),
+		URLQuery:    query,
 	})
 }
 
@@ -826,20 +799,13 @@ type GetImportStatusReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetImportStatusReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/import", r.Owner, r.Repo),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/repos/%v/%v/import", r.Owner, r.Repo),
 	})
 }
 
@@ -950,20 +916,13 @@ type GetLargeFilesReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetLargeFilesReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/import/large_files", r.Owner, r.Repo),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/repos/%v/%v/import/large_files", r.Owner, r.Repo),
 	})
 }
 
@@ -1078,20 +1037,16 @@ type GetStatusForAuthenticatedUserReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetStatusForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"wyandotte"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{"wyandotte": r.WyandottePreview},
-		RequiredPreviews:   []string{"wyandotte"},
-		URLPath:            fmt.Sprintf("/user/migrations/%v", r.MigrationId),
-		URLQuery:           query,
+		AllPreviews:      []string{"wyandotte"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
+		Method:           "GET",
+		Options:          opt,
+		Previews:         map[string]bool{"wyandotte": r.WyandottePreview},
+		RequiredPreviews: []string{"wyandotte"},
+		URLPath:          fmt.Sprintf("/user/migrations/%v", r.MigrationId),
 	})
 }
 
@@ -1207,20 +1162,16 @@ type GetStatusForOrgReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetStatusForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"wyandotte"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{"wyandotte": r.WyandottePreview},
-		RequiredPreviews:   []string{"wyandotte"},
-		URLPath:            fmt.Sprintf("/orgs/%v/migrations/%v", r.Org, r.MigrationId),
-		URLQuery:           query,
+		AllPreviews:      []string{"wyandotte"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
+		Method:           "GET",
+		Options:          opt,
+		Previews:         map[string]bool{"wyandotte": r.WyandottePreview},
+		RequiredPreviews: []string{"wyandotte"},
+		URLPath:          fmt.Sprintf("/orgs/%v/migrations/%v", r.Org, r.MigrationId),
 	})
 }
 
@@ -1347,17 +1298,16 @@ func (r *ListForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...re
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"wyandotte"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{"wyandotte": r.WyandottePreview},
-		RequiredPreviews:   []string{"wyandotte"},
-		URLPath:            fmt.Sprintf("/user/migrations"),
-		URLQuery:           query,
+		AllPreviews:      []string{"wyandotte"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
+		Method:           "GET",
+		Options:          opt,
+		Previews:         map[string]bool{"wyandotte": r.WyandottePreview},
+		RequiredPreviews: []string{"wyandotte"},
+		URLPath:          fmt.Sprintf("/user/migrations"),
+		URLQuery:         query,
 	})
 }
 
@@ -1485,17 +1435,16 @@ func (r *ListForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option)
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"wyandotte"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{"wyandotte": r.WyandottePreview},
-		RequiredPreviews:   []string{"wyandotte"},
-		URLPath:            fmt.Sprintf("/orgs/%v/migrations", r.Org),
-		URLQuery:           query,
+		AllPreviews:      []string{"wyandotte"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
+		Method:           "GET",
+		Options:          opt,
+		Previews:         map[string]bool{"wyandotte": r.WyandottePreview},
+		RequiredPreviews: []string{"wyandotte"},
+		URLPath:          fmt.Sprintf("/orgs/%v/migrations", r.Org),
+		URLQuery:         query,
 	})
 }
 
@@ -1626,17 +1575,16 @@ func (r *ListReposForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Op
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"wyandotte"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{"wyandotte": r.WyandottePreview},
-		RequiredPreviews:   []string{"wyandotte"},
-		URLPath:            fmt.Sprintf("/orgs/%v/migrations/%v/repositories", r.Org, r.MigrationId),
-		URLQuery:           query,
+		AllPreviews:      []string{"wyandotte"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
+		Method:           "GET",
+		Options:          opt,
+		Previews:         map[string]bool{"wyandotte": r.WyandottePreview},
+		RequiredPreviews: []string{"wyandotte"},
+		URLPath:          fmt.Sprintf("/orgs/%v/migrations/%v/repositories", r.Org, r.MigrationId),
+		URLQuery:         query,
 	})
 }
 
@@ -1766,17 +1714,16 @@ func (r *ListReposForUserReq) HTTPRequest(ctx context.Context, opt ...requests.O
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"wyandotte"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{"wyandotte": r.WyandottePreview},
-		RequiredPreviews:   []string{"wyandotte"},
-		URLPath:            fmt.Sprintf("/user/migrations/%v/repositories", r.MigrationId),
-		URLQuery:           query,
+		AllPreviews:      []string{"wyandotte"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
+		Method:           "GET",
+		Options:          opt,
+		Previews:         map[string]bool{"wyandotte": r.WyandottePreview},
+		RequiredPreviews: []string{"wyandotte"},
+		URLPath:          fmt.Sprintf("/user/migrations/%v/repositories", r.MigrationId),
+		URLQuery:         query,
 	})
 }
 
@@ -1891,23 +1838,17 @@ type MapCommitAuthorReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *MapCommitAuthorReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		Method:           "PATCH",
-		Options:          opt,
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/import/authors/%v", r.Owner, r.Repo, r.AuthorId),
-		URLQuery:         query,
+		JSONRequestBody: true,
+		Method:          "PATCH",
+		Options:         opt,
+		URLPath:         fmt.Sprintf("/repos/%v/%v/import/authors/%v", r.Owner, r.Repo, r.AuthorId),
 	})
 }
 
@@ -2034,23 +1975,17 @@ type SetLfsPreferenceReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *SetLfsPreferenceReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		Method:           "PATCH",
-		Options:          opt,
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/import/lfs", r.Owner, r.Repo),
-		URLQuery:         query,
+		JSONRequestBody: true,
+		Method:          "PATCH",
+		Options:         opt,
+		URLPath:         fmt.Sprintf("/repos/%v/%v/import/lfs", r.Owner, r.Repo),
 	})
 }
 
@@ -2174,23 +2109,17 @@ type StartForAuthenticatedUserReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *StartForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		Method:           "POST",
-		Options:          opt,
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/user/migrations"),
-		URLQuery:         query,
+		JSONRequestBody: true,
+		Method:          "POST",
+		Options:         opt,
+		URLPath:         fmt.Sprintf("/user/migrations"),
 	})
 }
 
@@ -2319,23 +2248,17 @@ type StartForOrgReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *StartForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		Method:           "POST",
-		Options:          opt,
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/orgs/%v/migrations", r.Org),
-		URLQuery:         query,
+		JSONRequestBody: true,
+		Method:          "POST",
+		Options:         opt,
+		URLPath:         fmt.Sprintf("/orgs/%v/migrations", r.Org),
 	})
 }
 
@@ -2465,23 +2388,17 @@ type StartImportReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *StartImportReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		Method:           "PUT",
-		Options:          opt,
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/import", r.Owner, r.Repo),
-		URLQuery:         query,
+		JSONRequestBody: true,
+		Method:          "PUT",
+		Options:         opt,
+		URLPath:         fmt.Sprintf("/repos/%v/%v/import", r.Owner, r.Repo),
 	})
 }
 
@@ -2627,20 +2544,16 @@ type UnlockRepoForAuthenticatedUserReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *UnlockRepoForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"wyandotte"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{},
-		Method:             "DELETE",
-		Options:            opt,
-		Previews:           map[string]bool{"wyandotte": r.WyandottePreview},
-		RequiredPreviews:   []string{"wyandotte"},
-		URLPath:            fmt.Sprintf("/user/migrations/%v/repos/%v/lock", r.MigrationId, r.RepoName),
-		URLQuery:           query,
+		AllPreviews:      []string{"wyandotte"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		Options:          opt,
+		Previews:         map[string]bool{"wyandotte": r.WyandottePreview},
+		RequiredPreviews: []string{"wyandotte"},
+		URLPath:          fmt.Sprintf("/user/migrations/%v/repos/%v/lock", r.MigrationId, r.RepoName),
 	})
 }
 
@@ -2752,20 +2665,16 @@ type UnlockRepoForOrgReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *UnlockRepoForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"wyandotte"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrBoolean},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{},
-		Method:             "DELETE",
-		Options:            opt,
-		Previews:           map[string]bool{"wyandotte": r.WyandottePreview},
-		RequiredPreviews:   []string{"wyandotte"},
-		URLPath:            fmt.Sprintf("/orgs/%v/migrations/%v/repos/%v/lock", r.Org, r.MigrationId, r.RepoName),
-		URLQuery:           query,
+		AllPreviews:      []string{"wyandotte"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		Options:          opt,
+		Previews:         map[string]bool{"wyandotte": r.WyandottePreview},
+		RequiredPreviews: []string{"wyandotte"},
+		URLPath:          fmt.Sprintf("/orgs/%v/migrations/%v/repos/%v/lock", r.Org, r.MigrationId, r.RepoName),
 	})
 }
 
@@ -2875,23 +2784,17 @@ type UpdateImportReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *UpdateImportReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		Method:           "PATCH",
-		Options:          opt,
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/import", r.Owner, r.Repo),
-		URLQuery:         query,
+		JSONRequestBody: true,
+		Method:          "PATCH",
+		Options:         opt,
+		URLPath:         fmt.Sprintf("/repos/%v/%v/import", r.Owner, r.Repo),
 	})
 }
 

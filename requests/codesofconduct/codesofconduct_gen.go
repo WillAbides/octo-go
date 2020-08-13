@@ -9,7 +9,6 @@ import (
 	internal "github.com/willabides/octo-go/internal"
 	requests "github.com/willabides/octo-go/requests"
 	"net/http"
-	"net/url"
 )
 
 // Client is a set of options to apply to requests
@@ -88,20 +87,16 @@ type GetAllCodesOfConductReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetAllCodesOfConductReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"scarlet-witch"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{"scarlet-witch": r.ScarletWitchPreview},
-		RequiredPreviews:   []string{"scarlet-witch"},
-		URLPath:            fmt.Sprintf("/codes_of_conduct"),
-		URLQuery:           query,
+		AllPreviews:      []string{"scarlet-witch"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
+		Method:           "GET",
+		Options:          opt,
+		Previews:         map[string]bool{"scarlet-witch": r.ScarletWitchPreview},
+		RequiredPreviews: []string{"scarlet-witch"},
+		URLPath:          fmt.Sprintf("/codes_of_conduct"),
 	})
 }
 
@@ -220,20 +215,16 @@ type GetConductCodeReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetConductCodeReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"scarlet-witch"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{"scarlet-witch": r.ScarletWitchPreview},
-		RequiredPreviews:   []string{"scarlet-witch"},
-		URLPath:            fmt.Sprintf("/codes_of_conduct/%v", r.Key),
-		URLQuery:           query,
+		AllPreviews:      []string{"scarlet-witch"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
+		Method:           "GET",
+		Options:          opt,
+		Previews:         map[string]bool{"scarlet-witch": r.ScarletWitchPreview},
+		RequiredPreviews: []string{"scarlet-witch"},
+		URLPath:          fmt.Sprintf("/codes_of_conduct/%v", r.Key),
 	})
 }
 
@@ -351,20 +342,16 @@ type GetForRepoReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"scarlet-witch"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{"scarlet-witch": r.ScarletWitchPreview},
-		RequiredPreviews:   []string{"scarlet-witch"},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/community/code_of_conduct", r.Owner, r.Repo),
-		URLQuery:           query,
+		AllPreviews:      []string{"scarlet-witch"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
+		Method:           "GET",
+		Options:          opt,
+		Previews:         map[string]bool{"scarlet-witch": r.ScarletWitchPreview},
+		RequiredPreviews: []string{"scarlet-witch"},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/community/code_of_conduct", r.Owner, r.Repo),
 	})
 }
 

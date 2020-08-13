@@ -131,47 +131,63 @@ func reqHTTPRequestFunc(endpoint *model.Endpoint, pq pkgQual) jen.Code {
 		jen.Return(jen.Qual(pq.pkgPath("internal"), "BuildHTTPRequest").Call(
 			jen.Id("ctx"),
 			jen.Qual(pq.pkgPath("internal"), "BuildHTTPRequestOptions").Values(
-				jen.Dict{
-					jen.Id("ExplicitURL"): reqExplicitURLVal(endpoint),
-					jen.Id("Method"):      jen.Lit(endpoint.Method),
-					jen.Id("RequiredPreviews"): jen.Op("[]").String().ValuesFunc(func(group *jen.Group) {
-						for _, preview := range endpoint.Previews {
-							if !preview.Required {
-								continue
+				jen.DictFunc(func(dict jen.Dict) {
+					dict[jen.Id("ExplicitURL")] = reqExplicitURLVal(endpoint)
+					dict[jen.Id("Method")] = jen.Lit(endpoint.Method)
+					if val := requiredPreviews(endpoint); len(val) > 0 {
+						dict[jen.Id("RequiredPreviews")] = jen.Id("[]string").ValuesFunc(func(group *jen.Group) {
+							for _, preview := range val {
+								group.Lit(preview)
 							}
-							group.Add(jen.Lit(preview.Name))
-						}
-					}),
-					jen.Id("AllPreviews"): jen.Op("[]").String().ValuesFunc(func(group *jen.Group) {
-						for _, preview := range endpoint.Previews {
-							group.Add(jen.Lit(preview.Name))
-						}
-					}),
-					jen.Id("HeaderVals"): reqHeaderMap(endpoint, pq),
-					jen.Id("Previews"): jen.Map(jen.String()).Bool().Values(jen.DictFunc(func(dict jen.Dict) {
-						for _, preview := range endpoint.Previews {
-							dict[jen.Lit(preview.Name)] = jen.Id("r").Dot(toExportedName(preview.Name + "-preview"))
-						}
-					})),
-					jen.Id("Body"):               reqBodyValue(endpoint),
-					jen.Id("URLQuery"):           jen.Id("query"),
-					jen.Id("URLPath"):            reqURLPathVal(endpoint),
-					jen.Id("EndpointAttributes"): reqEndpointAttributesValue(endpoint, pq),
-					jen.Id("Options"):            jen.Id("opt"),
-				},
+						})
+					}
+					if len(endpoint.Previews) > 0 {
+						dict[jen.Id("AllPreviews")] = jen.Op("[]").String().ValuesFunc(func(group *jen.Group) {
+							for _, preview := range endpoint.Previews {
+								group.Add(jen.Lit(preview.Name))
+							}
+						})
+						dict[jen.Id("Previews")] = jen.Map(jen.String()).Bool().Values(jen.DictFunc(func(dict jen.Dict) {
+							for _, preview := range endpoint.Previews {
+								dict[jen.Lit(preview.Name)] = jen.Id("r").Dot(toExportedName(preview.Name + "-preview"))
+							}
+						}))
+					}
+					dict[jen.Id("HeaderVals")] = reqHeaderMap(endpoint, pq)
+					if val := reqBodyValue(endpoint); val != nil {
+						dict[jen.Id("Body")] = val
+					}
+					if len(endpoint.QueryParams) > 0 {
+						dict[jen.Id("URLQuery")] = jen.Id("query")
+					}
+					dict[jen.Id("Options")] = jen.Id("opt")
+					if val := reqURLPathVal(endpoint); val != nil {
+						dict[jen.Id("URLPath")] = val
+					}
+					if endpointHasAttribute(endpoint, attrBodyUploader) {
+						dict[jen.Id("StreamRequestBody")] = jen.Lit(true)
+					}
+					if endpointHasAttribute(endpoint, attrExplicitURL) {
+						dict[jen.Id("RequireExplicitURL")] = jen.Lit(true)
+					}
+					if endpointHasAttribute(endpoint, attrJSONRequestBody) {
+						dict[jen.Id("JSONRequestBody")] = jen.Lit(true)
+					}
+				}),
 			),
 		)),
 	)
 	return stmt
 }
 
-func reqEndpointAttributesValue(endpoint *model.Endpoint, pq pkgQual) *jen.Statement {
-	attrs := getEndpointAttributes(endpoint)
-	return jen.Op("[]").Qual(pq.pkgPath("internal"), "EndpointAttribute").ValuesFunc(func(group *jen.Group) {
-		for _, attr := range attrs {
-			group.Qual(pq.pkgPath("internal"), attr.String())
+func requiredPreviews(endpoint *model.Endpoint) []string {
+	result := make([]string, 0, len(endpoint.Previews))
+	for _, preview := range endpoint.Previews {
+		if preview.Required {
+			result = append(result, preview.Name)
 		}
-	})
+	}
+	return result
 }
 
 func validCodes(endpoint *model.Endpoint) []int {
@@ -219,7 +235,7 @@ var bracesExp = regexp.MustCompile(`{[^}]+}`)
 
 func reqURLPathVal(endpoint *model.Endpoint) jen.Code {
 	if endpointHasAttribute(endpoint, attrExplicitURL) {
-		return jen.Lit("")
+		return nil
 	}
 	pth := bracesExp.ReplaceAllString(endpoint.Path, "%v")
 	return jen.Qual("fmt", "Sprintf").ParamsFunc(func(group *jen.Group) {
@@ -238,6 +254,9 @@ func reqExplicitURLVal(endpoint *model.Endpoint) jen.Code {
 }
 
 func reqURLQueryVal(endpoint *model.Endpoint) jen.Code {
+	if len(endpoint.QueryParams) == 0 {
+		return nil
+	}
 	stmt := jen.Id("query := ").Qual("net/url", "Values").Op("{}")
 	stmt.Line()
 	for _, param := range endpoint.QueryParams {

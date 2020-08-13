@@ -9,7 +9,6 @@ import (
 	internal "github.com/willabides/octo-go/internal"
 	requests "github.com/willabides/octo-go/requests"
 	"net/http"
-	"net/url"
 )
 
 // Client is a set of options to apply to requests
@@ -90,20 +89,16 @@ type GetRestrictionsForOrgReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetRestrictionsForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"sombra"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{"sombra": r.SombraPreview},
-		RequiredPreviews:   []string{"sombra"},
-		URLPath:            fmt.Sprintf("/orgs/%v/interaction-limits", r.Org),
-		URLQuery:           query,
+		AllPreviews:      []string{"sombra"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
+		Method:           "GET",
+		Options:          opt,
+		Previews:         map[string]bool{"sombra": r.SombraPreview},
+		RequiredPreviews: []string{"sombra"},
+		URLPath:          fmt.Sprintf("/orgs/%v/interaction-limits", r.Org),
 	})
 }
 
@@ -222,20 +217,16 @@ type GetRestrictionsForRepoReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetRestrictionsForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"sombra"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{"sombra": r.SombraPreview},
-		RequiredPreviews:   []string{"sombra"},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/interaction-limits", r.Owner, r.Repo),
-		URLQuery:           query,
+		AllPreviews:      []string{"sombra"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
+		Method:           "GET",
+		Options:          opt,
+		Previews:         map[string]bool{"sombra": r.SombraPreview},
+		RequiredPreviews: []string{"sombra"},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/interaction-limits", r.Owner, r.Repo),
 	})
 }
 
@@ -353,20 +344,16 @@ type RemoveRestrictionsForOrgReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *RemoveRestrictionsForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"sombra"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{},
-		Method:             "DELETE",
-		Options:            opt,
-		Previews:           map[string]bool{"sombra": r.SombraPreview},
-		RequiredPreviews:   []string{"sombra"},
-		URLPath:            fmt.Sprintf("/orgs/%v/interaction-limits", r.Org),
-		URLQuery:           query,
+		AllPreviews:      []string{"sombra"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		Options:          opt,
+		Previews:         map[string]bool{"sombra": r.SombraPreview},
+		RequiredPreviews: []string{"sombra"},
+		URLPath:          fmt.Sprintf("/orgs/%v/interaction-limits", r.Org),
 	})
 }
 
@@ -478,20 +465,16 @@ type RemoveRestrictionsForRepoReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *RemoveRestrictionsForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"sombra"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{},
-		Method:             "DELETE",
-		Options:            opt,
-		Previews:           map[string]bool{"sombra": r.SombraPreview},
-		RequiredPreviews:   []string{"sombra"},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/interaction-limits", r.Owner, r.Repo),
-		URLQuery:           query,
+		AllPreviews:      []string{"sombra"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		Options:          opt,
+		Previews:         map[string]bool{"sombra": r.SombraPreview},
+		RequiredPreviews: []string{"sombra"},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/interaction-limits", r.Owner, r.Repo),
 	})
 }
 
@@ -603,23 +586,20 @@ type SetRestrictionsForOrgReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *SetRestrictionsForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"sombra"},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		AllPreviews: []string{"sombra"},
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
+		JSONRequestBody:  true,
 		Method:           "PUT",
 		Options:          opt,
 		Previews:         map[string]bool{"sombra": r.SombraPreview},
 		RequiredPreviews: []string{"sombra"},
 		URLPath:          fmt.Sprintf("/orgs/%v/interaction-limits", r.Org),
-		URLQuery:         query,
 	})
 }
 
@@ -754,23 +734,20 @@ type SetRestrictionsForRepoReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *SetRestrictionsForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"sombra"},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		AllPreviews: []string{"sombra"},
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
+		JSONRequestBody:  true,
 		Method:           "PUT",
 		Options:          opt,
 		Previews:         map[string]bool{"sombra": r.SombraPreview},
 		RequiredPreviews: []string{"sombra"},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/interaction-limits", r.Owner, r.Repo),
-		URLQuery:         query,
 	})
 }
 

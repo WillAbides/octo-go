@@ -94,20 +94,16 @@ type AddRepoToInstallationReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *AddRepoToInstallationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"machine-man"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{},
-		Method:             "PUT",
-		Options:            opt,
-		Previews:           map[string]bool{"machine-man": r.MachineManPreview},
-		RequiredPreviews:   []string{"machine-man"},
-		URLPath:            fmt.Sprintf("/user/installations/%v/repositories/%v", r.InstallationId, r.RepositoryId),
-		URLQuery:           query,
+		AllPreviews:      []string{"machine-man"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "PUT",
+		Options:          opt,
+		Previews:         map[string]bool{"machine-man": r.MachineManPreview},
+		RequiredPreviews: []string{"machine-man"},
+		URLPath:          fmt.Sprintf("/user/installations/%v/repositories/%v", r.InstallationId, r.RepositoryId),
 	})
 }
 
@@ -211,20 +207,13 @@ type CheckAuthorizationReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CheckAuthorizationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/applications/%v/tokens/%v", r.ClientId, r.AccessToken),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/applications/%v/tokens/%v", r.ClientId, r.AccessToken),
 	})
 }
 
@@ -393,23 +382,17 @@ type CheckTokenReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CheckTokenReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		Method:           "POST",
-		Options:          opt,
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/applications/%v/token", r.ClientId),
-		URLQuery:         query,
+		JSONRequestBody: true,
+		Method:          "POST",
+		Options:         opt,
+		URLPath:         fmt.Sprintf("/applications/%v/token", r.ClientId),
 	})
 }
 
@@ -539,23 +522,20 @@ type CreateContentAttachmentReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateContentAttachmentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"corsair"},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		AllPreviews: []string{"corsair"},
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
+		JSONRequestBody:  true,
 		Method:           "POST",
 		Options:          opt,
 		Previews:         map[string]bool{"corsair": r.CorsairPreview},
 		RequiredPreviews: []string{"corsair"},
 		URLPath:          fmt.Sprintf("/content_references/%v/attachments", r.ContentReferenceId),
-		URLQuery:         query,
 	})
 }
 
@@ -681,20 +661,13 @@ type CreateFromManifestReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateFromManifestReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "POST",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/app-manifests/%v/conversions", r.Code),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "POST",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/app-manifests/%v/conversions", r.Code),
 	})
 }
 
@@ -870,23 +843,20 @@ type CreateInstallationAccessTokenReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateInstallationAccessTokenReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"machine-man"},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		AllPreviews: []string{"machine-man"},
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
+		JSONRequestBody:  true,
 		Method:           "POST",
 		Options:          opt,
 		Previews:         map[string]bool{"machine-man": r.MachineManPreview},
 		RequiredPreviews: []string{"machine-man"},
 		URLPath:          fmt.Sprintf("/app/installations/%v/access_tokens", r.InstallationId),
-		URLQuery:         query,
 	})
 }
 
@@ -1015,20 +985,14 @@ type DeleteAuthorizationReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteAuthorizationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"content-type": internal.String("application/json")},
-		Method:             "DELETE",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/applications/%v/grant", r.ClientId),
-		URLQuery:           query,
+		Body:            r.RequestBody,
+		ExplicitURL:     r._url,
+		HeaderVals:      map[string]*string{"content-type": internal.String("application/json")},
+		JSONRequestBody: true,
+		Method:          "DELETE",
+		Options:         opt,
+		URLPath:         fmt.Sprintf("/applications/%v/grant", r.ClientId),
 	})
 }
 
@@ -1150,20 +1114,16 @@ type DeleteInstallationReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteInstallationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"machine-man"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrBoolean},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{},
-		Method:             "DELETE",
-		Options:            opt,
-		Previews:           map[string]bool{"machine-man": r.MachineManPreview},
-		RequiredPreviews:   []string{"machine-man"},
-		URLPath:            fmt.Sprintf("/app/installations/%v", r.InstallationId),
-		URLQuery:           query,
+		AllPreviews:      []string{"machine-man"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		Options:          opt,
+		Previews:         map[string]bool{"machine-man": r.MachineManPreview},
+		RequiredPreviews: []string{"machine-man"},
+		URLPath:          fmt.Sprintf("/app/installations/%v", r.InstallationId),
 	})
 }
 
@@ -1272,20 +1232,14 @@ type DeleteTokenReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteTokenReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"content-type": internal.String("application/json")},
-		Method:             "DELETE",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/applications/%v/token", r.ClientId),
-		URLQuery:           query,
+		Body:            r.RequestBody,
+		ExplicitURL:     r._url,
+		HeaderVals:      map[string]*string{"content-type": internal.String("application/json")},
+		JSONRequestBody: true,
+		Method:          "DELETE",
+		Options:         opt,
+		URLPath:         fmt.Sprintf("/applications/%v/token", r.ClientId),
 	})
 }
 
@@ -1404,20 +1358,16 @@ type GetAuthenticatedReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetAuthenticatedReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"machine-man"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{"machine-man": r.MachineManPreview},
-		RequiredPreviews:   []string{"machine-man"},
-		URLPath:            fmt.Sprintf("/app"),
-		URLQuery:           query,
+		AllPreviews:      []string{"machine-man"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
+		Method:           "GET",
+		Options:          opt,
+		Previews:         map[string]bool{"machine-man": r.MachineManPreview},
+		RequiredPreviews: []string{"machine-man"},
+		URLPath:          fmt.Sprintf("/app"),
 	})
 }
 
@@ -1535,20 +1485,16 @@ type GetBySlugReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetBySlugReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"machine-man"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{"machine-man": r.MachineManPreview},
-		RequiredPreviews:   []string{"machine-man"},
-		URLPath:            fmt.Sprintf("/apps/%v", r.AppSlug),
-		URLQuery:           query,
+		AllPreviews:      []string{"machine-man"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
+		Method:           "GET",
+		Options:          opt,
+		Previews:         map[string]bool{"machine-man": r.MachineManPreview},
+		RequiredPreviews: []string{"machine-man"},
+		URLPath:          fmt.Sprintf("/apps/%v", r.AppSlug),
 	})
 }
 
@@ -1666,20 +1612,16 @@ type GetInstallationReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetInstallationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"machine-man"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{"machine-man": r.MachineManPreview},
-		RequiredPreviews:   []string{"machine-man"},
-		URLPath:            fmt.Sprintf("/app/installations/%v", r.InstallationId),
-		URLQuery:           query,
+		AllPreviews:      []string{"machine-man"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
+		Method:           "GET",
+		Options:          opt,
+		Previews:         map[string]bool{"machine-man": r.MachineManPreview},
+		RequiredPreviews: []string{"machine-man"},
+		URLPath:          fmt.Sprintf("/app/installations/%v", r.InstallationId),
 	})
 }
 
@@ -1795,20 +1737,16 @@ type GetOrgInstallationReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetOrgInstallationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"machine-man"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{"machine-man": r.MachineManPreview},
-		RequiredPreviews:   []string{"machine-man"},
-		URLPath:            fmt.Sprintf("/orgs/%v/installation", r.Org),
-		URLQuery:           query,
+		AllPreviews:      []string{"machine-man"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
+		Method:           "GET",
+		Options:          opt,
+		Previews:         map[string]bool{"machine-man": r.MachineManPreview},
+		RequiredPreviews: []string{"machine-man"},
+		URLPath:          fmt.Sprintf("/orgs/%v/installation", r.Org),
 	})
 }
 
@@ -1925,20 +1863,16 @@ type GetRepoInstallationReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetRepoInstallationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"machine-man"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{"machine-man": r.MachineManPreview},
-		RequiredPreviews:   []string{"machine-man"},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/installation", r.Owner, r.Repo),
-		URLQuery:           query,
+		AllPreviews:      []string{"machine-man"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
+		Method:           "GET",
+		Options:          opt,
+		Previews:         map[string]bool{"machine-man": r.MachineManPreview},
+		RequiredPreviews: []string{"machine-man"},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/installation", r.Owner, r.Repo),
 	})
 }
 
@@ -2050,20 +1984,13 @@ type GetSubscriptionPlanForAccountReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetSubscriptionPlanForAccountReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/marketplace_listing/accounts/%v", r.AccountId),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/marketplace_listing/accounts/%v", r.AccountId),
 	})
 }
 
@@ -2175,20 +2102,13 @@ type GetSubscriptionPlanForAccountStubbedReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetSubscriptionPlanForAccountStubbedReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/marketplace_listing/stubbed/accounts/%v", r.AccountId),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/marketplace_listing/stubbed/accounts/%v", r.AccountId),
 	})
 }
 
@@ -2304,20 +2224,16 @@ type GetUserInstallationReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetUserInstallationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"machine-man"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{"machine-man": r.MachineManPreview},
-		RequiredPreviews:   []string{"machine-man"},
-		URLPath:            fmt.Sprintf("/users/%v/installation", r.Username),
-		URLQuery:           query,
+		AllPreviews:      []string{"machine-man"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
+		Method:           "GET",
+		Options:          opt,
+		Previews:         map[string]bool{"machine-man": r.MachineManPreview},
+		RequiredPreviews: []string{"machine-man"},
+		URLPath:          fmt.Sprintf("/users/%v/installation", r.Username),
 	})
 }
 
@@ -2462,17 +2378,13 @@ func (r *ListAccountsForPlanReq) HTTPRequest(ctx context.Context, opt ...request
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/marketplace_listing/plans/%v/accounts", r.PlanId),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/marketplace_listing/plans/%v/accounts", r.PlanId),
+		URLQuery:    query,
 	})
 }
 
@@ -2617,17 +2529,13 @@ func (r *ListAccountsForPlanStubbedReq) HTTPRequest(ctx context.Context, opt ...
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/marketplace_listing/stubbed/plans/%v/accounts", r.PlanId),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/marketplace_listing/stubbed/plans/%v/accounts", r.PlanId),
+		URLQuery:    query,
 	})
 }
 
@@ -2767,13 +2675,12 @@ func (r *ListInstallationReposForAuthenticatedUserReq) HTTPRequest(ctx context.C
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"machine-man", "mercy"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
+		AllPreviews: []string{"machine-man", "mercy"},
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
 		Previews: map[string]bool{
 			"machine-man": r.MachineManPreview,
 			"mercy":       r.MercyPreview,
@@ -2935,17 +2842,16 @@ func (r *ListInstallationsReq) HTTPRequest(ctx context.Context, opt ...requests.
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"machine-man"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{"machine-man": r.MachineManPreview},
-		RequiredPreviews:   []string{"machine-man"},
-		URLPath:            fmt.Sprintf("/app/installations"),
-		URLQuery:           query,
+		AllPreviews:      []string{"machine-man"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
+		Method:           "GET",
+		Options:          opt,
+		Previews:         map[string]bool{"machine-man": r.MachineManPreview},
+		RequiredPreviews: []string{"machine-man"},
+		URLPath:          fmt.Sprintf("/app/installations"),
+		URLQuery:         query,
 	})
 }
 
@@ -3075,17 +2981,16 @@ func (r *ListInstallationsForAuthenticatedUserReq) HTTPRequest(ctx context.Conte
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"machine-man"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{"machine-man": r.MachineManPreview},
-		RequiredPreviews:   []string{"machine-man"},
-		URLPath:            fmt.Sprintf("/user/installations"),
-		URLQuery:           query,
+		AllPreviews:      []string{"machine-man"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
+		Method:           "GET",
+		Options:          opt,
+		Previews:         map[string]bool{"machine-man": r.MachineManPreview},
+		RequiredPreviews: []string{"machine-man"},
+		URLPath:          fmt.Sprintf("/user/installations"),
+		URLQuery:         query,
 	})
 }
 
@@ -3219,17 +3124,13 @@ func (r *ListPlansReq) HTTPRequest(ctx context.Context, opt ...requests.Option) 
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/marketplace_listing/plans"),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/marketplace_listing/plans"),
+		URLQuery:    query,
 	})
 }
 
@@ -3353,17 +3254,13 @@ func (r *ListPlansStubbedReq) HTTPRequest(ctx context.Context, opt ...requests.O
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/marketplace_listing/stubbed/plans"),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/marketplace_listing/stubbed/plans"),
+		URLQuery:    query,
 	})
 }
 
@@ -3500,13 +3397,12 @@ func (r *ListReposAccessibleToInstallationReq) HTTPRequest(ctx context.Context, 
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"machine-man", "mercy"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
+		AllPreviews: []string{"machine-man", "mercy"},
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
 		Previews: map[string]bool{
 			"machine-man": r.MachineManPreview,
 			"mercy":       r.MercyPreview,
@@ -3648,17 +3544,13 @@ func (r *ListSubscriptionsForAuthenticatedUserReq) HTTPRequest(ctx context.Conte
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/user/marketplace_purchases"),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/user/marketplace_purchases"),
+		URLQuery:    query,
 	})
 }
 
@@ -3782,17 +3674,13 @@ func (r *ListSubscriptionsForAuthenticatedUserStubbedReq) HTTPRequest(ctx contex
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/user/marketplace_purchases/stubbed"),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/user/marketplace_purchases/stubbed"),
+		URLQuery:    query,
 	})
 }
 
@@ -3913,20 +3801,16 @@ type RemoveRepoFromInstallationReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *RemoveRepoFromInstallationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"machine-man"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{},
-		Method:             "DELETE",
-		Options:            opt,
-		Previews:           map[string]bool{"machine-man": r.MachineManPreview},
-		RequiredPreviews:   []string{"machine-man"},
-		URLPath:            fmt.Sprintf("/user/installations/%v/repositories/%v", r.InstallationId, r.RepositoryId),
-		URLQuery:           query,
+		AllPreviews:      []string{"machine-man"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "DELETE",
+		Options:          opt,
+		Previews:         map[string]bool{"machine-man": r.MachineManPreview},
+		RequiredPreviews: []string{"machine-man"},
+		URLPath:          fmt.Sprintf("/user/installations/%v/repositories/%v", r.InstallationId, r.RepositoryId),
 	})
 }
 
@@ -4030,20 +3914,13 @@ type ResetAuthorizationReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *ResetAuthorizationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "POST",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/applications/%v/tokens/%v", r.ClientId, r.AccessToken),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "POST",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/applications/%v/tokens/%v", r.ClientId, r.AccessToken),
 	})
 }
 
@@ -4154,23 +4031,17 @@ type ResetTokenReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *ResetTokenReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		Method:           "PATCH",
-		Options:          opt,
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/applications/%v/token", r.ClientId),
-		URLQuery:         query,
+		JSONRequestBody: true,
+		Method:          "PATCH",
+		Options:         opt,
+		URLPath:         fmt.Sprintf("/applications/%v/token", r.ClientId),
 	})
 }
 
@@ -4292,20 +4163,13 @@ type RevokeAuthorizationForApplicationReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *RevokeAuthorizationForApplicationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{},
-		Method:             "DELETE",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/applications/%v/tokens/%v", r.ClientId, r.AccessToken),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{},
+		Method:      "DELETE",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/applications/%v/tokens/%v", r.ClientId, r.AccessToken),
 	})
 }
 
@@ -4409,20 +4273,13 @@ type RevokeGrantForApplicationReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *RevokeGrantForApplicationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{},
-		Method:             "DELETE",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/applications/%v/grants/%v", r.ClientId, r.AccessToken),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{},
+		Method:      "DELETE",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/applications/%v/grants/%v", r.ClientId, r.AccessToken),
 	})
 }
 
@@ -4524,20 +4381,13 @@ type RevokeInstallationAccessTokenReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *RevokeInstallationAccessTokenReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{},
-		Method:             "DELETE",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/installation/token"),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{},
+		Method:      "DELETE",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/installation/token"),
 	})
 }
 
@@ -4642,20 +4492,13 @@ type SuspendInstallationReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *SuspendInstallationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrBoolean},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{},
-		Method:             "PUT",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/app/installations/%v/suspended", r.InstallationId),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{},
+		Method:      "PUT",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/app/installations/%v/suspended", r.InstallationId),
 	})
 }
 
@@ -4765,20 +4608,13 @@ type UnsuspendInstallationReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *UnsuspendInstallationReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrBoolean},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{},
-		Method:             "DELETE",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/app/installations/%v/suspended", r.InstallationId),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{},
+		Method:      "DELETE",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/app/installations/%v/suspended", r.InstallationId),
 	})
 }
 

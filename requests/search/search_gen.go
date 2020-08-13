@@ -131,17 +131,13 @@ func (r *CodeReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*htt
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/search/code"),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/search/code"),
+		URLQuery:    query,
 	})
 }
 
@@ -319,17 +315,16 @@ func (r *CommitsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"cloak"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{"cloak": r.CloakPreview},
-		RequiredPreviews:   []string{"cloak"},
-		URLPath:            fmt.Sprintf("/search/commits"),
-		URLQuery:           query,
+		AllPreviews:      []string{"cloak"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
+		Method:           "GET",
+		Options:          opt,
+		Previews:         map[string]bool{"cloak": r.CloakPreview},
+		RequiredPreviews: []string{"cloak"},
+		URLPath:          fmt.Sprintf("/search/commits"),
+		URLQuery:         query,
 	})
 }
 
@@ -501,17 +496,13 @@ func (r *IssuesAndPullRequestsReq) HTTPRequest(ctx context.Context, opt ...reque
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/search/issues"),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/search/issues"),
+		URLQuery:    query,
 	})
 }
 
@@ -670,17 +661,13 @@ func (r *LabelsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*h
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/search/labels"),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/search/labels"),
+		URLQuery:    query,
 	})
 }
 
@@ -857,17 +844,15 @@ func (r *ReposReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*ht
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"mercy"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{"mercy": r.MercyPreview},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/search/repositories"),
-		URLQuery:           query,
+		AllPreviews: []string{"mercy"},
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
+		Previews:    map[string]bool{"mercy": r.MercyPreview},
+		URLPath:     fmt.Sprintf("/search/repositories"),
+		URLQuery:    query,
 	})
 }
 
@@ -1009,17 +994,16 @@ func (r *TopicsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*h
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"mercy"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{"mercy": r.MercyPreview},
-		RequiredPreviews:   []string{"mercy"},
-		URLPath:            fmt.Sprintf("/search/topics"),
-		URLQuery:           query,
+		AllPreviews:      []string{"mercy"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
+		Method:           "GET",
+		Options:          opt,
+		Previews:         map[string]bool{"mercy": r.MercyPreview},
+		RequiredPreviews: []string{"mercy"},
+		URLPath:          fmt.Sprintf("/search/topics"),
+		URLQuery:         query,
 	})
 }
 
@@ -1188,17 +1172,13 @@ func (r *UsersReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*ht
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/search/users"),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/search/users"),
+		URLQuery:    query,
 	})
 }
 

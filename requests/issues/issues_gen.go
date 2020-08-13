@@ -88,23 +88,17 @@ type AddAssigneesReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *AddAssigneesReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		Method:           "POST",
-		Options:          opt,
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/%v/assignees", r.Owner, r.Repo, r.IssueNumber),
-		URLQuery:         query,
+		JSONRequestBody: true,
+		Method:          "POST",
+		Options:         opt,
+		URLPath:         fmt.Sprintf("/repos/%v/%v/issues/%v/assignees", r.Owner, r.Repo, r.IssueNumber),
 	})
 }
 
@@ -233,23 +227,17 @@ type AddLabelsReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *AddLabelsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		Method:           "POST",
-		Options:          opt,
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/%v/labels", r.Owner, r.Repo, r.IssueNumber),
-		URLQuery:         query,
+		JSONRequestBody: true,
+		Method:          "POST",
+		Options:         opt,
+		URLPath:         fmt.Sprintf("/repos/%v/%v/issues/%v/labels", r.Owner, r.Repo, r.IssueNumber),
 	})
 }
 
@@ -379,20 +367,13 @@ type CheckUserCanBeAssignedReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CheckUserCanBeAssignedReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrBoolean},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/assignees/%v", r.Owner, r.Repo, r.Assignee),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{},
+		Method:      "GET",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/repos/%v/%v/assignees/%v", r.Owner, r.Repo, r.Assignee),
 	})
 }
 
@@ -502,23 +483,17 @@ type CreateReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		Method:           "POST",
-		Options:          opt,
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/issues", r.Owner, r.Repo),
-		URLQuery:         query,
+		JSONRequestBody: true,
+		Method:          "POST",
+		Options:         opt,
+		URLPath:         fmt.Sprintf("/repos/%v/%v/issues", r.Owner, r.Repo),
 	})
 }
 
@@ -673,23 +648,17 @@ type CreateCommentReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		Method:           "POST",
-		Options:          opt,
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/%v/comments", r.Owner, r.Repo, r.IssueNumber),
-		URLQuery:         query,
+		JSONRequestBody: true,
+		Method:          "POST",
+		Options:         opt,
+		URLPath:         fmt.Sprintf("/repos/%v/%v/issues/%v/comments", r.Owner, r.Repo, r.IssueNumber),
 	})
 }
 
@@ -812,23 +781,17 @@ type CreateLabelReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateLabelReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		Method:           "POST",
-		Options:          opt,
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/labels", r.Owner, r.Repo),
-		URLQuery:         query,
+		JSONRequestBody: true,
+		Method:          "POST",
+		Options:         opt,
+		URLPath:         fmt.Sprintf("/repos/%v/%v/labels", r.Owner, r.Repo),
 	})
 }
 
@@ -964,23 +927,17 @@ type CreateMilestoneReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateMilestoneReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		Method:           "POST",
-		Options:          opt,
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/milestones", r.Owner, r.Repo),
-		URLQuery:         query,
+		JSONRequestBody: true,
+		Method:          "POST",
+		Options:         opt,
+		URLPath:         fmt.Sprintf("/repos/%v/%v/milestones", r.Owner, r.Repo),
 	})
 }
 
@@ -1117,20 +1074,13 @@ type DeleteCommentReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{},
-		Method:             "DELETE",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/issues/comments/%v", r.Owner, r.Repo, r.CommentId),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{},
+		Method:      "DELETE",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/repos/%v/%v/issues/comments/%v", r.Owner, r.Repo, r.CommentId),
 	})
 }
 
@@ -1237,20 +1187,13 @@ type DeleteLabelReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteLabelReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{},
-		Method:             "DELETE",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/labels/%v", r.Owner, r.Repo, r.Name),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{},
+		Method:      "DELETE",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/repos/%v/%v/labels/%v", r.Owner, r.Repo, r.Name),
 	})
 }
 
@@ -1357,20 +1300,13 @@ type DeleteMilestoneReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteMilestoneReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrBoolean},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{},
-		Method:             "DELETE",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/milestones/%v", r.Owner, r.Repo, r.MilestoneNumber),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{},
+		Method:      "DELETE",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/repos/%v/%v/milestones/%v", r.Owner, r.Repo, r.MilestoneNumber),
 	})
 }
 
@@ -1493,20 +1429,15 @@ type GetReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"squirrel-girl"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/issues/%v", r.Owner, r.Repo, r.IssueNumber),
-		URLQuery:           query,
+		AllPreviews: []string{"squirrel-girl"},
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
+		Previews:    map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		URLPath:     fmt.Sprintf("/repos/%v/%v/issues/%v", r.Owner, r.Repo, r.IssueNumber),
 	})
 }
 
@@ -1637,23 +1568,18 @@ type GetCommentReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"machine-man", "squirrel-girl"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
+		AllPreviews: []string{"machine-man", "squirrel-girl"},
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
 		Previews: map[string]bool{
 			"machine-man":   r.MachineManPreview,
 			"squirrel-girl": r.SquirrelGirlPreview,
 		},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/comments/%v", r.Owner, r.Repo, r.CommentId),
-		URLQuery:         query,
+		URLPath: fmt.Sprintf("/repos/%v/%v/issues/comments/%v", r.Owner, r.Repo, r.CommentId),
 	})
 }
 
@@ -1795,24 +1721,19 @@ type GetEventReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetEventReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"starfox", "machine-man", "sailor-v"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
+		AllPreviews: []string{"starfox", "machine-man", "sailor-v"},
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
 		Previews: map[string]bool{
 			"machine-man": r.MachineManPreview,
 			"sailor-v":    r.SailorVPreview,
 			"starfox":     r.StarfoxPreview,
 		},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/events/%v", r.Owner, r.Repo, r.EventId),
-		URLQuery:         query,
+		URLPath: fmt.Sprintf("/repos/%v/%v/issues/events/%v", r.Owner, r.Repo, r.EventId),
 	})
 }
 
@@ -1926,20 +1847,13 @@ type GetLabelReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetLabelReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/labels/%v", r.Owner, r.Repo, r.Name),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/repos/%v/%v/labels/%v", r.Owner, r.Repo, r.Name),
 	})
 }
 
@@ -2053,20 +1967,13 @@ type GetMilestoneReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetMilestoneReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/milestones/%v", r.Owner, r.Repo, r.MilestoneNumber),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/repos/%v/%v/milestones/%v", r.Owner, r.Repo, r.MilestoneNumber),
 	})
 }
 
@@ -2274,20 +2181,18 @@ func (r *ListReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*htt
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"machine-man", "squirrel-girl"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
+		AllPreviews: []string{"machine-man", "squirrel-girl"},
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
 		Previews: map[string]bool{
 			"machine-man":   r.MachineManPreview,
 			"squirrel-girl": r.SquirrelGirlPreview,
 		},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/issues"),
-		URLQuery:         query,
+		URLPath:  fmt.Sprintf("/issues"),
+		URLQuery: query,
 	})
 }
 
@@ -2413,17 +2318,13 @@ func (r *ListAssigneesReq) HTTPRequest(ctx context.Context, opt ...requests.Opti
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/assignees", r.Owner, r.Repo),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/repos/%v/%v/assignees", r.Owner, r.Repo),
+		URLQuery:    query,
 	})
 }
 
@@ -2573,17 +2474,15 @@ func (r *ListCommentsReq) HTTPRequest(ctx context.Context, opt ...requests.Optio
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"squirrel-girl"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/issues/%v/comments", r.Owner, r.Repo, r.IssueNumber),
-		URLQuery:           query,
+		AllPreviews: []string{"squirrel-girl"},
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
+		Previews:    map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		URLPath:     fmt.Sprintf("/repos/%v/%v/issues/%v/comments", r.Owner, r.Repo, r.IssueNumber),
+		URLQuery:    query,
 	})
 }
 
@@ -2745,17 +2644,15 @@ func (r *ListCommentsForRepoReq) HTTPRequest(ctx context.Context, opt ...request
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"squirrel-girl"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/issues/comments", r.Owner, r.Repo),
-		URLQuery:           query,
+		AllPreviews: []string{"squirrel-girl"},
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
+		Previews:    map[string]bool{"squirrel-girl": r.SquirrelGirlPreview},
+		URLPath:     fmt.Sprintf("/repos/%v/%v/issues/comments", r.Owner, r.Repo),
+		URLQuery:    query,
 	})
 }
 
@@ -2906,20 +2803,18 @@ func (r *ListEventsReq) HTTPRequest(ctx context.Context, opt ...requests.Option)
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"starfox", "sailor-v"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
+		AllPreviews: []string{"starfox", "sailor-v"},
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
 		Previews: map[string]bool{
 			"sailor-v": r.SailorVPreview,
 			"starfox":  r.StarfoxPreview,
 		},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/%v/events", r.Owner, r.Repo, r.IssueNumber),
-		URLQuery:         query,
+		URLPath:  fmt.Sprintf("/repos/%v/%v/issues/%v/events", r.Owner, r.Repo, r.IssueNumber),
+		URLQuery: query,
 	})
 }
 
@@ -3067,20 +2962,18 @@ func (r *ListEventsForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"starfox", "sailor-v"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
+		AllPreviews: []string{"starfox", "sailor-v"},
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
 		Previews: map[string]bool{
 			"sailor-v": r.SailorVPreview,
 			"starfox":  r.StarfoxPreview,
 		},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/events", r.Owner, r.Repo),
-		URLQuery:         query,
+		URLPath:  fmt.Sprintf("/repos/%v/%v/issues/events", r.Owner, r.Repo),
+		URLQuery: query,
 	})
 }
 
@@ -3230,13 +3123,12 @@ func (r *ListEventsForTimelineReq) HTTPRequest(ctx context.Context, opt ...reque
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"mockingbird", "starfox"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
+		AllPreviews: []string{"mockingbird", "starfox"},
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
 		Previews: map[string]bool{
 			"mockingbird": r.MockingbirdPreview,
 			"starfox":     r.StarfoxPreview,
@@ -3435,20 +3327,18 @@ func (r *ListForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt ...re
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"machine-man", "squirrel-girl"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
+		AllPreviews: []string{"machine-man", "squirrel-girl"},
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
 		Previews: map[string]bool{
 			"machine-man":   r.MachineManPreview,
 			"squirrel-girl": r.SquirrelGirlPreview,
 		},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/user/issues"),
-		URLQuery:         query,
+		URLPath:  fmt.Sprintf("/user/issues"),
+		URLQuery: query,
 	})
 }
 
@@ -3641,20 +3531,18 @@ func (r *ListForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option)
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"machine-man", "squirrel-girl"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
+		AllPreviews: []string{"machine-man", "squirrel-girl"},
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
 		Previews: map[string]bool{
 			"machine-man":   r.MachineManPreview,
 			"squirrel-girl": r.SquirrelGirlPreview,
 		},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/orgs/%v/issues", r.Org),
-		URLQuery:         query,
+		URLPath:  fmt.Sprintf("/orgs/%v/issues", r.Org),
+		URLQuery: query,
 	})
 }
 
@@ -3865,20 +3753,18 @@ func (r *ListForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"machine-man", "squirrel-girl"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
+		AllPreviews: []string{"machine-man", "squirrel-girl"},
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
 		Previews: map[string]bool{
 			"machine-man":   r.MachineManPreview,
 			"squirrel-girl": r.SquirrelGirlPreview,
 		},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/issues", r.Owner, r.Repo),
-		URLQuery:         query,
+		URLPath:  fmt.Sprintf("/repos/%v/%v/issues", r.Owner, r.Repo),
+		URLQuery: query,
 	})
 }
 
@@ -4007,17 +3893,13 @@ func (r *ListLabelsForMilestoneReq) HTTPRequest(ctx context.Context, opt ...requ
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/milestones/%v/labels", r.Owner, r.Repo, r.MilestoneNumber),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/repos/%v/%v/milestones/%v/labels", r.Owner, r.Repo, r.MilestoneNumber),
+		URLQuery:    query,
 	})
 }
 
@@ -4143,17 +4025,13 @@ func (r *ListLabelsForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/labels", r.Owner, r.Repo),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/repos/%v/%v/labels", r.Owner, r.Repo),
+		URLQuery:    query,
 	})
 }
 
@@ -4282,17 +4160,13 @@ func (r *ListLabelsOnIssueReq) HTTPRequest(ctx context.Context, opt ...requests.
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/issues/%v/labels", r.Owner, r.Repo, r.IssueNumber),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/repos/%v/%v/issues/%v/labels", r.Owner, r.Repo, r.IssueNumber),
+		URLQuery:    query,
 	})
 }
 
@@ -4436,17 +4310,13 @@ func (r *ListMilestonesReq) HTTPRequest(ctx context.Context, opt ...requests.Opt
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/milestones", r.Owner, r.Repo),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "GET",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/repos/%v/%v/milestones", r.Owner, r.Repo),
+		URLQuery:    query,
 	})
 }
 
@@ -4571,20 +4441,16 @@ type LockReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *LockReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"sailor-v"},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"content-type": internal.String("application/json")},
-		Method:             "PUT",
-		Options:            opt,
-		Previews:           map[string]bool{"sailor-v": r.SailorVPreview},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/issues/%v/lock", r.Owner, r.Repo, r.IssueNumber),
-		URLQuery:           query,
+		AllPreviews:     []string{"sailor-v"},
+		Body:            r.RequestBody,
+		ExplicitURL:     r._url,
+		HeaderVals:      map[string]*string{"content-type": internal.String("application/json")},
+		JSONRequestBody: true,
+		Method:          "PUT",
+		Options:         opt,
+		Previews:        map[string]bool{"sailor-v": r.SailorVPreview},
+		URLPath:         fmt.Sprintf("/repos/%v/%v/issues/%v/lock", r.Owner, r.Repo, r.IssueNumber),
 	})
 }
 
@@ -4709,20 +4575,13 @@ type RemoveAllLabelsReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *RemoveAllLabelsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{},
-		Method:             "DELETE",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/issues/%v/labels", r.Owner, r.Repo, r.IssueNumber),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{},
+		Method:      "DELETE",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/repos/%v/%v/issues/%v/labels", r.Owner, r.Repo, r.IssueNumber),
 	})
 }
 
@@ -4830,23 +4689,17 @@ type RemoveAssigneesReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *RemoveAssigneesReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		Method:           "DELETE",
-		Options:          opt,
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/%v/assignees", r.Owner, r.Repo, r.IssueNumber),
-		URLQuery:         query,
+		JSONRequestBody: true,
+		Method:          "DELETE",
+		Options:         opt,
+		URLPath:         fmt.Sprintf("/repos/%v/%v/issues/%v/assignees", r.Owner, r.Repo, r.IssueNumber),
 	})
 }
 
@@ -4978,20 +4831,13 @@ type RemoveLabelReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *RemoveLabelReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "DELETE",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/issues/%v/labels/%v", r.Owner, r.Repo, r.IssueNumber, r.Name),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		Method:      "DELETE",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/repos/%v/%v/issues/%v/labels/%v", r.Owner, r.Repo, r.IssueNumber, r.Name),
 	})
 }
 
@@ -5106,23 +4952,17 @@ type SetLabelsReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *SetLabelsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		Method:           "PUT",
-		Options:          opt,
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/%v/labels", r.Owner, r.Repo, r.IssueNumber),
-		URLQuery:         query,
+		JSONRequestBody: true,
+		Method:          "PUT",
+		Options:         opt,
+		URLPath:         fmt.Sprintf("/repos/%v/%v/issues/%v/labels", r.Owner, r.Repo, r.IssueNumber),
 	})
 }
 
@@ -5252,20 +5092,13 @@ type UnlockReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *UnlockReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{},
-		Method:             "DELETE",
-		Options:            opt,
-		Previews:           map[string]bool{},
-		RequiredPreviews:   []string{},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/issues/%v/lock", r.Owner, r.Repo, r.IssueNumber),
-		URLQuery:           query,
+		Body:        nil,
+		ExplicitURL: r._url,
+		HeaderVals:  map[string]*string{},
+		Method:      "DELETE",
+		Options:     opt,
+		URLPath:     fmt.Sprintf("/repos/%v/%v/issues/%v/lock", r.Owner, r.Repo, r.IssueNumber),
 	})
 }
 
@@ -5373,23 +5206,17 @@ type UpdateReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *UpdateReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		Method:           "PATCH",
-		Options:          opt,
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/%v", r.Owner, r.Repo, r.IssueNumber),
-		URLQuery:         query,
+		JSONRequestBody: true,
+		Method:          "PATCH",
+		Options:         opt,
+		URLPath:         fmt.Sprintf("/repos/%v/%v/issues/%v", r.Owner, r.Repo, r.IssueNumber),
 	})
 }
 
@@ -5547,23 +5374,17 @@ type UpdateCommentReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *UpdateCommentReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		Method:           "PATCH",
-		Options:          opt,
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/issues/comments/%v", r.Owner, r.Repo, r.CommentId),
-		URLQuery:         query,
+		JSONRequestBody: true,
+		Method:          "PATCH",
+		Options:         opt,
+		URLPath:         fmt.Sprintf("/repos/%v/%v/issues/comments/%v", r.Owner, r.Repo, r.CommentId),
 	})
 }
 
@@ -5689,23 +5510,17 @@ type UpdateLabelReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *UpdateLabelReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		Method:           "PATCH",
-		Options:          opt,
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/labels/%v", r.Owner, r.Repo, r.Name),
-		URLQuery:         query,
+		JSONRequestBody: true,
+		Method:          "PATCH",
+		Options:         opt,
+		URLPath:         fmt.Sprintf("/repos/%v/%v/labels/%v", r.Owner, r.Repo, r.Name),
 	})
 }
 
@@ -5844,23 +5659,17 @@ type UpdateMilestoneReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *UpdateMilestoneReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
-		Method:           "PATCH",
-		Options:          opt,
-		Previews:         map[string]bool{},
-		RequiredPreviews: []string{},
-		URLPath:          fmt.Sprintf("/repos/%v/%v/milestones/%v", r.Owner, r.Repo, r.MilestoneNumber),
-		URLQuery:         query,
+		JSONRequestBody: true,
+		Method:          "PATCH",
+		Options:         opt,
+		URLPath:         fmt.Sprintf("/repos/%v/%v/milestones/%v", r.Owner, r.Repo, r.MilestoneNumber),
 	})
 }
 

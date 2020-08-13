@@ -25,8 +25,10 @@ type BuildHTTPRequestOptions struct {
 	Body               interface{}
 	URLQuery           url.Values
 	URLPath            string
-	EndpointAttributes []EndpointAttribute
 	Options            []requests.Option
+	StreamRequestBody  bool
+	RequireExplicitURL bool
+	JSONRequestBody    bool
 }
 
 func requestHeaders(b BuildHTTPRequestOptions) http.Header {
@@ -64,6 +66,9 @@ func requestHeaders(b BuildHTTPRequestOptions) http.Header {
 
 // updateURLQuery updates u's query with vals
 func updateURLQuery(u *url.URL, vals url.Values) {
+	if len(vals) == 0 {
+		return
+	}
 	q := u.Query()
 	if len(q) == 0 {
 		u.RawQuery = vals.Encode()
@@ -81,7 +86,7 @@ func updateURLQuery(u *url.URL, vals url.Values) {
 func requestURL(b BuildHTTPRequestOptions) (string, error) {
 	expURL := b.ExplicitURL
 	if expURL != "" {
-		if !hasAttribute(AttrExplicitURL, b.EndpointAttributes) {
+		if !b.RequireExplicitURL {
 			return expURL, nil
 		}
 
@@ -95,7 +100,7 @@ func requestURL(b BuildHTTPRequestOptions) (string, error) {
 		updateURLQuery(u, b.URLQuery)
 		return u.String(), nil
 	}
-	if hasAttribute(AttrExplicitURL, b.EndpointAttributes) {
+	if b.RequireExplicitURL {
 		return "", fmt.Errorf("ExplicitURL must be set")
 	}
 	opts := requests.BuildOptions(b.Options...)
@@ -113,14 +118,14 @@ func BuildHTTPRequest(ctx context.Context, b BuildHTTPRequestOptions) (*http.Req
 	var err error
 	switch {
 	case b.Body == nil:
-	case hasAttribute(AttrJSONRequestBody, b.EndpointAttributes):
+	case b.JSONRequestBody:
 		var buf bytes.Buffer
 		err = json.NewEncoder(&buf).Encode(&b.Body)
 		if err != nil {
 			return nil, newRequestError("error marshaling json body")
 		}
 		bodyReader = &buf
-	case hasAttribute(AttrBodyUploader, b.EndpointAttributes):
+	case b.StreamRequestBody:
 		bodyReader = b.Body.(io.Reader)
 	}
 	urlString, err := requestURL(b)
@@ -145,13 +150,4 @@ func BuildHTTPRequest(ctx context.Context, b BuildHTTPRequestOptions) (*http.Req
 	}
 
 	return req, nil
-}
-
-func hasAttribute(want EndpointAttribute, attributes []EndpointAttribute) bool {
-	for _, attr := range attributes {
-		if want == attr {
-			return true
-		}
-	}
-	return false
 }

@@ -94,23 +94,20 @@ type CreateReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"antiope"},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		AllPreviews: []string{"antiope"},
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
+		JSONRequestBody:  true,
 		Method:           "POST",
 		Options:          opt,
 		Previews:         map[string]bool{"antiope": r.AntiopePreview},
 		RequiredPreviews: []string{"antiope"},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/check-runs", r.Owner, r.Repo),
-		URLQuery:         query,
 	})
 }
 
@@ -409,23 +406,20 @@ type CreateSuiteReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateSuiteReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"antiope"},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		AllPreviews: []string{"antiope"},
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
+		JSONRequestBody:  true,
 		Method:           "POST",
 		Options:          opt,
 		Previews:         map[string]bool{"antiope": r.AntiopePreview},
 		RequiredPreviews: []string{"antiope"},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/check-suites", r.Owner, r.Repo),
-		URLQuery:         query,
 	})
 }
 
@@ -559,20 +553,16 @@ type GetReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"antiope"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{"antiope": r.AntiopePreview},
-		RequiredPreviews:   []string{"antiope"},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/check-runs/%v", r.Owner, r.Repo, r.CheckRunId),
-		URLQuery:           query,
+		AllPreviews:      []string{"antiope"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
+		Method:           "GET",
+		Options:          opt,
+		Previews:         map[string]bool{"antiope": r.AntiopePreview},
+		RequiredPreviews: []string{"antiope"},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/check-runs/%v", r.Owner, r.Repo, r.CheckRunId),
 	})
 }
 
@@ -695,20 +685,16 @@ type GetSuiteReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetSuiteReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"antiope"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{"antiope": r.AntiopePreview},
-		RequiredPreviews:   []string{"antiope"},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/check-suites/%v", r.Owner, r.Repo, r.CheckSuiteId),
-		URLQuery:           query,
+		AllPreviews:      []string{"antiope"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
+		Method:           "GET",
+		Options:          opt,
+		Previews:         map[string]bool{"antiope": r.AntiopePreview},
+		RequiredPreviews: []string{"antiope"},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/check-suites/%v", r.Owner, r.Repo, r.CheckSuiteId),
 	})
 }
 
@@ -846,17 +832,16 @@ func (r *ListAnnotationsReq) HTTPRequest(ctx context.Context, opt ...requests.Op
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"antiope"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{"antiope": r.AntiopePreview},
-		RequiredPreviews:   []string{"antiope"},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/check-runs/%v/annotations", r.Owner, r.Repo, r.CheckRunId),
-		URLQuery:           query,
+		AllPreviews:      []string{"antiope"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
+		Method:           "GET",
+		Options:          opt,
+		Previews:         map[string]bool{"antiope": r.AntiopePreview},
+		RequiredPreviews: []string{"antiope"},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/check-runs/%v/annotations", r.Owner, r.Repo, r.CheckRunId),
+		URLQuery:         query,
 	})
 }
 
@@ -1018,17 +1003,16 @@ func (r *ListForRefReq) HTTPRequest(ctx context.Context, opt ...requests.Option)
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"antiope"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{"antiope": r.AntiopePreview},
-		RequiredPreviews:   []string{"antiope"},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/commits/%v/check-runs", r.Owner, r.Repo, r.Ref),
-		URLQuery:           query,
+		AllPreviews:      []string{"antiope"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
+		Method:           "GET",
+		Options:          opt,
+		Previews:         map[string]bool{"antiope": r.AntiopePreview},
+		RequiredPreviews: []string{"antiope"},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/commits/%v/check-runs", r.Owner, r.Repo, r.Ref),
+		URLQuery:         query,
 	})
 }
 
@@ -1200,17 +1184,16 @@ func (r *ListForSuiteReq) HTTPRequest(ctx context.Context, opt ...requests.Optio
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"antiope"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{"antiope": r.AntiopePreview},
-		RequiredPreviews:   []string{"antiope"},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/check-suites/%v/check-runs", r.Owner, r.Repo, r.CheckSuiteId),
-		URLQuery:           query,
+		AllPreviews:      []string{"antiope"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
+		Method:           "GET",
+		Options:          opt,
+		Previews:         map[string]bool{"antiope": r.AntiopePreview},
+		RequiredPreviews: []string{"antiope"},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/check-suites/%v/check-runs", r.Owner, r.Repo, r.CheckSuiteId),
+		URLQuery:         query,
 	})
 }
 
@@ -1370,17 +1353,16 @@ func (r *ListSuitesForRefReq) HTTPRequest(ctx context.Context, opt ...requests.O
 	}
 
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"antiope"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{"accept": internal.String("application/json")},
-		Method:             "GET",
-		Options:            opt,
-		Previews:           map[string]bool{"antiope": r.AntiopePreview},
-		RequiredPreviews:   []string{"antiope"},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/commits/%v/check-suites", r.Owner, r.Repo, r.Ref),
-		URLQuery:           query,
+		AllPreviews:      []string{"antiope"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{"accept": internal.String("application/json")},
+		Method:           "GET",
+		Options:          opt,
+		Previews:         map[string]bool{"antiope": r.AntiopePreview},
+		RequiredPreviews: []string{"antiope"},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/commits/%v/check-suites", r.Owner, r.Repo, r.Ref),
+		URLQuery:         query,
 	})
 }
 
@@ -1513,20 +1495,16 @@ type RerequestSuiteReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *RerequestSuiteReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"antiope"},
-		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
-		ExplicitURL:        r._url,
-		HeaderVals:         map[string]*string{},
-		Method:             "POST",
-		Options:            opt,
-		Previews:           map[string]bool{"antiope": r.AntiopePreview},
-		RequiredPreviews:   []string{"antiope"},
-		URLPath:            fmt.Sprintf("/repos/%v/%v/check-suites/%v/rerequest", r.Owner, r.Repo, r.CheckSuiteId),
-		URLQuery:           query,
+		AllPreviews:      []string{"antiope"},
+		Body:             nil,
+		ExplicitURL:      r._url,
+		HeaderVals:       map[string]*string{},
+		Method:           "POST",
+		Options:          opt,
+		Previews:         map[string]bool{"antiope": r.AntiopePreview},
+		RequiredPreviews: []string{"antiope"},
+		URLPath:          fmt.Sprintf("/repos/%v/%v/check-suites/%v/rerequest", r.Owner, r.Repo, r.CheckSuiteId),
 	})
 }
 
@@ -1640,23 +1618,20 @@ type SetSuitesPreferencesReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *SetSuitesPreferencesReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"antiope"},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		AllPreviews: []string{"antiope"},
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
+		JSONRequestBody:  true,
 		Method:           "PATCH",
 		Options:          opt,
 		Previews:         map[string]bool{"antiope": r.AntiopePreview},
 		RequiredPreviews: []string{"antiope"},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/check-suites/preferences", r.Owner, r.Repo),
-		URLQuery:         query,
 	})
 }
 
@@ -1809,23 +1784,20 @@ type UpdateReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *UpdateReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
-		AllPreviews:        []string{"antiope"},
-		Body:               r.RequestBody,
-		EndpointAttributes: []internal.EndpointAttribute{internal.AttrJSONRequestBody},
-		ExplicitURL:        r._url,
+		AllPreviews: []string{"antiope"},
+		Body:        r.RequestBody,
+		ExplicitURL: r._url,
 		HeaderVals: map[string]*string{
 			"accept":       internal.String("application/json"),
 			"content-type": internal.String("application/json"),
 		},
+		JSONRequestBody:  true,
 		Method:           "PATCH",
 		Options:          opt,
 		Previews:         map[string]bool{"antiope": r.AntiopePreview},
 		RequiredPreviews: []string{"antiope"},
 		URLPath:          fmt.Sprintf("/repos/%v/%v/check-runs/%v", r.Owner, r.Repo, r.CheckRunId),
-		URLQuery:         query,
 	})
 }
 
