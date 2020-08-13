@@ -46,7 +46,7 @@ func GetAllTemplates(ctx context.Context, req *GetAllTemplatesReq, opt ...reques
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -133,8 +133,8 @@ func (r *GetAllTemplatesResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *GetAllTemplatesResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *GetAllTemplatesResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200, 304})
 	if err != nil {
@@ -175,7 +175,7 @@ func GetTemplate(ctx context.Context, req *GetTemplateReq, opt ...requests.Optio
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -258,8 +258,8 @@ func (r *GetTemplateResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *GetTemplateResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *GetTemplateResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200, 304})
 	if err != nil {

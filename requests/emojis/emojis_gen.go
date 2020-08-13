@@ -45,7 +45,7 @@ func Get(ctx context.Context, req *GetReq, opt ...requests.Option) (*GetResponse
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -132,8 +132,8 @@ func (r *GetResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *GetResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *GetResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200, 304})
 	if err != nil {

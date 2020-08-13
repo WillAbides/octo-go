@@ -47,7 +47,7 @@ func AddMemberLegacy(ctx context.Context, req *AddMemberLegacyReq, opt ...reques
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -128,8 +128,8 @@ func (r *AddMemberLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *AddMemberLegacyResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *AddMemberLegacyResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{204})
 	if err != nil {
@@ -164,7 +164,7 @@ func AddOrUpdateMembershipForUserInOrg(ctx context.Context, req *AddOrUpdateMemb
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -270,8 +270,8 @@ func (r *AddOrUpdateMembershipForUserInOrgResponse) HTTPResponse() *http.Respons
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *AddOrUpdateMembershipForUserInOrgResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *AddOrUpdateMembershipForUserInOrgResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
 	if err != nil {
@@ -312,7 +312,7 @@ func AddOrUpdateMembershipForUserLegacy(ctx context.Context, req *AddOrUpdateMem
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -415,8 +415,8 @@ func (r *AddOrUpdateMembershipForUserLegacyResponse) HTTPResponse() *http.Respon
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *AddOrUpdateMembershipForUserLegacyResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *AddOrUpdateMembershipForUserLegacyResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
 	if err != nil {
@@ -457,7 +457,7 @@ func AddOrUpdateProjectPermissionsInOrg(ctx context.Context, req *AddOrUpdatePro
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -572,8 +572,8 @@ func (r *AddOrUpdateProjectPermissionsInOrgResponse) HTTPResponse() *http.Respon
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *AddOrUpdateProjectPermissionsInOrgResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *AddOrUpdateProjectPermissionsInOrgResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{204})
 	if err != nil {
@@ -608,7 +608,7 @@ func AddOrUpdateProjectPermissionsLegacy(ctx context.Context, req *AddOrUpdatePr
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -720,8 +720,8 @@ func (r *AddOrUpdateProjectPermissionsLegacyResponse) HTTPResponse() *http.Respo
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *AddOrUpdateProjectPermissionsLegacyResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *AddOrUpdateProjectPermissionsLegacyResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{204})
 	if err != nil {
@@ -756,7 +756,7 @@ func AddOrUpdateRepoPermissionsInOrg(ctx context.Context, req *AddOrUpdateRepoPe
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -868,8 +868,8 @@ func (r *AddOrUpdateRepoPermissionsInOrgResponse) HTTPResponse() *http.Response 
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *AddOrUpdateRepoPermissionsInOrgResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *AddOrUpdateRepoPermissionsInOrgResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{204})
 	if err != nil {
@@ -904,7 +904,7 @@ func AddOrUpdateRepoPermissionsLegacy(ctx context.Context, req *AddOrUpdateRepoP
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -1007,8 +1007,8 @@ func (r *AddOrUpdateRepoPermissionsLegacyResponse) HTTPResponse() *http.Response
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *AddOrUpdateRepoPermissionsLegacyResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *AddOrUpdateRepoPermissionsLegacyResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{204})
 	if err != nil {
@@ -1043,7 +1043,7 @@ func CheckPermissionsForProjectInOrg(ctx context.Context, req *CheckPermissionsF
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -1137,8 +1137,8 @@ func (r *CheckPermissionsForProjectInOrgResponse) HTTPResponse() *http.Response 
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *CheckPermissionsForProjectInOrgResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *CheckPermissionsForProjectInOrgResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
 	if err != nil {
@@ -1179,7 +1179,7 @@ func CheckPermissionsForProjectLegacy(ctx context.Context, req *CheckPermissions
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -1270,8 +1270,8 @@ func (r *CheckPermissionsForProjectLegacyResponse) HTTPResponse() *http.Response
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *CheckPermissionsForProjectLegacyResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *CheckPermissionsForProjectLegacyResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
 	if err != nil {
@@ -1312,7 +1312,7 @@ func CheckPermissionsForRepoInOrg(ctx context.Context, req *CheckPermissionsForR
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -1398,8 +1398,8 @@ func (r *CheckPermissionsForRepoInOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *CheckPermissionsForRepoInOrgResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *CheckPermissionsForRepoInOrgResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200, 204})
 	if err != nil {
@@ -1440,7 +1440,7 @@ func CheckPermissionsForRepoLegacy(ctx context.Context, req *CheckPermissionsFor
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -1523,8 +1523,8 @@ func (r *CheckPermissionsForRepoLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *CheckPermissionsForRepoLegacyResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *CheckPermissionsForRepoLegacyResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200, 204})
 	if err != nil {
@@ -1565,7 +1565,7 @@ func Create(ctx context.Context, req *CreateReq, opt ...requests.Option) (*Creat
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -1697,8 +1697,8 @@ func (r *CreateResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *CreateResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *CreateResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{201})
 	if err != nil {
@@ -1739,7 +1739,7 @@ func CreateDiscussionCommentInOrg(ctx context.Context, req *CreateDiscussionComm
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -1850,8 +1850,8 @@ func (r *CreateDiscussionCommentInOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *CreateDiscussionCommentInOrgResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *CreateDiscussionCommentInOrgResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{201})
 	if err != nil {
@@ -1892,7 +1892,7 @@ func CreateDiscussionCommentLegacy(ctx context.Context, req *CreateDiscussionCom
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -2000,8 +2000,8 @@ func (r *CreateDiscussionCommentLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *CreateDiscussionCommentLegacyResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *CreateDiscussionCommentLegacyResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{201})
 	if err != nil {
@@ -2042,7 +2042,7 @@ func CreateDiscussionInOrg(ctx context.Context, req *CreateDiscussionInOrgReq, o
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -2162,8 +2162,8 @@ func (r *CreateDiscussionInOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *CreateDiscussionInOrgResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *CreateDiscussionInOrgResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{201})
 	if err != nil {
@@ -2204,7 +2204,7 @@ func CreateDiscussionLegacy(ctx context.Context, req *CreateDiscussionLegacyReq,
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -2321,8 +2321,8 @@ func (r *CreateDiscussionLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *CreateDiscussionLegacyResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *CreateDiscussionLegacyResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{201})
 	if err != nil {
@@ -2363,7 +2363,7 @@ func CreateOrUpdateIdpGroupConnectionsInOrg(ctx context.Context, req *CreateOrUp
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -2479,8 +2479,8 @@ func (r *CreateOrUpdateIdpGroupConnectionsInOrgResponse) HTTPResponse() *http.Re
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *CreateOrUpdateIdpGroupConnectionsInOrgResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *CreateOrUpdateIdpGroupConnectionsInOrgResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
 	if err != nil {
@@ -2521,7 +2521,7 @@ func CreateOrUpdateIdpGroupConnectionsLegacy(ctx context.Context, req *CreateOrU
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -2638,8 +2638,8 @@ func (r *CreateOrUpdateIdpGroupConnectionsLegacyResponse) HTTPResponse() *http.R
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *CreateOrUpdateIdpGroupConnectionsLegacyResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *CreateOrUpdateIdpGroupConnectionsLegacyResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
 	if err != nil {
@@ -2680,7 +2680,7 @@ func DeleteDiscussionCommentInOrg(ctx context.Context, req *DeleteDiscussionComm
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -2765,8 +2765,8 @@ func (r *DeleteDiscussionCommentInOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *DeleteDiscussionCommentInOrgResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *DeleteDiscussionCommentInOrgResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{204})
 	if err != nil {
@@ -2801,7 +2801,7 @@ func DeleteDiscussionCommentLegacy(ctx context.Context, req *DeleteDiscussionCom
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -2883,8 +2883,8 @@ func (r *DeleteDiscussionCommentLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *DeleteDiscussionCommentLegacyResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *DeleteDiscussionCommentLegacyResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{204})
 	if err != nil {
@@ -2919,7 +2919,7 @@ func DeleteDiscussionInOrg(ctx context.Context, req *DeleteDiscussionInOrgReq, o
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -3003,8 +3003,8 @@ func (r *DeleteDiscussionInOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *DeleteDiscussionInOrgResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *DeleteDiscussionInOrgResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{204})
 	if err != nil {
@@ -3039,7 +3039,7 @@ func DeleteDiscussionLegacy(ctx context.Context, req *DeleteDiscussionLegacyReq,
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -3120,8 +3120,8 @@ func (r *DeleteDiscussionLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *DeleteDiscussionLegacyResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *DeleteDiscussionLegacyResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{204})
 	if err != nil {
@@ -3156,7 +3156,7 @@ func DeleteInOrg(ctx context.Context, req *DeleteInOrgReq, opt ...requests.Optio
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -3239,8 +3239,8 @@ func (r *DeleteInOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *DeleteInOrgResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *DeleteInOrgResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{204})
 	if err != nil {
@@ -3275,7 +3275,7 @@ func DeleteLegacy(ctx context.Context, req *DeleteLegacyReq, opt ...requests.Opt
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -3355,8 +3355,8 @@ func (r *DeleteLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *DeleteLegacyResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *DeleteLegacyResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{204})
 	if err != nil {
@@ -3391,7 +3391,7 @@ func GetByName(ctx context.Context, req *GetByNameReq, opt ...requests.Option) (
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -3475,8 +3475,8 @@ func (r *GetByNameResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *GetByNameResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *GetByNameResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
 	if err != nil {
@@ -3517,7 +3517,7 @@ func GetDiscussionCommentInOrg(ctx context.Context, req *GetDiscussionCommentInO
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -3614,8 +3614,8 @@ func (r *GetDiscussionCommentInOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *GetDiscussionCommentInOrgResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *GetDiscussionCommentInOrgResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
 	if err != nil {
@@ -3656,7 +3656,7 @@ func GetDiscussionCommentLegacy(ctx context.Context, req *GetDiscussionCommentLe
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -3750,8 +3750,8 @@ func (r *GetDiscussionCommentLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *GetDiscussionCommentLegacyResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *GetDiscussionCommentLegacyResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
 	if err != nil {
@@ -3792,7 +3792,7 @@ func GetDiscussionInOrg(ctx context.Context, req *GetDiscussionInOrgReq, opt ...
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -3888,8 +3888,8 @@ func (r *GetDiscussionInOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *GetDiscussionInOrgResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *GetDiscussionInOrgResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
 	if err != nil {
@@ -3930,7 +3930,7 @@ func GetDiscussionLegacy(ctx context.Context, req *GetDiscussionLegacyReq, opt .
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -4023,8 +4023,8 @@ func (r *GetDiscussionLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *GetDiscussionLegacyResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *GetDiscussionLegacyResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
 	if err != nil {
@@ -4065,7 +4065,7 @@ func GetLegacy(ctx context.Context, req *GetLegacyReq, opt ...requests.Option) (
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -4146,8 +4146,8 @@ func (r *GetLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *GetLegacyResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *GetLegacyResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
 	if err != nil {
@@ -4188,7 +4188,7 @@ func GetMemberLegacy(ctx context.Context, req *GetMemberLegacyReq, opt ...reques
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -4270,8 +4270,8 @@ func (r *GetMemberLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *GetMemberLegacyResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *GetMemberLegacyResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{204, 404})
 	if err != nil {
@@ -4310,7 +4310,7 @@ func GetMembershipForUserInOrg(ctx context.Context, req *GetMembershipForUserInO
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -4395,8 +4395,8 @@ func (r *GetMembershipForUserInOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *GetMembershipForUserInOrgResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *GetMembershipForUserInOrgResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
 	if err != nil {
@@ -4437,7 +4437,7 @@ func GetMembershipForUserLegacy(ctx context.Context, req *GetMembershipForUserLe
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -4519,8 +4519,8 @@ func (r *GetMembershipForUserLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *GetMembershipForUserLegacyResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *GetMembershipForUserLegacyResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
 	if err != nil {
@@ -4561,7 +4561,7 @@ func List(ctx context.Context, req *ListReq, opt ...requests.Option) (*ListRespo
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -4654,8 +4654,8 @@ func (r *ListResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *ListResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *ListResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
 	if err != nil {
@@ -4696,7 +4696,7 @@ func ListChildInOrg(ctx context.Context, req *ListChildInOrgReq, opt ...requests
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -4792,8 +4792,8 @@ func (r *ListChildInOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *ListChildInOrgResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *ListChildInOrgResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
 	if err != nil {
@@ -4834,7 +4834,7 @@ func ListChildLegacy(ctx context.Context, req *ListChildLegacyReq, opt ...reques
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -4927,8 +4927,8 @@ func (r *ListChildLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *ListChildLegacyResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *ListChildLegacyResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
 	if err != nil {
@@ -4969,7 +4969,7 @@ func ListDiscussionCommentsInOrg(ctx context.Context, req *ListDiscussionComment
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -5083,8 +5083,8 @@ func (r *ListDiscussionCommentsInOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *ListDiscussionCommentsInOrgResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *ListDiscussionCommentsInOrgResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
 	if err != nil {
@@ -5125,7 +5125,7 @@ func ListDiscussionCommentsLegacy(ctx context.Context, req *ListDiscussionCommen
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -5236,8 +5236,8 @@ func (r *ListDiscussionCommentsLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *ListDiscussionCommentsLegacyResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *ListDiscussionCommentsLegacyResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
 	if err != nil {
@@ -5278,7 +5278,7 @@ func ListDiscussionsInOrg(ctx context.Context, req *ListDiscussionsInOrgReq, opt
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -5391,8 +5391,8 @@ func (r *ListDiscussionsInOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *ListDiscussionsInOrgResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *ListDiscussionsInOrgResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
 	if err != nil {
@@ -5433,7 +5433,7 @@ func ListDiscussionsLegacy(ctx context.Context, req *ListDiscussionsLegacyReq, o
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -5543,8 +5543,8 @@ func (r *ListDiscussionsLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *ListDiscussionsLegacyResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *ListDiscussionsLegacyResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
 	if err != nil {
@@ -5585,7 +5585,7 @@ func ListForAuthenticatedUser(ctx context.Context, req *ListForAuthenticatedUser
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -5677,8 +5677,8 @@ func (r *ListForAuthenticatedUserResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *ListForAuthenticatedUserResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *ListForAuthenticatedUserResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200, 304})
 	if err != nil {
@@ -5719,7 +5719,7 @@ func ListIdpGroupsForLegacy(ctx context.Context, req *ListIdpGroupsForLegacyReq,
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -5800,8 +5800,8 @@ func (r *ListIdpGroupsForLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *ListIdpGroupsForLegacyResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *ListIdpGroupsForLegacyResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
 	if err != nil {
@@ -5842,7 +5842,7 @@ func ListIdpGroupsForOrg(ctx context.Context, req *ListIdpGroupsForOrgReq, opt .
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -5935,8 +5935,8 @@ func (r *ListIdpGroupsForOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *ListIdpGroupsForOrgResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *ListIdpGroupsForOrgResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
 	if err != nil {
@@ -5977,7 +5977,7 @@ func ListIdpGroupsInOrg(ctx context.Context, req *ListIdpGroupsInOrgReq, opt ...
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -6061,8 +6061,8 @@ func (r *ListIdpGroupsInOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *ListIdpGroupsInOrgResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *ListIdpGroupsInOrgResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
 	if err != nil {
@@ -6103,7 +6103,7 @@ func ListMembersInOrg(ctx context.Context, req *ListMembersInOrgReq, opt ...requ
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -6210,8 +6210,8 @@ func (r *ListMembersInOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *ListMembersInOrgResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *ListMembersInOrgResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
 	if err != nil {
@@ -6252,7 +6252,7 @@ func ListMembersLegacy(ctx context.Context, req *ListMembersLegacyReq, opt ...re
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -6356,8 +6356,8 @@ func (r *ListMembersLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *ListMembersLegacyResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *ListMembersLegacyResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
 	if err != nil {
@@ -6398,7 +6398,7 @@ func ListPendingInvitationsInOrg(ctx context.Context, req *ListPendingInvitation
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -6494,8 +6494,8 @@ func (r *ListPendingInvitationsInOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *ListPendingInvitationsInOrgResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *ListPendingInvitationsInOrgResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
 	if err != nil {
@@ -6536,7 +6536,7 @@ func ListPendingInvitationsLegacy(ctx context.Context, req *ListPendingInvitatio
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -6629,8 +6629,8 @@ func (r *ListPendingInvitationsLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *ListPendingInvitationsLegacyResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *ListPendingInvitationsLegacyResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
 	if err != nil {
@@ -6671,7 +6671,7 @@ func ListProjectsInOrg(ctx context.Context, req *ListProjectsInOrgReq, opt ...re
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -6776,8 +6776,8 @@ func (r *ListProjectsInOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *ListProjectsInOrgResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *ListProjectsInOrgResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
 	if err != nil {
@@ -6818,7 +6818,7 @@ func ListProjectsLegacy(ctx context.Context, req *ListProjectsLegacyReq, opt ...
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -6920,8 +6920,8 @@ func (r *ListProjectsLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *ListProjectsLegacyResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *ListProjectsLegacyResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
 	if err != nil {
@@ -6962,7 +6962,7 @@ func ListReposInOrg(ctx context.Context, req *ListReposInOrgReq, opt ...requests
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -7058,8 +7058,8 @@ func (r *ListReposInOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *ListReposInOrgResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *ListReposInOrgResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
 	if err != nil {
@@ -7100,7 +7100,7 @@ func ListReposLegacy(ctx context.Context, req *ListReposLegacyReq, opt ...reques
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -7193,8 +7193,8 @@ func (r *ListReposLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *ListReposLegacyResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *ListReposLegacyResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
 	if err != nil {
@@ -7235,7 +7235,7 @@ func RemoveMemberLegacy(ctx context.Context, req *RemoveMemberLegacyReq, opt ...
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -7317,8 +7317,8 @@ func (r *RemoveMemberLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *RemoveMemberLegacyResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *RemoveMemberLegacyResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{204, 404})
 	if err != nil {
@@ -7357,7 +7357,7 @@ func RemoveMembershipForUserInOrg(ctx context.Context, req *RemoveMembershipForU
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -7441,8 +7441,8 @@ func (r *RemoveMembershipForUserInOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *RemoveMembershipForUserInOrgResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *RemoveMembershipForUserInOrgResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{204})
 	if err != nil {
@@ -7477,7 +7477,7 @@ func RemoveMembershipForUserLegacy(ctx context.Context, req *RemoveMembershipFor
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -7558,8 +7558,8 @@ func (r *RemoveMembershipForUserLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *RemoveMembershipForUserLegacyResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *RemoveMembershipForUserLegacyResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{204})
 	if err != nil {
@@ -7594,7 +7594,7 @@ func RemoveProjectInOrg(ctx context.Context, req *RemoveProjectInOrgReq, opt ...
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -7678,8 +7678,8 @@ func (r *RemoveProjectInOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *RemoveProjectInOrgResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *RemoveProjectInOrgResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{204})
 	if err != nil {
@@ -7714,7 +7714,7 @@ func RemoveProjectLegacy(ctx context.Context, req *RemoveProjectLegacyReq, opt .
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -7795,8 +7795,8 @@ func (r *RemoveProjectLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *RemoveProjectLegacyResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *RemoveProjectLegacyResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{204})
 	if err != nil {
@@ -7831,7 +7831,7 @@ func RemoveRepoInOrg(ctx context.Context, req *RemoveRepoInOrgReq, opt ...reques
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -7916,8 +7916,8 @@ func (r *RemoveRepoInOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *RemoveRepoInOrgResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *RemoveRepoInOrgResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{204})
 	if err != nil {
@@ -7952,7 +7952,7 @@ func RemoveRepoLegacy(ctx context.Context, req *RemoveRepoLegacyReq, opt ...requ
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -8034,8 +8034,8 @@ func (r *RemoveRepoLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *RemoveRepoLegacyResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *RemoveRepoLegacyResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{204})
 	if err != nil {
@@ -8070,7 +8070,7 @@ func UpdateDiscussionCommentInOrg(ctx context.Context, req *UpdateDiscussionComm
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -8182,8 +8182,8 @@ func (r *UpdateDiscussionCommentInOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *UpdateDiscussionCommentInOrgResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *UpdateDiscussionCommentInOrgResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
 	if err != nil {
@@ -8224,7 +8224,7 @@ func UpdateDiscussionCommentLegacy(ctx context.Context, req *UpdateDiscussionCom
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -8333,8 +8333,8 @@ func (r *UpdateDiscussionCommentLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *UpdateDiscussionCommentLegacyResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *UpdateDiscussionCommentLegacyResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
 	if err != nil {
@@ -8375,7 +8375,7 @@ func UpdateDiscussionInOrg(ctx context.Context, req *UpdateDiscussionInOrgReq, o
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -8489,8 +8489,8 @@ func (r *UpdateDiscussionInOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *UpdateDiscussionInOrgResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *UpdateDiscussionInOrgResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
 	if err != nil {
@@ -8531,7 +8531,7 @@ func UpdateDiscussionLegacy(ctx context.Context, req *UpdateDiscussionLegacyReq,
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -8642,8 +8642,8 @@ func (r *UpdateDiscussionLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *UpdateDiscussionLegacyResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *UpdateDiscussionLegacyResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
 	if err != nil {
@@ -8684,7 +8684,7 @@ func UpdateInOrg(ctx context.Context, req *UpdateInOrgReq, opt ...requests.Optio
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -8813,8 +8813,8 @@ func (r *UpdateInOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *UpdateInOrgResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *UpdateInOrgResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{201})
 	if err != nil {
@@ -8855,7 +8855,7 @@ func UpdateLegacy(ctx context.Context, req *UpdateLegacyReq, opt ...requests.Opt
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -8980,8 +8980,8 @@ func (r *UpdateLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *UpdateLegacyResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *UpdateLegacyResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{201})
 	if err != nil {

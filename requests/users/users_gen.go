@@ -48,7 +48,7 @@ func AddEmailForAuthenticated(ctx context.Context, req *AddEmailForAuthenticated
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -148,8 +148,8 @@ func (r *AddEmailForAuthenticatedResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *AddEmailForAuthenticatedResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *AddEmailForAuthenticatedResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{201, 304})
 	if err != nil {
@@ -190,7 +190,7 @@ func Block(ctx context.Context, req *BlockReq, opt ...requests.Option) (*BlockRe
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -270,8 +270,8 @@ func (r *BlockResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *BlockResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *BlockResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{204, 304})
 	if err != nil {
@@ -306,7 +306,7 @@ func CheckBlocked(ctx context.Context, req *CheckBlockedReq, opt ...requests.Opt
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -386,8 +386,8 @@ func (r *CheckBlockedResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *CheckBlockedResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *CheckBlockedResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{204, 304})
 	if err != nil {
@@ -422,7 +422,7 @@ func CheckFollowingForUser(ctx context.Context, req *CheckFollowingForUserReq, o
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -506,8 +506,8 @@ func (r *CheckFollowingForUserResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *CheckFollowingForUserResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *CheckFollowingForUserResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{204, 404})
 	if err != nil {
@@ -546,7 +546,7 @@ func CheckPersonIsFollowedByAuthenticated(ctx context.Context, req *CheckPersonI
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -626,8 +626,8 @@ func (r *CheckPersonIsFollowedByAuthenticatedResponse) HTTPResponse() *http.Resp
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *CheckPersonIsFollowedByAuthenticatedResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *CheckPersonIsFollowedByAuthenticatedResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{204, 304})
 	if err != nil {
@@ -662,7 +662,7 @@ func CreateGpgKeyForAuthenticated(ctx context.Context, req *CreateGpgKeyForAuthe
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -757,8 +757,8 @@ func (r *CreateGpgKeyForAuthenticatedResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *CreateGpgKeyForAuthenticatedResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *CreateGpgKeyForAuthenticatedResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{201, 304})
 	if err != nil {
@@ -799,7 +799,7 @@ func CreatePublicSshKeyForAuthenticated(ctx context.Context, req *CreatePublicSs
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -897,8 +897,8 @@ func (r *CreatePublicSshKeyForAuthenticatedResponse) HTTPResponse() *http.Respon
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *CreatePublicSshKeyForAuthenticatedResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *CreatePublicSshKeyForAuthenticatedResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{201, 304})
 	if err != nil {
@@ -939,7 +939,7 @@ func DeleteEmailForAuthenticated(ctx context.Context, req *DeleteEmailForAuthent
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -1030,8 +1030,8 @@ func (r *DeleteEmailForAuthenticatedResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *DeleteEmailForAuthenticatedResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *DeleteEmailForAuthenticatedResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{204, 304})
 	if err != nil {
@@ -1066,7 +1066,7 @@ func DeleteGpgKeyForAuthenticated(ctx context.Context, req *DeleteGpgKeyForAuthe
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -1148,8 +1148,8 @@ func (r *DeleteGpgKeyForAuthenticatedResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *DeleteGpgKeyForAuthenticatedResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *DeleteGpgKeyForAuthenticatedResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{204, 304})
 	if err != nil {
@@ -1184,7 +1184,7 @@ func DeletePublicSshKeyForAuthenticated(ctx context.Context, req *DeletePublicSs
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -1266,8 +1266,8 @@ func (r *DeletePublicSshKeyForAuthenticatedResponse) HTTPResponse() *http.Respon
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *DeletePublicSshKeyForAuthenticatedResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *DeletePublicSshKeyForAuthenticatedResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{204, 304})
 	if err != nil {
@@ -1302,7 +1302,7 @@ func Follow(ctx context.Context, req *FollowReq, opt ...requests.Option) (*Follo
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -1382,8 +1382,8 @@ func (r *FollowResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *FollowResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *FollowResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{204, 304})
 	if err != nil {
@@ -1418,7 +1418,7 @@ func GetAuthenticated(ctx context.Context, req *GetAuthenticatedReq, opt ...requ
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -1561,8 +1561,8 @@ func (r *GetAuthenticatedResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *GetAuthenticatedResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *GetAuthenticatedResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200, 304})
 	if err != nil {
@@ -1603,7 +1603,7 @@ func GetByUsername(ctx context.Context, req *GetByUsernameReq, opt ...requests.O
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -1747,8 +1747,8 @@ func (r *GetByUsernameResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *GetByUsernameResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *GetByUsernameResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
 	if err != nil {
@@ -1789,7 +1789,7 @@ func GetContextForUser(ctx context.Context, req *GetContextForUserReq, opt ...re
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -1889,8 +1889,8 @@ func (r *GetContextForUserResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *GetContextForUserResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *GetContextForUserResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
 	if err != nil {
@@ -1931,7 +1931,7 @@ func GetGpgKeyForAuthenticated(ctx context.Context, req *GetGpgKeyForAuthenticat
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -2014,8 +2014,8 @@ func (r *GetGpgKeyForAuthenticatedResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *GetGpgKeyForAuthenticatedResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *GetGpgKeyForAuthenticatedResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200, 304})
 	if err != nil {
@@ -2056,7 +2056,7 @@ func GetPublicSshKeyForAuthenticated(ctx context.Context, req *GetPublicSshKeyFo
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -2139,8 +2139,8 @@ func (r *GetPublicSshKeyForAuthenticatedResponse) HTTPResponse() *http.Response 
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *GetPublicSshKeyForAuthenticatedResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *GetPublicSshKeyForAuthenticatedResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200, 304})
 	if err != nil {
@@ -2181,7 +2181,7 @@ func List(ctx context.Context, req *ListReq, opt ...requests.Option) (*ListRespo
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -2277,8 +2277,8 @@ func (r *ListResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *ListResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *ListResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200, 304})
 	if err != nil {
@@ -2319,7 +2319,7 @@ func ListBlockedByAuthenticated(ctx context.Context, req *ListBlockedByAuthentic
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -2399,8 +2399,8 @@ func (r *ListBlockedByAuthenticatedResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *ListBlockedByAuthenticatedResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *ListBlockedByAuthenticatedResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200, 304})
 	if err != nil {
@@ -2441,7 +2441,7 @@ func ListEmailsForAuthenticated(ctx context.Context, req *ListEmailsForAuthentic
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -2533,8 +2533,8 @@ func (r *ListEmailsForAuthenticatedResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *ListEmailsForAuthenticatedResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *ListEmailsForAuthenticatedResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200, 304})
 	if err != nil {
@@ -2575,7 +2575,7 @@ func ListFollowedByAuthenticated(ctx context.Context, req *ListFollowedByAuthent
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -2667,8 +2667,8 @@ func (r *ListFollowedByAuthenticatedResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *ListFollowedByAuthenticatedResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *ListFollowedByAuthenticatedResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200, 304})
 	if err != nil {
@@ -2709,7 +2709,7 @@ func ListFollowersForAuthenticatedUser(ctx context.Context, req *ListFollowersFo
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -2801,8 +2801,8 @@ func (r *ListFollowersForAuthenticatedUserResponse) HTTPResponse() *http.Respons
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *ListFollowersForAuthenticatedUserResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *ListFollowersForAuthenticatedUserResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200, 304})
 	if err != nil {
@@ -2843,7 +2843,7 @@ func ListFollowersForUser(ctx context.Context, req *ListFollowersForUserReq, opt
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -2936,8 +2936,8 @@ func (r *ListFollowersForUserResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *ListFollowersForUserResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *ListFollowersForUserResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
 	if err != nil {
@@ -2978,7 +2978,7 @@ func ListFollowingForUser(ctx context.Context, req *ListFollowingForUserReq, opt
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -3071,8 +3071,8 @@ func (r *ListFollowingForUserResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *ListFollowingForUserResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *ListFollowingForUserResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
 	if err != nil {
@@ -3113,7 +3113,7 @@ func ListGpgKeysForAuthenticated(ctx context.Context, req *ListGpgKeysForAuthent
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -3205,8 +3205,8 @@ func (r *ListGpgKeysForAuthenticatedResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *ListGpgKeysForAuthenticatedResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *ListGpgKeysForAuthenticatedResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200, 304})
 	if err != nil {
@@ -3247,7 +3247,7 @@ func ListGpgKeysForUser(ctx context.Context, req *ListGpgKeysForUserReq, opt ...
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -3340,8 +3340,8 @@ func (r *ListGpgKeysForUserResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *ListGpgKeysForUserResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *ListGpgKeysForUserResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
 	if err != nil {
@@ -3382,7 +3382,7 @@ func ListPublicEmailsForAuthenticated(ctx context.Context, req *ListPublicEmails
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -3474,8 +3474,8 @@ func (r *ListPublicEmailsForAuthenticatedResponse) HTTPResponse() *http.Response
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *ListPublicEmailsForAuthenticatedResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *ListPublicEmailsForAuthenticatedResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200, 304})
 	if err != nil {
@@ -3516,7 +3516,7 @@ func ListPublicKeysForUser(ctx context.Context, req *ListPublicKeysForUserReq, o
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -3609,8 +3609,8 @@ func (r *ListPublicKeysForUserResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *ListPublicKeysForUserResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *ListPublicKeysForUserResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200})
 	if err != nil {
@@ -3651,7 +3651,7 @@ func ListPublicSshKeysForAuthenticated(ctx context.Context, req *ListPublicSshKe
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -3743,8 +3743,8 @@ func (r *ListPublicSshKeysForAuthenticatedResponse) HTTPResponse() *http.Respons
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *ListPublicSshKeysForAuthenticatedResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *ListPublicSshKeysForAuthenticatedResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200, 304})
 	if err != nil {
@@ -3785,7 +3785,7 @@ func SetPrimaryEmailVisibilityForAuthenticated(ctx context.Context, req *SetPrim
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -3883,8 +3883,8 @@ func (r *SetPrimaryEmailVisibilityForAuthenticatedResponse) HTTPResponse() *http
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *SetPrimaryEmailVisibilityForAuthenticatedResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *SetPrimaryEmailVisibilityForAuthenticatedResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200, 304})
 	if err != nil {
@@ -3925,7 +3925,7 @@ func Unblock(ctx context.Context, req *UnblockReq, opt ...requests.Option) (*Unb
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -4005,8 +4005,8 @@ func (r *UnblockResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *UnblockResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *UnblockResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{204, 304})
 	if err != nil {
@@ -4041,7 +4041,7 @@ func Unfollow(ctx context.Context, req *UnfollowReq, opt ...requests.Option) (*U
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -4121,8 +4121,8 @@ func (r *UnfollowResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *UnfollowResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *UnfollowResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{204, 304})
 	if err != nil {
@@ -4157,7 +4157,7 @@ func UpdateAuthenticated(ctx context.Context, req *UpdateAuthenticatedReq, opt .
 		return nil, err
 	}
 
-	err = resp.Load(r)
+	err = resp.ReadResponse(r)
 	if err != nil {
 		return nil, err
 	}
@@ -4273,8 +4273,8 @@ func (r *UpdateAuthenticatedResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
-// Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *UpdateAuthenticatedResponse) Load(resp *http.Response) error {
+// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
+func (r *UpdateAuthenticatedResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := internal.ResponseErrorCheck(resp, []int{200, 304})
 	if err != nil {

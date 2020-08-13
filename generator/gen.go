@@ -65,7 +65,7 @@ if err != nil {
 	return nil, err
 }
 
-err = resp.Load(r)
+err = resp.ReadResponse(r)
 if err != nil {
 	return nil, err
 }
@@ -80,11 +80,11 @@ func addRequestFunc(file *jen.File, pq pkgQual, endpoint *model.Endpoint) {
 
 func responseLoader(endpoint *model.Endpoint, pq pkgQual) *jen.Statement {
 	respStruct := respStructName(endpoint)
-	stmt := jen.Commentf("Load loads an *http.Response. Non-nil errors will have the type octo.ResponseError.")
+	stmt := jen.Commentf("ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.")
 	stmt.Line()
 	stmt.Func().Params(
 		jen.Id("r *").Id(respStruct),
-	).Id("Load").Params(
+	).Id("ReadResponse").Params(
 		jen.Id("resp").Op("*").Qual("net/http", "Response"),
 	).Error().BlockFunc(func(group *jen.Group) {
 		group.Id("r.httpResponse = resp")

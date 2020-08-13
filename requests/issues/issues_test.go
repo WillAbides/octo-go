@@ -30,7 +30,7 @@ func TestGet(t *testing.T) {
 	httpResp, err := httpClient.Do(httpReq)
 	require.NoError(t, err)
 	resp := new(issues.GetResponse)
-	err = resp.Load(httpResp)
+	err = resp.ReadResponse(httpResp)
 	require.NoError(t, err)
 	require.Equal(t, int64(1), resp.Data.Number)
 }
