@@ -459,7 +459,7 @@ func (r *DownloadArchiveForOrgReq) HTTPRequest(ctx context.Context, opt ...reque
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"wyandotte"},
 		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
+		EndpointAttributes: []internal.EndpointAttribute{internal.AttrRedirectOnly},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
 		Method:             "GET",
@@ -580,7 +580,7 @@ func (r *GetArchiveForAuthenticatedUserReq) HTTPRequest(ctx context.Context, opt
 	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
 		AllPreviews:        []string{"wyandotte"},
 		Body:               nil,
-		EndpointAttributes: []internal.EndpointAttribute{},
+		EndpointAttributes: []internal.EndpointAttribute{internal.AttrRedirectOnly},
 		ExplicitURL:        r._url,
 		HeaderVals:         map[string]*string{},
 		Method:             "GET",

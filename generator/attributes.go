@@ -104,15 +104,33 @@ var attrChecks = []attrCheck{
 		*attrs = append(*attrs, attrBoolean)
 	},
 
-	// attrRedirectOnly if the endpoint has only one response: 302
+	// attrRedirectOnly if the endpoint has as least one redirect response and no success responses
 	func(endpoint *model.Endpoint, attrs *[]endpointAttribute) {
-		if len(endpoint.Responses) != 1 {
+		if len(successResponses(endpoint.Responses)) != 0 {
 			return
 		}
-		_, ok := endpoint.Responses[302]
-		if !ok {
-			return
+		if len(redirectResponses(endpoint.Responses)) != 0 {
+			*attrs = append(*attrs, attrRedirectOnly)
 		}
-		*attrs = append(*attrs, attrRedirectOnly)
 	},
+}
+
+func successResponses(responses map[int]*model.Response) map[int]*model.Response {
+	result := make(map[int]*model.Response, len(responses))
+	for k, v := range responses {
+		if k < 300 {
+			result[k] = v
+		}
+	}
+	return result
+}
+
+func redirectResponses(responses map[int]*model.Response) map[int]*model.Response {
+	result := make(map[int]*model.Response, len(responses))
+	for k, v := range responses {
+		if k >= 300 && k < 400 {
+			result[k] = v
+		}
+	}
+	return result
 }
