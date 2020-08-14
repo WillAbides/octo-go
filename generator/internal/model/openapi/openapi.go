@@ -12,6 +12,7 @@ import (
 	"strings"
 
 	"github.com/getkin/kin-openapi/openapi3"
+	"github.com/jinzhu/inflection"
 	"github.com/pkg/errors"
 	"github.com/willabides/octo-go/generator/internal/model"
 )
@@ -97,7 +98,7 @@ func prepareComponentSchemaObj(swagger *openapi3.Swagger, parentName string, sch
 		case model.ParamTypeArray:
 			itemsRef := val.Items
 			itemsVal := itemsRef.Value
-			fullName := fmt.Sprintf("%s-%s-item", parentName, propName)
+			fullName := arrayName(parentName, propName)
 			if strings.HasPrefix(itemsRef.Ref, "#/components/schemas/") {
 				fullName = strings.TrimPrefix(itemsRef.Ref, "#/components/schemas/")
 			}
@@ -118,6 +119,14 @@ func prepareComponentSchemaObj(swagger *openapi3.Swagger, parentName string, sch
 			prepareComponentSchemaObj(swagger, fullName, itemsRef)
 		}
 	}
+}
+
+func arrayName(parentName, propName string) string {
+	nameParts := strings.Split(propName, "-")
+	lastIdx := len(nameParts) - 1
+	nameParts[lastIdx] = inflection.Singular(nameParts[lastIdx])
+	nm := strings.Join(nameParts, "-")
+	return fmt.Sprintf("%s-%s", parentName, nm)
 }
 
 func prepareOneOf(swagger *openapi3.Swagger, parentName string, schema *openapi3.Schema, oneOfNames map[string]bool) {
