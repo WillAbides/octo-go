@@ -228,71 +228,13 @@ func (r *CheckAuthorizationReq) Rel(link string, resp *CheckAuthorizationRespons
 }
 
 /*
-CheckAuthorizationResponseBody is a response body for CheckAuthorization
-
-https://developer.github.com/v3/apps/oauth_applications/#check-an-authorization
-*/
-type CheckAuthorizationResponseBody struct {
-	App struct {
-		ClientId string `json:"client_id"`
-		Name     string `json:"name"`
-		Url      string `json:"url"`
-	} `json:"app,omitempty"`
-	CreatedAt    string `json:"created_at,omitempty"`
-	Fingerprint  string `json:"fingerprint,omitempty"`
-	HashedToken  string `json:"hashed_token,omitempty"`
-	Id           int64  `json:"id,omitempty"`
-	Installation struct {
-
-		// Simple User
-		Account         components.SimpleUser `json:"account,omitempty"`
-		Permissions     interface{}           `json:"permissions,omitempty"`
-		RepositoriesUrl string                `json:"repositories_url,omitempty"`
-
-		// Describe whether all repositories have been selected or there's a selection involved
-		RepositorySelection string `json:"repository_selection,omitempty"`
-		SingleFileName      string `json:"single_file_name,omitempty"`
-	} `json:"installation,omitempty"`
-	Note    string `json:"note,omitempty"`
-	NoteUrl string `json:"note_url,omitempty"`
-
-	// A list of scopes that this authorization is in.
-	Scopes         []string `json:"scopes,omitempty"`
-	Token          string   `json:"token,omitempty"`
-	TokenLastEight string   `json:"token_last_eight,omitempty"`
-	UpdatedAt      string   `json:"updated_at,omitempty"`
-	Url            string   `json:"url,omitempty"`
-	User           struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredAt         string `json:"starred_at,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"user,omitempty"`
-}
-
-/*
 CheckAuthorizationResponse is a response for CheckAuthorization
 
 https://developer.github.com/v3/apps/oauth_applications/#check-an-authorization
 */
 type CheckAuthorizationResponse struct {
 	httpResponse *http.Response
-	Data         CheckAuthorizationResponseBody
+	Data         components.Authorization
 }
 
 // HTTPResponse returns the *http.Response
@@ -701,30 +643,10 @@ type CreateFromManifestResponseBody struct {
 	InstallationsCount int64 `json:"installations_count,omitempty"`
 
 	// The name of the GitHub app
-	Name   string `json:"name,omitempty"`
-	NodeId string `json:"node_id,omitempty"`
-	Owner  struct {
-		AvatarUrl         string `json:"avatar_url,omitempty"`
-		EventsUrl         string `json:"events_url,omitempty"`
-		FollowersUrl      string `json:"followers_url,omitempty"`
-		FollowingUrl      string `json:"following_url,omitempty"`
-		GistsUrl          string `json:"gists_url,omitempty"`
-		GravatarId        string `json:"gravatar_id,omitempty"`
-		HtmlUrl           string `json:"html_url,omitempty"`
-		Id                int64  `json:"id,omitempty"`
-		Login             string `json:"login,omitempty"`
-		NodeId            string `json:"node_id,omitempty"`
-		OrganizationsUrl  string `json:"organizations_url,omitempty"`
-		ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-		ReposUrl          string `json:"repos_url,omitempty"`
-		SiteAdmin         bool   `json:"site_admin,omitempty"`
-		StarredAt         string `json:"starred_at,omitempty"`
-		StarredUrl        string `json:"starred_url,omitempty"`
-		SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-		Type              string `json:"type,omitempty"`
-		Url               string `json:"url,omitempty"`
-	} `json:"owner,omitempty"`
-	Pem string `json:"pem,omitempty"`
+	Name   string                `json:"name,omitempty"`
+	NodeId string                `json:"node_id,omitempty"`
+	Owner  components.SimpleUser `json:"owner,omitempty"`
+	Pem    string                `json:"pem,omitempty"`
 
 	// The set of permissions for the GitHub app
 	Permissions map[string]string `json:"permissions,omitempty"`
