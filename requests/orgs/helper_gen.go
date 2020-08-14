@@ -13,6 +13,7 @@ import (
 	"net/url"
 	"path"
 	"regexp"
+	"sort"
 	"strings"
 
 	"github.com/willabides/octo-go/components"
@@ -47,6 +48,9 @@ type buildHTTPRequestOptions struct {
 func requestHeaders(b buildHTTPRequestOptions) http.Header {
 	opts := requests.BuildOptions(b.Options...)
 	previews := b.Previews
+	if previews == nil {
+		previews = map[string]bool{}
+	}
 	headers := b.HeaderVals
 	if opts.RequiredPreviews() {
 		for _, preview := range b.RequiredPreviews {
@@ -68,16 +72,21 @@ func requestHeaders(b buildHTTPRequestOptions) http.Header {
 	if header.Get("accept") == "" {
 		header.Set("Accept", "application/vnd.github.v3+json")
 	}
+	previewNames := make([]string, 0, len(previews))
 	for previewName, ok := range previews {
 		if !ok {
 			continue
 		}
+		previewNames = append(previewNames, previewName)
+	}
+	sort.Strings(previewNames)
+	for _, previewName := range previewNames {
 		header.Add("Accept", fmt.Sprintf("application/vnd.github.%s-preview+json", previewName))
 	}
 	return header
 }
 
-// updateURLQuery updates u's query with vals
+// updateURLQuery updates u's query with vals, removes any existing values of the same name
 func updateURLQuery(u *url.URL, vals url.Values) {
 	if len(vals) == 0 {
 		return
