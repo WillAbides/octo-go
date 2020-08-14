@@ -95,7 +95,7 @@ func reqRelReqFunc(file *jen.File, endpoint *model.Endpoint, pq pkgQual) {
 		jen.Id("link string"),
 		jen.Id("resp").Op("*").Id(respStructName(endpoint)),
 	).Params(jen.Bool()).Block(
-		jen.Id("u := ").Qual(pq.pkgPath("internal"), "RelLink").Call(jen.Id("resp.HTTPResponse(), link")),
+		jen.Id("u := ").Id("getRelLink").Call(jen.Id("resp.HTTPResponse(), link")),
 		jen.If(jen.Id("u").Op("==").Lit("")).Block(jen.Return(jen.False())),
 		jen.Id("r._url = u"),
 		jen.Return(jen.True()),
@@ -128,9 +128,9 @@ func reqHTTPRequestFunc(endpoint *model.Endpoint, pq pkgQual) jen.Code {
 		jen.Op("*").Qual("net/http", "Request"), jen.Error(),
 	).Block(
 		reqURLQueryVal(endpoint),
-		jen.Return(jen.Qual(pq.pkgPath("internal"), "BuildHTTPRequest").Call(
+		jen.Return(jen.Id("buildHTTPRequest").Call(
 			jen.Id("ctx"),
-			jen.Qual(pq.pkgPath("internal"), "BuildHTTPRequestOptions").Values(
+			jen.Id("buildHTTPRequestOptions").Values(
 				jen.DictFunc(func(dict jen.Dict) {
 					dict[jen.Id("ExplicitURL")] = reqExplicitURLVal(endpoint)
 					dict[jen.Id("Method")] = jen.Lit(endpoint.Method)
@@ -205,10 +205,9 @@ func reqHeaderMap(endpoint *model.Endpoint, pq pkgQual) *jen.Statement {
 	stmt := jen.Map(jen.String()).Op("*").String().Values(
 		jen.DictFunc(func(dict jen.Dict) {
 			headers := map[string]*jen.Statement{}
-			internalPkg := pq.pkgPath("internal")
 			if endpoint.SuccessMediaType != "" {
 				size++
-				headers["accept"] = jen.Qual(internalPkg, "String").Call(jen.Lit(endpoint.SuccessMediaType))
+				headers["accept"] = jen.Id("strPtr").Call(jen.Lit(endpoint.SuccessMediaType))
 			}
 
 			for _, header := range endpoint.Headers {
@@ -221,7 +220,7 @@ func reqHeaderMap(endpoint *model.Endpoint, pq pkgQual) *jen.Statement {
 
 			if headers["content-type"] == nil && endpoint.RequestBody != nil && endpoint.RequestBody.MediaType != "" {
 				size++
-				headers["content-type"] = jen.Qual(internalPkg, "String").Call(jen.Lit(endpoint.RequestBody.MediaType))
+				headers["content-type"] = jen.Id("strPtr").Call(jen.Lit(endpoint.RequestBody.MediaType))
 			}
 
 			for k, v := range headers {

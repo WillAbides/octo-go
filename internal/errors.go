@@ -88,6 +88,18 @@ func ResponseErrorCheck(resp *http.Response, validStatuses []int) error {
 	return NewResponseError(msg, resp)
 }
 
+func isRedirectOnly(validStatuses []int) bool {
+	if len(validStatuses) == 0 {
+		return false
+	}
+	for _, vs := range validStatuses {
+		if vs < 300 || vs > 399 {
+			return false
+		}
+	}
+	return true
+}
+
 func unmarshalErrorData(resp *http.Response) (*components.ResponseErrorData, error) {
 	if resp.Body == nil {
 		return nil, fmt.Errorf("no body")
