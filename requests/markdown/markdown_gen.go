@@ -5,19 +5,10 @@ package markdown
 import (
 	"context"
 	"fmt"
-	internal "github.com/willabides/octo-go/internal"
 	requests "github.com/willabides/octo-go/requests"
 	"io"
 	"net/http"
 )
-
-// Client is a set of options to apply to requests
-type Client []requests.Option
-
-// NewClient returns a new Client
-func NewClient(opt ...requests.Option) Client {
-	return opt
-}
 
 /*
 Render performs requests for "markdown/render"
@@ -81,10 +72,10 @@ type RenderReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *RenderReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		Body:        r.RequestBody,
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{"content-type": internal.String("application/json")},
+		HeaderVals:  map[string]*string{"content-type": strPtr("application/json")},
 		Method:      "POST",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/markdown"),
@@ -96,7 +87,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *RenderReq) Rel(link string, resp *RenderResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -138,7 +129,7 @@ func (r *RenderResponse) HTTPResponse() *http.Response {
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *RenderResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{200, 304})
+	err := responseErrorCheck(resp, []int{200, 304})
 	if err != nil {
 		return err
 	}
@@ -209,10 +200,10 @@ type RenderRawReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *RenderRawReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		Body:        r.RequestBody,
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{"content-type": internal.String("text/x-markdown")},
+		HeaderVals:  map[string]*string{"content-type": strPtr("text/x-markdown")},
 		Method:      "POST",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/markdown/raw"),
@@ -224,7 +215,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *RenderRawReq) Rel(link string, resp *RenderRawResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -249,7 +240,7 @@ func (r *RenderRawResponse) HTTPResponse() *http.Response {
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *RenderRawResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{200, 304})
+	err := responseErrorCheck(resp, []int{200, 304})
 	if err != nil {
 		return err
 	}

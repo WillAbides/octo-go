@@ -6,18 +6,9 @@ import (
 	"context"
 	"fmt"
 	components "github.com/willabides/octo-go/components"
-	internal "github.com/willabides/octo-go/internal"
 	requests "github.com/willabides/octo-go/requests"
 	"net/http"
 )
-
-// Client is a set of options to apply to requests
-type Client []requests.Option
-
-// NewClient returns a new Client
-func NewClient(opt ...requests.Option) Client {
-	return opt
-}
 
 /*
 GetGithubActionsBillingGhe performs requests for "billing/get-github-actions-billing-ghe"
@@ -83,9 +74,9 @@ type GetGithubActionsBillingGheReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetGithubActionsBillingGheReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		HeaderVals:  map[string]*string{"accept": strPtr("application/json")},
 		Method:      "GET",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/enterprises/%v/settings/billing/actions", r.EnterpriseId),
@@ -97,7 +88,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetGithubActionsBillingGheReq) Rel(link string, resp *GetGithubActionsBillingGheResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -123,12 +114,12 @@ func (r *GetGithubActionsBillingGheResponse) HTTPResponse() *http.Response {
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *GetGithubActionsBillingGheResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{200})
+	err := responseErrorCheck(resp, []int{200})
 	if err != nil {
 		return err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.UnmarshalResponseBody(resp, &r.Data)
+	if intInSlice(resp.StatusCode, []int{200}) {
+		err = unmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -198,9 +189,9 @@ type GetGithubActionsBillingOrgReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetGithubActionsBillingOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		HeaderVals:  map[string]*string{"accept": strPtr("application/json")},
 		Method:      "GET",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/orgs/%v/settings/billing/actions", r.Org),
@@ -212,7 +203,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetGithubActionsBillingOrgReq) Rel(link string, resp *GetGithubActionsBillingOrgResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -238,12 +229,12 @@ func (r *GetGithubActionsBillingOrgResponse) HTTPResponse() *http.Response {
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *GetGithubActionsBillingOrgResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{200})
+	err := responseErrorCheck(resp, []int{200})
 	if err != nil {
 		return err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.UnmarshalResponseBody(resp, &r.Data)
+	if intInSlice(resp.StatusCode, []int{200}) {
+		err = unmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -313,9 +304,9 @@ type GetGithubActionsBillingUserReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetGithubActionsBillingUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		HeaderVals:  map[string]*string{"accept": strPtr("application/json")},
 		Method:      "GET",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/users/%v/settings/billing/actions", r.Username),
@@ -327,7 +318,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetGithubActionsBillingUserReq) Rel(link string, resp *GetGithubActionsBillingUserResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -353,12 +344,12 @@ func (r *GetGithubActionsBillingUserResponse) HTTPResponse() *http.Response {
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *GetGithubActionsBillingUserResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{200})
+	err := responseErrorCheck(resp, []int{200})
 	if err != nil {
 		return err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.UnmarshalResponseBody(resp, &r.Data)
+	if intInSlice(resp.StatusCode, []int{200}) {
+		err = unmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -430,9 +421,9 @@ type GetGithubPackagesBillingGheReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetGithubPackagesBillingGheReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		HeaderVals:  map[string]*string{"accept": strPtr("application/json")},
 		Method:      "GET",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/enterprises/%v/settings/billing/packages", r.EnterpriseId),
@@ -444,7 +435,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetGithubPackagesBillingGheReq) Rel(link string, resp *GetGithubPackagesBillingGheResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -470,12 +461,12 @@ func (r *GetGithubPackagesBillingGheResponse) HTTPResponse() *http.Response {
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *GetGithubPackagesBillingGheResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{200})
+	err := responseErrorCheck(resp, []int{200})
 	if err != nil {
 		return err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.UnmarshalResponseBody(resp, &r.Data)
+	if intInSlice(resp.StatusCode, []int{200}) {
+		err = unmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -545,9 +536,9 @@ type GetGithubPackagesBillingOrgReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetGithubPackagesBillingOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		HeaderVals:  map[string]*string{"accept": strPtr("application/json")},
 		Method:      "GET",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/orgs/%v/settings/billing/packages", r.Org),
@@ -559,7 +550,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetGithubPackagesBillingOrgReq) Rel(link string, resp *GetGithubPackagesBillingOrgResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -585,12 +576,12 @@ func (r *GetGithubPackagesBillingOrgResponse) HTTPResponse() *http.Response {
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *GetGithubPackagesBillingOrgResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{200})
+	err := responseErrorCheck(resp, []int{200})
 	if err != nil {
 		return err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.UnmarshalResponseBody(resp, &r.Data)
+	if intInSlice(resp.StatusCode, []int{200}) {
+		err = unmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -660,9 +651,9 @@ type GetGithubPackagesBillingUserReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetGithubPackagesBillingUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		HeaderVals:  map[string]*string{"accept": strPtr("application/json")},
 		Method:      "GET",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/users/%v/settings/billing/packages", r.Username),
@@ -674,7 +665,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetGithubPackagesBillingUserReq) Rel(link string, resp *GetGithubPackagesBillingUserResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -700,12 +691,12 @@ func (r *GetGithubPackagesBillingUserResponse) HTTPResponse() *http.Response {
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *GetGithubPackagesBillingUserResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{200})
+	err := responseErrorCheck(resp, []int{200})
 	if err != nil {
 		return err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.UnmarshalResponseBody(resp, &r.Data)
+	if intInSlice(resp.StatusCode, []int{200}) {
+		err = unmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -777,9 +768,9 @@ type GetSharedStorageBillingGheReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetSharedStorageBillingGheReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		HeaderVals:  map[string]*string{"accept": strPtr("application/json")},
 		Method:      "GET",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/enterprises/%v/settings/billing/shared-storage", r.EnterpriseId),
@@ -791,7 +782,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetSharedStorageBillingGheReq) Rel(link string, resp *GetSharedStorageBillingGheResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -817,12 +808,12 @@ func (r *GetSharedStorageBillingGheResponse) HTTPResponse() *http.Response {
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *GetSharedStorageBillingGheResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{200})
+	err := responseErrorCheck(resp, []int{200})
 	if err != nil {
 		return err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.UnmarshalResponseBody(resp, &r.Data)
+	if intInSlice(resp.StatusCode, []int{200}) {
+		err = unmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -892,9 +883,9 @@ type GetSharedStorageBillingOrgReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetSharedStorageBillingOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		HeaderVals:  map[string]*string{"accept": strPtr("application/json")},
 		Method:      "GET",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/orgs/%v/settings/billing/shared-storage", r.Org),
@@ -906,7 +897,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetSharedStorageBillingOrgReq) Rel(link string, resp *GetSharedStorageBillingOrgResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -932,12 +923,12 @@ func (r *GetSharedStorageBillingOrgResponse) HTTPResponse() *http.Response {
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *GetSharedStorageBillingOrgResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{200})
+	err := responseErrorCheck(resp, []int{200})
 	if err != nil {
 		return err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.UnmarshalResponseBody(resp, &r.Data)
+	if intInSlice(resp.StatusCode, []int{200}) {
+		err = unmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -1007,9 +998,9 @@ type GetSharedStorageBillingUserReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetSharedStorageBillingUserReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		HeaderVals:  map[string]*string{"accept": strPtr("application/json")},
 		Method:      "GET",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/users/%v/settings/billing/shared-storage", r.Username),
@@ -1021,7 +1012,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetSharedStorageBillingUserReq) Rel(link string, resp *GetSharedStorageBillingUserResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1047,12 +1038,12 @@ func (r *GetSharedStorageBillingUserResponse) HTTPResponse() *http.Response {
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *GetSharedStorageBillingUserResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{200})
+	err := responseErrorCheck(resp, []int{200})
 	if err != nil {
 		return err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.UnmarshalResponseBody(resp, &r.Data)
+	if intInSlice(resp.StatusCode, []int{200}) {
+		err = unmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}

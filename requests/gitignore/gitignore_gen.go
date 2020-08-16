@@ -6,18 +6,9 @@ import (
 	"context"
 	"fmt"
 	components "github.com/willabides/octo-go/components"
-	internal "github.com/willabides/octo-go/internal"
 	requests "github.com/willabides/octo-go/requests"
 	"net/http"
 )
-
-// Client is a set of options to apply to requests
-type Client []requests.Option
-
-// NewClient returns a new Client
-func NewClient(opt ...requests.Option) Client {
-	return opt
-}
 
 /*
 GetAllTemplates performs requests for "gitignore/get-all-templates"
@@ -80,9 +71,9 @@ type GetAllTemplatesReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetAllTemplatesReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		HeaderVals:  map[string]*string{"accept": strPtr("application/json")},
 		Method:      "GET",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/gitignore/templates"),
@@ -94,7 +85,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetAllTemplatesReq) Rel(link string, resp *GetAllTemplatesResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -127,12 +118,12 @@ func (r *GetAllTemplatesResponse) HTTPResponse() *http.Response {
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *GetAllTemplatesResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{200, 304})
+	err := responseErrorCheck(resp, []int{200, 304})
 	if err != nil {
 		return err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.UnmarshalResponseBody(resp, &r.Data)
+	if intInSlice(resp.StatusCode, []int{200}) {
+		err = unmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -204,9 +195,9 @@ type GetTemplateReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetTemplateReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		HeaderVals:  map[string]*string{"accept": strPtr("application/json")},
 		Method:      "GET",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/gitignore/templates/%v", r.Name),
@@ -218,7 +209,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetTemplateReq) Rel(link string, resp *GetTemplateResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -244,12 +235,12 @@ func (r *GetTemplateResponse) HTTPResponse() *http.Response {
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *GetTemplateResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{200, 304})
+	err := responseErrorCheck(resp, []int{200, 304})
 	if err != nil {
 		return err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.UnmarshalResponseBody(resp, &r.Data)
+	if intInSlice(resp.StatusCode, []int{200}) {
+		err = unmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}

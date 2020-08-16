@@ -6,20 +6,11 @@ import (
 	"context"
 	"fmt"
 	components "github.com/willabides/octo-go/components"
-	internal "github.com/willabides/octo-go/internal"
 	requests "github.com/willabides/octo-go/requests"
 	"net/http"
 	"net/url"
 	"strconv"
 )
-
-// Client is a set of options to apply to requests
-type Client []requests.Option
-
-// NewClient returns a new Client
-func NewClient(opt ...requests.Option) Client {
-	return opt
-}
 
 /*
 AddSelectedRepoToOrgSecret performs requests for "actions/add-selected-repo-to-org-secret"
@@ -89,7 +80,7 @@ type AddSelectedRepoToOrgSecretReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *AddSelectedRepoToOrgSecretReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		ExplicitURL: r._url,
 		Method:      "PUT",
 		Options:     opt,
@@ -102,7 +93,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *AddSelectedRepoToOrgSecretReq) Rel(link string, resp *AddSelectedRepoToOrgSecretResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -127,7 +118,7 @@ func (r *AddSelectedRepoToOrgSecretResponse) HTTPResponse() *http.Response {
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *AddSelectedRepoToOrgSecretResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{204})
+	err := responseErrorCheck(resp, []int{204})
 	if err != nil {
 		return err
 	}
@@ -198,7 +189,7 @@ type CancelWorkflowRunReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CancelWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		ExplicitURL: r._url,
 		Method:      "POST",
 		Options:     opt,
@@ -211,7 +202,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *CancelWorkflowRunReq) Rel(link string, resp *CancelWorkflowRunResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -236,7 +227,7 @@ func (r *CancelWorkflowRunResponse) HTTPResponse() *http.Response {
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *CancelWorkflowRunResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{202})
+	err := responseErrorCheck(resp, []int{202})
 	if err != nil {
 		return err
 	}
@@ -309,10 +300,10 @@ type CreateOrUpdateOrgSecretReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateOrUpdateOrgSecretReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		Body:        r.RequestBody,
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{"content-type": internal.String("application/json")},
+		HeaderVals:  map[string]*string{"content-type": strPtr("application/json")},
 		Method:      "PUT",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/orgs/%v/actions/secrets/%v", r.Org, r.SecretName),
@@ -324,7 +315,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *CreateOrUpdateOrgSecretReq) Rel(link string, resp *CreateOrUpdateOrgSecretResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -392,7 +383,7 @@ func (r *CreateOrUpdateOrgSecretResponse) HTTPResponse() *http.Response {
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *CreateOrUpdateOrgSecretResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{201, 204})
+	err := responseErrorCheck(resp, []int{201, 204})
 	if err != nil {
 		return err
 	}
@@ -466,10 +457,10 @@ type CreateOrUpdateRepoSecretReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateOrUpdateRepoSecretReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		Body:        r.RequestBody,
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{"content-type": internal.String("application/json")},
+		HeaderVals:  map[string]*string{"content-type": strPtr("application/json")},
 		Method:      "PUT",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/actions/secrets/%v", r.Owner, r.Repo, r.SecretName),
@@ -481,7 +472,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *CreateOrUpdateRepoSecretReq) Rel(link string, resp *CreateOrUpdateRepoSecretResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -526,7 +517,7 @@ func (r *CreateOrUpdateRepoSecretResponse) HTTPResponse() *http.Response {
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *CreateOrUpdateRepoSecretResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{201, 204})
+	err := responseErrorCheck(resp, []int{201, 204})
 	if err != nil {
 		return err
 	}
@@ -595,9 +586,9 @@ type CreateRegistrationTokenForOrgReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateRegistrationTokenForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		HeaderVals:  map[string]*string{"accept": strPtr("application/json")},
 		Method:      "POST",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/orgs/%v/actions/runners/registration-token", r.Org),
@@ -609,7 +600,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *CreateRegistrationTokenForOrgReq) Rel(link string, resp *CreateRegistrationTokenForOrgResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -635,12 +626,12 @@ func (r *CreateRegistrationTokenForOrgResponse) HTTPResponse() *http.Response {
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *CreateRegistrationTokenForOrgResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{201})
+	err := responseErrorCheck(resp, []int{201})
 	if err != nil {
 		return err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{201}) {
-		err = internal.UnmarshalResponseBody(resp, &r.Data)
+	if intInSlice(resp.StatusCode, []int{201}) {
+		err = unmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -711,9 +702,9 @@ type CreateRegistrationTokenForRepoReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateRegistrationTokenForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		HeaderVals:  map[string]*string{"accept": strPtr("application/json")},
 		Method:      "POST",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/actions/runners/registration-token", r.Owner, r.Repo),
@@ -725,7 +716,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *CreateRegistrationTokenForRepoReq) Rel(link string, resp *CreateRegistrationTokenForRepoResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -751,12 +742,12 @@ func (r *CreateRegistrationTokenForRepoResponse) HTTPResponse() *http.Response {
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *CreateRegistrationTokenForRepoResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{201})
+	err := responseErrorCheck(resp, []int{201})
 	if err != nil {
 		return err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{201}) {
-		err = internal.UnmarshalResponseBody(resp, &r.Data)
+	if intInSlice(resp.StatusCode, []int{201}) {
+		err = unmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -826,9 +817,9 @@ type CreateRemoveTokenForOrgReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateRemoveTokenForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		HeaderVals:  map[string]*string{"accept": strPtr("application/json")},
 		Method:      "POST",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/orgs/%v/actions/runners/remove-token", r.Org),
@@ -840,7 +831,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *CreateRemoveTokenForOrgReq) Rel(link string, resp *CreateRemoveTokenForOrgResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -866,12 +857,12 @@ func (r *CreateRemoveTokenForOrgResponse) HTTPResponse() *http.Response {
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *CreateRemoveTokenForOrgResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{201})
+	err := responseErrorCheck(resp, []int{201})
 	if err != nil {
 		return err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{201}) {
-		err = internal.UnmarshalResponseBody(resp, &r.Data)
+	if intInSlice(resp.StatusCode, []int{201}) {
+		err = unmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -942,9 +933,9 @@ type CreateRemoveTokenForRepoReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateRemoveTokenForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		HeaderVals:  map[string]*string{"accept": strPtr("application/json")},
 		Method:      "POST",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/actions/runners/remove-token", r.Owner, r.Repo),
@@ -956,7 +947,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *CreateRemoveTokenForRepoReq) Rel(link string, resp *CreateRemoveTokenForRepoResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -982,12 +973,12 @@ func (r *CreateRemoveTokenForRepoResponse) HTTPResponse() *http.Response {
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *CreateRemoveTokenForRepoResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{201})
+	err := responseErrorCheck(resp, []int{201})
 	if err != nil {
 		return err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{201}) {
-		err = internal.UnmarshalResponseBody(resp, &r.Data)
+	if intInSlice(resp.StatusCode, []int{201}) {
+		err = unmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -1060,10 +1051,10 @@ type CreateWorkflowDispatchReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateWorkflowDispatchReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		Body:        r.RequestBody,
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{"content-type": internal.String("application/json")},
+		HeaderVals:  map[string]*string{"content-type": strPtr("application/json")},
 		Method:      "POST",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/actions/workflows/%v/dispatches", r.Owner, r.Repo, r.WorkflowId),
@@ -1075,7 +1066,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *CreateWorkflowDispatchReq) Rel(link string, resp *CreateWorkflowDispatchResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1118,7 +1109,7 @@ func (r *CreateWorkflowDispatchResponse) HTTPResponse() *http.Response {
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *CreateWorkflowDispatchResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{204})
+	err := responseErrorCheck(resp, []int{204})
 	if err != nil {
 		return err
 	}
@@ -1191,7 +1182,7 @@ type DeleteArtifactReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteArtifactReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		ExplicitURL: r._url,
 		Method:      "DELETE",
 		Options:     opt,
@@ -1204,7 +1195,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *DeleteArtifactReq) Rel(link string, resp *DeleteArtifactResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1229,7 +1220,7 @@ func (r *DeleteArtifactResponse) HTTPResponse() *http.Response {
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *DeleteArtifactResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{204})
+	err := responseErrorCheck(resp, []int{204})
 	if err != nil {
 		return err
 	}
@@ -1301,7 +1292,7 @@ type DeleteOrgSecretReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteOrgSecretReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		ExplicitURL: r._url,
 		Method:      "DELETE",
 		Options:     opt,
@@ -1314,7 +1305,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *DeleteOrgSecretReq) Rel(link string, resp *DeleteOrgSecretResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1339,7 +1330,7 @@ func (r *DeleteOrgSecretResponse) HTTPResponse() *http.Response {
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *DeleteOrgSecretResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{204})
+	err := responseErrorCheck(resp, []int{204})
 	if err != nil {
 		return err
 	}
@@ -1412,7 +1403,7 @@ type DeleteRepoSecretReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteRepoSecretReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		ExplicitURL: r._url,
 		Method:      "DELETE",
 		Options:     opt,
@@ -1425,7 +1416,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *DeleteRepoSecretReq) Rel(link string, resp *DeleteRepoSecretResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1450,7 +1441,7 @@ func (r *DeleteRepoSecretResponse) HTTPResponse() *http.Response {
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *DeleteRepoSecretResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{204})
+	err := responseErrorCheck(resp, []int{204})
 	if err != nil {
 		return err
 	}
@@ -1522,7 +1513,7 @@ type DeleteSelfHostedRunnerFromOrgReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteSelfHostedRunnerFromOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		ExplicitURL: r._url,
 		Method:      "DELETE",
 		Options:     opt,
@@ -1535,7 +1526,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *DeleteSelfHostedRunnerFromOrgReq) Rel(link string, resp *DeleteSelfHostedRunnerFromOrgResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1560,7 +1551,7 @@ func (r *DeleteSelfHostedRunnerFromOrgResponse) HTTPResponse() *http.Response {
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *DeleteSelfHostedRunnerFromOrgResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{204})
+	err := responseErrorCheck(resp, []int{204})
 	if err != nil {
 		return err
 	}
@@ -1633,7 +1624,7 @@ type DeleteSelfHostedRunnerFromRepoReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteSelfHostedRunnerFromRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		ExplicitURL: r._url,
 		Method:      "DELETE",
 		Options:     opt,
@@ -1646,7 +1637,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *DeleteSelfHostedRunnerFromRepoReq) Rel(link string, resp *DeleteSelfHostedRunnerFromRepoResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1671,7 +1662,7 @@ func (r *DeleteSelfHostedRunnerFromRepoResponse) HTTPResponse() *http.Response {
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *DeleteSelfHostedRunnerFromRepoResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{204})
+	err := responseErrorCheck(resp, []int{204})
 	if err != nil {
 		return err
 	}
@@ -1742,7 +1733,7 @@ type DeleteWorkflowRunReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		ExplicitURL: r._url,
 		Method:      "DELETE",
 		Options:     opt,
@@ -1755,7 +1746,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *DeleteWorkflowRunReq) Rel(link string, resp *DeleteWorkflowRunResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1780,7 +1771,7 @@ func (r *DeleteWorkflowRunResponse) HTTPResponse() *http.Response {
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *DeleteWorkflowRunResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{204})
+	err := responseErrorCheck(resp, []int{204})
 	if err != nil {
 		return err
 	}
@@ -1851,7 +1842,7 @@ type DeleteWorkflowRunLogsReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DeleteWorkflowRunLogsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		ExplicitURL: r._url,
 		Method:      "DELETE",
 		Options:     opt,
@@ -1864,7 +1855,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *DeleteWorkflowRunLogsReq) Rel(link string, resp *DeleteWorkflowRunLogsResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -1889,7 +1880,7 @@ func (r *DeleteWorkflowRunLogsResponse) HTTPResponse() *http.Response {
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *DeleteWorkflowRunLogsResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{204})
+	err := responseErrorCheck(resp, []int{204})
 	if err != nil {
 		return err
 	}
@@ -1965,7 +1956,7 @@ type DownloadArtifactReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DownloadArtifactReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		ExplicitURL: r._url,
 		Method:      "GET",
 		Options:     opt,
@@ -1978,7 +1969,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *DownloadArtifactReq) Rel(link string, resp *DownloadArtifactResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -2003,7 +1994,7 @@ func (r *DownloadArtifactResponse) HTTPResponse() *http.Response {
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *DownloadArtifactResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{302})
+	err := responseErrorCheck(resp, []int{302})
 	if err != nil {
 		return err
 	}
@@ -2076,7 +2067,7 @@ type DownloadJobLogsForWorkflowRunReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DownloadJobLogsForWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		ExplicitURL: r._url,
 		Method:      "GET",
 		Options:     opt,
@@ -2089,7 +2080,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *DownloadJobLogsForWorkflowRunReq) Rel(link string, resp *DownloadJobLogsForWorkflowRunResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -2114,7 +2105,7 @@ func (r *DownloadJobLogsForWorkflowRunResponse) HTTPResponse() *http.Response {
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *DownloadJobLogsForWorkflowRunResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{302})
+	err := responseErrorCheck(resp, []int{302})
 	if err != nil {
 		return err
 	}
@@ -2185,7 +2176,7 @@ type DownloadWorkflowRunLogsReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *DownloadWorkflowRunLogsReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		ExplicitURL: r._url,
 		Method:      "GET",
 		Options:     opt,
@@ -2198,7 +2189,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *DownloadWorkflowRunLogsReq) Rel(link string, resp *DownloadWorkflowRunLogsResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -2223,7 +2214,7 @@ func (r *DownloadWorkflowRunLogsResponse) HTTPResponse() *http.Response {
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *DownloadWorkflowRunLogsResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{302})
+	err := responseErrorCheck(resp, []int{302})
 	if err != nil {
 		return err
 	}
@@ -2296,9 +2287,9 @@ type GetArtifactReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetArtifactReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		HeaderVals:  map[string]*string{"accept": strPtr("application/json")},
 		Method:      "GET",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/actions/artifacts/%v", r.Owner, r.Repo, r.ArtifactId),
@@ -2310,7 +2301,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetArtifactReq) Rel(link string, resp *GetArtifactResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -2336,12 +2327,12 @@ func (r *GetArtifactResponse) HTTPResponse() *http.Response {
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *GetArtifactResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{200})
+	err := responseErrorCheck(resp, []int{200})
 	if err != nil {
 		return err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.UnmarshalResponseBody(resp, &r.Data)
+	if intInSlice(resp.StatusCode, []int{200}) {
+		err = unmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -2415,9 +2406,9 @@ type GetJobForWorkflowRunReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetJobForWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		HeaderVals:  map[string]*string{"accept": strPtr("application/json")},
 		Method:      "GET",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/actions/jobs/%v", r.Owner, r.Repo, r.JobId),
@@ -2429,7 +2420,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetJobForWorkflowRunReq) Rel(link string, resp *GetJobForWorkflowRunResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -2455,12 +2446,12 @@ func (r *GetJobForWorkflowRunResponse) HTTPResponse() *http.Response {
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *GetJobForWorkflowRunResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{202})
+	err := responseErrorCheck(resp, []int{202})
 	if err != nil {
 		return err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{202}) {
-		err = internal.UnmarshalResponseBody(resp, &r.Data)
+	if intInSlice(resp.StatusCode, []int{202}) {
+		err = unmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -2530,9 +2521,9 @@ type GetOrgPublicKeyReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetOrgPublicKeyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		HeaderVals:  map[string]*string{"accept": strPtr("application/json")},
 		Method:      "GET",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/orgs/%v/actions/secrets/public-key", r.Org),
@@ -2544,7 +2535,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetOrgPublicKeyReq) Rel(link string, resp *GetOrgPublicKeyResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -2570,12 +2561,12 @@ func (r *GetOrgPublicKeyResponse) HTTPResponse() *http.Response {
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *GetOrgPublicKeyResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{200})
+	err := responseErrorCheck(resp, []int{200})
 	if err != nil {
 		return err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.UnmarshalResponseBody(resp, &r.Data)
+	if intInSlice(resp.StatusCode, []int{200}) {
+		err = unmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -2648,9 +2639,9 @@ type GetOrgSecretReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetOrgSecretReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		HeaderVals:  map[string]*string{"accept": strPtr("application/json")},
 		Method:      "GET",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/orgs/%v/actions/secrets/%v", r.Org, r.SecretName),
@@ -2662,7 +2653,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetOrgSecretReq) Rel(link string, resp *GetOrgSecretResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -2688,12 +2679,12 @@ func (r *GetOrgSecretResponse) HTTPResponse() *http.Response {
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *GetOrgSecretResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{200})
+	err := responseErrorCheck(resp, []int{200})
 	if err != nil {
 		return err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.UnmarshalResponseBody(resp, &r.Data)
+	if intInSlice(resp.StatusCode, []int{200}) {
+		err = unmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -2764,9 +2755,9 @@ type GetRepoPublicKeyReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetRepoPublicKeyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		HeaderVals:  map[string]*string{"accept": strPtr("application/json")},
 		Method:      "GET",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/actions/secrets/public-key", r.Owner, r.Repo),
@@ -2778,7 +2769,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetRepoPublicKeyReq) Rel(link string, resp *GetRepoPublicKeyResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -2804,12 +2795,12 @@ func (r *GetRepoPublicKeyResponse) HTTPResponse() *http.Response {
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *GetRepoPublicKeyResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{200})
+	err := responseErrorCheck(resp, []int{200})
 	if err != nil {
 		return err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.UnmarshalResponseBody(resp, &r.Data)
+	if intInSlice(resp.StatusCode, []int{200}) {
+		err = unmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -2883,9 +2874,9 @@ type GetRepoSecretReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetRepoSecretReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		HeaderVals:  map[string]*string{"accept": strPtr("application/json")},
 		Method:      "GET",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/actions/secrets/%v", r.Owner, r.Repo, r.SecretName),
@@ -2897,7 +2888,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetRepoSecretReq) Rel(link string, resp *GetRepoSecretResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -2923,12 +2914,12 @@ func (r *GetRepoSecretResponse) HTTPResponse() *http.Response {
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *GetRepoSecretResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{200})
+	err := responseErrorCheck(resp, []int{200})
 	if err != nil {
 		return err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.UnmarshalResponseBody(resp, &r.Data)
+	if intInSlice(resp.StatusCode, []int{200}) {
+		err = unmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -3001,9 +2992,9 @@ type GetSelfHostedRunnerForOrgReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetSelfHostedRunnerForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		HeaderVals:  map[string]*string{"accept": strPtr("application/json")},
 		Method:      "GET",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/orgs/%v/actions/runners/%v", r.Org, r.RunnerId),
@@ -3015,7 +3006,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetSelfHostedRunnerForOrgReq) Rel(link string, resp *GetSelfHostedRunnerForOrgResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -3041,12 +3032,12 @@ func (r *GetSelfHostedRunnerForOrgResponse) HTTPResponse() *http.Response {
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *GetSelfHostedRunnerForOrgResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{200})
+	err := responseErrorCheck(resp, []int{200})
 	if err != nil {
 		return err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.UnmarshalResponseBody(resp, &r.Data)
+	if intInSlice(resp.StatusCode, []int{200}) {
+		err = unmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -3120,9 +3111,9 @@ type GetSelfHostedRunnerForRepoReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetSelfHostedRunnerForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		HeaderVals:  map[string]*string{"accept": strPtr("application/json")},
 		Method:      "GET",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/actions/runners/%v", r.Owner, r.Repo, r.RunnerId),
@@ -3134,7 +3125,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetSelfHostedRunnerForRepoReq) Rel(link string, resp *GetSelfHostedRunnerForRepoResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -3160,12 +3151,12 @@ func (r *GetSelfHostedRunnerForRepoResponse) HTTPResponse() *http.Response {
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *GetSelfHostedRunnerForRepoResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{200})
+	err := responseErrorCheck(resp, []int{200})
 	if err != nil {
 		return err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.UnmarshalResponseBody(resp, &r.Data)
+	if intInSlice(resp.StatusCode, []int{200}) {
+		err = unmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -3237,9 +3228,9 @@ type GetWorkflowReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetWorkflowReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		HeaderVals:  map[string]*string{"accept": strPtr("application/json")},
 		Method:      "GET",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/actions/workflows/%v", r.Owner, r.Repo, r.WorkflowId),
@@ -3251,7 +3242,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetWorkflowReq) Rel(link string, resp *GetWorkflowResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -3277,12 +3268,12 @@ func (r *GetWorkflowResponse) HTTPResponse() *http.Response {
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *GetWorkflowResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{200})
+	err := responseErrorCheck(resp, []int{200})
 	if err != nil {
 		return err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.UnmarshalResponseBody(resp, &r.Data)
+	if intInSlice(resp.StatusCode, []int{200}) {
+		err = unmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -3354,9 +3345,9 @@ type GetWorkflowRunReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		HeaderVals:  map[string]*string{"accept": strPtr("application/json")},
 		Method:      "GET",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/actions/runs/%v", r.Owner, r.Repo, r.RunId),
@@ -3368,7 +3359,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetWorkflowRunReq) Rel(link string, resp *GetWorkflowRunResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -3394,12 +3385,12 @@ func (r *GetWorkflowRunResponse) HTTPResponse() *http.Response {
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *GetWorkflowRunResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{200})
+	err := responseErrorCheck(resp, []int{200})
 	if err != nil {
 		return err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.UnmarshalResponseBody(resp, &r.Data)
+	if intInSlice(resp.StatusCode, []int{200}) {
+		err = unmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -3471,9 +3462,9 @@ type GetWorkflowRunUsageReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetWorkflowRunUsageReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		HeaderVals:  map[string]*string{"accept": strPtr("application/json")},
 		Method:      "GET",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/actions/runs/%v/timing", r.Owner, r.Repo, r.RunId),
@@ -3485,7 +3476,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetWorkflowRunUsageReq) Rel(link string, resp *GetWorkflowRunUsageResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -3511,12 +3502,12 @@ func (r *GetWorkflowRunUsageResponse) HTTPResponse() *http.Response {
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *GetWorkflowRunUsageResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{200})
+	err := responseErrorCheck(resp, []int{200})
 	if err != nil {
 		return err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.UnmarshalResponseBody(resp, &r.Data)
+	if intInSlice(resp.StatusCode, []int{200}) {
+		err = unmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -3588,9 +3579,9 @@ type GetWorkflowUsageReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *GetWorkflowUsageReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		HeaderVals:  map[string]*string{"accept": strPtr("application/json")},
 		Method:      "GET",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/actions/workflows/%v/timing", r.Owner, r.Repo, r.WorkflowId),
@@ -3602,7 +3593,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *GetWorkflowUsageReq) Rel(link string, resp *GetWorkflowUsageResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -3628,12 +3619,12 @@ func (r *GetWorkflowUsageResponse) HTTPResponse() *http.Response {
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *GetWorkflowUsageResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{200})
+	err := responseErrorCheck(resp, []int{200})
 	if err != nil {
 		return err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.UnmarshalResponseBody(resp, &r.Data)
+	if intInSlice(resp.StatusCode, []int{200}) {
+		err = unmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -3718,9 +3709,9 @@ func (r *ListArtifactsForRepoReq) HTTPRequest(ctx context.Context, opt ...reques
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		HeaderVals:  map[string]*string{"accept": strPtr("application/json")},
 		Method:      "GET",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/actions/artifacts", r.Owner, r.Repo),
@@ -3733,7 +3724,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListArtifactsForRepoReq) Rel(link string, resp *ListArtifactsForRepoResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -3769,12 +3760,12 @@ func (r *ListArtifactsForRepoResponse) HTTPResponse() *http.Response {
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *ListArtifactsForRepoResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{200})
+	err := responseErrorCheck(resp, []int{200})
 	if err != nil {
 		return err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.UnmarshalResponseBody(resp, &r.Data)
+	if intInSlice(resp.StatusCode, []int{200}) {
+		err = unmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -3871,9 +3862,9 @@ func (r *ListJobsForWorkflowRunReq) HTTPRequest(ctx context.Context, opt ...requ
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		HeaderVals:  map[string]*string{"accept": strPtr("application/json")},
 		Method:      "GET",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/actions/runs/%v/jobs", r.Owner, r.Repo, r.RunId),
@@ -3886,7 +3877,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListJobsForWorkflowRunReq) Rel(link string, resp *ListJobsForWorkflowRunResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -3922,12 +3913,12 @@ func (r *ListJobsForWorkflowRunResponse) HTTPResponse() *http.Response {
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *ListJobsForWorkflowRunResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{200})
+	err := responseErrorCheck(resp, []int{200})
 	if err != nil {
 		return err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.UnmarshalResponseBody(resp, &r.Data)
+	if intInSlice(resp.StatusCode, []int{200}) {
+		err = unmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -4011,9 +4002,9 @@ func (r *ListOrgSecretsReq) HTTPRequest(ctx context.Context, opt ...requests.Opt
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		HeaderVals:  map[string]*string{"accept": strPtr("application/json")},
 		Method:      "GET",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/orgs/%v/actions/secrets", r.Org),
@@ -4026,7 +4017,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListOrgSecretsReq) Rel(link string, resp *ListOrgSecretsResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -4062,12 +4053,12 @@ func (r *ListOrgSecretsResponse) HTTPResponse() *http.Response {
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *ListOrgSecretsResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{200})
+	err := responseErrorCheck(resp, []int{200})
 	if err != nil {
 		return err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.UnmarshalResponseBody(resp, &r.Data)
+	if intInSlice(resp.StatusCode, []int{200}) {
+		err = unmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -4152,9 +4143,9 @@ func (r *ListRepoSecretsReq) HTTPRequest(ctx context.Context, opt ...requests.Op
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		HeaderVals:  map[string]*string{"accept": strPtr("application/json")},
 		Method:      "GET",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/actions/secrets", r.Owner, r.Repo),
@@ -4167,7 +4158,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListRepoSecretsReq) Rel(link string, resp *ListRepoSecretsResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -4203,12 +4194,12 @@ func (r *ListRepoSecretsResponse) HTTPResponse() *http.Response {
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *ListRepoSecretsResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{200})
+	err := responseErrorCheck(resp, []int{200})
 	if err != nil {
 		return err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.UnmarshalResponseBody(resp, &r.Data)
+	if intInSlice(resp.StatusCode, []int{200}) {
+		err = unmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -4293,9 +4284,9 @@ func (r *ListRepoWorkflowsReq) HTTPRequest(ctx context.Context, opt ...requests.
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		HeaderVals:  map[string]*string{"accept": strPtr("application/json")},
 		Method:      "GET",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/actions/workflows", r.Owner, r.Repo),
@@ -4308,7 +4299,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListRepoWorkflowsReq) Rel(link string, resp *ListRepoWorkflowsResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -4344,12 +4335,12 @@ func (r *ListRepoWorkflowsResponse) HTTPResponse() *http.Response {
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *ListRepoWorkflowsResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{200})
+	err := responseErrorCheck(resp, []int{200})
 	if err != nil {
 		return err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.UnmarshalResponseBody(resp, &r.Data)
+	if intInSlice(resp.StatusCode, []int{200}) {
+		err = unmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -4419,9 +4410,9 @@ type ListRunnerApplicationsForOrgReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *ListRunnerApplicationsForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		HeaderVals:  map[string]*string{"accept": strPtr("application/json")},
 		Method:      "GET",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/orgs/%v/actions/runners/downloads", r.Org),
@@ -4433,7 +4424,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListRunnerApplicationsForOrgReq) Rel(link string, resp *ListRunnerApplicationsForOrgResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -4459,12 +4450,12 @@ func (r *ListRunnerApplicationsForOrgResponse) HTTPResponse() *http.Response {
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *ListRunnerApplicationsForOrgResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{200})
+	err := responseErrorCheck(resp, []int{200})
 	if err != nil {
 		return err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.UnmarshalResponseBody(resp, &r.Data)
+	if intInSlice(resp.StatusCode, []int{200}) {
+		err = unmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -4535,9 +4526,9 @@ type ListRunnerApplicationsForRepoReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *ListRunnerApplicationsForRepoReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		HeaderVals:  map[string]*string{"accept": strPtr("application/json")},
 		Method:      "GET",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/actions/runners/downloads", r.Owner, r.Repo),
@@ -4549,7 +4540,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListRunnerApplicationsForRepoReq) Rel(link string, resp *ListRunnerApplicationsForRepoResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -4575,12 +4566,12 @@ func (r *ListRunnerApplicationsForRepoResponse) HTTPResponse() *http.Response {
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *ListRunnerApplicationsForRepoResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{200})
+	err := responseErrorCheck(resp, []int{200})
 	if err != nil {
 		return err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.UnmarshalResponseBody(resp, &r.Data)
+	if intInSlice(resp.StatusCode, []int{200}) {
+		err = unmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -4653,9 +4644,9 @@ type ListSelectedReposForOrgSecretReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *ListSelectedReposForOrgSecretReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		HeaderVals:  map[string]*string{"accept": strPtr("application/json")},
 		Method:      "GET",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/orgs/%v/actions/secrets/%v/repositories", r.Org, r.SecretName),
@@ -4667,7 +4658,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListSelectedReposForOrgSecretReq) Rel(link string, resp *ListSelectedReposForOrgSecretResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -4703,12 +4694,12 @@ func (r *ListSelectedReposForOrgSecretResponse) HTTPResponse() *http.Response {
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *ListSelectedReposForOrgSecretResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{200})
+	err := responseErrorCheck(resp, []int{200})
 	if err != nil {
 		return err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.UnmarshalResponseBody(resp, &r.Data)
+	if intInSlice(resp.StatusCode, []int{200}) {
+		err = unmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -4792,9 +4783,9 @@ func (r *ListSelfHostedRunnersForOrgReq) HTTPRequest(ctx context.Context, opt ..
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		HeaderVals:  map[string]*string{"accept": strPtr("application/json")},
 		Method:      "GET",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/orgs/%v/actions/runners", r.Org),
@@ -4807,7 +4798,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListSelfHostedRunnersForOrgReq) Rel(link string, resp *ListSelfHostedRunnersForOrgResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -4843,12 +4834,12 @@ func (r *ListSelfHostedRunnersForOrgResponse) HTTPResponse() *http.Response {
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *ListSelfHostedRunnersForOrgResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{200})
+	err := responseErrorCheck(resp, []int{200})
 	if err != nil {
 		return err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.UnmarshalResponseBody(resp, &r.Data)
+	if intInSlice(resp.StatusCode, []int{200}) {
+		err = unmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -4933,9 +4924,9 @@ func (r *ListSelfHostedRunnersForRepoReq) HTTPRequest(ctx context.Context, opt .
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		HeaderVals:  map[string]*string{"accept": strPtr("application/json")},
 		Method:      "GET",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/actions/runners", r.Owner, r.Repo),
@@ -4948,7 +4939,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListSelfHostedRunnersForRepoReq) Rel(link string, resp *ListSelfHostedRunnersForRepoResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -4984,12 +4975,12 @@ func (r *ListSelfHostedRunnersForRepoResponse) HTTPResponse() *http.Response {
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *ListSelfHostedRunnersForRepoResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{200})
+	err := responseErrorCheck(resp, []int{200})
 	if err != nil {
 		return err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.UnmarshalResponseBody(resp, &r.Data)
+	if intInSlice(resp.StatusCode, []int{200}) {
+		err = unmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -5075,9 +5066,9 @@ func (r *ListWorkflowRunArtifactsReq) HTTPRequest(ctx context.Context, opt ...re
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		HeaderVals:  map[string]*string{"accept": strPtr("application/json")},
 		Method:      "GET",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/actions/runs/%v/artifacts", r.Owner, r.Repo, r.RunId),
@@ -5090,7 +5081,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListWorkflowRunArtifactsReq) Rel(link string, resp *ListWorkflowRunArtifactsResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -5126,12 +5117,12 @@ func (r *ListWorkflowRunArtifactsResponse) HTTPResponse() *http.Response {
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *ListWorkflowRunArtifactsResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{200})
+	err := responseErrorCheck(resp, []int{200})
 	if err != nil {
 		return err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.UnmarshalResponseBody(resp, &r.Data)
+	if intInSlice(resp.StatusCode, []int{200}) {
+		err = unmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -5257,9 +5248,9 @@ func (r *ListWorkflowRunsReq) HTTPRequest(ctx context.Context, opt ...requests.O
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		HeaderVals:  map[string]*string{"accept": strPtr("application/json")},
 		Method:      "GET",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/actions/workflows/%v/runs", r.Owner, r.Repo, r.WorkflowId),
@@ -5272,7 +5263,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListWorkflowRunsReq) Rel(link string, resp *ListWorkflowRunsResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -5308,12 +5299,12 @@ func (r *ListWorkflowRunsResponse) HTTPResponse() *http.Response {
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *ListWorkflowRunsResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{200})
+	err := responseErrorCheck(resp, []int{200})
 	if err != nil {
 		return err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.UnmarshalResponseBody(resp, &r.Data)
+	if intInSlice(resp.StatusCode, []int{200}) {
+		err = unmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -5438,9 +5429,9 @@ func (r *ListWorkflowRunsForRepoReq) HTTPRequest(ctx context.Context, opt ...req
 		query.Set("page", strconv.FormatInt(*r.Page, 10))
 	}
 
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{"accept": internal.String("application/json")},
+		HeaderVals:  map[string]*string{"accept": strPtr("application/json")},
 		Method:      "GET",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/repos/%v/%v/actions/runs", r.Owner, r.Repo),
@@ -5453,7 +5444,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ListWorkflowRunsForRepoReq) Rel(link string, resp *ListWorkflowRunsForRepoResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -5489,12 +5480,12 @@ func (r *ListWorkflowRunsForRepoResponse) HTTPResponse() *http.Response {
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *ListWorkflowRunsForRepoResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{200})
+	err := responseErrorCheck(resp, []int{200})
 	if err != nil {
 		return err
 	}
-	if internal.IntInSlice(resp.StatusCode, []int{200}) {
-		err = internal.UnmarshalResponseBody(resp, &r.Data)
+	if intInSlice(resp.StatusCode, []int{200}) {
+		err = unmarshalResponseBody(resp, &r.Data)
 		if err != nil {
 			return err
 		}
@@ -5566,7 +5557,7 @@ type ReRunWorkflowReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *ReRunWorkflowReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		ExplicitURL: r._url,
 		Method:      "POST",
 		Options:     opt,
@@ -5579,7 +5570,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *ReRunWorkflowReq) Rel(link string, resp *ReRunWorkflowResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -5604,7 +5595,7 @@ func (r *ReRunWorkflowResponse) HTTPResponse() *http.Response {
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *ReRunWorkflowResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{201})
+	err := responseErrorCheck(resp, []int{201})
 	if err != nil {
 		return err
 	}
@@ -5679,7 +5670,7 @@ type RemoveSelectedRepoFromOrgSecretReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *RemoveSelectedRepoFromOrgSecretReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		ExplicitURL: r._url,
 		Method:      "DELETE",
 		Options:     opt,
@@ -5692,7 +5683,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *RemoveSelectedRepoFromOrgSecretReq) Rel(link string, resp *RemoveSelectedRepoFromOrgSecretResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -5717,7 +5708,7 @@ func (r *RemoveSelectedRepoFromOrgSecretResponse) HTTPResponse() *http.Response 
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *RemoveSelectedRepoFromOrgSecretResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{204})
+	err := responseErrorCheck(resp, []int{204})
 	if err != nil {
 		return err
 	}
@@ -5790,10 +5781,10 @@ type SetSelectedReposForOrgSecretReq struct {
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *SetSelectedReposForOrgSecretReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	return internal.BuildHTTPRequest(ctx, internal.BuildHTTPRequestOptions{
+	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		Body:        r.RequestBody,
 		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{"content-type": internal.String("application/json")},
+		HeaderVals:  map[string]*string{"content-type": strPtr("application/json")},
 		Method:      "PUT",
 		Options:     opt,
 		URLPath:     fmt.Sprintf("/orgs/%v/actions/secrets/%v/repositories", r.Org, r.SecretName),
@@ -5805,7 +5796,7 @@ Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
 func (r *SetSelectedReposForOrgSecretReq) Rel(link string, resp *SetSelectedReposForOrgSecretResponse) bool {
-	u := internal.RelLink(resp.HTTPResponse(), link)
+	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
 	}
@@ -5850,7 +5841,7 @@ func (r *SetSelectedReposForOrgSecretResponse) HTTPResponse() *http.Response {
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
 func (r *SetSelectedReposForOrgSecretResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
-	err := internal.ResponseErrorCheck(resp, []int{204})
+	err := responseErrorCheck(resp, []int{204})
 	if err != nil {
 		return err
 	}

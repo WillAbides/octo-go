@@ -88,7 +88,7 @@ func responseLoader(endpoint *model.Endpoint, pq pkgQual) *jen.Statement {
 		jen.Id("resp").Op("*").Qual("net/http", "Response"),
 	).Error().BlockFunc(func(group *jen.Group) {
 		group.Id("r.httpResponse = resp")
-		group.Id("err := ").Qual(pq.pkgPath("internal"), "ResponseErrorCheck").Call(
+		group.Id("err := ").Id("responseErrorCheck").Call(
 			jen.Id("resp"),
 			jen.Id("[]int").ValuesFunc(func(group *jen.Group) {
 				for _, code := range validCodes(endpoint) {
@@ -100,7 +100,7 @@ func responseLoader(endpoint *model.Endpoint, pq pkgQual) *jen.Statement {
 		switch {
 		case endpointHasAttribute(endpoint, attrNoResponseBody):
 		case endpointHasAttribute(endpoint, attrBoolean):
-			group.Id("err = ").Qual(pq.pkgPath("internal"), "SetBoolResult").Id("(resp, &r.Data)")
+			group.Id("err = ").Id("setBoolResult").Id("(resp, &r.Data)")
 			group.Id("if err != nil {return err}")
 		case len(responseCodesWithBodies(endpoint)) > 0:
 			dataStatuses := jen.Id("[]int").ValuesFunc(func(group *jen.Group) {
@@ -109,12 +109,9 @@ func responseLoader(endpoint *model.Endpoint, pq pkgQual) *jen.Statement {
 				}
 			})
 			group.If(
-				jen.Qual(pq.pkgPath("internal"), "IntInSlice").Call(jen.Id("resp.StatusCode"), dataStatuses),
+				jen.Id("intInSlice").Call(jen.Id("resp.StatusCode"), dataStatuses),
 			).Block(
-				jen.Id("err = ").Qual(
-					pq.pkgPath("internal"),
-					"UnmarshalResponseBody(resp, &r.Data)",
-				),
+				jen.Id("err = ").Id("unmarshalResponseBody(resp, &r.Data)"),
 				jen.Id("if err != nil {return err}"),
 			)
 		}
