@@ -96,6 +96,9 @@ func TestUnmarshalResponseBody(t *testing.T) {
 		"[]components.StarredRepository": true,
 		"[]components.Stargazer":         true,
 	}
+	ignoreErrors := map[string]bool{
+		`json: unknown field "single_file"`: true,
+	}
 	if testing.Short() {
 		t.Skip("skipping test in short mode.")
 	}
@@ -120,6 +123,9 @@ func TestUnmarshalResponseBody(t *testing.T) {
 					decoder.DisallowUnknownFields()
 					fmt.Println(string(ex))
 					err := test.decode(decoder)
+					if err != nil && ignoreErrors[err.Error()] {
+						err = nil
+					}
 					if !assert.NoError(t, err) {
 						decoder2 := json.NewDecoder(bytes.NewReader(ex))
 						err2 := test.decode(decoder2)

@@ -12,6 +12,7 @@ import (
 	"strings"
 
 	"github.com/getkin/kin-openapi/openapi3"
+	"github.com/jinzhu/inflection"
 	"github.com/pkg/errors"
 	"github.com/willabides/octo-go/generator/internal/model"
 )
@@ -70,9 +71,87 @@ func prepareComponentSchemas(swagger *openapi3.Swagger) {
 	}
 }
 
+func prepareComponentSchemaArray(swagger *openapi3.Swagger, parentName string, schemaRef *openapi3.SchemaRef) {
+	schema := schemaRef.Value
+	itemsVal := schema.Items.Value
+	if isSimpleType(itemsVal) {
+		return
+	}
+	singleName := inflection.Singular(parentName)
+	if singleName == parentName {
+		singleName += "-item"
+	}
+	schema.Items.Ref = "#/components/schemas/" + singleName
+	swagger.Components.Schemas[singleName] = openapi3.NewSchemaRef("", itemsVal)
+	prepareComponentSchemaObj(swagger, parentName, schema.Items)
+}
+
 func prepareComponentSchemaObj(swagger *openapi3.Swagger, parentName string, schemaRef *openapi3.SchemaRef) {
 	schema := schemaRef.Value
 	oneOfNames := map[string]bool{}
+	prepareOneOf(swagger, parentName, schema, oneOfNames)
+	if schema.Items != nil && schemaRef.Ref == "" {
+		prepareComponentSchemaArray(swagger, parentName, schemaRef)
+		return
+	}
+	if len(schema.AllOf) != 1 {
+		for _, ref := range schema.AllOf {
+			prepareComponentSchemaObj(swagger, parentName, ref)
+		}
+	}
+
+	propNames := make([]string, 0, len(schema.Properties))
+	for propName := range schema.Properties {
+		propNames = append(propNames, propName)
+	}
+	sort.Strings(propNames)
+	for _, propName := range propNames {
+		ref := schema.Properties[propName]
+		propName = overrideComponentSchemaName(propName)
+		if ref.Ref != "" {
+			continue
+		}
+		val := ref.Value
+		switch opSchemaType(val) {
+		case model.ParamTypeObject, model.ParamTypeOneOf:
+			fullName := fmt.Sprintf("%s-%s", parentName, propName)
+			thisRef := ref
+			addProps := val.AdditionalProperties
+			if addProps != nil && opSchemaType(addProps.Value) == model.ParamTypeObject {
+				fullName = inflection.Singular(fullName)
+				thisRef = addProps
+			}
+			if len(val.AllOf) != 1 {
+				swagger.Components.Schemas[fullName] = openapi3.NewSchemaRef("", thisRef.Value)
+			}
+			thisRef.Ref = "#/components/schemas/" + fullName
+			prepareComponentSchemaObj(swagger, fullName, thisRef)
+		case model.ParamTypeArray:
+			itemsRef := val.Items
+			itemsVal := itemsRef.Value
+			fullName := arrayName(parentName, propName)
+			if strings.HasPrefix(itemsRef.Ref, "#/components/schemas/") {
+				fullName = strings.TrimPrefix(itemsRef.Ref, "#/components/schemas/")
+			}
+			switch opSchemaType(itemsVal) {
+			case model.ParamTypeObject, model.ParamTypeOneOf:
+				swagger.Components.Schemas[fullName] = openapi3.NewSchemaRef("", itemsVal)
+				itemsRef.Ref = "#/components/schemas/" + fullName
+				prepareComponentSchemaObj(swagger, fullName, itemsRef)
+			}
+		}
+	}
+}
+
+func arrayName(parentName, propName string) string {
+	nameParts := strings.Split(propName, "-")
+	lastIdx := len(nameParts) - 1
+	nameParts[lastIdx] = inflection.Singular(nameParts[lastIdx])
+	nm := strings.Join(nameParts, "-")
+	return fmt.Sprintf("%s-%s", parentName, nm)
+}
+
+func prepareOneOf(swagger *openapi3.Swagger, parentName string, schema *openapi3.Schema, oneOfNames map[string]bool) {
 	for _, ref := range schema.OneOf {
 		if ref.Ref != "" {
 			continue
@@ -88,46 +167,6 @@ func prepareComponentSchemaObj(swagger *openapi3.Swagger, parentName string, sch
 			swagger.Components.Schemas[fullName] = openapi3.NewSchemaRef("", val)
 			ref.Ref = "#/components/schemas/" + fullName
 			prepareComponentSchemaObj(swagger, fullName, ref)
-		}
-	}
-
-	for propName, ref := range schema.Properties {
-		propName = overrideComponentSchemaName(propName)
-		if ref.Ref != "" {
-			continue
-		}
-		val := ref.Value
-		switch opSchemaType(val) {
-		case model.ParamTypeObject, model.ParamTypeOneOf:
-			if val.AdditionalProperties != nil {
-				break
-			}
-			fullName := fmt.Sprintf("%s-%s", parentName, propName)
-			swagger.Components.Schemas[fullName] = openapi3.NewSchemaRef("", val)
-			ref.Ref = "#/components/schemas/" + fullName
-			prepareComponentSchemaObj(swagger, fullName, ref)
-		case model.ParamTypeArray:
-			itemsRef := val.Items
-			itemsVal := itemsRef.Value
-			fullName := fmt.Sprintf("%s-%s-item", parentName, propName)
-			if strings.HasPrefix(itemsRef.Ref, "#/components/schemas/") {
-				fullName = strings.TrimPrefix(itemsRef.Ref, "#/components/schemas/")
-			}
-			wrongType := false
-			switch opSchemaType(itemsVal) {
-			case model.ParamTypeObject, model.ParamTypeOneOf:
-			default:
-				wrongType = true
-			}
-			if wrongType {
-				break
-			}
-			if itemsVal.AdditionalProperties != nil {
-				break
-			}
-			swagger.Components.Schemas[fullName] = openapi3.NewSchemaRef("", itemsVal)
-			itemsRef.Ref = "#/components/schemas/" + fullName
-			prepareComponentSchemaObj(swagger, fullName, itemsRef)
 		}
 	}
 }
@@ -258,6 +297,20 @@ var op2modelTypes = map[string]model.ParamType{
 	"number":  model.ParamTypeNumber,
 }
 
+func isSimpleType(opSchema *openapi3.Schema) bool {
+	tp := opSchemaType(opSchema)
+	for _, paramType := range []model.ParamType{
+		model.ParamTypeString,
+		model.ParamTypeInt,
+		model.ParamTypeBool,
+	} {
+		if tp == paramType {
+			return true
+		}
+	}
+	return false
+}
+
 func opSchemaType(opSchema *openapi3.Schema) model.ParamType {
 	if strings.HasPrefix(opSchema.Type, "[]") {
 		return model.ParamTypeArray
@@ -273,8 +326,19 @@ func opSchemaType(opSchema *openapi3.Schema) model.ParamType {
 
 func opParamSchema(schemaRef *openapi3.SchemaRef) (*model.ParamSchema, error) {
 	opSchema := schemaRef.Value
+
+	if len(opSchema.AllOf) == 1 {
+		sr := &openapi3.SchemaRef{
+			Ref:   opSchema.AllOf[0].Ref,
+			Value: opSchema.AllOf[0].Value,
+		}
+		sr.Value.Nullable = opSchema.Nullable
+		sr.Value.Description = opSchema.Description
+		return opParamSchema(sr)
+	}
+
 	schema := model.ParamSchema{
-		Nullable: schemaRef.Value.Nullable,
+		Nullable: opSchema.Nullable,
 		Ref:      schemaRef.Ref,
 		Type:     opSchemaType(opSchema),
 	}
@@ -307,27 +371,35 @@ func opParamSchema(schemaRef *openapi3.SchemaRef) (*model.ParamSchema, error) {
 			props[k] = v
 		}
 
-		err = addAllOfProps(opSchema, props)
+		err = appendParams(schemaRef, opSchema, props, &schema)
 		if err != nil {
-			return nil, errors.WithStack(err)
-		}
-
-		propNames := make([]string, 0, len(props))
-		for name := range props {
-			propNames = append(propNames, name)
-		}
-		sort.Strings(propNames)
-		for _, name := range propNames {
-			ref := props[name]
-			var objParam *model.Param
-			objParam, err = opObjectParam(schemaRef, ref, name)
-			if err != nil {
-				return nil, errors.WithStack(err)
-			}
-			schema.ObjectParams = append(schema.ObjectParams, objParam)
+			return nil, err
 		}
 	}
 	return &schema, nil
+}
+
+func appendParams(schemaRef *openapi3.SchemaRef, opSchema *openapi3.Schema, props map[string]*openapi3.SchemaRef, schema *model.ParamSchema) error {
+	err := addAllOfProps(opSchema, props)
+	if err != nil {
+		return errors.WithStack(err)
+	}
+
+	propNames := make([]string, 0, len(props))
+	for name := range props {
+		propNames = append(propNames, name)
+	}
+	sort.Strings(propNames)
+	for _, name := range propNames {
+		ref := props[name]
+		var objParam *model.Param
+		objParam, err = opObjectParam(schemaRef, ref, name)
+		if err != nil {
+			return errors.WithStack(err)
+		}
+		schema.ObjectParams = append(schema.ObjectParams, objParam)
+	}
+	return nil
 }
 
 func oneOfObjectParams(opSchemaRef *openapi3.SchemaRef, oneOf []*openapi3.SchemaRef) ([]*model.Param, error) {
@@ -371,12 +443,15 @@ func oneOfPropName(ref *openapi3.SchemaRef, names map[string]bool) string {
 }
 
 func addAllOfProps(opSchema *openapi3.Schema, props map[string]*openapi3.SchemaRef) error {
-	if len(opSchema.AllOf) == 0 {
-		return nil
-	}
 	allOfProps := map[string]*openapi3.SchemaRef{}
 	for _, ref := range opSchema.AllOf {
-		for name, val := range ref.Value.Properties {
+		names := make([]string, 0, len(ref.Value.Properties))
+		for name := range ref.Value.Properties {
+			names = append(names, name)
+		}
+		sort.Strings(names)
+		for _, name := range names {
+			val := ref.Value.Properties[name]
 			if allOfProps[name] != nil && !eqSchemaRef(val, allOfProps[name]) {
 				return errors.Errorf("duplicating property name from allOf: %q", name)
 			}

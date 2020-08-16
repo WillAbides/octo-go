@@ -452,13 +452,13 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	operationID:    "activity/set-thread-subscription",
 }, {
 	decode: func(decoder *json.Decoder) error {
-		target := apps.CheckAuthorizationResponseBody{}
+		target := components.Authorization{}
 		return decoder.Decode(&target)
 	},
 	endpointPath:   "/applications/{client_id}/tokens/{access_token}",
 	httpMethod:     "GET",
 	httpStatusCode: 200,
-	name:           "octo.CheckAuthorizationResponseBody",
+	name:           "components.Authorization",
 	operationID:    "apps/check-authorization",
 }, {
 	decode: func(decoder *json.Decoder) error {

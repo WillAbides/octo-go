@@ -8,6 +8,7 @@ require (
 	github.com/dnaeon/go-vcr v1.0.1
 	github.com/getkin/kin-openapi v0.8.0
 	github.com/google/go-cmp v0.4.1
+	github.com/jinzhu/inflection v1.0.0
 	github.com/joho/godotenv v1.3.0
 	github.com/mitchellh/go-wordwrap v1.0.0
 	github.com/pkg/errors v0.9.1
