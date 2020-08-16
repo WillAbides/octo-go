@@ -75,7 +75,10 @@ func prepareComponentSchemaObj(swagger *openapi3.Swagger, parentName string, sch
 	schema := schemaRef.Value
 	oneOfNames := map[string]bool{}
 	prepareOneOf(swagger, parentName, schema, oneOfNames)
-
+	if schema.Items != nil && schemaRef.Ref == "" {
+		prepareComponentSchemaObj(swagger, parentName, schema.Items)
+		return
+	}
 	for propName, ref := range schema.Properties {
 		propName = overrideComponentSchemaName(propName)
 		if ref.Ref != "" {

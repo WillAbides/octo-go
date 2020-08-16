@@ -749,21 +749,23 @@ type CommunityProfileFiles struct {
 }
 
 type ContentDirectory []struct {
-	Links struct {
-		Git  string `json:"git"`
-		Html string `json:"html"`
-		Self string `json:"self"`
-	} `json:"_links"`
-	Content     string `json:"content,omitempty"`
-	DownloadUrl string `json:"download_url"`
-	GitUrl      string `json:"git_url"`
-	HtmlUrl     string `json:"html_url"`
-	Name        string `json:"name"`
-	Path        string `json:"path"`
-	Sha         string `json:"sha"`
-	Size        int64  `json:"size"`
-	Type        string `json:"type"`
-	Url         string `json:"url"`
+	Links       ContentDirectoryLinks `json:"_links"`
+	Content     string                `json:"content,omitempty"`
+	DownloadUrl string                `json:"download_url"`
+	GitUrl      string                `json:"git_url"`
+	HtmlUrl     string                `json:"html_url"`
+	Name        string                `json:"name"`
+	Path        string                `json:"path"`
+	Sha         string                `json:"sha"`
+	Size        int64                 `json:"size"`
+	Type        string                `json:"type"`
+	Url         string                `json:"url"`
+}
+
+type ContentDirectoryLinks struct {
+	Git  string `json:"git"`
+	Html string `json:"html"`
+	Self string `json:"self"`
 }
 
 type ContentFile struct {
@@ -4518,14 +4520,16 @@ type ScopedInstallation struct {
 type ScopedInstallationPermissions interface{}
 
 type SearchResultTextMatches []struct {
-	Fragment string `json:"fragment,omitempty"`
-	Matches  []struct {
-		Indices []int64 `json:"indices,omitempty"`
-		Text    string  `json:"text,omitempty"`
-	} `json:"matches,omitempty"`
-	ObjectType string `json:"object_type,omitempty"`
-	ObjectUrl  string `json:"object_url,omitempty"`
-	Property   string `json:"property,omitempty"`
+	Fragment   string                         `json:"fragment,omitempty"`
+	Matches    []SearchResultTextMatchesMatch `json:"matches,omitempty"`
+	ObjectType string                         `json:"object_type,omitempty"`
+	ObjectUrl  string                         `json:"object_url,omitempty"`
+	Property   string                         `json:"property,omitempty"`
+}
+
+type SearchResultTextMatchesMatch struct {
+	Indices []int64 `json:"indices,omitempty"`
+	Text    string  `json:"text,omitempty"`
 }
 
 type ShortBlob struct {
