@@ -71,15 +71,42 @@ func prepareComponentSchemas(swagger *openapi3.Swagger) {
 	}
 }
 
+func prepareComponentSchemaArray(swagger *openapi3.Swagger, parentName string, schemaRef *openapi3.SchemaRef) {
+	schema := schemaRef.Value
+	itemsVal := schema.Items.Value
+	if isSimpleType(itemsVal) {
+		return
+	}
+	singleName := inflection.Singular(parentName)
+	if singleName == parentName {
+		singleName += "-item"
+	}
+	schema.Items.Ref = "#/components/schemas/" + singleName
+	swagger.Components.Schemas[singleName] = openapi3.NewSchemaRef("", itemsVal)
+	prepareComponentSchemaObj(swagger, parentName, schema.Items)
+}
+
 func prepareComponentSchemaObj(swagger *openapi3.Swagger, parentName string, schemaRef *openapi3.SchemaRef) {
 	schema := schemaRef.Value
 	oneOfNames := map[string]bool{}
 	prepareOneOf(swagger, parentName, schema, oneOfNames)
 	if schema.Items != nil && schemaRef.Ref == "" {
-		prepareComponentSchemaObj(swagger, parentName, schema.Items)
+		prepareComponentSchemaArray(swagger, parentName, schemaRef)
 		return
 	}
-	for propName, ref := range schema.Properties {
+	if len(schema.AllOf) != 1 {
+		for _, ref := range schema.AllOf {
+			prepareComponentSchemaObj(swagger, parentName, ref)
+		}
+	}
+
+	propNames := make([]string, 0, len(schema.Properties))
+	for propName := range schema.Properties {
+		propNames = append(propNames, propName)
+	}
+	sort.Strings(propNames)
+	for _, propName := range propNames {
+		ref := schema.Properties[propName]
 		propName = overrideComponentSchemaName(propName)
 		if ref.Ref != "" {
 			continue
@@ -87,17 +114,18 @@ func prepareComponentSchemaObj(swagger *openapi3.Swagger, parentName string, sch
 		val := ref.Value
 		switch opSchemaType(val) {
 		case model.ParamTypeObject, model.ParamTypeOneOf:
-			if val.AdditionalProperties != nil {
-				break
-			}
-			if len(val.AllOf) == 1 {
-				break
-			}
-
 			fullName := fmt.Sprintf("%s-%s", parentName, propName)
-			swagger.Components.Schemas[fullName] = openapi3.NewSchemaRef("", val)
-			ref.Ref = "#/components/schemas/" + fullName
-			prepareComponentSchemaObj(swagger, fullName, ref)
+			thisRef := ref
+			addProps := val.AdditionalProperties
+			if addProps != nil && opSchemaType(addProps.Value) == model.ParamTypeObject {
+				fullName = inflection.Singular(fullName)
+				thisRef = addProps
+			}
+			if len(val.AllOf) != 1 {
+				swagger.Components.Schemas[fullName] = openapi3.NewSchemaRef("", thisRef.Value)
+			}
+			thisRef.Ref = "#/components/schemas/" + fullName
+			prepareComponentSchemaObj(swagger, fullName, thisRef)
 		case model.ParamTypeArray:
 			itemsRef := val.Items
 			itemsVal := itemsRef.Value
@@ -105,21 +133,12 @@ func prepareComponentSchemaObj(swagger *openapi3.Swagger, parentName string, sch
 			if strings.HasPrefix(itemsRef.Ref, "#/components/schemas/") {
 				fullName = strings.TrimPrefix(itemsRef.Ref, "#/components/schemas/")
 			}
-			wrongType := false
 			switch opSchemaType(itemsVal) {
 			case model.ParamTypeObject, model.ParamTypeOneOf:
-			default:
-				wrongType = true
+				swagger.Components.Schemas[fullName] = openapi3.NewSchemaRef("", itemsVal)
+				itemsRef.Ref = "#/components/schemas/" + fullName
+				prepareComponentSchemaObj(swagger, fullName, itemsRef)
 			}
-			if wrongType {
-				break
-			}
-			if itemsVal.AdditionalProperties != nil {
-				break
-			}
-			swagger.Components.Schemas[fullName] = openapi3.NewSchemaRef("", itemsVal)
-			itemsRef.Ref = "#/components/schemas/" + fullName
-			prepareComponentSchemaObj(swagger, fullName, itemsRef)
 		}
 	}
 }
@@ -276,6 +295,20 @@ var op2modelTypes = map[string]model.ParamType{
 	"":        model.ParamTypeObject,
 	"array":   model.ParamTypeArray,
 	"number":  model.ParamTypeNumber,
+}
+
+func isSimpleType(opSchema *openapi3.Schema) bool {
+	tp := opSchemaType(opSchema)
+	for _, paramType := range []model.ParamType{
+		model.ParamTypeString,
+		model.ParamTypeInt,
+		model.ParamTypeBool,
+	} {
+		if tp == paramType {
+			return true
+		}
+	}
+	return false
 }
 
 func opSchemaType(opSchema *openapi3.Schema) model.ParamType {

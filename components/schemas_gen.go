@@ -162,32 +162,34 @@ type AuthorizationApp struct {
 }
 
 type BaseGist struct {
-	Comments    int64  `json:"comments"`
-	CommentsUrl string `json:"comments_url"`
-	CommitsUrl  string `json:"commits_url"`
-	CreatedAt   string `json:"created_at"`
-	Description string `json:"description"`
-	Files       map[string]struct {
-		Filename string `json:"filename,omitempty"`
-		Language string `json:"language,omitempty"`
-		RawUrl   string `json:"raw_url,omitempty"`
-		Size     int64  `json:"size,omitempty"`
-		Type     string `json:"type,omitempty"`
-	} `json:"files"`
-	Forks      []BaseGistFork    `json:"forks,omitempty"`
-	ForksUrl   string            `json:"forks_url"`
-	GitPullUrl string            `json:"git_pull_url"`
-	GitPushUrl string            `json:"git_push_url"`
-	History    []BaseGistHistory `json:"history,omitempty"`
-	HtmlUrl    string            `json:"html_url"`
-	Id         string            `json:"id"`
-	NodeId     string            `json:"node_id"`
-	Owner      *SimpleUser       `json:"owner,omitempty"`
-	Public     bool              `json:"public"`
-	Truncated  bool              `json:"truncated,omitempty"`
-	UpdatedAt  string            `json:"updated_at"`
-	Url        string            `json:"url"`
-	User       *SimpleUser       `json:"user"`
+	Comments    int64                   `json:"comments"`
+	CommentsUrl string                  `json:"comments_url"`
+	CommitsUrl  string                  `json:"commits_url"`
+	CreatedAt   string                  `json:"created_at"`
+	Description string                  `json:"description"`
+	Files       map[string]BaseGistFile `json:"files"`
+	Forks       []BaseGistFork          `json:"forks,omitempty"`
+	ForksUrl    string                  `json:"forks_url"`
+	GitPullUrl  string                  `json:"git_pull_url"`
+	GitPushUrl  string                  `json:"git_push_url"`
+	History     []BaseGistHistory       `json:"history,omitempty"`
+	HtmlUrl     string                  `json:"html_url"`
+	Id          string                  `json:"id"`
+	NodeId      string                  `json:"node_id"`
+	Owner       *SimpleUser             `json:"owner,omitempty"`
+	Public      bool                    `json:"public"`
+	Truncated   bool                    `json:"truncated,omitempty"`
+	UpdatedAt   string                  `json:"updated_at"`
+	Url         string                  `json:"url"`
+	User        *SimpleUser             `json:"user"`
+}
+
+type BaseGistFile struct {
+	Filename string `json:"filename,omitempty"`
+	Language string `json:"language,omitempty"`
+	RawUrl   string `json:"raw_url,omitempty"`
+	Size     int64  `json:"size,omitempty"`
+	Type     string `json:"type,omitempty"`
 }
 
 type BaseGistFork interface{}
@@ -748,7 +750,15 @@ type CommunityProfileFiles struct {
 	Readme              *CommunityHealthFile `json:"readme"`
 }
 
-type ContentDirectory []struct {
+type ContentDirectory []ContentDirectoryItem
+
+type ContentDirectoryLinks struct {
+	Git  string `json:"git"`
+	Html string `json:"html"`
+	Self string `json:"self"`
+}
+
+type ContentDirectoryItem struct {
 	Links       ContentDirectoryLinks `json:"_links"`
 	Content     string                `json:"content,omitempty"`
 	DownloadUrl string                `json:"download_url"`
@@ -760,12 +770,6 @@ type ContentDirectory []struct {
 	Size        int64                 `json:"size"`
 	Type        string                `json:"type"`
 	Url         string                `json:"url"`
-}
-
-type ContentDirectoryLinks struct {
-	Git  string `json:"git"`
-	Html string `json:"html"`
-	Self string `json:"self"`
 }
 
 type ContentFile struct {
@@ -1408,118 +1412,132 @@ type GistCommitChangeStatus struct {
 }
 
 type GistFull struct {
-	Comments    int64  `json:"comments,omitempty"`
-	CommentsUrl string `json:"comments_url,omitempty"`
-	CommitsUrl  string `json:"commits_url,omitempty"`
-	CreatedAt   string `json:"created_at,omitempty"`
-	Description string `json:"description,omitempty"`
-	Files       map[string]struct {
-		Content   string `json:"content,omitempty"`
-		Filename  string `json:"filename,omitempty"`
-		Language  string `json:"language,omitempty"`
-		RawUrl    string `json:"raw_url,omitempty"`
-		Size      int64  `json:"size,omitempty"`
-		Truncated bool   `json:"truncated,omitempty"`
-		Type      string `json:"type,omitempty"`
-	} `json:"files,omitempty"`
-	ForkOf *GistSimple `json:"fork_of,omitempty"`
-	Forks  []struct {
-		CreatedAt string `json:"created_at,omitempty"`
-		Id        string `json:"id,omitempty"`
-		UpdatedAt string `json:"updated_at,omitempty"`
-		Url       string `json:"url,omitempty"`
-		User      struct {
-			AvatarUrl         string `json:"avatar_url,omitempty"`
-			EventsUrl         string `json:"events_url,omitempty"`
-			FollowersUrl      string `json:"followers_url,omitempty"`
-			FollowingUrl      string `json:"following_url,omitempty"`
-			GistsUrl          string `json:"gists_url,omitempty"`
-			GravatarId        string `json:"gravatar_id,omitempty"`
-			HtmlUrl           string `json:"html_url,omitempty"`
-			Id                int64  `json:"id,omitempty"`
-			Login             string `json:"login,omitempty"`
-			NodeId            string `json:"node_id,omitempty"`
-			OrganizationsUrl  string `json:"organizations_url,omitempty"`
-			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-			ReposUrl          string `json:"repos_url,omitempty"`
-			SiteAdmin         bool   `json:"site_admin,omitempty"`
-			StarredUrl        string `json:"starred_url,omitempty"`
-			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-			Type              string `json:"type,omitempty"`
-			Url               string `json:"url,omitempty"`
-		} `json:"user,omitempty"`
-	} `json:"forks,omitempty"`
-	ForksUrl   string `json:"forks_url,omitempty"`
-	GitPullUrl string `json:"git_pull_url,omitempty"`
-	GitPushUrl string `json:"git_push_url,omitempty"`
-	History    []struct {
-		ChangeStatus struct {
-			Additions int64 `json:"additions,omitempty"`
-			Deletions int64 `json:"deletions,omitempty"`
-			Total     int64 `json:"total,omitempty"`
-		} `json:"change_status,omitempty"`
-		CommittedAt string `json:"committed_at,omitempty"`
-		Url         string `json:"url,omitempty"`
-		User        *struct {
-			AvatarUrl         string `json:"avatar_url,omitempty"`
-			EventsUrl         string `json:"events_url,omitempty"`
-			FollowersUrl      string `json:"followers_url,omitempty"`
-			FollowingUrl      string `json:"following_url,omitempty"`
-			GistsUrl          string `json:"gists_url,omitempty"`
-			GravatarId        string `json:"gravatar_id,omitempty"`
-			HtmlUrl           string `json:"html_url,omitempty"`
-			Id                int64  `json:"id,omitempty"`
-			Login             string `json:"login,omitempty"`
-			NodeId            string `json:"node_id,omitempty"`
-			OrganizationsUrl  string `json:"organizations_url,omitempty"`
-			ReceivedEventsUrl string `json:"received_events_url,omitempty"`
-			ReposUrl          string `json:"repos_url,omitempty"`
-			SiteAdmin         bool   `json:"site_admin,omitempty"`
-			StarredUrl        string `json:"starred_url,omitempty"`
-			SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
-			Type              string `json:"type,omitempty"`
-			Url               string `json:"url,omitempty"`
-		} `json:"user,omitempty"`
-		Version string `json:"version,omitempty"`
-	} `json:"history,omitempty"`
-	HtmlUrl   string      `json:"html_url,omitempty"`
-	Id        string      `json:"id,omitempty"`
-	NodeId    string      `json:"node_id,omitempty"`
-	Owner     *SimpleUser `json:"owner,omitempty"`
-	Public    bool        `json:"public,omitempty"`
-	Truncated bool        `json:"truncated,omitempty"`
-	UpdatedAt string      `json:"updated_at,omitempty"`
-	Url       string      `json:"url,omitempty"`
-	User      string      `json:"user,omitempty"`
+	Comments    int64                     `json:"comments,omitempty"`
+	CommentsUrl string                    `json:"comments_url,omitempty"`
+	CommitsUrl  string                    `json:"commits_url,omitempty"`
+	CreatedAt   string                    `json:"created_at,omitempty"`
+	Description string                    `json:"description,omitempty"`
+	Files       map[string]GistSimpleFile `json:"files,omitempty"`
+	ForkOf      *GistSimple               `json:"fork_of,omitempty"`
+	Forks       []GistFullFork            `json:"forks,omitempty"`
+	ForksUrl    string                    `json:"forks_url,omitempty"`
+	GitPullUrl  string                    `json:"git_pull_url,omitempty"`
+	GitPushUrl  string                    `json:"git_push_url,omitempty"`
+	History     []GistFullHistory         `json:"history,omitempty"`
+	HtmlUrl     string                    `json:"html_url,omitempty"`
+	Id          string                    `json:"id,omitempty"`
+	NodeId      string                    `json:"node_id,omitempty"`
+	Owner       *SimpleUser               `json:"owner,omitempty"`
+	Public      bool                      `json:"public,omitempty"`
+	Truncated   bool                      `json:"truncated,omitempty"`
+	UpdatedAt   string                    `json:"updated_at,omitempty"`
+	Url         string                    `json:"url,omitempty"`
+	User        string                    `json:"user,omitempty"`
+}
+
+type GistFullFile struct {
+	Content   string `json:"content,omitempty"`
+	Filename  string `json:"filename,omitempty"`
+	Language  string `json:"language,omitempty"`
+	RawUrl    string `json:"raw_url,omitempty"`
+	Size      int64  `json:"size,omitempty"`
+	Truncated bool   `json:"truncated,omitempty"`
+	Type      string `json:"type,omitempty"`
+}
+
+type GistFullFork struct {
+	CreatedAt string           `json:"created_at,omitempty"`
+	Id        string           `json:"id,omitempty"`
+	UpdatedAt string           `json:"updated_at,omitempty"`
+	Url       string           `json:"url,omitempty"`
+	User      GistFullForkUser `json:"user,omitempty"`
+}
+
+type GistFullForkUser struct {
+	AvatarUrl         string `json:"avatar_url,omitempty"`
+	EventsUrl         string `json:"events_url,omitempty"`
+	FollowersUrl      string `json:"followers_url,omitempty"`
+	FollowingUrl      string `json:"following_url,omitempty"`
+	GistsUrl          string `json:"gists_url,omitempty"`
+	GravatarId        string `json:"gravatar_id,omitempty"`
+	HtmlUrl           string `json:"html_url,omitempty"`
+	Id                int64  `json:"id,omitempty"`
+	Login             string `json:"login,omitempty"`
+	NodeId            string `json:"node_id,omitempty"`
+	OrganizationsUrl  string `json:"organizations_url,omitempty"`
+	ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+	ReposUrl          string `json:"repos_url,omitempty"`
+	SiteAdmin         bool   `json:"site_admin,omitempty"`
+	StarredUrl        string `json:"starred_url,omitempty"`
+	SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+	Type              string `json:"type,omitempty"`
+	Url               string `json:"url,omitempty"`
+}
+
+type GistFullHistory struct {
+	ChangeStatus GistFullHistoryChangeStatus `json:"change_status,omitempty"`
+	CommittedAt  string                      `json:"committed_at,omitempty"`
+	Url          string                      `json:"url,omitempty"`
+	User         *GistFullHistoryUser        `json:"user,omitempty"`
+	Version      string                      `json:"version,omitempty"`
+}
+
+type GistFullHistoryChangeStatus struct {
+	Additions int64 `json:"additions,omitempty"`
+	Deletions int64 `json:"deletions,omitempty"`
+	Total     int64 `json:"total,omitempty"`
+}
+
+type GistFullHistoryUser struct {
+	AvatarUrl         string `json:"avatar_url,omitempty"`
+	EventsUrl         string `json:"events_url,omitempty"`
+	FollowersUrl      string `json:"followers_url,omitempty"`
+	FollowingUrl      string `json:"following_url,omitempty"`
+	GistsUrl          string `json:"gists_url,omitempty"`
+	GravatarId        string `json:"gravatar_id,omitempty"`
+	HtmlUrl           string `json:"html_url,omitempty"`
+	Id                int64  `json:"id,omitempty"`
+	Login             string `json:"login,omitempty"`
+	NodeId            string `json:"node_id,omitempty"`
+	OrganizationsUrl  string `json:"organizations_url,omitempty"`
+	ReceivedEventsUrl string `json:"received_events_url,omitempty"`
+	ReposUrl          string `json:"repos_url,omitempty"`
+	SiteAdmin         bool   `json:"site_admin,omitempty"`
+	StarredUrl        string `json:"starred_url,omitempty"`
+	SubscriptionsUrl  string `json:"subscriptions_url,omitempty"`
+	Type              string `json:"type,omitempty"`
+	Url               string `json:"url,omitempty"`
 }
 
 type GistSimple struct {
-	Comments    int64  `json:"comments,omitempty"`
-	CommentsUrl string `json:"comments_url,omitempty"`
-	CommitsUrl  string `json:"commits_url,omitempty"`
-	CreatedAt   string `json:"created_at,omitempty"`
-	Description string `json:"description,omitempty"`
-	Files       map[string]struct {
-		Content   string `json:"content,omitempty"`
-		Filename  string `json:"filename,omitempty"`
-		Language  string `json:"language,omitempty"`
-		RawUrl    string `json:"raw_url,omitempty"`
-		Size      int64  `json:"size,omitempty"`
-		Truncated bool   `json:"truncated,omitempty"`
-		Type      string `json:"type,omitempty"`
-	} `json:"files,omitempty"`
-	ForksUrl   string      `json:"forks_url,omitempty"`
-	GitPullUrl string      `json:"git_pull_url,omitempty"`
-	GitPushUrl string      `json:"git_push_url,omitempty"`
-	HtmlUrl    string      `json:"html_url,omitempty"`
-	Id         string      `json:"id,omitempty"`
-	NodeId     string      `json:"node_id,omitempty"`
-	Owner      *SimpleUser `json:"owner,omitempty"`
-	Public     bool        `json:"public,omitempty"`
-	Truncated  bool        `json:"truncated,omitempty"`
-	UpdatedAt  string      `json:"updated_at,omitempty"`
-	Url        string      `json:"url,omitempty"`
-	User       string      `json:"user,omitempty"`
+	Comments    int64                     `json:"comments,omitempty"`
+	CommentsUrl string                    `json:"comments_url,omitempty"`
+	CommitsUrl  string                    `json:"commits_url,omitempty"`
+	CreatedAt   string                    `json:"created_at,omitempty"`
+	Description string                    `json:"description,omitempty"`
+	Files       map[string]GistSimpleFile `json:"files,omitempty"`
+	ForksUrl    string                    `json:"forks_url,omitempty"`
+	GitPullUrl  string                    `json:"git_pull_url,omitempty"`
+	GitPushUrl  string                    `json:"git_push_url,omitempty"`
+	HtmlUrl     string                    `json:"html_url,omitempty"`
+	Id          string                    `json:"id,omitempty"`
+	NodeId      string                    `json:"node_id,omitempty"`
+	Owner       *SimpleUser               `json:"owner,omitempty"`
+	Public      bool                      `json:"public,omitempty"`
+	Truncated   bool                      `json:"truncated,omitempty"`
+	UpdatedAt   string                    `json:"updated_at,omitempty"`
+	Url         string                    `json:"url,omitempty"`
+	User        string                    `json:"user,omitempty"`
+}
+
+type GistSimpleFile struct {
+	Content   string `json:"content,omitempty"`
+	Filename  string `json:"filename,omitempty"`
+	Language  string `json:"language,omitempty"`
+	RawUrl    string `json:"raw_url,omitempty"`
+	Size      int64  `json:"size,omitempty"`
+	Truncated bool   `json:"truncated,omitempty"`
+	Type      string `json:"type,omitempty"`
 }
 
 type GitCommit struct {
@@ -1901,12 +1919,20 @@ type Integration struct {
 	Pem    string      `json:"pem,omitempty"`
 
 	// The set of permissions for the GitHub app
-	Permissions map[string]string `json:"permissions"`
+	Permissions IntegrationPermissions `json:"permissions"`
 
 	// The slug name of the GitHub app
 	Slug          string `json:"slug,omitempty"`
 	UpdatedAt     string `json:"updated_at"`
 	WebhookSecret string `json:"webhook_secret,omitempty"`
+}
+
+type IntegrationPermissions struct {
+	Checks      string `json:"checks,omitempty"`
+	Contents    string `json:"contents,omitempty"`
+	Deployments string `json:"deployments,omitempty"`
+	Issues      string `json:"issues,omitempty"`
+	Metadata    string `json:"metadata,omitempty"`
 }
 
 type InteractionLimit struct {
@@ -4519,13 +4545,15 @@ type ScopedInstallation struct {
 
 type ScopedInstallationPermissions interface{}
 
-type SearchResultTextMatches []struct {
+type SearchResultTextMatch struct {
 	Fragment   string                         `json:"fragment,omitempty"`
 	Matches    []SearchResultTextMatchesMatch `json:"matches,omitempty"`
 	ObjectType string                         `json:"object_type,omitempty"`
 	ObjectUrl  string                         `json:"object_url,omitempty"`
 	Property   string                         `json:"property,omitempty"`
 }
+
+type SearchResultTextMatches []SearchResultTextMatch
 
 type SearchResultTextMatchesMatch struct {
 	Indices []int64 `json:"indices,omitempty"`
