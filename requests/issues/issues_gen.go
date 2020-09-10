@@ -68,9 +68,13 @@ https://developer.github.com/v3/issues/assignees/#add-assignees-to-an-issue
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type AddAssigneesReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// issue_number parameter
 	IssueNumber int64
@@ -206,9 +210,13 @@ https://developer.github.com/v3/issues/labels/#add-labels-to-an-issue
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type AddLabelsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// issue_number parameter
 	IssueNumber int64
@@ -346,9 +354,13 @@ https://developer.github.com/v3/issues/assignees/#check-if-a-user-can-be-assigne
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CheckUserCanBeAssignedReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// assignee parameter
 	Assignee string
@@ -462,8 +474,12 @@ https://developer.github.com/v3/issues/#create-an-issue
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody CreateReqBody
 }
@@ -623,9 +639,13 @@ https://developer.github.com/v3/issues/comments/#create-an-issue-comment
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateCommentReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// issue_number parameter
 	IssueNumber int64
@@ -758,8 +778,12 @@ https://developer.github.com/v3/issues/labels/#create-a-label
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateLabelReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody CreateLabelReqBody
 }
@@ -903,8 +927,12 @@ https://developer.github.com/v3/issues/milestones/#create-a-milestone
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateMilestoneReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody CreateMilestoneReqBody
 }
@@ -1047,9 +1075,13 @@ https://developer.github.com/v3/issues/comments/#delete-an-issue-comment
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DeleteCommentReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// comment_id parameter
 	CommentId int64
@@ -1158,9 +1190,13 @@ https://developer.github.com/v3/issues/labels/#delete-a-label
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DeleteLabelReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// name parameter
 	Name string
@@ -1269,9 +1305,13 @@ https://developer.github.com/v3/issues/milestones/#delete-a-milestone
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DeleteMilestoneReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// milestone_number parameter
 	MilestoneNumber int64
@@ -1385,9 +1425,13 @@ https://developer.github.com/v3/issues/#get-an-issue
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// issue_number parameter
 	IssueNumber int64
@@ -1517,9 +1561,13 @@ https://developer.github.com/v3/issues/comments/#get-an-issue-comment
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetCommentReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// comment_id parameter
 	CommentId int64
@@ -1658,9 +1706,13 @@ https://developer.github.com/v3/issues/events/#get-an-issue-event
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetEventReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// event_id parameter
 	EventId int64
@@ -1811,9 +1863,13 @@ https://developer.github.com/v3/issues/labels/#get-a-label
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetLabelReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// name parameter
 	Name string
@@ -1930,9 +1986,13 @@ https://developer.github.com/v3/issues/milestones/#get-a-milestone
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetMilestoneReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// milestone_number parameter
 	MilestoneNumber int64
@@ -2000,7 +2060,7 @@ List issues assigned to the authenticated user.
 
   GET /issues
 
-https://developer.github.com/v3/issues/#list-issues-assigned-to-the-authenticated-user
+https://developer.github.com/v3/issues/#list-issues
 */
 func List(ctx context.Context, req *ListReq, opt ...requests.Option) (*ListResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -2033,7 +2093,7 @@ List issues assigned to the authenticated user.
 
   GET /issues
 
-https://developer.github.com/v3/issues/#list-issues-assigned-to-the-authenticated-user
+https://developer.github.com/v3/issues/#list-issues
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -2044,7 +2104,7 @@ func (c Client) List(ctx context.Context, req *ListReq, opt ...requests.Option) 
 /*
 ListReq is request data for Client.List
 
-https://developer.github.com/v3/issues/#list-issues-assigned-to-the-authenticated-user
+https://developer.github.com/v3/issues/#list-issues
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -2074,11 +2134,11 @@ type ListReq struct {
 	// What to sort results by. Can be either `created`, `updated`, `comments`.
 	Sort *string
 
-	// One of `asc` (ascending) or `desc` (descending).
+	// The direction of the sort. Can be either `asc` or `desc`.
 	Direction *string
 
 	/*
-	Only show notifications updated after the given time. This is a timestamp in
+	Only issues updated at or after this time are returned. This is a timestamp in
 	[ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format:
 	`YYYY-MM-DDTHH:MM:SSZ`.
 	*/
@@ -2183,7 +2243,7 @@ func (r *ListReq) Rel(link string, resp *ListResponse) bool {
 /*
 ListResponse is a response for List
 
-https://developer.github.com/v3/issues/#list-issues-assigned-to-the-authenticated-user
+https://developer.github.com/v3/issues/#list-issues
 */
 type ListResponse struct {
 	httpResponse *http.Response
@@ -2267,9 +2327,13 @@ https://developer.github.com/v3/issues/assignees/#list-assignees
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListAssigneesReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -2398,15 +2462,19 @@ https://developer.github.com/v3/issues/comments/#list-issue-comments
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListCommentsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// issue_number parameter
 	IssueNumber int64
 
 	/*
-	Only show notifications updated after the given time. This is a timestamp in
+	Only comments updated at or after this time are returned. This is a timestamp in
 	[ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format:
 	`YYYY-MM-DDTHH:MM:SSZ`.
 	*/
@@ -2555,21 +2623,22 @@ https://developer.github.com/v3/issues/comments/#list-issue-comments-for-a-repos
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListCommentsForRepoReq struct {
-	_url  string
-	Owner string
-	Repo  string
+	_url string
 
-	/*
-	One of `created` (when the repository was starred) or `updated` (when it was
-	last pushed to).
-	*/
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// Either `created` or `updated`.
 	Sort *string
 
 	// Either `asc` or `desc`. Ignored without the `sort` parameter.
 	Direction *string
 
 	/*
-	Only show notifications updated after the given time. This is a timestamp in
+	Only comments updated at or after this time are returned. This is a timestamp in
 	[ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format:
 	`YYYY-MM-DDTHH:MM:SSZ`.
 	*/
@@ -2724,9 +2793,13 @@ https://developer.github.com/v3/issues/events/#list-issue-events
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListEventsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// issue_number parameter
 	IssueNumber int64
@@ -2885,9 +2958,13 @@ https://developer.github.com/v3/issues/events/#list-issue-events-for-a-repositor
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListEventsForRepoReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -3043,9 +3120,13 @@ https://developer.github.com/v3/issues/timeline/#list-timeline-events-for-an-iss
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListEventsForTimelineReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// issue_number parameter
 	IssueNumber int64
@@ -3155,7 +3236,7 @@ List user account issues assigned to the authenticated user.
 
   GET /user/issues
 
-https://developer.github.com/v3/issues/#list-user-account-issues-assigned-to-the-authenticated-user
+https://developer.github.com/v3/issues/#list-issues
 */
 func ListForAuthenticatedUser(ctx context.Context, req *ListForAuthenticatedUserReq, opt ...requests.Option) (*ListForAuthenticatedUserResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -3188,7 +3269,7 @@ List user account issues assigned to the authenticated user.
 
   GET /user/issues
 
-https://developer.github.com/v3/issues/#list-user-account-issues-assigned-to-the-authenticated-user
+https://developer.github.com/v3/issues/#list-issues
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -3199,7 +3280,7 @@ func (c Client) ListForAuthenticatedUser(ctx context.Context, req *ListForAuthen
 /*
 ListForAuthenticatedUserReq is request data for Client.ListForAuthenticatedUser
 
-https://developer.github.com/v3/issues/#list-user-account-issues-assigned-to-the-authenticated-user
+https://developer.github.com/v3/issues/#list-issues
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -3229,11 +3310,11 @@ type ListForAuthenticatedUserReq struct {
 	// What to sort results by. Can be either `created`, `updated`, `comments`.
 	Sort *string
 
-	// One of `asc` (ascending) or `desc` (descending).
+	// The direction of the sort. Can be either `asc` or `desc`.
 	Direction *string
 
 	/*
-	Only show notifications updated after the given time. This is a timestamp in
+	Only issues updated at or after this time are returned. This is a timestamp in
 	[ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format:
 	`YYYY-MM-DDTHH:MM:SSZ`.
 	*/
@@ -3322,7 +3403,7 @@ func (r *ListForAuthenticatedUserReq) Rel(link string, resp *ListForAuthenticate
 /*
 ListForAuthenticatedUserResponse is a response for ListForAuthenticatedUser
 
-https://developer.github.com/v3/issues/#list-user-account-issues-assigned-to-the-authenticated-user
+https://developer.github.com/v3/issues/#list-issues
 */
 type ListForAuthenticatedUserResponse struct {
 	httpResponse *http.Response
@@ -3407,7 +3488,9 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type ListForOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	/*
 	Indicates which sorts of issues to return. Can be one of:
@@ -3432,11 +3515,11 @@ type ListForOrgReq struct {
 	// What to sort results by. Can be either `created`, `updated`, `comments`.
 	Sort *string
 
-	// One of `asc` (ascending) or `desc` (descending).
+	// The direction of the sort. Can be either `asc` or `desc`.
 	Direction *string
 
 	/*
-	Only show notifications updated after the given time. This is a timestamp in
+	Only issues updated at or after this time are returned. This is a timestamp in
 	[ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format:
 	`YYYY-MM-DDTHH:MM:SSZ`.
 	*/
@@ -3609,9 +3692,13 @@ https://developer.github.com/v3/issues/#list-repository-issues
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListForRepoReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	/*
 	If an `integer` is passed, it should refer to a milestone by its `number` field.
@@ -3644,11 +3731,11 @@ type ListForRepoReq struct {
 	// What to sort results by. Can be either `created`, `updated`, `comments`.
 	Sort *string
 
-	// One of `asc` (ascending) or `desc` (descending).
+	// The direction of the sort. Can be either `asc` or `desc`.
 	Direction *string
 
 	/*
-	Only show notifications updated after the given time. This is a timestamp in
+	Only issues updated at or after this time are returned. This is a timestamp in
 	[ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format:
 	`YYYY-MM-DDTHH:MM:SSZ`.
 	*/
@@ -3830,9 +3917,13 @@ https://developer.github.com/v3/issues/labels/#list-labels-for-issues-in-a-miles
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListLabelsForMilestoneReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// milestone_number parameter
 	MilestoneNumber int64
@@ -3964,9 +4055,13 @@ https://developer.github.com/v3/issues/labels/#list-labels-for-a-repository
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListLabelsForRepoReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -4095,9 +4190,13 @@ https://developer.github.com/v3/issues/labels/#list-labels-for-an-issue
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListLabelsOnIssueReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// issue_number parameter
 	IssueNumber int64
@@ -4229,9 +4328,13 @@ https://developer.github.com/v3/issues/milestones/#list-milestones
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListMilestonesReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// The state of the milestone. Either `open`, `closed`, or `all`.
 	State *string
@@ -4378,9 +4481,13 @@ https://developer.github.com/v3/issues/#lock-an-issue
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type LockReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// issue_number parameter
 	IssueNumber int64
@@ -4522,9 +4629,13 @@ https://developer.github.com/v3/issues/labels/#remove-all-labels-from-an-issue
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type RemoveAllLabelsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// issue_number parameter
 	IssueNumber int64
@@ -4633,9 +4744,13 @@ https://developer.github.com/v3/issues/assignees/#remove-assignees-from-an-issue
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type RemoveAssigneesReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// issue_number parameter
 	IssueNumber int64
@@ -4772,9 +4887,13 @@ https://developer.github.com/v3/issues/labels/#remove-a-label-from-an-issue
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type RemoveLabelReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// issue_number parameter
 	IssueNumber int64
@@ -4894,9 +5013,13 @@ https://developer.github.com/v3/issues/labels/#set-labels-for-an-issue
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type SetLabelsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// issue_number parameter
 	IssueNumber int64
@@ -5034,9 +5157,13 @@ https://developer.github.com/v3/issues/#unlock-an-issue
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type UnlockReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// issue_number parameter
 	IssueNumber int64
@@ -5145,9 +5272,13 @@ https://developer.github.com/v3/issues/#update-an-issue
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type UpdateReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// issue_number parameter
 	IssueNumber int64
@@ -5312,9 +5443,13 @@ https://developer.github.com/v3/issues/comments/#update-an-issue-comment
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type UpdateCommentReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// comment_id parameter
 	CommentId   int64
@@ -5447,9 +5582,13 @@ https://developer.github.com/v3/issues/labels/#update-a-label
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type UpdateLabelReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// name parameter
 	Name        string
@@ -5496,6 +5635,7 @@ type UpdateLabelReqBody struct {
 
 	// A short description of the label.
 	Description *string `json:"description,omitempty"`
+	Name        *string `json:"name,omitempty"`
 
 	/*
 	The new name of the label. Emoji can be added to label names, using either
@@ -5595,9 +5735,13 @@ https://developer.github.com/v3/issues/milestones/#update-a-milestone
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type UpdateMilestoneReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// milestone_number parameter
 	MilestoneNumber int64

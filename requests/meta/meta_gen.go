@@ -8,7 +8,6 @@ import (
 	components "github.com/willabides/octo-go/components"
 	requests "github.com/willabides/octo-go/requests"
 	"net/http"
-	"net/url"
 )
 
 /*
@@ -18,7 +17,7 @@ Get GitHub meta information.
 
   GET /meta
 
-https://developer.github.com/v3/meta/#get-github-meta-information
+https://developer.github.com/v3/meta/#meta
 */
 func Get(ctx context.Context, req *GetReq, opt ...requests.Option) (*GetResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -51,7 +50,7 @@ Get GitHub meta information.
 
   GET /meta
 
-https://developer.github.com/v3/meta/#get-github-meta-information
+https://developer.github.com/v3/meta/#meta
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -62,7 +61,7 @@ func (c Client) Get(ctx context.Context, req *GetReq, opt ...requests.Option) (*
 /*
 GetReq is request data for Client.Get
 
-https://developer.github.com/v3/meta/#get-github-meta-information
+https://developer.github.com/v3/meta/#meta
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -97,7 +96,7 @@ func (r *GetReq) Rel(link string, resp *GetResponse) bool {
 /*
 GetResponse is a response for Get
 
-https://developer.github.com/v3/meta/#get-github-meta-information
+https://developer.github.com/v3/meta/#meta
 */
 type GetResponse struct {
 	httpResponse *http.Response
@@ -113,375 +112,6 @@ func (r *GetResponse) HTTPResponse() *http.Response {
 func (r *GetResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := responseErrorCheck(resp, []int{200, 304})
-	if err != nil {
-		return err
-	}
-	if intInSlice(resp.StatusCode, []int{200}) {
-		err = unmarshalResponseBody(resp, &r.Data)
-		if err != nil {
-			return err
-		}
-	}
-	return nil
-}
-
-/*
-GetOctocat performs requests for "meta/get-octocat"
-
-Get Octocat.
-
-  GET /octocat
-
-*/
-func GetOctocat(ctx context.Context, req *GetOctocatReq, opt ...requests.Option) (*GetOctocatResponse, error) {
-	opts := requests.BuildOptions(opt...)
-	if req == nil {
-		req = new(GetOctocatReq)
-	}
-	resp := &GetOctocatResponse{}
-
-	httpReq, err := req.HTTPRequest(ctx, opt...)
-	if err != nil {
-		return nil, err
-	}
-
-	r, err := opts.HttpClient().Do(httpReq)
-	if err != nil {
-		return nil, err
-	}
-
-	err = resp.ReadResponse(r)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-GetOctocat performs requests for "meta/get-octocat"
-
-Get Octocat.
-
-  GET /octocat
-
-
-
-Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
-*/
-func (c Client) GetOctocat(ctx context.Context, req *GetOctocatReq, opt ...requests.Option) (*GetOctocatResponse, error) {
-	return GetOctocat(ctx, req, append(c, opt...)...)
-}
-
-/*
-GetOctocatReq is request data for Client.GetOctocat
-
-
-
-Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
-*/
-type GetOctocatReq struct {
-	_url string
-
-	// The words to show in Octocat's speech bubble
-	S *string
-}
-
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
-func (r *GetOctocatReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	query := url.Values{}
-	if r.S != nil {
-		query.Set("s", *r.S)
-	}
-
-	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
-		ExplicitURL: r._url,
-		Method:      "GET",
-		Options:     opt,
-		URLPath:     fmt.Sprintf("/octocat"),
-		URLQuery:    query,
-	})
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *GetOctocatReq) Rel(link string, resp *GetOctocatResponse) bool {
-	u := getRelLink(resp.HTTPResponse(), link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-GetOctocatResponse is a response for GetOctocat
-
-*/
-type GetOctocatResponse struct {
-	httpResponse *http.Response
-}
-
-// HTTPResponse returns the *http.Response
-func (r *GetOctocatResponse) HTTPResponse() *http.Response {
-	return r.httpResponse
-}
-
-// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *GetOctocatResponse) ReadResponse(resp *http.Response) error {
-	r.httpResponse = resp
-	err := responseErrorCheck(resp, []int{200})
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
-/*
-GetZen performs requests for "meta/get-zen"
-
-Get the Zen of GitHub.
-
-  GET /zen
-
-*/
-func GetZen(ctx context.Context, req *GetZenReq, opt ...requests.Option) (*GetZenResponse, error) {
-	opts := requests.BuildOptions(opt...)
-	if req == nil {
-		req = new(GetZenReq)
-	}
-	resp := &GetZenResponse{}
-
-	httpReq, err := req.HTTPRequest(ctx, opt...)
-	if err != nil {
-		return nil, err
-	}
-
-	r, err := opts.HttpClient().Do(httpReq)
-	if err != nil {
-		return nil, err
-	}
-
-	err = resp.ReadResponse(r)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-GetZen performs requests for "meta/get-zen"
-
-Get the Zen of GitHub.
-
-  GET /zen
-
-
-
-Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
-*/
-func (c Client) GetZen(ctx context.Context, req *GetZenReq, opt ...requests.Option) (*GetZenResponse, error) {
-	return GetZen(ctx, req, append(c, opt...)...)
-}
-
-/*
-GetZenReq is request data for Client.GetZen
-
-
-
-Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
-*/
-type GetZenReq struct {
-	_url string
-}
-
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
-func (r *GetZenReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
-		ExplicitURL: r._url,
-		Method:      "GET",
-		Options:     opt,
-		URLPath:     fmt.Sprintf("/zen"),
-	})
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *GetZenReq) Rel(link string, resp *GetZenResponse) bool {
-	u := getRelLink(resp.HTTPResponse(), link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-GetZenResponse is a response for GetZen
-
-*/
-type GetZenResponse struct {
-	httpResponse *http.Response
-}
-
-// HTTPResponse returns the *http.Response
-func (r *GetZenResponse) HTTPResponse() *http.Response {
-	return r.httpResponse
-}
-
-// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *GetZenResponse) ReadResponse(resp *http.Response) error {
-	r.httpResponse = resp
-	err := responseErrorCheck(resp, []int{200})
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
-/*
-Root performs requests for "meta/root"
-
-GitHub API Root.
-
-  GET /
-
-*/
-func Root(ctx context.Context, req *RootReq, opt ...requests.Option) (*RootResponse, error) {
-	opts := requests.BuildOptions(opt...)
-	if req == nil {
-		req = new(RootReq)
-	}
-	resp := &RootResponse{}
-
-	httpReq, err := req.HTTPRequest(ctx, opt...)
-	if err != nil {
-		return nil, err
-	}
-
-	r, err := opts.HttpClient().Do(httpReq)
-	if err != nil {
-		return nil, err
-	}
-
-	err = resp.ReadResponse(r)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-Root performs requests for "meta/root"
-
-GitHub API Root.
-
-  GET /
-
-
-
-Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
-*/
-func (c Client) Root(ctx context.Context, req *RootReq, opt ...requests.Option) (*RootResponse, error) {
-	return Root(ctx, req, append(c, opt...)...)
-}
-
-/*
-RootReq is request data for Client.Root
-
-
-
-Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
-*/
-type RootReq struct {
-	_url string
-}
-
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
-func (r *RootReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
-		ExplicitURL: r._url,
-		HeaderVals:  map[string]*string{"accept": strPtr("application/json")},
-		Method:      "GET",
-		Options:     opt,
-		URLPath:     fmt.Sprintf("/"),
-	})
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *RootReq) Rel(link string, resp *RootResponse) bool {
-	u := getRelLink(resp.HTTPResponse(), link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-RootResponseBody is a response body for Root
-
-*/
-type RootResponseBody struct {
-	AuthorizationsUrl                string `json:"authorizations_url"`
-	CodeSearchUrl                    string `json:"code_search_url"`
-	CommitSearchUrl                  string `json:"commit_search_url"`
-	CurrentUserAuthorizationsHtmlUrl string `json:"current_user_authorizations_html_url"`
-	CurrentUserRepositoriesUrl       string `json:"current_user_repositories_url"`
-	CurrentUserUrl                   string `json:"current_user_url"`
-	EmailsUrl                        string `json:"emails_url"`
-	EmojisUrl                        string `json:"emojis_url"`
-	EventsUrl                        string `json:"events_url"`
-	FeedsUrl                         string `json:"feeds_url"`
-	FollowersUrl                     string `json:"followers_url"`
-	FollowingUrl                     string `json:"following_url"`
-	GistsUrl                         string `json:"gists_url"`
-	HubUrl                           string `json:"hub_url"`
-	IssueSearchUrl                   string `json:"issue_search_url"`
-	IssuesUrl                        string `json:"issues_url"`
-	KeysUrl                          string `json:"keys_url"`
-	LabelSearchUrl                   string `json:"label_search_url"`
-	NotificationsUrl                 string `json:"notifications_url"`
-	OrganizationRepositoriesUrl      string `json:"organization_repositories_url"`
-	OrganizationTeamsUrl             string `json:"organization_teams_url"`
-	OrganizationUrl                  string `json:"organization_url"`
-	PublicGistsUrl                   string `json:"public_gists_url"`
-	RateLimitUrl                     string `json:"rate_limit_url"`
-	RepositorySearchUrl              string `json:"repository_search_url"`
-	RepositoryUrl                    string `json:"repository_url"`
-	StarredGistsUrl                  string `json:"starred_gists_url"`
-	StarredUrl                       string `json:"starred_url"`
-	TopicSearchUrl                   string `json:"topic_search_url,omitempty"`
-	UserOrganizationsUrl             string `json:"user_organizations_url"`
-	UserRepositoriesUrl              string `json:"user_repositories_url"`
-	UserSearchUrl                    string `json:"user_search_url"`
-	UserUrl                          string `json:"user_url"`
-}
-
-/*
-RootResponse is a response for Root
-
-*/
-type RootResponse struct {
-	httpResponse *http.Response
-	Data         RootResponseBody
-}
-
-// HTTPResponse returns the *http.Response
-func (r *RootResponse) HTTPResponse() *http.Response {
-	return r.httpResponse
-}
-
-// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *RootResponse) ReadResponse(resp *http.Response) error {
-	r.httpResponse = resp
-	err := responseErrorCheck(resp, []int{200})
 	if err != nil {
 		return err
 	}

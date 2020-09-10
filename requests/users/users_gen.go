@@ -20,7 +20,7 @@ Add an email address for the authenticated user.
 
   POST /user/emails
 
-https://developer.github.com/v3/users/emails/#add-an-email-address-for-the-authenticated-user
+https://developer.github.com/v3/users/emails/#add-email-addresses
 */
 func AddEmailForAuthenticated(ctx context.Context, req *AddEmailForAuthenticatedReq, opt ...requests.Option) (*AddEmailForAuthenticatedResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -53,7 +53,7 @@ Add an email address for the authenticated user.
 
   POST /user/emails
 
-https://developer.github.com/v3/users/emails/#add-an-email-address-for-the-authenticated-user
+https://developer.github.com/v3/users/emails/#add-email-addresses
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -64,7 +64,7 @@ func (c Client) AddEmailForAuthenticated(ctx context.Context, req *AddEmailForAu
 /*
 AddEmailForAuthenticatedReq is request data for Client.AddEmailForAuthenticated
 
-https://developer.github.com/v3/users/emails/#add-an-email-address-for-the-authenticated-user
+https://developer.github.com/v3/users/emails/#add-email-addresses
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -104,7 +104,7 @@ func (r *AddEmailForAuthenticatedReq) Rel(link string, resp *AddEmailForAuthenti
 /*
 AddEmailForAuthenticatedReqBody is a request body for users/add-email-for-authenticated
 
-https://developer.github.com/v3/users/emails/#add-an-email-address-for-the-authenticated-user
+https://developer.github.com/v3/users/emails/#add-email-addresses
 */
 type AddEmailForAuthenticatedReqBody struct {
 
@@ -120,7 +120,7 @@ type AddEmailForAuthenticatedReqBody struct {
 /*
 AddEmailForAuthenticatedResponse is a response for AddEmailForAuthenticated
 
-https://developer.github.com/v3/users/emails/#add-an-email-address-for-the-authenticated-user
+https://developer.github.com/v3/users/emails/#add-email-addresses
 */
 type AddEmailForAuthenticatedResponse struct {
 	httpResponse *http.Response
@@ -204,7 +204,9 @@ https://developer.github.com/v3/users/blocking/#block-a-user
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type BlockReq struct {
-	_url     string
+	_url string
+
+	// username parameter
 	Username string
 }
 
@@ -262,7 +264,7 @@ Check if a user is blocked by the authenticated user.
 
   GET /user/blocks/{username}
 
-https://developer.github.com/v3/users/blocking/#check-if-a-user-is-blocked-by-the-authenticated-user
+https://developer.github.com/v3/users/blocking/#check-whether-youve-blocked-a-user
 */
 func CheckBlocked(ctx context.Context, req *CheckBlockedReq, opt ...requests.Option) (*CheckBlockedResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -295,7 +297,7 @@ Check if a user is blocked by the authenticated user.
 
   GET /user/blocks/{username}
 
-https://developer.github.com/v3/users/blocking/#check-if-a-user-is-blocked-by-the-authenticated-user
+https://developer.github.com/v3/users/blocking/#check-whether-youve-blocked-a-user
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -306,12 +308,14 @@ func (c Client) CheckBlocked(ctx context.Context, req *CheckBlockedReq, opt ...r
 /*
 CheckBlockedReq is request data for Client.CheckBlocked
 
-https://developer.github.com/v3/users/blocking/#check-if-a-user-is-blocked-by-the-authenticated-user
+https://developer.github.com/v3/users/blocking/#check-whether-youve-blocked-a-user
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CheckBlockedReq struct {
-	_url     string
+	_url string
+
+	// username parameter
 	Username string
 }
 
@@ -341,7 +345,7 @@ func (r *CheckBlockedReq) Rel(link string, resp *CheckBlockedResponse) bool {
 /*
 CheckBlockedResponse is a response for CheckBlocked
 
-https://developer.github.com/v3/users/blocking/#check-if-a-user-is-blocked-by-the-authenticated-user
+https://developer.github.com/v3/users/blocking/#check-whether-youve-blocked-a-user
 */
 type CheckBlockedResponse struct {
 	httpResponse *http.Response
@@ -418,7 +422,9 @@ https://developer.github.com/v3/users/followers/#check-if-a-user-follows-another
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CheckFollowingForUserReq struct {
-	_url     string
+	_url string
+
+	// username parameter
 	Username string
 
 	// target_user parameter
@@ -484,7 +490,7 @@ Check if a person is followed by the authenticated user.
 
   GET /user/following/{username}
 
-https://developer.github.com/v3/users/followers/#check-if-a-person-is-followed-by-the-authenticated-user
+https://developer.github.com/v3/users/followers/#check-if-you-are-following-a-user
 */
 func CheckPersonIsFollowedByAuthenticated(ctx context.Context, req *CheckPersonIsFollowedByAuthenticatedReq, opt ...requests.Option) (*CheckPersonIsFollowedByAuthenticatedResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -517,7 +523,7 @@ Check if a person is followed by the authenticated user.
 
   GET /user/following/{username}
 
-https://developer.github.com/v3/users/followers/#check-if-a-person-is-followed-by-the-authenticated-user
+https://developer.github.com/v3/users/followers/#check-if-you-are-following-a-user
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -528,12 +534,14 @@ func (c Client) CheckPersonIsFollowedByAuthenticated(ctx context.Context, req *C
 /*
 CheckPersonIsFollowedByAuthenticatedReq is request data for Client.CheckPersonIsFollowedByAuthenticated
 
-https://developer.github.com/v3/users/followers/#check-if-a-person-is-followed-by-the-authenticated-user
+https://developer.github.com/v3/users/followers/#check-if-you-are-following-a-user
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CheckPersonIsFollowedByAuthenticatedReq struct {
-	_url     string
+	_url string
+
+	// username parameter
 	Username string
 }
 
@@ -563,7 +571,7 @@ func (r *CheckPersonIsFollowedByAuthenticatedReq) Rel(link string, resp *CheckPe
 /*
 CheckPersonIsFollowedByAuthenticatedResponse is a response for CheckPersonIsFollowedByAuthenticated
 
-https://developer.github.com/v3/users/followers/#check-if-a-person-is-followed-by-the-authenticated-user
+https://developer.github.com/v3/users/followers/#check-if-you-are-following-a-user
 */
 type CheckPersonIsFollowedByAuthenticatedResponse struct {
 	httpResponse *http.Response
@@ -591,7 +599,7 @@ Create a GPG key for the authenticated user.
 
   POST /user/gpg_keys
 
-https://developer.github.com/v3/users/gpg_keys/#create-a-gpg-key-for-the-authenticated-user
+https://developer.github.com/v3/users/gpg_keys/#create-a-gpg-key
 */
 func CreateGpgKeyForAuthenticated(ctx context.Context, req *CreateGpgKeyForAuthenticatedReq, opt ...requests.Option) (*CreateGpgKeyForAuthenticatedResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -624,7 +632,7 @@ Create a GPG key for the authenticated user.
 
   POST /user/gpg_keys
 
-https://developer.github.com/v3/users/gpg_keys/#create-a-gpg-key-for-the-authenticated-user
+https://developer.github.com/v3/users/gpg_keys/#create-a-gpg-key
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -635,7 +643,7 @@ func (c Client) CreateGpgKeyForAuthenticated(ctx context.Context, req *CreateGpg
 /*
 CreateGpgKeyForAuthenticatedReq is request data for Client.CreateGpgKeyForAuthenticated
 
-https://developer.github.com/v3/users/gpg_keys/#create-a-gpg-key-for-the-authenticated-user
+https://developer.github.com/v3/users/gpg_keys/#create-a-gpg-key
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -675,7 +683,7 @@ func (r *CreateGpgKeyForAuthenticatedReq) Rel(link string, resp *CreateGpgKeyFor
 /*
 CreateGpgKeyForAuthenticatedReqBody is a request body for users/create-gpg-key-for-authenticated
 
-https://developer.github.com/v3/users/gpg_keys/#create-a-gpg-key-for-the-authenticated-user
+https://developer.github.com/v3/users/gpg_keys/#create-a-gpg-key
 */
 type CreateGpgKeyForAuthenticatedReqBody struct {
 
@@ -686,7 +694,7 @@ type CreateGpgKeyForAuthenticatedReqBody struct {
 /*
 CreateGpgKeyForAuthenticatedResponse is a response for CreateGpgKeyForAuthenticated
 
-https://developer.github.com/v3/users/gpg_keys/#create-a-gpg-key-for-the-authenticated-user
+https://developer.github.com/v3/users/gpg_keys/#create-a-gpg-key
 */
 type CreateGpgKeyForAuthenticatedResponse struct {
 	httpResponse *http.Response
@@ -721,7 +729,7 @@ Create a public SSH key for the authenticated user.
 
   POST /user/keys
 
-https://developer.github.com/v3/users/keys/#create-a-public-ssh-key-for-the-authenticated-user
+https://developer.github.com/v3/users/keys/#create-a-public-key
 */
 func CreatePublicSshKeyForAuthenticated(ctx context.Context, req *CreatePublicSshKeyForAuthenticatedReq, opt ...requests.Option) (*CreatePublicSshKeyForAuthenticatedResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -754,7 +762,7 @@ Create a public SSH key for the authenticated user.
 
   POST /user/keys
 
-https://developer.github.com/v3/users/keys/#create-a-public-ssh-key-for-the-authenticated-user
+https://developer.github.com/v3/users/keys/#create-a-public-key
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -765,7 +773,7 @@ func (c Client) CreatePublicSshKeyForAuthenticated(ctx context.Context, req *Cre
 /*
 CreatePublicSshKeyForAuthenticatedReq is request data for Client.CreatePublicSshKeyForAuthenticated
 
-https://developer.github.com/v3/users/keys/#create-a-public-ssh-key-for-the-authenticated-user
+https://developer.github.com/v3/users/keys/#create-a-public-key
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -805,7 +813,7 @@ func (r *CreatePublicSshKeyForAuthenticatedReq) Rel(link string, resp *CreatePub
 /*
 CreatePublicSshKeyForAuthenticatedReqBody is a request body for users/create-public-ssh-key-for-authenticated
 
-https://developer.github.com/v3/users/keys/#create-a-public-ssh-key-for-the-authenticated-user
+https://developer.github.com/v3/users/keys/#create-a-public-key
 */
 type CreatePublicSshKeyForAuthenticatedReqBody struct {
 
@@ -819,7 +827,7 @@ type CreatePublicSshKeyForAuthenticatedReqBody struct {
 /*
 CreatePublicSshKeyForAuthenticatedResponse is a response for CreatePublicSshKeyForAuthenticated
 
-https://developer.github.com/v3/users/keys/#create-a-public-ssh-key-for-the-authenticated-user
+https://developer.github.com/v3/users/keys/#create-a-public-key
 */
 type CreatePublicSshKeyForAuthenticatedResponse struct {
 	httpResponse *http.Response
@@ -854,7 +862,7 @@ Delete an email address for the authenticated user.
 
   DELETE /user/emails
 
-https://developer.github.com/v3/users/emails/#delete-an-email-address-for-the-authenticated-user
+https://developer.github.com/v3/users/emails/#delete-email-addresses
 */
 func DeleteEmailForAuthenticated(ctx context.Context, req *DeleteEmailForAuthenticatedReq, opt ...requests.Option) (*DeleteEmailForAuthenticatedResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -887,7 +895,7 @@ Delete an email address for the authenticated user.
 
   DELETE /user/emails
 
-https://developer.github.com/v3/users/emails/#delete-an-email-address-for-the-authenticated-user
+https://developer.github.com/v3/users/emails/#delete-email-addresses
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -898,7 +906,7 @@ func (c Client) DeleteEmailForAuthenticated(ctx context.Context, req *DeleteEmai
 /*
 DeleteEmailForAuthenticatedReq is request data for Client.DeleteEmailForAuthenticated
 
-https://developer.github.com/v3/users/emails/#delete-an-email-address-for-the-authenticated-user
+https://developer.github.com/v3/users/emails/#delete-email-addresses
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -935,7 +943,7 @@ func (r *DeleteEmailForAuthenticatedReq) Rel(link string, resp *DeleteEmailForAu
 /*
 DeleteEmailForAuthenticatedReqBody is a request body for users/delete-email-for-authenticated
 
-https://developer.github.com/v3/users/emails/#delete-an-email-address-for-the-authenticated-user
+https://developer.github.com/v3/users/emails/#delete-email-addresses
 */
 type DeleteEmailForAuthenticatedReqBody struct {
 
@@ -946,7 +954,7 @@ type DeleteEmailForAuthenticatedReqBody struct {
 /*
 DeleteEmailForAuthenticatedResponse is a response for DeleteEmailForAuthenticated
 
-https://developer.github.com/v3/users/emails/#delete-an-email-address-for-the-authenticated-user
+https://developer.github.com/v3/users/emails/#delete-email-addresses
 */
 type DeleteEmailForAuthenticatedResponse struct {
 	httpResponse *http.Response
@@ -974,7 +982,7 @@ Delete a GPG key for the authenticated user.
 
   DELETE /user/gpg_keys/{gpg_key_id}
 
-https://developer.github.com/v3/users/gpg_keys/#delete-a-gpg-key-for-the-authenticated-user
+https://developer.github.com/v3/users/gpg_keys/#delete-a-gpg-key
 */
 func DeleteGpgKeyForAuthenticated(ctx context.Context, req *DeleteGpgKeyForAuthenticatedReq, opt ...requests.Option) (*DeleteGpgKeyForAuthenticatedResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -1007,7 +1015,7 @@ Delete a GPG key for the authenticated user.
 
   DELETE /user/gpg_keys/{gpg_key_id}
 
-https://developer.github.com/v3/users/gpg_keys/#delete-a-gpg-key-for-the-authenticated-user
+https://developer.github.com/v3/users/gpg_keys/#delete-a-gpg-key
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -1018,7 +1026,7 @@ func (c Client) DeleteGpgKeyForAuthenticated(ctx context.Context, req *DeleteGpg
 /*
 DeleteGpgKeyForAuthenticatedReq is request data for Client.DeleteGpgKeyForAuthenticated
 
-https://developer.github.com/v3/users/gpg_keys/#delete-a-gpg-key-for-the-authenticated-user
+https://developer.github.com/v3/users/gpg_keys/#delete-a-gpg-key
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -1055,7 +1063,7 @@ func (r *DeleteGpgKeyForAuthenticatedReq) Rel(link string, resp *DeleteGpgKeyFor
 /*
 DeleteGpgKeyForAuthenticatedResponse is a response for DeleteGpgKeyForAuthenticated
 
-https://developer.github.com/v3/users/gpg_keys/#delete-a-gpg-key-for-the-authenticated-user
+https://developer.github.com/v3/users/gpg_keys/#delete-a-gpg-key
 */
 type DeleteGpgKeyForAuthenticatedResponse struct {
 	httpResponse *http.Response
@@ -1083,7 +1091,7 @@ Delete a public SSH key for the authenticated user.
 
   DELETE /user/keys/{key_id}
 
-https://developer.github.com/v3/users/keys/#delete-a-public-ssh-key-for-the-authenticated-user
+https://developer.github.com/v3/users/keys/#delete-a-public-key
 */
 func DeletePublicSshKeyForAuthenticated(ctx context.Context, req *DeletePublicSshKeyForAuthenticatedReq, opt ...requests.Option) (*DeletePublicSshKeyForAuthenticatedResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -1116,7 +1124,7 @@ Delete a public SSH key for the authenticated user.
 
   DELETE /user/keys/{key_id}
 
-https://developer.github.com/v3/users/keys/#delete-a-public-ssh-key-for-the-authenticated-user
+https://developer.github.com/v3/users/keys/#delete-a-public-key
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -1127,7 +1135,7 @@ func (c Client) DeletePublicSshKeyForAuthenticated(ctx context.Context, req *Del
 /*
 DeletePublicSshKeyForAuthenticatedReq is request data for Client.DeletePublicSshKeyForAuthenticated
 
-https://developer.github.com/v3/users/keys/#delete-a-public-ssh-key-for-the-authenticated-user
+https://developer.github.com/v3/users/keys/#delete-a-public-key
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -1164,7 +1172,7 @@ func (r *DeletePublicSshKeyForAuthenticatedReq) Rel(link string, resp *DeletePub
 /*
 DeletePublicSshKeyForAuthenticatedResponse is a response for DeletePublicSshKeyForAuthenticated
 
-https://developer.github.com/v3/users/keys/#delete-a-public-ssh-key-for-the-authenticated-user
+https://developer.github.com/v3/users/keys/#delete-a-public-key
 */
 type DeletePublicSshKeyForAuthenticatedResponse struct {
 	httpResponse *http.Response
@@ -1241,7 +1249,9 @@ https://developer.github.com/v3/users/followers/#follow-a-user
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type FollowReq struct {
-	_url     string
+	_url string
+
+	// username parameter
 	Username string
 }
 
@@ -1525,7 +1535,9 @@ https://developer.github.com/v3/users/#get-a-user
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetByUsernameReq struct {
-	_url     string
+	_url string
+
+	// username parameter
 	Username string
 }
 
@@ -1703,7 +1715,9 @@ https://developer.github.com/v3/users/#get-contextual-information-for-a-user
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetContextForUserReq struct {
-	_url     string
+	_url string
+
+	// username parameter
 	Username string
 
 	/*
@@ -1791,7 +1805,7 @@ Get a GPG key for the authenticated user.
 
   GET /user/gpg_keys/{gpg_key_id}
 
-https://developer.github.com/v3/users/gpg_keys/#get-a-gpg-key-for-the-authenticated-user
+https://developer.github.com/v3/users/gpg_keys/#get-a-single-gpg-key
 */
 func GetGpgKeyForAuthenticated(ctx context.Context, req *GetGpgKeyForAuthenticatedReq, opt ...requests.Option) (*GetGpgKeyForAuthenticatedResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -1824,7 +1838,7 @@ Get a GPG key for the authenticated user.
 
   GET /user/gpg_keys/{gpg_key_id}
 
-https://developer.github.com/v3/users/gpg_keys/#get-a-gpg-key-for-the-authenticated-user
+https://developer.github.com/v3/users/gpg_keys/#get-a-single-gpg-key
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -1835,7 +1849,7 @@ func (c Client) GetGpgKeyForAuthenticated(ctx context.Context, req *GetGpgKeyFor
 /*
 GetGpgKeyForAuthenticatedReq is request data for Client.GetGpgKeyForAuthenticated
 
-https://developer.github.com/v3/users/gpg_keys/#get-a-gpg-key-for-the-authenticated-user
+https://developer.github.com/v3/users/gpg_keys/#get-a-single-gpg-key
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -1873,7 +1887,7 @@ func (r *GetGpgKeyForAuthenticatedReq) Rel(link string, resp *GetGpgKeyForAuthen
 /*
 GetGpgKeyForAuthenticatedResponse is a response for GetGpgKeyForAuthenticated
 
-https://developer.github.com/v3/users/gpg_keys/#get-a-gpg-key-for-the-authenticated-user
+https://developer.github.com/v3/users/gpg_keys/#get-a-single-gpg-key
 */
 type GetGpgKeyForAuthenticatedResponse struct {
 	httpResponse *http.Response
@@ -1908,7 +1922,7 @@ Get a public SSH key for the authenticated user.
 
   GET /user/keys/{key_id}
 
-https://developer.github.com/v3/users/keys/#get-a-public-ssh-key-for-the-authenticated-user
+https://developer.github.com/v3/users/keys/#get-a-single-public-key
 */
 func GetPublicSshKeyForAuthenticated(ctx context.Context, req *GetPublicSshKeyForAuthenticatedReq, opt ...requests.Option) (*GetPublicSshKeyForAuthenticatedResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -1941,7 +1955,7 @@ Get a public SSH key for the authenticated user.
 
   GET /user/keys/{key_id}
 
-https://developer.github.com/v3/users/keys/#get-a-public-ssh-key-for-the-authenticated-user
+https://developer.github.com/v3/users/keys/#get-a-single-public-key
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -1952,7 +1966,7 @@ func (c Client) GetPublicSshKeyForAuthenticated(ctx context.Context, req *GetPub
 /*
 GetPublicSshKeyForAuthenticatedReq is request data for Client.GetPublicSshKeyForAuthenticated
 
-https://developer.github.com/v3/users/keys/#get-a-public-ssh-key-for-the-authenticated-user
+https://developer.github.com/v3/users/keys/#get-a-single-public-key
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -1990,7 +2004,7 @@ func (r *GetPublicSshKeyForAuthenticatedReq) Rel(link string, resp *GetPublicSsh
 /*
 GetPublicSshKeyForAuthenticatedResponse is a response for GetPublicSshKeyForAuthenticated
 
-https://developer.github.com/v3/users/keys/#get-a-public-ssh-key-for-the-authenticated-user
+https://developer.github.com/v3/users/keys/#get-a-single-public-key
 */
 type GetPublicSshKeyForAuthenticatedResponse struct {
 	httpResponse *http.Response
@@ -2025,7 +2039,7 @@ List users.
 
   GET /users
 
-https://developer.github.com/v3/users/#list-users
+https://developer.github.com/v3/users/#get-all-users
 */
 func List(ctx context.Context, req *ListReq, opt ...requests.Option) (*ListResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -2058,7 +2072,7 @@ List users.
 
   GET /users
 
-https://developer.github.com/v3/users/#list-users
+https://developer.github.com/v3/users/#get-all-users
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -2069,7 +2083,7 @@ func (c Client) List(ctx context.Context, req *ListReq, opt ...requests.Option) 
 /*
 ListReq is request data for Client.List
 
-https://developer.github.com/v3/users/#list-users
+https://developer.github.com/v3/users/#get-all-users
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -2123,7 +2137,7 @@ func (r *ListReq) Rel(link string, resp *ListResponse) bool {
 /*
 ListResponse is a response for List
 
-https://developer.github.com/v3/users/#list-users
+https://developer.github.com/v3/users/#get-all-users
 */
 type ListResponse struct {
 	httpResponse *http.Response
@@ -2158,7 +2172,7 @@ List users blocked by the authenticated user.
 
   GET /user/blocks
 
-https://developer.github.com/v3/users/blocking/#list-users-blocked-by-the-authenticated-user
+https://developer.github.com/v3/users/blocking/#list-blocked-users
 */
 func ListBlockedByAuthenticated(ctx context.Context, req *ListBlockedByAuthenticatedReq, opt ...requests.Option) (*ListBlockedByAuthenticatedResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -2191,7 +2205,7 @@ List users blocked by the authenticated user.
 
   GET /user/blocks
 
-https://developer.github.com/v3/users/blocking/#list-users-blocked-by-the-authenticated-user
+https://developer.github.com/v3/users/blocking/#list-blocked-users
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -2202,7 +2216,7 @@ func (c Client) ListBlockedByAuthenticated(ctx context.Context, req *ListBlocked
 /*
 ListBlockedByAuthenticatedReq is request data for Client.ListBlockedByAuthenticated
 
-https://developer.github.com/v3/users/blocking/#list-users-blocked-by-the-authenticated-user
+https://developer.github.com/v3/users/blocking/#list-blocked-users
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -2237,7 +2251,7 @@ func (r *ListBlockedByAuthenticatedReq) Rel(link string, resp *ListBlockedByAuth
 /*
 ListBlockedByAuthenticatedResponse is a response for ListBlockedByAuthenticated
 
-https://developer.github.com/v3/users/blocking/#list-users-blocked-by-the-authenticated-user
+https://developer.github.com/v3/users/blocking/#list-blocked-users
 */
 type ListBlockedByAuthenticatedResponse struct {
 	httpResponse *http.Response
@@ -2272,7 +2286,7 @@ List email addresses for the authenticated user.
 
   GET /user/emails
 
-https://developer.github.com/v3/users/emails/#list-email-addresses-for-the-authenticated-user
+https://developer.github.com/v3/users/emails/#list-email-addresses-for-a-user
 */
 func ListEmailsForAuthenticated(ctx context.Context, req *ListEmailsForAuthenticatedReq, opt ...requests.Option) (*ListEmailsForAuthenticatedResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -2305,7 +2319,7 @@ List email addresses for the authenticated user.
 
   GET /user/emails
 
-https://developer.github.com/v3/users/emails/#list-email-addresses-for-the-authenticated-user
+https://developer.github.com/v3/users/emails/#list-email-addresses-for-a-user
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -2316,7 +2330,7 @@ func (c Client) ListEmailsForAuthenticated(ctx context.Context, req *ListEmailsF
 /*
 ListEmailsForAuthenticatedReq is request data for Client.ListEmailsForAuthenticated
 
-https://developer.github.com/v3/users/emails/#list-email-addresses-for-the-authenticated-user
+https://developer.github.com/v3/users/emails/#list-email-addresses-for-a-user
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -2366,7 +2380,7 @@ func (r *ListEmailsForAuthenticatedReq) Rel(link string, resp *ListEmailsForAuth
 /*
 ListEmailsForAuthenticatedResponse is a response for ListEmailsForAuthenticated
 
-https://developer.github.com/v3/users/emails/#list-email-addresses-for-the-authenticated-user
+https://developer.github.com/v3/users/emails/#list-email-addresses-for-a-user
 */
 type ListEmailsForAuthenticatedResponse struct {
 	httpResponse *http.Response
@@ -2401,7 +2415,7 @@ List the people the authenticated user follows.
 
   GET /user/following
 
-https://developer.github.com/v3/users/followers/#list-the-people-the-authenticated-user-follows
+https://developer.github.com/v3/users/followers/#list-users-followed-by-another-user
 */
 func ListFollowedByAuthenticated(ctx context.Context, req *ListFollowedByAuthenticatedReq, opt ...requests.Option) (*ListFollowedByAuthenticatedResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -2434,7 +2448,7 @@ List the people the authenticated user follows.
 
   GET /user/following
 
-https://developer.github.com/v3/users/followers/#list-the-people-the-authenticated-user-follows
+https://developer.github.com/v3/users/followers/#list-users-followed-by-another-user
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -2445,7 +2459,7 @@ func (c Client) ListFollowedByAuthenticated(ctx context.Context, req *ListFollow
 /*
 ListFollowedByAuthenticatedReq is request data for Client.ListFollowedByAuthenticated
 
-https://developer.github.com/v3/users/followers/#list-the-people-the-authenticated-user-follows
+https://developer.github.com/v3/users/followers/#list-users-followed-by-another-user
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -2495,7 +2509,7 @@ func (r *ListFollowedByAuthenticatedReq) Rel(link string, resp *ListFollowedByAu
 /*
 ListFollowedByAuthenticatedResponse is a response for ListFollowedByAuthenticated
 
-https://developer.github.com/v3/users/followers/#list-the-people-the-authenticated-user-follows
+https://developer.github.com/v3/users/followers/#list-users-followed-by-another-user
 */
 type ListFollowedByAuthenticatedResponse struct {
 	httpResponse *http.Response
@@ -2530,7 +2544,7 @@ List followers of the authenticated user.
 
   GET /user/followers
 
-https://developer.github.com/v3/users/followers/#list-followers-of-the-authenticated-user
+https://developer.github.com/v3/users/followers/#list-followers-of-a-user
 */
 func ListFollowersForAuthenticatedUser(ctx context.Context, req *ListFollowersForAuthenticatedUserReq, opt ...requests.Option) (*ListFollowersForAuthenticatedUserResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -2563,7 +2577,7 @@ List followers of the authenticated user.
 
   GET /user/followers
 
-https://developer.github.com/v3/users/followers/#list-followers-of-the-authenticated-user
+https://developer.github.com/v3/users/followers/#list-followers-of-a-user
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -2574,7 +2588,7 @@ func (c Client) ListFollowersForAuthenticatedUser(ctx context.Context, req *List
 /*
 ListFollowersForAuthenticatedUserReq is request data for Client.ListFollowersForAuthenticatedUser
 
-https://developer.github.com/v3/users/followers/#list-followers-of-the-authenticated-user
+https://developer.github.com/v3/users/followers/#list-followers-of-a-user
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -2624,7 +2638,7 @@ func (r *ListFollowersForAuthenticatedUserReq) Rel(link string, resp *ListFollow
 /*
 ListFollowersForAuthenticatedUserResponse is a response for ListFollowersForAuthenticatedUser
 
-https://developer.github.com/v3/users/followers/#list-followers-of-the-authenticated-user
+https://developer.github.com/v3/users/followers/#list-followers-of-a-user
 */
 type ListFollowersForAuthenticatedUserResponse struct {
 	httpResponse *http.Response
@@ -2708,7 +2722,9 @@ https://developer.github.com/v3/users/followers/#list-followers-of-a-user
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListFollowersForUserReq struct {
-	_url     string
+	_url string
+
+	// username parameter
 	Username string
 
 	// Results per page (max 100)
@@ -2838,7 +2854,9 @@ https://developer.github.com/v3/users/followers/#list-the-people-a-user-follows
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListFollowingForUserReq struct {
-	_url     string
+	_url string
+
+	// username parameter
 	Username string
 
 	// Results per page (max 100)
@@ -2919,7 +2937,7 @@ List GPG keys for the authenticated user.
 
   GET /user/gpg_keys
 
-https://developer.github.com/v3/users/gpg_keys/#list-gpg-keys-for-the-authenticated-user
+https://developer.github.com/v3/users/gpg_keys/#list-your-gpg-keys
 */
 func ListGpgKeysForAuthenticated(ctx context.Context, req *ListGpgKeysForAuthenticatedReq, opt ...requests.Option) (*ListGpgKeysForAuthenticatedResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -2952,7 +2970,7 @@ List GPG keys for the authenticated user.
 
   GET /user/gpg_keys
 
-https://developer.github.com/v3/users/gpg_keys/#list-gpg-keys-for-the-authenticated-user
+https://developer.github.com/v3/users/gpg_keys/#list-your-gpg-keys
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -2963,7 +2981,7 @@ func (c Client) ListGpgKeysForAuthenticated(ctx context.Context, req *ListGpgKey
 /*
 ListGpgKeysForAuthenticatedReq is request data for Client.ListGpgKeysForAuthenticated
 
-https://developer.github.com/v3/users/gpg_keys/#list-gpg-keys-for-the-authenticated-user
+https://developer.github.com/v3/users/gpg_keys/#list-your-gpg-keys
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -3013,7 +3031,7 @@ func (r *ListGpgKeysForAuthenticatedReq) Rel(link string, resp *ListGpgKeysForAu
 /*
 ListGpgKeysForAuthenticatedResponse is a response for ListGpgKeysForAuthenticated
 
-https://developer.github.com/v3/users/gpg_keys/#list-gpg-keys-for-the-authenticated-user
+https://developer.github.com/v3/users/gpg_keys/#list-your-gpg-keys
 */
 type ListGpgKeysForAuthenticatedResponse struct {
 	httpResponse *http.Response
@@ -3097,7 +3115,9 @@ https://developer.github.com/v3/users/gpg_keys/#list-gpg-keys-for-a-user
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListGpgKeysForUserReq struct {
-	_url     string
+	_url string
+
+	// username parameter
 	Username string
 
 	// Results per page (max 100)
@@ -3178,7 +3198,7 @@ List public email addresses for the authenticated user.
 
   GET /user/public_emails
 
-https://developer.github.com/v3/users/emails/#list-public-email-addresses-for-the-authenticated-user
+https://developer.github.com/v3/users/emails/#list-public-email-addresses-for-a-user
 */
 func ListPublicEmailsForAuthenticated(ctx context.Context, req *ListPublicEmailsForAuthenticatedReq, opt ...requests.Option) (*ListPublicEmailsForAuthenticatedResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -3211,7 +3231,7 @@ List public email addresses for the authenticated user.
 
   GET /user/public_emails
 
-https://developer.github.com/v3/users/emails/#list-public-email-addresses-for-the-authenticated-user
+https://developer.github.com/v3/users/emails/#list-public-email-addresses-for-a-user
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -3222,7 +3242,7 @@ func (c Client) ListPublicEmailsForAuthenticated(ctx context.Context, req *ListP
 /*
 ListPublicEmailsForAuthenticatedReq is request data for Client.ListPublicEmailsForAuthenticated
 
-https://developer.github.com/v3/users/emails/#list-public-email-addresses-for-the-authenticated-user
+https://developer.github.com/v3/users/emails/#list-public-email-addresses-for-a-user
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -3272,7 +3292,7 @@ func (r *ListPublicEmailsForAuthenticatedReq) Rel(link string, resp *ListPublicE
 /*
 ListPublicEmailsForAuthenticatedResponse is a response for ListPublicEmailsForAuthenticated
 
-https://developer.github.com/v3/users/emails/#list-public-email-addresses-for-the-authenticated-user
+https://developer.github.com/v3/users/emails/#list-public-email-addresses-for-a-user
 */
 type ListPublicEmailsForAuthenticatedResponse struct {
 	httpResponse *http.Response
@@ -3356,7 +3376,9 @@ https://developer.github.com/v3/users/keys/#list-public-keys-for-a-user
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListPublicKeysForUserReq struct {
-	_url     string
+	_url string
+
+	// username parameter
 	Username string
 
 	// Results per page (max 100)
@@ -3437,7 +3459,7 @@ List public SSH keys for the authenticated user.
 
   GET /user/keys
 
-https://developer.github.com/v3/users/keys/#list-public-ssh-keys-for-the-authenticated-user
+https://developer.github.com/v3/users/keys/#list-your-public-keys
 */
 func ListPublicSshKeysForAuthenticated(ctx context.Context, req *ListPublicSshKeysForAuthenticatedReq, opt ...requests.Option) (*ListPublicSshKeysForAuthenticatedResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -3470,7 +3492,7 @@ List public SSH keys for the authenticated user.
 
   GET /user/keys
 
-https://developer.github.com/v3/users/keys/#list-public-ssh-keys-for-the-authenticated-user
+https://developer.github.com/v3/users/keys/#list-your-public-keys
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -3481,7 +3503,7 @@ func (c Client) ListPublicSshKeysForAuthenticated(ctx context.Context, req *List
 /*
 ListPublicSshKeysForAuthenticatedReq is request data for Client.ListPublicSshKeysForAuthenticated
 
-https://developer.github.com/v3/users/keys/#list-public-ssh-keys-for-the-authenticated-user
+https://developer.github.com/v3/users/keys/#list-your-public-keys
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -3531,7 +3553,7 @@ func (r *ListPublicSshKeysForAuthenticatedReq) Rel(link string, resp *ListPublic
 /*
 ListPublicSshKeysForAuthenticatedResponse is a response for ListPublicSshKeysForAuthenticated
 
-https://developer.github.com/v3/users/keys/#list-public-ssh-keys-for-the-authenticated-user
+https://developer.github.com/v3/users/keys/#list-your-public-keys
 */
 type ListPublicSshKeysForAuthenticatedResponse struct {
 	httpResponse *http.Response
@@ -3566,7 +3588,7 @@ Set primary email visibility for the authenticated user.
 
   PATCH /user/email/visibility
 
-https://developer.github.com/v3/users/emails/#set-primary-email-visibility-for-the-authenticated-user
+https://developer.github.com/v3/users/emails/#toggle-primary-email-visibility
 */
 func SetPrimaryEmailVisibilityForAuthenticated(ctx context.Context, req *SetPrimaryEmailVisibilityForAuthenticatedReq, opt ...requests.Option) (*SetPrimaryEmailVisibilityForAuthenticatedResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -3599,7 +3621,7 @@ Set primary email visibility for the authenticated user.
 
   PATCH /user/email/visibility
 
-https://developer.github.com/v3/users/emails/#set-primary-email-visibility-for-the-authenticated-user
+https://developer.github.com/v3/users/emails/#toggle-primary-email-visibility
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -3610,7 +3632,7 @@ func (c Client) SetPrimaryEmailVisibilityForAuthenticated(ctx context.Context, r
 /*
 SetPrimaryEmailVisibilityForAuthenticatedReq is request data for Client.SetPrimaryEmailVisibilityForAuthenticated
 
-https://developer.github.com/v3/users/emails/#set-primary-email-visibility-for-the-authenticated-user
+https://developer.github.com/v3/users/emails/#toggle-primary-email-visibility
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -3650,7 +3672,7 @@ func (r *SetPrimaryEmailVisibilityForAuthenticatedReq) Rel(link string, resp *Se
 /*
 SetPrimaryEmailVisibilityForAuthenticatedReqBody is a request body for users/set-primary-email-visibility-for-authenticated
 
-https://developer.github.com/v3/users/emails/#set-primary-email-visibility-for-the-authenticated-user
+https://developer.github.com/v3/users/emails/#toggle-primary-email-visibility
 */
 type SetPrimaryEmailVisibilityForAuthenticatedReqBody struct {
 
@@ -3664,7 +3686,7 @@ type SetPrimaryEmailVisibilityForAuthenticatedReqBody struct {
 /*
 SetPrimaryEmailVisibilityForAuthenticatedResponse is a response for SetPrimaryEmailVisibilityForAuthenticated
 
-https://developer.github.com/v3/users/emails/#set-primary-email-visibility-for-the-authenticated-user
+https://developer.github.com/v3/users/emails/#toggle-primary-email-visibility
 */
 type SetPrimaryEmailVisibilityForAuthenticatedResponse struct {
 	httpResponse *http.Response
@@ -3748,7 +3770,9 @@ https://developer.github.com/v3/users/blocking/#unblock-a-user
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type UnblockReq struct {
-	_url     string
+	_url string
+
+	// username parameter
 	Username string
 }
 
@@ -3855,7 +3879,9 @@ https://developer.github.com/v3/users/followers/#unfollow-a-user
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type UnfollowReq struct {
-	_url     string
+	_url string
+
+	// username parameter
 	Username string
 }
 

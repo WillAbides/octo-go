@@ -19,7 +19,7 @@ Add a repository to an app installation.
 
   PUT /user/installations/{installation_id}/repositories/{repository_id}
 
-https://developer.github.com/v3/apps/installations/#add-a-repository-to-an-app-installation
+https://developer.github.com/v3/apps/installations/#add-repository-to-installation
 */
 func AddRepoToInstallation(ctx context.Context, req *AddRepoToInstallationReq, opt ...requests.Option) (*AddRepoToInstallationResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -52,7 +52,7 @@ Add a repository to an app installation.
 
   PUT /user/installations/{installation_id}/repositories/{repository_id}
 
-https://developer.github.com/v3/apps/installations/#add-a-repository-to-an-app-installation
+https://developer.github.com/v3/apps/installations/#add-repository-to-installation
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -63,7 +63,7 @@ func (c Client) AddRepoToInstallation(ctx context.Context, req *AddRepoToInstall
 /*
 AddRepoToInstallationReq is request data for Client.AddRepoToInstallation
 
-https://developer.github.com/v3/apps/installations/#add-a-repository-to-an-app-installation
+https://developer.github.com/v3/apps/installations/#add-repository-to-installation
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -112,7 +112,7 @@ func (r *AddRepoToInstallationReq) Rel(link string, resp *AddRepoToInstallationR
 /*
 AddRepoToInstallationResponse is a response for AddRepoToInstallation
 
-https://developer.github.com/v3/apps/installations/#add-a-repository-to-an-app-installation
+https://developer.github.com/v3/apps/installations/#add-repository-to-installation
 */
 type AddRepoToInstallationResponse struct {
 	httpResponse *http.Response
@@ -140,7 +140,7 @@ Check an authorization.
 
   GET /applications/{client_id}/tokens/{access_token}
 
-https://developer.github.com/v3/apps/oauth_applications/#check-an-authorization
+https://developer.github.com/v3/oauth_authorizations/#check-an-authorization
 */
 func CheckAuthorization(ctx context.Context, req *CheckAuthorizationReq, opt ...requests.Option) (*CheckAuthorizationResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -173,7 +173,7 @@ Check an authorization.
 
   GET /applications/{client_id}/tokens/{access_token}
 
-https://developer.github.com/v3/apps/oauth_applications/#check-an-authorization
+https://developer.github.com/v3/oauth_authorizations/#check-an-authorization
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -184,13 +184,17 @@ func (c Client) CheckAuthorization(ctx context.Context, req *CheckAuthorizationR
 /*
 CheckAuthorizationReq is request data for Client.CheckAuthorization
 
-https://developer.github.com/v3/apps/oauth_applications/#check-an-authorization
+https://developer.github.com/v3/oauth_authorizations/#check-an-authorization
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CheckAuthorizationReq struct {
-	_url        string
-	ClientId    string
+	_url string
+
+	// client_id parameter
+	ClientId string
+
+	// access_token parameter
 	AccessToken string
 }
 
@@ -221,7 +225,7 @@ func (r *CheckAuthorizationReq) Rel(link string, resp *CheckAuthorizationRespons
 /*
 CheckAuthorizationResponse is a response for CheckAuthorization
 
-https://developer.github.com/v3/apps/oauth_applications/#check-an-authorization
+https://developer.github.com/v3/oauth_authorizations/#check-an-authorization
 */
 type CheckAuthorizationResponse struct {
 	httpResponse *http.Response
@@ -256,7 +260,7 @@ Check a token.
 
   POST /applications/{client_id}/token
 
-https://developer.github.com/v3/apps/oauth_applications/#check-a-token
+https://developer.github.com/v3/oauth_authorizations/#check-an-authorization
 */
 func CheckToken(ctx context.Context, req *CheckTokenReq, opt ...requests.Option) (*CheckTokenResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -289,7 +293,7 @@ Check a token.
 
   POST /applications/{client_id}/token
 
-https://developer.github.com/v3/apps/oauth_applications/#check-a-token
+https://developer.github.com/v3/oauth_authorizations/#check-an-authorization
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -300,12 +304,14 @@ func (c Client) CheckToken(ctx context.Context, req *CheckTokenReq, opt ...reque
 /*
 CheckTokenReq is request data for Client.CheckToken
 
-https://developer.github.com/v3/apps/oauth_applications/#check-a-token
+https://developer.github.com/v3/oauth_authorizations/#check-an-authorization
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CheckTokenReq struct {
-	_url        string
+	_url string
+
+	// client_id parameter
 	ClientId    string
 	RequestBody CheckTokenReqBody
 }
@@ -341,7 +347,7 @@ func (r *CheckTokenReq) Rel(link string, resp *CheckTokenResponse) bool {
 /*
 CheckTokenReqBody is a request body for apps/check-token
 
-https://developer.github.com/v3/apps/oauth_applications/#check-a-token
+https://developer.github.com/v3/oauth_authorizations/#check-an-authorization
 */
 type CheckTokenReqBody struct {
 
@@ -352,7 +358,7 @@ type CheckTokenReqBody struct {
 /*
 CheckTokenResponse is a response for CheckToken
 
-https://developer.github.com/v3/apps/oauth_applications/#check-a-token
+https://developer.github.com/v3/oauth_authorizations/#check-an-authorization
 */
 type CheckTokenResponse struct {
 	httpResponse *http.Response
@@ -686,7 +692,7 @@ Create an installation access token for an app.
 
   POST /app/installations/{installation_id}/access_tokens
 
-https://developer.github.com/v3/apps/#create-an-installation-access-token-for-an-app
+https://developer.github.com/v3/apps/#create-a-new-installation-token
 */
 func CreateInstallationAccessToken(ctx context.Context, req *CreateInstallationAccessTokenReq, opt ...requests.Option) (*CreateInstallationAccessTokenResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -719,7 +725,7 @@ Create an installation access token for an app.
 
   POST /app/installations/{installation_id}/access_tokens
 
-https://developer.github.com/v3/apps/#create-an-installation-access-token-for-an-app
+https://developer.github.com/v3/apps/#create-a-new-installation-token
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -730,7 +736,7 @@ func (c Client) CreateInstallationAccessToken(ctx context.Context, req *CreateIn
 /*
 CreateInstallationAccessTokenReq is request data for Client.CreateInstallationAccessToken
 
-https://developer.github.com/v3/apps/#create-an-installation-access-token-for-an-app
+https://developer.github.com/v3/apps/#create-a-new-installation-token
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -785,7 +791,7 @@ type CreateInstallationAccessTokenReqBodyPermissions map[string]string
 /*
 CreateInstallationAccessTokenReqBody is a request body for apps/create-installation-access-token
 
-https://developer.github.com/v3/apps/#create-an-installation-access-token-for-an-app
+https://developer.github.com/v3/apps/#create-a-new-installation-token
 */
 type CreateInstallationAccessTokenReqBody struct {
 	Permissions map[string]string `json:"permissions,omitempty"`
@@ -800,7 +806,7 @@ type CreateInstallationAccessTokenReqBody struct {
 /*
 CreateInstallationAccessTokenResponse is a response for CreateInstallationAccessToken
 
-https://developer.github.com/v3/apps/#create-an-installation-access-token-for-an-app
+https://developer.github.com/v3/apps/#create-a-new-installation-token
 */
 type CreateInstallationAccessTokenResponse struct {
 	httpResponse *http.Response
@@ -835,7 +841,7 @@ Delete an app authorization.
 
   DELETE /applications/{client_id}/grant
 
-https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-authorization
+https://developer.github.com/v3/oauth_authorizations/#revoke-a-grant-for-an-application
 */
 func DeleteAuthorization(ctx context.Context, req *DeleteAuthorizationReq, opt ...requests.Option) (*DeleteAuthorizationResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -868,7 +874,7 @@ Delete an app authorization.
 
   DELETE /applications/{client_id}/grant
 
-https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-authorization
+https://developer.github.com/v3/oauth_authorizations/#revoke-a-grant-for-an-application
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -879,12 +885,14 @@ func (c Client) DeleteAuthorization(ctx context.Context, req *DeleteAuthorizatio
 /*
 DeleteAuthorizationReq is request data for Client.DeleteAuthorization
 
-https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-authorization
+https://developer.github.com/v3/oauth_authorizations/#revoke-a-grant-for-an-application
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DeleteAuthorizationReq struct {
-	_url        string
+	_url string
+
+	// client_id parameter
 	ClientId    string
 	RequestBody DeleteAuthorizationReqBody
 }
@@ -917,7 +925,7 @@ func (r *DeleteAuthorizationReq) Rel(link string, resp *DeleteAuthorizationRespo
 /*
 DeleteAuthorizationReqBody is a request body for apps/delete-authorization
 
-https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-authorization
+https://developer.github.com/v3/oauth_authorizations/#revoke-a-grant-for-an-application
 */
 type DeleteAuthorizationReqBody struct {
 
@@ -928,7 +936,7 @@ type DeleteAuthorizationReqBody struct {
 /*
 DeleteAuthorizationResponse is a response for DeleteAuthorization
 
-https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-authorization
+https://developer.github.com/v3/oauth_authorizations/#revoke-a-grant-for-an-application
 */
 type DeleteAuthorizationResponse struct {
 	httpResponse *http.Response
@@ -956,7 +964,7 @@ Delete an installation for the authenticated app.
 
   DELETE /app/installations/{installation_id}
 
-https://developer.github.com/v3/apps/#delete-an-installation-for-the-authenticated-app
+https://developer.github.com/v3/apps/#delete-a-single-installation
 */
 func DeleteInstallation(ctx context.Context, req *DeleteInstallationReq, opt ...requests.Option) (*DeleteInstallationResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -989,7 +997,7 @@ Delete an installation for the authenticated app.
 
   DELETE /app/installations/{installation_id}
 
-https://developer.github.com/v3/apps/#delete-an-installation-for-the-authenticated-app
+https://developer.github.com/v3/apps/#delete-a-single-installation
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -1000,7 +1008,7 @@ func (c Client) DeleteInstallation(ctx context.Context, req *DeleteInstallationR
 /*
 DeleteInstallationReq is request data for Client.DeleteInstallation
 
-https://developer.github.com/v3/apps/#delete-an-installation-for-the-authenticated-app
+https://developer.github.com/v3/apps/#delete-a-single-installation
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -1046,7 +1054,7 @@ func (r *DeleteInstallationReq) Rel(link string, resp *DeleteInstallationRespons
 /*
 DeleteInstallationResponse is a response for DeleteInstallation
 
-https://developer.github.com/v3/apps/#delete-an-installation-for-the-authenticated-app
+https://developer.github.com/v3/apps/#delete-a-single-installation
 */
 type DeleteInstallationResponse struct {
 	httpResponse *http.Response
@@ -1079,7 +1087,7 @@ Delete an app token.
 
   DELETE /applications/{client_id}/token
 
-https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-token
+https://developer.github.com/v3/oauth_authorizations/#revoke-an-authorization-for-an-application
 */
 func DeleteToken(ctx context.Context, req *DeleteTokenReq, opt ...requests.Option) (*DeleteTokenResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -1112,7 +1120,7 @@ Delete an app token.
 
   DELETE /applications/{client_id}/token
 
-https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-token
+https://developer.github.com/v3/oauth_authorizations/#revoke-an-authorization-for-an-application
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -1123,12 +1131,14 @@ func (c Client) DeleteToken(ctx context.Context, req *DeleteTokenReq, opt ...req
 /*
 DeleteTokenReq is request data for Client.DeleteToken
 
-https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-token
+https://developer.github.com/v3/oauth_authorizations/#revoke-an-authorization-for-an-application
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DeleteTokenReq struct {
-	_url        string
+	_url string
+
+	// client_id parameter
 	ClientId    string
 	RequestBody DeleteTokenReqBody
 }
@@ -1161,7 +1171,7 @@ func (r *DeleteTokenReq) Rel(link string, resp *DeleteTokenResponse) bool {
 /*
 DeleteTokenReqBody is a request body for apps/delete-token
 
-https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-token
+https://developer.github.com/v3/oauth_authorizations/#revoke-an-authorization-for-an-application
 */
 type DeleteTokenReqBody struct {
 
@@ -1172,7 +1182,7 @@ type DeleteTokenReqBody struct {
 /*
 DeleteTokenResponse is a response for DeleteToken
 
-https://developer.github.com/v3/apps/oauth_applications/#delete-an-app-token
+https://developer.github.com/v3/oauth_authorizations/#revoke-an-authorization-for-an-application
 */
 type DeleteTokenResponse struct {
 	httpResponse *http.Response
@@ -1200,7 +1210,7 @@ Get the authenticated app.
 
   GET /app
 
-https://developer.github.com/v3/apps/#get-the-authenticated-app
+https://developer.github.com/v3/apps/#get-the-authenticated-github-app
 */
 func GetAuthenticated(ctx context.Context, req *GetAuthenticatedReq, opt ...requests.Option) (*GetAuthenticatedResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -1233,7 +1243,7 @@ Get the authenticated app.
 
   GET /app
 
-https://developer.github.com/v3/apps/#get-the-authenticated-app
+https://developer.github.com/v3/apps/#get-the-authenticated-github-app
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -1244,7 +1254,7 @@ func (c Client) GetAuthenticated(ctx context.Context, req *GetAuthenticatedReq, 
 /*
 GetAuthenticatedReq is request data for Client.GetAuthenticated
 
-https://developer.github.com/v3/apps/#get-the-authenticated-app
+https://developer.github.com/v3/apps/#get-the-authenticated-github-app
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -1288,7 +1298,7 @@ func (r *GetAuthenticatedReq) Rel(link string, resp *GetAuthenticatedResponse) b
 /*
 GetAuthenticatedResponse is a response for GetAuthenticated
 
-https://developer.github.com/v3/apps/#get-the-authenticated-app
+https://developer.github.com/v3/apps/#get-the-authenticated-github-app
 */
 type GetAuthenticatedResponse struct {
 	httpResponse *http.Response
@@ -1449,7 +1459,7 @@ Get an installation for the authenticated app.
 
   GET /app/installations/{installation_id}
 
-https://developer.github.com/v3/apps/#get-an-installation-for-the-authenticated-app
+https://developer.github.com/v3/apps/#get-a-single-installation
 */
 func GetInstallation(ctx context.Context, req *GetInstallationReq, opt ...requests.Option) (*GetInstallationResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -1482,7 +1492,7 @@ Get an installation for the authenticated app.
 
   GET /app/installations/{installation_id}
 
-https://developer.github.com/v3/apps/#get-an-installation-for-the-authenticated-app
+https://developer.github.com/v3/apps/#get-a-single-installation
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -1493,7 +1503,7 @@ func (c Client) GetInstallation(ctx context.Context, req *GetInstallationReq, op
 /*
 GetInstallationReq is request data for Client.GetInstallation
 
-https://developer.github.com/v3/apps/#get-an-installation-for-the-authenticated-app
+https://developer.github.com/v3/apps/#get-a-single-installation
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -1540,7 +1550,7 @@ func (r *GetInstallationReq) Rel(link string, resp *GetInstallationResponse) boo
 /*
 GetInstallationResponse is a response for GetInstallation
 
-https://developer.github.com/v3/apps/#get-an-installation-for-the-authenticated-app
+https://developer.github.com/v3/apps/#get-a-single-installation
 */
 type GetInstallationResponse struct {
 	httpResponse *http.Response
@@ -1625,7 +1635,9 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type GetOrgInstallationReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	/*
 	To access the API with your GitHub App, you must set this to true for your
@@ -1748,9 +1760,13 @@ https://developer.github.com/v3/apps/#get-a-repository-installation-for-the-auth
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetRepoInstallationReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	/*
 	To access the API with your GitHub App, you must set this to true for your
@@ -1824,7 +1840,7 @@ Get a subscription plan for an account.
 
   GET /marketplace_listing/accounts/{account_id}
 
-https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account
+https://developer.github.com/v3/apps/marketplace/#check-if-a-github-account-is-associated-with-any-marketplace-listing
 */
 func GetSubscriptionPlanForAccount(ctx context.Context, req *GetSubscriptionPlanForAccountReq, opt ...requests.Option) (*GetSubscriptionPlanForAccountResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -1857,7 +1873,7 @@ Get a subscription plan for an account.
 
   GET /marketplace_listing/accounts/{account_id}
 
-https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account
+https://developer.github.com/v3/apps/marketplace/#check-if-a-github-account-is-associated-with-any-marketplace-listing
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -1868,7 +1884,7 @@ func (c Client) GetSubscriptionPlanForAccount(ctx context.Context, req *GetSubsc
 /*
 GetSubscriptionPlanForAccountReq is request data for Client.GetSubscriptionPlanForAccount
 
-https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account
+https://developer.github.com/v3/apps/marketplace/#check-if-a-github-account-is-associated-with-any-marketplace-listing
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -1906,7 +1922,7 @@ func (r *GetSubscriptionPlanForAccountReq) Rel(link string, resp *GetSubscriptio
 /*
 GetSubscriptionPlanForAccountResponse is a response for GetSubscriptionPlanForAccount
 
-https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account
+https://developer.github.com/v3/apps/marketplace/#check-if-a-github-account-is-associated-with-any-marketplace-listing
 */
 type GetSubscriptionPlanForAccountResponse struct {
 	httpResponse *http.Response
@@ -1941,7 +1957,7 @@ Get a subscription plan for an account (stubbed).
 
   GET /marketplace_listing/stubbed/accounts/{account_id}
 
-https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account-stubbed
+https://developer.github.com/v3/apps/marketplace/#check-if-a-github-account-is-associated-with-any-marketplace-listing
 */
 func GetSubscriptionPlanForAccountStubbed(ctx context.Context, req *GetSubscriptionPlanForAccountStubbedReq, opt ...requests.Option) (*GetSubscriptionPlanForAccountStubbedResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -1974,7 +1990,7 @@ Get a subscription plan for an account (stubbed).
 
   GET /marketplace_listing/stubbed/accounts/{account_id}
 
-https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account-stubbed
+https://developer.github.com/v3/apps/marketplace/#check-if-a-github-account-is-associated-with-any-marketplace-listing
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -1985,7 +2001,7 @@ func (c Client) GetSubscriptionPlanForAccountStubbed(ctx context.Context, req *G
 /*
 GetSubscriptionPlanForAccountStubbedReq is request data for Client.GetSubscriptionPlanForAccountStubbed
 
-https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account-stubbed
+https://developer.github.com/v3/apps/marketplace/#check-if-a-github-account-is-associated-with-any-marketplace-listing
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -2023,7 +2039,7 @@ func (r *GetSubscriptionPlanForAccountStubbedReq) Rel(link string, resp *GetSubs
 /*
 GetSubscriptionPlanForAccountStubbedResponse is a response for GetSubscriptionPlanForAccountStubbed
 
-https://developer.github.com/v3/apps/marketplace/#get-a-subscription-plan-for-an-account-stubbed
+https://developer.github.com/v3/apps/marketplace/#check-if-a-github-account-is-associated-with-any-marketplace-listing
 */
 type GetSubscriptionPlanForAccountStubbedResponse struct {
 	httpResponse *http.Response
@@ -2107,7 +2123,9 @@ https://developer.github.com/v3/apps/#get-a-user-installation-for-the-authentica
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetUserInstallationReq struct {
-	_url     string
+	_url string
+
+	// username parameter
 	Username string
 
 	/*
@@ -2182,7 +2200,7 @@ List accounts for a plan.
 
   GET /marketplace_listing/plans/{plan_id}/accounts
 
-https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan
+https://developer.github.com/v3/apps/marketplace/#list-all-github-accounts-user-or-organization-on-a-specific-plan
 */
 func ListAccountsForPlan(ctx context.Context, req *ListAccountsForPlanReq, opt ...requests.Option) (*ListAccountsForPlanResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -2215,7 +2233,7 @@ List accounts for a plan.
 
   GET /marketplace_listing/plans/{plan_id}/accounts
 
-https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan
+https://developer.github.com/v3/apps/marketplace/#list-all-github-accounts-user-or-organization-on-a-specific-plan
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -2226,7 +2244,7 @@ func (c Client) ListAccountsForPlan(ctx context.Context, req *ListAccountsForPla
 /*
 ListAccountsForPlanReq is request data for Client.ListAccountsForPlan
 
-https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan
+https://developer.github.com/v3/apps/marketplace/#list-all-github-accounts-user-or-organization-on-a-specific-plan
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -2237,8 +2255,8 @@ type ListAccountsForPlanReq struct {
 	PlanId int64
 
 	/*
-	One of `created` (when the repository was starred) or `updated` (when it was
-	last pushed to).
+	Sorts the GitHub accounts by the date they were created or last updated. Can be
+	one of `created` or `updated`.
 	*/
 	Sort *string
 
@@ -2297,7 +2315,7 @@ func (r *ListAccountsForPlanReq) Rel(link string, resp *ListAccountsForPlanRespo
 /*
 ListAccountsForPlanResponse is a response for ListAccountsForPlan
 
-https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan
+https://developer.github.com/v3/apps/marketplace/#list-all-github-accounts-user-or-organization-on-a-specific-plan
 */
 type ListAccountsForPlanResponse struct {
 	httpResponse *http.Response
@@ -2332,7 +2350,7 @@ List accounts for a plan (stubbed).
 
   GET /marketplace_listing/stubbed/plans/{plan_id}/accounts
 
-https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan-stubbed
+https://developer.github.com/v3/apps/marketplace/#list-all-github-accounts-user-or-organization-on-a-specific-plan
 */
 func ListAccountsForPlanStubbed(ctx context.Context, req *ListAccountsForPlanStubbedReq, opt ...requests.Option) (*ListAccountsForPlanStubbedResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -2365,7 +2383,7 @@ List accounts for a plan (stubbed).
 
   GET /marketplace_listing/stubbed/plans/{plan_id}/accounts
 
-https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan-stubbed
+https://developer.github.com/v3/apps/marketplace/#list-all-github-accounts-user-or-organization-on-a-specific-plan
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -2376,7 +2394,7 @@ func (c Client) ListAccountsForPlanStubbed(ctx context.Context, req *ListAccount
 /*
 ListAccountsForPlanStubbedReq is request data for Client.ListAccountsForPlanStubbed
 
-https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan-stubbed
+https://developer.github.com/v3/apps/marketplace/#list-all-github-accounts-user-or-organization-on-a-specific-plan
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -2387,8 +2405,8 @@ type ListAccountsForPlanStubbedReq struct {
 	PlanId int64
 
 	/*
-	One of `created` (when the repository was starred) or `updated` (when it was
-	last pushed to).
+	Sorts the GitHub accounts by the date they were created or last updated. Can be
+	one of `created` or `updated`.
 	*/
 	Sort *string
 
@@ -2447,7 +2465,7 @@ func (r *ListAccountsForPlanStubbedReq) Rel(link string, resp *ListAccountsForPl
 /*
 ListAccountsForPlanStubbedResponse is a response for ListAccountsForPlanStubbed
 
-https://developer.github.com/v3/apps/marketplace/#list-accounts-for-a-plan-stubbed
+https://developer.github.com/v3/apps/marketplace/#list-all-github-accounts-user-or-organization-on-a-specific-plan
 */
 type ListAccountsForPlanStubbedResponse struct {
 	httpResponse *http.Response
@@ -2482,7 +2500,7 @@ List repositories accessible to the user access token.
 
   GET /user/installations/{installation_id}/repositories
 
-https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-access-token
+https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-for-an-installation
 */
 func ListInstallationReposForAuthenticatedUser(ctx context.Context, req *ListInstallationReposForAuthenticatedUserReq, opt ...requests.Option) (*ListInstallationReposForAuthenticatedUserResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -2515,7 +2533,7 @@ List repositories accessible to the user access token.
 
   GET /user/installations/{installation_id}/repositories
 
-https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-access-token
+https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-for-an-installation
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -2526,7 +2544,7 @@ func (c Client) ListInstallationReposForAuthenticatedUser(ctx context.Context, r
 /*
 ListInstallationReposForAuthenticatedUserReq is request data for Client.ListInstallationReposForAuthenticatedUser
 
-https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-access-token
+https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-for-an-installation
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -2598,7 +2616,7 @@ func (r *ListInstallationReposForAuthenticatedUserReq) Rel(link string, resp *Li
 /*
 ListInstallationReposForAuthenticatedUserResponseBody is a response body for ListInstallationReposForAuthenticatedUser
 
-https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-access-token
+https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-for-an-installation
 */
 type ListInstallationReposForAuthenticatedUserResponseBody struct {
 	Repositories        []components.Repository `json:"repositories,omitempty"`
@@ -2609,7 +2627,7 @@ type ListInstallationReposForAuthenticatedUserResponseBody struct {
 /*
 ListInstallationReposForAuthenticatedUserResponse is a response for ListInstallationReposForAuthenticatedUser
 
-https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-access-token
+https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-user-for-an-installation
 */
 type ListInstallationReposForAuthenticatedUserResponse struct {
 	httpResponse *http.Response
@@ -2644,7 +2662,7 @@ List installations for the authenticated app.
 
   GET /app/installations
 
-https://developer.github.com/v3/apps/#list-installations-for-the-authenticated-app
+https://developer.github.com/v3/apps/#find-installations
 */
 func ListInstallations(ctx context.Context, req *ListInstallationsReq, opt ...requests.Option) (*ListInstallationsResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -2677,7 +2695,7 @@ List installations for the authenticated app.
 
   GET /app/installations
 
-https://developer.github.com/v3/apps/#list-installations-for-the-authenticated-app
+https://developer.github.com/v3/apps/#find-installations
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -2688,7 +2706,7 @@ func (c Client) ListInstallations(ctx context.Context, req *ListInstallationsReq
 /*
 ListInstallationsReq is request data for Client.ListInstallations
 
-https://developer.github.com/v3/apps/#list-installations-for-the-authenticated-app
+https://developer.github.com/v3/apps/#find-installations
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -2761,7 +2779,7 @@ func (r *ListInstallationsReq) Rel(link string, resp *ListInstallationsResponse)
 /*
 ListInstallationsResponse is a response for ListInstallations
 
-https://developer.github.com/v3/apps/#list-installations-for-the-authenticated-app
+https://developer.github.com/v3/apps/#find-installations
 */
 type ListInstallationsResponse struct {
 	httpResponse *http.Response
@@ -2796,7 +2814,7 @@ List app installations accessible to the user access token.
 
   GET /user/installations
 
-https://developer.github.com/v3/apps/installations/#list-app-installations-accessible-to-the-user-access-token
+https://developer.github.com/v3/apps/#list-installations-for-user
 */
 func ListInstallationsForAuthenticatedUser(ctx context.Context, req *ListInstallationsForAuthenticatedUserReq, opt ...requests.Option) (*ListInstallationsForAuthenticatedUserResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -2829,7 +2847,7 @@ List app installations accessible to the user access token.
 
   GET /user/installations
 
-https://developer.github.com/v3/apps/installations/#list-app-installations-accessible-to-the-user-access-token
+https://developer.github.com/v3/apps/#list-installations-for-user
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -2840,7 +2858,7 @@ func (c Client) ListInstallationsForAuthenticatedUser(ctx context.Context, req *
 /*
 ListInstallationsForAuthenticatedUserReq is request data for Client.ListInstallationsForAuthenticatedUser
 
-https://developer.github.com/v3/apps/installations/#list-app-installations-accessible-to-the-user-access-token
+https://developer.github.com/v3/apps/#list-installations-for-user
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -2899,7 +2917,7 @@ func (r *ListInstallationsForAuthenticatedUserReq) Rel(link string, resp *ListIn
 /*
 ListInstallationsForAuthenticatedUserResponseBody is a response body for ListInstallationsForAuthenticatedUser
 
-https://developer.github.com/v3/apps/installations/#list-app-installations-accessible-to-the-user-access-token
+https://developer.github.com/v3/apps/#list-installations-for-user
 */
 type ListInstallationsForAuthenticatedUserResponseBody struct {
 	Installations []components.Installation `json:"installations,omitempty"`
@@ -2909,7 +2927,7 @@ type ListInstallationsForAuthenticatedUserResponseBody struct {
 /*
 ListInstallationsForAuthenticatedUserResponse is a response for ListInstallationsForAuthenticatedUser
 
-https://developer.github.com/v3/apps/installations/#list-app-installations-accessible-to-the-user-access-token
+https://developer.github.com/v3/apps/#list-installations-for-user
 */
 type ListInstallationsForAuthenticatedUserResponse struct {
 	httpResponse *http.Response
@@ -2944,7 +2962,7 @@ List plans.
 
   GET /marketplace_listing/plans
 
-https://developer.github.com/v3/apps/marketplace/#list-plans
+https://developer.github.com/v3/apps/marketplace/#list-all-plans-for-your-marketplace-listing
 */
 func ListPlans(ctx context.Context, req *ListPlansReq, opt ...requests.Option) (*ListPlansResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -2977,7 +2995,7 @@ List plans.
 
   GET /marketplace_listing/plans
 
-https://developer.github.com/v3/apps/marketplace/#list-plans
+https://developer.github.com/v3/apps/marketplace/#list-all-plans-for-your-marketplace-listing
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -2988,7 +3006,7 @@ func (c Client) ListPlans(ctx context.Context, req *ListPlansReq, opt ...request
 /*
 ListPlansReq is request data for Client.ListPlans
 
-https://developer.github.com/v3/apps/marketplace/#list-plans
+https://developer.github.com/v3/apps/marketplace/#list-all-plans-for-your-marketplace-listing
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -3038,7 +3056,7 @@ func (r *ListPlansReq) Rel(link string, resp *ListPlansResponse) bool {
 /*
 ListPlansResponse is a response for ListPlans
 
-https://developer.github.com/v3/apps/marketplace/#list-plans
+https://developer.github.com/v3/apps/marketplace/#list-all-plans-for-your-marketplace-listing
 */
 type ListPlansResponse struct {
 	httpResponse *http.Response
@@ -3073,7 +3091,7 @@ List plans (stubbed).
 
   GET /marketplace_listing/stubbed/plans
 
-https://developer.github.com/v3/apps/marketplace/#list-plans-stubbed
+https://developer.github.com/v3/apps/marketplace/#list-all-plans-for-your-marketplace-listing
 */
 func ListPlansStubbed(ctx context.Context, req *ListPlansStubbedReq, opt ...requests.Option) (*ListPlansStubbedResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -3106,7 +3124,7 @@ List plans (stubbed).
 
   GET /marketplace_listing/stubbed/plans
 
-https://developer.github.com/v3/apps/marketplace/#list-plans-stubbed
+https://developer.github.com/v3/apps/marketplace/#list-all-plans-for-your-marketplace-listing
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -3117,7 +3135,7 @@ func (c Client) ListPlansStubbed(ctx context.Context, req *ListPlansStubbedReq, 
 /*
 ListPlansStubbedReq is request data for Client.ListPlansStubbed
 
-https://developer.github.com/v3/apps/marketplace/#list-plans-stubbed
+https://developer.github.com/v3/apps/marketplace/#list-all-plans-for-your-marketplace-listing
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -3167,7 +3185,7 @@ func (r *ListPlansStubbedReq) Rel(link string, resp *ListPlansStubbedResponse) b
 /*
 ListPlansStubbedResponse is a response for ListPlansStubbed
 
-https://developer.github.com/v3/apps/marketplace/#list-plans-stubbed
+https://developer.github.com/v3/apps/marketplace/#list-all-plans-for-your-marketplace-listing
 */
 type ListPlansStubbedResponse struct {
 	httpResponse *http.Response
@@ -3202,7 +3220,7 @@ List repositories accessible to the app installation.
 
   GET /installation/repositories
 
-https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-app-installation
+https://developer.github.com/v3/apps/installations/#list-repositories
 */
 func ListReposAccessibleToInstallation(ctx context.Context, req *ListReposAccessibleToInstallationReq, opt ...requests.Option) (*ListReposAccessibleToInstallationResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -3235,7 +3253,7 @@ List repositories accessible to the app installation.
 
   GET /installation/repositories
 
-https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-app-installation
+https://developer.github.com/v3/apps/installations/#list-repositories
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -3246,7 +3264,7 @@ func (c Client) ListReposAccessibleToInstallation(ctx context.Context, req *List
 /*
 ListReposAccessibleToInstallationReq is request data for Client.ListReposAccessibleToInstallation
 
-https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-app-installation
+https://developer.github.com/v3/apps/installations/#list-repositories
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -3315,7 +3333,7 @@ func (r *ListReposAccessibleToInstallationReq) Rel(link string, resp *ListReposA
 /*
 ListReposAccessibleToInstallationResponseBody is a response body for ListReposAccessibleToInstallation
 
-https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-app-installation
+https://developer.github.com/v3/apps/installations/#list-repositories
 */
 type ListReposAccessibleToInstallationResponseBody struct {
 	Repositories        []components.Repository `json:"repositories,omitempty"`
@@ -3326,7 +3344,7 @@ type ListReposAccessibleToInstallationResponseBody struct {
 /*
 ListReposAccessibleToInstallationResponse is a response for ListReposAccessibleToInstallation
 
-https://developer.github.com/v3/apps/installations/#list-repositories-accessible-to-the-app-installation
+https://developer.github.com/v3/apps/installations/#list-repositories
 */
 type ListReposAccessibleToInstallationResponse struct {
 	httpResponse *http.Response
@@ -3361,7 +3379,7 @@ List subscriptions for the authenticated user.
 
   GET /user/marketplace_purchases
 
-https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user
+https://developer.github.com/v3/apps/marketplace/#get-a-users-marketplace-purchases
 */
 func ListSubscriptionsForAuthenticatedUser(ctx context.Context, req *ListSubscriptionsForAuthenticatedUserReq, opt ...requests.Option) (*ListSubscriptionsForAuthenticatedUserResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -3394,7 +3412,7 @@ List subscriptions for the authenticated user.
 
   GET /user/marketplace_purchases
 
-https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user
+https://developer.github.com/v3/apps/marketplace/#get-a-users-marketplace-purchases
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -3405,7 +3423,7 @@ func (c Client) ListSubscriptionsForAuthenticatedUser(ctx context.Context, req *
 /*
 ListSubscriptionsForAuthenticatedUserReq is request data for Client.ListSubscriptionsForAuthenticatedUser
 
-https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user
+https://developer.github.com/v3/apps/marketplace/#get-a-users-marketplace-purchases
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -3455,7 +3473,7 @@ func (r *ListSubscriptionsForAuthenticatedUserReq) Rel(link string, resp *ListSu
 /*
 ListSubscriptionsForAuthenticatedUserResponse is a response for ListSubscriptionsForAuthenticatedUser
 
-https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user
+https://developer.github.com/v3/apps/marketplace/#get-a-users-marketplace-purchases
 */
 type ListSubscriptionsForAuthenticatedUserResponse struct {
 	httpResponse *http.Response
@@ -3490,7 +3508,7 @@ List subscriptions for the authenticated user (stubbed).
 
   GET /user/marketplace_purchases/stubbed
 
-https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user-stubbed
+https://developer.github.com/v3/apps/marketplace/#get-a-users-marketplace-purchases
 */
 func ListSubscriptionsForAuthenticatedUserStubbed(ctx context.Context, req *ListSubscriptionsForAuthenticatedUserStubbedReq, opt ...requests.Option) (*ListSubscriptionsForAuthenticatedUserStubbedResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -3523,7 +3541,7 @@ List subscriptions for the authenticated user (stubbed).
 
   GET /user/marketplace_purchases/stubbed
 
-https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user-stubbed
+https://developer.github.com/v3/apps/marketplace/#get-a-users-marketplace-purchases
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -3534,7 +3552,7 @@ func (c Client) ListSubscriptionsForAuthenticatedUserStubbed(ctx context.Context
 /*
 ListSubscriptionsForAuthenticatedUserStubbedReq is request data for Client.ListSubscriptionsForAuthenticatedUserStubbed
 
-https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user-stubbed
+https://developer.github.com/v3/apps/marketplace/#get-a-users-marketplace-purchases
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -3584,7 +3602,7 @@ func (r *ListSubscriptionsForAuthenticatedUserStubbedReq) Rel(link string, resp 
 /*
 ListSubscriptionsForAuthenticatedUserStubbedResponse is a response for ListSubscriptionsForAuthenticatedUserStubbed
 
-https://developer.github.com/v3/apps/marketplace/#list-subscriptions-for-the-authenticated-user-stubbed
+https://developer.github.com/v3/apps/marketplace/#get-a-users-marketplace-purchases
 */
 type ListSubscriptionsForAuthenticatedUserStubbedResponse struct {
 	httpResponse *http.Response
@@ -3619,7 +3637,7 @@ Remove a repository from an app installation.
 
   DELETE /user/installations/{installation_id}/repositories/{repository_id}
 
-https://developer.github.com/v3/apps/installations/#remove-a-repository-from-an-app-installation
+https://developer.github.com/v3/apps/installations/#remove-repository-from-installation
 */
 func RemoveRepoFromInstallation(ctx context.Context, req *RemoveRepoFromInstallationReq, opt ...requests.Option) (*RemoveRepoFromInstallationResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -3652,7 +3670,7 @@ Remove a repository from an app installation.
 
   DELETE /user/installations/{installation_id}/repositories/{repository_id}
 
-https://developer.github.com/v3/apps/installations/#remove-a-repository-from-an-app-installation
+https://developer.github.com/v3/apps/installations/#remove-repository-from-installation
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -3663,7 +3681,7 @@ func (c Client) RemoveRepoFromInstallation(ctx context.Context, req *RemoveRepoF
 /*
 RemoveRepoFromInstallationReq is request data for Client.RemoveRepoFromInstallation
 
-https://developer.github.com/v3/apps/installations/#remove-a-repository-from-an-app-installation
+https://developer.github.com/v3/apps/installations/#remove-repository-from-installation
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -3712,7 +3730,7 @@ func (r *RemoveRepoFromInstallationReq) Rel(link string, resp *RemoveRepoFromIns
 /*
 RemoveRepoFromInstallationResponse is a response for RemoveRepoFromInstallation
 
-https://developer.github.com/v3/apps/installations/#remove-a-repository-from-an-app-installation
+https://developer.github.com/v3/apps/installations/#remove-repository-from-installation
 */
 type RemoveRepoFromInstallationResponse struct {
 	httpResponse *http.Response
@@ -3740,7 +3758,7 @@ Reset an authorization.
 
   POST /applications/{client_id}/tokens/{access_token}
 
-https://developer.github.com/v3/apps/oauth_applications/#reset-an-authorization
+https://developer.github.com/v3/oauth_authorizations/#reset-an-authorization
 */
 func ResetAuthorization(ctx context.Context, req *ResetAuthorizationReq, opt ...requests.Option) (*ResetAuthorizationResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -3773,7 +3791,7 @@ Reset an authorization.
 
   POST /applications/{client_id}/tokens/{access_token}
 
-https://developer.github.com/v3/apps/oauth_applications/#reset-an-authorization
+https://developer.github.com/v3/oauth_authorizations/#reset-an-authorization
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -3784,13 +3802,17 @@ func (c Client) ResetAuthorization(ctx context.Context, req *ResetAuthorizationR
 /*
 ResetAuthorizationReq is request data for Client.ResetAuthorization
 
-https://developer.github.com/v3/apps/oauth_applications/#reset-an-authorization
+https://developer.github.com/v3/oauth_authorizations/#reset-an-authorization
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ResetAuthorizationReq struct {
-	_url        string
-	ClientId    string
+	_url string
+
+	// client_id parameter
+	ClientId string
+
+	// access_token parameter
 	AccessToken string
 }
 
@@ -3821,7 +3843,7 @@ func (r *ResetAuthorizationReq) Rel(link string, resp *ResetAuthorizationRespons
 /*
 ResetAuthorizationResponse is a response for ResetAuthorization
 
-https://developer.github.com/v3/apps/oauth_applications/#reset-an-authorization
+https://developer.github.com/v3/oauth_authorizations/#reset-an-authorization
 */
 type ResetAuthorizationResponse struct {
 	httpResponse *http.Response
@@ -3856,7 +3878,7 @@ Reset a token.
 
   PATCH /applications/{client_id}/token
 
-https://developer.github.com/v3/apps/oauth_applications/#reset-a-token
+https://developer.github.com/v3/oauth_authorizations/#reset-an-authorization
 */
 func ResetToken(ctx context.Context, req *ResetTokenReq, opt ...requests.Option) (*ResetTokenResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -3889,7 +3911,7 @@ Reset a token.
 
   PATCH /applications/{client_id}/token
 
-https://developer.github.com/v3/apps/oauth_applications/#reset-a-token
+https://developer.github.com/v3/oauth_authorizations/#reset-an-authorization
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -3900,12 +3922,14 @@ func (c Client) ResetToken(ctx context.Context, req *ResetTokenReq, opt ...reque
 /*
 ResetTokenReq is request data for Client.ResetToken
 
-https://developer.github.com/v3/apps/oauth_applications/#reset-a-token
+https://developer.github.com/v3/oauth_authorizations/#reset-an-authorization
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ResetTokenReq struct {
-	_url        string
+	_url string
+
+	// client_id parameter
 	ClientId    string
 	RequestBody ResetTokenReqBody
 }
@@ -3941,7 +3965,7 @@ func (r *ResetTokenReq) Rel(link string, resp *ResetTokenResponse) bool {
 /*
 ResetTokenReqBody is a request body for apps/reset-token
 
-https://developer.github.com/v3/apps/oauth_applications/#reset-a-token
+https://developer.github.com/v3/oauth_authorizations/#reset-an-authorization
 */
 type ResetTokenReqBody struct {
 
@@ -3952,7 +3976,7 @@ type ResetTokenReqBody struct {
 /*
 ResetTokenResponse is a response for ResetToken
 
-https://developer.github.com/v3/apps/oauth_applications/#reset-a-token
+https://developer.github.com/v3/oauth_authorizations/#reset-an-authorization
 */
 type ResetTokenResponse struct {
 	httpResponse *http.Response
@@ -3987,7 +4011,7 @@ Revoke an authorization for an application.
 
   DELETE /applications/{client_id}/tokens/{access_token}
 
-https://developer.github.com/v3/apps/oauth_applications/#revoke-an-authorization-for-an-application
+https://developer.github.com/v3/oauth_authorizations/#revoke-an-authorization-for-an-application
 */
 func RevokeAuthorizationForApplication(ctx context.Context, req *RevokeAuthorizationForApplicationReq, opt ...requests.Option) (*RevokeAuthorizationForApplicationResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -4020,7 +4044,7 @@ Revoke an authorization for an application.
 
   DELETE /applications/{client_id}/tokens/{access_token}
 
-https://developer.github.com/v3/apps/oauth_applications/#revoke-an-authorization-for-an-application
+https://developer.github.com/v3/oauth_authorizations/#revoke-an-authorization-for-an-application
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -4031,13 +4055,17 @@ func (c Client) RevokeAuthorizationForApplication(ctx context.Context, req *Revo
 /*
 RevokeAuthorizationForApplicationReq is request data for Client.RevokeAuthorizationForApplication
 
-https://developer.github.com/v3/apps/oauth_applications/#revoke-an-authorization-for-an-application
+https://developer.github.com/v3/oauth_authorizations/#revoke-an-authorization-for-an-application
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type RevokeAuthorizationForApplicationReq struct {
-	_url        string
-	ClientId    string
+	_url string
+
+	// client_id parameter
+	ClientId string
+
+	// access_token parameter
 	AccessToken string
 }
 
@@ -4067,7 +4095,7 @@ func (r *RevokeAuthorizationForApplicationReq) Rel(link string, resp *RevokeAuth
 /*
 RevokeAuthorizationForApplicationResponse is a response for RevokeAuthorizationForApplication
 
-https://developer.github.com/v3/apps/oauth_applications/#revoke-an-authorization-for-an-application
+https://developer.github.com/v3/oauth_authorizations/#revoke-an-authorization-for-an-application
 */
 type RevokeAuthorizationForApplicationResponse struct {
 	httpResponse *http.Response
@@ -4095,7 +4123,7 @@ Revoke a grant for an application.
 
   DELETE /applications/{client_id}/grants/{access_token}
 
-https://developer.github.com/v3/apps/oauth_applications/#revoke-a-grant-for-an-application
+https://developer.github.com/v3/oauth_authorizations/#revoke-a-grant-for-an-application
 */
 func RevokeGrantForApplication(ctx context.Context, req *RevokeGrantForApplicationReq, opt ...requests.Option) (*RevokeGrantForApplicationResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -4128,7 +4156,7 @@ Revoke a grant for an application.
 
   DELETE /applications/{client_id}/grants/{access_token}
 
-https://developer.github.com/v3/apps/oauth_applications/#revoke-a-grant-for-an-application
+https://developer.github.com/v3/oauth_authorizations/#revoke-a-grant-for-an-application
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -4139,13 +4167,17 @@ func (c Client) RevokeGrantForApplication(ctx context.Context, req *RevokeGrantF
 /*
 RevokeGrantForApplicationReq is request data for Client.RevokeGrantForApplication
 
-https://developer.github.com/v3/apps/oauth_applications/#revoke-a-grant-for-an-application
+https://developer.github.com/v3/oauth_authorizations/#revoke-a-grant-for-an-application
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type RevokeGrantForApplicationReq struct {
-	_url        string
-	ClientId    string
+	_url string
+
+	// client_id parameter
+	ClientId string
+
+	// access_token parameter
 	AccessToken string
 }
 
@@ -4175,7 +4207,7 @@ func (r *RevokeGrantForApplicationReq) Rel(link string, resp *RevokeGrantForAppl
 /*
 RevokeGrantForApplicationResponse is a response for RevokeGrantForApplication
 
-https://developer.github.com/v3/apps/oauth_applications/#revoke-a-grant-for-an-application
+https://developer.github.com/v3/oauth_authorizations/#revoke-a-grant-for-an-application
 */
 type RevokeGrantForApplicationResponse struct {
 	httpResponse *http.Response
@@ -4203,7 +4235,7 @@ Revoke an installation access token.
 
   DELETE /installation/token
 
-https://developer.github.com/v3/apps/installations/#revoke-an-installation-access-token
+https://developer.github.com/v3/apps/installations/#revoke-token
 */
 func RevokeInstallationAccessToken(ctx context.Context, req *RevokeInstallationAccessTokenReq, opt ...requests.Option) (*RevokeInstallationAccessTokenResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -4236,7 +4268,7 @@ Revoke an installation access token.
 
   DELETE /installation/token
 
-https://developer.github.com/v3/apps/installations/#revoke-an-installation-access-token
+https://developer.github.com/v3/apps/installations/#revoke-token
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -4247,7 +4279,7 @@ func (c Client) RevokeInstallationAccessToken(ctx context.Context, req *RevokeIn
 /*
 RevokeInstallationAccessTokenReq is request data for Client.RevokeInstallationAccessToken
 
-https://developer.github.com/v3/apps/installations/#revoke-an-installation-access-token
+https://developer.github.com/v3/apps/installations/#revoke-token
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -4281,7 +4313,7 @@ func (r *RevokeInstallationAccessTokenReq) Rel(link string, resp *RevokeInstalla
 /*
 RevokeInstallationAccessTokenResponse is a response for RevokeInstallationAccessToken
 
-https://developer.github.com/v3/apps/installations/#revoke-an-installation-access-token
+https://developer.github.com/v3/apps/installations/#revoke-token
 */
 type RevokeInstallationAccessTokenResponse struct {
 	httpResponse *http.Response
@@ -4309,7 +4341,7 @@ Suspend an app installation.
 
   PUT /app/installations/{installation_id}/suspended
 
-https://developer.github.com/v3/apps/#suspend-an-app-installation
+https://developer.github.com/v3/apps/#suspend-a-single-installation
 */
 func SuspendInstallation(ctx context.Context, req *SuspendInstallationReq, opt ...requests.Option) (*SuspendInstallationResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -4342,7 +4374,7 @@ Suspend an app installation.
 
   PUT /app/installations/{installation_id}/suspended
 
-https://developer.github.com/v3/apps/#suspend-an-app-installation
+https://developer.github.com/v3/apps/#suspend-a-single-installation
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -4353,7 +4385,7 @@ func (c Client) SuspendInstallation(ctx context.Context, req *SuspendInstallatio
 /*
 SuspendInstallationReq is request data for Client.SuspendInstallation
 
-https://developer.github.com/v3/apps/#suspend-an-app-installation
+https://developer.github.com/v3/apps/#suspend-a-single-installation
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -4390,7 +4422,7 @@ func (r *SuspendInstallationReq) Rel(link string, resp *SuspendInstallationRespo
 /*
 SuspendInstallationResponse is a response for SuspendInstallation
 
-https://developer.github.com/v3/apps/#suspend-an-app-installation
+https://developer.github.com/v3/apps/#suspend-a-single-installation
 */
 type SuspendInstallationResponse struct {
 	httpResponse *http.Response
@@ -4423,7 +4455,7 @@ Unsuspend an app installation.
 
   DELETE /app/installations/{installation_id}/suspended
 
-https://developer.github.com/v3/apps/#unsuspend-an-app-installation
+https://developer.github.com/v3/apps/#unsuspend-a-single-installation
 */
 func UnsuspendInstallation(ctx context.Context, req *UnsuspendInstallationReq, opt ...requests.Option) (*UnsuspendInstallationResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -4456,7 +4488,7 @@ Unsuspend an app installation.
 
   DELETE /app/installations/{installation_id}/suspended
 
-https://developer.github.com/v3/apps/#unsuspend-an-app-installation
+https://developer.github.com/v3/apps/#unsuspend-a-single-installation
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -4467,7 +4499,7 @@ func (c Client) UnsuspendInstallation(ctx context.Context, req *UnsuspendInstall
 /*
 UnsuspendInstallationReq is request data for Client.UnsuspendInstallation
 
-https://developer.github.com/v3/apps/#unsuspend-an-app-installation
+https://developer.github.com/v3/apps/#unsuspend-a-single-installation
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -4504,7 +4536,7 @@ func (r *UnsuspendInstallationReq) Rel(link string, resp *UnsuspendInstallationR
 /*
 UnsuspendInstallationResponse is a response for UnsuspendInstallation
 
-https://developer.github.com/v3/apps/#unsuspend-an-app-installation
+https://developer.github.com/v3/apps/#unsuspend-a-single-installation
 */
 type UnsuspendInstallationResponse struct {
 	httpResponse *http.Response

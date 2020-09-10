@@ -67,7 +67,9 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type GetRestrictionsForOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	/*
 	The Interactions API is currently in public preview. See the [blog
@@ -192,9 +194,13 @@ https://developer.github.com/v3/interactions/repos/#get-interaction-restrictions
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetRestrictionsForRepoReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	/*
 	The Interactions API is currently in public preview. See the [blog
@@ -320,7 +326,9 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type RemoveRestrictionsForOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	/*
 	The Interactions API is currently in public preview. See the [blog
@@ -437,9 +445,13 @@ https://developer.github.com/v3/interactions/repos/#remove-interaction-restricti
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type RemoveRestrictionsForRepoReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	/*
 	The Interactions API is currently in public preview. See the [blog
@@ -556,7 +568,9 @@ https://developer.github.com/v3/interactions/orgs/#set-interaction-restrictions-
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type SetRestrictionsForOrgReq struct {
-	_url        string
+	_url string
+
+	// org parameter
 	Org         string
 	RequestBody SetRestrictionsForOrgReqBody
 
@@ -702,8 +716,12 @@ https://developer.github.com/v3/interactions/repos/#set-interaction-restrictions
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type SetRestrictionsForRepoReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody SetRestrictionsForRepoReqBody
 

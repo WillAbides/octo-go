@@ -84,7 +84,7 @@ type CodeReq struct {
 	/*
 	Sorts the results of your query. Can only be `indexed`, which indicates how
 	recently a file has been indexed by the GitHub search infrastructure. Default:
-	[best match](https://developer.github.com/v3/search/#ranking-search-results)
+	[best match](GitHub/v3/search/#ranking-search-results)
 	*/
 	Sort *string
 
@@ -1119,7 +1119,7 @@ type UsersReq struct {
 	/*
 	Sorts the results of your query by number of `followers` or `repositories`, or
 	when the person `joined` GitHub. Default: [best
-	match](https://developer.github.com/v3/search/#ranking-search-results)
+	match](GitHub/v3/search/#ranking-search-results)
 	*/
 	Sort *string
 

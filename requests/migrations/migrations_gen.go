@@ -68,9 +68,13 @@ https://developer.github.com/v3/migrations/source_imports/#cancel-an-import
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CancelImportReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 }
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
@@ -292,7 +296,9 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type DeleteArchiveForOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// migration_id parameter
 	MigrationId int64
@@ -413,7 +419,9 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type DownloadArchiveForOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// migration_id parameter
 	MigrationId int64
@@ -643,14 +651,18 @@ https://developer.github.com/v3/migrations/source_imports/#get-commit-authors
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetCommitAuthorsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	/*
-	Only show notifications updated after the given time. This is a timestamp in
-	[ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format:
-	`YYYY-MM-DDTHH:MM:SSZ`.
+	Only authors found after this id are returned. Provide the highest author ID
+	you've seen so far. New authors may be added to the list at any point while the
+	importer is performing the `raw` step.
 	*/
 	Since *string
 }
@@ -772,9 +784,13 @@ https://developer.github.com/v3/migrations/source_imports/#get-an-import-status
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetImportStatusReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 }
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
@@ -888,9 +904,13 @@ https://developer.github.com/v3/migrations/source_imports/#get-large-files
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetLargeFilesReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 }
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
@@ -955,7 +975,7 @@ Get a user migration status.
 
   GET /user/migrations/{migration_id}
 
-https://developer.github.com/v3/migrations/users/#get-a-user-migration-status
+https://developer.github.com/v3/migrations/users/#get-the-status-of-a-user-migration
 */
 func GetStatusForAuthenticatedUser(ctx context.Context, req *GetStatusForAuthenticatedUserReq, opt ...requests.Option) (*GetStatusForAuthenticatedUserResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -988,7 +1008,7 @@ Get a user migration status.
 
   GET /user/migrations/{migration_id}
 
-https://developer.github.com/v3/migrations/users/#get-a-user-migration-status
+https://developer.github.com/v3/migrations/users/#get-the-status-of-a-user-migration
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -999,7 +1019,7 @@ func (c Client) GetStatusForAuthenticatedUser(ctx context.Context, req *GetStatu
 /*
 GetStatusForAuthenticatedUserReq is request data for Client.GetStatusForAuthenticatedUser
 
-https://developer.github.com/v3/migrations/users/#get-a-user-migration-status
+https://developer.github.com/v3/migrations/users/#get-the-status-of-a-user-migration
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -1043,7 +1063,7 @@ func (r *GetStatusForAuthenticatedUserReq) Rel(link string, resp *GetStatusForAu
 /*
 GetStatusForAuthenticatedUserResponse is a response for GetStatusForAuthenticatedUser
 
-https://developer.github.com/v3/migrations/users/#get-a-user-migration-status
+https://developer.github.com/v3/migrations/users/#get-the-status-of-a-user-migration
 */
 type GetStatusForAuthenticatedUserResponse struct {
 	httpResponse *http.Response
@@ -1128,7 +1148,9 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type GetStatusForOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// migration_id parameter
 	MigrationId int64
@@ -1202,7 +1224,7 @@ List user migrations.
 
   GET /user/migrations
 
-https://developer.github.com/v3/migrations/users/#list-user-migrations
+https://developer.github.com/v3/migrations/users/#get-a-list-of-user-migrations
 */
 func ListForAuthenticatedUser(ctx context.Context, req *ListForAuthenticatedUserReq, opt ...requests.Option) (*ListForAuthenticatedUserResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -1235,7 +1257,7 @@ List user migrations.
 
   GET /user/migrations
 
-https://developer.github.com/v3/migrations/users/#list-user-migrations
+https://developer.github.com/v3/migrations/users/#get-a-list-of-user-migrations
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -1246,7 +1268,7 @@ func (c Client) ListForAuthenticatedUser(ctx context.Context, req *ListForAuthen
 /*
 ListForAuthenticatedUserReq is request data for Client.ListForAuthenticatedUser
 
-https://developer.github.com/v3/migrations/users/#list-user-migrations
+https://developer.github.com/v3/migrations/users/#get-a-list-of-user-migrations
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -1302,7 +1324,7 @@ func (r *ListForAuthenticatedUserReq) Rel(link string, resp *ListForAuthenticate
 /*
 ListForAuthenticatedUserResponse is a response for ListForAuthenticatedUser
 
-https://developer.github.com/v3/migrations/users/#list-user-migrations
+https://developer.github.com/v3/migrations/users/#get-a-list-of-user-migrations
 */
 type ListForAuthenticatedUserResponse struct {
 	httpResponse *http.Response
@@ -1387,7 +1409,9 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type ListForOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -1523,7 +1547,9 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type ListReposForOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// migration_id parameter
 	MigrationId int64
@@ -1799,9 +1825,13 @@ https://developer.github.com/v3/migrations/source_imports/#map-a-commit-author
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type MapCommitAuthorReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// author_id parameter
 	AuthorId    int64
@@ -1938,8 +1968,12 @@ https://developer.github.com/v3/migrations/source_imports/#update-git-lfs-prefer
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type SetLfsPreferenceReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody SetLfsPreferenceReqBody
 }
@@ -2210,7 +2244,9 @@ https://developer.github.com/v3/migrations/orgs/#start-an-organization-migration
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type StartForOrgReq struct {
-	_url        string
+	_url string
+
+	// org parameter
 	Org         string
 	RequestBody StartForOrgReqBody
 }
@@ -2348,8 +2384,12 @@ https://developer.github.com/v3/migrations/source_imports/#start-an-import
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type StartImportReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody StartImportReqBody
 }
@@ -2616,7 +2656,9 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type UnlockRepoForOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// migration_id parameter
 	MigrationId int64
@@ -2739,8 +2781,12 @@ https://developer.github.com/v3/migrations/source_imports/#update-an-import
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type UpdateImportReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody UpdateImportReqBody
 }

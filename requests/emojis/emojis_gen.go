@@ -16,7 +16,7 @@ Get emojis.
 
   GET /emojis
 
-https://developer.github.com/v3/emojis/#get-emojis
+https://developer.github.com/v3/emojis/#emojis
 */
 func Get(ctx context.Context, req *GetReq, opt ...requests.Option) (*GetResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -49,7 +49,7 @@ Get emojis.
 
   GET /emojis
 
-https://developer.github.com/v3/emojis/#get-emojis
+https://developer.github.com/v3/emojis/#emojis
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -60,7 +60,7 @@ func (c Client) Get(ctx context.Context, req *GetReq, opt ...requests.Option) (*
 /*
 GetReq is request data for Client.Get
 
-https://developer.github.com/v3/emojis/#get-emojis
+https://developer.github.com/v3/emojis/#emojis
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -95,14 +95,14 @@ func (r *GetReq) Rel(link string, resp *GetResponse) bool {
 /*
 GetResponseBody is a response body for Get
 
-https://developer.github.com/v3/emojis/#get-emojis
+https://developer.github.com/v3/emojis/#emojis
 */
 type GetResponseBody map[string]string
 
 /*
 GetResponse is a response for Get
 
-https://developer.github.com/v3/emojis/#get-emojis
+https://developer.github.com/v3/emojis/#emojis
 */
 type GetResponse struct {
 	httpResponse *http.Response

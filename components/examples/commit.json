@@ -23,13 +23,13 @@
   "commit": {
     "author": {
       "date": "2011-04-14T16:00:49Z",
-      "email": "mona@github.com",
+      "email": "support@github.com",
       "name": "Monalisa Octocat"
     },
     "comment_count": 0,
     "committer": {
       "date": "2011-04-14T16:00:49Z",
-      "email": "mona@github.com",
+      "email": "support@github.com",
       "name": "Monalisa Octocat"
     },
     "message": "Fix all the bugs",

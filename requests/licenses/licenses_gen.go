@@ -19,7 +19,7 @@ Get a license.
 
   GET /licenses/{license}
 
-https://developer.github.com/v3/licenses/#get-a-license
+https://developer.github.com/v3/licenses/#get-an-individual-license
 */
 func Get(ctx context.Context, req *GetReq, opt ...requests.Option) (*GetResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -52,7 +52,7 @@ Get a license.
 
   GET /licenses/{license}
 
-https://developer.github.com/v3/licenses/#get-a-license
+https://developer.github.com/v3/licenses/#get-an-individual-license
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -63,7 +63,7 @@ func (c Client) Get(ctx context.Context, req *GetReq, opt ...requests.Option) (*
 /*
 GetReq is request data for Client.Get
 
-https://developer.github.com/v3/licenses/#get-a-license
+https://developer.github.com/v3/licenses/#get-an-individual-license
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -101,7 +101,7 @@ func (r *GetReq) Rel(link string, resp *GetResponse) bool {
 /*
 GetResponse is a response for Get
 
-https://developer.github.com/v3/licenses/#get-a-license
+https://developer.github.com/v3/licenses/#get-an-individual-license
 */
 type GetResponse struct {
 	httpResponse *http.Response
@@ -136,7 +136,7 @@ Get all commonly used licenses.
 
   GET /licenses
 
-https://developer.github.com/v3/licenses/#get-all-commonly-used-licenses
+https://developer.github.com/v3/licenses/#list-commonly-used-licenses
 */
 func GetAllCommonlyUsed(ctx context.Context, req *GetAllCommonlyUsedReq, opt ...requests.Option) (*GetAllCommonlyUsedResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -169,7 +169,7 @@ Get all commonly used licenses.
 
   GET /licenses
 
-https://developer.github.com/v3/licenses/#get-all-commonly-used-licenses
+https://developer.github.com/v3/licenses/#list-commonly-used-licenses
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -180,7 +180,7 @@ func (c Client) GetAllCommonlyUsed(ctx context.Context, req *GetAllCommonlyUsedR
 /*
 GetAllCommonlyUsedReq is request data for Client.GetAllCommonlyUsed
 
-https://developer.github.com/v3/licenses/#get-all-commonly-used-licenses
+https://developer.github.com/v3/licenses/#list-commonly-used-licenses
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -228,7 +228,7 @@ func (r *GetAllCommonlyUsedReq) Rel(link string, resp *GetAllCommonlyUsedRespons
 /*
 GetAllCommonlyUsedResponse is a response for GetAllCommonlyUsed
 
-https://developer.github.com/v3/licenses/#get-all-commonly-used-licenses
+https://developer.github.com/v3/licenses/#list-commonly-used-licenses
 */
 type GetAllCommonlyUsedResponse struct {
 	httpResponse *http.Response
@@ -312,9 +312,13 @@ https://developer.github.com/v3/licenses/#get-the-license-for-a-repository
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetForRepoReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 }
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.

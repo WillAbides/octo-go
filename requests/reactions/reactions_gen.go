@@ -68,9 +68,13 @@ https://developer.github.com/v3/reactions/#create-reaction-for-a-commit-comment
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateForCommitCommentReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// comment_id parameter
 	CommentId   int64
@@ -217,9 +221,13 @@ https://developer.github.com/v3/reactions/#create-reaction-for-an-issue
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateForIssueReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// issue_number parameter
 	IssueNumber int64
@@ -366,9 +374,13 @@ https://developer.github.com/v3/reactions/#create-reaction-for-an-issue-comment
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateForIssueCommentReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// comment_id parameter
 	CommentId   int64
@@ -515,9 +527,13 @@ https://developer.github.com/v3/reactions/#create-reaction-for-a-pull-request-re
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateForPullRequestReviewCommentReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// comment_id parameter
 	CommentId   int64
@@ -668,13 +684,19 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type CreateForTeamDiscussionCommentInOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// team_slug parameter
-	TeamSlug         string
+	TeamSlug string
+
+	// discussion_number parameter
 	DiscussionNumber int64
-	CommentNumber    int64
-	RequestBody      CreateForTeamDiscussionCommentInOrgReqBody
+
+	// comment_number parameter
+	CommentNumber int64
+	RequestBody   CreateForTeamDiscussionCommentInOrgReqBody
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
@@ -817,11 +839,17 @@ https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateForTeamDiscussionCommentLegacyReq struct {
-	_url             string
-	TeamId           int64
+	_url string
+
+	// team_id parameter
+	TeamId int64
+
+	// discussion_number parameter
 	DiscussionNumber int64
-	CommentNumber    int64
-	RequestBody      CreateForTeamDiscussionCommentLegacyReqBody
+
+	// comment_number parameter
+	CommentNumber int64
+	RequestBody   CreateForTeamDiscussionCommentLegacyReqBody
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
@@ -965,10 +993,14 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type CreateForTeamDiscussionInOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// team_slug parameter
-	TeamSlug         string
+	TeamSlug string
+
+	// discussion_number parameter
 	DiscussionNumber int64
 	RequestBody      CreateForTeamDiscussionInOrgReqBody
 
@@ -1113,8 +1145,12 @@ https://developer.github.com/v3/reactions/#create-reaction-for-a-team-discussion
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateForTeamDiscussionLegacyReq struct {
-	_url             string
-	TeamId           int64
+	_url string
+
+	// team_id parameter
+	TeamId int64
+
+	// discussion_number parameter
 	DiscussionNumber int64
 	RequestBody      CreateForTeamDiscussionLegacyReqBody
 
@@ -1259,12 +1295,18 @@ https://developer.github.com/v3/reactions/#delete-a-commit-comment-reaction
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DeleteForCommitCommentReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// comment_id parameter
-	CommentId  int64
+	CommentId int64
+
+	// reaction_id parameter
 	ReactionId int64
 
 	/*
@@ -1385,13 +1427,19 @@ https://developer.github.com/v3/reactions/#delete-an-issue-reaction
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DeleteForIssueReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// issue_number parameter
 	IssueNumber int64
-	ReactionId  int64
+
+	// reaction_id parameter
+	ReactionId int64
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
@@ -1511,12 +1559,18 @@ https://developer.github.com/v3/reactions/#delete-an-issue-comment-reaction
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DeleteForIssueCommentReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// comment_id parameter
-	CommentId  int64
+	CommentId int64
+
+	// reaction_id parameter
 	ReactionId int64
 
 	/*
@@ -1637,12 +1691,18 @@ https://developer.github.com/v3/reactions/#delete-a-pull-request-comment-reactio
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DeleteForPullRequestCommentReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// comment_id parameter
-	CommentId  int64
+	CommentId int64
+
+	// reaction_id parameter
 	ReactionId int64
 
 	/*
@@ -1764,12 +1824,18 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type DeleteForTeamDiscussionReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// team_slug parameter
-	TeamSlug         string
+	TeamSlug string
+
+	// discussion_number parameter
 	DiscussionNumber int64
-	ReactionId       int64
+
+	// reaction_id parameter
+	ReactionId int64
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
@@ -1890,13 +1956,21 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type DeleteForTeamDiscussionCommentReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// team_slug parameter
-	TeamSlug         string
+	TeamSlug string
+
+	// discussion_number parameter
 	DiscussionNumber int64
-	CommentNumber    int64
-	ReactionId       int64
+
+	// comment_number parameter
+	CommentNumber int64
+
+	// reaction_id parameter
+	ReactionId int64
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
@@ -1967,7 +2041,7 @@ Delete a reaction (Legacy).
 
   DELETE /reactions/{reaction_id}
 
-https://developer.github.com/v3/reactions/#delete-a-reaction-legacy
+https://developer.github.com/v3/reactions/#delete-a-reaction
 */
 func DeleteLegacy(ctx context.Context, req *DeleteLegacyReq, opt ...requests.Option) (*DeleteLegacyResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -2000,7 +2074,7 @@ Delete a reaction (Legacy).
 
   DELETE /reactions/{reaction_id}
 
-https://developer.github.com/v3/reactions/#delete-a-reaction-legacy
+https://developer.github.com/v3/reactions/#delete-a-reaction
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -2011,12 +2085,14 @@ func (c Client) DeleteLegacy(ctx context.Context, req *DeleteLegacyReq, opt ...r
 /*
 DeleteLegacyReq is request data for Client.DeleteLegacy
 
-https://developer.github.com/v3/reactions/#delete-a-reaction-legacy
+https://developer.github.com/v3/reactions/#delete-a-reaction
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DeleteLegacyReq struct {
-	_url       string
+	_url string
+
+	// reaction_id parameter
 	ReactionId int64
 
 	/*
@@ -2060,7 +2136,7 @@ func (r *DeleteLegacyReq) Rel(link string, resp *DeleteLegacyResponse) bool {
 /*
 DeleteLegacyResponse is a response for DeleteLegacy
 
-https://developer.github.com/v3/reactions/#delete-a-reaction-legacy
+https://developer.github.com/v3/reactions/#delete-a-reaction
 */
 type DeleteLegacyResponse struct {
 	httpResponse *http.Response
@@ -2137,9 +2213,13 @@ https://developer.github.com/v3/reactions/#list-reactions-for-a-commit-comment
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListForCommitCommentReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// comment_id parameter
 	CommentId int64
@@ -2295,9 +2375,13 @@ https://developer.github.com/v3/reactions/#list-reactions-for-an-issue
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListForIssueReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// issue_number parameter
 	IssueNumber int64
@@ -2453,9 +2537,13 @@ https://developer.github.com/v3/reactions/#list-reactions-for-an-issue-comment
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListForIssueCommentReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// comment_id parameter
 	CommentId int64
@@ -2611,9 +2699,13 @@ https://developer.github.com/v3/reactions/#list-reactions-for-a-pull-request-rev
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListForPullRequestReviewCommentReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// comment_id parameter
 	CommentId int64
@@ -2770,12 +2862,18 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type ListForTeamDiscussionCommentInOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// team_slug parameter
-	TeamSlug         string
+	TeamSlug string
+
+	// discussion_number parameter
 	DiscussionNumber int64
-	CommentNumber    int64
+
+	// comment_number parameter
+	CommentNumber int64
 
 	/*
 	Returns a single [reaction
@@ -2928,10 +3026,16 @@ https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListForTeamDiscussionCommentLegacyReq struct {
-	_url             string
-	TeamId           int64
+	_url string
+
+	// team_id parameter
+	TeamId int64
+
+	// discussion_number parameter
 	DiscussionNumber int64
-	CommentNumber    int64
+
+	// comment_number parameter
+	CommentNumber int64
 
 	/*
 	Returns a single [reaction
@@ -3085,10 +3189,14 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type ListForTeamDiscussionInOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// team_slug parameter
-	TeamSlug         string
+	TeamSlug string
+
+	// discussion_number parameter
 	DiscussionNumber int64
 
 	/*
@@ -3242,8 +3350,12 @@ https://developer.github.com/v3/reactions/#list-reactions-for-a-team-discussion-
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListForTeamDiscussionLegacyReq struct {
-	_url             string
-	TeamId           int64
+	_url string
+
+	// team_id parameter
+	TeamId int64
+
+	// discussion_number parameter
 	DiscussionNumber int64
 
 	/*

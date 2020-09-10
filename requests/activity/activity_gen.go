@@ -19,7 +19,7 @@ Check if a repository is starred by the authenticated user.
 
   GET /user/starred/{owner}/{repo}
 
-https://developer.github.com/v3/activity/starring/#check-if-a-repository-is-starred-by-the-authenticated-user
+https://developer.github.com/v3/activity/starring/#check-if-you-are-starring-a-repository
 */
 func CheckRepoIsStarredByAuthenticatedUser(ctx context.Context, req *CheckRepoIsStarredByAuthenticatedUserReq, opt ...requests.Option) (*CheckRepoIsStarredByAuthenticatedUserResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -52,7 +52,7 @@ Check if a repository is starred by the authenticated user.
 
   GET /user/starred/{owner}/{repo}
 
-https://developer.github.com/v3/activity/starring/#check-if-a-repository-is-starred-by-the-authenticated-user
+https://developer.github.com/v3/activity/starring/#check-if-you-are-starring-a-repository
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -63,14 +63,18 @@ func (c Client) CheckRepoIsStarredByAuthenticatedUser(ctx context.Context, req *
 /*
 CheckRepoIsStarredByAuthenticatedUserReq is request data for Client.CheckRepoIsStarredByAuthenticatedUser
 
-https://developer.github.com/v3/activity/starring/#check-if-a-repository-is-starred-by-the-authenticated-user
+https://developer.github.com/v3/activity/starring/#check-if-you-are-starring-a-repository
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CheckRepoIsStarredByAuthenticatedUserReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 }
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
@@ -99,7 +103,7 @@ func (r *CheckRepoIsStarredByAuthenticatedUserReq) Rel(link string, resp *CheckR
 /*
 CheckRepoIsStarredByAuthenticatedUserResponse is a response for CheckRepoIsStarredByAuthenticatedUser
 
-https://developer.github.com/v3/activity/starring/#check-if-a-repository-is-starred-by-the-authenticated-user
+https://developer.github.com/v3/activity/starring/#check-if-you-are-starring-a-repository
 */
 type CheckRepoIsStarredByAuthenticatedUserResponse struct {
 	httpResponse *http.Response
@@ -176,9 +180,13 @@ https://developer.github.com/v3/activity/watching/#delete-a-repository-subscript
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DeleteRepoSubscriptionReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 }
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
@@ -344,7 +352,7 @@ Get feeds.
 
   GET /feeds
 
-https://developer.github.com/v3/activity/feeds/#get-feeds
+https://developer.github.com/v3/activity/feeds/#list-feeds
 */
 func GetFeeds(ctx context.Context, req *GetFeedsReq, opt ...requests.Option) (*GetFeedsResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -377,7 +385,7 @@ Get feeds.
 
   GET /feeds
 
-https://developer.github.com/v3/activity/feeds/#get-feeds
+https://developer.github.com/v3/activity/feeds/#list-feeds
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -388,7 +396,7 @@ func (c Client) GetFeeds(ctx context.Context, req *GetFeedsReq, opt ...requests.
 /*
 GetFeedsReq is request data for Client.GetFeeds
 
-https://developer.github.com/v3/activity/feeds/#get-feeds
+https://developer.github.com/v3/activity/feeds/#list-feeds
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -423,7 +431,7 @@ func (r *GetFeedsReq) Rel(link string, resp *GetFeedsResponse) bool {
 /*
 GetFeedsResponse is a response for GetFeeds
 
-https://developer.github.com/v3/activity/feeds/#get-feeds
+https://developer.github.com/v3/activity/feeds/#list-feeds
 */
 type GetFeedsResponse struct {
 	httpResponse *http.Response
@@ -507,9 +515,13 @@ https://developer.github.com/v3/activity/watching/#get-a-repository-subscription
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetRepoSubscriptionReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 }
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
@@ -574,7 +586,7 @@ Get a thread.
 
   GET /notifications/threads/{thread_id}
 
-https://developer.github.com/v3/activity/notifications/#get-a-thread
+https://developer.github.com/v3/activity/notifications/#view-a-single-thread
 */
 func GetThread(ctx context.Context, req *GetThreadReq, opt ...requests.Option) (*GetThreadResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -607,7 +619,7 @@ Get a thread.
 
   GET /notifications/threads/{thread_id}
 
-https://developer.github.com/v3/activity/notifications/#get-a-thread
+https://developer.github.com/v3/activity/notifications/#view-a-single-thread
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -618,7 +630,7 @@ func (c Client) GetThread(ctx context.Context, req *GetThreadReq, opt ...request
 /*
 GetThreadReq is request data for Client.GetThread
 
-https://developer.github.com/v3/activity/notifications/#get-a-thread
+https://developer.github.com/v3/activity/notifications/#view-a-single-thread
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -656,7 +668,7 @@ func (r *GetThreadReq) Rel(link string, resp *GetThreadResponse) bool {
 /*
 GetThreadResponse is a response for GetThread
 
-https://developer.github.com/v3/activity/notifications/#get-a-thread
+https://developer.github.com/v3/activity/notifications/#view-a-single-thread
 */
 type GetThreadResponse struct {
 	httpResponse *http.Response
@@ -691,7 +703,7 @@ Get a thread subscription for the authenticated user.
 
   GET /notifications/threads/{thread_id}/subscription
 
-https://developer.github.com/v3/activity/notifications/#get-a-thread-subscription-for-the-authenticated-user
+https://developer.github.com/v3/activity/notifications/#get-a-thread-subscription
 */
 func GetThreadSubscriptionForAuthenticatedUser(ctx context.Context, req *GetThreadSubscriptionForAuthenticatedUserReq, opt ...requests.Option) (*GetThreadSubscriptionForAuthenticatedUserResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -724,7 +736,7 @@ Get a thread subscription for the authenticated user.
 
   GET /notifications/threads/{thread_id}/subscription
 
-https://developer.github.com/v3/activity/notifications/#get-a-thread-subscription-for-the-authenticated-user
+https://developer.github.com/v3/activity/notifications/#get-a-thread-subscription
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -735,7 +747,7 @@ func (c Client) GetThreadSubscriptionForAuthenticatedUser(ctx context.Context, r
 /*
 GetThreadSubscriptionForAuthenticatedUserReq is request data for Client.GetThreadSubscriptionForAuthenticatedUser
 
-https://developer.github.com/v3/activity/notifications/#get-a-thread-subscription-for-the-authenticated-user
+https://developer.github.com/v3/activity/notifications/#get-a-thread-subscription
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -773,7 +785,7 @@ func (r *GetThreadSubscriptionForAuthenticatedUserReq) Rel(link string, resp *Ge
 /*
 GetThreadSubscriptionForAuthenticatedUserResponse is a response for GetThreadSubscriptionForAuthenticatedUser
 
-https://developer.github.com/v3/activity/notifications/#get-a-thread-subscription-for-the-authenticated-user
+https://developer.github.com/v3/activity/notifications/#get-a-thread-subscription
 */
 type GetThreadSubscriptionForAuthenticatedUserResponse struct {
 	httpResponse *http.Response
@@ -857,7 +869,9 @@ https://developer.github.com/v3/activity/events/#list-events-for-the-authenticat
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListEventsForAuthenticatedUserReq struct {
-	_url     string
+	_url string
+
+	// username parameter
 	Username string
 
 	// Results per page (max 100)
@@ -938,7 +952,7 @@ List notifications for the authenticated user.
 
   GET /notifications
 
-https://developer.github.com/v3/activity/notifications/#list-notifications-for-the-authenticated-user
+https://developer.github.com/v3/activity/notifications/#list-your-notifications
 */
 func ListNotificationsForAuthenticatedUser(ctx context.Context, req *ListNotificationsForAuthenticatedUserReq, opt ...requests.Option) (*ListNotificationsForAuthenticatedUserResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -971,7 +985,7 @@ List notifications for the authenticated user.
 
   GET /notifications
 
-https://developer.github.com/v3/activity/notifications/#list-notifications-for-the-authenticated-user
+https://developer.github.com/v3/activity/notifications/#list-your-notifications
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -982,7 +996,7 @@ func (c Client) ListNotificationsForAuthenticatedUser(ctx context.Context, req *
 /*
 ListNotificationsForAuthenticatedUserReq is request data for Client.ListNotificationsForAuthenticatedUser
 
-https://developer.github.com/v3/activity/notifications/#list-notifications-for-the-authenticated-user
+https://developer.github.com/v3/activity/notifications/#list-your-notifications
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -1067,7 +1081,7 @@ func (r *ListNotificationsForAuthenticatedUserReq) Rel(link string, resp *ListNo
 /*
 ListNotificationsForAuthenticatedUserResponse is a response for ListNotificationsForAuthenticatedUser
 
-https://developer.github.com/v3/activity/notifications/#list-notifications-for-the-authenticated-user
+https://developer.github.com/v3/activity/notifications/#list-your-notifications
 */
 type ListNotificationsForAuthenticatedUserResponse struct {
 	httpResponse *http.Response
@@ -1151,9 +1165,13 @@ https://developer.github.com/v3/activity/events/#list-organization-events-for-th
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListOrgEventsForAuthenticatedUserReq struct {
-	_url     string
+	_url string
+
+	// username parameter
 	Username string
-	Org      string
+
+	// org parameter
+	Org string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -1411,9 +1429,13 @@ https://developer.github.com/v3/activity/events/#list-public-events-for-a-networ
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListPublicEventsForRepoNetworkReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -1542,7 +1564,9 @@ https://developer.github.com/v3/activity/events/#list-public-events-for-a-user
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListPublicEventsForUserReq struct {
-	_url     string
+	_url string
+
+	// username parameter
 	Username string
 
 	// Results per page (max 100)
@@ -1673,7 +1697,9 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type ListPublicOrgEventsReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -1802,7 +1828,9 @@ https://developer.github.com/v3/activity/events/#list-events-received-by-the-aut
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListReceivedEventsForUserReq struct {
-	_url     string
+	_url string
+
+	// username parameter
 	Username string
 
 	// Results per page (max 100)
@@ -1932,7 +1960,9 @@ https://developer.github.com/v3/activity/events/#list-public-events-received-by-
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListReceivedPublicEventsForUserReq struct {
-	_url     string
+	_url string
+
+	// username parameter
 	Username string
 
 	// Results per page (max 100)
@@ -2062,9 +2092,13 @@ https://developer.github.com/v3/activity/events/#list-repository-events
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListRepoEventsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -2193,9 +2227,13 @@ https://developer.github.com/v3/activity/notifications/#list-repository-notifica
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListRepoNotificationsForAuthenticatedUserReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// If `true`, show notifications marked as read.
 	All *bool
@@ -2310,7 +2348,7 @@ List repositories starred by the authenticated user.
 
   GET /user/starred
 
-https://developer.github.com/v3/activity/starring/#list-repositories-starred-by-the-authenticated-user
+https://developer.github.com/v3/activity/starring/#list-repositories-being-starred
 */
 func ListReposStarredByAuthenticatedUser(ctx context.Context, req *ListReposStarredByAuthenticatedUserReq, opt ...requests.Option) (*ListReposStarredByAuthenticatedUserResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -2343,7 +2381,7 @@ List repositories starred by the authenticated user.
 
   GET /user/starred
 
-https://developer.github.com/v3/activity/starring/#list-repositories-starred-by-the-authenticated-user
+https://developer.github.com/v3/activity/starring/#list-repositories-being-starred
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -2354,7 +2392,7 @@ func (c Client) ListReposStarredByAuthenticatedUser(ctx context.Context, req *Li
 /*
 ListReposStarredByAuthenticatedUserReq is request data for Client.ListReposStarredByAuthenticatedUser
 
-https://developer.github.com/v3/activity/starring/#list-repositories-starred-by-the-authenticated-user
+https://developer.github.com/v3/activity/starring/#list-repositories-being-starred
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -2419,7 +2457,7 @@ func (r *ListReposStarredByAuthenticatedUserReq) Rel(link string, resp *ListRepo
 /*
 ListReposStarredByAuthenticatedUserResponse is a response for ListReposStarredByAuthenticatedUser
 
-https://developer.github.com/v3/activity/starring/#list-repositories-starred-by-the-authenticated-user
+https://developer.github.com/v3/activity/starring/#list-repositories-being-starred
 */
 type ListReposStarredByAuthenticatedUserResponse struct {
 	httpResponse *http.Response
@@ -2503,7 +2541,9 @@ https://developer.github.com/v3/activity/starring/#list-repositories-starred-by-
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListReposStarredByUserReq struct {
-	_url     string
+	_url string
+
+	// username parameter
 	Username string
 
 	/*
@@ -2648,7 +2688,9 @@ https://developer.github.com/v3/activity/watching/#list-repositories-watched-by-
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListReposWatchedByUserReq struct {
-	_url     string
+	_url string
+
+	// username parameter
 	Username string
 
 	// Results per page (max 100)
@@ -2778,9 +2820,13 @@ https://developer.github.com/v3/activity/starring/#list-stargazers
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListStargazersForRepoReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -2860,7 +2906,7 @@ List repositories watched by the authenticated user.
 
   GET /user/subscriptions
 
-https://developer.github.com/v3/activity/watching/#list-repositories-watched-by-the-authenticated-user
+https://developer.github.com/v3/activity/watching/#list-repositories-being-watched
 */
 func ListWatchedReposForAuthenticatedUser(ctx context.Context, req *ListWatchedReposForAuthenticatedUserReq, opt ...requests.Option) (*ListWatchedReposForAuthenticatedUserResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -2893,7 +2939,7 @@ List repositories watched by the authenticated user.
 
   GET /user/subscriptions
 
-https://developer.github.com/v3/activity/watching/#list-repositories-watched-by-the-authenticated-user
+https://developer.github.com/v3/activity/watching/#list-repositories-being-watched
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -2904,7 +2950,7 @@ func (c Client) ListWatchedReposForAuthenticatedUser(ctx context.Context, req *L
 /*
 ListWatchedReposForAuthenticatedUserReq is request data for Client.ListWatchedReposForAuthenticatedUser
 
-https://developer.github.com/v3/activity/watching/#list-repositories-watched-by-the-authenticated-user
+https://developer.github.com/v3/activity/watching/#list-repositories-being-watched
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -2954,7 +3000,7 @@ func (r *ListWatchedReposForAuthenticatedUserReq) Rel(link string, resp *ListWat
 /*
 ListWatchedReposForAuthenticatedUserResponse is a response for ListWatchedReposForAuthenticatedUser
 
-https://developer.github.com/v3/activity/watching/#list-repositories-watched-by-the-authenticated-user
+https://developer.github.com/v3/activity/watching/#list-repositories-being-watched
 */
 type ListWatchedReposForAuthenticatedUserResponse struct {
 	httpResponse *http.Response
@@ -3038,9 +3084,13 @@ https://developer.github.com/v3/activity/watching/#list-watchers
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListWatchersForRepoReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -3120,7 +3170,7 @@ Mark notifications as read.
 
   PUT /notifications
 
-https://developer.github.com/v3/activity/notifications/#mark-notifications-as-read
+https://developer.github.com/v3/activity/notifications/#mark-as-read
 */
 func MarkNotificationsAsRead(ctx context.Context, req *MarkNotificationsAsReadReq, opt ...requests.Option) (*MarkNotificationsAsReadResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -3153,7 +3203,7 @@ Mark notifications as read.
 
   PUT /notifications
 
-https://developer.github.com/v3/activity/notifications/#mark-notifications-as-read
+https://developer.github.com/v3/activity/notifications/#mark-as-read
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -3164,7 +3214,7 @@ func (c Client) MarkNotificationsAsRead(ctx context.Context, req *MarkNotificati
 /*
 MarkNotificationsAsReadReq is request data for Client.MarkNotificationsAsRead
 
-https://developer.github.com/v3/activity/notifications/#mark-notifications-as-read
+https://developer.github.com/v3/activity/notifications/#mark-as-read
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -3204,7 +3254,7 @@ func (r *MarkNotificationsAsReadReq) Rel(link string, resp *MarkNotificationsAsR
 /*
 MarkNotificationsAsReadReqBody is a request body for activity/mark-notifications-as-read
 
-https://developer.github.com/v3/activity/notifications/#mark-notifications-as-read
+https://developer.github.com/v3/activity/notifications/#mark-as-read
 */
 type MarkNotificationsAsReadReqBody struct {
 
@@ -3218,7 +3268,7 @@ type MarkNotificationsAsReadReqBody struct {
 /*
 MarkNotificationsAsReadResponseBody is a response body for MarkNotificationsAsRead
 
-https://developer.github.com/v3/activity/notifications/#mark-notifications-as-read
+https://developer.github.com/v3/activity/notifications/#mark-as-read
 */
 type MarkNotificationsAsReadResponseBody struct {
 	Message string `json:"message,omitempty"`
@@ -3227,7 +3277,7 @@ type MarkNotificationsAsReadResponseBody struct {
 /*
 MarkNotificationsAsReadResponse is a response for MarkNotificationsAsRead
 
-https://developer.github.com/v3/activity/notifications/#mark-notifications-as-read
+https://developer.github.com/v3/activity/notifications/#mark-as-read
 */
 type MarkNotificationsAsReadResponse struct {
 	httpResponse *http.Response
@@ -3311,8 +3361,12 @@ https://developer.github.com/v3/activity/notifications/#mark-repository-notifica
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type MarkRepoNotificationsAsReadReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody MarkRepoNotificationsAsReadReqBody
 }
@@ -3548,8 +3602,12 @@ https://developer.github.com/v3/activity/watching/#set-a-repository-subscription
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type SetRepoSubscriptionReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody SetRepoSubscriptionReqBody
 }
@@ -3767,7 +3825,7 @@ Star a repository for the authenticated user.
 
   PUT /user/starred/{owner}/{repo}
 
-https://developer.github.com/v3/activity/starring/#star-a-repository-for-the-authenticated-user
+https://developer.github.com/v3/activity/starring/#star-a-repository
 */
 func StarRepoForAuthenticatedUser(ctx context.Context, req *StarRepoForAuthenticatedUserReq, opt ...requests.Option) (*StarRepoForAuthenticatedUserResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -3800,7 +3858,7 @@ Star a repository for the authenticated user.
 
   PUT /user/starred/{owner}/{repo}
 
-https://developer.github.com/v3/activity/starring/#star-a-repository-for-the-authenticated-user
+https://developer.github.com/v3/activity/starring/#star-a-repository
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -3811,14 +3869,18 @@ func (c Client) StarRepoForAuthenticatedUser(ctx context.Context, req *StarRepoF
 /*
 StarRepoForAuthenticatedUserReq is request data for Client.StarRepoForAuthenticatedUser
 
-https://developer.github.com/v3/activity/starring/#star-a-repository-for-the-authenticated-user
+https://developer.github.com/v3/activity/starring/#star-a-repository
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type StarRepoForAuthenticatedUserReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 }
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
@@ -3847,7 +3909,7 @@ func (r *StarRepoForAuthenticatedUserReq) Rel(link string, resp *StarRepoForAuth
 /*
 StarRepoForAuthenticatedUserResponse is a response for StarRepoForAuthenticatedUser
 
-https://developer.github.com/v3/activity/starring/#star-a-repository-for-the-authenticated-user
+https://developer.github.com/v3/activity/starring/#star-a-repository
 */
 type StarRepoForAuthenticatedUserResponse struct {
 	httpResponse *http.Response
@@ -3875,7 +3937,7 @@ Unstar a repository for the authenticated user.
 
   DELETE /user/starred/{owner}/{repo}
 
-https://developer.github.com/v3/activity/starring/#unstar-a-repository-for-the-authenticated-user
+https://developer.github.com/v3/activity/starring/#unstar-a-repository
 */
 func UnstarRepoForAuthenticatedUser(ctx context.Context, req *UnstarRepoForAuthenticatedUserReq, opt ...requests.Option) (*UnstarRepoForAuthenticatedUserResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -3908,7 +3970,7 @@ Unstar a repository for the authenticated user.
 
   DELETE /user/starred/{owner}/{repo}
 
-https://developer.github.com/v3/activity/starring/#unstar-a-repository-for-the-authenticated-user
+https://developer.github.com/v3/activity/starring/#unstar-a-repository
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -3919,14 +3981,18 @@ func (c Client) UnstarRepoForAuthenticatedUser(ctx context.Context, req *UnstarR
 /*
 UnstarRepoForAuthenticatedUserReq is request data for Client.UnstarRepoForAuthenticatedUser
 
-https://developer.github.com/v3/activity/starring/#unstar-a-repository-for-the-authenticated-user
+https://developer.github.com/v3/activity/starring/#unstar-a-repository
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type UnstarRepoForAuthenticatedUserReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 }
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
@@ -3955,7 +4021,7 @@ func (r *UnstarRepoForAuthenticatedUserReq) Rel(link string, resp *UnstarRepoFor
 /*
 UnstarRepoForAuthenticatedUserResponse is a response for UnstarRepoForAuthenticatedUser
 
-https://developer.github.com/v3/activity/starring/#unstar-a-repository-for-the-authenticated-user
+https://developer.github.com/v3/activity/starring/#unstar-a-repository
 */
 type UnstarRepoForAuthenticatedUserResponse struct {
 	httpResponse *http.Response

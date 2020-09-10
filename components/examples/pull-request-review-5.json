@@ -7,7 +7,7 @@
       "href": "https://api.github.com/repos/octocat/Hello-World/pulls/12"
     }
   },
-  "author_association": "collaborator",
+  "author_association": "string",
   "body": "This is close to perfect! Please address the suggested inline change. And add more about this.",
   "commit_id": "ecdd80bb57125d7ba9641ffaa4d7d2c19d3f3091",
   "html_url": "https://github.com/octocat/Hello-World/pull/12#pullrequestreview-80",

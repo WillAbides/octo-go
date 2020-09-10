@@ -68,8 +68,12 @@ https://developer.github.com/v3/git/blobs/#create-a-blob
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateBlobReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody CreateBlobReqBody
 }
@@ -203,8 +207,12 @@ https://developer.github.com/v3/git/commits/#create-a-commit
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateCommitReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody CreateCommitReqBody
 }
@@ -407,8 +415,12 @@ https://developer.github.com/v3/git/refs/#create-a-reference
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateRefReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody CreateRefReqBody
 }
@@ -546,8 +558,12 @@ https://developer.github.com/v3/git/tags/#create-a-tag-object
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateTagReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody CreateTagReqBody
 }
@@ -706,8 +722,12 @@ https://developer.github.com/v3/git/trees/#create-a-tree
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateTreeReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody CreateTreeReqBody
 }
@@ -880,9 +900,13 @@ https://developer.github.com/v3/git/refs/#delete-a-reference
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DeleteRefReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// ref+ parameter
 	Ref string
@@ -991,9 +1015,13 @@ https://developer.github.com/v3/git/blobs/#get-a-blob
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetBlobReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// file_sha parameter
 	FileSha string
@@ -1110,9 +1138,13 @@ https://developer.github.com/v3/git/commits/#get-a-commit
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetCommitReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// commit_sha+ parameter
 	CommitSha string
@@ -1229,9 +1261,13 @@ https://developer.github.com/v3/git/refs/#get-a-reference
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetRefReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// ref+ parameter
 	Ref string
@@ -1348,9 +1384,13 @@ https://developer.github.com/v3/git/tags/#get-a-tag
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetTagReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// tag_sha parameter
 	TagSha string
@@ -1467,9 +1507,13 @@ https://developer.github.com/v3/git/trees/#get-a-tree
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetTreeReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// tree_sha parameter
 	TreeSha string
@@ -1601,9 +1645,13 @@ https://developer.github.com/v3/git/refs/#list-matching-references
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListMatchingRefsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// ref+ parameter
 	Ref string
@@ -1735,9 +1783,13 @@ https://developer.github.com/v3/git/refs/#update-a-reference
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type UpdateRefReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// ref+ parameter
 	Ref         string

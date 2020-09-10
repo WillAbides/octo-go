@@ -69,7 +69,9 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type AddSelectedRepoToOrgSecretReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// secret_name parameter
 	SecretName string
@@ -181,9 +183,15 @@ https://developer.github.com/v3/actions/workflow-runs/#cancel-a-workflow-run
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CancelWorkflowRunReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
+
+	// run_id parameter
 	RunId int64
 }
 
@@ -291,7 +299,9 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type CreateOrUpdateOrgSecretReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// secret_name parameter
 	SecretName  string
@@ -446,9 +456,13 @@ https://developer.github.com/v3/actions/secrets/#create-or-update-a-repository-s
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateOrUpdateRepoSecretReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// secret_name parameter
 	SecretName  string
@@ -581,7 +595,9 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type CreateRegistrationTokenForOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 }
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
@@ -695,9 +711,13 @@ https://developer.github.com/v3/actions/self-hosted-runners/#create-a-registrati
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateRegistrationTokenForRepoReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 }
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
@@ -812,7 +832,9 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type CreateRemoveTokenForOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 }
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
@@ -926,9 +948,13 @@ https://developer.github.com/v3/actions/self-hosted-runners/#create-a-remove-tok
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateRemoveTokenForRepoReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 }
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
@@ -1081,11 +1107,7 @@ https://developer.github.com/v3/actions/workflows/#create-a-workflow-dispatch-ev
 */
 type CreateWorkflowDispatchReqBody struct {
 
-	/*
-	Input keys and values configured in the workflow file. The maximum number of
-	properties is 10. Any default properties configured in the workflow file will be
-	used when `inputs` are omitted.
-	*/
+	// Input keys and values configured in the workflow file. The maximum number of properties is 10.
 	Inputs map[string]string `json:"inputs,omitempty"`
 
 	// The reference of the workflow run. The reference can be a branch, tag, or a commit SHA.
@@ -1172,9 +1194,13 @@ https://developer.github.com/v3/actions/artifacts/#delete-an-artifact
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DeleteArtifactReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// artifact_id parameter
 	ArtifactId int64
@@ -1284,7 +1310,9 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type DeleteOrgSecretReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// secret_name parameter
 	SecretName string
@@ -1393,9 +1421,13 @@ https://developer.github.com/v3/actions/secrets/#delete-a-repository-secret
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DeleteRepoSecretReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// secret_name parameter
 	SecretName string
@@ -1505,7 +1537,9 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type DeleteSelfHostedRunnerFromOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// runner_id parameter
 	RunnerId int64
@@ -1614,9 +1648,13 @@ https://developer.github.com/v3/actions/self-hosted-runners/#delete-a-self-hoste
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DeleteSelfHostedRunnerFromRepoReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// runner_id parameter
 	RunnerId int64
@@ -1834,9 +1872,15 @@ https://developer.github.com/v3/actions/workflow-runs/#delete-workflow-run-logs
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DeleteWorkflowRunLogsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
+
+	// run_id parameter
 	RunId int64
 }
 
@@ -1943,9 +1987,13 @@ https://developer.github.com/v3/actions/artifacts/#download-an-artifact
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DownloadArtifactReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// artifact_id parameter
 	ArtifactId int64
@@ -2057,9 +2105,13 @@ https://developer.github.com/v3/actions/workflow-jobs/#download-job-logs-for-a-w
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DownloadJobLogsForWorkflowRunReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// job_id parameter
 	JobId int64
@@ -2168,9 +2220,15 @@ https://developer.github.com/v3/actions/workflow-runs/#download-workflow-run-log
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DownloadWorkflowRunLogsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
+
+	// run_id parameter
 	RunId int64
 }
 
@@ -2277,9 +2335,13 @@ https://developer.github.com/v3/actions/artifacts/#get-an-artifact
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetArtifactReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// artifact_id parameter
 	ArtifactId int64
@@ -2396,9 +2458,13 @@ https://developer.github.com/v3/actions/workflow-jobs/#get-a-job-for-a-workflow-
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetJobForWorkflowRunReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// job_id parameter
 	JobId int64
@@ -2516,7 +2582,9 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type GetOrgPublicKeyReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 }
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
@@ -2631,7 +2699,9 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type GetOrgSecretReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// secret_name parameter
 	SecretName string
@@ -2748,9 +2818,13 @@ https://developer.github.com/v3/actions/secrets/#get-a-repository-public-key
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetRepoPublicKeyReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 }
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
@@ -2864,9 +2938,13 @@ https://developer.github.com/v3/actions/secrets/#get-a-repository-secret
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetRepoSecretReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// secret_name parameter
 	SecretName string
@@ -2984,7 +3062,9 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type GetSelfHostedRunnerForOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// runner_id parameter
 	RunnerId int64
@@ -3101,9 +3181,13 @@ https://developer.github.com/v3/actions/self-hosted-runners/#get-a-self-hosted-r
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetSelfHostedRunnerForRepoReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// runner_id parameter
 	RunnerId int64
@@ -3220,9 +3304,15 @@ https://developer.github.com/v3/actions/workflows/#get-a-workflow
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetWorkflowReq struct {
-	_url       string
-	Owner      string
-	Repo       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// workflow_id parameter
 	WorkflowId int64
 }
 
@@ -3337,9 +3427,15 @@ https://developer.github.com/v3/actions/workflow-runs/#get-a-workflow-run
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetWorkflowRunReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
+
+	// run_id parameter
 	RunId int64
 }
 
@@ -3454,9 +3550,15 @@ https://developer.github.com/v3/actions/workflow-runs/#get-workflow-run-usage
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetWorkflowRunUsageReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
+
+	// run_id parameter
 	RunId int64
 }
 
@@ -3571,9 +3673,15 @@ https://developer.github.com/v3/actions/workflows/#get-workflow-usage
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetWorkflowUsageReq struct {
-	_url       string
-	Owner      string
-	Repo       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// workflow_id parameter
 	WorkflowId int64
 }
 
@@ -3688,9 +3796,13 @@ https://developer.github.com/v3/actions/artifacts/#list-artifacts-for-a-reposito
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListArtifactsForRepoReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -3829,9 +3941,15 @@ https://developer.github.com/v3/actions/workflow-jobs/#list-jobs-for-a-workflow-
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListJobsForWorkflowRunReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
+
+	// run_id parameter
 	RunId int64
 
 	/*
@@ -3983,7 +4101,9 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type ListOrgSecretsReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -4122,9 +4242,13 @@ https://developer.github.com/v3/actions/secrets/#list-repository-secrets
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListRepoSecretsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -4263,9 +4387,13 @@ https://developer.github.com/v3/actions/workflows/#list-repository-workflows
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListRepoWorkflowsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -4405,7 +4533,9 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type ListRunnerApplicationsForOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 }
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
@@ -4519,9 +4649,13 @@ https://developer.github.com/v3/actions/self-hosted-runners/#list-runner-applica
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListRunnerApplicationsForRepoReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 }
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
@@ -4636,7 +4770,9 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type ListSelectedReposForOrgSecretReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// secret_name parameter
 	SecretName string
@@ -4764,7 +4900,9 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type ListSelfHostedRunnersForOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -4903,9 +5041,13 @@ https://developer.github.com/v3/actions/self-hosted-runners/#list-self-hosted-ru
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListSelfHostedRunnersForRepoReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -5044,9 +5186,15 @@ https://developer.github.com/v3/actions/artifacts/#list-workflow-run-artifacts
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListWorkflowRunArtifactsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
+
+	// run_id parameter
 	RunId int64
 
 	// Results per page (max 100)
@@ -5186,9 +5334,15 @@ https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListWorkflowRunsReq struct {
-	_url       string
-	Owner      string
-	Repo       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// workflow_id parameter
 	WorkflowId int64
 
 	/*
@@ -5368,9 +5522,13 @@ https://developer.github.com/v3/actions/workflow-runs/#list-workflow-runs-for-a-
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListWorkflowRunsForRepoReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	/*
 	Returns someone's workflow runs. Use the login for the user who created the
@@ -5549,9 +5707,15 @@ https://developer.github.com/v3/actions/workflow-runs/#re-run-a-workflow
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ReRunWorkflowReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
+
+	// run_id parameter
 	RunId int64
 }
 
@@ -5659,7 +5823,9 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type RemoveSelectedRepoFromOrgSecretReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// secret_name parameter
 	SecretName string
@@ -5772,7 +5938,9 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type SetSelectedReposForOrgSecretReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// secret_name parameter
 	SecretName  string

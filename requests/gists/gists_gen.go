@@ -271,7 +271,7 @@ Create a gist comment.
 
   POST /gists/{gist_id}/comments
 
-https://developer.github.com/v3/gists/comments/#create-a-gist-comment
+https://developer.github.com/v3/gists/comments/#create-a-comment
 */
 func CreateComment(ctx context.Context, req *CreateCommentReq, opt ...requests.Option) (*CreateCommentResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -304,7 +304,7 @@ Create a gist comment.
 
   POST /gists/{gist_id}/comments
 
-https://developer.github.com/v3/gists/comments/#create-a-gist-comment
+https://developer.github.com/v3/gists/comments/#create-a-comment
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -315,7 +315,7 @@ func (c Client) CreateComment(ctx context.Context, req *CreateCommentReq, opt ..
 /*
 CreateCommentReq is request data for Client.CreateComment
 
-https://developer.github.com/v3/gists/comments/#create-a-gist-comment
+https://developer.github.com/v3/gists/comments/#create-a-comment
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -358,7 +358,7 @@ func (r *CreateCommentReq) Rel(link string, resp *CreateCommentResponse) bool {
 /*
 CreateCommentReqBody is a request body for gists/create-comment
 
-https://developer.github.com/v3/gists/comments/#create-a-gist-comment
+https://developer.github.com/v3/gists/comments/#create-a-comment
 */
 type CreateCommentReqBody struct {
 
@@ -369,7 +369,7 @@ type CreateCommentReqBody struct {
 /*
 CreateCommentResponse is a response for CreateComment
 
-https://developer.github.com/v3/gists/comments/#create-a-gist-comment
+https://developer.github.com/v3/gists/comments/#create-a-comment
 */
 type CreateCommentResponse struct {
 	httpResponse *http.Response
@@ -513,7 +513,7 @@ Delete a gist comment.
 
   DELETE /gists/{gist_id}/comments/{comment_id}
 
-https://developer.github.com/v3/gists/comments/#delete-a-gist-comment
+https://developer.github.com/v3/gists/comments/#delete-a-comment
 */
 func DeleteComment(ctx context.Context, req *DeleteCommentReq, opt ...requests.Option) (*DeleteCommentResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -546,7 +546,7 @@ Delete a gist comment.
 
   DELETE /gists/{gist_id}/comments/{comment_id}
 
-https://developer.github.com/v3/gists/comments/#delete-a-gist-comment
+https://developer.github.com/v3/gists/comments/#delete-a-comment
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -557,7 +557,7 @@ func (c Client) DeleteComment(ctx context.Context, req *DeleteCommentReq, opt ..
 /*
 DeleteCommentReq is request data for Client.DeleteComment
 
-https://developer.github.com/v3/gists/comments/#delete-a-gist-comment
+https://developer.github.com/v3/gists/comments/#delete-a-comment
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -597,7 +597,7 @@ func (r *DeleteCommentReq) Rel(link string, resp *DeleteCommentResponse) bool {
 /*
 DeleteCommentResponse is a response for DeleteComment
 
-https://developer.github.com/v3/gists/comments/#delete-a-gist-comment
+https://developer.github.com/v3/gists/comments/#delete-a-comment
 */
 type DeleteCommentResponse struct {
 	httpResponse *http.Response
@@ -742,7 +742,7 @@ Get a gist.
 
   GET /gists/{gist_id}
 
-https://developer.github.com/v3/gists/#get-a-gist
+https://developer.github.com/v3/gists/#get-a-single-gist
 */
 func Get(ctx context.Context, req *GetReq, opt ...requests.Option) (*GetResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -775,7 +775,7 @@ Get a gist.
 
   GET /gists/{gist_id}
 
-https://developer.github.com/v3/gists/#get-a-gist
+https://developer.github.com/v3/gists/#get-a-single-gist
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -786,7 +786,7 @@ func (c Client) Get(ctx context.Context, req *GetReq, opt ...requests.Option) (*
 /*
 GetReq is request data for Client.Get
 
-https://developer.github.com/v3/gists/#get-a-gist
+https://developer.github.com/v3/gists/#get-a-single-gist
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -824,7 +824,7 @@ func (r *GetReq) Rel(link string, resp *GetResponse) bool {
 /*
 GetResponse is a response for Get
 
-https://developer.github.com/v3/gists/#get-a-gist
+https://developer.github.com/v3/gists/#get-a-single-gist
 */
 type GetResponse struct {
 	httpResponse *http.Response
@@ -859,7 +859,7 @@ Get a gist comment.
 
   GET /gists/{gist_id}/comments/{comment_id}
 
-https://developer.github.com/v3/gists/comments/#get-a-gist-comment
+https://developer.github.com/v3/gists/comments/#get-a-single-comment
 */
 func GetComment(ctx context.Context, req *GetCommentReq, opt ...requests.Option) (*GetCommentResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -892,7 +892,7 @@ Get a gist comment.
 
   GET /gists/{gist_id}/comments/{comment_id}
 
-https://developer.github.com/v3/gists/comments/#get-a-gist-comment
+https://developer.github.com/v3/gists/comments/#get-a-single-comment
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -903,7 +903,7 @@ func (c Client) GetComment(ctx context.Context, req *GetCommentReq, opt ...reque
 /*
 GetCommentReq is request data for Client.GetComment
 
-https://developer.github.com/v3/gists/comments/#get-a-gist-comment
+https://developer.github.com/v3/gists/comments/#get-a-single-comment
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -944,7 +944,7 @@ func (r *GetCommentReq) Rel(link string, resp *GetCommentResponse) bool {
 /*
 GetCommentResponse is a response for GetComment
 
-https://developer.github.com/v3/gists/comments/#get-a-gist-comment
+https://developer.github.com/v3/gists/comments/#get-a-single-comment
 */
 type GetCommentResponse struct {
 	httpResponse *http.Response
@@ -979,7 +979,7 @@ Get a gist revision.
 
   GET /gists/{gist_id}/{sha}
 
-https://developer.github.com/v3/gists/#get-a-gist-revision
+https://developer.github.com/v3/gists/#get-a-specific-revision-of-a-gist
 */
 func GetRevision(ctx context.Context, req *GetRevisionReq, opt ...requests.Option) (*GetRevisionResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -1012,7 +1012,7 @@ Get a gist revision.
 
   GET /gists/{gist_id}/{sha}
 
-https://developer.github.com/v3/gists/#get-a-gist-revision
+https://developer.github.com/v3/gists/#get-a-specific-revision-of-a-gist
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -1023,7 +1023,7 @@ func (c Client) GetRevision(ctx context.Context, req *GetRevisionReq, opt ...req
 /*
 GetRevisionReq is request data for Client.GetRevision
 
-https://developer.github.com/v3/gists/#get-a-gist-revision
+https://developer.github.com/v3/gists/#get-a-specific-revision-of-a-gist
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -1064,7 +1064,7 @@ func (r *GetRevisionReq) Rel(link string, resp *GetRevisionResponse) bool {
 /*
 GetRevisionResponse is a response for GetRevision
 
-https://developer.github.com/v3/gists/#get-a-gist-revision
+https://developer.github.com/v3/gists/#get-a-specific-revision-of-a-gist
 */
 type GetRevisionResponse struct {
 	httpResponse *http.Response
@@ -1099,7 +1099,7 @@ List gists for the authenticated user.
 
   GET /gists
 
-https://developer.github.com/v3/gists/#list-gists-for-the-authenticated-user
+https://developer.github.com/v3/gists/#list-a-users-gists
 */
 func List(ctx context.Context, req *ListReq, opt ...requests.Option) (*ListResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -1132,7 +1132,7 @@ List gists for the authenticated user.
 
   GET /gists
 
-https://developer.github.com/v3/gists/#list-gists-for-the-authenticated-user
+https://developer.github.com/v3/gists/#list-a-users-gists
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -1143,7 +1143,7 @@ func (c Client) List(ctx context.Context, req *ListReq, opt ...requests.Option) 
 /*
 ListReq is request data for Client.List
 
-https://developer.github.com/v3/gists/#list-gists-for-the-authenticated-user
+https://developer.github.com/v3/gists/#list-a-users-gists
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -1151,9 +1151,9 @@ type ListReq struct {
 	_url string
 
 	/*
-	Only show notifications updated after the given time. This is a timestamp in
-	[ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format:
-	`YYYY-MM-DDTHH:MM:SSZ`.
+	This is a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+	format: `YYYY-MM-DDTHH:MM:SSZ`. Only gists updated at or after this time are
+	returned.
 	*/
 	Since *string
 
@@ -1203,7 +1203,7 @@ func (r *ListReq) Rel(link string, resp *ListResponse) bool {
 /*
 ListResponse is a response for List
 
-https://developer.github.com/v3/gists/#list-gists-for-the-authenticated-user
+https://developer.github.com/v3/gists/#list-a-users-gists
 */
 type ListResponse struct {
 	httpResponse *http.Response
@@ -1238,7 +1238,7 @@ List gist comments.
 
   GET /gists/{gist_id}/comments
 
-https://developer.github.com/v3/gists/comments/#list-gist-comments
+https://developer.github.com/v3/gists/comments/#list-comments-on-a-gist
 */
 func ListComments(ctx context.Context, req *ListCommentsReq, opt ...requests.Option) (*ListCommentsResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -1271,7 +1271,7 @@ List gist comments.
 
   GET /gists/{gist_id}/comments
 
-https://developer.github.com/v3/gists/comments/#list-gist-comments
+https://developer.github.com/v3/gists/comments/#list-comments-on-a-gist
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -1282,7 +1282,7 @@ func (c Client) ListComments(ctx context.Context, req *ListCommentsReq, opt ...r
 /*
 ListCommentsReq is request data for Client.ListComments
 
-https://developer.github.com/v3/gists/comments/#list-gist-comments
+https://developer.github.com/v3/gists/comments/#list-comments-on-a-gist
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -1335,7 +1335,7 @@ func (r *ListCommentsReq) Rel(link string, resp *ListCommentsResponse) bool {
 /*
 ListCommentsResponse is a response for ListComments
 
-https://developer.github.com/v3/gists/comments/#list-gist-comments
+https://developer.github.com/v3/gists/comments/#list-comments-on-a-gist
 */
 type ListCommentsResponse struct {
 	httpResponse *http.Response
@@ -1551,13 +1551,15 @@ https://developer.github.com/v3/gists/#list-gists-for-a-user
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListForUserReq struct {
-	_url     string
+	_url string
+
+	// username parameter
 	Username string
 
 	/*
-	Only show notifications updated after the given time. This is a timestamp in
-	[ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format:
-	`YYYY-MM-DDTHH:MM:SSZ`.
+	This is a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+	format: `YYYY-MM-DDTHH:MM:SSZ`. Only gists updated at or after this time are
+	returned.
 	*/
 	Since *string
 
@@ -1774,7 +1776,7 @@ List public gists.
 
   GET /gists/public
 
-https://developer.github.com/v3/gists/#list-public-gists
+https://developer.github.com/v3/gists/#list-all-public-gists
 */
 func ListPublic(ctx context.Context, req *ListPublicReq, opt ...requests.Option) (*ListPublicResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -1807,7 +1809,7 @@ List public gists.
 
   GET /gists/public
 
-https://developer.github.com/v3/gists/#list-public-gists
+https://developer.github.com/v3/gists/#list-all-public-gists
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -1818,7 +1820,7 @@ func (c Client) ListPublic(ctx context.Context, req *ListPublicReq, opt ...reque
 /*
 ListPublicReq is request data for Client.ListPublic
 
-https://developer.github.com/v3/gists/#list-public-gists
+https://developer.github.com/v3/gists/#list-all-public-gists
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -1826,9 +1828,9 @@ type ListPublicReq struct {
 	_url string
 
 	/*
-	Only show notifications updated after the given time. This is a timestamp in
-	[ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format:
-	`YYYY-MM-DDTHH:MM:SSZ`.
+	This is a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+	format: `YYYY-MM-DDTHH:MM:SSZ`. Only gists updated at or after this time are
+	returned.
 	*/
 	Since *string
 
@@ -1878,7 +1880,7 @@ func (r *ListPublicReq) Rel(link string, resp *ListPublicResponse) bool {
 /*
 ListPublicResponse is a response for ListPublic
 
-https://developer.github.com/v3/gists/#list-public-gists
+https://developer.github.com/v3/gists/#list-all-public-gists
 */
 type ListPublicResponse struct {
 	httpResponse *http.Response
@@ -1965,9 +1967,9 @@ type ListStarredReq struct {
 	_url string
 
 	/*
-	Only show notifications updated after the given time. This is a timestamp in
-	[ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format:
-	`YYYY-MM-DDTHH:MM:SSZ`.
+	This is a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+	format: `YYYY-MM-DDTHH:MM:SSZ`. Only gists updated at or after this time are
+	returned.
 	*/
 	Since *string
 
@@ -2270,7 +2272,7 @@ Update a gist.
 
   PATCH /gists/{gist_id}
 
-https://developer.github.com/v3/gists/#update-a-gist
+https://developer.github.com/v3/gists/#edit-a-gist
 */
 func Update(ctx context.Context, req *UpdateReq, opt ...requests.Option) (*UpdateResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -2303,7 +2305,7 @@ Update a gist.
 
   PATCH /gists/{gist_id}
 
-https://developer.github.com/v3/gists/#update-a-gist
+https://developer.github.com/v3/gists/#edit-a-gist
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -2314,7 +2316,7 @@ func (c Client) Update(ctx context.Context, req *UpdateReq, opt ...requests.Opti
 /*
 UpdateReq is request data for Client.Update
 
-https://developer.github.com/v3/gists/#update-a-gist
+https://developer.github.com/v3/gists/#edit-a-gist
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -2367,7 +2369,7 @@ type UpdateReqBodyFiles struct {
 /*
 UpdateReqBody is a request body for gists/update
 
-https://developer.github.com/v3/gists/#update-a-gist
+https://developer.github.com/v3/gists/#edit-a-gist
 */
 type UpdateReqBody struct {
 
@@ -2381,7 +2383,7 @@ type UpdateReqBody struct {
 /*
 UpdateResponse is a response for Update
 
-https://developer.github.com/v3/gists/#update-a-gist
+https://developer.github.com/v3/gists/#edit-a-gist
 */
 type UpdateResponse struct {
 	httpResponse *http.Response
@@ -2416,7 +2418,7 @@ Update a gist comment.
 
   PATCH /gists/{gist_id}/comments/{comment_id}
 
-https://developer.github.com/v3/gists/comments/#update-a-gist-comment
+https://developer.github.com/v3/gists/comments/#edit-a-comment
 */
 func UpdateComment(ctx context.Context, req *UpdateCommentReq, opt ...requests.Option) (*UpdateCommentResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -2449,7 +2451,7 @@ Update a gist comment.
 
   PATCH /gists/{gist_id}/comments/{comment_id}
 
-https://developer.github.com/v3/gists/comments/#update-a-gist-comment
+https://developer.github.com/v3/gists/comments/#edit-a-comment
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -2460,7 +2462,7 @@ func (c Client) UpdateComment(ctx context.Context, req *UpdateCommentReq, opt ..
 /*
 UpdateCommentReq is request data for Client.UpdateComment
 
-https://developer.github.com/v3/gists/comments/#update-a-gist-comment
+https://developer.github.com/v3/gists/comments/#edit-a-comment
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -2506,7 +2508,7 @@ func (r *UpdateCommentReq) Rel(link string, resp *UpdateCommentResponse) bool {
 /*
 UpdateCommentReqBody is a request body for gists/update-comment
 
-https://developer.github.com/v3/gists/comments/#update-a-gist-comment
+https://developer.github.com/v3/gists/comments/#edit-a-comment
 */
 type UpdateCommentReqBody struct {
 
@@ -2517,7 +2519,7 @@ type UpdateCommentReqBody struct {
 /*
 UpdateCommentResponse is a response for UpdateComment
 
-https://developer.github.com/v3/gists/comments/#update-a-gist-comment
+https://developer.github.com/v3/gists/comments/#edit-a-comment
 */
 type UpdateCommentResponse struct {
 	httpResponse *http.Response

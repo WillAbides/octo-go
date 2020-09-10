@@ -68,8 +68,12 @@ https://developer.github.com/v3/orgs/blocking/#block-a-user-from-an-organization
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type BlockUserReq struct {
-	_url     string
-	Org      string
+	_url string
+
+	// org parameter
+	Org string
+
+	// username parameter
 	Username string
 }
 
@@ -176,8 +180,12 @@ https://developer.github.com/v3/orgs/blocking/#check-if-a-user-is-blocked-by-an-
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CheckBlockedUserReq struct {
-	_url     string
-	Org      string
+	_url string
+
+	// org parameter
+	Org string
+
+	// username parameter
 	Username string
 }
 
@@ -289,8 +297,12 @@ https://developer.github.com/v3/orgs/members/#check-organization-membership-for-
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CheckMembershipForUserReq struct {
-	_url     string
-	Org      string
+	_url string
+
+	// org parameter
+	Org string
+
+	// username parameter
 	Username string
 }
 
@@ -397,8 +409,12 @@ https://developer.github.com/v3/orgs/members/#check-public-organization-membersh
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CheckPublicMembershipForUserReq struct {
-	_url     string
-	Org      string
+	_url string
+
+	// org parameter
+	Org string
+
+	// username parameter
 	Username string
 }
 
@@ -510,8 +526,12 @@ https://developer.github.com/v3/orgs/outside_collaborators/#convert-an-organizat
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ConvertMemberToOutsideCollaboratorReq struct {
-	_url     string
-	Org      string
+	_url string
+
+	// org parameter
+	Org string
+
+	// username parameter
 	Username string
 }
 
@@ -618,7 +638,9 @@ https://developer.github.com/v3/orgs/members/#create-an-organization-invitation
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateInvitationReq struct {
-	_url        string
+	_url string
+
+	// org parameter
 	Org         string
 	RequestBody CreateInvitationReqBody
 }
@@ -769,7 +791,9 @@ https://developer.github.com/v3/orgs/hooks/#create-an-organization-webhook
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateWebhookReq struct {
-	_url        string
+	_url string
+
+	// org parameter
 	Org         string
 	RequestBody CreateWebhookReqBody
 }
@@ -941,8 +965,12 @@ https://developer.github.com/v3/orgs/hooks/#delete-an-organization-webhook
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DeleteWebhookReq struct {
-	_url   string
-	Org    string
+	_url string
+
+	// org parameter
+	Org string
+
+	// hook_id parameter
 	HookId int64
 }
 
@@ -1055,7 +1083,9 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type GetReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	/*
 	New repository creation permissions are available to preview. You can now use
@@ -1187,7 +1217,9 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type GetMembershipForAuthenticatedUserReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 }
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
@@ -1301,8 +1333,12 @@ https://developer.github.com/v3/orgs/members/#get-organization-membership-for-a-
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetMembershipForUserReq struct {
-	_url     string
-	Org      string
+	_url string
+
+	// org parameter
+	Org string
+
+	// username parameter
 	Username string
 }
 
@@ -1417,8 +1453,12 @@ https://developer.github.com/v3/orgs/hooks/#get-an-organization-webhook
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetWebhookReq struct {
-	_url   string
-	Org    string
+	_url string
+
+	// org parameter
+	Org string
+
+	// hook_id parameter
 	HookId int64
 }
 
@@ -1484,7 +1524,7 @@ List organizations.
 
   GET /organizations
 
-https://developer.github.com/v3/orgs/#list-organizations
+https://developer.github.com/v3/orgs/#list-all-organizations
 */
 func List(ctx context.Context, req *ListReq, opt ...requests.Option) (*ListResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -1517,7 +1557,7 @@ List organizations.
 
   GET /organizations
 
-https://developer.github.com/v3/orgs/#list-organizations
+https://developer.github.com/v3/orgs/#list-all-organizations
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -1528,7 +1568,7 @@ func (c Client) List(ctx context.Context, req *ListReq, opt ...requests.Option) 
 /*
 ListReq is request data for Client.List
 
-https://developer.github.com/v3/orgs/#list-organizations
+https://developer.github.com/v3/orgs/#list-all-organizations
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -1582,7 +1622,7 @@ func (r *ListReq) Rel(link string, resp *ListResponse) bool {
 /*
 ListResponse is a response for List
 
-https://developer.github.com/v3/orgs/#list-organizations
+https://developer.github.com/v3/orgs/#list-all-organizations
 */
 type ListResponse struct {
 	httpResponse *http.Response
@@ -1667,7 +1707,9 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type ListAppInstallationsReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -1816,7 +1858,9 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type ListBlockedUsersReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 }
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
@@ -1881,7 +1925,7 @@ List organizations for the authenticated user.
 
   GET /user/orgs
 
-https://developer.github.com/v3/orgs/#list-organizations-for-the-authenticated-user
+https://developer.github.com/v3/orgs/#list-your-organizations
 */
 func ListForAuthenticatedUser(ctx context.Context, req *ListForAuthenticatedUserReq, opt ...requests.Option) (*ListForAuthenticatedUserResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -1914,7 +1958,7 @@ List organizations for the authenticated user.
 
   GET /user/orgs
 
-https://developer.github.com/v3/orgs/#list-organizations-for-the-authenticated-user
+https://developer.github.com/v3/orgs/#list-your-organizations
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -1925,7 +1969,7 @@ func (c Client) ListForAuthenticatedUser(ctx context.Context, req *ListForAuthen
 /*
 ListForAuthenticatedUserReq is request data for Client.ListForAuthenticatedUser
 
-https://developer.github.com/v3/orgs/#list-organizations-for-the-authenticated-user
+https://developer.github.com/v3/orgs/#list-your-organizations
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -1975,7 +2019,7 @@ func (r *ListForAuthenticatedUserReq) Rel(link string, resp *ListForAuthenticate
 /*
 ListForAuthenticatedUserResponse is a response for ListForAuthenticatedUser
 
-https://developer.github.com/v3/orgs/#list-organizations-for-the-authenticated-user
+https://developer.github.com/v3/orgs/#list-your-organizations
 */
 type ListForAuthenticatedUserResponse struct {
 	httpResponse *http.Response
@@ -2059,7 +2103,9 @@ https://developer.github.com/v3/orgs/#list-organizations-for-a-user
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListForUserReq struct {
-	_url     string
+	_url string
+
+	// username parameter
 	Username string
 
 	// Results per page (max 100)
@@ -2190,7 +2236,9 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type ListInvitationTeamsReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// invitation_id parameter
 	InvitationId int64
@@ -2323,7 +2371,9 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type ListMembersReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	/*
 	Filter members returned in the list. Can be one of:
@@ -2426,7 +2476,7 @@ List organization memberships for the authenticated user.
 
   GET /user/memberships/orgs
 
-https://developer.github.com/v3/orgs/members/#list-organization-memberships-for-the-authenticated-user
+https://developer.github.com/v3/orgs/members/#list-your-organization-memberships
 */
 func ListMembershipsForAuthenticatedUser(ctx context.Context, req *ListMembershipsForAuthenticatedUserReq, opt ...requests.Option) (*ListMembershipsForAuthenticatedUserResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -2459,7 +2509,7 @@ List organization memberships for the authenticated user.
 
   GET /user/memberships/orgs
 
-https://developer.github.com/v3/orgs/members/#list-organization-memberships-for-the-authenticated-user
+https://developer.github.com/v3/orgs/members/#list-your-organization-memberships
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -2470,7 +2520,7 @@ func (c Client) ListMembershipsForAuthenticatedUser(ctx context.Context, req *Li
 /*
 ListMembershipsForAuthenticatedUserReq is request data for Client.ListMembershipsForAuthenticatedUser
 
-https://developer.github.com/v3/orgs/members/#list-organization-memberships-for-the-authenticated-user
+https://developer.github.com/v3/orgs/members/#list-your-organization-memberships
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -2530,7 +2580,7 @@ func (r *ListMembershipsForAuthenticatedUserReq) Rel(link string, resp *ListMemb
 /*
 ListMembershipsForAuthenticatedUserResponse is a response for ListMembershipsForAuthenticatedUser
 
-https://developer.github.com/v3/orgs/members/#list-organization-memberships-for-the-authenticated-user
+https://developer.github.com/v3/orgs/members/#list-your-organization-memberships
 */
 type ListMembershipsForAuthenticatedUserResponse struct {
 	httpResponse *http.Response
@@ -2615,7 +2665,9 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type ListOutsideCollaboratorsReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	/*
 	Filter the list of outside collaborators. Can be one of:
@@ -2756,7 +2808,9 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type ListPendingInvitationsReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -2886,7 +2940,9 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type ListPublicMembersReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -3016,7 +3072,9 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type ListSamlSsoAuthorizationsReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 }
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
@@ -3131,7 +3189,9 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type ListWebhooksReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -3260,8 +3320,12 @@ https://developer.github.com/v3/orgs/hooks/#ping-an-organization-webhook
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type PingWebhookReq struct {
-	_url   string
-	Org    string
+	_url string
+
+	// org parameter
+	Org string
+
+	// hook_id parameter
 	HookId int64
 }
 
@@ -3373,8 +3437,12 @@ https://developer.github.com/v3/orgs/members/#remove-an-organization-member
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type RemoveMemberReq struct {
-	_url     string
-	Org      string
+	_url string
+
+	// org parameter
+	Org string
+
+	// username parameter
 	Username string
 }
 
@@ -3481,8 +3549,12 @@ https://developer.github.com/v3/orgs/members/#remove-organization-membership-for
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type RemoveMembershipForUserReq struct {
-	_url     string
-	Org      string
+	_url string
+
+	// org parameter
+	Org string
+
+	// username parameter
 	Username string
 }
 
@@ -3589,8 +3661,12 @@ https://developer.github.com/v3/orgs/outside_collaborators/#remove-outside-colla
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type RemoveOutsideCollaboratorReq struct {
-	_url     string
-	Org      string
+	_url string
+
+	// org parameter
+	Org string
+
+	// username parameter
 	Username string
 }
 
@@ -3697,8 +3773,12 @@ https://developer.github.com/v3/orgs/members/#remove-public-organization-members
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type RemovePublicMembershipForAuthenticatedUserReq struct {
-	_url     string
-	Org      string
+	_url string
+
+	// org parameter
+	Org string
+
+	// username parameter
 	Username string
 }
 
@@ -3806,7 +3886,9 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type RemoveSamlSsoAuthorizationReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// credential_id parameter
 	CredentialId int64
@@ -3920,8 +4002,12 @@ https://developer.github.com/v3/orgs/members/#set-organization-membership-for-a-
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type SetMembershipForUserReq struct {
-	_url        string
-	Org         string
+	_url string
+
+	// org parameter
+	Org string
+
+	// username parameter
 	Username    string
 	RequestBody SetMembershipForUserReqBody
 }
@@ -4056,8 +4142,12 @@ https://developer.github.com/v3/orgs/members/#set-public-organization-membership
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type SetPublicMembershipForAuthenticatedUserReq struct {
-	_url     string
-	Org      string
+	_url string
+
+	// org parameter
+	Org string
+
+	// username parameter
 	Username string
 }
 
@@ -4164,8 +4254,12 @@ https://developer.github.com/v3/orgs/blocking/#unblock-a-user-from-an-organizati
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type UnblockUserReq struct {
-	_url     string
-	Org      string
+	_url string
+
+	// org parameter
+	Org string
+
+	// username parameter
 	Username string
 }
 
@@ -4272,7 +4366,9 @@ https://developer.github.com/v3/orgs/#update-an-organization
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type UpdateReq struct {
-	_url        string
+	_url string
+
+	// org parameter
 	Org         string
 	RequestBody UpdateReqBody
 
@@ -4521,7 +4617,9 @@ https://developer.github.com/v3/orgs/members/#update-an-organization-membership-
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type UpdateMembershipForAuthenticatedUserReq struct {
-	_url        string
+	_url string
+
+	// org parameter
 	Org         string
 	RequestBody UpdateMembershipForAuthenticatedUserReqBody
 }
@@ -4652,8 +4750,12 @@ https://developer.github.com/v3/orgs/hooks/#update-an-organization-webhook
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type UpdateWebhookReq struct {
-	_url        string
-	Org         string
+	_url string
+
+	// org parameter
+	Org string
+
+	// hook_id parameter
 	HookId      int64
 	RequestBody UpdateWebhookReqBody
 }
