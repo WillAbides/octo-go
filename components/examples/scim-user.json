@@ -1,5 +1,6 @@
 {
   "active": true,
+  "displayName": "Monalisa Octocat",
   "emails": [
     {
       "primary": true,
@@ -19,6 +20,7 @@
   },
   "name": {
     "familyName": "Octocat",
+    "formatted": "Monalisa Octocat",
     "givenName": "Monalisa"
   },
   "schemas": [

@@ -487,6 +487,7 @@ type ProvisionAndInviteUserReqBodyEmails struct {
 // ProvisionAndInviteUserReqBodyName is a value for ProvisionAndInviteUserReqBody's Name field
 type ProvisionAndInviteUserReqBodyName struct {
 	FamilyName *string `json:"familyName"`
+	Formatted  *string `json:"formatted,omitempty"`
 	GivenName  *string `json:"givenName"`
 }
 
@@ -496,7 +497,9 @@ ProvisionAndInviteUserReqBody is a request body for scim/provision-and-invite-us
 https://developer.github.com/v3/scim/#provision-and-invite-a-scim-user
 */
 type ProvisionAndInviteUserReqBody struct {
-	Active      *bool   `json:"active,omitempty"`
+	Active *bool `json:"active,omitempty"`
+
+	// The name of the user, suitable for display to end-users
 	DisplayName *string `json:"displayName,omitempty"`
 
 	// user emails
@@ -643,6 +646,7 @@ type SetInformationForProvisionedUserReqBodyEmails struct {
 // SetInformationForProvisionedUserReqBodyName is a value for SetInformationForProvisionedUserReqBody's Name field
 type SetInformationForProvisionedUserReqBodyName struct {
 	FamilyName *string `json:"familyName"`
+	Formatted  *string `json:"formatted,omitempty"`
 	GivenName  *string `json:"givenName"`
 }
 
@@ -652,7 +656,9 @@ SetInformationForProvisionedUserReqBody is a request body for scim/set-informati
 https://developer.github.com/v3/scim/#set-scim-information-for-a-provisioned-user
 */
 type SetInformationForProvisionedUserReqBody struct {
-	Active      *bool   `json:"active,omitempty"`
+	Active *bool `json:"active,omitempty"`
+
+	// The name of the user, suitable for display to end-users
 	DisplayName *string `json:"displayName,omitempty"`
 
 	// user emails

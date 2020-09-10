@@ -1150,7 +1150,7 @@ type Event struct {
 }
 
 type EventPayload struct {
-	Action string `json:"action,omitempty"`
+	Action string `json:"action"`
 
 	// Comments provide a way for people to collaborate on an issue.
 	Comment IssueComment `json:"comment,omitempty"`
@@ -4400,6 +4400,9 @@ type ScimUser struct {
 	// The active status of the User.
 	Active bool `json:"active"`
 
+	// The name of the user, suitable for display to end-users
+	DisplayName string `json:"displayName,omitempty"`
+
 	// user emails
 	Emails []ScimUserEmail `json:"emails"`
 
@@ -4456,6 +4459,7 @@ type ScimUserMeta struct {
 
 type ScimUserName struct {
 	FamilyName string `json:"familyName"`
+	Formatted  string `json:"formatted,omitempty"`
 	GivenName  string `json:"givenName"`
 }
 
