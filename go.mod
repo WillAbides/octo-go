@@ -3,6 +3,7 @@ module github.com/willabides/octo-go
 go 1.14
 
 require (
+	github.com/Masterminds/semver/v3 v3.1.0
 	github.com/dave/jennifer v1.4.0
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/dnaeon/go-vcr v1.0.1
