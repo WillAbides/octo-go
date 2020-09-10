@@ -11,6 +11,7 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/Masterminds/semver/v3"
 	"github.com/willabides/octo-go"
 	"github.com/willabides/octo-go/requests/repos"
 )
@@ -39,9 +40,13 @@ func main() {
 	tag := releaseTag
 	var err error
 	if tag == "latest" {
-		tag, err = latestReleaseTag(ctx, client)
+		tag, err = getNewTag(ctx, client)
 		if err != nil {
 			log.Fatal(err)
+		}
+		if tag == "" {
+			log.Println("nothing to update to")
+			return
 		}
 	}
 
@@ -99,6 +104,22 @@ func setCurrentVersion(workingDir, version string) error {
 	return ioutil.WriteFile(versionFile, []byte(version), 0o640) //nolint:gosec // 640 is fine
 }
 
+func getNewTag(ctx context.Context, client octo.Client) (string, error) {
+	releaseTag, err := latestReleaseTag(ctx, client)
+	if err != nil {
+		return "", err
+	}
+	tagTag, err := newestSemverTag(ctx, client)
+	if err != nil {
+		return "", err
+	}
+	tag, err := higherValidSemver(releaseTag, tagTag)
+	if err != nil && err != errTwoInvalidSemvers {
+		return "", err
+	}
+	return tag, nil
+}
+
 func latestReleaseTag(ctx context.Context, client octo.Client) (string, error) {
 	resp, err := client.Repos().GetLatestRelease(ctx, &repos.GetLatestReleaseReq{
 		Owner: "github",
@@ -108,4 +129,51 @@ func latestReleaseTag(ctx context.Context, client octo.Client) (string, error) {
 		return "", err
 	}
 	return resp.Data.TagName, nil
+}
+
+func newestSemverTag(ctx context.Context, client octo.Client) (string, error) {
+	resp, err := client.Repos().ListTags(ctx, &repos.ListTagsReq{
+		Owner: "github",
+		Repo:  "rest-api-description",
+	})
+	if err != nil {
+		return "", err
+	}
+	result := "v0-phony"
+	for _, tag := range resp.Data {
+		result, err = higherValidSemver(result, tag.Name)
+		if err != nil {
+			return "", err
+		}
+	}
+	if result == "v0-phony" {
+		result = ""
+	}
+	return result, nil
+}
+
+var errTwoInvalidSemvers = fmt.Errorf("can't compare two invalid semvers")
+
+func higherValidSemver(a, b string) (string, error) {
+	verA, err := semver.NewVersion(a)
+	if err != nil && err != semver.ErrInvalidSemVer {
+		return "", err
+	}
+	verB, err := semver.NewVersion(b)
+	if err != nil && err != semver.ErrInvalidSemVer {
+		return "", err
+	}
+	if verA == nil && verB == nil {
+		return "", errTwoInvalidSemvers
+	}
+	if verA == nil {
+		return b, nil
+	}
+	if verB == nil {
+		return a, nil
+	}
+	if verB.GreaterThan(verA) {
+		return b, nil
+	}
+	return a, nil
 }
