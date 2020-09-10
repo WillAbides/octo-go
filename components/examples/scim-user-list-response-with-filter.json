@@ -2,6 +2,7 @@
   "Resources": [
     {
       "active": true,
+      "displayName": "Mona Octocat",
       "emails": [
         {
           "primary": true,
@@ -18,6 +19,7 @@
       },
       "name": {
         "familyName": "Octocat",
+        "formatted": "Mona Octocat",
         "givenName": "Mona"
       },
       "schemas": [
