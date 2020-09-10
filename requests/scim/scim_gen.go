@@ -19,7 +19,7 @@ Delete a SCIM user from an organization.
 
   DELETE /scim/v2/organizations/{org}/Users/{scim_user_id}
 
-https://developer.github.com/v3/scim/#delete-a-scim-user-from-an-organization
+https://developer.github.com/v3/scim/#remove-a-user-from-the-organization
 */
 func DeleteUserFromOrg(ctx context.Context, req *DeleteUserFromOrgReq, opt ...requests.Option) (*DeleteUserFromOrgResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -52,7 +52,7 @@ Delete a SCIM user from an organization.
 
   DELETE /scim/v2/organizations/{org}/Users/{scim_user_id}
 
-https://developer.github.com/v3/scim/#delete-a-scim-user-from-an-organization
+https://developer.github.com/v3/scim/#remove-a-user-from-the-organization
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -63,13 +63,15 @@ func (c Client) DeleteUserFromOrg(ctx context.Context, req *DeleteUserFromOrgReq
 /*
 DeleteUserFromOrgReq is request data for Client.DeleteUserFromOrg
 
-https://developer.github.com/v3/scim/#delete-a-scim-user-from-an-organization
+https://developer.github.com/v3/scim/#remove-a-user-from-the-organization
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DeleteUserFromOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// scim_user_id parameter
 	ScimUserId string
@@ -101,7 +103,7 @@ func (r *DeleteUserFromOrgReq) Rel(link string, resp *DeleteUserFromOrgResponse)
 /*
 DeleteUserFromOrgResponse is a response for DeleteUserFromOrg
 
-https://developer.github.com/v3/scim/#delete-a-scim-user-from-an-organization
+https://developer.github.com/v3/scim/#remove-a-user-from-the-organization
 */
 type DeleteUserFromOrgResponse struct {
 	httpResponse *http.Response
@@ -129,7 +131,7 @@ Get SCIM provisioning information for a user.
 
   GET /scim/v2/organizations/{org}/Users/{scim_user_id}
 
-https://developer.github.com/v3/scim/#get-scim-provisioning-information-for-a-user
+https://developer.github.com/v3/scim/#get-provisioning-details-for-a-single-user
 */
 func GetProvisioningInformationForUser(ctx context.Context, req *GetProvisioningInformationForUserReq, opt ...requests.Option) (*GetProvisioningInformationForUserResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -162,7 +164,7 @@ Get SCIM provisioning information for a user.
 
   GET /scim/v2/organizations/{org}/Users/{scim_user_id}
 
-https://developer.github.com/v3/scim/#get-scim-provisioning-information-for-a-user
+https://developer.github.com/v3/scim/#get-provisioning-details-for-a-single-user
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -173,13 +175,15 @@ func (c Client) GetProvisioningInformationForUser(ctx context.Context, req *GetP
 /*
 GetProvisioningInformationForUserReq is request data for Client.GetProvisioningInformationForUser
 
-https://developer.github.com/v3/scim/#get-scim-provisioning-information-for-a-user
+https://developer.github.com/v3/scim/#get-provisioning-details-for-a-single-user
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetProvisioningInformationForUserReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// scim_user_id parameter
 	ScimUserId string
@@ -212,7 +216,7 @@ func (r *GetProvisioningInformationForUserReq) Rel(link string, resp *GetProvisi
 /*
 GetProvisioningInformationForUserResponse is a response for GetProvisioningInformationForUser
 
-https://developer.github.com/v3/scim/#get-scim-provisioning-information-for-a-user
+https://developer.github.com/v3/scim/#get-provisioning-details-for-a-single-user
 */
 type GetProvisioningInformationForUserResponse struct {
 	httpResponse *http.Response
@@ -247,7 +251,7 @@ List SCIM provisioned identities.
 
   GET /scim/v2/organizations/{org}/Users
 
-https://developer.github.com/v3/scim/#list-scim-provisioned-identities
+https://developer.github.com/v3/scim/#get-a-list-of-provisioned-identities
 */
 func ListProvisionedIdentities(ctx context.Context, req *ListProvisionedIdentitiesReq, opt ...requests.Option) (*ListProvisionedIdentitiesResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -280,7 +284,7 @@ List SCIM provisioned identities.
 
   GET /scim/v2/organizations/{org}/Users
 
-https://developer.github.com/v3/scim/#list-scim-provisioned-identities
+https://developer.github.com/v3/scim/#get-a-list-of-provisioned-identities
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -291,13 +295,15 @@ func (c Client) ListProvisionedIdentities(ctx context.Context, req *ListProvisio
 /*
 ListProvisionedIdentitiesReq is request data for Client.ListProvisionedIdentities
 
-https://developer.github.com/v3/scim/#list-scim-provisioned-identities
+https://developer.github.com/v3/scim/#get-a-list-of-provisioned-identities
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListProvisionedIdentitiesReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// Used for pagination: the index of the first result to return.
 	StartIndex *int64
@@ -360,7 +366,7 @@ func (r *ListProvisionedIdentitiesReq) Rel(link string, resp *ListProvisionedIde
 /*
 ListProvisionedIdentitiesResponse is a response for ListProvisionedIdentities
 
-https://developer.github.com/v3/scim/#list-scim-provisioned-identities
+https://developer.github.com/v3/scim/#get-a-list-of-provisioned-identities
 */
 type ListProvisionedIdentitiesResponse struct {
 	httpResponse *http.Response
@@ -395,7 +401,7 @@ Provision and invite a SCIM user.
 
   POST /scim/v2/organizations/{org}/Users
 
-https://developer.github.com/v3/scim/#provision-and-invite-a-scim-user
+https://developer.github.com/v3/scim/#provision-and-invite-users
 */
 func ProvisionAndInviteUser(ctx context.Context, req *ProvisionAndInviteUserReq, opt ...requests.Option) (*ProvisionAndInviteUserResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -428,7 +434,7 @@ Provision and invite a SCIM user.
 
   POST /scim/v2/organizations/{org}/Users
 
-https://developer.github.com/v3/scim/#provision-and-invite-a-scim-user
+https://developer.github.com/v3/scim/#provision-and-invite-users
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -439,12 +445,14 @@ func (c Client) ProvisionAndInviteUser(ctx context.Context, req *ProvisionAndInv
 /*
 ProvisionAndInviteUserReq is request data for Client.ProvisionAndInviteUser
 
-https://developer.github.com/v3/scim/#provision-and-invite-a-scim-user
+https://developer.github.com/v3/scim/#provision-and-invite-users
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ProvisionAndInviteUserReq struct {
-	_url        string
+	_url string
+
+	// org parameter
 	Org         string
 	RequestBody ProvisionAndInviteUserReqBody
 }
@@ -493,7 +501,7 @@ type ProvisionAndInviteUserReqBodyName struct {
 /*
 ProvisionAndInviteUserReqBody is a request body for scim/provision-and-invite-user
 
-https://developer.github.com/v3/scim/#provision-and-invite-a-scim-user
+https://developer.github.com/v3/scim/#provision-and-invite-users
 */
 type ProvisionAndInviteUserReqBody struct {
 	Active      *bool   `json:"active,omitempty"`
@@ -513,7 +521,7 @@ type ProvisionAndInviteUserReqBody struct {
 /*
 ProvisionAndInviteUserResponse is a response for ProvisionAndInviteUser
 
-https://developer.github.com/v3/scim/#provision-and-invite-a-scim-user
+https://developer.github.com/v3/scim/#provision-and-invite-users
 */
 type ProvisionAndInviteUserResponse struct {
 	httpResponse *http.Response
@@ -548,7 +556,7 @@ Update a provisioned organization membership.
 
   PUT /scim/v2/organizations/{org}/Users/{scim_user_id}
 
-https://developer.github.com/v3/scim/#set-scim-information-for-a-provisioned-user
+https://developer.github.com/v3/scim/#replace-a-provisioned-users-information
 */
 func SetInformationForProvisionedUser(ctx context.Context, req *SetInformationForProvisionedUserReq, opt ...requests.Option) (*SetInformationForProvisionedUserResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -581,7 +589,7 @@ Update a provisioned organization membership.
 
   PUT /scim/v2/organizations/{org}/Users/{scim_user_id}
 
-https://developer.github.com/v3/scim/#set-scim-information-for-a-provisioned-user
+https://developer.github.com/v3/scim/#replace-a-provisioned-users-information
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -592,13 +600,15 @@ func (c Client) SetInformationForProvisionedUser(ctx context.Context, req *SetIn
 /*
 SetInformationForProvisionedUserReq is request data for Client.SetInformationForProvisionedUser
 
-https://developer.github.com/v3/scim/#set-scim-information-for-a-provisioned-user
+https://developer.github.com/v3/scim/#replace-a-provisioned-users-information
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type SetInformationForProvisionedUserReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// scim_user_id parameter
 	ScimUserId  string
@@ -649,7 +659,7 @@ type SetInformationForProvisionedUserReqBodyName struct {
 /*
 SetInformationForProvisionedUserReqBody is a request body for scim/set-information-for-provisioned-user
 
-https://developer.github.com/v3/scim/#set-scim-information-for-a-provisioned-user
+https://developer.github.com/v3/scim/#replace-a-provisioned-users-information
 */
 type SetInformationForProvisionedUserReqBody struct {
 	Active      *bool   `json:"active,omitempty"`
@@ -669,7 +679,7 @@ type SetInformationForProvisionedUserReqBody struct {
 /*
 SetInformationForProvisionedUserResponse is a response for SetInformationForProvisionedUser
 
-https://developer.github.com/v3/scim/#set-scim-information-for-a-provisioned-user
+https://developer.github.com/v3/scim/#replace-a-provisioned-users-information
 */
 type SetInformationForProvisionedUserResponse struct {
 	httpResponse *http.Response
@@ -704,7 +714,7 @@ Update an attribute for a SCIM user.
 
   PATCH /scim/v2/organizations/{org}/Users/{scim_user_id}
 
-https://developer.github.com/v3/scim/#update-an-attribute-for-a-scim-user
+https://developer.github.com/v3/scim/#update-a-user-attribute
 */
 func UpdateAttributeForUser(ctx context.Context, req *UpdateAttributeForUserReq, opt ...requests.Option) (*UpdateAttributeForUserResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -737,7 +747,7 @@ Update an attribute for a SCIM user.
 
   PATCH /scim/v2/organizations/{org}/Users/{scim_user_id}
 
-https://developer.github.com/v3/scim/#update-an-attribute-for-a-scim-user
+https://developer.github.com/v3/scim/#update-a-user-attribute
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -748,13 +758,15 @@ func (c Client) UpdateAttributeForUser(ctx context.Context, req *UpdateAttribute
 /*
 UpdateAttributeForUserReq is request data for Client.UpdateAttributeForUser
 
-https://developer.github.com/v3/scim/#update-an-attribute-for-a-scim-user
+https://developer.github.com/v3/scim/#update-a-user-attribute
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type UpdateAttributeForUserReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// scim_user_id parameter
 	ScimUserId  string
@@ -808,7 +820,7 @@ type UpdateAttributeForUserReqBodyOperationsValue struct {
 /*
 UpdateAttributeForUserReqBody is a request body for scim/update-attribute-for-user
 
-https://developer.github.com/v3/scim/#update-an-attribute-for-a-scim-user
+https://developer.github.com/v3/scim/#update-a-user-attribute
 */
 type UpdateAttributeForUserReqBody struct {
 
@@ -820,7 +832,7 @@ type UpdateAttributeForUserReqBody struct {
 /*
 UpdateAttributeForUserResponse is a response for UpdateAttributeForUser
 
-https://developer.github.com/v3/scim/#update-an-attribute-for-a-scim-user
+https://developer.github.com/v3/scim/#update-a-user-attribute
 */
 type UpdateAttributeForUserResponse struct {
 	httpResponse *http.Response

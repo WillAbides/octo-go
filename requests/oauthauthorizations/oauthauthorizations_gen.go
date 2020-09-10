@@ -665,7 +665,9 @@ https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authoriza
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetOrCreateAuthorizationForAppReq struct {
-	_url        string
+	_url string
+
+	// client_id parameter
 	ClientId    string
 	RequestBody GetOrCreateAuthorizationForAppReqBody
 }
@@ -808,7 +810,9 @@ https://developer.github.com/v3/oauth_authorizations/#get-or-create-an-authoriza
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetOrCreateAuthorizationForAppAndFingerprintReq struct {
-	_url     string
+	_url string
+
+	// client_id parameter
 	ClientId string
 
 	// fingerprint parameter

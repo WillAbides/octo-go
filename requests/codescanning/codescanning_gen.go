@@ -67,9 +67,13 @@ https://developer.github.com/v3/code-scanning/#get-a-code-scanning-alert
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetAlertReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// alert_id parameter
 	AlertId int64
@@ -186,9 +190,13 @@ https://developer.github.com/v3/code-scanning/#list-code-scanning-alerts-for-a-r
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListAlertsForRepoReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// Set to `closed` to list only closed code scanning alerts.
 	State *string

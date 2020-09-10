@@ -19,7 +19,7 @@ Add project collaborator.
 
   PUT /projects/{project_id}/collaborators/{username}
 
-https://developer.github.com/v3/projects/collaborators/#add-project-collaborator
+https://developer.github.com/v3/projects/collaborators/#add-user-as-a-collaborator
 */
 func AddCollaborator(ctx context.Context, req *AddCollaboratorReq, opt ...requests.Option) (*AddCollaboratorResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -52,7 +52,7 @@ Add project collaborator.
 
   PUT /projects/{project_id}/collaborators/{username}
 
-https://developer.github.com/v3/projects/collaborators/#add-project-collaborator
+https://developer.github.com/v3/projects/collaborators/#add-user-as-a-collaborator
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -63,13 +63,17 @@ func (c Client) AddCollaborator(ctx context.Context, req *AddCollaboratorReq, op
 /*
 AddCollaboratorReq is request data for Client.AddCollaborator
 
-https://developer.github.com/v3/projects/collaborators/#add-project-collaborator
+https://developer.github.com/v3/projects/collaborators/#add-user-as-a-collaborator
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type AddCollaboratorReq struct {
-	_url        string
-	ProjectId   int64
+	_url string
+
+	// project_id parameter
+	ProjectId int64
+
+	// username parameter
 	Username    string
 	RequestBody AddCollaboratorReqBody
 
@@ -114,7 +118,7 @@ func (r *AddCollaboratorReq) Rel(link string, resp *AddCollaboratorResponse) boo
 /*
 AddCollaboratorReqBody is a request body for projects/add-collaborator
 
-https://developer.github.com/v3/projects/collaborators/#add-project-collaborator
+https://developer.github.com/v3/projects/collaborators/#add-user-as-a-collaborator
 */
 type AddCollaboratorReqBody struct {
 
@@ -125,7 +129,7 @@ type AddCollaboratorReqBody struct {
 /*
 AddCollaboratorResponse is a response for AddCollaborator
 
-https://developer.github.com/v3/projects/collaborators/#add-project-collaborator
+https://developer.github.com/v3/projects/collaborators/#add-user-as-a-collaborator
 */
 type AddCollaboratorResponse struct {
 	httpResponse *http.Response
@@ -350,7 +354,9 @@ https://developer.github.com/v3/projects/columns/#create-a-project-column
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateColumnReq struct {
-	_url        string
+	_url string
+
+	// project_id parameter
 	ProjectId   int64
 	RequestBody CreateColumnReqBody
 
@@ -638,7 +644,9 @@ https://developer.github.com/v3/projects/#create-an-organization-project
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateForOrgReq struct {
-	_url        string
+	_url string
+
+	// org parameter
 	Org         string
 	RequestBody CreateForOrgReqBody
 
@@ -784,8 +792,12 @@ https://developer.github.com/v3/projects/#create-a-repository-project
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateForRepoReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody CreateForRepoReqBody
 
@@ -931,7 +943,9 @@ https://developer.github.com/v3/projects/#delete-a-project
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DeleteReq struct {
-	_url      string
+	_url string
+
+	// project_id parameter
 	ProjectId int64
 
 	/*
@@ -1292,7 +1306,9 @@ https://developer.github.com/v3/projects/#get-a-project
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetReq struct {
-	_url      string
+	_url string
+
+	// project_id parameter
 	ProjectId int64
 
 	/*
@@ -1628,7 +1644,7 @@ Get project permission for a user.
 
   GET /projects/{project_id}/collaborators/{username}/permission
 
-https://developer.github.com/v3/projects/collaborators/#get-project-permission-for-a-user
+https://developer.github.com/v3/projects/collaborators/#review-a-users-permission-level
 */
 func GetPermissionForUser(ctx context.Context, req *GetPermissionForUserReq, opt ...requests.Option) (*GetPermissionForUserResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -1661,7 +1677,7 @@ Get project permission for a user.
 
   GET /projects/{project_id}/collaborators/{username}/permission
 
-https://developer.github.com/v3/projects/collaborators/#get-project-permission-for-a-user
+https://developer.github.com/v3/projects/collaborators/#review-a-users-permission-level
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -1672,14 +1688,18 @@ func (c Client) GetPermissionForUser(ctx context.Context, req *GetPermissionForU
 /*
 GetPermissionForUserReq is request data for Client.GetPermissionForUser
 
-https://developer.github.com/v3/projects/collaborators/#get-project-permission-for-a-user
+https://developer.github.com/v3/projects/collaborators/#review-a-users-permission-level
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetPermissionForUserReq struct {
-	_url      string
+	_url string
+
+	// project_id parameter
 	ProjectId int64
-	Username  string
+
+	// username parameter
+	Username string
 
 	/*
 	The Projects API is currently available for developers to preview. During the
@@ -1721,7 +1741,7 @@ func (r *GetPermissionForUserReq) Rel(link string, resp *GetPermissionForUserRes
 /*
 GetPermissionForUserResponse is a response for GetPermissionForUser
 
-https://developer.github.com/v3/projects/collaborators/#get-project-permission-for-a-user
+https://developer.github.com/v3/projects/collaborators/#review-a-users-permission-level
 */
 type GetPermissionForUserResponse struct {
 	httpResponse *http.Response
@@ -1909,7 +1929,7 @@ List project collaborators.
 
   GET /projects/{project_id}/collaborators
 
-https://developer.github.com/v3/projects/collaborators/#list-project-collaborators
+https://developer.github.com/v3/projects/collaborators/#list-collaborators
 */
 func ListCollaborators(ctx context.Context, req *ListCollaboratorsReq, opt ...requests.Option) (*ListCollaboratorsResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -1942,7 +1962,7 @@ List project collaborators.
 
   GET /projects/{project_id}/collaborators
 
-https://developer.github.com/v3/projects/collaborators/#list-project-collaborators
+https://developer.github.com/v3/projects/collaborators/#list-collaborators
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -1953,12 +1973,14 @@ func (c Client) ListCollaborators(ctx context.Context, req *ListCollaboratorsReq
 /*
 ListCollaboratorsReq is request data for Client.ListCollaborators
 
-https://developer.github.com/v3/projects/collaborators/#list-project-collaborators
+https://developer.github.com/v3/projects/collaborators/#list-collaborators
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListCollaboratorsReq struct {
-	_url      string
+	_url string
+
+	// project_id parameter
 	ProjectId int64
 
 	/*
@@ -2029,7 +2051,7 @@ func (r *ListCollaboratorsReq) Rel(link string, resp *ListCollaboratorsResponse)
 /*
 ListCollaboratorsResponse is a response for ListCollaborators
 
-https://developer.github.com/v3/projects/collaborators/#list-project-collaborators
+https://developer.github.com/v3/projects/collaborators/#list-collaborators
 */
 type ListCollaboratorsResponse struct {
 	httpResponse *http.Response
@@ -2113,7 +2135,9 @@ https://developer.github.com/v3/projects/columns/#list-project-columns
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListColumnsReq struct {
-	_url      string
+	_url string
+
+	// project_id parameter
 	ProjectId int64
 
 	// Results per page (max 100)
@@ -2256,7 +2280,9 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type ListForOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	/*
 	Indicates the state of the projects to return. Can be either `open`, `closed`,
@@ -2406,9 +2432,13 @@ https://developer.github.com/v3/projects/#list-repository-projects
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListForRepoReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	/*
 	Indicates the state of the projects to return. Can be either `open`, `closed`,
@@ -2558,7 +2588,9 @@ https://developer.github.com/v3/projects/#list-user-projects
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListForUserReq struct {
-	_url     string
+	_url string
+
+	// username parameter
 	Username string
 
 	/*
@@ -2939,7 +2971,7 @@ Remove user as a collaborator.
 
   DELETE /projects/{project_id}/collaborators/{username}
 
-https://developer.github.com/v3/projects/collaborators/#remove-project-collaborator
+https://developer.github.com/v3/projects/collaborators/#remove-user-as-a-collaborator
 */
 func RemoveCollaborator(ctx context.Context, req *RemoveCollaboratorReq, opt ...requests.Option) (*RemoveCollaboratorResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -2972,7 +3004,7 @@ Remove user as a collaborator.
 
   DELETE /projects/{project_id}/collaborators/{username}
 
-https://developer.github.com/v3/projects/collaborators/#remove-project-collaborator
+https://developer.github.com/v3/projects/collaborators/#remove-user-as-a-collaborator
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -2983,14 +3015,18 @@ func (c Client) RemoveCollaborator(ctx context.Context, req *RemoveCollaboratorR
 /*
 RemoveCollaboratorReq is request data for Client.RemoveCollaborator
 
-https://developer.github.com/v3/projects/collaborators/#remove-project-collaborator
+https://developer.github.com/v3/projects/collaborators/#remove-user-as-a-collaborator
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type RemoveCollaboratorReq struct {
-	_url      string
+	_url string
+
+	// project_id parameter
 	ProjectId int64
-	Username  string
+
+	// username parameter
+	Username string
 
 	/*
 	The Projects API is currently available for developers to preview. During the
@@ -3031,7 +3067,7 @@ func (r *RemoveCollaboratorReq) Rel(link string, resp *RemoveCollaboratorRespons
 /*
 RemoveCollaboratorResponse is a response for RemoveCollaborator
 
-https://developer.github.com/v3/projects/collaborators/#remove-project-collaborator
+https://developer.github.com/v3/projects/collaborators/#remove-user-as-a-collaborator
 */
 type RemoveCollaboratorResponse struct {
 	httpResponse *http.Response
@@ -3108,7 +3144,9 @@ https://developer.github.com/v3/projects/#update-a-project
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type UpdateReq struct {
-	_url        string
+	_url string
+
+	// project_id parameter
 	ProjectId   int64
 	RequestBody UpdateReqBody
 

@@ -68,8 +68,12 @@ https://developer.github.com/v3/checks/runs/#create-a-check-run
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody CreateReqBody
 
@@ -379,8 +383,12 @@ https://developer.github.com/v3/checks/suites/#create-a-check-suite
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateSuiteReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody CreateSuiteReqBody
 
@@ -523,9 +531,13 @@ https://developer.github.com/v3/checks/runs/#get-a-check-run
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// check_run_id parameter
 	CheckRunId int64
@@ -654,9 +666,13 @@ https://developer.github.com/v3/checks/suites/#get-a-check-suite
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetSuiteReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// check_suite_id parameter
 	CheckSuiteId int64
@@ -785,9 +801,13 @@ https://developer.github.com/v3/checks/runs/#list-check-run-annotations
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListAnnotationsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// check_run_id parameter
 	CheckRunId int64
@@ -931,9 +951,13 @@ https://developer.github.com/v3/checks/runs/#list-check-runs-for-a-git-reference
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListForRefReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// ref+ parameter
 	Ref string
@@ -1111,9 +1135,13 @@ https://developer.github.com/v3/checks/runs/#list-check-runs-in-a-check-suite
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListForSuiteReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// check_suite_id parameter
 	CheckSuiteId int64
@@ -1291,9 +1319,13 @@ https://developer.github.com/v3/checks/suites/#list-check-suites-for-a-git-refer
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListSuitesForRefReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// ref+ parameter
 	Ref string
@@ -1301,7 +1333,10 @@ type ListSuitesForRefReq struct {
 	// Filters check suites by GitHub App `id`.
 	AppId *int64
 
-	// Returns check runs with the specified `name`.
+	/*
+	Filters checks suites by the name of the [check
+	run](https://developer.github.com/v3/checks/runs/).
+	*/
 	CheckName *string
 
 	// Results per page (max 100)
@@ -1459,9 +1494,13 @@ https://developer.github.com/v3/checks/suites/#rerequest-a-check-suite
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type RerequestSuiteReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// check_suite_id parameter
 	CheckSuiteId int64
@@ -1582,8 +1621,12 @@ https://developer.github.com/v3/checks/suites/#update-repository-preferences-for
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type SetSuitesPreferencesReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody SetSuitesPreferencesReqBody
 
@@ -1744,9 +1787,13 @@ https://developer.github.com/v3/checks/runs/#update-a-check-run
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type UpdateReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// check_run_id parameter
 	CheckRunId  int64

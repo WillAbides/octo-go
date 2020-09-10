@@ -68,9 +68,15 @@ https://developer.github.com/v3/pulls/#check-if-a-pull-request-has-been-merged
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CheckIfMergedReq struct {
-	_url       string
-	Owner      string
-	Repo       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// pull_number parameter
 	PullNumber int64
 }
 
@@ -182,8 +188,12 @@ https://developer.github.com/v3/pulls/#create-a-pull-request
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody CreateReqBody
 
@@ -358,9 +368,15 @@ https://developer.github.com/v3/pulls/comments/#create-a-reply-for-a-review-comm
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateReplyForReviewCommentReq struct {
-	_url       string
-	Owner      string
-	Repo       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// pull_number parameter
 	PullNumber int64
 
 	// comment_id parameter
@@ -494,9 +510,15 @@ https://developer.github.com/v3/pulls/reviews/#create-a-review-for-a-pull-reques
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateReviewReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// pull_number parameter
 	PullNumber  int64
 	RequestBody CreateReviewReqBody
 }
@@ -671,9 +693,15 @@ https://developer.github.com/v3/pulls/comments/#create-a-review-comment-for-a-pu
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateReviewCommentReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// pull_number parameter
 	PullNumber  int64
 	RequestBody CreateReviewCommentReqBody
 
@@ -871,9 +899,15 @@ https://developer.github.com/v3/pulls/reviews/#delete-a-pending-review-for-a-pul
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DeletePendingReviewReq struct {
-	_url       string
-	Owner      string
-	Repo       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// pull_number parameter
 	PullNumber int64
 
 	// review_id parameter
@@ -991,9 +1025,13 @@ https://developer.github.com/v3/pulls/comments/#delete-a-review-comment-for-a-pu
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DeleteReviewCommentReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// comment_id parameter
 	CommentId int64
@@ -1107,9 +1145,15 @@ https://developer.github.com/v3/pulls/reviews/#dismiss-a-review-for-a-pull-reque
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DismissReviewReq struct {
-	_url       string
-	Owner      string
-	Repo       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// pull_number parameter
 	PullNumber int64
 
 	// review_id parameter
@@ -1244,9 +1288,15 @@ https://developer.github.com/v3/pulls/#get-a-pull-request
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetReq struct {
-	_url       string
-	Owner      string
-	Repo       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// pull_number parameter
 	PullNumber int64
 
 	/*
@@ -1373,9 +1423,15 @@ https://developer.github.com/v3/pulls/reviews/#get-a-review-for-a-pull-request
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetReviewReq struct {
-	_url       string
-	Owner      string
-	Repo       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// pull_number parameter
 	PullNumber int64
 
 	// review_id parameter
@@ -1493,9 +1549,13 @@ https://developer.github.com/v3/pulls/comments/#get-a-review-comment-for-a-pull-
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetReviewCommentReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// comment_id parameter
 	CommentId int64
@@ -1635,9 +1695,13 @@ https://developer.github.com/v3/pulls/#list-pull-requests
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// Either `open`, `closed`, or `all` to filter by state.
 	State *string
@@ -1819,9 +1883,15 @@ https://developer.github.com/v3/pulls/reviews/#list-comments-for-a-pull-request-
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListCommentsForReviewReq struct {
-	_url       string
-	Owner      string
-	Repo       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// pull_number parameter
 	PullNumber int64
 
 	// review_id parameter
@@ -1954,9 +2024,15 @@ https://developer.github.com/v3/pulls/#list-commits-on-a-pull-request
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListCommitsReq struct {
-	_url       string
-	Owner      string
-	Repo       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// pull_number parameter
 	PullNumber int64
 
 	// Results per page (max 100)
@@ -2086,9 +2162,15 @@ https://developer.github.com/v3/pulls/#list-pull-requests-files
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListFilesReq struct {
-	_url       string
-	Owner      string
-	Repo       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// pull_number parameter
 	PullNumber int64
 
 	// Results per page (max 100)
@@ -2218,9 +2300,15 @@ https://developer.github.com/v3/pulls/review_requests/#list-requested-reviewers-
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListRequestedReviewersReq struct {
-	_url       string
-	Owner      string
-	Repo       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// pull_number parameter
 	PullNumber int64
 
 	// Results per page (max 100)
@@ -2350,24 +2438,27 @@ https://developer.github.com/v3/pulls/comments/#list-review-comments-on-a-pull-r
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListReviewCommentsReq struct {
-	_url       string
-	Owner      string
-	Repo       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// pull_number parameter
 	PullNumber int64
 
-	/*
-	One of `created` (when the repository was starred) or `updated` (when it was
-	last pushed to).
-	*/
+	// Can be either `created` or `updated` comments.
 	Sort *string
 
 	// Can be either `asc` or `desc`. Ignored without `sort` parameter.
 	Direction *string
 
 	/*
-	Only show notifications updated after the given time. This is a timestamp in
-	[ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format:
-	`YYYY-MM-DDTHH:MM:SSZ`.
+	This is a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+	format: `YYYY-MM-DDTHH:MM:SSZ`. Only returns comments `updated` at or after this
+	time.
 	*/
 	Since *string
 
@@ -2530,23 +2621,24 @@ https://developer.github.com/v3/pulls/comments/#list-review-comments-in-a-reposi
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListReviewCommentsForRepoReq struct {
-	_url  string
-	Owner string
-	Repo  string
+	_url string
 
-	/*
-	One of `created` (when the repository was starred) or `updated` (when it was
-	last pushed to).
-	*/
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// Can be either `created` or `updated` comments.
 	Sort *string
 
 	// Can be either `asc` or `desc`. Ignored without `sort` parameter.
 	Direction *string
 
 	/*
-	Only show notifications updated after the given time. This is a timestamp in
-	[ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format:
-	`YYYY-MM-DDTHH:MM:SSZ`.
+	This is a timestamp in [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+	format: `YYYY-MM-DDTHH:MM:SSZ`. Only returns comments `updated` at or after this
+	time.
 	*/
 	Since *string
 
@@ -2709,9 +2801,15 @@ https://developer.github.com/v3/pulls/reviews/#list-reviews-for-a-pull-request
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListReviewsReq struct {
-	_url       string
-	Owner      string
-	Repo       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// pull_number parameter
 	PullNumber int64
 
 	// Results per page (max 100)
@@ -2841,9 +2939,15 @@ https://developer.github.com/v3/pulls/#merge-a-pull-request
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type MergeReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// pull_number parameter
 	PullNumber  int64
 	RequestBody MergeReqBody
 }
@@ -2983,9 +3087,15 @@ https://developer.github.com/v3/pulls/review_requests/#remove-requested-reviewer
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type RemoveRequestedReviewersReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// pull_number parameter
 	PullNumber  int64
 	RequestBody RemoveRequestedReviewersReqBody
 }
@@ -3109,9 +3219,15 @@ https://developer.github.com/v3/pulls/review_requests/#request-reviewers-for-a-p
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type RequestReviewersReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// pull_number parameter
 	PullNumber  int64
 	RequestBody RequestReviewersReqBody
 }
@@ -3245,9 +3361,15 @@ https://developer.github.com/v3/pulls/reviews/#submit-a-review-for-a-pull-reques
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type SubmitReviewReq struct {
-	_url       string
-	Owner      string
-	Repo       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// pull_number parameter
 	PullNumber int64
 
 	// review_id parameter
@@ -3390,9 +3512,15 @@ https://developer.github.com/v3/pulls/#update-a-pull-request
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type UpdateReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// pull_number parameter
 	PullNumber  int64
 	RequestBody UpdateReqBody
 
@@ -3555,9 +3683,15 @@ https://developer.github.com/v3/pulls/#update-a-pull-request-branch
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type UpdateBranchReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// pull_number parameter
 	PullNumber  int64
 	RequestBody UpdateBranchReqBody
 
@@ -3716,9 +3850,15 @@ https://developer.github.com/v3/pulls/reviews/#update-a-review-for-a-pull-reques
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type UpdateReviewReq struct {
-	_url       string
-	Owner      string
-	Repo       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// pull_number parameter
 	PullNumber int64
 
 	// review_id parameter
@@ -3852,9 +3992,13 @@ https://developer.github.com/v3/pulls/comments/#update-a-review-comment-for-a-pu
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type UpdateReviewCommentReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// comment_id parameter
 	CommentId   int64

@@ -179,9 +179,13 @@ https://developer.github.com/v3/repos/branches/#add-app-access-restrictions
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type AddAppAccessRestrictionsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// branch+ parameter
 	Branch      string
@@ -310,9 +314,15 @@ https://developer.github.com/v3/repos/collaborators/#add-a-repository-collaborat
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type AddCollaboratorReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// username parameter
 	Username    string
 	RequestBody AddCollaboratorReqBody
 }
@@ -454,9 +464,13 @@ https://developer.github.com/v3/repos/branches/#add-status-check-contexts
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type AddStatusCheckContextsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// branch+ parameter
 	Branch      string
@@ -592,9 +606,13 @@ https://developer.github.com/v3/repos/branches/#add-team-access-restrictions
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type AddTeamAccessRestrictionsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// branch+ parameter
 	Branch      string
@@ -723,9 +741,13 @@ https://developer.github.com/v3/repos/branches/#add-user-access-restrictions
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type AddUserAccessRestrictionsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// branch+ parameter
 	Branch      string
@@ -854,9 +876,15 @@ https://developer.github.com/v3/repos/collaborators/#check-if-a-user-is-a-reposi
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CheckCollaboratorReq struct {
-	_url     string
-	Owner    string
-	Repo     string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// username parameter
 	Username string
 }
 
@@ -968,9 +996,13 @@ https://developer.github.com/v3/repos/#check-if-vulnerability-alerts-are-enabled
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CheckVulnerabilityAlertsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	/*
 	Enabling and disabling dependency alerts for a repository using the REST API is
@@ -1091,9 +1123,13 @@ https://developer.github.com/v3/repos/commits/#compare-two-commits
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CompareCommitsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// base parameter
 	Base string
@@ -1213,9 +1249,13 @@ https://developer.github.com/v3/repos/comments/#create-a-commit-comment
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateCommitCommentReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// commit_sha+ parameter
 	CommitSha   string
@@ -1357,9 +1397,13 @@ https://developer.github.com/v3/repos/branches/#create-commit-signature-protecti
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateCommitSignatureProtectionReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// branch+ parameter
 	Branch string
@@ -1488,9 +1532,13 @@ https://developer.github.com/v3/repos/statuses/#create-a-commit-status
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateCommitStatusReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// sha parameter
 	Sha         string
@@ -1638,8 +1686,12 @@ https://developer.github.com/v3/repos/keys/#create-a-deploy-key
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateDeployKeyReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody CreateDeployKeyReqBody
 }
@@ -1786,8 +1838,12 @@ https://developer.github.com/v3/repos/deployments/#create-a-deployment
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateDeploymentReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody CreateDeploymentReqBody
 
@@ -1975,9 +2031,13 @@ https://developer.github.com/v3/repos/deployments/#create-a-deployment-status
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateDeploymentStatusReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// deployment_id parameter
 	DeploymentId int64
@@ -2206,8 +2266,12 @@ https://developer.github.com/v3/repos/#create-a-repository-dispatch-event
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateDispatchEventReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody CreateDispatchEventReqBody
 }
@@ -2282,7 +2346,7 @@ Create a repository for the authenticated user.
 
   POST /user/repos
 
-https://developer.github.com/v3/repos/#create-a-repository-for-the-authenticated-user
+https://developer.github.com/v3/repos/#create
 */
 func CreateForAuthenticatedUser(ctx context.Context, req *CreateForAuthenticatedUserReq, opt ...requests.Option) (*CreateForAuthenticatedUserResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -2315,7 +2379,7 @@ Create a repository for the authenticated user.
 
   POST /user/repos
 
-https://developer.github.com/v3/repos/#create-a-repository-for-the-authenticated-user
+https://developer.github.com/v3/repos/#create
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -2326,7 +2390,7 @@ func (c Client) CreateForAuthenticatedUser(ctx context.Context, req *CreateForAu
 /*
 CreateForAuthenticatedUserReq is request data for Client.CreateForAuthenticatedUser
 
-https://developer.github.com/v3/repos/#create-a-repository-for-the-authenticated-user
+https://developer.github.com/v3/repos/#create
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -2392,7 +2456,7 @@ func (r *CreateForAuthenticatedUserReq) Rel(link string, resp *CreateForAuthenti
 /*
 CreateForAuthenticatedUserReqBody is a request body for repos/create-for-authenticated-user
 
-https://developer.github.com/v3/repos/#create-a-repository-for-the-authenticated-user
+https://developer.github.com/v3/repos/#create
 */
 type CreateForAuthenticatedUserReqBody struct {
 
@@ -2454,7 +2518,7 @@ type CreateForAuthenticatedUserReqBody struct {
 /*
 CreateForAuthenticatedUserResponse is a response for CreateForAuthenticatedUser
 
-https://developer.github.com/v3/repos/#create-a-repository-for-the-authenticated-user
+https://developer.github.com/v3/repos/#create
 */
 type CreateForAuthenticatedUserResponse struct {
 	httpResponse *http.Response
@@ -2538,14 +2602,26 @@ https://developer.github.com/v3/repos/forks/#create-a-fork
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateForkReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// org parameter
+	Org         *string
 	RequestBody CreateForkReqBody
 }
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
 func (r *CreateForkReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+	query := url.Values{}
+	if r.Org != nil {
+		query.Set("org", *r.Org)
+	}
+
 	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		Body:        r.RequestBody,
 		ExplicitURL: r._url,
@@ -2553,9 +2629,10 @@ func (r *CreateForkReq) HTTPRequest(ctx context.Context, opt ...requests.Option)
 			"accept":       strPtr("application/json"),
 			"content-type": strPtr("application/json"),
 		},
-		Method:  "POST",
-		Options: opt,
-		URLPath: fmt.Sprintf("/repos/%v/%v/forks", r.Owner, r.Repo),
+		Method:   "POST",
+		Options:  opt,
+		URLPath:  fmt.Sprintf("/repos/%v/%v/forks", r.Owner, r.Repo),
+		URLQuery: query,
 	})
 }
 
@@ -2670,7 +2747,9 @@ https://developer.github.com/v3/repos/#create-an-organization-repository
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateInOrgReq struct {
-	_url        string
+	_url string
+
+	// org parameter
 	Org         string
 	RequestBody CreateInOrgReqBody
 
@@ -2907,9 +2986,13 @@ https://developer.github.com/v3/repos/contents/#create-or-update-file-contents
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateOrUpdateFileContentsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// path+ parameter
 	Path        string
@@ -3079,8 +3162,12 @@ https://developer.github.com/v3/repos/pages/#create-a-github-pages-site
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreatePagesSiteReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody CreatePagesSiteReqBody
 
@@ -3239,8 +3326,12 @@ https://developer.github.com/v3/repos/releases/#create-a-release
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateReleaseReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody CreateReleaseReqBody
 }
@@ -3551,8 +3642,12 @@ https://developer.github.com/v3/repos/hooks/#create-a-repository-webhook
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateWebhookReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody CreateWebhookReqBody
 }
@@ -3833,9 +3928,13 @@ https://developer.github.com/v3/repos/#delete-a-repository
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DeleteReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 }
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
@@ -3941,9 +4040,13 @@ https://developer.github.com/v3/repos/branches/#delete-access-restrictions
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DeleteAccessRestrictionsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// branch+ parameter
 	Branch string
@@ -4052,9 +4155,13 @@ https://developer.github.com/v3/repos/branches/#delete-admin-branch-protection
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DeleteAdminBranchProtectionReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// branch+ parameter
 	Branch string
@@ -4168,9 +4275,13 @@ https://developer.github.com/v3/repos/branches/#delete-branch-protection
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DeleteBranchProtectionReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// branch+ parameter
 	Branch string
@@ -4279,9 +4390,13 @@ https://developer.github.com/v3/repos/comments/#delete-a-commit-comment
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DeleteCommitCommentReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// comment_id parameter
 	CommentId int64
@@ -4395,9 +4510,13 @@ https://developer.github.com/v3/repos/branches/#delete-commit-signature-protecti
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DeleteCommitSignatureProtectionReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// branch+ parameter
 	Branch string
@@ -4523,9 +4642,13 @@ https://developer.github.com/v3/repos/keys/#delete-a-deploy-key
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DeleteDeployKeyReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// key_id parameter
 	KeyId int64
@@ -4634,9 +4757,13 @@ https://developer.github.com/v3/repos/deployments/#delete-a-deployment
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DeleteDeploymentReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// deployment_id parameter
 	DeploymentId int64
@@ -4745,9 +4872,13 @@ https://developer.github.com/v3/repos/contents/#delete-a-file
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DeleteFileReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// path+ parameter
 	Path        string
@@ -4912,9 +5043,13 @@ https://developer.github.com/v3/repos/invitations/#delete-a-repository-invitatio
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DeleteInvitationReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// invitation_id parameter
 	InvitationId int64
@@ -5023,9 +5158,13 @@ https://developer.github.com/v3/repos/pages/#delete-a-github-pages-site
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DeletePagesSiteReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	/*
 	Enabling and disabling Pages in the Pages API is currently available for
@@ -5143,9 +5282,13 @@ https://developer.github.com/v3/repos/branches/#delete-pull-request-review-prote
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DeletePullRequestReviewProtectionReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// branch+ parameter
 	Branch string
@@ -5259,9 +5402,13 @@ https://developer.github.com/v3/repos/releases/#delete-a-release
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DeleteReleaseReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// release_id parameter
 	ReleaseId int64
@@ -5370,9 +5517,13 @@ https://developer.github.com/v3/repos/releases/#delete-a-release-asset
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DeleteReleaseAssetReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// asset_id parameter
 	AssetId int64
@@ -5481,9 +5632,15 @@ https://developer.github.com/v3/repos/hooks/#delete-a-repository-webhook
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DeleteWebhookReq struct {
-	_url   string
-	Owner  string
-	Repo   string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// hook_id parameter
 	HookId int64
 }
 
@@ -5595,9 +5752,13 @@ https://developer.github.com/v3/repos/#disable-automated-security-fixes
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DisableAutomatedSecurityFixesReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	/*
 	Enabling or disabling automated security fixes is currently available for
@@ -5713,9 +5874,13 @@ https://developer.github.com/v3/repos/#disable-vulnerability-alerts
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DisableVulnerabilityAlertsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	/*
 	Enabling and disabling dependency alerts for a repository using the REST API is
@@ -5769,228 +5934,6 @@ func (r *DisableVulnerabilityAlertsResponse) HTTPResponse() *http.Response {
 func (r *DisableVulnerabilityAlertsResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := responseErrorCheck(resp, []int{204})
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
-/*
-DownloadTarballArchive performs requests for "repos/download-tarball-archive"
-
-Download a repository archive (tar).
-
-  GET /repos/{owner}/{repo}/tarball/{ref}
-
-https://developer.github.com/v3/repos/contents/#download-a-repository-archive
-*/
-func DownloadTarballArchive(ctx context.Context, req *DownloadTarballArchiveReq, opt ...requests.Option) (*DownloadTarballArchiveResponse, error) {
-	opts := requests.BuildOptions(opt...)
-	if req == nil {
-		req = new(DownloadTarballArchiveReq)
-	}
-	resp := &DownloadTarballArchiveResponse{}
-
-	httpReq, err := req.HTTPRequest(ctx, opt...)
-	if err != nil {
-		return nil, err
-	}
-
-	r, err := opts.HttpClient().Do(httpReq)
-	if err != nil {
-		return nil, err
-	}
-
-	err = resp.ReadResponse(r)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-DownloadTarballArchive performs requests for "repos/download-tarball-archive"
-
-Download a repository archive (tar).
-
-  GET /repos/{owner}/{repo}/tarball/{ref}
-
-https://developer.github.com/v3/repos/contents/#download-a-repository-archive
-
-Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
-*/
-func (c Client) DownloadTarballArchive(ctx context.Context, req *DownloadTarballArchiveReq, opt ...requests.Option) (*DownloadTarballArchiveResponse, error) {
-	return DownloadTarballArchive(ctx, req, append(c, opt...)...)
-}
-
-/*
-DownloadTarballArchiveReq is request data for Client.DownloadTarballArchive
-
-https://developer.github.com/v3/repos/contents/#download-a-repository-archive
-
-Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
-*/
-type DownloadTarballArchiveReq struct {
-	_url  string
-	Owner string
-	Repo  string
-
-	// ref parameter
-	Ref string
-}
-
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
-func (r *DownloadTarballArchiveReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
-		ExplicitURL: r._url,
-		Method:      "GET",
-		Options:     opt,
-		URLPath:     fmt.Sprintf("/repos/%v/%v/tarball/%v", r.Owner, r.Repo, r.Ref),
-	})
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *DownloadTarballArchiveReq) Rel(link string, resp *DownloadTarballArchiveResponse) bool {
-	u := getRelLink(resp.HTTPResponse(), link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-DownloadTarballArchiveResponse is a response for DownloadTarballArchive
-
-https://developer.github.com/v3/repos/contents/#download-a-repository-archive
-*/
-type DownloadTarballArchiveResponse struct {
-	httpResponse *http.Response
-}
-
-// HTTPResponse returns the *http.Response
-func (r *DownloadTarballArchiveResponse) HTTPResponse() *http.Response {
-	return r.httpResponse
-}
-
-// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *DownloadTarballArchiveResponse) ReadResponse(resp *http.Response) error {
-	r.httpResponse = resp
-	err := responseErrorCheck(resp, []int{302})
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
-/*
-DownloadZipballArchive performs requests for "repos/download-zipball-archive"
-
-Download a repository archive (zip).
-
-  GET /repos/{owner}/{repo}/zipball/{ref}
-
-https://developer.github.com/v3/repos/contents/#download-a-repository-archive
-*/
-func DownloadZipballArchive(ctx context.Context, req *DownloadZipballArchiveReq, opt ...requests.Option) (*DownloadZipballArchiveResponse, error) {
-	opts := requests.BuildOptions(opt...)
-	if req == nil {
-		req = new(DownloadZipballArchiveReq)
-	}
-	resp := &DownloadZipballArchiveResponse{}
-
-	httpReq, err := req.HTTPRequest(ctx, opt...)
-	if err != nil {
-		return nil, err
-	}
-
-	r, err := opts.HttpClient().Do(httpReq)
-	if err != nil {
-		return nil, err
-	}
-
-	err = resp.ReadResponse(r)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-/*
-DownloadZipballArchive performs requests for "repos/download-zipball-archive"
-
-Download a repository archive (zip).
-
-  GET /repos/{owner}/{repo}/zipball/{ref}
-
-https://developer.github.com/v3/repos/contents/#download-a-repository-archive
-
-Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
-*/
-func (c Client) DownloadZipballArchive(ctx context.Context, req *DownloadZipballArchiveReq, opt ...requests.Option) (*DownloadZipballArchiveResponse, error) {
-	return DownloadZipballArchive(ctx, req, append(c, opt...)...)
-}
-
-/*
-DownloadZipballArchiveReq is request data for Client.DownloadZipballArchive
-
-https://developer.github.com/v3/repos/contents/#download-a-repository-archive
-
-Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
-*/
-type DownloadZipballArchiveReq struct {
-	_url  string
-	Owner string
-	Repo  string
-
-	// ref parameter
-	Ref string
-}
-
-// HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
-func (r *DownloadZipballArchiveReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
-	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
-		ExplicitURL: r._url,
-		Method:      "GET",
-		Options:     opt,
-		URLPath:     fmt.Sprintf("/repos/%v/%v/zipball/%v", r.Owner, r.Repo, r.Ref),
-	})
-}
-
-/*
-Rel updates this request to point to a relative link from resp. Returns false if
-the link does not exist. Handy for paging.
-*/
-func (r *DownloadZipballArchiveReq) Rel(link string, resp *DownloadZipballArchiveResponse) bool {
-	u := getRelLink(resp.HTTPResponse(), link)
-	if u == "" {
-		return false
-	}
-	r._url = u
-	return true
-}
-
-/*
-DownloadZipballArchiveResponse is a response for DownloadZipballArchive
-
-https://developer.github.com/v3/repos/contents/#download-a-repository-archive
-*/
-type DownloadZipballArchiveResponse struct {
-	httpResponse *http.Response
-}
-
-// HTTPResponse returns the *http.Response
-func (r *DownloadZipballArchiveResponse) HTTPResponse() *http.Response {
-	return r.httpResponse
-}
-
-// ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *DownloadZipballArchiveResponse) ReadResponse(resp *http.Response) error {
-	r.httpResponse = resp
-	err := responseErrorCheck(resp, []int{302})
 	if err != nil {
 		return err
 	}
@@ -6053,9 +5996,13 @@ https://developer.github.com/v3/repos/#enable-automated-security-fixes
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type EnableAutomatedSecurityFixesReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	/*
 	Enabling or disabling automated security fixes is currently available for
@@ -6171,9 +6118,13 @@ https://developer.github.com/v3/repos/#enable-vulnerability-alerts
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type EnableVulnerabilityAlertsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	/*
 	Enabling and disabling dependency alerts for a repository using the REST API is
@@ -6289,9 +6240,13 @@ https://developer.github.com/v3/repos/#get-a-repository
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	/*
 	You can set the visibility of a repository using the new `visibility` parameter
@@ -6429,9 +6384,13 @@ https://developer.github.com/v3/repos/branches/#get-access-restrictions
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetAccessRestrictionsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// branch+ parameter
 	Branch string
@@ -6548,9 +6507,13 @@ https://developer.github.com/v3/repos/branches/#get-admin-branch-protection
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetAdminBranchProtectionReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// branch+ parameter
 	Branch string
@@ -6667,9 +6630,13 @@ https://developer.github.com/v3/repos/branches/#get-all-status-check-contexts
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetAllStatusCheckContextsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// branch+ parameter
 	Branch string
@@ -6793,9 +6760,13 @@ https://developer.github.com/v3/repos/#get-all-repository-topics
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetAllTopicsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	/*
 	The `topics` property for repositories on GitHub is currently available for
@@ -6919,9 +6890,13 @@ https://developer.github.com/v3/repos/branches/#list-apps-with-access-to-the-pro
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetAppsWithAccessToProtectedBranchReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// branch+ parameter
 	Branch string
@@ -7038,9 +7013,13 @@ https://developer.github.com/v3/repos/branches/#get-a-branch
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetBranchReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// branch+ parameter
 	Branch string
@@ -7157,9 +7136,13 @@ https://developer.github.com/v3/repos/branches/#get-branch-protection
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetBranchProtectionReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// branch+ parameter
 	Branch string
@@ -7288,9 +7271,13 @@ https://developer.github.com/v3/repos/traffic/#get-repository-clones
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetClonesReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// Must be one of: `day`, `week`.
 	Per *string
@@ -7413,9 +7400,13 @@ https://developer.github.com/v3/repos/statistics/#get-the-weekly-commit-activity
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetCodeFrequencyStatsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 }
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
@@ -7529,9 +7520,15 @@ https://developer.github.com/v3/repos/collaborators/#get-repository-permissions-
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetCollaboratorPermissionLevelReq struct {
-	_url     string
-	Owner    string
-	Repo     string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// username parameter
 	Username string
 }
 
@@ -7646,9 +7643,13 @@ https://developer.github.com/v3/repos/statuses/#get-the-combined-status-for-a-sp
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetCombinedStatusForRefReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// ref+ parameter
 	Ref string
@@ -7765,9 +7766,13 @@ https://developer.github.com/v3/repos/commits/#get-a-commit
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetCommitReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// ref+ parameter
 	Ref string
@@ -7884,9 +7889,13 @@ https://developer.github.com/v3/repos/statistics/#get-the-last-year-of-commit-ac
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetCommitActivityStatsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 }
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
@@ -8000,9 +8009,13 @@ https://developer.github.com/v3/repos/comments/#get-a-commit-comment
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetCommitCommentReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// comment_id parameter
 	CommentId int64
@@ -8132,9 +8145,13 @@ https://developer.github.com/v3/repos/branches/#get-commit-signature-protection
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetCommitSignatureProtectionReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// branch+ parameter
 	Branch string
@@ -8263,9 +8280,13 @@ https://developer.github.com/v3/repos/community/#get-community-profile-metrics
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetCommunityProfileMetricsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	/*
 	We're currently offering a preview of the Community Profile API (also known as
@@ -8389,9 +8410,13 @@ https://developer.github.com/v3/repos/contents/#get-repository-content
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetContentReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// path+ parameter
 	Path string
@@ -8611,9 +8636,13 @@ https://developer.github.com/v3/repos/statistics/#get-all-contributor-commit-act
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetContributorsStatsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 }
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
@@ -8727,9 +8756,13 @@ https://developer.github.com/v3/repos/keys/#get-a-deploy-key
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetDeployKeyReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// key_id parameter
 	KeyId int64
@@ -8846,9 +8879,13 @@ https://developer.github.com/v3/repos/deployments/#get-a-deployment
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetDeploymentReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// deployment_id parameter
 	DeploymentId int64
@@ -8987,9 +9024,13 @@ https://developer.github.com/v3/repos/deployments/#get-a-deployment-status
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetDeploymentStatusReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// deployment_id parameter
 	DeploymentId int64
@@ -9144,9 +9185,13 @@ https://developer.github.com/v3/repos/pages/#get-latest-pages-build
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetLatestPagesBuildReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 }
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
@@ -9260,9 +9305,13 @@ https://developer.github.com/v3/repos/releases/#get-the-latest-release
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetLatestReleaseReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 }
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
@@ -9376,9 +9425,13 @@ https://developer.github.com/v3/repos/pages/#get-a-github-pages-site
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetPagesReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 }
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
@@ -9492,9 +9545,13 @@ https://developer.github.com/v3/repos/pages/#get-github-pages-build
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetPagesBuildReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// build_id parameter
 	BuildId int64
@@ -9611,9 +9668,13 @@ https://developer.github.com/v3/repos/statistics/#get-the-weekly-commit-count
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetParticipationStatsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 }
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
@@ -9727,9 +9788,13 @@ https://developer.github.com/v3/repos/branches/#get-pull-request-review-protecti
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetPullRequestReviewProtectionReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// branch+ parameter
 	Branch string
@@ -9858,9 +9923,13 @@ https://developer.github.com/v3/repos/statistics/#get-the-hourly-commit-count-fo
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetPunchCardStatsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 }
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
@@ -9974,9 +10043,13 @@ https://developer.github.com/v3/repos/contents/#get-a-repository-readme
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetReadmeReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	/*
 	The name of the commit/branch/tag. Default: the repository’s default branch
@@ -10102,9 +10175,13 @@ https://developer.github.com/v3/repos/releases/#get-a-release
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetReleaseReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// release_id parameter
 	ReleaseId int64
@@ -10221,9 +10298,13 @@ https://developer.github.com/v3/repos/releases/#get-a-release-asset
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetReleaseAssetReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// asset_id parameter
 	AssetId int64
@@ -10340,9 +10421,13 @@ https://developer.github.com/v3/repos/releases/#get-a-release-by-tag-name
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetReleaseByTagReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// tag+ parameter
 	Tag string
@@ -10459,9 +10544,13 @@ https://developer.github.com/v3/repos/branches/#get-status-checks-protection
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetStatusChecksProtectionReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// branch+ parameter
 	Branch string
@@ -10578,9 +10667,13 @@ https://developer.github.com/v3/repos/branches/#list-teams-with-access-to-the-pr
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetTeamsWithAccessToProtectedBranchReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// branch+ parameter
 	Branch string
@@ -10697,9 +10790,13 @@ https://developer.github.com/v3/repos/traffic/#get-top-referral-paths
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetTopPathsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 }
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
@@ -10813,9 +10910,13 @@ https://developer.github.com/v3/repos/traffic/#get-top-referral-sources
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetTopReferrersReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 }
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
@@ -10929,9 +11030,13 @@ https://developer.github.com/v3/repos/branches/#list-users-with-access-to-the-pr
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetUsersWithAccessToProtectedBranchReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// branch+ parameter
 	Branch string
@@ -11048,9 +11153,13 @@ https://developer.github.com/v3/repos/traffic/#get-page-views
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetViewsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// Must be one of: `day`, `week`.
 	Per *string
@@ -11173,9 +11282,15 @@ https://developer.github.com/v3/repos/hooks/#get-a-repository-webhook
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetWebhookReq struct {
-	_url   string
-	Owner  string
-	Repo   string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// hook_id parameter
 	HookId int64
 }
 
@@ -11290,9 +11405,13 @@ https://developer.github.com/v3/repos/branches/#list-branches
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListBranchesReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	/*
 	Setting to `true` returns only protected branches. When set to `false`, only
@@ -11430,9 +11549,13 @@ https://developer.github.com/v3/repos/commits/#list-branches-for-head-commit
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListBranchesForHeadCommitReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// commit_sha+ parameter
 	CommitSha string
@@ -11561,9 +11684,13 @@ https://developer.github.com/v3/repos/collaborators/#list-repository-collaborato
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListCollaboratorsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	/*
 	Filter collaborators returned by their affiliation. Can be one of:
@@ -11704,9 +11831,13 @@ https://developer.github.com/v3/repos/comments/#list-commit-comments
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListCommentsForCommitReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// commit_sha+ parameter
 	CommitSha string
@@ -11851,9 +11982,13 @@ https://developer.github.com/v3/repos/comments/#list-commit-comments-for-a-repos
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListCommitCommentsForRepoReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -11995,9 +12130,13 @@ https://developer.github.com/v3/repos/statuses/#list-commit-statuses-for-a-refer
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListCommitStatusesForRefReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// ref+ parameter
 	Ref string
@@ -12129,9 +12268,13 @@ https://developer.github.com/v3/repos/commits/#list-commits
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListCommitsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	/*
 	SHA or branch to start listing commits from. Default: the repository’s default
@@ -12146,9 +12289,8 @@ type ListCommitsReq struct {
 	Author *string
 
 	/*
-	Only show notifications updated after the given time. This is a timestamp in
-	[ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) format:
-	`YYYY-MM-DDTHH:MM:SSZ`.
+	Only commits after this date will be returned. This is a timestamp in [ISO
+	8601](https://en.wikipedia.org/wiki/ISO_8601) format: `YYYY-MM-DDTHH:MM:SSZ`.
 	*/
 	Since *string
 
@@ -12300,9 +12442,13 @@ https://developer.github.com/v3/repos/#list-repository-contributors
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListContributorsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// Set to `1` or `true` to include anonymous contributors in results.
 	Anon *string
@@ -12437,9 +12583,13 @@ https://developer.github.com/v3/repos/keys/#list-deploy-keys
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListDeployKeysReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -12568,9 +12718,13 @@ https://developer.github.com/v3/repos/deployments/#list-deployment-statuses
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListDeploymentStatusesReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// deployment_id parameter
 	DeploymentId int64
@@ -12730,9 +12884,13 @@ https://developer.github.com/v3/repos/deployments/#list-deployments
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListDeploymentsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// The SHA recorded at creation time.
 	Sha *string
@@ -12852,7 +13010,7 @@ List repositories for the authenticated user.
 
   GET /user/repos
 
-https://developer.github.com/v3/repos/#list-repositories-for-the-authenticated-user
+https://developer.github.com/v3/repos/#list-your-repositories
 */
 func ListForAuthenticatedUser(ctx context.Context, req *ListForAuthenticatedUserReq, opt ...requests.Option) (*ListForAuthenticatedUserResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -12885,7 +13043,7 @@ List repositories for the authenticated user.
 
   GET /user/repos
 
-https://developer.github.com/v3/repos/#list-repositories-for-the-authenticated-user
+https://developer.github.com/v3/repos/#list-your-repositories
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -12896,7 +13054,7 @@ func (c Client) ListForAuthenticatedUser(ctx context.Context, req *ListForAuthen
 /*
 ListForAuthenticatedUserReq is request data for Client.ListForAuthenticatedUser
 
-https://developer.github.com/v3/repos/#list-repositories-for-the-authenticated-user
+https://developer.github.com/v3/repos/#list-your-repositories
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -13013,7 +13171,7 @@ func (r *ListForAuthenticatedUserReq) Rel(link string, resp *ListForAuthenticate
 /*
 ListForAuthenticatedUserResponse is a response for ListForAuthenticatedUser
 
-https://developer.github.com/v3/repos/#list-repositories-for-the-authenticated-user
+https://developer.github.com/v3/repos/#list-your-repositories
 */
 type ListForAuthenticatedUserResponse struct {
 	httpResponse *http.Response
@@ -13098,7 +13256,9 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type ListForOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	/*
 	Specifies the types of repositories you want returned. Can be one of `all`,
@@ -13280,7 +13440,9 @@ https://developer.github.com/v3/repos/#list-repositories-for-a-user
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListForUserReq struct {
-	_url     string
+	_url string
+
+	// username parameter
 	Username string
 
 	// Can be one of `all`, `owner`, `member`.
@@ -13445,9 +13607,13 @@ https://developer.github.com/v3/repos/forks/#list-forks
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListForksReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// The sort order. Can be either `newest`, `oldest`, or `stargazers`.
 	Sort *string
@@ -13582,9 +13748,13 @@ https://developer.github.com/v3/repos/invitations/#list-repository-invitations
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListInvitationsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -13664,7 +13834,7 @@ List repository invitations for the authenticated user.
 
   GET /user/repository_invitations
 
-https://developer.github.com/v3/repos/invitations/#list-repository-invitations-for-the-authenticated-user
+https://developer.github.com/v3/repos/invitations/#list-a-users-repository-invitations
 */
 func ListInvitationsForAuthenticatedUser(ctx context.Context, req *ListInvitationsForAuthenticatedUserReq, opt ...requests.Option) (*ListInvitationsForAuthenticatedUserResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -13697,7 +13867,7 @@ List repository invitations for the authenticated user.
 
   GET /user/repository_invitations
 
-https://developer.github.com/v3/repos/invitations/#list-repository-invitations-for-the-authenticated-user
+https://developer.github.com/v3/repos/invitations/#list-a-users-repository-invitations
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -13708,7 +13878,7 @@ func (c Client) ListInvitationsForAuthenticatedUser(ctx context.Context, req *Li
 /*
 ListInvitationsForAuthenticatedUserReq is request data for Client.ListInvitationsForAuthenticatedUser
 
-https://developer.github.com/v3/repos/invitations/#list-repository-invitations-for-the-authenticated-user
+https://developer.github.com/v3/repos/invitations/#list-a-users-repository-invitations
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -13758,7 +13928,7 @@ func (r *ListInvitationsForAuthenticatedUserReq) Rel(link string, resp *ListInvi
 /*
 ListInvitationsForAuthenticatedUserResponse is a response for ListInvitationsForAuthenticatedUser
 
-https://developer.github.com/v3/repos/invitations/#list-repository-invitations-for-the-authenticated-user
+https://developer.github.com/v3/repos/invitations/#list-a-users-repository-invitations
 */
 type ListInvitationsForAuthenticatedUserResponse struct {
 	httpResponse *http.Response
@@ -13842,9 +14012,13 @@ https://developer.github.com/v3/repos/#list-repository-languages
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListLanguagesReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 }
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
@@ -13958,9 +14132,13 @@ https://developer.github.com/v3/repos/pages/#list-github-pages-builds
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListPagesBuildsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -14040,7 +14218,7 @@ List public repositories.
 
   GET /repositories
 
-https://developer.github.com/v3/repos/#list-public-repositories
+https://developer.github.com/v3/repos/#list-all-public-repositories
 */
 func ListPublic(ctx context.Context, req *ListPublicReq, opt ...requests.Option) (*ListPublicResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -14073,7 +14251,7 @@ List public repositories.
 
   GET /repositories
 
-https://developer.github.com/v3/repos/#list-public-repositories
+https://developer.github.com/v3/repos/#list-all-public-repositories
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -14084,7 +14262,7 @@ func (c Client) ListPublic(ctx context.Context, req *ListPublicReq, opt ...reque
 /*
 ListPublicReq is request data for Client.ListPublic
 
-https://developer.github.com/v3/repos/#list-public-repositories
+https://developer.github.com/v3/repos/#list-all-public-repositories
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -14142,7 +14320,7 @@ func (r *ListPublicReq) Rel(link string, resp *ListPublicResponse) bool {
 /*
 ListPublicResponse is a response for ListPublic
 
-https://developer.github.com/v3/repos/#list-public-repositories
+https://developer.github.com/v3/repos/#list-all-public-repositories
 */
 type ListPublicResponse struct {
 	httpResponse *http.Response
@@ -14226,9 +14404,13 @@ https://developer.github.com/v3/repos/commits/#list-pull-requests-associated-wit
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListPullRequestsAssociatedWithCommitReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// commit_sha+ parameter
 	CommitSha string
@@ -14372,9 +14554,13 @@ https://developer.github.com/v3/repos/releases/#list-release-assets
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListReleaseAssetsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// release_id parameter
 	ReleaseId int64
@@ -14506,9 +14692,13 @@ https://developer.github.com/v3/repos/releases/#list-releases
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListReleasesReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -14637,9 +14827,13 @@ https://developer.github.com/v3/repos/#list-repository-tags
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListTagsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -14768,9 +14962,13 @@ https://developer.github.com/v3/repos/#list-repository-teams
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListTeamsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -14899,9 +15097,13 @@ https://developer.github.com/v3/repos/hooks/#list-repository-webhooks
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListWebhooksReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -15030,8 +15232,12 @@ https://developer.github.com/v3/repos/merging/#merge-a-branch
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type MergeReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody MergeReqBody
 }
@@ -15168,9 +15374,15 @@ https://developer.github.com/v3/repos/hooks/#ping-a-repository-webhook
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type PingWebhookReq struct {
-	_url   string
-	Owner  string
-	Repo   string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// hook_id parameter
 	HookId int64
 }
 
@@ -15282,9 +15494,13 @@ https://developer.github.com/v3/repos/branches/#remove-app-access-restrictions
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type RemoveAppAccessRestrictionsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// branch+ parameter
 	Branch      string
@@ -15413,9 +15629,15 @@ https://developer.github.com/v3/repos/collaborators/#remove-a-repository-collabo
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type RemoveCollaboratorReq struct {
-	_url     string
-	Owner    string
-	Repo     string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// username parameter
 	Username string
 }
 
@@ -15522,9 +15744,13 @@ https://developer.github.com/v3/repos/branches/#remove-status-check-contexts
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type RemoveStatusCheckContextsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// branch+ parameter
 	Branch      string
@@ -15660,9 +15886,13 @@ https://developer.github.com/v3/repos/branches/#remove-status-check-protection
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type RemoveStatusCheckProtectionReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// branch+ parameter
 	Branch string
@@ -15771,9 +16001,13 @@ https://developer.github.com/v3/repos/branches/#remove-team-access-restrictions
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type RemoveTeamAccessRestrictionsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// branch+ parameter
 	Branch      string
@@ -15902,9 +16136,13 @@ https://developer.github.com/v3/repos/branches/#remove-user-access-restrictions
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type RemoveUserAccessRestrictionsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// branch+ parameter
 	Branch      string
@@ -16033,8 +16271,12 @@ https://developer.github.com/v3/repos/#replace-all-repository-topics
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ReplaceAllTopicsReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody ReplaceAllTopicsReqBody
 
@@ -16180,9 +16422,13 @@ https://developer.github.com/v3/repos/pages/#request-a-github-pages-build
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type RequestPagesBuildReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 }
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
@@ -16296,9 +16542,13 @@ https://developer.github.com/v3/repos/branches/#set-admin-branch-protection
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type SetAdminBranchProtectionReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// branch+ parameter
 	Branch string
@@ -16415,9 +16665,13 @@ https://developer.github.com/v3/repos/branches/#set-app-access-restrictions
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type SetAppAccessRestrictionsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// branch+ parameter
 	Branch      string
@@ -16546,9 +16800,13 @@ https://developer.github.com/v3/repos/branches/#set-status-check-contexts
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type SetStatusCheckContextsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// branch+ parameter
 	Branch      string
@@ -16684,9 +16942,13 @@ https://developer.github.com/v3/repos/branches/#set-team-access-restrictions
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type SetTeamAccessRestrictionsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// branch+ parameter
 	Branch      string
@@ -16815,9 +17077,13 @@ https://developer.github.com/v3/repos/branches/#set-user-access-restrictions
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type SetUserAccessRestrictionsReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// branch+ parameter
 	Branch      string
@@ -16946,9 +17212,15 @@ https://developer.github.com/v3/repos/hooks/#test-the-push-repository-webhook
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type TestPushWebhookReq struct {
-	_url   string
-	Owner  string
-	Repo   string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// hook_id parameter
 	HookId int64
 }
 
@@ -17060,8 +17332,12 @@ https://developer.github.com/v3/repos/#transfer-a-repository
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type TransferReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody TransferReqBody
 }
@@ -17195,8 +17471,12 @@ https://developer.github.com/v3/repos/#update-a-repository
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type UpdateReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody UpdateReqBody
 
@@ -17423,9 +17703,13 @@ https://developer.github.com/v3/repos/branches/#update-branch-protection
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type UpdateBranchProtectionReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// branch+ parameter
 	Branch      string
@@ -17670,9 +17954,13 @@ https://developer.github.com/v3/repos/comments/#update-a-commit-comment
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type UpdateCommitCommentReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// comment_id parameter
 	CommentId   int64
@@ -17805,8 +18093,12 @@ https://developer.github.com/v3/repos/pages/#update-information-about-a-github-p
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type UpdateInformationAboutPagesSiteReq struct {
-	_url        string
-	Owner       string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody UpdateInformationAboutPagesSiteReqBody
 }
@@ -17933,9 +18225,13 @@ https://developer.github.com/v3/repos/invitations/#update-a-repository-invitatio
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type UpdateInvitationReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// invitation_id parameter
 	InvitationId int64
@@ -18071,9 +18367,13 @@ https://developer.github.com/v3/repos/branches/#update-pull-request-review-prote
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type UpdatePullRequestReviewProtectionReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// branch+ parameter
 	Branch      string
@@ -18242,9 +18542,13 @@ https://developer.github.com/v3/repos/releases/#update-a-release
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type UpdateReleaseReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// release_id parameter
 	ReleaseId   int64
@@ -18396,9 +18700,13 @@ https://developer.github.com/v3/repos/releases/#update-a-release-asset
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type UpdateReleaseAssetReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// asset_id parameter
 	AssetId     int64
@@ -18535,9 +18843,13 @@ https://developer.github.com/v3/repos/branches/#update-status-check-potection
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type UpdateStatusCheckProtectionReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	// branch+ parameter
 	Branch      string
@@ -18673,9 +18985,15 @@ https://developer.github.com/v3/repos/hooks/#update-a-repository-webhook
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type UpdateWebhookReq struct {
-	_url        string
-	Owner       string
-	Repo        string
+	_url string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
+
+	// hook_id parameter
 	HookId      int64
 	RequestBody UpdateWebhookReqBody
 }

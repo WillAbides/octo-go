@@ -17,7 +17,7 @@ Render a Markdown document.
 
   POST /markdown
 
-https://developer.github.com/v3/markdown/#render-a-markdown-document
+https://developer.github.com/v3/markdown/#render-an-arbitrary-markdown-document
 */
 func Render(ctx context.Context, req *RenderReq, opt ...requests.Option) (*RenderResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -50,7 +50,7 @@ Render a Markdown document.
 
   POST /markdown
 
-https://developer.github.com/v3/markdown/#render-a-markdown-document
+https://developer.github.com/v3/markdown/#render-an-arbitrary-markdown-document
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -61,7 +61,7 @@ func (c Client) Render(ctx context.Context, req *RenderReq, opt ...requests.Opti
 /*
 RenderReq is request data for Client.Render
 
-https://developer.github.com/v3/markdown/#render-a-markdown-document
+https://developer.github.com/v3/markdown/#render-an-arbitrary-markdown-document
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -98,7 +98,7 @@ func (r *RenderReq) Rel(link string, resp *RenderResponse) bool {
 /*
 RenderReqBody is a request body for markdown/render
 
-https://developer.github.com/v3/markdown/#render-a-markdown-document
+https://developer.github.com/v3/markdown/#render-an-arbitrary-markdown-document
 */
 type RenderReqBody struct {
 
@@ -115,7 +115,7 @@ type RenderReqBody struct {
 /*
 RenderResponse is a response for Render
 
-https://developer.github.com/v3/markdown/#render-a-markdown-document
+https://developer.github.com/v3/markdown/#render-an-arbitrary-markdown-document
 */
 type RenderResponse struct {
 	httpResponse *http.Response

@@ -17,7 +17,7 @@ Get all codes of conduct.
 
   GET /codes_of_conduct
 
-https://developer.github.com/v3/codes_of_conduct/#get-all-codes-of-conduct
+https://developer.github.com/v3/codes_of_conduct/#list-all-codes-of-conduct
 */
 func GetAllCodesOfConduct(ctx context.Context, req *GetAllCodesOfConductReq, opt ...requests.Option) (*GetAllCodesOfConductResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -50,7 +50,7 @@ Get all codes of conduct.
 
   GET /codes_of_conduct
 
-https://developer.github.com/v3/codes_of_conduct/#get-all-codes-of-conduct
+https://developer.github.com/v3/codes_of_conduct/#list-all-codes-of-conduct
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -61,7 +61,7 @@ func (c Client) GetAllCodesOfConduct(ctx context.Context, req *GetAllCodesOfCond
 /*
 GetAllCodesOfConductReq is request data for Client.GetAllCodesOfConduct
 
-https://developer.github.com/v3/codes_of_conduct/#get-all-codes-of-conduct
+https://developer.github.com/v3/codes_of_conduct/#list-all-codes-of-conduct
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -106,7 +106,7 @@ func (r *GetAllCodesOfConductReq) Rel(link string, resp *GetAllCodesOfConductRes
 /*
 GetAllCodesOfConductResponse is a response for GetAllCodesOfConduct
 
-https://developer.github.com/v3/codes_of_conduct/#get-all-codes-of-conduct
+https://developer.github.com/v3/codes_of_conduct/#list-all-codes-of-conduct
 */
 type GetAllCodesOfConductResponse struct {
 	httpResponse *http.Response
@@ -141,7 +141,7 @@ Get a code of conduct.
 
   GET /codes_of_conduct/{key}
 
-https://developer.github.com/v3/codes_of_conduct/#get-a-code-of-conduct
+https://developer.github.com/v3/codes_of_conduct/#get-an-individual-code-of-conduct
 */
 func GetConductCode(ctx context.Context, req *GetConductCodeReq, opt ...requests.Option) (*GetConductCodeResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -174,7 +174,7 @@ Get a code of conduct.
 
   GET /codes_of_conduct/{key}
 
-https://developer.github.com/v3/codes_of_conduct/#get-a-code-of-conduct
+https://developer.github.com/v3/codes_of_conduct/#get-an-individual-code-of-conduct
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -185,7 +185,7 @@ func (c Client) GetConductCode(ctx context.Context, req *GetConductCodeReq, opt 
 /*
 GetConductCodeReq is request data for Client.GetConductCode
 
-https://developer.github.com/v3/codes_of_conduct/#get-a-code-of-conduct
+https://developer.github.com/v3/codes_of_conduct/#get-an-individual-code-of-conduct
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -233,7 +233,7 @@ func (r *GetConductCodeReq) Rel(link string, resp *GetConductCodeResponse) bool 
 /*
 GetConductCodeResponse is a response for GetConductCode
 
-https://developer.github.com/v3/codes_of_conduct/#get-a-code-of-conduct
+https://developer.github.com/v3/codes_of_conduct/#get-an-individual-code-of-conduct
 */
 type GetConductCodeResponse struct {
 	httpResponse *http.Response
@@ -317,9 +317,13 @@ https://developer.github.com/v3/codes_of_conduct/#get-the-code-of-conduct-for-a-
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetForRepoReq struct {
-	_url  string
+	_url string
+
+	// owner parameter
 	Owner string
-	Repo  string
+
+	// repo parameter
+	Repo string
 
 	/*
 	The Codes of Conduct API is currently available for developers to preview.

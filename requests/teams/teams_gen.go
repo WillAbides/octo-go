@@ -68,8 +68,12 @@ https://developer.github.com/v3/teams/members/#add-team-member-legacy
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type AddMemberLegacyReq struct {
-	_url     string
-	TeamId   int64
+	_url string
+
+	// team_id parameter
+	TeamId int64
+
+	// username parameter
 	Username string
 }
 
@@ -177,10 +181,14 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type AddOrUpdateMembershipForUserInOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// team_slug parameter
-	TeamSlug    string
+	TeamSlug string
+
+	// username parameter
 	Username    string
 	RequestBody AddOrUpdateMembershipForUserInOrgReqBody
 }
@@ -317,8 +325,12 @@ https://developer.github.com/v3/teams/members/#add-or-update-team-membership-for
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type AddOrUpdateMembershipForUserLegacyReq struct {
-	_url        string
-	TeamId      int64
+	_url string
+
+	// team_id parameter
+	TeamId int64
+
+	// username parameter
 	Username    string
 	RequestBody AddOrUpdateMembershipForUserLegacyReqBody
 }
@@ -456,10 +468,14 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type AddOrUpdateProjectPermissionsInOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// team_slug parameter
-	TeamSlug    string
+	TeamSlug string
+
+	// project_id parameter
 	ProjectId   int64
 	RequestBody AddOrUpdateProjectPermissionsInOrgReqBody
 
@@ -602,8 +618,12 @@ https://developer.github.com/v3/teams/#add-or-update-team-project-permissions-le
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type AddOrUpdateProjectPermissionsLegacyReq struct {
-	_url        string
-	TeamId      int64
+	_url string
+
+	// team_id parameter
+	TeamId int64
+
+	// project_id parameter
 	ProjectId   int64
 	RequestBody AddOrUpdateProjectPermissionsLegacyReqBody
 
@@ -747,11 +767,17 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type AddOrUpdateRepoPermissionsInOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// team_slug parameter
-	TeamSlug    string
-	Owner       string
+	TeamSlug string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody AddOrUpdateRepoPermissionsInOrgReqBody
 }
@@ -887,9 +913,15 @@ https://developer.github.com/v3/teams/#add-or-update-team-repository-permissions
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type AddOrUpdateRepoPermissionsLegacyReq struct {
-	_url        string
-	TeamId      int64
-	Owner       string
+	_url string
+
+	// team_id parameter
+	TeamId int64
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
 	Repo        string
 	RequestBody AddOrUpdateRepoPermissionsLegacyReqBody
 }
@@ -1020,10 +1052,14 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type CheckPermissionsForProjectInOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// team_slug parameter
-	TeamSlug  string
+	TeamSlug string
+
+	// project_id parameter
 	ProjectId int64
 
 	/*
@@ -1150,8 +1186,12 @@ https://developer.github.com/v3/teams/#check-team-permissions-for-a-project-lega
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CheckPermissionsForProjectLegacyReq struct {
-	_url      string
-	TeamId    int64
+	_url string
+
+	// team_id parameter
+	TeamId int64
+
+	// project_id parameter
 	ProjectId int64
 
 	/*
@@ -1279,12 +1319,18 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type CheckPermissionsForRepoInOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// team_slug parameter
 	TeamSlug string
-	Owner    string
-	Repo     string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
 }
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
@@ -1398,10 +1444,16 @@ https://developer.github.com/v3/teams/#check-team-permissions-for-a-repository-l
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CheckPermissionsForRepoLegacyReq struct {
-	_url   string
+	_url string
+
+	// team_id parameter
 	TeamId int64
-	Owner  string
-	Repo   string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
 }
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
@@ -1515,7 +1567,9 @@ https://developer.github.com/v3/teams/#create-a-team
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateReq struct {
-	_url        string
+	_url string
+
+	// org parameter
 	Org         string
 	RequestBody CreateReqBody
 }
@@ -1683,10 +1737,14 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type CreateDiscussionCommentInOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// team_slug parameter
-	TeamSlug         string
+	TeamSlug string
+
+	// discussion_number parameter
 	DiscussionNumber int64
 	RequestBody      CreateDiscussionCommentInOrgReqBody
 
@@ -1830,8 +1888,12 @@ https://developer.github.com/v3/teams/discussion_comments/#create-a-discussion-c
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateDiscussionCommentLegacyReq struct {
-	_url             string
-	TeamId           int64
+	_url string
+
+	// team_id parameter
+	TeamId int64
+
+	// discussion_number parameter
 	DiscussionNumber int64
 	RequestBody      CreateDiscussionCommentLegacyReqBody
 
@@ -1976,7 +2038,9 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type CreateDiscussionInOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// team_slug parameter
 	TeamSlug    string
@@ -2132,7 +2196,9 @@ https://developer.github.com/v3/teams/discussions/#create-a-discussion-legacy
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type CreateDiscussionLegacyReq struct {
-	_url        string
+	_url string
+
+	// team_id parameter
 	TeamId      int64
 	RequestBody CreateDiscussionLegacyReqBody
 
@@ -2231,7 +2297,7 @@ func (r *CreateDiscussionLegacyResponse) ReadResponse(resp *http.Response) error
 }
 
 /*
-CreateOrUpdateIdpGroupConnectionsInOrg performs requests for "teams/create-or-update-idp-group-connections-in-org"
+CreateOrUpdateIdPGroupConnectionsInOrg performs requests for "teams/create-or-update-id-p-group-connections-in-org"
 
 Create or update IdP group connections.
 
@@ -2239,12 +2305,12 @@ Create or update IdP group connections.
 
 https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections
 */
-func CreateOrUpdateIdpGroupConnectionsInOrg(ctx context.Context, req *CreateOrUpdateIdpGroupConnectionsInOrgReq, opt ...requests.Option) (*CreateOrUpdateIdpGroupConnectionsInOrgResponse, error) {
+func CreateOrUpdateIdPGroupConnectionsInOrg(ctx context.Context, req *CreateOrUpdateIdPGroupConnectionsInOrgReq, opt ...requests.Option) (*CreateOrUpdateIdPGroupConnectionsInOrgResponse, error) {
 	opts := requests.BuildOptions(opt...)
 	if req == nil {
-		req = new(CreateOrUpdateIdpGroupConnectionsInOrgReq)
+		req = new(CreateOrUpdateIdPGroupConnectionsInOrgReq)
 	}
-	resp := &CreateOrUpdateIdpGroupConnectionsInOrgResponse{}
+	resp := &CreateOrUpdateIdPGroupConnectionsInOrgResponse{}
 
 	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
@@ -2264,7 +2330,7 @@ func CreateOrUpdateIdpGroupConnectionsInOrg(ctx context.Context, req *CreateOrUp
 }
 
 /*
-CreateOrUpdateIdpGroupConnectionsInOrg performs requests for "teams/create-or-update-idp-group-connections-in-org"
+CreateOrUpdateIdPGroupConnectionsInOrg performs requests for "teams/create-or-update-id-p-group-connections-in-org"
 
 Create or update IdP group connections.
 
@@ -2274,28 +2340,30 @@ https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-conn
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
-func (c Client) CreateOrUpdateIdpGroupConnectionsInOrg(ctx context.Context, req *CreateOrUpdateIdpGroupConnectionsInOrgReq, opt ...requests.Option) (*CreateOrUpdateIdpGroupConnectionsInOrgResponse, error) {
-	return CreateOrUpdateIdpGroupConnectionsInOrg(ctx, req, append(c, opt...)...)
+func (c Client) CreateOrUpdateIdPGroupConnectionsInOrg(ctx context.Context, req *CreateOrUpdateIdPGroupConnectionsInOrgReq, opt ...requests.Option) (*CreateOrUpdateIdPGroupConnectionsInOrgResponse, error) {
+	return CreateOrUpdateIdPGroupConnectionsInOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
-CreateOrUpdateIdpGroupConnectionsInOrgReq is request data for Client.CreateOrUpdateIdpGroupConnectionsInOrg
+CreateOrUpdateIdPGroupConnectionsInOrgReq is request data for Client.CreateOrUpdateIdPGroupConnectionsInOrg
 
 https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
-type CreateOrUpdateIdpGroupConnectionsInOrgReq struct {
+type CreateOrUpdateIdPGroupConnectionsInOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// team_slug parameter
 	TeamSlug    string
-	RequestBody CreateOrUpdateIdpGroupConnectionsInOrgReqBody
+	RequestBody CreateOrUpdateIdPGroupConnectionsInOrgReqBody
 }
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
-func (r *CreateOrUpdateIdpGroupConnectionsInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+func (r *CreateOrUpdateIdPGroupConnectionsInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		Body:        r.RequestBody,
 		ExplicitURL: r._url,
@@ -2313,7 +2381,7 @@ func (r *CreateOrUpdateIdpGroupConnectionsInOrgReq) HTTPRequest(ctx context.Cont
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *CreateOrUpdateIdpGroupConnectionsInOrgReq) Rel(link string, resp *CreateOrUpdateIdpGroupConnectionsInOrgResponse) bool {
+func (r *CreateOrUpdateIdPGroupConnectionsInOrgReq) Rel(link string, resp *CreateOrUpdateIdPGroupConnectionsInOrgResponse) bool {
 	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
@@ -2322,8 +2390,8 @@ func (r *CreateOrUpdateIdpGroupConnectionsInOrgReq) Rel(link string, resp *Creat
 	return true
 }
 
-// CreateOrUpdateIdpGroupConnectionsInOrgReqBodyGroups is a value for CreateOrUpdateIdpGroupConnectionsInOrgReqBody's Groups field
-type CreateOrUpdateIdpGroupConnectionsInOrgReqBodyGroups struct {
+// CreateOrUpdateIdPGroupConnectionsInOrgReqBodyGroups is a value for CreateOrUpdateIdPGroupConnectionsInOrgReqBody's Groups field
+type CreateOrUpdateIdPGroupConnectionsInOrgReqBodyGroups struct {
 
 	// Description of the IdP group.
 	GroupDescription *string `json:"group_description"`
@@ -2336,37 +2404,37 @@ type CreateOrUpdateIdpGroupConnectionsInOrgReqBodyGroups struct {
 }
 
 /*
-CreateOrUpdateIdpGroupConnectionsInOrgReqBody is a request body for teams/create-or-update-idp-group-connections-in-org
+CreateOrUpdateIdPGroupConnectionsInOrgReqBody is a request body for teams/create-or-update-id-p-group-connections-in-org
 
 https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections
 */
-type CreateOrUpdateIdpGroupConnectionsInOrgReqBody struct {
+type CreateOrUpdateIdPGroupConnectionsInOrgReqBody struct {
 
 	/*
 	The IdP groups you want to connect to a GitHub team. When updating, the new
 	`groups` object will replace the original one. You must include any existing
 	groups that you don't want to remove.
 	*/
-	Groups []CreateOrUpdateIdpGroupConnectionsInOrgReqBodyGroups `json:"groups"`
+	Groups []CreateOrUpdateIdPGroupConnectionsInOrgReqBodyGroups `json:"groups"`
 }
 
 /*
-CreateOrUpdateIdpGroupConnectionsInOrgResponse is a response for CreateOrUpdateIdpGroupConnectionsInOrg
+CreateOrUpdateIdPGroupConnectionsInOrgResponse is a response for CreateOrUpdateIdPGroupConnectionsInOrg
 
 https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections
 */
-type CreateOrUpdateIdpGroupConnectionsInOrgResponse struct {
+type CreateOrUpdateIdPGroupConnectionsInOrgResponse struct {
 	httpResponse *http.Response
 	Data         components.GroupMapping
 }
 
 // HTTPResponse returns the *http.Response
-func (r *CreateOrUpdateIdpGroupConnectionsInOrgResponse) HTTPResponse() *http.Response {
+func (r *CreateOrUpdateIdPGroupConnectionsInOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *CreateOrUpdateIdpGroupConnectionsInOrgResponse) ReadResponse(resp *http.Response) error {
+func (r *CreateOrUpdateIdPGroupConnectionsInOrgResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := responseErrorCheck(resp, []int{200})
 	if err != nil {
@@ -2382,7 +2450,7 @@ func (r *CreateOrUpdateIdpGroupConnectionsInOrgResponse) ReadResponse(resp *http
 }
 
 /*
-CreateOrUpdateIdpGroupConnectionsLegacy performs requests for "teams/create-or-update-idp-group-connections-legacy"
+CreateOrUpdateIdPGroupConnectionsLegacy performs requests for "teams/create-or-update-id-p-group-connections-legacy"
 
 Create or update IdP group connections (Legacy).
 
@@ -2390,12 +2458,12 @@ Create or update IdP group connections (Legacy).
 
 https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections-legacy
 */
-func CreateOrUpdateIdpGroupConnectionsLegacy(ctx context.Context, req *CreateOrUpdateIdpGroupConnectionsLegacyReq, opt ...requests.Option) (*CreateOrUpdateIdpGroupConnectionsLegacyResponse, error) {
+func CreateOrUpdateIdPGroupConnectionsLegacy(ctx context.Context, req *CreateOrUpdateIdPGroupConnectionsLegacyReq, opt ...requests.Option) (*CreateOrUpdateIdPGroupConnectionsLegacyResponse, error) {
 	opts := requests.BuildOptions(opt...)
 	if req == nil {
-		req = new(CreateOrUpdateIdpGroupConnectionsLegacyReq)
+		req = new(CreateOrUpdateIdPGroupConnectionsLegacyReq)
 	}
-	resp := &CreateOrUpdateIdpGroupConnectionsLegacyResponse{}
+	resp := &CreateOrUpdateIdPGroupConnectionsLegacyResponse{}
 
 	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
@@ -2415,7 +2483,7 @@ func CreateOrUpdateIdpGroupConnectionsLegacy(ctx context.Context, req *CreateOrU
 }
 
 /*
-CreateOrUpdateIdpGroupConnectionsLegacy performs requests for "teams/create-or-update-idp-group-connections-legacy"
+CreateOrUpdateIdPGroupConnectionsLegacy performs requests for "teams/create-or-update-id-p-group-connections-legacy"
 
 Create or update IdP group connections (Legacy).
 
@@ -2425,25 +2493,27 @@ https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-conn
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
-func (c Client) CreateOrUpdateIdpGroupConnectionsLegacy(ctx context.Context, req *CreateOrUpdateIdpGroupConnectionsLegacyReq, opt ...requests.Option) (*CreateOrUpdateIdpGroupConnectionsLegacyResponse, error) {
-	return CreateOrUpdateIdpGroupConnectionsLegacy(ctx, req, append(c, opt...)...)
+func (c Client) CreateOrUpdateIdPGroupConnectionsLegacy(ctx context.Context, req *CreateOrUpdateIdPGroupConnectionsLegacyReq, opt ...requests.Option) (*CreateOrUpdateIdPGroupConnectionsLegacyResponse, error) {
+	return CreateOrUpdateIdPGroupConnectionsLegacy(ctx, req, append(c, opt...)...)
 }
 
 /*
-CreateOrUpdateIdpGroupConnectionsLegacyReq is request data for Client.CreateOrUpdateIdpGroupConnectionsLegacy
+CreateOrUpdateIdPGroupConnectionsLegacyReq is request data for Client.CreateOrUpdateIdPGroupConnectionsLegacy
 
 https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections-legacy
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
-type CreateOrUpdateIdpGroupConnectionsLegacyReq struct {
-	_url        string
+type CreateOrUpdateIdPGroupConnectionsLegacyReq struct {
+	_url string
+
+	// team_id parameter
 	TeamId      int64
-	RequestBody CreateOrUpdateIdpGroupConnectionsLegacyReqBody
+	RequestBody CreateOrUpdateIdPGroupConnectionsLegacyReqBody
 }
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
-func (r *CreateOrUpdateIdpGroupConnectionsLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+func (r *CreateOrUpdateIdPGroupConnectionsLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		Body:        r.RequestBody,
 		ExplicitURL: r._url,
@@ -2461,7 +2531,7 @@ func (r *CreateOrUpdateIdpGroupConnectionsLegacyReq) HTTPRequest(ctx context.Con
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *CreateOrUpdateIdpGroupConnectionsLegacyReq) Rel(link string, resp *CreateOrUpdateIdpGroupConnectionsLegacyResponse) bool {
+func (r *CreateOrUpdateIdPGroupConnectionsLegacyReq) Rel(link string, resp *CreateOrUpdateIdPGroupConnectionsLegacyResponse) bool {
 	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
@@ -2470,8 +2540,8 @@ func (r *CreateOrUpdateIdpGroupConnectionsLegacyReq) Rel(link string, resp *Crea
 	return true
 }
 
-// CreateOrUpdateIdpGroupConnectionsLegacyReqBodyGroups is a value for CreateOrUpdateIdpGroupConnectionsLegacyReqBody's Groups field
-type CreateOrUpdateIdpGroupConnectionsLegacyReqBodyGroups struct {
+// CreateOrUpdateIdPGroupConnectionsLegacyReqBodyGroups is a value for CreateOrUpdateIdPGroupConnectionsLegacyReqBody's Groups field
+type CreateOrUpdateIdPGroupConnectionsLegacyReqBodyGroups struct {
 	Description *string `json:"description,omitempty"`
 
 	// Description of the IdP group.
@@ -2487,38 +2557,38 @@ type CreateOrUpdateIdpGroupConnectionsLegacyReqBodyGroups struct {
 }
 
 /*
-CreateOrUpdateIdpGroupConnectionsLegacyReqBody is a request body for teams/create-or-update-idp-group-connections-legacy
+CreateOrUpdateIdPGroupConnectionsLegacyReqBody is a request body for teams/create-or-update-id-p-group-connections-legacy
 
 https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections-legacy
 */
-type CreateOrUpdateIdpGroupConnectionsLegacyReqBody struct {
+type CreateOrUpdateIdPGroupConnectionsLegacyReqBody struct {
 
 	/*
 	The IdP groups you want to connect to a GitHub team. When updating, the new
 	`groups` object will replace the original one. You must include any existing
 	groups that you don't want to remove.
 	*/
-	Groups   []CreateOrUpdateIdpGroupConnectionsLegacyReqBodyGroups `json:"groups"`
+	Groups   []CreateOrUpdateIdPGroupConnectionsLegacyReqBodyGroups `json:"groups"`
 	SyncedAt *string                                                `json:"synced_at,omitempty"`
 }
 
 /*
-CreateOrUpdateIdpGroupConnectionsLegacyResponse is a response for CreateOrUpdateIdpGroupConnectionsLegacy
+CreateOrUpdateIdPGroupConnectionsLegacyResponse is a response for CreateOrUpdateIdPGroupConnectionsLegacy
 
 https://developer.github.com/v3/teams/team_sync/#create-or-update-idp-group-connections-legacy
 */
-type CreateOrUpdateIdpGroupConnectionsLegacyResponse struct {
+type CreateOrUpdateIdPGroupConnectionsLegacyResponse struct {
 	httpResponse *http.Response
 	Data         components.GroupMapping
 }
 
 // HTTPResponse returns the *http.Response
-func (r *CreateOrUpdateIdpGroupConnectionsLegacyResponse) HTTPResponse() *http.Response {
+func (r *CreateOrUpdateIdPGroupConnectionsLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *CreateOrUpdateIdpGroupConnectionsLegacyResponse) ReadResponse(resp *http.Response) error {
+func (r *CreateOrUpdateIdPGroupConnectionsLegacyResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := responseErrorCheck(resp, []int{200})
 	if err != nil {
@@ -2590,12 +2660,18 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type DeleteDiscussionCommentInOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// team_slug parameter
-	TeamSlug         string
+	TeamSlug string
+
+	// discussion_number parameter
 	DiscussionNumber int64
-	CommentNumber    int64
+
+	// comment_number parameter
+	CommentNumber int64
 }
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
@@ -2701,10 +2777,16 @@ https://developer.github.com/v3/teams/discussion_comments/#delete-a-discussion-c
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DeleteDiscussionCommentLegacyReq struct {
-	_url             string
-	TeamId           int64
+	_url string
+
+	// team_id parameter
+	TeamId int64
+
+	// discussion_number parameter
 	DiscussionNumber int64
-	CommentNumber    int64
+
+	// comment_number parameter
+	CommentNumber int64
 }
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
@@ -2811,10 +2893,14 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type DeleteDiscussionInOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// team_slug parameter
-	TeamSlug         string
+	TeamSlug string
+
+	// discussion_number parameter
 	DiscussionNumber int64
 }
 
@@ -2921,8 +3007,12 @@ https://developer.github.com/v3/teams/discussions/#delete-a-discussion-legacy
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DeleteDiscussionLegacyReq struct {
-	_url             string
-	TeamId           int64
+	_url string
+
+	// team_id parameter
+	TeamId int64
+
+	// discussion_number parameter
 	DiscussionNumber int64
 }
 
@@ -3030,7 +3120,9 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type DeleteInOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// team_slug parameter
 	TeamSlug string
@@ -3139,7 +3231,9 @@ https://developer.github.com/v3/teams/#delete-a-team-legacy
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type DeleteLegacyReq struct {
-	_url   string
+	_url string
+
+	// team_id parameter
 	TeamId int64
 }
 
@@ -3247,7 +3341,9 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type GetByNameReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// team_slug parameter
 	TeamSlug string
@@ -3365,12 +3461,18 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type GetDiscussionCommentInOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// team_slug parameter
-	TeamSlug         string
+	TeamSlug string
+
+	// discussion_number parameter
 	DiscussionNumber int64
-	CommentNumber    int64
+
+	// comment_number parameter
+	CommentNumber int64
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
@@ -3497,10 +3599,16 @@ https://developer.github.com/v3/teams/discussion_comments/#get-a-discussion-comm
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetDiscussionCommentLegacyReq struct {
-	_url             string
-	TeamId           int64
+	_url string
+
+	// team_id parameter
+	TeamId int64
+
+	// discussion_number parameter
 	DiscussionNumber int64
-	CommentNumber    int64
+
+	// comment_number parameter
+	CommentNumber int64
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
@@ -3628,10 +3736,14 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type GetDiscussionInOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// team_slug parameter
-	TeamSlug         string
+	TeamSlug string
+
+	// discussion_number parameter
 	DiscussionNumber int64
 
 	/*
@@ -3759,8 +3871,12 @@ https://developer.github.com/v3/teams/discussions/#get-a-discussion-legacy
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetDiscussionLegacyReq struct {
-	_url             string
-	TeamId           int64
+	_url string
+
+	// team_id parameter
+	TeamId int64
+
+	// discussion_number parameter
 	DiscussionNumber int64
 
 	/*
@@ -3888,7 +4004,9 @@ https://developer.github.com/v3/teams/#get-a-team-legacy
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetLegacyReq struct {
-	_url   string
+	_url string
+
+	// team_id parameter
 	TeamId int64
 }
 
@@ -4003,8 +4121,12 @@ https://developer.github.com/v3/teams/members/#get-team-member-legacy
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetMemberLegacyReq struct {
-	_url     string
-	TeamId   int64
+	_url string
+
+	// team_id parameter
+	TeamId int64
+
+	// username parameter
 	Username string
 }
 
@@ -4117,10 +4239,14 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type GetMembershipForUserInOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// team_slug parameter
 	TeamSlug string
+
+	// username parameter
 	Username string
 }
 
@@ -4235,8 +4361,12 @@ https://developer.github.com/v3/teams/members/#get-team-membership-for-a-user-le
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type GetMembershipForUserLegacyReq struct {
-	_url     string
-	TeamId   int64
+	_url string
+
+	// team_id parameter
+	TeamId int64
+
+	// username parameter
 	Username string
 }
 
@@ -4352,7 +4482,9 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type ListReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -4482,7 +4614,9 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type ListChildInOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// team_slug parameter
 	TeamSlug string
@@ -4614,7 +4748,9 @@ https://developer.github.com/v3/teams/#list-child-teams-legacy
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListChildLegacyReq struct {
-	_url   string
+	_url string
+
+	// team_id parameter
 	TeamId int64
 
 	// Results per page (max 100)
@@ -4745,13 +4881,20 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type ListDiscussionCommentsInOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// team_slug parameter
-	TeamSlug         string
+	TeamSlug string
+
+	// discussion_number parameter
 	DiscussionNumber int64
 
-	// One of `asc` (ascending) or `desc` (descending).
+	/*
+	Sorts the discussion comments by the date they were created. To return the
+	oldest comments first, set to `asc`. Can be one of `asc` or `desc`.
+	*/
 	Direction *string
 
 	// Results per page (max 100)
@@ -4897,11 +5040,18 @@ https://developer.github.com/v3/teams/discussion_comments/#list-discussion-comme
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListDiscussionCommentsLegacyReq struct {
-	_url             string
-	TeamId           int64
+	_url string
+
+	// team_id parameter
+	TeamId int64
+
+	// discussion_number parameter
 	DiscussionNumber int64
 
-	// One of `asc` (ascending) or `desc` (descending).
+	/*
+	Sorts the discussion comments by the date they were created. To return the
+	oldest comments first, set to `asc`. Can be one of `asc` or `desc`.
+	*/
 	Direction *string
 
 	// Results per page (max 100)
@@ -5048,12 +5198,17 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type ListDiscussionsInOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// team_slug parameter
 	TeamSlug string
 
-	// One of `asc` (ascending) or `desc` (descending).
+	/*
+	Sorts the discussion comments by the date they were created. To return the
+	oldest comments first, set to `asc`. Can be one of `asc` or `desc`.
+	*/
 	Direction *string
 
 	// Results per page (max 100)
@@ -5199,10 +5354,15 @@ https://developer.github.com/v3/teams/discussions/#list-discussions-legacy
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListDiscussionsLegacyReq struct {
-	_url   string
+	_url string
+
+	// team_id parameter
 	TeamId int64
 
-	// One of `asc` (ascending) or `desc` (descending).
+	/*
+	Sorts the discussion comments by the date they were created. To return the
+	oldest comments first, set to `asc`. Can be one of `asc` or `desc`.
+	*/
 	Direction *string
 
 	// Results per page (max 100)
@@ -5299,7 +5459,7 @@ List teams for the authenticated user.
 
   GET /user/teams
 
-https://developer.github.com/v3/teams/#list-teams-for-the-authenticated-user
+https://developer.github.com/v3/teams/#list-user-teams
 */
 func ListForAuthenticatedUser(ctx context.Context, req *ListForAuthenticatedUserReq, opt ...requests.Option) (*ListForAuthenticatedUserResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -5332,7 +5492,7 @@ List teams for the authenticated user.
 
   GET /user/teams
 
-https://developer.github.com/v3/teams/#list-teams-for-the-authenticated-user
+https://developer.github.com/v3/teams/#list-user-teams
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -5343,7 +5503,7 @@ func (c Client) ListForAuthenticatedUser(ctx context.Context, req *ListForAuthen
 /*
 ListForAuthenticatedUserReq is request data for Client.ListForAuthenticatedUser
 
-https://developer.github.com/v3/teams/#list-teams-for-the-authenticated-user
+https://developer.github.com/v3/teams/#list-user-teams
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -5393,7 +5553,7 @@ func (r *ListForAuthenticatedUserReq) Rel(link string, resp *ListForAuthenticate
 /*
 ListForAuthenticatedUserResponse is a response for ListForAuthenticatedUser
 
-https://developer.github.com/v3/teams/#list-teams-for-the-authenticated-user
+https://developer.github.com/v3/teams/#list-user-teams
 */
 type ListForAuthenticatedUserResponse struct {
 	httpResponse *http.Response
@@ -5422,7 +5582,7 @@ func (r *ListForAuthenticatedUserResponse) ReadResponse(resp *http.Response) err
 }
 
 /*
-ListIdpGroupsForLegacy performs requests for "teams/list-idp-groups-for-legacy"
+ListIdPGroupsForLegacy performs requests for "teams/list-id-p-groups-for-legacy"
 
 List IdP groups for a team (Legacy).
 
@@ -5430,12 +5590,12 @@ List IdP groups for a team (Legacy).
 
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team-legacy
 */
-func ListIdpGroupsForLegacy(ctx context.Context, req *ListIdpGroupsForLegacyReq, opt ...requests.Option) (*ListIdpGroupsForLegacyResponse, error) {
+func ListIdPGroupsForLegacy(ctx context.Context, req *ListIdPGroupsForLegacyReq, opt ...requests.Option) (*ListIdPGroupsForLegacyResponse, error) {
 	opts := requests.BuildOptions(opt...)
 	if req == nil {
-		req = new(ListIdpGroupsForLegacyReq)
+		req = new(ListIdPGroupsForLegacyReq)
 	}
-	resp := &ListIdpGroupsForLegacyResponse{}
+	resp := &ListIdPGroupsForLegacyResponse{}
 
 	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
@@ -5455,7 +5615,7 @@ func ListIdpGroupsForLegacy(ctx context.Context, req *ListIdpGroupsForLegacyReq,
 }
 
 /*
-ListIdpGroupsForLegacy performs requests for "teams/list-idp-groups-for-legacy"
+ListIdPGroupsForLegacy performs requests for "teams/list-id-p-groups-for-legacy"
 
 List IdP groups for a team (Legacy).
 
@@ -5465,24 +5625,26 @@ https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team-lega
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
-func (c Client) ListIdpGroupsForLegacy(ctx context.Context, req *ListIdpGroupsForLegacyReq, opt ...requests.Option) (*ListIdpGroupsForLegacyResponse, error) {
-	return ListIdpGroupsForLegacy(ctx, req, append(c, opt...)...)
+func (c Client) ListIdPGroupsForLegacy(ctx context.Context, req *ListIdPGroupsForLegacyReq, opt ...requests.Option) (*ListIdPGroupsForLegacyResponse, error) {
+	return ListIdPGroupsForLegacy(ctx, req, append(c, opt...)...)
 }
 
 /*
-ListIdpGroupsForLegacyReq is request data for Client.ListIdpGroupsForLegacy
+ListIdPGroupsForLegacyReq is request data for Client.ListIdPGroupsForLegacy
 
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team-legacy
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
-type ListIdpGroupsForLegacyReq struct {
-	_url   string
+type ListIdPGroupsForLegacyReq struct {
+	_url string
+
+	// team_id parameter
 	TeamId int64
 }
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
-func (r *ListIdpGroupsForLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+func (r *ListIdPGroupsForLegacyReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": strPtr("application/json")},
@@ -5496,7 +5658,7 @@ func (r *ListIdpGroupsForLegacyReq) HTTPRequest(ctx context.Context, opt ...requ
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ListIdpGroupsForLegacyReq) Rel(link string, resp *ListIdpGroupsForLegacyResponse) bool {
+func (r *ListIdPGroupsForLegacyReq) Rel(link string, resp *ListIdPGroupsForLegacyResponse) bool {
 	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
@@ -5506,22 +5668,22 @@ func (r *ListIdpGroupsForLegacyReq) Rel(link string, resp *ListIdpGroupsForLegac
 }
 
 /*
-ListIdpGroupsForLegacyResponse is a response for ListIdpGroupsForLegacy
+ListIdPGroupsForLegacyResponse is a response for ListIdPGroupsForLegacy
 
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team-legacy
 */
-type ListIdpGroupsForLegacyResponse struct {
+type ListIdPGroupsForLegacyResponse struct {
 	httpResponse *http.Response
 	Data         components.GroupMapping
 }
 
 // HTTPResponse returns the *http.Response
-func (r *ListIdpGroupsForLegacyResponse) HTTPResponse() *http.Response {
+func (r *ListIdPGroupsForLegacyResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *ListIdpGroupsForLegacyResponse) ReadResponse(resp *http.Response) error {
+func (r *ListIdPGroupsForLegacyResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := responseErrorCheck(resp, []int{200})
 	if err != nil {
@@ -5537,7 +5699,7 @@ func (r *ListIdpGroupsForLegacyResponse) ReadResponse(resp *http.Response) error
 }
 
 /*
-ListIdpGroupsForOrg performs requests for "teams/list-idp-groups-for-org"
+ListIdPGroupsForOrg performs requests for "teams/list-id-p-groups-for-org"
 
 List IdP groups for an organization.
 
@@ -5545,12 +5707,12 @@ List IdP groups for an organization.
 
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-an-organization
 */
-func ListIdpGroupsForOrg(ctx context.Context, req *ListIdpGroupsForOrgReq, opt ...requests.Option) (*ListIdpGroupsForOrgResponse, error) {
+func ListIdPGroupsForOrg(ctx context.Context, req *ListIdPGroupsForOrgReq, opt ...requests.Option) (*ListIdPGroupsForOrgResponse, error) {
 	opts := requests.BuildOptions(opt...)
 	if req == nil {
-		req = new(ListIdpGroupsForOrgReq)
+		req = new(ListIdPGroupsForOrgReq)
 	}
-	resp := &ListIdpGroupsForOrgResponse{}
+	resp := &ListIdPGroupsForOrgResponse{}
 
 	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
@@ -5570,7 +5732,7 @@ func ListIdpGroupsForOrg(ctx context.Context, req *ListIdpGroupsForOrgReq, opt .
 }
 
 /*
-ListIdpGroupsForOrg performs requests for "teams/list-idp-groups-for-org"
+ListIdPGroupsForOrg performs requests for "teams/list-id-p-groups-for-org"
 
 List IdP groups for an organization.
 
@@ -5580,20 +5742,22 @@ https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-an-organiza
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
-func (c Client) ListIdpGroupsForOrg(ctx context.Context, req *ListIdpGroupsForOrgReq, opt ...requests.Option) (*ListIdpGroupsForOrgResponse, error) {
-	return ListIdpGroupsForOrg(ctx, req, append(c, opt...)...)
+func (c Client) ListIdPGroupsForOrg(ctx context.Context, req *ListIdPGroupsForOrgReq, opt ...requests.Option) (*ListIdPGroupsForOrgResponse, error) {
+	return ListIdPGroupsForOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
-ListIdpGroupsForOrgReq is request data for Client.ListIdpGroupsForOrg
+ListIdPGroupsForOrgReq is request data for Client.ListIdPGroupsForOrg
 
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-an-organization
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
-type ListIdpGroupsForOrgReq struct {
+type ListIdPGroupsForOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// Results per page (max 100)
 	PerPage *int64
@@ -5603,7 +5767,7 @@ type ListIdpGroupsForOrgReq struct {
 }
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
-func (r *ListIdpGroupsForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+func (r *ListIdPGroupsForOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	query := url.Values{}
 	if r.PerPage != nil {
 		query.Set("per_page", strconv.FormatInt(*r.PerPage, 10))
@@ -5626,7 +5790,7 @@ func (r *ListIdpGroupsForOrgReq) HTTPRequest(ctx context.Context, opt ...request
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ListIdpGroupsForOrgReq) Rel(link string, resp *ListIdpGroupsForOrgResponse) bool {
+func (r *ListIdPGroupsForOrgReq) Rel(link string, resp *ListIdPGroupsForOrgResponse) bool {
 	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
@@ -5636,22 +5800,22 @@ func (r *ListIdpGroupsForOrgReq) Rel(link string, resp *ListIdpGroupsForOrgRespo
 }
 
 /*
-ListIdpGroupsForOrgResponse is a response for ListIdpGroupsForOrg
+ListIdPGroupsForOrgResponse is a response for ListIdPGroupsForOrg
 
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-an-organization
 */
-type ListIdpGroupsForOrgResponse struct {
+type ListIdPGroupsForOrgResponse struct {
 	httpResponse *http.Response
 	Data         components.GroupMapping
 }
 
 // HTTPResponse returns the *http.Response
-func (r *ListIdpGroupsForOrgResponse) HTTPResponse() *http.Response {
+func (r *ListIdPGroupsForOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *ListIdpGroupsForOrgResponse) ReadResponse(resp *http.Response) error {
+func (r *ListIdPGroupsForOrgResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := responseErrorCheck(resp, []int{200})
 	if err != nil {
@@ -5667,7 +5831,7 @@ func (r *ListIdpGroupsForOrgResponse) ReadResponse(resp *http.Response) error {
 }
 
 /*
-ListIdpGroupsInOrg performs requests for "teams/list-idp-groups-in-org"
+ListIdPGroupsInOrg performs requests for "teams/list-id-p-groups-in-org"
 
 List IdP groups for a team.
 
@@ -5675,12 +5839,12 @@ List IdP groups for a team.
 
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team
 */
-func ListIdpGroupsInOrg(ctx context.Context, req *ListIdpGroupsInOrgReq, opt ...requests.Option) (*ListIdpGroupsInOrgResponse, error) {
+func ListIdPGroupsInOrg(ctx context.Context, req *ListIdPGroupsInOrgReq, opt ...requests.Option) (*ListIdPGroupsInOrgResponse, error) {
 	opts := requests.BuildOptions(opt...)
 	if req == nil {
-		req = new(ListIdpGroupsInOrgReq)
+		req = new(ListIdPGroupsInOrgReq)
 	}
-	resp := &ListIdpGroupsInOrgResponse{}
+	resp := &ListIdPGroupsInOrgResponse{}
 
 	httpReq, err := req.HTTPRequest(ctx, opt...)
 	if err != nil {
@@ -5700,7 +5864,7 @@ func ListIdpGroupsInOrg(ctx context.Context, req *ListIdpGroupsInOrgReq, opt ...
 }
 
 /*
-ListIdpGroupsInOrg performs requests for "teams/list-idp-groups-in-org"
+ListIdPGroupsInOrg performs requests for "teams/list-id-p-groups-in-org"
 
 List IdP groups for a team.
 
@@ -5710,27 +5874,29 @@ https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
-func (c Client) ListIdpGroupsInOrg(ctx context.Context, req *ListIdpGroupsInOrgReq, opt ...requests.Option) (*ListIdpGroupsInOrgResponse, error) {
-	return ListIdpGroupsInOrg(ctx, req, append(c, opt...)...)
+func (c Client) ListIdPGroupsInOrg(ctx context.Context, req *ListIdPGroupsInOrgReq, opt ...requests.Option) (*ListIdPGroupsInOrgResponse, error) {
+	return ListIdPGroupsInOrg(ctx, req, append(c, opt...)...)
 }
 
 /*
-ListIdpGroupsInOrgReq is request data for Client.ListIdpGroupsInOrg
+ListIdPGroupsInOrgReq is request data for Client.ListIdPGroupsInOrg
 
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
-type ListIdpGroupsInOrgReq struct {
+type ListIdPGroupsInOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// team_slug parameter
 	TeamSlug string
 }
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
-func (r *ListIdpGroupsInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
+func (r *ListIdPGroupsInOrgReq) HTTPRequest(ctx context.Context, opt ...requests.Option) (*http.Request, error) {
 	return buildHTTPRequest(ctx, buildHTTPRequestOptions{
 		ExplicitURL: r._url,
 		HeaderVals:  map[string]*string{"accept": strPtr("application/json")},
@@ -5744,7 +5910,7 @@ func (r *ListIdpGroupsInOrgReq) HTTPRequest(ctx context.Context, opt ...requests
 Rel updates this request to point to a relative link from resp. Returns false if
 the link does not exist. Handy for paging.
 */
-func (r *ListIdpGroupsInOrgReq) Rel(link string, resp *ListIdpGroupsInOrgResponse) bool {
+func (r *ListIdPGroupsInOrgReq) Rel(link string, resp *ListIdPGroupsInOrgResponse) bool {
 	u := getRelLink(resp.HTTPResponse(), link)
 	if u == "" {
 		return false
@@ -5754,22 +5920,22 @@ func (r *ListIdpGroupsInOrgReq) Rel(link string, resp *ListIdpGroupsInOrgRespons
 }
 
 /*
-ListIdpGroupsInOrgResponse is a response for ListIdpGroupsInOrg
+ListIdPGroupsInOrgResponse is a response for ListIdPGroupsInOrg
 
 https://developer.github.com/v3/teams/team_sync/#list-idp-groups-for-a-team
 */
-type ListIdpGroupsInOrgResponse struct {
+type ListIdPGroupsInOrgResponse struct {
 	httpResponse *http.Response
 	Data         components.GroupMapping
 }
 
 // HTTPResponse returns the *http.Response
-func (r *ListIdpGroupsInOrgResponse) HTTPResponse() *http.Response {
+func (r *ListIdPGroupsInOrgResponse) HTTPResponse() *http.Response {
 	return r.httpResponse
 }
 
 // ReadResponse reads an *http.Response. Non-nil errors will have the type octo.ResponseError.
-func (r *ListIdpGroupsInOrgResponse) ReadResponse(resp *http.Response) error {
+func (r *ListIdPGroupsInOrgResponse) ReadResponse(resp *http.Response) error {
 	r.httpResponse = resp
 	err := responseErrorCheck(resp, []int{200})
 	if err != nil {
@@ -5841,7 +6007,9 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type ListMembersInOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// team_slug parameter
 	TeamSlug string
@@ -5984,7 +6152,9 @@ https://developer.github.com/v3/teams/members/#list-team-members-legacy
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListMembersLegacyReq struct {
-	_url   string
+	_url string
+
+	// team_id parameter
 	TeamId int64
 
 	/*
@@ -6126,7 +6296,9 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type ListPendingInvitationsInOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// team_slug parameter
 	TeamSlug string
@@ -6258,7 +6430,9 @@ https://developer.github.com/v3/teams/members/#list-pending-team-invitations-leg
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListPendingInvitationsLegacyReq struct {
-	_url   string
+	_url string
+
+	// team_id parameter
 	TeamId int64
 
 	// Results per page (max 100)
@@ -6389,7 +6563,9 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type ListProjectsInOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// team_slug parameter
 	TeamSlug string
@@ -6533,7 +6709,9 @@ https://developer.github.com/v3/teams/#list-team-projects-legacy
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListProjectsLegacyReq struct {
-	_url   string
+	_url string
+
+	// team_id parameter
 	TeamId int64
 
 	// Results per page (max 100)
@@ -6676,7 +6854,9 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type ListReposInOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// team_slug parameter
 	TeamSlug string
@@ -6808,7 +6988,9 @@ https://developer.github.com/v3/teams/#list-team-repositories-legacy
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type ListReposLegacyReq struct {
-	_url   string
+	_url string
+
+	// team_id parameter
 	TeamId int64
 
 	// Results per page (max 100)
@@ -6938,8 +7120,12 @@ https://developer.github.com/v3/teams/members/#remove-team-member-legacy
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type RemoveMemberLegacyReq struct {
-	_url     string
-	TeamId   int64
+	_url string
+
+	// team_id parameter
+	TeamId int64
+
+	// username parameter
 	Username string
 }
 
@@ -7052,10 +7238,14 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type RemoveMembershipForUserInOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// team_slug parameter
 	TeamSlug string
+
+	// username parameter
 	Username string
 }
 
@@ -7162,8 +7352,12 @@ https://developer.github.com/v3/teams/members/#remove-team-membership-for-a-user
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type RemoveMembershipForUserLegacyReq struct {
-	_url     string
-	TeamId   int64
+	_url string
+
+	// team_id parameter
+	TeamId int64
+
+	// username parameter
 	Username string
 }
 
@@ -7271,10 +7465,14 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type RemoveProjectInOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// team_slug parameter
-	TeamSlug  string
+	TeamSlug string
+
+	// project_id parameter
 	ProjectId int64
 }
 
@@ -7381,8 +7579,12 @@ https://developer.github.com/v3/teams/#remove-a-project-from-a-team-legacy
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type RemoveProjectLegacyReq struct {
-	_url      string
-	TeamId    int64
+	_url string
+
+	// team_id parameter
+	TeamId int64
+
+	// project_id parameter
 	ProjectId int64
 }
 
@@ -7490,12 +7692,18 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type RemoveRepoInOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// team_slug parameter
 	TeamSlug string
-	Owner    string
-	Repo     string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
 }
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
@@ -7601,10 +7809,16 @@ https://developer.github.com/v3/teams/#remove-a-repository-from-a-team-legacy
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type RemoveRepoLegacyReq struct {
-	_url   string
+	_url string
+
+	// team_id parameter
 	TeamId int64
-	Owner  string
-	Repo   string
+
+	// owner parameter
+	Owner string
+
+	// repo parameter
+	Repo string
 }
 
 // HTTPRequest builds an *http.Request. Non-nil errors will have the type *requests.RequestError.
@@ -7711,13 +7925,19 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type UpdateDiscussionCommentInOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// team_slug parameter
-	TeamSlug         string
+	TeamSlug string
+
+	// discussion_number parameter
 	DiscussionNumber int64
-	CommentNumber    int64
-	RequestBody      UpdateDiscussionCommentInOrgReqBody
+
+	// comment_number parameter
+	CommentNumber int64
+	RequestBody   UpdateDiscussionCommentInOrgReqBody
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
@@ -7859,11 +8079,17 @@ https://developer.github.com/v3/teams/discussion_comments/#update-a-discussion-c
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type UpdateDiscussionCommentLegacyReq struct {
-	_url             string
-	TeamId           int64
+	_url string
+
+	// team_id parameter
+	TeamId int64
+
+	// discussion_number parameter
 	DiscussionNumber int64
-	CommentNumber    int64
-	RequestBody      UpdateDiscussionCommentLegacyReqBody
+
+	// comment_number parameter
+	CommentNumber int64
+	RequestBody   UpdateDiscussionCommentLegacyReqBody
 
 	/*
 	An additional `reactions` object in the issue comment payload is currently
@@ -8006,10 +8232,14 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type UpdateDiscussionInOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// team_slug parameter
-	TeamSlug         string
+	TeamSlug string
+
+	// discussion_number parameter
 	DiscussionNumber int64
 	RequestBody      UpdateDiscussionInOrgReqBody
 
@@ -8156,8 +8386,12 @@ https://developer.github.com/v3/teams/discussions/#update-a-discussion-legacy
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type UpdateDiscussionLegacyReq struct {
-	_url             string
-	TeamId           int64
+	_url string
+
+	// team_id parameter
+	TeamId int64
+
+	// discussion_number parameter
 	DiscussionNumber int64
 	RequestBody      UpdateDiscussionLegacyReqBody
 
@@ -8305,7 +8539,9 @@ Non-nil errors will have the type *requests.RequestError, octo.ResponseError or 
 */
 type UpdateInOrgReq struct {
 	_url string
-	Org  string
+
+	// org parameter
+	Org string
 
 	// team_slug parameter
 	TeamSlug    string
@@ -8468,7 +8704,9 @@ https://developer.github.com/v3/teams/#update-a-team-legacy
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
 type UpdateLegacyReq struct {
-	_url        string
+	_url string
+
+	// team_id parameter
 	TeamId      int64
 	RequestBody UpdateLegacyReqBody
 }

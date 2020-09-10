@@ -17,7 +17,7 @@ Get rate limit status for the authenticated user.
 
   GET /rate_limit
 
-https://developer.github.com/v3/rate_limit/#get-rate-limit-status-for-the-authenticated-user
+https://developer.github.com/v3/rate_limit/#get-your-current-rate-limit-status
 */
 func Get(ctx context.Context, req *GetReq, opt ...requests.Option) (*GetResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -50,7 +50,7 @@ Get rate limit status for the authenticated user.
 
   GET /rate_limit
 
-https://developer.github.com/v3/rate_limit/#get-rate-limit-status-for-the-authenticated-user
+https://developer.github.com/v3/rate_limit/#get-your-current-rate-limit-status
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -61,7 +61,7 @@ func (c Client) Get(ctx context.Context, req *GetReq, opt ...requests.Option) (*
 /*
 GetReq is request data for Client.Get
 
-https://developer.github.com/v3/rate_limit/#get-rate-limit-status-for-the-authenticated-user
+https://developer.github.com/v3/rate_limit/#get-your-current-rate-limit-status
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -96,7 +96,7 @@ func (r *GetReq) Rel(link string, resp *GetResponse) bool {
 /*
 GetResponse is a response for Get
 
-https://developer.github.com/v3/rate_limit/#get-rate-limit-status-for-the-authenticated-user
+https://developer.github.com/v3/rate_limit/#get-your-current-rate-limit-status
 */
 type GetResponse struct {
 	httpResponse *http.Response

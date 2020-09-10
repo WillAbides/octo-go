@@ -17,7 +17,7 @@ Get all gitignore templates.
 
   GET /gitignore/templates
 
-https://developer.github.com/v3/gitignore/#get-all-gitignore-templates
+https://developer.github.com/v3/gitignore/#listing-available-templates
 */
 func GetAllTemplates(ctx context.Context, req *GetAllTemplatesReq, opt ...requests.Option) (*GetAllTemplatesResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -50,7 +50,7 @@ Get all gitignore templates.
 
   GET /gitignore/templates
 
-https://developer.github.com/v3/gitignore/#get-all-gitignore-templates
+https://developer.github.com/v3/gitignore/#listing-available-templates
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -61,7 +61,7 @@ func (c Client) GetAllTemplates(ctx context.Context, req *GetAllTemplatesReq, op
 /*
 GetAllTemplatesReq is request data for Client.GetAllTemplates
 
-https://developer.github.com/v3/gitignore/#get-all-gitignore-templates
+https://developer.github.com/v3/gitignore/#listing-available-templates
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -96,14 +96,14 @@ func (r *GetAllTemplatesReq) Rel(link string, resp *GetAllTemplatesResponse) boo
 /*
 GetAllTemplatesResponseBody is a response body for GetAllTemplates
 
-https://developer.github.com/v3/gitignore/#get-all-gitignore-templates
+https://developer.github.com/v3/gitignore/#listing-available-templates
 */
 type GetAllTemplatesResponseBody []string
 
 /*
 GetAllTemplatesResponse is a response for GetAllTemplates
 
-https://developer.github.com/v3/gitignore/#get-all-gitignore-templates
+https://developer.github.com/v3/gitignore/#listing-available-templates
 */
 type GetAllTemplatesResponse struct {
 	httpResponse *http.Response
@@ -138,7 +138,7 @@ Get a gitignore template.
 
   GET /gitignore/templates/{name}
 
-https://developer.github.com/v3/gitignore/#get-a-gitignore-template
+https://developer.github.com/v3/gitignore/#get-a-single-template
 */
 func GetTemplate(ctx context.Context, req *GetTemplateReq, opt ...requests.Option) (*GetTemplateResponse, error) {
 	opts := requests.BuildOptions(opt...)
@@ -171,7 +171,7 @@ Get a gitignore template.
 
   GET /gitignore/templates/{name}
 
-https://developer.github.com/v3/gitignore/#get-a-gitignore-template
+https://developer.github.com/v3/gitignore/#get-a-single-template
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -182,7 +182,7 @@ func (c Client) GetTemplate(ctx context.Context, req *GetTemplateReq, opt ...req
 /*
 GetTemplateReq is request data for Client.GetTemplate
 
-https://developer.github.com/v3/gitignore/#get-a-gitignore-template
+https://developer.github.com/v3/gitignore/#get-a-single-template
 
 Non-nil errors will have the type *requests.RequestError, octo.ResponseError or url.Error.
 */
@@ -220,7 +220,7 @@ func (r *GetTemplateReq) Rel(link string, resp *GetTemplateResponse) bool {
 /*
 GetTemplateResponse is a response for GetTemplate
 
-https://developer.github.com/v3/gitignore/#get-a-gitignore-template
+https://developer.github.com/v3/gitignore/#get-a-single-template
 */
 type GetTemplateResponse struct {
 	httpResponse *http.Response

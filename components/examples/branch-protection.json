@@ -67,7 +67,7 @@
       "continuous-integration/travis-ci"
     ],
     "contexts_url": "https://api.github.com/repos/octocat/Hello-World/branches/master/protection/required_status_checks/contexts",
-    "enforcement_level": "non_admins",
+    "enforcement_level": "string",
     "url": "https://api.github.com/repos/octocat/Hello-World/branches/master/protection/required_status_checks"
   },
   "restrictions": {

@@ -4069,7 +4069,7 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	httpMethod:     "PATCH",
 	httpStatusCode: 200,
 	name:           "components.GroupMapping",
-	operationID:    "teams/create-or-update-idp-group-connections-in-org",
+	operationID:    "teams/create-or-update-id-p-group-connections-in-org",
 }, {
 	decode: func(decoder *json.Decoder) error {
 		target := components.GroupMapping{}
@@ -4079,7 +4079,7 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	httpMethod:     "PATCH",
 	httpStatusCode: 200,
 	name:           "components.GroupMapping",
-	operationID:    "teams/create-or-update-idp-group-connections-legacy",
+	operationID:    "teams/create-or-update-id-p-group-connections-legacy",
 }, {
 	decode: func(decoder *json.Decoder) error {
 		target := components.TeamFull{}
@@ -4249,7 +4249,7 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	httpMethod:     "GET",
 	httpStatusCode: 200,
 	name:           "components.GroupMapping",
-	operationID:    "teams/list-idp-groups-for-legacy",
+	operationID:    "teams/list-id-p-groups-for-legacy",
 }, {
 	decode: func(decoder *json.Decoder) error {
 		target := components.GroupMapping{}
@@ -4259,7 +4259,7 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	httpMethod:     "GET",
 	httpStatusCode: 200,
 	name:           "components.GroupMapping",
-	operationID:    "teams/list-idp-groups-for-org",
+	operationID:    "teams/list-id-p-groups-for-org",
 }, {
 	decode: func(decoder *json.Decoder) error {
 		target := components.GroupMapping{}
@@ -4269,7 +4269,7 @@ var generatedUnmarshalResponseBodyTests = []unmarshalResponseBodyTest{{
 	httpMethod:     "GET",
 	httpStatusCode: 200,
 	name:           "components.GroupMapping",
-	operationID:    "teams/list-idp-groups-in-org",
+	operationID:    "teams/list-id-p-groups-in-org",
 }, {
 	decode: func(decoder *json.Decoder) error {
 		target := []components.SimpleUser{}
